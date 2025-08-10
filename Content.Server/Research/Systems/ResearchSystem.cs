@@ -8,6 +8,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Research.Systems
@@ -32,15 +33,18 @@ namespace Content.Server.Research.Systems
             InitializeConsole();
             InitializeSource();
             InitializeServer();
+            InitializeBkm(); // backmen change
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchRegistrationChangedEvent>(OnDatabaseRegistrationChanged);
         }
 
         /// <summary>
         /// Gets a server based on its unique numeric id.
+        /// backmen change: Also requires MapId to check a map
         /// </summary>
         /// <param name="client"></param>
         /// <param name="id"></param>
+        /// <param name="mapId"></param> // backmen change
         /// <param name="serverUid"></param>
         /// <param name="serverComponent"></param>
         /// <returns></returns>
@@ -116,7 +120,7 @@ namespace Content.Server.Research.Systems
                     continue;
                 server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
-                UpdateServer(uid, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
+                UpdateServer(uid, (int)server.ResearchConsoleUpdateTime.TotalSeconds, server);
             }
         }
     }

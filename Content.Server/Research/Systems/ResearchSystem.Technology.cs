@@ -1,8 +1,8 @@
 using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Construction.Prototypes;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Systems;
 
@@ -21,6 +21,7 @@ public sealed partial class ResearchSystem
         primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
         primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
         primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes;
+		primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts;
 
         Dirty(primaryUid, primaryDb);
 
@@ -81,7 +82,7 @@ public sealed partial class ResearchSystem
             return false;
 
         AddTechnology(serverEnt.Value, prototype);
-        TrySetMainDiscipline(prototype, serverEnt.Value);
+        //TrySetMainDiscipline(prototype, serverEnt.Value); // Goobstation commented
         ModifyServerPoints(serverEnt.Value, -prototype.Cost);
         UpdateTechnologyCards(serverEnt.Value);
 
@@ -100,7 +101,11 @@ public sealed partial class ResearchSystem
             return;
 
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(technology, out var prototype))
+		{
+			//if (PrototypeManager.TryIndex<ConstructionPrototype>(technology, out var prototype))
+			//	AddTechnology(uid, prototype, component);
             return;
+		}
         AddTechnology(uid, prototype, component);
     }
 
@@ -121,12 +126,21 @@ public sealed partial class ResearchSystem
 
         component.UnlockedTechnologies.Add(technology.ID);
         var addedRecipes = new List<string>();
+		
         foreach (var unlock in technology.RecipeUnlocks)
         {
             if (component.UnlockedRecipes.Contains(unlock))
                 continue;
             component.UnlockedRecipes.Add(unlock);
             addedRecipes.Add(unlock);
+        }
+		
+		foreach (var craftunlock in technology.CraftUnlocks)
+        {
+            if (component.UnlockedCrafts.Contains(craftunlock))
+                continue;
+            component.UnlockedCrafts.Add(craftunlock);
+            addedRecipes.Add(craftunlock);
         }
         Dirty(uid, component);
 
@@ -166,9 +180,10 @@ public sealed partial class ResearchSystem
             return;
         component.MainDiscipline = null;
         component.CurrentTechnologyCards = new List<string>();
-        component.SupportedDisciplines = new List<ProtoId<TechDisciplinePrototype>>();
-        component.UnlockedTechnologies = new List<ProtoId<TechnologyPrototype>>();
-        component.UnlockedRecipes = new List<ProtoId<LatheRecipePrototype>>();
+        component.SupportedDisciplines = new List<string>();
+        component.UnlockedTechnologies = new List<string>();
+        component.UnlockedRecipes = new List<string>();
+		component.UnlockedCrafts = new List<string>();
         Dirty(uid, component);
     }
 }

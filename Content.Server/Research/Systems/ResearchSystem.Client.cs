@@ -102,6 +102,7 @@ public sealed partial class ResearchSystem
             return;
 
         TryGetClientServer(uid, out _, out var serverComponent, component);
+        var mapId = Transform(uid).MapID;
 
         var names = GetServerNames(uid);
         var state = new ResearchClientBoundInterfaceState(
