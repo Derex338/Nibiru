@@ -1,0 +1,15 @@
+﻿<ui1:FactionMenu xmlns="https://spacestation14.io"
+            xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
+            Title="{Loc 'Создание фракции'}"
+            Resizable="False">
+
+    <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="250">
+        <Label Name="CurrentTextLabel" Text="{Loc 'Название фракции'}" />
+		<BoxContainer Orientation="Vertical" SeparationOverride="50">
+        <LineEdit Name="LabelLineEdit" Access="Public" />
+		<Button Name="CreateButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
+		        MinSize="60 50"
+                Text="{Loc 'Создать'}"/>
+		</BoxContainer>
+    </BoxContainer>
+</ui1:FactionMenu>
