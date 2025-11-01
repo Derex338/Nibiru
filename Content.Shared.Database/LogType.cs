@@ -81,9 +81,9 @@ public enum LogType
     ChemicalReaction = 17,
 
     /// <summary>
-    /// EntityEffect related interactions.
+    /// Reagent effects related interactions.
     /// </summary>
-    EntityEffect = 18,
+    ReagentEffect = 18,
 
     /// <summary>
     /// Canister valve was opened or closed.
@@ -473,9 +473,14 @@ public enum LogType
     /// Damaging grid collision has occurred.
     /// </summary>
     ShuttleImpact = 102,
-
-    /// <summary>
+	
+	/// <summary>
     /// Events relating to midi playback.
     /// </summary>
     Instrument = 103,
+	
+	/// <summary>
+    /// Faction created
+    /// </summary>
+    FactionCreated = 199
 }

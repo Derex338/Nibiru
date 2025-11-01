@@ -22,6 +22,12 @@ public sealed partial class ConstructionPrototype : IPrototype
     public LocId? SetName;
 
     public string? Name;
+	
+	/// <summary>
+    ///     Research points that give when you craft this thing
+    /// </summary>
+	[DataField]
+    public int Points = 100; //Nibiru
 
     /// <summary>
     ///     "Useful" description displayed in the construction GUI.
@@ -84,8 +90,8 @@ public sealed partial class ConstructionPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<ConstructionPrototype>? Mirror { get; private set; }
-
-    /// <summary>
+	
+	/// <summary>
     ///     Possible constructions to replace this one with as determined by the placement mode
     /// </summary>
     [DataField]

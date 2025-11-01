@@ -1,0 +1,54 @@
+﻿<ui1:FactionMenu xmlns="https://spacestation14.io"
+            xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
+            Title="{Loc 'Создание фракции'}"
+            Resizable="False">
+
+    <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="250" Visible="True">
+        <Label Name="CurrentTextLabel" Text="{Loc 'Название фракции'}" />
+		<BoxContainer Orientation="Vertical" SeparationOverride="50">
+        <LineEdit Name="LabelLineEdit" Access="Public" />
+		<Button Name="CreateButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
+		        MinSize="60 50"
+                Text="{Loc 'Создать'}"/>
+		</BoxContainer>
+    </BoxContainer>
+	<BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="250" Visible="False">
+        <Label Name="FactionName" Text="{Loc 'Название фракции: '}" />
+		<BoxContainer
+            Name="MembersContainer"
+            Orientation="Vertical"
+            VerticalExpand="True"
+            SizeFlagsStretchRatio="2"
+            Margin="5">
+            <Label Text="{Loc 'Члены фракции: '}"
+                    HorizontalAlignment="Left"/>
+            <PanelContainer VerticalExpand="True">
+                <ScrollContainer
+                    HScrollEnabled="False"
+                    HorizontalExpand="True"
+                    VerticalExpand="True">
+                    <BoxContainer
+                        Name="Members"
+                        Orientation="Vertical"
+                        VerticalExpand="True">
+                    </BoxContainer>
+                </ScrollContainer>
+            </PanelContainer>
+        </BoxContainer>
+		<BoxContainer
+            Name="Buttons"
+            Orientation="Horizontal"
+            SizeFlagsStretchRatio="2"
+            Margin="5">
+            <Button Name="TransferTitle" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
+					MinSize="20 15"
+					Text="{Loc 'Передать титул'}"/>
+			<Button Name="Heir" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
+					MinSize="20 15"
+					Text="{Loc 'Назначить наследником'}"/>
+			<Button Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
+					MinSize="15 15"
+					Text="{Loc 'Расформировать фракцию'}"/>
+        </BoxContainer>
+    </BoxContainer>
+</ui1:FactionMenu>

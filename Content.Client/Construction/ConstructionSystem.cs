@@ -29,6 +29,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly SpriteSystem _sprite = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+		[Dependency] private readonly IPrototypeManager _proto = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -80,7 +81,7 @@ namespace Content.Client.Construction
         {
             foreach (var constructionProto in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
-                if (!PrototypeManager.Resolve(constructionProto.Graph, out var graphProto))
+                if (!PrototypeManager.TryIndex(constructionProto.Graph, out var graphProto))
                     continue;
 
                 if (constructionProto.TargetNode is not { } targetNodeId)
@@ -121,14 +122,17 @@ namespace Content.Client.Construction
                     // If we got the id of the prototype, we exit the “recursion” by clearing the stack.
                     stack.Clear();
 
-                    if (!PrototypeManager.Resolve(entityId, out var proto))
+                    if (!PrototypeManager.TryIndex(constructionProto.ID, out ConstructionPrototype? recipe))
                         continue;
 
-                    var name = constructionProto.SetName.HasValue ? Loc.GetString(constructionProto.SetName) : proto.Name;
-                    var desc = constructionProto.SetDescription.HasValue ? Loc.GetString(constructionProto.SetDescription) : proto.Description;
+                    if (!PrototypeManager.TryIndex(entityId, out var proto))
+                        continue;
 
-                    constructionProto.Name = name;
-                    constructionProto.Description = desc;
+                    var name = recipe.SetName.HasValue ? Loc.GetString(recipe.SetName) : proto.Name;
+                    var desc = recipe.SetDescription.HasValue ? Loc.GetString(recipe.SetDescription) : proto.Description;
+
+                    recipe.Name = name;
+                    recipe.Description = desc;
 
                     _recipesMetadataCache.Add(constructionProto.ID, entityId);
                 } while (stack.Count > 0);
@@ -169,7 +173,7 @@ namespace Content.Client.Construction
                     "construction-ghost-examine-message",
                     ("name", component.Prototype.Name)));
 
-                if (!PrototypeManager.Resolve(component.Prototype.Graph, out var graph))
+                if (!PrototypeManager.TryIndex(component.Prototype.Graph, out var graph))
                     return;
 
                 var startNode = graph.Nodes[component.Prototype.StartNode];
@@ -418,6 +422,35 @@ namespace Content.Client.Construction
 
             _ghosts.Clear();
         }
+		
+		# region Nibiru
+	
+		public string GetCraftName(ProtoId<ConstructionPrototype> proto)
+		{
+			return GetCraftName(_proto.Index(proto));
+		}
+
+		public string GetCraftName(ConstructionPrototype proto)
+		{
+			if (!string.IsNullOrWhiteSpace(proto.Name))
+				return Loc.GetString(proto.Name);
+
+			//if (proto.Graph is {} result)
+			//{
+			//    return  //_proto.Index(result).Name;
+			//}
+
+			//if (proto.ResultReagents is { } resultReagents)
+			//{
+			//    return ContentLocalizationManager.FormatList(resultReagents
+			//        .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", _proto.Index(p.Key).LocalizedName), ("amount", p.Value)))
+			//        .ToList());
+			//}
+
+			return string.Empty;
+		}
+	
+		# endregion 
     }
 
     public sealed class CraftingAvailabilityChangedArgs : EventArgs

@@ -3,6 +3,10 @@ using Content.Shared.Interaction;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
+using Robust.Shared.Prototypes;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared._Nibiru.Factions;
+
 namespace Content.Shared.Construction;
 
 /// <summary>
@@ -132,3 +136,43 @@ public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 public sealed partial class WelderRefineDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+[Serializable, NetSerializable]
+public sealed class ConstructionUIOpen : EntityEventArgs
+{
+    public readonly NetEntity NetEntity;
+
+    public ConstructionUIOpen(NetEntity netEntity)
+    {
+        NetEntity = netEntity;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class ConstructionCrafts : EntityEventArgs
+{
+    public readonly NetEntity NetEntity;
+	public readonly List<ProtoId<ConstructionPrototype>> Crafts;
+
+    public ConstructionCrafts(NetEntity netEntity, List<ProtoId<ConstructionPrototype>> crafts)
+    {
+        NetEntity = netEntity;
+		Crafts = crafts;
+    }
+}
+
+public sealed class CraftsGetRecipesEvent : EntityEventArgs
+    {
+        public readonly EntityUid User;
+        public readonly FactionComponent Comp;
+
+        public bool GetUnavailable;
+
+        public HashSet<ProtoId<ConstructionPrototype>> Recipes = new();
+
+        public CraftsGetRecipesEvent(Entity<FactionComponent> user, bool forced)
+        {
+            (User, Comp) = user;
+            GetUnavailable = forced;
+        }
+    }

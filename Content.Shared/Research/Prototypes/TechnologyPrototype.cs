@@ -1,5 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared._Nibiru.Research;
 
 namespace Content.Shared.Research.Prototypes;
 
@@ -50,7 +52,16 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// How much research is needed to unlock.
     /// </summary>
     [DataField]
-    public int Cost = 10000;
+    public int Cost = 0;
+	
+	/// <summary>
+    /// Entity that needed to unlock.
+    /// </summary>
+    [DataField]
+    public List<EntityRequiredTech> EntityToUnlock = new(); //Nibiru
+	
+	[DataField]
+    public List<MaterialRequiredTech> MaterialToUnlock = new(); //Nibiru
 
     /// <summary>
     /// A list of <see cref="TechnologyPrototype"/>s that need to be unlocked in order to unlock this technology.
@@ -63,12 +74,22 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// </summary>
     [DataField]
     public List<ProtoId<LatheRecipePrototype>> RecipeUnlocks = new();
+	
+	[DataField]
+    public List<ProtoId<ConstructionPrototype>> CraftUnlocks = new();
 
     /// <summary>
     /// A list of non-standard effects that are done when this technology is unlocked.
     /// </summary>
     [DataField]
     public IReadOnlyList<GenericUnlock> GenericUnlocks = new List<GenericUnlock>();
+
+    /// <summary>
+    /// Goobstation R&D console rework field
+    /// Position of this tech in console menu
+    /// </summary>
+    [DataField(required: true)]
+    public Vector2i Position { get; private set; }
 }
 
 [DataDefinition]
