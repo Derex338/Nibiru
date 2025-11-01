@@ -258,7 +258,7 @@ public sealed partial class ResearchSystem
 					if (used.Contains(material))
                         continue;
 	
-					var splitStack = _stackSystem.Split(material, recipe.Amount, user.ToCoordinates(0, 0), stack);
+					var splitStack = _stackSystem.Split((material, stack), recipe.Amount, user.ToCoordinates(0, 0));
 	
 					if (splitStack == null)
                         continue;

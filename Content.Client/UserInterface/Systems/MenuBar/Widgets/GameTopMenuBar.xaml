@@ -93,6 +93,15 @@
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
+	<ui:MenuButton
+        Name="FactionButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/fist.svg.192dpi.png'}"
+        ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
+        />
     <ui:MenuButton
         Name="AHelpButton"
         Access="Internal"

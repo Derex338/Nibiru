@@ -9,6 +9,7 @@ using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
+using Content.Client.UserInterface.Systems.Faction;
 using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.MenuBar;
@@ -16,6 +17,7 @@ namespace Content.Client.UserInterface.Systems.MenuBar;
 public sealed class GameTopMenuBarUIController : UIController
 {
     [Dependency] private readonly EscapeUIController _escape = default!;
+	[Dependency] private readonly FactionUIController _faction = default!;
     [Dependency] private readonly AdminUIController _admin = default!;
     [Dependency] private readonly CharacterUIController _character = default!;
     [Dependency] private readonly CraftingUIController _crafting = default!;
@@ -40,6 +42,7 @@ public sealed class GameTopMenuBarUIController : UIController
     {
         _escape.UnloadButton();
         _guidebook.UnloadButton();
+		_faction.UnloadButton();
         _admin.UnloadButton();
         _character.UnloadButton();
         _crafting.UnloadButton();
@@ -53,6 +56,7 @@ public sealed class GameTopMenuBarUIController : UIController
     {
         _escape.LoadButton();
         _guidebook.LoadButton();
+		_faction.LoadButton();
         _admin.LoadButton();
         _character.LoadButton();
         _crafting.LoadButton();
