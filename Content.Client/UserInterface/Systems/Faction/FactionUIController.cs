@@ -15,6 +15,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using Content.Shared._Nibiru.Factions;
 using Content.Client.UserInterface.Systems.Faction;
+using Content.Client._Nibiru.Faction;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Faction;
@@ -23,6 +24,7 @@ namespace Content.Client.UserInterface.Systems.Faction;
 public sealed class FactionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {	
 	[Dependency] private readonly IEntityManager _entityManager = default!;
+	//[Dependency] private readonly FactionSystem _factionSystem = default!;
 
     private FactionMenu? _factionWindow;
 
@@ -100,6 +102,8 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
     {
         if (_factionWindow == null)
             return;
+		
+		UpdateState();
 
         if (_factionWindow.IsOpen)
         {
@@ -115,21 +119,27 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 	
 	private void OnCreateFactionButtonPressed()
     {
-        // Получаем текст из текстового поля
         _factionName = _factionWindow!.LabelLineEdit.Text;
 	
-        //Проверяем, что имя фракции не пустое
         if (!string.IsNullOrWhiteSpace(_factionName))
         {
             _entityManager.RaisePredictiveEvent(new FactionCreateRequestMessage
 			{
 				FactionName = _factionName
 			});
+			
+			UpdateState();
         }
 		else
-		{
             return;
-		}
     }
+	
+	private void UpdateState()
+	{
+		if (_factionWindow == null)
+            return;
+		
+		//_factionSystem.RequestState(_factionWindow);
+	}
 }
 

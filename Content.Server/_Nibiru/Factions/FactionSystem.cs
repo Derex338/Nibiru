@@ -33,7 +33,9 @@ namespace Content.Server._Nibiru.Factions;
         public override void Initialize()
         {
             base.Initialize();
+			
             SubscribeNetworkEvent<FactionCreateRequestMessage>(OnFactionCreateRequest);
+			SubscribeNetworkEvent<FactionStateRequestMessage>(OnFactionStateRequest);
         }
 
         private void OnFactionCreateRequest(FactionCreateRequestMessage msg, EntitySessionEventArgs args)
@@ -87,15 +89,27 @@ namespace Content.Server._Nibiru.Factions;
             }
         }
 		
+		private void OnFactionStateRequest(FactionStateRequestMessage msg, EntitySessionEventArgs args)
+        {
+            var player = args.SenderSession.AttachedEntity;
+			
+			if (!player.HasValue)
+            return;
+		
+			if (EntityManager.TryGetComponent<FactionComponent>(player, out var factionComponent)
+			&& factionComponent.IsCreator == true)
+            {
+				msg.creator = true;
+			}
+        }
+		
 		public HashSet<Entity<FactionComponent>> GetFactions(EntityUid client)
         {
             ClientLookup.Clear();
 
             var clientXform = Transform(client);
-            if (clientXform.GridUid is not { } grid)
-                return ClientLookup;
 
-            _lookup.GetGridEntities(grid, ClientLookup);
+            _lookup.GetEntitiesOnMap(clientXform.MapID, ClientLookup);
             return ClientLookup;
         }
     }
