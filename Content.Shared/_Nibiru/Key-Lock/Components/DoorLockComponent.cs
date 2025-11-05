@@ -23,9 +23,3 @@ public partial class DoorLockComponent : Component
 	[DataField]
     public float CrackDuration = 120f;
 }
-
-[Serializable, NetSerializable]
-public sealed class FactionStateRequestMessage : EntityEventArgs
-{
-   public bool creator = false;
-}

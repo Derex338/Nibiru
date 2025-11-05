@@ -7,9 +7,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.Fuel;
 
 [NetworkedComponent]
-public abstract partial class FuelNeededComponent : Component
+public abstract partial class SharedFuelConsumptionComponent : Component
 {
-
     [ViewVariables(VVAccess.ReadOnly)]
     public FuelLightState CurrentState;
 
@@ -20,10 +19,10 @@ public abstract partial class FuelNeededComponent : Component
     public string FadeOutBehaviourID = string.Empty;
 
     [DataField]
-    public TimeSpan GlowDuration = TimeSpan.FromSeconds(60 * 15f);
+    public TimeSpan GlowDuration = TimeSpan.FromSeconds(15f);
 
     [DataField]
-    public TimeSpan FadeOutDuration = TimeSpan.FromSeconds(60 * 5f);
+    public TimeSpan FadeOutDuration = TimeSpan.FromSeconds(5f);
 
     [DataField]
     public float MaxFuelAmount = 500f;

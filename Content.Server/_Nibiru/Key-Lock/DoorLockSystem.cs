@@ -51,7 +51,7 @@ namespace Content.Server._Nibiru.Factions;
 	private void CreateLock(InteractUsingEvent args)
     {
         if(args.Handled 
-		|| TryComp<DoorLockComponent>(args.Target, out var comp) 
+		|| TryComp<DoorLockComponent>(args.Target, out var comp)
 		|| !TryComp<DoorComponent>(args.Target, out var door))
             return;
 
@@ -90,7 +90,7 @@ namespace Content.Server._Nibiru.Factions;
                 {
                     BreakOnDamage = true,
                     BreakOnMove = true,
-                    BreakOnDropItem = true,
+                    BreakOnDropItem = false,
                 });
 			
 			args.Handled = true;

@@ -6,12 +6,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Nibiru.Fuel;
 
-[NetworkedComponent]
-public abstract partial class FuelComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class FuelComponent : Component
 {
     [DataField]
-    public int Value = 100;
+    public float Value = 100f;
 	
 	[DataField]
-    public int TemperatureMax = 100;
+    public float TemperatureMax = 100f;
 }
