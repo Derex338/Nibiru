@@ -20,6 +20,7 @@ using JetBrains.Annotations;
 using Content.Shared.Light.Components;
 using Content.Server.Light.Components;
 using Robust.Server.GameObjects;
+using Content.Shared.Examine;
 
 namespace Content.Server._Nibiru.Fuel
 {
@@ -41,6 +42,8 @@ namespace Content.Server._Nibiru.Fuel
 			
 			SubscribeLocalEvent<FuelConsumptionComponent, InteractUsingEvent>(AddFuel);
 			SubscribeLocalEvent<FuelConsumptionComponent, ComponentInit>(OnExpLightInit);
+			
+			SubscribeLocalEvent<FuelConsumptionComponent, ExaminedEvent>(OnExamined);
 		}  
 		
 		public override void Update(float frameTime)
@@ -62,6 +65,9 @@ namespace Content.Server._Nibiru.Fuel
 
             if (component.StateExpiryTime <= 0f)
             {
+				var ev = new FuelStateChangedEvent(false, component.StateExpiryTime, component.Temperature);
+				RaiseLocalEvent(ent, ref ev);
+				
                 switch (component.CurrentState)
                 {
                     case FuelLightState.Lit:
@@ -75,6 +81,7 @@ namespace Content.Server._Nibiru.Fuel
                     default:
                     case FuelLightState.Fading:
                         component.CurrentState = FuelLightState.Dead;
+						component.Temperature = 0.1f;
                         _nameModifier.RefreshNameModifiers(ent.Owner);
 
                         UpdateSounds(ent);
@@ -118,11 +125,13 @@ namespace Content.Server._Nibiru.Fuel
 				}
 		
 				component.StateExpiryTime += (float)fuel.Value;
+				component.Temperature = (float)fuel.TemperatureMax;
 				_stackSystem.SetCount(args.Used, stack.Count - 1, stack);
 			}
 			else
 			{
 				component.StateExpiryTime += (float)fuel.Value;
+				component.Temperature = fuel.TemperatureMax;
 				EntityManager.DeleteEntity(args.Used);
 			}
 		
@@ -184,6 +193,9 @@ namespace Content.Server._Nibiru.Fuel
 
                 var ignite = new IgnitionEvent(true);
                 RaiseLocalEvent(ent, ref ignite);
+				
+				var ev = new FuelStateChangedEvent(true, component.StateExpiryTime, component.Temperature);
+				RaiseLocalEvent(ent, ref ev);
 
                 component.CurrentState = FuelLightState.Lit;
 
@@ -204,6 +216,14 @@ namespace Content.Server._Nibiru.Fuel
             component.StateExpiryTime = 100f;
             EnsureComp<PointLightComponent>(uid);
         }
+		
+		private void OnExamined(Entity<FuelConsumptionComponent> ent, ref ExaminedEvent args)
+		{
+			if (!args.IsInDetailsRange)
+				return;
+
+			args.PushMarkup(Loc.GetString("entity-fuel-examined", ("ExpiryTime", ent.Comp.StateExpiryTime.ToString("F1"))));
+		}
 
 	}
 }

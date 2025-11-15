@@ -1,4 +1,4 @@
-/*using Content.Server._Nibiru.World;
+using Content.Server._Nibiru.World;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
@@ -21,8 +21,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Nibiru.GameTicking.Rules;
 
+// Взято за основу с RimFortress
 /// <summary>
-/// Взято за основу с RimFortress
+/// Система управления игровым режимом Nibiru Survival
 /// </summary>
 public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurvivalRuleComponent>
 {
@@ -49,7 +50,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
 
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
 
-        InitializeCommands();
+        //InitializeCommands();
     }
 
     protected override void Added(EntityUid uid, NibiruSurvivalRuleComponent comp, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -67,18 +68,18 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            _world.SpawnPlayer(ev.Player);
+            _world.SpawnPlayer(ev);
 
             ev.Handled = true;
             return;
         }
     }
-
+    /*
     public List<(EntityCoordinates Coords, EntProtoId Proto, WorldRuleComponent Comp)> AvailableRules(Entity<RimFortressPlayerComponent> uid)
     {
         var available = new List<(EntityCoordinates, EntProtoId, WorldRuleComponent)>();
 
-        var query = EntityQueryEnumerator<RimFortressRuleComponent, GameRuleComponent>();
+        var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var ruleUid, out var rf, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(ruleUid, rule))
@@ -111,7 +112,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         }
 
         return available;
-    }
+    }*/
 
     public override void Update(float frameTime)
     {
@@ -126,7 +127,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             StartWorldRule(new(uid, rule));
         }
     }
-
+    /*
     public RimFortressRuleComponent GetRule()
     {
         while (EntityQueryEnumerator<NibiruSurvivalRuleComponent>().MoveNext(out var comp))
@@ -135,13 +136,13 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         }
 
         return EntityManager.ComponentFactory.GetComponent<NibiruSurvivalRuleComponent>();
-    }
+    }*/
 
     public bool IsGameRuleActive(EntityUid ruleEntity, WorldRuleComponent? component = null)
     {
         return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
-
+    /*
     public bool HasDelayedEvent(Entity<RimFortressPlayerComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -155,7 +156,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         }
 
         return false;
-    }
+    }*/
 
     /// <summary>
     /// Adds a world rule to the list, but does not
@@ -310,4 +311,4 @@ public readonly record struct WorldRuleAddedEvent(EntityUid RuleEntity, EntProto
 public readonly record struct WorldRuleStartedEvent(EntityUid RuleEntity, EntProtoId RuleId, EntityUid Target, EntityCoordinates TargetCoordinates);
 
 [ByRefEvent]
-public readonly record struct WorldRuleEndedEvent(EntityUid RuleEntity, EntProtoId RuleId, EntityUid Target, EntityCoordinates TargetCoordinates);*/
+public readonly record struct WorldRuleEndedEvent(EntityUid RuleEntity, EntProtoId RuleId, EntityUid Target, EntityCoordinates TargetCoordinates);

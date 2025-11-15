@@ -1,11 +1,12 @@
 using Robust.Shared.GameStates;
+using Content.Shared._Nibiru.World;
 
 namespace Content.Shared.Pinpointer;
 
 /// <summary>
 /// Will show a marker on a NavMap.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedNavMapSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedNavMapSystem), typeof(SharedNibiruWorldSystem))]
 [AutoGenerateComponentState]
 public sealed partial class NavMapBeaconComponent : Component
 {

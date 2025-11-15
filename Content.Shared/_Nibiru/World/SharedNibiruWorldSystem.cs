@@ -1,4 +1,4 @@
-/*using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared.Maps;
@@ -15,8 +15,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Nibiru.World;
 
+// Взято за основу с RimFortress
 /// <summary>
-/// Взято за основу с RimFortress
+/// Управление миром и генерацией
 /// </summary>
 public abstract partial class SharedNibiruWorldSystem : EntitySystem
 {
@@ -34,7 +35,7 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
 
     //protected EntityQuery<RimFortressPlayerComponent> PlayerQuery;
     private EntityQuery<TransformComponent> _xformQuery;
-/*
+
     private int _maxSettlementRadius = 100;
     private int _minSettlementMembers = 2;
     private int _playerSafeRadius = 100;
@@ -46,13 +47,13 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
         base.Initialize();
         //PlayerQuery = GetEntityQuery<RimFortressPlayerComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
-/*
-        Subs.CVar(_cvar, RfVars.MaxSettlementRadius, value => _maxSettlementRadius = value, true);
-        Subs.CVar(_cvar, RfVars.MinSettlementMembers, value => _minSettlementMembers = value, true);
-        Subs.CVar(_cvar, RfVars.PlayerSafeRadius, value => _playerSafeRadius = value, true);
-        Subs.CVar(_cvar, RfVars.SpawnAreaRadius, value => SpawnAreaRadius = value, true);
-        Subs.CVar(_cvar, RfVars.MinSpawnAreaTiles, value => MinSpawnAreaTiles = value, true);
-		
+        /*
+                Subs.CVar(_cvar, RfVars.MaxSettlementRadius, value => _maxSettlementRadius = value, true);
+                Subs.CVar(_cvar, RfVars.MinSettlementMembers, value => _minSettlementMembers = value, true);
+                Subs.CVar(_cvar, RfVars.PlayerSafeRadius, value => _playerSafeRadius = value, true);
+                Subs.CVar(_cvar, RfVars.SpawnAreaRadius, value => SpawnAreaRadius = value, true);
+                Subs.CVar(_cvar, RfVars.MinSpawnAreaTiles, value => MinSpawnAreaTiles = value, true);
+                */
     }
 
     public void CreateMapBeacon(EntityUid gridUid, Vector2i indicates, Color color, string text)
@@ -73,7 +74,26 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
         entity.Comp.Color = color;
         entity.Comp.Text = text;
     }
-/*
+    /*
+    public List<EntityCoordinates> GetPlayerCoords()
+    {
+        //var enumerator = EntityQueryEnumerator<RimFortressPlayerComponent>();
+
+        if (!Resolve(entity, ref entity.Comp)
+            || !_xformQuery.TryComp(entity, out var playerXform))
+            return new();
+
+        // Collect a list of the coordinates of all the player's pops
+        var points = new List<Vector2>();
+
+        if (!_xformQuery.TryComp(entity, out var xform))
+            return new();
+
+        points.Add(xform.Coordinates.Position);
+
+        return points;
+    }*/
+    /*
     public void SetPlayerFactionColor(Entity<RimFortressPlayerComponent?> uid, Color color)
     {
         if (!Resolve(uid, ref uid.Comp))
@@ -125,7 +145,7 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
             jobId = null;
             return false;
         }
-    }
+    }*/
 }
 
 [Serializable, NetSerializable]
@@ -137,4 +157,4 @@ public sealed class SettlementCoordinatesMessage(Dictionary<NetEntity, List<NetC
 [Serializable, NetSerializable]
 public sealed class WorldDebugInfoRequest : EntityEventArgs
 {
-}*/
+}

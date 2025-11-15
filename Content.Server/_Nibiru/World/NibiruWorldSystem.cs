@@ -1,4 +1,4 @@
-/*using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Mind;
@@ -9,6 +9,7 @@ using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
 //using Content.Shared._Nibiru.CCVar;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Light.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Preferences;
@@ -69,12 +70,15 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         Rule = rule;
         var map = _map.CreateMap();
         _biome.EnsurePlanet(map, _prototype.Index(rule.Biome));
+
+        var cave = _map.CreateMap();
+        _biome.EnsurePlanet(cave, _prototype.Index(rule.CaveBiome));
         /*
         TODO: fix this, after updating the engine, Fog of War may crash the client
         var fog = EnsureComp<FogOfWarComponent>(map);
         Dirty(map, fog);
         */
-/*
+
         if (TryComp(map, out LightCycleComponent? cycle))
         {
             cycle.Duration = rule.DayDuration;
@@ -84,16 +88,17 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         }
 
         rule.WorldMap = map;
+        rule.CaveMap = cave;
         return map;
     }
 
     /// <summary>
     /// Creates or allocates a free map for the player
     /// </summary>
-    public void SpawnPlayer(ICommonSession session)
+    public void SpawnPlayer(PlayerBeforeSpawnEvent ev)
     {
         if (Rule is not { } rule)
-            return ;
+            return;
 
         var coords = Turf.GetTileCenter(GetSpawnTiles(1).First());
         var spawnBox = Box2.CenteredAround(coords.Position, new Vector2(SpawnAreaRadius));
@@ -102,11 +107,11 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         if (freeTiles.Count == 0)
             return;
 
-        // Spawn RF player entity
-        var newMind = _mind.CreateMind(session.UserId, session.Name);
-        _mind.SetUserId(newMind, session.UserId);
+        // Spawn player entity
+        var newMind = _mind.CreateMind(ev.Player.UserId, ev.Player.Name);
+        _mind.SetUserId(newMind, ev.Player.UserId);
 
-        var mob = Spawn(rule.PlayerProtoId, coords);
+        var mob = _station.SpawnPlayerMob(coords, null, ev.Profile, null, null);
         _mind.TransferTo(newMind, mob);
 
         //var player = EnsureComp<RimFortressPlayerComponent>(mob);
@@ -115,8 +120,8 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         //RoundstartSpawn(new(mob, player), freeTiles);
 
         //Dirty(mob, player);
-    }*/
-/*
+    }
+    /*
     /// <summary>
     /// Adds entities to the list of entities controlled by the player
     /// </summary>
@@ -130,7 +135,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             //_npc.AddNpcControl(player.Owner, pop);
 
             var beacon = EnsureComp<NavMapBeaconComponent>(pop);
-            beacon.Color = player.Comp.FactionColor;
+            //beacon.Color = player.Comp.FactionColor;
             beacon.Text = MetaData(pop).EntityName;
         }
 
@@ -154,8 +159,8 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         player.Comp.Pops.Add(pop);
         Dirty(player);
-    }
-
+    }*/
+    /*
     /// <summary>
     /// Spawns starting pops and expedition equipment for the player
     /// </summary>
@@ -189,7 +194,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
             spawnTiles.Add(tileRef);
         }
-/*
+
         // Spawn player equipment
         if (_equipment.GetPlayerEquipment(session.UserId) is { } equipment)
         {
@@ -220,11 +225,11 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             pops.Add(pop);
         }
 
-        AddPops(player, pops);
+        //AddPops(player, pops);
 
         player.Comp.GotRoundstartPops = true;
-    }
-
+    }*/
+    /*
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -242,5 +247,5 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         {
             RaiseNetworkEvent(msg, subscriber);
         }
-    }
-}*/
+    }*/
+}

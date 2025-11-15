@@ -55,3 +55,6 @@ public enum FuelLightState
     Fading,
     Dead
 }
+
+[ByRefEvent]
+public readonly record struct FuelStateChangedEvent(bool IsLit, float StateExpiryTime, float Temperature);

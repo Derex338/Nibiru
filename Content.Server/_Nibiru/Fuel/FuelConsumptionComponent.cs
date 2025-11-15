@@ -15,5 +15,6 @@ namespace Content.Server._Nibiru.Fuel
         public bool Activated => CurrentState is FuelLightState.Lit or FuelLightState.Fading;
 
         [ViewVariables] public float StateExpiryTime = default;
+        [DataField] public float Temperature = 1000f;
     }
 }

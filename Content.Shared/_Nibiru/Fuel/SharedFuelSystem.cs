@@ -5,7 +5,7 @@ using Content.Shared._Nibiru.Fuel;
 
 namespace Content.Shared._Nibiru.Fuel;
 
-public partial class SharedFuelSystem : EntitySystem
+public sealed partial class SharedFuelSystem : EntitySystem
 {
     
 
@@ -14,9 +14,20 @@ public partial class SharedFuelSystem : EntitySystem
         base.Initialize();
         
     }
+	/*
+	public bool IsActive(<FuelConsumptionComponent?> entity)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return true;
+		
+		if(entity.Comp.CurrentState.Lit)
+			return true;
+		
+		return false;
+    }
 	
-	public void hui()
+	public float GetTemperatureEntity()
 	{
 		
-	}
+	}*/
 }

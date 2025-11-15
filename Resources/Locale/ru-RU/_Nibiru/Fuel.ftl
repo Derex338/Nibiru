@@ -1,0 +1,1 @@
+entity-fuel-examined = ОСталось топлива на { $ExpiryTime } секунд

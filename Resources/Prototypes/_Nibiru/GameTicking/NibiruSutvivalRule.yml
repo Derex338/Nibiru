@@ -1,0 +1,17 @@
+- type: gamePreset
+  id: Nibiru
+  alias:
+    - nibiru
+  name: Nibiru survival
+  description: rim-fortress-description
+  rules:
+    - NibiruSurvival
+    
+- type: entity
+  id: NibiruSurvival
+  parent: BaseGameRule
+  components:
+    - type: NibiruSurvivalRule
+      biome: Continental
+      caveBiome: Continental
+      dayDuration: 1800 #30 min

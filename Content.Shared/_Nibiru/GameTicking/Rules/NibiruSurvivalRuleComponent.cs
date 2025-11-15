@@ -24,10 +24,16 @@ public sealed partial class NibiruSurvivalRuleComponent : Component
     public ProtoId<BiomeTemplatePrototype> Biome;
 
     /// <summary>
+    /// Biome template that will be used in the creation of the cave
+    /// </summary>
+    [DataField(required: true)]
+    public ProtoId<BiomeTemplatePrototype> CaveBiome;
+
+    /// <summary>
     /// Duration of the day
     /// </summary>
     [DataField]
-    public TimeSpan DayDuration = TimeSpan.FromMinutes(10);
+    public TimeSpan DayDuration = TimeSpan.FromMinutes(20);
 
     /// <summary>
     /// Components that will be added to the pops when spawned
@@ -55,4 +61,7 @@ public sealed partial class NibiruSurvivalRuleComponent : Component
 
     [ViewVariables]
     public EntityUid WorldMap;
+
+    [ViewVariables]
+    public EntityUid CaveMap;
 }

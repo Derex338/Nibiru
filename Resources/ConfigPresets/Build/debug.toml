@@ -1,1 +1,44 @@
-﻿
+﻿[game]
+hostname = "🌍 Nibiru"
+desc = "Первый из первых. Первый кто назвал себя первым и самый первый из моего же списка из одного сервера"
+maxplayers = 1050
+soft_max_players = 999
+# map_rotation = true
+# peaceful_end = false
+
+[server]
+rules_file = "CorvaxLRPRuleset"
+lobby_name = "️🌍 Nibiru"
+
+[game.panic_bunker]
+enabled = false
+show_reason = true
+min_account_age = 0
+min_overall_minutes = 0
+deny_vpn = false
+enable_without_admins = false
+disable_with_admins = false
+
+[rules]
+time = 20.0
+
+[hub]
+advertise = false
+tags = "lang:ru,rp:low,rp:med,region:eu_e"
+hub_urls = "https://hub.spacestation14.com/"
+
+[infolinks]
+discord = "https://discord.gg/9aBXebcWGs"
+
+[net]
+tickrate = 30
+port = 1212
+bindto = "::,0.0.0.0"
+max_connections = 256
+upnp = true
+
+[status]
+enabled = true
+
+[mapping]
+autosave = false
