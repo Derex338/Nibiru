@@ -59,6 +59,9 @@
         layer:
         - WallLayer
         density: 2000
+  - type: Tag
+    tags:
+      - Rock
 
 - type: entity
   abstract: true
@@ -809,6 +812,9 @@
       state: rock_north
     - map: [ "enum.EdgeLayer.West" ]
       state: rock_west
+  - type: Tag
+    tags:
+      - Rock
 
 # Ore veins
 - type: entity

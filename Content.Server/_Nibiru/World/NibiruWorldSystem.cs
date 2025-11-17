@@ -73,11 +73,6 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         var cave = _map.CreateMap();
         _biome.EnsurePlanet(cave, _prototype.Index(rule.CaveBiome));
-        /*
-        TODO: fix this, after updating the engine, Fog of War may crash the client
-        var fog = EnsureComp<FogOfWarComponent>(map);
-        Dirty(map, fog);
-        */
 
         if (TryComp(map, out LightCycleComponent? cycle))
         {

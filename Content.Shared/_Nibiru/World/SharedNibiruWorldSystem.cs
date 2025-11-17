@@ -46,7 +46,7 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
     {
         base.Initialize();
         //PlayerQuery = GetEntityQuery<RimFortressPlayerComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+        //_xformQuery = GetEntityQuery<TransformComponent>();
         /*
                 Subs.CVar(_cvar, RfVars.MaxSettlementRadius, value => _maxSettlementRadius = value, true);
                 Subs.CVar(_cvar, RfVars.MinSettlementMembers, value => _minSettlementMembers = value, true);

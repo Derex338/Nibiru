@@ -3,7 +3,7 @@
   alias:
     - nibiru
   name: Nibiru survival
-  description: rim-fortress-description
+  description: Голопопое выживание
   rules:
     - NibiruSurvival
     
@@ -13,5 +13,5 @@
   components:
     - type: NibiruSurvivalRule
       biome: Continental
-      caveBiome: Continental
+      caveBiome: Caves
       dayDuration: 1800 #30 min
