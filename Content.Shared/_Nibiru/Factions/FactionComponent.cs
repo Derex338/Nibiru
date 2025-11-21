@@ -1,28 +1,43 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
-using Content.Shared.Research.Components;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._Nibiru.Factions;
 
-    [RegisterComponent]
-    public sealed partial class FactionComponent : Component
-    {
-        [DataField("factionName")]
-        public string FactionName { get; set; } = string.Empty;
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+public sealed partial class FactionComponent : Component
+{
+    [AutoNetworkedField]
+    [DataField("factionName")]
+    public string FactionName { get; set; } = string.Empty;
 
-        [DataField("isCreator")]
-        public bool IsCreator { get; set; } = false;
-		
-		/// <summary>
-        /// All of the recipe packs that the faction type has by default
-        /// </summary>
-        [DataField]
-        public List<ProtoId<ConstructionPackPrototype>> StaticPacks = new();
-		
-		public EntityUid? ResearchServer;
+    [AutoNetworkedField]
+    [DataField("isCreator")]
+    public bool IsCreator { get; set; } = false;
 
-        //[DataField("members")]
-        //public List<EntityUid> Members { get; set; } = new();
-    }
+    /// <summary>
+    /// All of the recipe packs that the faction type has by default
+    /// </summary>
+    [DataField]
+    public List<ProtoId<ConstructionPackPrototype>> StaticPacks = new();
+
+    [ViewVariables]
+    public EntityUid? ResearchServer;
+
+    [AutoNetworkedField]
+    [ViewVariables]
+    public List<EntityUid> Members { get; set; } = new();
+
+    [AutoNetworkedField]
+    [ViewVariables]
+    public EntityUid Leader = default!;
+
+    [AutoNetworkedField]
+    [ViewVariables]
+    public EntityUid Heir = default!;
+
+    [AutoNetworkedField]
+    [ViewVariables]
+    public Color FactionColor = Color.Pink;
+}

@@ -9,7 +9,7 @@ using Content.Shared._Nibiru.Factions.Messages;
 
 namespace Content.Server._Nibiru.Factions.UI;
 
-public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, AddFactionVerb consRevSystem, PopupSystem popup, EntityManager entManager) : BaseEui
+public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, AddFactionVerb factionVerbSystem, PopupSystem popup, EntityManager entManager) : BaseEui
 {
     public override EuiStateBase GetNewState()
     {
@@ -36,34 +36,24 @@ public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, A
 
             if (consent.IsAccepted)
             {
-                // Make target a revolutionary
-                //revRuleSystem.ConvertEntityToRevolution(target, converter);
-
-                // Remove request
-                //consRevSystem.CancelRequest((target, targetConsRev), (converter, consRev));
-
-                // Apply cooldown to convertor
-                //consRevSystem.ApplyConversionCooldown((converter, consRev));
-				
-				var targetComp = entManager.AddComponent<FactionComponent>(target);
-				targetComp.FactionName = consFact.FactionName;
-				if (consFact.ResearchServer is not null)
-					targetComp.ResearchServer = consFact.ResearchServer;
+				//var targetComp = entManager.AddComponent<FactionComponent>(target);
+    //            targetComp.FactionName = consFact.FactionName;
+    //            targetComp.Leader = converter;
+    //            targetComp.FactionColor = consFact.FactionColor;
+    //            consFact.Members.Add(target);
+    //            if (consFact.ResearchServer is not null)
+    //                targetComp.ResearchServer = consFact.ResearchServer;
 
                 // Announce that convert was successful
                 popup.PopupEntity(
                     Loc.GetString("ЗАПРОС ПРИНЯТ", ("target", Identity.Entity(target, entManager))),
                     target,
                     converter);
+
+                factionVerbSystem.OnAccept(target, converter);
             }
             else
             {
-                // Cancel request with cooldown
-                //consRevSystem.CancelRequest((target, targetConsRev), (converter, consRev));
-
-                // Apply conversion block to target
-                //consRevSystem.ApplyConversionDeny((target, targetConsRev));
-
                 // Announce that convert failed
                 popup.PopupEntity(
                     Loc.GetString("ПОШЁЛ НАХУЙ", ("target", Identity.Entity(target, entManager))),

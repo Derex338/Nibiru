@@ -16,48 +16,48 @@ namespace Content.Client.Backmen.Research.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MiniRecipeCardControl : Control
 {
-    public MiniRecipeCardControl(TechnologyPrototype technology, 
-								IPrototypeManager prototypeManager, 
-								SpriteSystem sprite, 
-								LatheSystem lathe, 
-								ConstructionSystem ConstSys,
-								LatheRecipePrototype? proto = null, 
-								ConstructionPrototype? consProto = null)
+    public MiniRecipeCardControl(TechnologyPrototype technology,
+                                IPrototypeManager prototypeManager,
+                                SpriteSystem sprite,
+                                LatheSystem lathe,
+                                ConstructionSystem ConstSys,
+                                LatheRecipePrototype? proto = null,
+                                ConstructionPrototype? consProto = null)
     {
         RobustXamlLoader.Load(this);
 
         var discipline = prototypeManager.Index(technology.Discipline);
         Background.ModulateSelfOverride = discipline.Color;
-		if(proto != null)
-		{
-			NameLabel.SetMessage(lathe.GetRecipeName(proto));
-			
-			if (proto.Result.HasValue)
-				Showcase.Texture = sprite.Frame0(prototypeManager.Index(proto.Result.Value));
+        if (proto != null)
+        {
+            NameLabel.SetMessage(lathe.GetRecipeName(proto));
 
-			if (proto.Description.HasValue)
-			{
-				var tooltip = new Tooltip();
-				tooltip.SetMessage(FormattedMessage.FromUnformatted(lathe.GetRecipeDescription(proto)));
-				Main.TooltipSupplier = _ => tooltip;
-			}
-		}
-		
-		if(consProto != null)
-		{
-			NameLabel.SetMessage(ConstSys.GetCraftName(consProto));
-			
-			if (!ConstSys!.TryGetRecipePrototype(consProto.ID, out var targetProtoId) || !prototypeManager.TryIndex(targetProtoId, out EntityPrototype? entity))
-				return;
-	
-			Showcase.Texture = sprite.Frame0(prototypeManager.Index(entity));
+            if (proto.Result.HasValue)
+                Showcase.Texture = sprite.Frame0(prototypeManager.Index(proto.Result.Value));
 
-			if (!string.IsNullOrWhiteSpace(consProto.Description))
-			{
-				var tooltip = new Tooltip();
-				tooltip.SetMessage(FormattedMessage.FromUnformatted(consProto.Description));
-				Main.TooltipSupplier = _ => tooltip;
-			}
-		}
+            if (proto.Description.HasValue)
+            {
+                var tooltip = new Tooltip();
+                tooltip.SetMessage(FormattedMessage.FromUnformatted(lathe.GetRecipeDescription(proto)));
+                Main.TooltipSupplier = _ => tooltip;
+            }
+        }
+
+        if (consProto != null)
+        {
+            NameLabel.SetMessage(ConstSys.GetCraftName(consProto));
+
+            if (!ConstSys!.TryGetRecipePrototype(consProto.ID, out var targetProtoId) || !prototypeManager.TryIndex(targetProtoId, out EntityPrototype? entity))
+                return;
+
+            Showcase.Texture = sprite.Frame0(prototypeManager.Index(entity));
+
+            if (!string.IsNullOrWhiteSpace(consProto.Description))
+            {
+                var tooltip = new Tooltip();
+                tooltip.SetMessage(FormattedMessage.FromUnformatted(consProto.Description));
+                Main.TooltipSupplier = _ => tooltip;
+            }
+        }
     }
 }

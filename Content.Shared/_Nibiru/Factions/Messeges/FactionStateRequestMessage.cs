@@ -8,6 +8,7 @@ namespace Content.Shared._Nibiru.Factions
     [Serializable, NetSerializable]
     public sealed class FactionStateRequestMessage : EntityEventArgs
     {
-        public bool creator = false;
+        public bool Creator = false;
+        public string FactionName = string.Empty;
     }
 }

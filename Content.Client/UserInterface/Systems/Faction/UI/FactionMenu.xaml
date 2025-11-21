@@ -1,4 +1,6 @@
-﻿<ui1:FactionMenu xmlns="https://spacestation14.io"
+<ui1:FactionMenu xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
             xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
             Title="{Loc 'Окно фракции'}"
             Resizable="False">
@@ -12,43 +14,83 @@
                 Text="{Loc 'Создать'}"/>
 		</BoxContainer>
     </BoxContainer>
+    
 	<BoxContainer Name="FactionLeaderWindow" Orientation="Vertical" SeparationOverride="10" MinWidth="250" Access="Public" Visible="False">
-        <Label Name="FactionName" Text="{Loc 'Название фракции: '}" />
-		<BoxContainer
-            Name="MembersContainer"
-            Orientation="Vertical"
+        <RichTextLabel Name="FactionName" Text="{Loc 'Название фракции: '}" Access="Public" />
+        <BoxContainer
+            Name="FactionNameChangeContainer"
+            Orientation="Horizontal"
             VerticalExpand="True"
             SizeFlagsStretchRatio="2"
             Margin="5">
-            <Label Text="{Loc 'Члены фракции: '}"
+            <LineEdit Name="FactionNameChange" Access="Public" MinSize="150 20" PlaceHolder="Название фракции"/>
+            <Button Name="FactionNameChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
+					MinSize="30 20"
+					Text="{Loc 'Сменить название фракции'}"/>
+        </BoxContainer>
+        <BoxContainer
+            Name="FactionColorChangeContainer"
+            Orientation="Horizontal"
+            VerticalExpand="True"
+            SizeFlagsStretchRatio="2"
+            Margin="5">
+            <LineEdit Name="FactionColorChange" Access="Public" MinSize="150 20" PlaceHolder="#000000 or blue"/>
+            <Button Name="FactionColorChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
+                    MinSize="30 20"
+                    Text="{Loc 'Сменить цвет фракции'}"/>
+        </BoxContainer>
+        <BoxContainer
+                Name="MembersContainer"
+                Orientation="Vertical"
+                VerticalExpand="True"
+                SizeFlagsStretchRatio="2"
+                Margin="5"
+                Access="Public">
+            <Label Text="{Loc 'faction-members'}"
                     HorizontalAlignment="Left"/>
+            <customControls:HSeparator StyleClasses="LowDivider"
+                    Margin="0 0 0 10"/>
             <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#00000000"/>
+                </PanelContainer.PanelOverride>
                 <ScrollContainer
                     HScrollEnabled="False"
                     HorizontalExpand="True"
-                    VerticalExpand="True">
+                    VerticalExpand="True"
+                    MinSize="50 250">
                     <BoxContainer
-                        Name="Members"
+                        Name="MemberContainer"
                         Orientation="Vertical"
-                        VerticalExpand="True">
+                        VerticalExpand="True"
+                        Access="Public">
                     </BoxContainer>
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
-		<BoxContainer
+        <GridContainer
             Name="Buttons"
-            Orientation="Horizontal"
-            SizeFlagsStretchRatio="2"
-            Margin="5">
+            HorizontalExpand="true"
+            Columns="3">
             <Button Name="TransferTitle" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
-					MinSize="20 15"
+					MinSize="150 20"
 					Text="{Loc 'Передать титул'}"/>
 			<Button Name="Heir" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
-					MinSize="20 15"
+					MinSize="150 20"
 					Text="{Loc 'Назначить наследником'}"/>
 			<Button Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
-					MinSize="15 15"
+					MinSize="150 20"
 					Text="{Loc 'Расформировать фракцию'}"/>
+        </GridContainer>
+    </BoxContainer>
+
+    <BoxContainer Name="FactionMemberWindow" Orientation="Vertical" SeparationOverride="10" MinWidth="250" Access="Public" Visible="True">
+        <RichTextLabel Name="FactionNameMember" Access="Public" Text="{Loc 'Название фракции'}" />
+        <Label Name="FactionLeader" Access="Public" Text="{Loc 'Leader'}" />
+        <BoxContainer Orientation="Vertical" SeparationOverride="50">
+            <Button Name="LeaveButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
+                    MinSize="60 50"
+                    Text="{Loc 'Выйти из фракции'}"/>
         </BoxContainer>
     </BoxContainer>
 </ui1:FactionMenu>
