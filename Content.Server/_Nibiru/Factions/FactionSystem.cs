@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.Mobs;
 using Robust.Shared.Random;
 using Content.Shared.Mobs.Components;
+using Content.Server.Mind;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -18,6 +19,7 @@ public sealed class FactionSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private static readonly HashSet<Entity<FactionComponent>> ClientLookup = new();
 
@@ -57,7 +59,8 @@ public sealed class FactionSystem : EntitySystem
         foreach (var faction in allFactions)
         {
             if (EntityManager.TryGetComponent<FactionComponent>(faction, out var factionComponent)
-                && factionComponent.FactionName == msg.FactionName)
+                && factionComponent.FactionName == msg.FactionName
+                && _mindSystem.TryGetMind(faction, out var mindId, out var mind))
             {
                 _popup.PopupEntity(
                 Loc.GetString("faction-already-exist", ("factionName", factionComponent.FactionName)),

@@ -15,10 +15,10 @@ public sealed class ConstructionRecipeCheck : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-		
-		RequestRecipeInfo();
 
-       SubscribeNetworkEvent<ConstructionCrafts>(OnConstructionCraftsEvent);
+        RequestRecipeInfo();
+
+        SubscribeNetworkEvent<ConstructionCrafts>(OnConstructionCraftsEvent);
     }
 
     public void RequestRecipeInfo()
@@ -39,26 +39,26 @@ public sealed class ConstructionRecipeCheck : EntitySystem
 
         OnConstructionRecipeUpdate?.Invoke(data);
     }
-	
-	public readonly record struct RecipeData(
+
+    public readonly record struct RecipeData(
         List<ProtoId<ConstructionPrototype>> crafts
     );
-/*
-    public List<Control> GetCharacterInfoControls(EntityUid uid)
-    {
-        var ev = new GetCharacterInfoControlsEvent(uid);
-        RaiseLocalEvent(uid, ref ev, true);
-        return ev.Controls;
-    }
+    /*
+        public List<Control> GetCharacterInfoControls(EntityUid uid)
+        {
+            var ev = new GetCharacterInfoControlsEvent(uid);
+            RaiseLocalEvent(uid, ref ev, true);
+            return ev.Controls;
+        }
 
-    /// <summary>
-    /// Event raised to get additional controls to display in the character info menu.
-    /// </summary>
-    [ByRefEvent]
-    public readonly record struct GetCharacterInfoControlsEvent(EntityUid Entity)
-    {
-        public readonly List<Control> Controls = new();
+        /// <summary>
+        /// Event raised to get additional controls to display in the character info menu.
+        /// </summary>
+        [ByRefEvent]
+        public readonly record struct GetCharacterInfoControlsEvent(EntityUid Entity)
+        {
+            public readonly List<Control> Controls = new();
 
-        public readonly EntityUid Entity = Entity;
-    }*/
+            public readonly EntityUid Entity = Entity;
+        }*/
 }

@@ -21,92 +21,92 @@ using Robust.Shared.Map;
 
 namespace Content.Server._Nibiru.Construction;
 
-    /// <summary>
-    /// The server-side implementation of the construction system, which is used for constructing entities in game.
-    /// </summary>
-    [UsedImplicitly]
-    public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
+/// <summary>
+/// The server-side implementation of the construction system, which is used for constructing entities in game.
+/// </summary>
+[UsedImplicitly]
+public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
+{
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+    private static readonly HashSet<Entity<TechnologyDatabaseComponent>> ClientLookup = new();
+
+    public override void Initialize()
     {
-		[Dependency] private readonly IPrototypeManager _proto = default!;
-		[Dependency] private readonly MindSystem _minds = default!;
-		[Dependency] private readonly ISharedPlayerManager _player = default!;
-		[Dependency] private readonly EntityLookupSystem _lookup = default!;
-		
-		private static readonly HashSet<Entity<TechnologyDatabaseComponent>> ClientLookup = new();
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeNetworkEvent<ConstructionUIOpen>(OnRequestCraftsInfoEvent);
+        SubscribeLocalEvent<TechnologyDatabaseComponent, CraftsGetRecipesEvent>(OnGetRecipes);
+    }
+
+    private void OnRequestCraftsInfoEvent(ConstructionUIOpen msg, EntitySessionEventArgs args)
+    {
+        if (!args.SenderSession.AttachedEntity.HasValue || args.SenderSession.AttachedEntity != GetEntity(msg.NetEntity))
+            return;
+
+        var entity = args.SenderSession.AttachedEntity.Value;
+        if (!EntityManager.TryGetComponent<FactionComponent>(entity, out var comp))
+            return;
+
+        List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp);
+
+        //crafts.Add(new("MimeHardsuit"));
+
+        RaiseNetworkEvent(new ConstructionCrafts(GetNetEntity(entity), crafts), args.SenderSession);
+    }
+
+    public List<ProtoId<ConstructionPrototype>> GetAvailableRecipes(EntityUid uid, FactionComponent comp, bool getUnavailable = false)
+    {
+        var ev = new CraftsGetRecipesEvent((uid, comp), getUnavailable);
+        AddRecipesFromPacks(ev.Recipes, comp.StaticPacks);
+
+        var allServers = GetServers(uid).ToList();
+
+        if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Player)
+        && Player.ResearchServer is null)
         {
-            base.Initialize();
-			
-			SubscribeNetworkEvent<ConstructionUIOpen>(OnRequestCraftsInfoEvent);
-			SubscribeLocalEvent<TechnologyDatabaseComponent, CraftsGetRecipesEvent>(OnGetRecipes);
+            foreach (var server in allServers)
+            {
+                if (EntityManager.TryGetComponent<FactionComponent>(server, out var Serv)
+                && Serv.FactionName == Player.FactionName)
+                {
+                    Player.ResearchServer = server;
+                    RaiseLocalEvent(server, ev);
+                }
+            }
         }
-		
-		private void OnRequestCraftsInfoEvent(ConstructionUIOpen msg, EntitySessionEventArgs args)
-		{	
-			if (!args.SenderSession.AttachedEntity.HasValue || args.SenderSession.AttachedEntity != GetEntity(msg.NetEntity))
-				return;
-
-			var entity = args.SenderSession.AttachedEntity.Value;
-			if(!EntityManager.TryGetComponent<FactionComponent>(entity, out var comp))
-				return;
-			
-			List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp);
-			
-			//crafts.Add(new("MimeHardsuit"));
-
-			RaiseNetworkEvent(new ConstructionCrafts(GetNetEntity(entity), crafts), args.SenderSession);
-		}
-		
-		public List<ProtoId<ConstructionPrototype>> GetAvailableRecipes(EntityUid uid, FactionComponent comp, bool getUnavailable = false)
+        else if (EntityManager.TryGetComponent<FactionComponent>(uid, out var PlayerHui)
+        && PlayerHui.ResearchServer is { } serverUid
+        && EntityManager.TryGetComponent<FactionComponent>(serverUid, out var server)
+        && server.FactionName == PlayerHui.FactionName)
         {
-			var ev = new CraftsGetRecipesEvent((uid, comp), getUnavailable);
-            AddRecipesFromPacks(ev.Recipes, comp.StaticPacks);
-			
-			var allServers = GetServers(uid).ToList();
-			
-			if(EntityManager.TryGetComponent<FactionComponent>(uid, out var Player)
-			&& Player.ResearchServer is null)
-			{
-				foreach(var server in allServers)
-				{
-					if(EntityManager.TryGetComponent<FactionComponent>(server, out var Serv)
-					&& Serv.FactionName == Player.FactionName)
-					{
-						Player.ResearchServer = server;
-						RaiseLocalEvent(server, ev);
-					}
-				}
-			}
-			else if(EntityManager.TryGetComponent<FactionComponent>(uid, out var PlayerHui)
-			&& PlayerHui.ResearchServer is { } serverUid
-			&& EntityManager.TryGetComponent<FactionComponent>(serverUid, out var server) 
-			&& server.FactionName == PlayerHui.FactionName)
-			{
-				RaiseLocalEvent(serverUid, ev);
-			}
-			
-            return ev.Recipes.ToList();
+            RaiseLocalEvent(serverUid, ev);
         }
-		
-		public void AddRecipesFromPacks(HashSet<ProtoId<ConstructionPrototype>> recipes, IEnumerable<ProtoId<ConstructionPackPrototype>> packs)
-		{
-			foreach (var id in packs)
-			{
-				var pack = _proto.Index(id);
-				recipes.UnionWith(pack.Recipes);
-			}
-		}
-		
-		public void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, CraftsGetRecipesEvent args)
+
+        return ev.Recipes.ToList();
+    }
+
+    public void AddRecipesFromPacks(HashSet<ProtoId<ConstructionPrototype>> recipes, IEnumerable<ProtoId<ConstructionPackPrototype>> packs)
+    {
+        foreach (var id in packs)
         {
-            //if (uid == args.Const)
-				//return;
-			
-			if(EntityManager.TryGetComponent<FactionComponent>(uid, out var Server) 
-				&& EntityManager.TryGetComponent<FactionComponent>(args.User, out var Player)
-				&& Server.FactionName == Player.FactionName)
-			{/*
+            var pack = _proto.Index(id);
+            recipes.UnionWith(pack.Recipes);
+        }
+    }
+
+    public void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, CraftsGetRecipesEvent args)
+    {
+        //if (uid == args.Const)
+        //return;
+
+        if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Server)
+            && EntityManager.TryGetComponent<FactionComponent>(args.User, out var Player)
+            && Server.FactionName == Player.FactionName)
+        {/*
 				foreach (var id in args.Comp.StaticPacks)
 				{
 					var pack = _proto.Index(id);
@@ -119,24 +119,24 @@ namespace Content.Server._Nibiru.Construction;
 						}
 					}
 				}*/
-				
-				foreach (var recipe in component.UnlockedCrafts)
-				{
-					args.Recipes.Add(recipe);
-					//args.Recipes.Add(new("TileWeb"));
-				}
-			}
-        }
-		
-		public HashSet<Entity<TechnologyDatabaseComponent>> GetServers(EntityUid client)
-        {
-            ClientLookup.Clear();
 
-            var clientXform = Transform(client);
-            if (clientXform.GridUid is not { } grid)
-                return ClientLookup;
-
-            _lookup.GetGridEntities(grid, ClientLookup);
-            return ClientLookup;
+            foreach (var recipe in component.UnlockedCrafts)
+            {
+                args.Recipes.Add(recipe);
+                //args.Recipes.Add(new("TileWeb"));
+            }
         }
     }
+
+    public HashSet<Entity<TechnologyDatabaseComponent>> GetServers(EntityUid client)
+    {
+        ClientLookup.Clear();
+
+        var clientXform = Transform(client);
+        if (clientXform.GridUid is not { } grid)
+            return ClientLookup;
+
+        _lookup.GetGridEntities(grid, ClientLookup);
+        return ClientLookup;
+    }
+}

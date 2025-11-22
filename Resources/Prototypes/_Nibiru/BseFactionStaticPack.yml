@@ -1,0 +1,10 @@
+- type: constructionPack
+  id: Base
+  recipes: 
+  - ChestDrawer
+  
+- type: constructionPack
+  id: ABOBA
+  recipes:
+  - MimeHardsuit
+  - ShelfWood
