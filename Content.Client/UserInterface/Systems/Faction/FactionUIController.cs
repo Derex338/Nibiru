@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using Content.Shared._Nibiru.Factions;
-using Content.Client._Nibiru.Faction;
+using Content.Client.Nibiru.Faction;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using Robust.Client.Player;
 using Robust.Client.Input;
@@ -18,7 +18,7 @@ using Content.Shared.IdentityManagement;
 using System.Xml.Linq;
 using Content.Client.Backmen.Research.UI;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
-using Content.Client._Nibiru.Faction.UI;
+using Content.Client.Nibiru.Faction.UI;
 
 namespace Content.Client.UserInterface.Systems.Faction;
 

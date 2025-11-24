@@ -4,7 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client._Nibiru.Construction;
+namespace Content.Client.Nibiru.Construction;
 
 public sealed class ConstructionRecipeCheck : EntitySystem
 {

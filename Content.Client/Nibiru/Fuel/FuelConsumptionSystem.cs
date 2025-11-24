@@ -1,12 +1,12 @@
 using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
-using Content.Client._Nibiru.Fuel;
+using Content.Client.Nibiru.Fuel;
 using Content.Shared._Nibiru.Fuel;
 using Robust.Client.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Content.Client.Light.EntitySystems;
 
-namespace Content.Client._Nibiru.Fuel;
+namespace Content.Client.Nibiru.Fuel;
 
 public sealed class FuelConsumptionSystem : VisualizerSystem<FuelConsumptionComponent>
 {

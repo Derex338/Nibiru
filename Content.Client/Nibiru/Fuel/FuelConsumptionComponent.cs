@@ -3,7 +3,7 @@ using Content.Shared.Light.Components;
 using Robust.Shared.Audio;
 using Content.Shared._Nibiru.Fuel;
 
-namespace Content.Client._Nibiru.Fuel;
+namespace Content.Client.Nibiru.Fuel;
 
 /// <summary>
 /// Component that represents a handheld expendable light which can be activated and eventually dies over time.

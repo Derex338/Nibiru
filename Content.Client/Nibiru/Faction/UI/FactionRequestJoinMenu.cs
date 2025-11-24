@@ -6,7 +6,7 @@ using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 
-namespace Content.Client._Nibiru.Faction.UI;
+namespace Content.Client.Nibiru.Faction.UI;
 
 [UsedImplicitly]
 public sealed class FactionRequestedEui : BaseEui

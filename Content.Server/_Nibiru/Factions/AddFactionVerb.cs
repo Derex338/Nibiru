@@ -17,7 +17,7 @@ using Content.Server.Mind;
 using Content.Server.EUI;
 using Content.Shared.IdentityManagement;
 using Content.Server._Nibiru.Factions.UI;
-//using Content.Client._Nibiru.Faction.UI;
+//using Content.Client.Nibiru.Faction.UI;
 
 namespace Content.Server._Nibiru.Factions
 {

@@ -1,4 +1,4 @@
-using Content.Client._Nibiru.Construction;
+using Content.Client.Nibiru.Construction;
 using Content.Client.Construction.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using static Content.Client._Nibiru.Construction.ConstructionRecipeCheck;
+using static Content.Client.Nibiru.Construction.ConstructionRecipeCheck;
 
 namespace Content.Client.UserInterface.Systems.Crafting;
 

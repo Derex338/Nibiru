@@ -17,7 +17,7 @@ using Robust.Shared.Prototypes;
 
 using Content.Shared.Research.Components;
 using Content.Shared._Nibiru.Factions;
-using Content.Client._Nibiru.Construction;
+using Content.Client.Nibiru.Construction;
 using Content.Shared.Construction;
 using static Content.Client.Construction.ConstructionSystem;
 

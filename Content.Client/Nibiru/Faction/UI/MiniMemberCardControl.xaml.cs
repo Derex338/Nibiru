@@ -6,7 +6,7 @@ using Content.Shared._Nibiru.Factions;
 using Robust.Client.UserInterface;
 using System.Numerics;
 
-namespace Content.Client._Nibiru.Faction.UI;
+namespace Content.Client.Nibiru.Faction.UI;
 
 public sealed partial class MiniMemberCardControl : Control
 {

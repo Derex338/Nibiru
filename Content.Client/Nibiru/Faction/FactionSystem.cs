@@ -8,7 +8,7 @@
 //using Robust.Client.Player;
 //using Content.Shared._Nibiru.Factions;
 
-//namespace Content.Client._Nibiru.Faction;
+//namespace Content.Client.Nibiru.Faction;
 
 //public sealed class FactionSystem : EntitySystem
 //{
