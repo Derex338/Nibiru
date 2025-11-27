@@ -5,6 +5,11 @@
   targetNode: MetalRod
   category: construction-category-materials
   objectType: Item
+  entitysToShowRecipe: 
+  - Workbench
+  conditions:
+  - !type:WorkbenchCondition
+    workbench: Workbench
 
 - type: construction
   id: SheetRGlass

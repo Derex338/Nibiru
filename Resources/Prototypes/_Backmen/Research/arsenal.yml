@@ -20,6 +20,7 @@
 #  - RiotControl
   craftUnlocks:
   - TileWeb
+  - MetalRod
   position: -2,-2
 
 - type: technology

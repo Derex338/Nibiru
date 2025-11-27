@@ -28,9 +28,6 @@
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <ItemGroup>
-    <EmbeddedResource Remove="Nibiru\Workbench\UI\WorkbenchWindow.xaml" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Update="_Nibiru\Faction\UI\MiniMemberCardControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </AdditionalFiles>

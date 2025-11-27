@@ -8,6 +8,9 @@
           completed:
             - !type:SetStackCount
               amount: 2
+          #conditions:
+          #  - !type:RequariedWorkbench
+          #    id: Workbench
           steps:
             - material: Steel
               amount: 1

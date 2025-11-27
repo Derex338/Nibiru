@@ -1,3 +1,4 @@
+using Content.Shared._Nibiru.Workbench;
 using Content.Shared.Construction.Conditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
@@ -28,6 +29,9 @@ public sealed partial class ConstructionPrototype : IPrototype
     /// </summary>
 	[DataField]
     public int Points = 100; //Nibiru
+
+    [DataField]
+    public List<ProtoId<EntityPrototype>> EntitysToShowRecipe = new(); //Nibiru
 
     /// <summary>
     ///     "Useful" description displayed in the construction GUI.

@@ -1,28 +1,22 @@
-using Content.Server.Construction.Components;
-using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.DoAfter;
 using Robust.Shared.Prototypes;
 using Robust.Server.GameObjects;
 using Content.Shared.Research.Components;
 using Content.Shared._Nibiru.Factions;
-using Content.Shared.Construction.Messages;
-using Content.Shared.Construction;
-using Content.Shared.UserInterface;
-using Content.Shared.IdentityManagement;
 using JetBrains.Annotations;
-using Robust.Server.Containers;
-using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 using System.Linq;
 ﻿using Content.Server.Mind;
 using Robust.Shared.Player;
 using Robust.Shared.Map;
+using Content.Shared._Nibiru.Workbench;
+using Content.Shared.Lathe;
+using Content.Shared.UserInterface;
 
 namespace Content.Server._Nibiru.Construction;
 
 /// <summary>
-/// The server-side implementation of the construction system, which is used for constructing entities in game.
+/// The server-side implementation of the construction system, which is used for return unloced recipes to client.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
@@ -31,6 +25,7 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
     [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
 
     private static readonly HashSet<Entity<TechnologyDatabaseComponent>> ClientLookup = new();
 
@@ -40,6 +35,9 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
 
         SubscribeNetworkEvent<ConstructionUIOpen>(OnRequestCraftsInfoEvent);
         SubscribeLocalEvent<TechnologyDatabaseComponent, CraftsGetRecipesEvent>(OnGetRecipes);
+
+        SubscribeLocalEvent<WorkbenchComponent, RequestRecipesWorkbenchMessage>(OnRequestRecipesWorkbench);
+        SubscribeLocalEvent<WorkbenchComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUI(u, c));
     }
 
     private void OnRequestCraftsInfoEvent(ConstructionUIOpen msg, EntitySessionEventArgs args)
@@ -51,23 +49,34 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
         if (!EntityManager.TryGetComponent<FactionComponent>(entity, out var comp))
             return;
 
-        List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp);
-
-        //crafts.Add(new("MimeHardsuit"));
+        List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp, comp.StaticPacks);
 
         RaiseNetworkEvent(new ConstructionCrafts(GetNetEntity(entity), crafts), args.SenderSession);
     }
 
-    public List<ProtoId<ConstructionPrototype>> GetAvailableRecipes(EntityUid uid, FactionComponent comp, bool getUnavailable = false)
+    private void OnRequestRecipesWorkbench(EntityUid uid, WorkbenchComponent component, RequestRecipesWorkbenchMessage msg)
+    {
+        UpdateUI(uid, component);
+    }
+
+    private void UpdateUI(EntityUid uid, WorkbenchComponent component)
+    {
+        if (!EntityManager.TryGetComponent<FactionComponent>(uid, out var comp))
+            return;
+
+        var state = new WorkbenchUpdateState(GetAvailableRecipes(uid, comp, component.StaticPacks));
+        _uiSys.SetUiState(uid, WorkbenchUiKey.Key, state);
+    }
+
+    public List<ProtoId<ConstructionPrototype>> GetAvailableRecipes(EntityUid uid, FactionComponent comp, List<ProtoId<ConstructionPackPrototype>> packs, bool getUnavailable = false)
     {
         var ev = new CraftsGetRecipesEvent((uid, comp), getUnavailable);
-        AddRecipesFromPacks(ev.Recipes, comp.StaticPacks);
-
-        var allServers = GetServers(uid).ToList();
 
         if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Player)
         && Player.ResearchServer is null)
         {
+            var allServers = GetServers(uid).ToList();
+
             foreach (var server in allServers)
             {
                 if (EntityManager.TryGetComponent<FactionComponent>(server, out var Serv)
@@ -75,6 +84,8 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
                 {
                     Player.ResearchServer = server;
                     RaiseLocalEvent(server, ev);
+
+                    break;
                 }
             }
         }
@@ -86,6 +97,7 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
             RaiseLocalEvent(serverUid, ev);
         }
 
+        AddRecipesFromPacks(ev.Recipes, packs);
         return ev.Recipes.ToList();
     }
 
@@ -122,8 +134,23 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
 
             foreach (var recipe in component.UnlockedCrafts)
             {
-                args.Recipes.Add(recipe);
-                //args.Recipes.Add(new("TileWeb"));
+                if (_proto.TryIndex<ConstructionPrototype>(recipe, out var comp)
+                    && comp.EntitysToShowRecipe.Count > 0
+                    && EntityManager.TryGetComponent<MetaDataComponent>(args.User, out var meta)
+                    && meta.EntityPrototype != null)
+                {
+                    foreach (var entity in comp.EntitysToShowRecipe)
+                    {
+                        if (entity == meta.EntityPrototype.ID)
+                        {
+                            args.Recipes.Add(recipe);
+                        }
+                    }
+
+                    return;
+                }
+                else
+                    args.Recipes.Add(recipe);
             }
         }
     }
