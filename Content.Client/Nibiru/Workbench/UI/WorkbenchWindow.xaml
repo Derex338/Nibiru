@@ -1,40 +1,71 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
-    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-        <BoxContainer Orientation="Vertical" MinWidth="243" Margin="0 0 5 0">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5">
-                <LineEdit Name="Search" PlaceHolder="{Loc 'construction-menu-search'}" HorizontalExpand="True"/>
-                <OptionButton Name="OptionCategories" Access="Public" MinSize="130 0"/>
-            </BoxContainer>
-            <controls:ListContainer Name="Recipes" Access="Public" Group="True" Toggle="True" VerticalExpand="True" />
-            <ScrollContainer Name="RecipesGridScrollContainer" VerticalExpand="True" Access="Public" Visible="False">
-                <GridContainer Name="RecipesGrid" Columns="5" Access="Public"/>
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'workbench-menu-title'}"
+               SetSize="700 500"
+               MinSize="600 400">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Left side: Categories and Recipes -->
+        <BoxContainer Orientation="Vertical" MinWidth="300" Margin="5" VerticalExpand="True">
+            <!-- Search bar -->
+            <LineEdit Name="Search"
+                      PlaceHolder="{Loc 'construction-menu-search'}"
+                      HorizontalExpand="True"
+                      Margin="0 0 0 5"/>
+
+            <!-- Categories with recipes in ScrollContainer -->
+            <ScrollContainer Name="CategoriesScrollContainer"
+                           VerticalExpand="True"
+                           HorizontalExpand="True">
+                <BoxContainer Name="CategoriesContainer"
+                            Orientation="Vertical"
+                            Access="Public"
+                            HorizontalExpand="True"/>
             </ScrollContainer>
         </BoxContainer>
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-            <BoxContainer Orientation="Horizontal">
-                <Button Name="MenuGridViewButton" ToggleMode="True" Text="{Loc construction-menu-grid-view}"/>
-                <Button Name="FavoriteButton" Visible="false"/>
-            </BoxContainer>
-            <Control>
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 5">
-                    <BoxContainer Orientation="Horizontal" Align="Center">
-                        <EntityPrototypeView Name="TargetTexture" HorizontalAlignment="Right" Stretch="Fill" Margin="0 0 10 0"/>
-                        <BoxContainer Orientation="Vertical">
-                            <RichTextLabel Name="TargetName"/>
-                            <RichTextLabel Name="TargetDesc"/>
-                        </BoxContainer>
+
+        <!-- Right side: Recipe info -->
+        <BoxContainer Orientation="Vertical"
+                     HorizontalExpand="True"
+                     VerticalExpand="True"
+                     Margin="5">
+            <!-- Recipe preview -->
+            <BoxContainer Orientation="Vertical"
+                         HorizontalExpand="True"
+                         Margin="0 0 0 10">
+                <BoxContainer Orientation="Horizontal" Align="Center" Margin="0 0 0 5">
+                    <EntityPrototypeView Name="TargetTexture"
+                                       SetSize="64 64"
+                                       HorizontalAlignment="Left"
+                                       Stretch="Fill"
+                                       Margin="0 0 10 0"/>
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <RichTextLabel Name="TargetName"
+                                     StyleClasses="LabelHeading"
+                                     Margin="0 0 0 5"/>
+                        <RichTextLabel Name="TargetDesc"/>
                     </BoxContainer>
                 </BoxContainer>
-            </Control>
-            <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True" Margin="0 0 0 5"/>
+            </BoxContainer>
+
+            <!-- Recipe steps -->
+            <Label Text="{Loc 'workbench-recipe-steps'}"
+                   StyleClasses="LabelHeading"
+                   Margin="0 0 0 5"/>
+            <ItemList Name="RecipeStepList"
+                     Access="Public"
+                     VerticalExpand="True"
+                     Margin="0 0 0 10"/>
+
+            <!-- Action buttons -->
             <BoxContainer Orientation="Vertical">
-                <Button Name="BuildButton" Disabled="True" ToggleMode="True"
-                        VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
-                <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">
-                    <Button Name="EraseButton" ToggleMode="True"
-                        HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
-                </BoxContainer>
+                <Button Name="BuildButton"
+                       Disabled="True"
+                       ToggleMode="True"
+                       Text="{Loc 'construction-menu-craft'}"
+                       Margin="0 0 0 5"/>
+                <Button Name="ClearButton"
+                       Text="{Loc 'workbench-clear-ghost'}"
+                       HorizontalExpand="True"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

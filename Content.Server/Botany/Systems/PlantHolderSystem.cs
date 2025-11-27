@@ -30,6 +30,8 @@ using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
+using Content.Shared._Nibiru.Research.Components;
+using Content.Server._Nibiru.Research.Components;
 
 namespace Content.Server.Botany.Systems;
 
@@ -727,6 +729,10 @@ public sealed class PlantHolderSystem : EntitySystem
 
             _botany.Harvest(component.Seed, user, component.YieldMod);
             AfterHarvest(plantholder, component);
+
+            var ev = new HarvestPlantMessage(user, component.Seed);
+            RaiseLocalEvent(user, ev); //Nibiru
+
             return true;
         }
 

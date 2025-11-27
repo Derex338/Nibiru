@@ -8,14 +8,16 @@ using Content.Server.KillTracking;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared._Nibiru.Research.Components;
 using Content.Shared.Research.Components;
+using Content.Server._Nibiru.Research.Components;
 
 namespace Content.Server._Nibiru.Research;
 
-public sealed class PointsFromKillSystem : EntitySystem
+public sealed class PointsFromStuffSystem : EntitySystem
 {
     public override void Initialize()
     {
         SubscribeLocalEvent<PointsFromKillComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<FactionComponent, HarvestPlantMessage>(OnHarvest);
     }
 
     private void OnMobStateChanged(EntityUid uid, PointsFromKillComponent component, MobStateChangedEvent args)
@@ -55,5 +57,18 @@ public sealed class PointsFromKillSystem : EntitySystem
         if (HasComp<HTNComponent>(sourceEntity))
             return new KillNpcSource(sourceEntity.Value);
         return new KillEnvironmentSource();
+    }
+
+    private void OnHarvest(EntityUid user, FactionComponent comp, HarvestPlantMessage msg)
+    {
+        if (comp.ResearchServer == null)
+            return;
+
+        if (EntityManager.TryGetComponent<FactionComponent>(comp.ResearchServer, out var server)
+        && EntityManager.TryGetComponent<ResearchServerComponent>(comp.ResearchServer, out var research)
+        && server.FactionName == comp.FactionName)
+        {
+            research.Points += msg._seed.Points;
+        }
     }
 }

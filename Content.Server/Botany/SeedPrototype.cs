@@ -260,6 +260,9 @@ public partial class SeedData
     [DataField]
     public LogImpact? HarvestLogImpact = null;
 
+    [DataField]
+    public int Points = 100;
+
     public SeedData Clone()
     {
         DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");

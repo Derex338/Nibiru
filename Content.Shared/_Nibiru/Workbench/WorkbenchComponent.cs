@@ -31,5 +31,7 @@ public sealed partial class WorkbenchComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? ProducingSound;
+
+    public EntityUid? CurrentGhost;
 }
 
