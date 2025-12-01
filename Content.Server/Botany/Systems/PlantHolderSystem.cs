@@ -730,7 +730,7 @@ public sealed class PlantHolderSystem : EntitySystem
             _botany.Harvest(component.Seed, user, component.YieldMod);
             AfterHarvest(plantholder, component);
 
-            var ev = new HarvestPlantMessage(user, component.Seed);
+            var ev = new HarvestPlantMessage(component.Seed);
             RaiseLocalEvent(user, ev); //Nibiru
 
             return true;

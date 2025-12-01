@@ -1,8 +1,5 @@
 using Content.Server.NPC.HTN;
-using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Systems;
 using Robust.Shared.Player;
 using Content.Server.KillTracking;
 using Content.Shared._Nibiru.Factions;
@@ -18,6 +15,18 @@ public sealed class PointsFromStuffSystem : EntitySystem
     {
         SubscribeLocalEvent<PointsFromKillComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<FactionComponent, HarvestPlantMessage>(OnHarvest);
+        //SubscribeLocalEvent<PointsFromDestructionComponent, DestructionEventArgs>(OnDestruction);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<ResearchServerComponent>();
+        while (query.MoveNext(out var uid, out var research))
+        {
+            research.Points += (int)(1 * frameTime);
+        }
     }
 
     private void OnMobStateChanged(EntityUid uid, PointsFromKillComponent component, MobStateChangedEvent args)
@@ -71,4 +80,21 @@ public sealed class PointsFromStuffSystem : EntitySystem
             research.Points += msg._seed.Points;
         }
     }
+    //private void OnDestruction(EntityUid uid, PointsFromDestructionComponent component, DestructionEventArgs args)
+    //{
+    //    if (component.CurrentOre == null)
+    //        return;
+
+    //    var proto = _proto.Index<OrePrototype>(component.CurrentOre);
+
+    //    if (proto.OreEntity == null)
+    //        return;
+
+    //    var coords = Transform(uid).Coordinates;
+    //    var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield + 1);
+    //    for (var i = 0; i < toSpawn; i++)
+    //    {
+    //        Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
+    //    }
+    //}
 }

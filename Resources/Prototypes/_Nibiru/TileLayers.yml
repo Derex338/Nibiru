@@ -1,0 +1,66 @@
+- type: tool
+  id: Diging
+  name: tool-quality-diging-name
+  toolName: tool-quality-diging-tool-name
+  spawn: Shovel
+  icon: { sprite: Objects/Tools/shovel.rsi, state: icon }
+  
+- type: tile
+  id: FloorPlanetDirt
+  name: tiles-dirt-planet-floor
+  sprite: /Textures/Tiles/Planet/dirt.rsi/dirt.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
+  baseTurf: FloorBasalt
+  deconstructTools: [ Diging ]
+  
+- type: tile
+  id: FloorPlanetGrass
+  name: tiles-grass-planet-floor
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    South: /Textures/Tiles/Planet/Grass/double_edge.png
+    East: /Textures/Tiles/Planet/Grass/double_edge.png
+    North: /Textures/Tiles/Planet/Grass/double_edge.png
+    West: /Textures/Tiles/Planet/Grass/double_edge.png
+  baseTurf: FloorPlanetDirt
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepGrass
+  itemDrop: FloorTileItemGrass
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
+  deconstructTools: [ Diging ]
+  
+- type: tile
+  id: FloorBasalt
+  name: tiles-basalt-floor
+  sprite: /Textures/Tiles/Planet/basalt.png
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+  indestructible: true

@@ -13,5 +13,5 @@ public sealed partial class FuelComponent : Component
     public float Value = 100f;
 	
 	[DataField]
-    public float TemperatureMax = 100f;
+    public float TemperatureMax = 800f;
 }

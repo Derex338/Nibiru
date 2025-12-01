@@ -486,6 +486,13 @@
   - type: StaticPrice
     price: 25
   - type: Shovel
+  - type: Tool
+    qualities:
+    - Diging
+  - type: ToolTileCompatible
+    delay: 10
+  - type: Prying
+    speedModifier: 0.8
 
 - type: entity
   parent: BaseItem

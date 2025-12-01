@@ -8,5 +8,5 @@ namespace Content.Shared._Nibiru.Research.Components;
 public sealed partial class PointsFromKillComponent : Component
 {
     [DataField("points")]
-    public int Points { get; set; } = 100;
+    public int Points = 100;
 }

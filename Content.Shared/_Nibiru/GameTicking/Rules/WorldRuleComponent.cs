@@ -35,12 +35,6 @@ public sealed partial class WorldRuleComponent : Component
     [DataField]
     public int MinPlayers;
 
-    /// <summary>
-    /// Cost of the event in points. <seealso cref="NarratorPrototype"/>
-    /// </summary>
-    [DataField]
-    public int Cost = 10;
-
     [ViewVariables]
     public EntityUid Target;
 

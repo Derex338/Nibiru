@@ -25,28 +25,28 @@ using Content.Shared.Examine;
 namespace Content.Server._Nibiru.Fuel
 {
 
-	[UsedImplicitly]
-	public sealed class FuelSystem : EntitySystem
-	{	
-		[Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-		[Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-		[Dependency] private readonly NameModifierSystem _nameModifier = default!;
-		[Dependency] private readonly StackSystem _stackSystem = default!;
-		[Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-		[Dependency] private readonly SharedAudioSystem _audio = default!;
-		[Dependency] private readonly SharedItemSystem _item = default!;
-	
-		public override void Initialize()
-		{
-			base.Initialize();
-			
-			SubscribeLocalEvent<FuelConsumptionComponent, InteractUsingEvent>(AddFuel);
-			SubscribeLocalEvent<FuelConsumptionComponent, ComponentInit>(OnExpLightInit);
-			
-			SubscribeLocalEvent<FuelConsumptionComponent, ExaminedEvent>(OnExamined);
-		}  
-		
-		public override void Update(float frameTime)
+    [UsedImplicitly]
+    public sealed class FuelSystem : EntitySystem
+    {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<FuelConsumptionComponent, InteractUsingEvent>(AddFuel);
+            SubscribeLocalEvent<FuelConsumptionComponent, ComponentInit>(OnExpLightInit);
+
+            SubscribeLocalEvent<FuelConsumptionComponent, ExaminedEvent>(OnExamined);
+        }
+
+        public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<FuelConsumptionComponent>();
             while (query.MoveNext(out var uid, out var light))
@@ -54,8 +54,8 @@ namespace Content.Server._Nibiru.Fuel
                 UpdateFuel((uid, light), frameTime);
             }
         }
-		
-		private void UpdateFuel(Entity<FuelConsumptionComponent> ent, float frameTime)
+
+        private void UpdateFuel(Entity<FuelConsumptionComponent> ent, float frameTime)
         {
             var component = ent.Comp;
             if (!component.Activated)
@@ -65,9 +65,9 @@ namespace Content.Server._Nibiru.Fuel
 
             if (component.StateExpiryTime <= 0f)
             {
-				var ev = new FuelStateChangedEvent(false, component.StateExpiryTime, component.Temperature);
-				RaiseLocalEvent(ent, ref ev);
-				
+                var ev = new FuelStateChangedEvent(false, component.StateExpiryTime, component.Temperature);
+                RaiseLocalEvent(ent, ref ev);
+
                 switch (component.CurrentState)
                 {
                     case FuelLightState.Lit:
@@ -81,7 +81,7 @@ namespace Content.Server._Nibiru.Fuel
                     default:
                     case FuelLightState.Fading:
                         component.CurrentState = FuelLightState.Dead;
-						component.Temperature = 0.1f;
+                        component.Temperature = 0.1f;
                         _nameModifier.RefreshNameModifiers(ent.Owner);
 
                         UpdateSounds(ent);
@@ -96,49 +96,52 @@ namespace Content.Server._Nibiru.Fuel
                 }
             }
         }
-	
-		private void AddFuel(EntityUid uid, FuelConsumptionComponent component, InteractUsingEvent args)
-		{
-			if(args.Handled)
-				return;
-			
-			if (TryComp<IgnitionSourceComponent>(args.Used, out var ignit) && ignit.Ignited && TryActivate((uid, component)))
-				return;
-		
-			if (!TryComp<FuelComponent>(args.Used, out var fuel))
-				return;
 
-			if (component.StateExpiryTime + fuel.Value >= component.MaxFuelAmount)
-				return;
-		
-			if (TryComp(args.Used, out StackComponent? stack))
-			{
-				if (component.CurrentState is FuelLightState.Dead)
-				{
-					component.CurrentState = FuelLightState.BrandNew;
-					component.StateExpiryTime = (float)fuel.Value;
-	
-					_nameModifier.RefreshNameModifiers(uid);
-					_stackSystem.SetCount(args.Used, stack.Count - 1, stack);
-					UpdateVisualizer((uid, component));
-					return;
-				}
-		
-				component.StateExpiryTime += (float)fuel.Value;
-				component.Temperature = (float)fuel.TemperatureMax;
-				_stackSystem.SetCount(args.Used, stack.Count - 1, stack);
-			}
-			else
-			{
-				component.StateExpiryTime += (float)fuel.Value;
-				component.Temperature = fuel.TemperatureMax;
-				EntityManager.DeleteEntity(args.Used);
-			}
-		
-			args.Handled = true;
-		}
-	
-		private void UpdateVisualizer(Entity<FuelConsumptionComponent> ent, AppearanceComponent? appearance = null)
+        private void AddFuel(EntityUid uid, FuelConsumptionComponent component, InteractUsingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (TryComp<IgnitionSourceComponent>(args.Used, out var ignit) && ignit.Ignited && TryActivate((uid, component)))
+                return;
+
+            if (!TryComp<FuelComponent>(args.Used, out var fuel))
+                return;
+
+            if (component.StateExpiryTime + fuel.Value >= component.MaxFuelAmount)
+                return;
+
+            if (TryComp(args.Used, out StackComponent? stack))
+            {
+                if (component.CurrentState is FuelLightState.Dead)
+                {
+                    component.CurrentState = FuelLightState.BrandNew;
+                    component.StateExpiryTime = (float)fuel.Value;
+
+                    _nameModifier.RefreshNameModifiers(uid);
+                    _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+                    UpdateVisualizer((uid, component));
+                    return;
+                }
+
+                component.StateExpiryTime += (float)fuel.Value;
+                component.Temperature = (float)fuel.TemperatureMax;
+                _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+            }
+            else
+            {
+                if (component.CurrentState is FuelLightState.Dead)
+                    component.CurrentState = FuelLightState.BrandNew;
+
+                component.StateExpiryTime += (float)fuel.Value;
+                component.Temperature = fuel.TemperatureMax;
+                EntityManager.QueueDeleteEntity(args.Used);
+            }
+
+            args.Handled = true;
+        }
+
+        private void UpdateVisualizer(Entity<FuelConsumptionComponent> ent, AppearanceComponent? appearance = null)
         {
             var component = ent.Comp;
             if (!Resolve(ent, ref appearance, false))
@@ -163,8 +166,8 @@ namespace Content.Server._Nibiru.Fuel
                     break;
             }
         }
-		
-		private void UpdateSounds(Entity<FuelConsumptionComponent> ent)
+
+        private void UpdateSounds(Entity<FuelConsumptionComponent> ent)
         {
             var component = ent.Comp;
 
@@ -180,8 +183,8 @@ namespace Content.Server._Nibiru.Fuel
                     break;
             }
         }
-		
-		public bool TryActivate(Entity<FuelConsumptionComponent> ent)
+
+        public bool TryActivate(Entity<FuelConsumptionComponent> ent)
         {
             var component = ent.Comp;
             if (!component.Activated && component.CurrentState == FuelLightState.BrandNew)
@@ -193,9 +196,9 @@ namespace Content.Server._Nibiru.Fuel
 
                 var ignite = new IgnitionEvent(true);
                 RaiseLocalEvent(ent, ref ignite);
-				
-				var ev = new FuelStateChangedEvent(true, component.StateExpiryTime, component.Temperature);
-				RaiseLocalEvent(ent, ref ev);
+
+                var ev = new FuelStateChangedEvent(true, component.StateExpiryTime, component.Temperature);
+                RaiseLocalEvent(ent, ref ev);
 
                 component.CurrentState = FuelLightState.Lit;
 
@@ -204,8 +207,8 @@ namespace Content.Server._Nibiru.Fuel
             }
             return true;
         }
-		
-		private void OnExpLightInit(EntityUid uid, FuelConsumptionComponent component, ComponentInit args)
+
+        private void OnExpLightInit(EntityUid uid, FuelConsumptionComponent component, ComponentInit args)
         {
             if (TryComp<ItemComponent>(uid, out var item))
             {
@@ -216,14 +219,14 @@ namespace Content.Server._Nibiru.Fuel
             component.StateExpiryTime = 100f;
             EnsureComp<PointLightComponent>(uid);
         }
-		
-		private void OnExamined(Entity<FuelConsumptionComponent> ent, ref ExaminedEvent args)
-		{
-			if (!args.IsInDetailsRange)
-				return;
 
-			args.PushMarkup(Loc.GetString("entity-fuel-examined", ("ExpiryTime", ent.Comp.StateExpiryTime.ToString("F1"))));
-		}
+        private void OnExamined(Entity<FuelConsumptionComponent> ent, ref ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
 
-	}
+            args.PushMarkup(Loc.GetString("entity-fuel-examined", ("ExpiryTime", ent.Comp.StateExpiryTime.ToString("F1"))));
+        }
+
+    }
 }

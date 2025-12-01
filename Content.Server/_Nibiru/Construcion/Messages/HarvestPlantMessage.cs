@@ -3,15 +3,13 @@ using Content.Server.Botany;
 
 namespace Content.Server._Nibiru.Research.Components;
 
-[Serializable, NetSerializable]
+[Serializable]
 public sealed class HarvestPlantMessage : EntityEventArgs
 {
-    public EntityUid _user;
     public SeedData _seed;
 
-    public HarvestPlantMessage(EntityUid user, SeedData seed)
+    public HarvestPlantMessage(SeedData seed)
     {
-        _user = user;
         _seed = seed;
     }
 }
