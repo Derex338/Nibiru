@@ -1,0 +1,34 @@
+- type: entity
+  id: MobPigRideable
+  parent: MobFox
+  name: rideable fox
+  description: A majestic pig you can ride.
+  components:
+  - type: Vehicle
+    locomotionType: Legs
+    mountDelay: 2.0
+    dismountDelay: 1.5
+    canMoveWhenDead: false
+    baseState: pig
+    mountedState: pig_mounted
+    dismountAction: ActionDismount
+  - type: InputMover
+    canMove: false
+  - type: MobMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5.0
+  
+- type: entity
+  id: ActionDismount
+  name: Dismount
+  description: Get off your mount.
+  components:
+  - type: Action
+    startDelay: true
+    useDelay: 0.5
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:DismountActionEvent
