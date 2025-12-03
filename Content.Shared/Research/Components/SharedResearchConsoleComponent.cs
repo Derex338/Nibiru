@@ -35,10 +35,31 @@ namespace Content.Shared.Research.Components
         /// Goobstation field - all researches and their availablities
         /// </summary>
         public Dictionary<string, ResearchAvailability> Researches;
-        public ResearchConsoleBoundInterfaceState(int points, Dictionary<string, ResearchAvailability> researches)   // Goobstation R&D console rework = researches field
+
+        public string CurrentEpoch;//Also Nibiru
+        public List<string> UnlockedEpochs; //Nibiru
+
+        public ResearchConsoleBoundInterfaceState(
+            int points,
+            Dictionary<string, ResearchAvailability> researches,
+            string currentEpoch,
+            List<string> unlockedEpochs)
         {
             Points = points;
-            Researches = researches;    // Goobstation R&D console rework
+            Researches = researches;
+            CurrentEpoch = currentEpoch;
+            UnlockedEpochs = unlockedEpochs;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ConsoleChangeEpochMessage : BoundUserInterfaceMessage //Nibiru
+    {
+        public string EpochId;
+
+        public ConsoleChangeEpochMessage(string epochId)
+        {
+            EpochId = epochId;
         }
     }
 }

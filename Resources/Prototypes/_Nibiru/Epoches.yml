@@ -1,0 +1,31 @@
+- type: researchEpoch
+  id: StoneAge
+  name: research-epoch-stone-age
+  description: research-epoch-stone-age-desc
+  order: 0
+  color: "#8B4513"
+  # ID технологии, которая открывает следующую эпоху
+  #unlockNextEpochTech: NonlethalAmmunition
+
+- type: researchEpoch
+  id: EpochBronze
+  name: research-epoch-bronze-age
+  description: research-epoch-bronze-age-desc
+  order: 1
+  color: "#CD7F32"
+  unlockNextEpochTech: NonlethalAmmunition
+
+- type: researchEpoch
+  id: EpochIron
+  name: research-epoch-iron-age
+  description: research-epoch-iron-age-desc
+  order: 2
+  color: "#A9A9A9"
+  unlockNextEpochTech: iron_age_final_tech
+
+- type: researchEpoch
+  id: EpochModern
+  name: research-epoch-modern-age
+  description: research-epoch-modern-age-desc
+  order: 3
+  color: "#4169E1"

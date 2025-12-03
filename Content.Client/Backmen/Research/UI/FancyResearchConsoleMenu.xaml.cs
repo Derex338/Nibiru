@@ -33,6 +33,23 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     private readonly AccessReaderSystem _accessReader;
 
     /// <summary>
+    /// Текущая выбранная эпоха
+    /// </summary>
+    public string CurrentEpoch = "StoneAge"; //Nibiru
+
+    /// <summary>
+    /// Разблокированные эпохи
+    /// </summary>
+    public List<string> UnlockedEpochs = new() { "StoneAge" }; //Nibiru
+
+    /// <summary>
+    /// Кнопки эпох
+    /// </summary>
+    private Dictionary<string, Button> _epochButtons = new(); //Nibiru
+
+    public Action<string>? OnEpochChanged; //Nibiru
+
+    /// <summary>
     /// Console entity
     /// </summary>
     public EntityUid Entity;
@@ -235,4 +252,102 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     {
         public TechDisciplinePrototype Proto = proto;
     }
+
+    #region Nibiru
+
+    /// <summary>
+    /// Обновляет панель с кнопками эпох
+    /// </summary>
+    public void UpdateEpochTabs(List<string> unlockedEpochs, string currentEpoch)
+    {
+        UnlockedEpochs = unlockedEpochs;
+        CurrentEpoch = currentEpoch;
+
+        EpochTabsContainer.RemoveAllChildren();
+        _epochButtons.Clear();
+
+        // Скрываем если только одна эпоха
+        if (unlockedEpochs.Count <= 1)
+        {
+            EpochTabsContainer.Visible = false;
+            return;
+        }
+
+        EpochTabsContainer.Visible = true;
+
+        // Сортируем эпохи
+        var epochs = new List<ResearchEpochPrototype>();
+        foreach (var epochId in unlockedEpochs)
+        {
+            if (_prototype.TryIndex<ResearchEpochPrototype>(epochId, out var epoch))
+            {
+                epochs.Add(epoch);
+            }
+        }
+        epochs = epochs.OrderBy(e => e.Order).ToList();
+
+        // Создаём кнопки
+        foreach (var epoch in epochs)
+        {
+            var button = CreateEpochButton(epoch, epoch.ID == currentEpoch);
+            EpochTabsContainer.AddChild(button);
+            _epochButtons[epoch.ID] = button;
+        }
+    }
+
+    private Button CreateEpochButton(ResearchEpochPrototype epoch, bool isActive)
+    {
+        var button = new Button
+        {
+            MinWidth = 150,
+            MinHeight = 50,
+            HorizontalExpand = true,
+            StyleClasses = { isActive ? "ButtonColorGreen" : "ButtonColorDefault" }
+        };
+
+        var container = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center
+        };
+
+        // Иконка
+        if (epoch.Icon != null)
+        {
+            var icon = new TextureRect
+            {
+                Texture = _sprite.Frame0(epoch.Icon),
+                TextureScale = new Vector2(2, 2),
+                VerticalAlignment = VAlignment.Center,
+                Margin = new Thickness(0, 0, 5, 0)
+            };
+            container.AddChild(icon);
+        }
+
+        // Название
+        var label = new Label
+        {
+            Text = Loc.GetString(epoch.Name),
+            VerticalAlignment = VAlignment.Center,
+            StyleClasses = { "LabelHeading" },
+            Modulate = epoch.Color
+        };
+        container.AddChild(label);
+
+        button.AddChild(container);
+        button.OnPressed += _ => OnEpochButtonPressed(epoch.ID);
+
+        return button;
+    }
+
+    private void OnEpochButtonPressed(string epochId)
+    {
+        if (CurrentEpoch == epochId)
+            return;
+
+        OnEpochChanged?.Invoke(epochId);
+    }
+
+    #endregion
 }

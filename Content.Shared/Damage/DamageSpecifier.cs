@@ -36,6 +36,12 @@ namespace Content.Shared.Damage
         [UsedImplicitly]
         private Dictionary<string, FixedPoint2>? _damageGroupDictionary;
 
+        //Nibiru
+        //[JsonPropertyName("penetration")]
+        //[DataField("penetration")]
+        //[UsedImplicitly]
+        //private FixedPoint2? _penetrationDictionary;
+
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>

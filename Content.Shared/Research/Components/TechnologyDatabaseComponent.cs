@@ -5,6 +5,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Research.Components;
 
@@ -55,6 +56,24 @@ public sealed partial class TechnologyDatabaseComponent : Component
     [AutoNetworkedField]
     [DataField("roundstartTechs", customTypeSerializer: typeof(PrototypeIdListSerializer<TechnologyPrototype>))]
     public List<string> RoundstartTechnologies = new();
+
+    #region Nibiru
+
+    /// <summary>
+    /// Текущая выбранная эпоха
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("currentEpoch")]
+    public string CurrentEpoch = "StoneAge";
+
+    /// <summary>
+    /// Разблокированные эпохи
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("unlockedEpochs")]
+    public List<string> UnlockedEpochs = new() { "StoneAge" };
+
+    #endregion
 }
 
 /// <summary>

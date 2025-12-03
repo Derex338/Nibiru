@@ -37,6 +37,12 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new ConsoleServerSelectionMessage());
         };
+
+        _consoleMenu.OnEpochChanged += id =>
+        {
+            // Отправляем сообщение на сервер о смене эпохи
+            SendMessage(new ConsoleChangeEpochMessage(id));
+        };
     }
 
     public override void OnProtoReload(PrototypesReloadedEventArgs args)
@@ -51,6 +57,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 
         _consoleMenu?.UpdatePanels(rState.Researches);
         _consoleMenu?.UpdateInformationPanel(rState.Points);
+        _consoleMenu?.UpdateEpochTabs(rState.UnlockedEpochs, rState.CurrentEpoch);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -64,6 +71,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         // Thats for avoiding refresh spam when only points are updated
         if (_consoleMenu == null)
             return;
+        _consoleMenu.UpdateEpochTabs(castState.UnlockedEpochs, castState.CurrentEpoch);
         if (!_consoleMenu.List.SequenceEqual(castState.Researches))
             _consoleMenu.UpdatePanels(castState.Researches);
         if (_consoleMenu.Points != castState.Points)

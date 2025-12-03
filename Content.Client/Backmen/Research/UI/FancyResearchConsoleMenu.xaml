@@ -4,7 +4,7 @@
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:goob="clr-namespace:Content.Client.Backmen.Research.UI"
                       Title="{Loc 'research-console-menu-title'}"
-                      SetSize="1270 850">
+                      SetSize="1270 800">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
@@ -23,6 +23,12 @@
                 <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" MinHeight="30"/>
             </BoxContainer>
         </BoxContainer>
+        <BoxContainer Name="EpochTabsContainer"
+                      Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      MinHeight="50"
+                      Margin="10 0 10 10"
+                      Visible="False"/>
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
                       VerticalExpand="True">

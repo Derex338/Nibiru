@@ -23,17 +23,17 @@ namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
-	[Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     //[Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-	[Dependency] private readonly ContainerSystem _container = default!;
-	[Dependency] private readonly StackSystem _stackSystem = default!;
-	[Dependency] private readonly IRobustRandom _robustRandom = default!;
-	
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly StackSystem _stackSystem = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
     /// <summary>
     /// Syncs the primary entity's database to that of the secondary entity's database.
     /// </summary>
@@ -47,7 +47,7 @@ public sealed partial class ResearchSystem
         primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
         primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
         primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes;
-		primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts;
+        primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts;
 
         Dirty(primaryUid, primaryDb);
 
@@ -127,11 +127,11 @@ public sealed partial class ResearchSystem
             return;
 
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(technology, out var prototype))
-		{
-			//if (PrototypeManager.TryIndex<ConstructionPrototype>(technology, out var prototype))
-			//	AddTechnology(uid, prototype, component);
+        {
+            //if (PrototypeManager.TryIndex<ConstructionPrototype>(technology, out var prototype))
+            //	AddTechnology(uid, prototype, component);
             return;
-		}
+        }
         AddTechnology(uid, prototype, component);
     }
 
@@ -152,7 +152,7 @@ public sealed partial class ResearchSystem
 
         component.UnlockedTechnologies.Add(technology.ID);
         var addedRecipes = new List<string>();
-		
+
         foreach (var unlock in technology.RecipeUnlocks)
         {
             if (component.UnlockedRecipes.Contains(unlock))
@@ -160,8 +160,8 @@ public sealed partial class ResearchSystem
             component.UnlockedRecipes.Add(unlock);
             addedRecipes.Add(unlock);
         }
-		
-		foreach (var CraftUnlock in technology.CraftUnlocks)
+
+        foreach (var CraftUnlock in technology.CraftUnlocks)
         {
             if (component.UnlockedCrafts.Contains(CraftUnlock))
                 continue;
@@ -169,6 +169,8 @@ public sealed partial class ResearchSystem
             addedRecipes.Add(CraftUnlock);
         }
         Dirty(uid, component);
+
+        CheckEpochUnlock(uid, technology, component); //Nibiru
 
         var ev = new TechnologyDatabaseModifiedEvent(addedRecipes);
         RaiseLocalEvent(uid, ref ev);
@@ -181,7 +183,7 @@ public sealed partial class ResearchSystem
     /// <returns>Whether it could be unlocked or not</returns>
     public bool CanServerUnlockTechnology(EntityUid uid,
         TechnologyPrototype technology,
-		EntityUid user, 
+        EntityUid user,
         TechnologyDatabaseComponent? database = null,
         ResearchClientComponent? client = null)
     {
@@ -197,21 +199,21 @@ public sealed partial class ResearchSystem
 
         if (technology.Cost >= serverComp.Points)
             return false;
-		
-		if(!TechEntityRecipe(user, technology) && (technology.MaterialToUnlock.Count > 0 || technology.EntityToUnlock.Count > 0)) //Nibiru
-			return false;
+
+        if (!TechEntityRecipe(user, technology) && (technology.MaterialToUnlock.Count > 0 || technology.EntityToUnlock.Count > 0)) //Nibiru
+            return false;
 
         return true;
     }
-	
-	//Nibiru start
-	private bool TechEntityRecipe(EntityUid user, TechnologyPrototype technology)
-	{
-		//var container = _container.EnsureContainer<Container>(user, "item_construction", out var existed);
-		//var containers = new Dictionary<string, Container>();
-		var used = new HashSet<EntityUid>();
-		
-		/*Container GetContainer(string name)
+
+    //Nibiru start
+    private bool TechEntityRecipe(EntityUid user, TechnologyPrototype technology)
+    {
+        //var container = _container.EnsureContainer<Container>(user, "item_construction", out var existed);
+        //var containers = new Dictionary<string, Container>();
+        var used = new HashSet<EntityUid>();
+
+        /*Container GetContainer(string name)
             {
                 if (containers.TryGetValue(name, out var container1))
                     return container1;
@@ -228,60 +230,60 @@ public sealed partial class ResearchSystem
                     return c;
                 }
             }*/
-		
-		if(technology.EntityToUnlock is not null)
-		{
-			foreach(var recipe in technology.EntityToUnlock)
-			{
-				foreach(var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
-				{
-					if(!recipe.EntityValid(entity, out var ent))
-						continue;
-					
-					if (used.Contains(entity))
+
+        if (technology.EntityToUnlock is not null)
+        {
+            foreach (var recipe in technology.EntityToUnlock)
+            {
+                foreach (var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
+                {
+                    if (!recipe.EntityValid(entity, out var ent))
                         continue;
-					
-					return true;
-				}
-			}
-		}
-		
-		if(technology.EntityToUnlock is not null)
-		{
-			foreach(var recipe in technology.MaterialToUnlock)
-			{
-				foreach(var material in new HashSet<EntityUid>(EnumerateNearby(user)))
-				{
-					if (!recipe.EntityValid(material, out var stack))
+
+                    if (used.Contains(entity))
                         continue;
-	
-					if (used.Contains(material))
+
+                    return true;
+                }
+            }
+        }
+
+        if (technology.EntityToUnlock is not null)
+        {
+            foreach (var recipe in technology.MaterialToUnlock)
+            {
+                foreach (var material in new HashSet<EntityUid>(EnumerateNearby(user)))
+                {
+                    if (!recipe.EntityValid(material, out var stack))
                         continue;
-	
-					var splitStack = _stackSystem.Split((material, stack), recipe.Amount, user.ToCoordinates(0, 0));
-	
-					if (splitStack == null)
+
+                    if (used.Contains(material))
                         continue;
-	
-					//if (string.IsNullOrEmpty(recipe.Store))
-					//{
-					//	if (!_container.Insert(splitStack.Value, container))
-					//		continue;
-					//}
-					//else if (!_container.Insert(splitStack.Value, GetContainer(recipe.Store)))
+
+                    var splitStack = _stackSystem.Split((material, stack), recipe.Amount, user.ToCoordinates(0, 0));
+
+                    if (splitStack == null)
+                        continue;
+
+                    //if (string.IsNullOrEmpty(recipe.Store))
+                    //{
+                    //	if (!_container.Insert(splitStack.Value, container))
+                    //		continue;
+                    //}
+                    //else if (!_container.Insert(splitStack.Value, GetContainer(recipe.Store)))
                     //    continue;
-					
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-	
-	private IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
-	{
-		foreach (var item in _handsSystem.EnumerateHeld(user))
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
+    {
+        foreach (var item in _handsSystem.EnumerateHeld(user))
         {
             if (TryComp(item, out StorageComponent? storage))
             {
@@ -298,7 +300,7 @@ public sealed partial class ResearchSystem
         {
             while (containerSlotEnumerator.MoveNext(out var containerSlot))
             {
-                if(!containerSlot.ContainedEntity.HasValue)
+                if (!containerSlot.ContainedEntity.HasValue)
                     continue;
 
                 if (TryComp(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
@@ -322,8 +324,8 @@ public sealed partial class ResearchSystem
             if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _container.IsInSameOrParentContainer(user, near))
                 yield return near;
         }
-	}
-	//Nibiru end
+    }
+    //Nibiru end
 
     private void OnDatabaseRegistrationChanged(EntityUid uid, TechnologyDatabaseComponent component, ref ResearchRegistrationChangedEvent args)
     {
@@ -334,7 +336,7 @@ public sealed partial class ResearchSystem
         component.SupportedDisciplines = new List<string>();
         component.UnlockedTechnologies = new List<string>();
         component.UnlockedRecipes = new List<string>();
-		component.UnlockedCrafts = new List<string>();
+        component.UnlockedCrafts = new List<string>();
         Dirty(uid, component);
     }
 }

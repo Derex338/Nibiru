@@ -54,8 +54,13 @@ public abstract partial class SharedResearchSystem : EntitySystem   // Goobstati
 
         var availableTechnologies = new List<TechnologyPrototype>();
         var disciplineTiers = GetDisciplineTiers(component);
+
         foreach (var tech in PrototypeManager.EnumeratePrototypes<TechnologyPrototype>())
         {
+            // ВАЖНО: фильтруем по текущей эпохе
+            if (tech.Epoch != component.CurrentEpoch)
+                continue;
+
             if (IsTechnologyAvailable(component, tech, disciplineTiers))
                 availableTechnologies.Add(tech);
         }
@@ -304,4 +309,23 @@ public abstract partial class SharedResearchSystem : EntitySystem   // Goobstati
         var ev = new TechnologyDatabaseModifiedEvent(new List<string> { recipe });
         RaiseLocalEvent(uid, ref ev);
     }
+
+    #region Nibiru
+
+    /// <summary>
+    /// Переключает текущую эпоху
+    /// </summary>
+    public void SetCurrentEpoch(EntityUid uid, ProtoId<ResearchEpochPrototype> epochId, TechnologyDatabaseComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (!component.UnlockedEpochs.Contains(epochId))
+            return;
+
+        component.CurrentEpoch = epochId;
+        Dirty(uid, component);
+    }
+
+    #endregion
 }

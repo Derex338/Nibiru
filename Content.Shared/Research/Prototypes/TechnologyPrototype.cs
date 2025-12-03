@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared._Nibiru.Research;
@@ -52,7 +52,7 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// How much research is needed to unlock.
     /// </summary>
     [DataField]
-    public int Cost = 0;
+    public int Cost = 0; //Nibiru
 	
 	/// <summary>
     /// Entity that needed to unlock.
@@ -62,6 +62,12 @@ public sealed partial class TechnologyPrototype : IPrototype
 	
 	[DataField]
     public List<MaterialRequiredTech> MaterialToUnlock = new(); //Nibiru
+
+    /// <summary>
+    /// К какой эпохе относится эта технология
+    /// </summary>
+    [DataField("epoch")]
+    public ProtoId<ResearchEpochPrototype> Epoch = "StoneAge"; //Nibiru
 
     /// <summary>
     /// A list of <see cref="TechnologyPrototype"/>s that need to be unlocked in order to unlock this technology.
