@@ -78,7 +78,7 @@
 			<Button Name="Heir" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
 					MinSize="150 20"
 					Text="{Loc 'Назначить наследником'}"/>
-			<Button Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" 
+			<Button Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
 					MinSize="150 20"
 					Text="{Loc 'Расформировать фракцию'}"/>
         </GridContainer>

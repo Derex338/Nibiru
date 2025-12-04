@@ -28,6 +28,12 @@
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <ItemGroup>
+    <EmbeddedResource Remove="Nibiru\Key\UI\KeyCodeSet.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Update="Nibiru\Key\UI\KeyCodeSet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
     <AdditionalFiles Update="_Nibiru\Faction\UI\MiniMemberCardControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </AdditionalFiles>

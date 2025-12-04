@@ -284,21 +284,25 @@ namespace Content.Client.Construction.UI
             var (search, category) = args;
             var isEmptyCategory = string.IsNullOrEmpty(category) || category == ForAllCategoryName;
             _selectedCategory = isEmptyCategory ? string.Empty : category;
-			
-            //_constructionSystem?.OpenUI();
-			
-			//var Netentity = _playerManager.LocalEntity;
-			//if (Netentity != null)
-			//_sharedConstruction.OpenUI();
-				//RaiseNetworkEvent(new ConstructionUIOpen(GetNetEntity(entity.Value)));
-			
-			//ConsRecipes.Add(new("MimeHardsuit"));
+
+            var query = _prototypeManager.EnumeratePrototypes<ConstructionPackPrototype>();
+            foreach (var item in query)
+            {
+                if (item.StartRecipes)
+                {
+                    foreach (var rec in item.Recipes)
+                    {
+                        if (!ConsRecipes.Contains(rec))
+                            ConsRecipes.Add(rec);
+                    }
+                }
+            }
 
             foreach (var id in ConsRecipes)//_prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {		
 				if (!_prototypeManager.TryIndex(id, out var recipe))
 					continue;
-				/*
+				
                 if (recipe.Hide)
                     continue;
 
@@ -318,7 +322,7 @@ namespace Content.Client.Construction.UI
                         recipe.Category != category)
                         continue;
                 }
-*/
+
                 if (!_constructionSystem!.TryGetRecipePrototype(recipe.ID, out var targetProtoId))
                 {
                     Logger.Error("Cannot find the target prototype in the recipe cache with the id \"{0}\" of {1}.",

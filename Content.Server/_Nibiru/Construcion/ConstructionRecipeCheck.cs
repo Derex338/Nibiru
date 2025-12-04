@@ -49,6 +49,8 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
         if (!EntityManager.TryGetComponent<FactionComponent>(entity, out var comp))
             return;
 
+        comp.StaticPacks.Add(new ProtoId<ConstructionPackPrototype>("FactionBase"));
+
         List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp, comp.StaticPacks);
 
         RaiseNetworkEvent(new ConstructionCrafts(GetNetEntity(entity), crafts), args.SenderSession);
@@ -101,7 +103,7 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
         return ev.Recipes.ToList();
     }
 
-    public void AddRecipesFromPacks(HashSet<ProtoId<ConstructionPrototype>> recipes, IEnumerable<ProtoId<ConstructionPackPrototype>> packs)
+    public void AddRecipesFromPacks(HashSet<ProtoId<ConstructionPrototype>> recipes, List<ProtoId<ConstructionPackPrototype>> packs)
     {
         foreach (var id in packs)
         {
@@ -112,26 +114,10 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
 
     public void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, CraftsGetRecipesEvent args)
     {
-        //if (uid == args.Const)
-        //return;
-
         if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Server)
             && EntityManager.TryGetComponent<FactionComponent>(args.User, out var Player)
             && Server.FactionName == Player.FactionName)
-        {/*
-				foreach (var id in args.Comp.StaticPacks)
-				{
-					var pack = _proto.Index(id);
-					foreach (var recipe in pack.Recipes)
-					{
-						if (args.GetUnavailable || component.UnlockedCrafts.Contains(recipe))
-						{
-							args.Recipes.Add(recipe);
-							args.Recipes.Add(new("TileWeb"));
-						}
-					}
-				}*/
-
+        {
             foreach (var recipe in component.UnlockedCrafts)
             {
                 if (_proto.TryIndex<ConstructionPrototype>(recipe, out var comp)

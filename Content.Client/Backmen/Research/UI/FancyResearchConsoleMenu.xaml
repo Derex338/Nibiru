@@ -16,7 +16,7 @@
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                 <RichTextLabel Name="ResearchAmountLabel"/>
                 <Control VerticalExpand="True"/>
-                <BoxContainer Name="TierDisplayContainer" Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Bottom"/>
+                <BoxContainer Name="TierDisplayContainer" Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Bottom" Visible="False"/>
                 <!-- This is where we put all of the little graphics that display discipline tiers!-->
             </BoxContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalAlignment="Right">

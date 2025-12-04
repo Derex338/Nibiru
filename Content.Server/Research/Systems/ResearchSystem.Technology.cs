@@ -18,6 +18,7 @@ using Content.Shared.Stacks;
 using Content.Server.Stack;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
+using Content.Shared._Nibiru.Factions;
 
 namespace Content.Server.Research.Systems;
 
@@ -105,6 +106,9 @@ public sealed partial class ResearchSystem
             return false;
 
         if (!CanServerUnlockTechnology(client, prototype, user, clientDatabase, component))
+            return false;
+
+        if (!SameFaction(user, serverEnt.Value))
             return false;
 
         AddTechnology(serverEnt.Value, prototype);
@@ -324,6 +328,13 @@ public sealed partial class ResearchSystem
             if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _container.IsInSameOrParentContainer(user, near))
                 yield return near;
         }
+    }
+
+    private bool SameFaction(EntityUid user, EntityUid server)
+    {
+        if (!TryComp<FactionComponent>(user, out var userFact) || !TryComp<FactionComponent>(server, out var serverFact))
+            return false;
+        return userFact.FactionName == serverFact.FactionName;
     }
     //Nibiru end
 

@@ -1,0 +1,11 @@
+<ui1:KeyCodeSet xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui1="clr-namespace:Content.Client.Nibiru.Key.UI"
+                      Title="{Loc 'key-code-window-title'}">
+    <BoxContainer Orientation="Vertical" Margin="5">
+        <LineEdit Name="CodeLabel" Access="Public" MinSize="30 20" PlaceHolder="00000"/>
+        <BoxContainer Orientation="Horizontal" Align="Center">
+            <Button Name="AcceptButton" Text="{Loc 'да'}"/>
+        </BoxContainer>
+    </BoxContainer>
+</ui1:KeyCodeSet>

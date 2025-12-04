@@ -15,6 +15,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Client.Stylesheets;
 
 namespace Content.Client.Backmen.Research.UI;
 
@@ -302,7 +303,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
             MinWidth = 150,
             MinHeight = 50,
             HorizontalExpand = true,
-            StyleClasses = { isActive ? "ButtonColorGreen" : "ButtonColorDefault" }
+            StyleClasses = { isActive ? "ButtonColorGreen" : "ButtonColorDefault", StyleClass.ButtonSquare }
         };
 
         var container = new BoxContainer

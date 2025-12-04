@@ -1,13 +1,18 @@
 - type: constructionPack
   id: Base
+  startRecipes: True
   recipes: 
   - ChestDrawer
+  
+- type: constructionPack
+  id: FactionBase
+  recipes:
+  - ShelfWood
   
 - type: constructionPack
   id: ABOBA
   recipes:
   - MimeHardsuit
-  - ShelfWood
   - SheetRGlass
   - SheetClockworkGlass
   - SheetPGlass

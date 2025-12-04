@@ -19,6 +19,10 @@ public sealed partial class ConstructionPackPrototype : IPrototype//, IInheritin
     //[ParentDataField(typeof(AbstractPrototypeIdArraySerializer<ConstructionPackPrototype>))]
     //public string[]? Parents { get; private set; }
 
+    [ViewVariables]
+    [DataField]
+    public bool StartRecipes = false;
+
     [NeverPushInheritance]
     [AbstractDataField]
     public bool Abstract { get; private set; }

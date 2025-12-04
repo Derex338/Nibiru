@@ -86,11 +86,6 @@ public sealed class FactionSystem : EntitySystem
 
             _adminLog.Add(LogType.FactionCreated, LogImpact.Medium, $"{ToPrettyString(player):player} создал фракцию с названием {factionName}");
 
-            foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPackPrototype>())
-            {
-                factionComponent.StaticPacks.Add(recipe.ID);
-            }
-
             Dirty(player, factionComponent);
         }
     }
