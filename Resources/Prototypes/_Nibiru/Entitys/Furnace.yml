@@ -12,6 +12,7 @@
         state: lit
         color: "#FFFFFF"
         visible: false
+        shader: unshaded
   - type: Appearance
   - type: Transform
   - type: Physics
@@ -36,7 +37,7 @@
   - type: SolutionContainerManager
     solutions:
       smelted_metal:
-        maxVolume: 500
+        maxVolume: 100
   - type: DrainableSolution
     solution: smelted_metal
   - type: PointLight
@@ -44,12 +45,18 @@
     color: "#E25822"
     radius: 0.5
     energy: 2.0
+    netsync: false
   - type: FuelConsumption
-    glowDuration: 100
-    fadeOutDuration: 4
-    iconStateSpent: icon
+    maxFuelAmount: 1800                   # 30 минут работы
+    targetBurnTemperature: 1400           # Высокая температура для плавки
+    minOperatingTemperature: 800          # Работает при 800°C+
+    heatingRate: 40                       # Медленно нагревается
+    coolingRate: 15                       # Очень медленно остывает
+    fuelConsumptionRate: 0.5              # Экономный расход
+    fadeOutDuration: 30
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
+    iconStateSpent: icon
     # Sounds legit nuff
     litSound:
       path: /Audio/Items/Flare/flare_on.ogg

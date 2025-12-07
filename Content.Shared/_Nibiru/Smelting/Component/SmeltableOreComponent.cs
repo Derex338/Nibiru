@@ -30,7 +30,7 @@ public sealed partial class SmeltableOreComponent : Component
     /// Реагент который получается при плавке
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<ReagentPrototype> ResultReagent = default!;
+    public string ResultReagent = default!;
 
     /// <summary>
     /// Количество реагента которое получается

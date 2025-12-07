@@ -12,9 +12,10 @@ namespace Content.Server._Nibiru.Fuel
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
         [ViewVariables]
-        public bool Activated => CurrentState is FuelLightState.Lit or FuelLightState.Fading;
+        public bool IsOperational => CurrentState == FuelLightState.Lit &&
+                                   CurrentTemperature >= MinOperatingTemperature;
 
-        [ViewVariables] public float StateExpiryTime = default;
-        [DataField] public float Temperature = 1000f;
+        [ViewVariables] public float StateExpiryTime = 100f;
+        [DataField] public float CurrentTemperature = 1000f;
     }
 }

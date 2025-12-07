@@ -1,21 +1,21 @@
 using Content.Server._Nibiru.Fuel;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared._Nibiru.Fuel;
 using Content.Shared._Nibiru.Smelting;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Tag;
+using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 
@@ -28,9 +28,9 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly StackSystem _stackSystem = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -41,14 +41,15 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         SubscribeLocalEvent<SmeltingFurnaceComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SmeltingFurnaceComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
 
-        // Слушаем события топлива
-        //SubscribeLocalEvent<SmeltingFurnaceComponent, FuelStateChangedEvent>(OnFuelStateChanged);
+        // Слушаем события от системы топлива
+        SubscribeLocalEvent<SmeltingFurnaceComponent, TemperatureChangedEvent>(OnTemperatureChanged);
+        SubscribeLocalEvent<SmeltingFurnaceComponent, FuelStateChangedEvent>(OnFuelStateChanged);
     }
 
     private void OnFurnaceInit(EntityUid uid, SmeltingFurnaceComponent component, ComponentInit args)
     {
-        // Создаём контейнер для руд
         component.OreContainer = _container.EnsureContainer<Container>(uid, component.ContainerId);
+        component.SolutionContainer = _container.EnsureContainer<Container>(uid, "solution_container");
     }
 
     public override void Update(float frameTime)
@@ -58,139 +59,255 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         var query = EntityQueryEnumerator<SmeltingFurnaceComponent, FuelConsumptionComponent>();
         while (query.MoveNext(out var uid, out var furnace, out var fuel))
         {
-            UpdateFurnaceTemperature(uid, furnace, fuel, frameTime);
-            UpdateSmelting(uid, furnace, frameTime);
+            // Печь работает только если топливо достаточно горячее
+            if (!fuel.IsOperational || furnace.OreContainer == null)
+                continue;
+
+            UpdateFurnaceContents((uid, furnace, fuel), frameTime);
         }
     }
 
     /// <summary>
-    /// Обновляет температуру печи в зависимости от топлива
+    /// Обновляет содержимое печи - нагревает, плавит, сжигает
     /// </summary>
-    private void UpdateFurnaceTemperature(EntityUid uid, SmeltingFurnaceComponent furnace, FuelConsumptionComponent fuel, float frameTime)
+    private void UpdateFurnaceContents(
+        Entity<SmeltingFurnaceComponent, FuelConsumptionComponent> ent,
+        float dt)
     {
-        var targetTemperature = 0f;
+        var (uid, furnace, fuel) = ent;
+        var furnaceTemp = fuel.CurrentTemperature;
+        var anythingSmelting = false;
 
-        // Если топливо горит - нагреваем до его температуры
-        if (fuel.CurrentState is FuelLightState.Lit or FuelLightState.Fading)
+        foreach (var entity in furnace.OreContainer!.ContainedEntities.ToArray())
         {
-            targetTemperature = fuel.Temperature;
-        }
-
-        // Плавно изменяем температуру
-        if (furnace.CurrentTemperature < targetTemperature)
-        {
-            // Нагрев
-            furnace.CurrentTemperature = Math.Min(
-                targetTemperature,
-                furnace.CurrentTemperature + furnace.HeatingRate * frameTime
-            );
-        }
-        else if (furnace.CurrentTemperature > targetTemperature)
-        {
-            // Остывание
-            furnace.CurrentTemperature = Math.Max(
-                targetTemperature,
-                furnace.CurrentTemperature - furnace.CoolingRate * frameTime
-            );
-        }
-
-        Dirty(uid, furnace);
-    }
-
-    /// <summary>
-    /// Обновляет процесс плавки руд внутри печи
-    /// </summary>
-    private void UpdateSmelting(EntityUid uid, SmeltingFurnaceComponent furnace, float frameTime)
-    {
-        if (furnace.CurrentTemperature <= 0 || furnace.OreContainer == null)
-            return;
-
-        foreach (var entity in furnace.OreContainer.ContainedEntities)
-        {
-            if (!TryComp<TemperatureComponent>(entity, out var temp))
-                continue;
-
-            // Нагреваем руду
-            temp.CurrentTemperature = Math.Min(
-                furnace.CurrentTemperature,
-                temp.CurrentTemperature + frameTime * 20f // Скорость нагрева
-            );
-
-            if (!TryComp<SmeltableOreComponent>(entity, out var ore))
-                continue;
-
-            // Если достигли температуры плавления - плавим
-            if (temp.CurrentTemperature >= ore.MeltingPoint)
+            // Обрабатываем руду
+            if (TryComp<SmeltableOreComponent>(entity, out var ore))
             {
-                ore.MeltingProgress += ore.MeltingSpeed * frameTime;
-
-                // Руда полностью расплавилась
-                if (ore.MeltingProgress >= 1f)
+                if (ProcessOre(uid, entity, furnace, ore, furnaceTemp, dt))
                 {
-                    MeltOre(uid, entity, furnace, ore);
+                    anythingSmelting = true;
+                    continue;
                 }
             }
 
-            Dirty(entity, ore);
+            // Обрабатываем обычные предметы с температурой
+            if (TryComp<TemperatureComponent>(entity, out var temp))
+            {
+                ProcessTemperature(uid, entity, furnace, temp, furnaceTemp, dt);
+            }
         }
 
         // Обновляем визуалы
-        //if (TryComp<AppearanceComponent>(uid, out var appearance))
-        //{
-        //    _appearance.SetData(uid, SmeltingFurnaceVisuals.ContainsOre, containedEntities.Count > 0, appearance);
-        //    _appearance.SetData(uid, SmeltingFurnaceVisuals.IsSmelting, anythingSmelting, appearance);
-        //}
+        UpdateVisuals(uid, furnace, anythingSmelting);
+    }
+
+    /// <summary>
+    /// Обрабатывает плавку руды
+    /// </summary>
+    private bool ProcessOre(
+        EntityUid furnaceUid,
+        EntityUid oreUid,
+        SmeltingFurnaceComponent furnace,
+        SmeltableOreComponent ore,
+        float furnaceTemp,
+        float dt)
+    {
+        // Нагреваем руду если есть компонент температуры
+        if (TryComp<TemperatureComponent>(oreUid, out var temp))
+        {
+            HeatEntity(temp, furnaceTemp, dt, 30f); // Скорость нагрева руды
+        }
+
+        var currentTemp = temp?.CurrentTemperature ?? furnaceTemp;
+
+        // Если достигли температуры плавления - плавим
+        if (currentTemp >= ore.MeltingPoint)
+        {
+            ore.MeltingProgress += ore.MeltingSpeed * dt;
+
+            // Руда полностью расплавилась
+            if (ore.MeltingProgress >= 1f)
+            {
+                MeltOre(furnaceUid, oreUid, furnace, ore);
+                return false;
+            }
+
+            Dirty(oreUid, ore);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Обрабатывает нагрев обычного предмета
+    /// </summary>
+    private void ProcessTemperature(
+        EntityUid furnaceUid,
+        EntityUid itemUid,
+        SmeltingFurnaceComponent furnace,
+        TemperatureComponent temp,
+        float furnaceTemp,
+        float dt)
+    {
+        HeatEntity(temp, furnaceTemp, dt, 40f); // Скорость нагрева предметов
+
+        // Если предмет достиг температуры горения - сжигаем его
+        if (temp.CurrentTemperature >= furnace.BurnTemperature)
+        {
+            BurnItem(furnaceUid, itemUid, furnace);
+        }
+    }
+
+    /// <summary>
+    /// Нагревает предмет
+    /// </summary>
+    private void HeatEntity(TemperatureComponent temp, float targetTemp, float dt, float rate)
+    {
+        if (temp.CurrentTemperature < targetTemp)
+        {
+            temp.CurrentTemperature = Math.Min(
+                targetTemp,
+                temp.CurrentTemperature + rate * dt
+            );
+        }
     }
 
     /// <summary>
     /// Плавит руду в реагент
     /// </summary>
-    private void MeltOre(EntityUid furnaceUid, EntityUid oreUid, SmeltingFurnaceComponent furnace, SmeltableOreComponent ore)
+    private void MeltOre(
+        EntityUid furnaceUid,
+        EntityUid oreUid,
+        SmeltingFurnaceComponent furnace,
+        SmeltableOreComponent ore)
     {
-        if (!_solution.TryGetSolution(furnaceUid, furnace.Solution, out var solution, out var solutionComp))
+        Entity<SolutionContainerManagerComponent>? containerEntity = null;
+        string solutionName = string.Empty;
+
+        // Проверяем есть ли сосуд в печи
+        if (furnace.SolutionContainer != null && furnace.SolutionContainer.ContainedEntities.Count > 0)
         {
-            return;
+            foreach (var container in furnace.SolutionContainer.ContainedEntities)
+            {
+                if (TryComp<SolutionContainerManagerComponent>(container, out var comp))
+                {
+                    containerEntity = (container, comp);
+                    solutionName = comp.Containers.FirstOrDefault() ?? string.Empty;
+                    break;
+                }
+            }
         }
 
-        solutionComp.AddReagent(ore.ResultReagent, ore.ResultAmount);
-        solutionComp.Temperature = ore.ResultTemperature;
+        // Если нашли сосуд - льём в него
+        if (containerEntity.HasValue && !string.IsNullOrEmpty(solutionName))
+        {
+            if (_solution.TryGetSolution(containerEntity.Value.Owner, solutionName, out var solution, out var solutionComp))
+            {
+                _solution.TryAddReagent(
+                    solution.Value,
+                    ore.ResultReagent,
+                    ore.ResultAmount,
+                    out _);
 
-        //if (!_solution.TryAddSolution(solution.Value, solutionComp))
-        //{
-        //    Log.Warning($"Failed to add reagent {ore.ResultReagent} to furnace {furnaceUid}");
+                //solutionComp.AddReagent(ore.ResultReagent, ore.ResultAmount);
+                //solutionComp.Temperature = ore.ResultTemperature;
+            }
+        }
+        // Иначе льём в хранилище печи
+        else if (_solution.TryGetSolution(furnaceUid, furnace.Solution, out var furnaceSolution, out var furnaceSolutionComp))
+        {
+            furnaceSolutionComp.AddReagent(ore.ResultReagent, ore.ResultAmount);
+            furnaceSolutionComp.Temperature = ore.ResultTemperature;
+        }
 
-        //    return;
-        //}
-        //_solution.AddThermalEnergy(solution.Value, ore.ResultTemperature);
-
-        // Звук
+        // Звук плавления
         if (furnace.MeltCompleteSound != null)
             _audio.PlayPvs(furnace.MeltCompleteSound, furnaceUid);
 
         // Событие
-        //var ev = new OreMeltedEvent(oreUid, ore.ResultReagent, ore.ResultAmount, ore.ResultTemperature);
-        //RaiseLocalEvent(furnaceUid, ref ev);
+        var ev = new OreMeltedEvent(oreUid, ore.ResultReagent, ore.ResultAmount);
+        RaiseLocalEvent(furnaceUid, ev);
 
         // Удаляем руду
         QueueDel(oreUid);
     }
 
+
     /// <summary>
-    /// Добавление руды в печь
+    /// Сжигает предмет
     /// </summary>
-    private void OnInteractUsing(EntityUid uid, SmeltingFurnaceComponent component, InteractUsingEvent args)
+    private void BurnItem(EntityUid furnaceUid, EntityUid itemUid, SmeltingFurnaceComponent furnace)
     {
-        if (args.Handled || component.OreContainer == null)
+        if (furnace.BurnSound != null)
+            _audio.PlayPvs(furnace.BurnSound, furnaceUid);
+
+        var ev = new ItemBurnedEvent(itemUid);
+        RaiseLocalEvent(furnaceUid, ev);
+
+        QueueDel(itemUid);
+    }
+
+    /// <summary>
+    /// Добавление предмета в печь
+    /// </summary>
+    private void OnInteractUsing(EntityUid uid, SmeltingFurnaceComponent comp, InteractUsingEvent args)
+    {
+        if (args.Handled || comp.OreContainer == null || comp.SolutionContainer == null)
             return;
 
-        // Проверяем что это руда
-        if (!HasComp<SmeltableOreComponent>(args.Used))
-            return;
+        // Проверяем что это сосуд с раствором
+        if (HasComp<SolutionContainerManagerComponent>(args.Used))
+        {
+            // Можно вставить только если слот пуст
+            if (comp.SolutionContainer.ContainedEntities.Count > 0)
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("smelting-furnace-container-slot-occupied"),
+                    uid,
+                    args.User
+                );
+                return;
+            }
 
-        if (component.Tags != null)
+            if (!_container.Insert(args.Used, comp.SolutionContainer))
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("smelting-furnace-insert-failed"),
+                    uid,
+                    args.User
+                );
+                return;
+            }
+
+            _popup.PopupEntity(
+                Loc.GetString("smelting-furnace-container-inserted"),
+                uid,
+                args.User
+            );
+            args.Handled = true;
+            return;
+        }
+
+        // Проверяем что это либо руда, либо предмет с температурой
+        var canInsert = HasComp<SmeltableOreComponent>(args.Used) ||
+                       HasComp<TemperatureComponent>(args.Used);
+
+        if (!canInsert)
+        {
+            _popup.PopupEntity(
+                Loc.GetString("smelting-furnace-cant-insert"),
+                uid,
+                args.User
+            );
+            return;
+        }
+
+        // Проверяем теги если есть whitelist
+        if (comp.Tags != null && comp.Tags.Count > 0)
         {
             bool hasTag = false;
-            foreach (var tag in component.Tags)
+            foreach (var tag in comp.Tags)
             {
                 if (_tag.HasTag(args.Used, tag))
                 {
@@ -198,59 +315,101 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
                     break;
                 }
             }
+
             if (!hasTag)
             {
-                _popup.PopupEntity(Loc.GetString("smelting-furnace-incorrect-ore"), uid, args.User);
+                _popup.PopupEntity(
+                    Loc.GetString("smelting-furnace-incorrect-item"),
+                    uid,
+                    args.User
+                );
                 return;
             }
         }
 
         // Проверяем вместимость
-        if (component.OreContainer.ContainedEntities.Count >= component.MaxOreCapacity)
+        if (comp.OreContainer.ContainedEntities.Count >= comp.MaxOreCapacity)
         {
-            _popup.PopupEntity(Loc.GetString("smelting-furnace-full"), uid, args.User);
+            _popup.PopupEntity(
+                Loc.GetString("smelting-furnace-full"),
+                uid,
+                args.User
+            );
             return;
         }
 
-        if (TryComp(args.Used, out StackComponent? stack))
+        // Если это стак - берём один предмет
+        if (TryComp<StackComponent>(args.Used, out var stack) && stack.Count > 1)
         {
-            if (stack.Count >= component.MaxOreCapacity || !_container.Insert(args.Used, component.OreContainer))
+            var splitStack = _stack.Split(
+                (args.Used, stack),
+                1,
+                Transform(uid).Coordinates
+            );
+
+            if (!splitStack.HasValue)
+                return;
+
+            if (!_container.Insert(splitStack.Value, comp.OreContainer))
             {
-                _popup.PopupEntity(Loc.GetString("smelting-furnace-insert-failed"), uid, args.User);
+                _popup.PopupEntity(
+                    Loc.GetString("smelting-furnace-insert-failed"),
+                    uid,
+                    args.User
+                );
                 return;
             }
         }
         else
         {
-            // Добавляем руду в печь
-            if (!_container.Insert(args.Used, component.OreContainer))
+            if (!_container.Insert(args.Used, comp.OreContainer))
             {
-                _popup.PopupEntity(Loc.GetString("smelting-furnace-insert-failed"), uid, args.User);
+                _popup.PopupEntity(
+                    Loc.GetString("smelting-furnace-insert-failed"),
+                    uid,
+                    args.User
+                );
                 return;
             }
         }
 
-        //_popup.PopupEntity(Loc.GetString("smelting-furnace-ore-added"), uid, args.User);
+        _popup.PopupEntity(
+            Loc.GetString("smelting-furnace-insert-success"),
+            uid,
+            args.User
+        );
+
         args.Handled = true;
     }
 
     /// <summary>
     /// Examine - показываем содержимое и температуру
     /// </summary>
-    private void OnExamined(EntityUid uid, SmeltingFurnaceComponent component, ExaminedEvent args)
+    private void OnExamined(EntityUid uid, SmeltingFurnaceComponent comp, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange || component.OreContainer == null)
+        if (!args.IsInDetailsRange || comp.OreContainer == null)
             return;
 
-        args.PushMarkup(Loc.GetString("smelting-furnace-examine-temperature",
-            ("temperature", $"{component.CurrentTemperature:F0}")));
+        if (TryComp<FuelConsumptionComponent>(uid, out var fuel))
+        {
+            args.PushMarkup(Loc.GetString(
+                "smelting-furnace-examine-temperature",
+                ("temperature", $"{fuel.CurrentTemperature:F0}")
+            ));
 
-        var oreCount = component.OreContainer.ContainedEntities.Count;
+            if (fuel.IsOperational)
+                args.PushMarkup(Loc.GetString("smelting-furnace-examine-operational"));
+            else
+                args.PushMarkup(Loc.GetString("smelting-furnace-examine-cold"));
+        }
+
+        var oreCount = comp.OreContainer.ContainedEntities.Count;
         if (oreCount > 0)
         {
-            args.PushMarkup(Loc.GetString("smelting-furnace-examine-contains",
-                ("count", oreCount),
-                ("max", component.MaxOreCapacity)));
+            args.PushMarkup(Loc.GetString(
+                "smelting-furnace-examine-contains",
+                ("count", oreCount)
+            ));
         }
         else
         {
@@ -259,24 +418,26 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Verb для извлечения всех руд
+    /// Verb для извлечения содержимого
     /// </summary>
-    private void OnGetVerbs(EntityUid uid, SmeltingFurnaceComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(
+        EntityUid uid,
+        SmeltingFurnaceComponent comp,
+        GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.OreContainer == null)
+        if (!args.CanAccess || !args.CanInteract || comp.OreContainer == null || comp.SolutionContainer == null)
             return;
 
-        if (component.OreContainer.ContainedEntities.Count == 0)
+        if (comp.OreContainer.ContainedEntities.Count == 0 && comp.SolutionContainer.ContainedEntities.Count == 0)
             return;
 
         var verb = new AlternativeVerb
         {
             Text = Loc.GetString("smelting-furnace-verb-empty"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
-            Act = () =>
-            {
-                EmptyFurnace(uid, component, args.User);
-            }
+            Icon = new SpriteSpecifier.Texture(
+                new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")
+            ),
+            Act = () => EmptyFurnace(uid, comp, args.User)
         };
 
         args.Verbs.Add(verb);
@@ -285,34 +446,120 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     /// <summary>
     /// Опустошает печь
     /// </summary>
-    private void EmptyFurnace(EntityUid uid, SmeltingFurnaceComponent component, EntityUid user)
+    private void EmptyFurnace(EntityUid uid, SmeltingFurnaceComponent comp, EntityUid user)
     {
-        if (component.OreContainer == null)
+        if (comp.OreContainer == null || comp.SolutionContainer == null)
             return;
 
-        //var xform = Transform(uid);
-        //var coordinates = xform.Coordinates;
+        var tooHot = false;
+        var extracted = 0;
 
-        foreach (var oreUid in component.OreContainer.ContainedEntities)
+        // Извлекаем руду/предметы
+        foreach (var itemUid in comp.OreContainer.ContainedEntities.ToArray())
         {
-            if (TryComp<TemperatureComponent>(oreUid, out var temp) && temp.CurrentTemperature > 300)
+            if (TryComp<TemperatureComponent>(itemUid, out var temp) &&
+                temp.CurrentTemperature > 300)
             {
-                _popup.PopupEntity(Loc.GetString("smelting-furnace-ore-too-hot"), uid, user);
+                tooHot = true;
                 continue;
             }
-            else
-                _container.Remove(oreUid, component.OreContainer);
-            //Transform(oreUid).Coordinates = coordinates;
+
+            _container.Remove(itemUid, comp.OreContainer);
+            extracted++;
         }
 
-        _popup.PopupEntity(Loc.GetString("smelting-furnace-emptied"), uid, user);
+        // Извлекаем сосуд с раствором
+        foreach (var itemUid in comp.SolutionContainer.ContainedEntities.ToArray())
+        {
+            _container.Remove(itemUid, comp.SolutionContainer);
+            extracted++;
+        }
+
+        if (tooHot)
+        {
+            _popup.PopupEntity(
+                Loc.GetString("smelting-furnace-items-too-hot"),
+                uid,
+                user
+            );
+        }
+
+        if (extracted > 0)
+        {
+            _popup.PopupEntity(
+                Loc.GetString("smelting-furnace-emptied", ("count", extracted)),
+                uid,
+                user
+            );
+        }
     }
 
     /// <summary>
-    /// Реакция на изменение состояния топлива
+    /// Обновляет визуалы печи
     /// </summary>
-    private void OnFuelStateChanged(EntityUid uid, SmeltingFurnaceComponent component, ref FuelStateChangedEvent args)
+    private void UpdateVisuals(
+        EntityUid uid,
+        SmeltingFurnaceComponent comp,
+        bool isSmelting)
     {
-        // Можно добавить звуки или эффекты когда печь нагревается/остывает
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
+
+        var hasItems = comp.OreContainer != null &&
+                      comp.OreContainer.ContainedEntities.Count > 0;
+
+        _appearance.SetData(uid, SmeltingFurnaceVisuals.ContainsOre, hasItems, appearance);
+        _appearance.SetData(uid, SmeltingFurnaceVisuals.IsSmelting, isSmelting, appearance);
+    }
+
+    private void OnTemperatureChanged(
+        EntityUid uid,
+        SmeltingFurnaceComponent comp,
+        ref TemperatureChangedEvent args)
+    {
+        // Можно добавить звуки или эффекты при изменении температуры
+    }
+
+    private void OnFuelStateChanged(
+        EntityUid uid,
+        SmeltingFurnaceComponent comp,
+        ref FuelStateChangedEvent args)
+    {
+        // Можно добавить уведомления когда топливо заканчивается
+        if (!args.IsLit && comp.OreContainer != null &&
+            comp.OreContainer.ContainedEntities.Count > 0)
+        {
+            // Топливо закончилось, но в печи есть предметы
+        }
+    }
+}
+
+/// <summary>
+/// Событие когда руда расплавилась
+/// </summary>
+public sealed class OreMeltedEvent : EntityEventArgs
+{
+    public EntityUid OreEntity;
+    public string Reagent;
+    public float Amount;
+
+    public OreMeltedEvent(EntityUid oreEntity, string reagent, float amount)
+    {
+        OreEntity = oreEntity;
+        Reagent = reagent;
+        Amount = amount;
+    }
+}
+
+/// <summary>
+/// Событие когда предмет сгорел
+/// </summary>
+public sealed class ItemBurnedEvent : EntityEventArgs
+{
+    public EntityUid ItemEntity;
+
+    public ItemBurnedEvent(EntityUid itemEntity)
+    {
+        ItemEntity = itemEntity;
     }
 }

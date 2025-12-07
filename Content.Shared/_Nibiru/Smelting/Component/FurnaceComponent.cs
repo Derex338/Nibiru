@@ -3,13 +3,14 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Nibiru.Smelting;
 
 /// <summary>
-/// Компонент печи для плавки руд
+/// Компонент печи для плавки руд и нагрева предметов
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SmeltingFurnaceComponent : Component
 {
     [DataField]
@@ -19,10 +20,13 @@ public sealed partial class SmeltingFurnaceComponent : Component
     public string Solution = "smelted_metal";
 
     /// <summary>
-    /// Контейнер для руд
+    /// Контейнер для руд и предметов
     /// </summary>
     [ViewVariables]
     public Container? OreContainer = default!;
+
+    [ViewVariables]
+    public Container? SolutionContainer = default!;
 
     /// <summary>
     /// Максимальное количество предметов в печи
@@ -31,25 +35,16 @@ public sealed partial class SmeltingFurnaceComponent : Component
     public int MaxOreCapacity = 10;
 
     /// <summary>
-    /// Текущая температура внутри печи
+    /// Белый список тегов для предметов которые можно класть в печь
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public float CurrentTemperature = 0f;
-
-    /// <summary>
-    /// Скорость нагрева в градусах в секунду
-    /// </summary>
-    [DataField]
-    public float HeatingRate = 50f;
-
-    /// <summary>
-    /// Скорость остывания в градусах в секунду
-    /// </summary>
-    [DataField]
-    public float CoolingRate = 20f;
-
     [DataField]
     public List<ProtoId<TagPrototype>>? Tags;
+
+    /// <summary>
+    /// Температура при которой предметы начинают гореть
+    /// </summary>
+    [DataField]
+    public float BurnTemperature = 500f;
 
     /// <summary>
     /// Звук плавления
@@ -62,4 +57,18 @@ public sealed partial class SmeltingFurnaceComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? MeltCompleteSound;
+
+    /// <summary>
+    /// Звук когда предмет сгорает
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? BurnSound;
+}
+
+[Serializable, NetSerializable]
+public enum SmeltingFurnaceVisuals : byte
+{
+    ContainsOre,
+    IsSmelting,
+    Temperature
 }
