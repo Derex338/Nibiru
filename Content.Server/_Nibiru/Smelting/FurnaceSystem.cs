@@ -5,14 +5,17 @@ using Content.Shared._Nibiru.Smelting;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Kitchen;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Verbs;
+using Microsoft.CodeAnalysis;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -31,6 +34,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
     public override void Initialize()
     {
@@ -48,8 +52,8 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
 
     private void OnFurnaceInit(EntityUid uid, SmeltingFurnaceComponent component, ComponentInit args)
     {
-        component.OreContainer = _container.EnsureContainer<Container>(uid, component.ContainerId);
-        component.SolutionContainer = _container.EnsureContainer<Container>(uid, "solution_container");
+        //component.OreContainer = _container.EnsureContainer<Container>(uid, component.ContainerId);
+        //component.SolutionContainer = _container.EnsureContainer<ContainerSlot>(uid, component.SolutionContainerId);
     }
 
     public override void Update(float frameTime)
@@ -60,7 +64,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         while (query.MoveNext(out var uid, out var furnace, out var fuel))
         {
             // Печь работает только если топливо достаточно горячее
-            if (!fuel.IsOperational || furnace.OreContainer == null)
+            if (!fuel.IsOperational) //|| furnace.OreContainer == null)
                 continue;
 
             UpdateFurnaceContents((uid, furnace, fuel), frameTime);
@@ -78,7 +82,9 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         var furnaceTemp = fuel.CurrentTemperature;
         var anythingSmelting = false;
 
-        foreach (var entity in furnace.OreContainer!.ContainedEntities.ToArray())
+        var inputContainer = _container.EnsureContainer<Container>(uid, furnace.ContainerId);
+
+        foreach (var entity in inputContainer.ContainedEntities.ToArray())
         {
             // Обрабатываем руду
             if (TryComp<SmeltableOreComponent>(entity, out var ore))
@@ -155,7 +161,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         // Если предмет достиг температуры горения - сжигаем его
         if (temp.CurrentTemperature >= furnace.BurnTemperature)
         {
-            BurnItem(furnaceUid, itemUid, furnace);
+            //BurnItem(furnaceUid, itemUid, furnace);
         }
     }
 
@@ -182,39 +188,12 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         SmeltingFurnaceComponent furnace,
         SmeltableOreComponent ore)
     {
-        Entity<SolutionContainerManagerComponent>? containerEntity = null;
-        string solutionName = string.Empty;
-
-        // Проверяем есть ли сосуд в печи
-        if (furnace.SolutionContainer != null && furnace.SolutionContainer.ContainedEntities.Count > 0)
+        var outputContainer = _itemSlotsSystem.GetItemOrNull(furnaceUid, furnace.SolutionContainerId);
+        if (outputContainer is not null && _solution.TryGetFitsInDispenser(outputContainer.Value, out var target, out _))
         {
-            foreach (var container in furnace.SolutionContainer.ContainedEntities)
-            {
-                if (TryComp<SolutionContainerManagerComponent>(container, out var comp))
-                {
-                    containerEntity = (container, comp);
-                    solutionName = comp.Containers.FirstOrDefault() ?? string.Empty;
-                    break;
-                }
-            }
+            _solution.TryAddReagent(target.Value, ore.ResultReagent, ore.ResultAmount, temperature: ore.ResultTemperature);
+            _solution.SetTemperature(target.Value, ore.ResultTemperature);
         }
-
-        // Если нашли сосуд - льём в него
-        if (containerEntity.HasValue && !string.IsNullOrEmpty(solutionName))
-        {
-            if (_solution.TryGetSolution(containerEntity.Value.Owner, solutionName, out var solution, out var solutionComp))
-            {
-                _solution.TryAddReagent(
-                    solution.Value,
-                    ore.ResultReagent,
-                    ore.ResultAmount,
-                    out _);
-
-                //solutionComp.AddReagent(ore.ResultReagent, ore.ResultAmount);
-                //solutionComp.Temperature = ore.ResultTemperature;
-            }
-        }
-        // Иначе льём в хранилище печи
         else if (_solution.TryGetSolution(furnaceUid, furnace.Solution, out var furnaceSolution, out var furnaceSolutionComp))
         {
             furnaceSolutionComp.AddReagent(ore.ResultReagent, ore.ResultAmount);
@@ -253,82 +232,22 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     /// </summary>
     private void OnInteractUsing(EntityUid uid, SmeltingFurnaceComponent comp, InteractUsingEvent args)
     {
-        if (args.Handled || comp.OreContainer == null || comp.SolutionContainer == null)
+        if (args.Handled)
             return;
 
-        // Проверяем что это сосуд с раствором
-        if (HasComp<SolutionContainerManagerComponent>(args.Used))
-        {
-            // Можно вставить только если слот пуст
-            if (comp.SolutionContainer.ContainedEntities.Count > 0)
-            {
-                _popup.PopupEntity(
-                    Loc.GetString("smelting-furnace-container-slot-occupied"),
-                    uid,
-                    args.User
-                );
-                return;
-            }
+        var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
 
-            if (!_container.Insert(args.Used, comp.SolutionContainer))
-            {
-                _popup.PopupEntity(
-                    Loc.GetString("smelting-furnace-insert-failed"),
-                    uid,
-                    args.User
-                );
-                return;
-            }
-
-            _popup.PopupEntity(
-                Loc.GetString("smelting-furnace-container-inserted"),
-                uid,
-                args.User
-            );
-            args.Handled = true;
-            return;
-        }
-
-        // Проверяем что это либо руда, либо предмет с температурой
-        var canInsert = HasComp<SmeltableOreComponent>(args.Used) ||
-                       HasComp<TemperatureComponent>(args.Used);
+        //Проверяем что это либо руда, либо предмет с температурой
+        var canInsert = HasComp<SmeltableOreComponent>(args.Used);
+                       //HasComp<TemperatureComponent>(args.Used);
 
         if (!canInsert)
         {
-            _popup.PopupEntity(
-                Loc.GetString("smelting-furnace-cant-insert"),
-                uid,
-                args.User
-            );
             return;
         }
 
-        // Проверяем теги если есть whitelist
-        if (comp.Tags != null && comp.Tags.Count > 0)
-        {
-            bool hasTag = false;
-            foreach (var tag in comp.Tags)
-            {
-                if (_tag.HasTag(args.Used, tag))
-                {
-                    hasTag = true;
-                    break;
-                }
-            }
-
-            if (!hasTag)
-            {
-                _popup.PopupEntity(
-                    Loc.GetString("smelting-furnace-incorrect-item"),
-                    uid,
-                    args.User
-                );
-                return;
-            }
-        }
-
-        // Проверяем вместимость
-        if (comp.OreContainer.ContainedEntities.Count >= comp.MaxOreCapacity)
+        //Проверяем вместимость
+        if (inputContainer.ContainedEntities.Count >= comp.MaxOreCapacity)
         {
             _popup.PopupEntity(
                 Loc.GetString("smelting-furnace-full"),
@@ -350,7 +269,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
             if (!splitStack.HasValue)
                 return;
 
-            if (!_container.Insert(splitStack.Value, comp.OreContainer))
+            if (!_container.Insert(splitStack.Value, inputContainer))
             {
                 _popup.PopupEntity(
                     Loc.GetString("smelting-furnace-insert-failed"),
@@ -362,7 +281,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         }
         else
         {
-            if (!_container.Insert(args.Used, comp.OreContainer))
+            if (!_container.Insert(args.Used, inputContainer))
             {
                 _popup.PopupEntity(
                     Loc.GetString("smelting-furnace-insert-failed"),
@@ -387,7 +306,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     /// </summary>
     private void OnExamined(EntityUid uid, SmeltingFurnaceComponent comp, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange || comp.OreContainer == null)
+        if (!args.IsInDetailsRange)
             return;
 
         if (TryComp<FuelConsumptionComponent>(uid, out var fuel))
@@ -403,7 +322,9 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("smelting-furnace-examine-cold"));
         }
 
-        var oreCount = comp.OreContainer.ContainedEntities.Count;
+        var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
+
+        var oreCount = inputContainer.ContainedEntities.Count;
         if (oreCount > 0)
         {
             args.PushMarkup(Loc.GetString(
@@ -425,10 +346,12 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         SmeltingFurnaceComponent comp,
         GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || comp.OreContainer == null || comp.SolutionContainer == null)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (comp.OreContainer.ContainedEntities.Count == 0 && comp.SolutionContainer.ContainedEntities.Count == 0)
+        var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
+
+        if (inputContainer.ContainedEntities.Count == 0)
             return;
 
         var verb = new AlternativeVerb
@@ -448,14 +371,13 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
     /// </summary>
     private void EmptyFurnace(EntityUid uid, SmeltingFurnaceComponent comp, EntityUid user)
     {
-        if (comp.OreContainer == null || comp.SolutionContainer == null)
-            return;
-
         var tooHot = false;
         var extracted = 0;
 
+        var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
+
         // Извлекаем руду/предметы
-        foreach (var itemUid in comp.OreContainer.ContainedEntities.ToArray())
+        foreach (var itemUid in inputContainer.ContainedEntities.ToArray())
         {
             if (TryComp<TemperatureComponent>(itemUid, out var temp) &&
                 temp.CurrentTemperature > 300)
@@ -464,14 +386,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
                 continue;
             }
 
-            _container.Remove(itemUid, comp.OreContainer);
-            extracted++;
-        }
-
-        // Извлекаем сосуд с раствором
-        foreach (var itemUid in comp.SolutionContainer.ContainedEntities.ToArray())
-        {
-            _container.Remove(itemUid, comp.SolutionContainer);
+            _container.Remove(itemUid, inputContainer);
             extracted++;
         }
 
@@ -479,15 +394,6 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         {
             _popup.PopupEntity(
                 Loc.GetString("smelting-furnace-items-too-hot"),
-                uid,
-                user
-            );
-        }
-
-        if (extracted > 0)
-        {
-            _popup.PopupEntity(
-                Loc.GetString("smelting-furnace-emptied", ("count", extracted)),
                 uid,
                 user
             );

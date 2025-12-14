@@ -112,6 +112,9 @@ namespace Content.Shared.Chemistry.Reagent
         public float? MeltingPoint { get; private set; }
 
         [DataField]
+        public string? ScrapEntity; //Nibiru
+
+        [DataField]
         public SpriteSpecifier? MetamorphicSprite { get; private set; } = null;
 
         [DataField]

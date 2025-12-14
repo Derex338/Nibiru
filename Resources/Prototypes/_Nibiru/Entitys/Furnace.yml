@@ -30,6 +30,7 @@
         - MachineLayer
   - type: SmeltingFurnace
     containerId: ore_container
+    solutionContainerId: solution_container
     maxOreCapacity: 10
     heatingRate: 80    # Быстро нагревается
     coolingRate: 20    # Медленно остывает
@@ -37,7 +38,7 @@
   - type: SolutionContainerManager
     solutions:
       smelted_metal:
-        maxVolume: 100
+        maxVol: 100
   - type: DrainableSolution
     solution: smelted_metal
   - type: PointLight
@@ -92,39 +93,199 @@
         maxDuration: 4.0
         startValue: 2.0
         endValue: 1.0
+  - type: ItemSlots
+    slots:
+      solution_container:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ContainerContainer
+    containers:
+      solution_container: !type:ContainerSlot
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
+  - type: Temperature
   
 - type: entity
   id: CopperOre
   name: copper ore
+  parent: BaseItem
   description: A chunk of copper ore.
   components:
   - type: Sprite
     sprite: Objects/Materials/ore.rsi
-    state: copper_ore
+    state: iron
   - type: Item
     size: Small
   - type: Stack
     count: 1
     stackType: CopperOre
   - type: SmeltableOre
-    meltingPoint: 1000      # Медь плавится легче железа
-    meltingSpeed: 0.2
+    meltingPoint: 950      # Медь плавится легче железа
+    meltingSpeed: 1
     resultReagent: CopperMolten
-    resultAmount: 99
+    resultAmount: 50
     resultTemperature: 1100
   - type: Temperature
+  - type: Clickable
+  - type: InteractionOutline
   
 - type: reagent
   id: CopperMolten
-  name: molten copper
-  desc: Molten copper, glowing orange-red.
-  physicalDesc: molten-metal
+  name: copper
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
   flavor: metallic
   color: "#ff8844"
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Heat: 18
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal
+            
+- type: stack
+  id: CopperOre
+  name: copper ore
+  spawn: CopperOre
+  maxCount: 30
+  
+- type: entity
+  id: TinOre
+  name: tin ore
+  parent: BaseItem
+  description: A chunk of tin ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: iron
+  - type: Item
+    size: Small
+  - type: Stack
+    count: 1
+    stackType: TinOre
+  - type: SmeltableOre
+    meltingPoint: 950      # Медь плавится легче железа
+    meltingSpeed: 1
+    resultReagent: TinMolten
+    resultAmount: 50
+    resultTemperature: 1100
+  - type: Temperature
+  - type: Clickable
+  - type: InteractionOutline
+  
+- type: reagent
+  id: TinMolten
+  name: tin
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal
+            
+- type: stack
+  id: TinOre
+  name: tin ore
+  spawn: TinOre
+  maxCount: 30
+  
+- type: reaction
+  id: BronzeReaction
+  minTemp: 1000
+  reactants:
+    CopperMolten:
+      amount: 1
+    TinMolten:
+      amount: 1
+  products:
+    BronzeMolten: 2
+    
+- type: reagent
+  id: BronzeMolten
+  name: bronze
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal
+  
+- type: entity
+  id: Fuel
+  name: fuel
+  description: A chunk of copper ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: coal
+  - type: Item
+    size: Small
+  - type: Fuel
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Temperature
+  - type: TemperatureColor
+  
+- type: entity
+  id: ScrapMetal
+  name: ScrapMetal
+  description: A chunk of copper ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: coal
+  - type: Item
+    size: Small
+  - type: Clickable
+  - type: InteractionOutline
+  
+- type: entity
+  id: BaseMold
+  parent: BaseItem
+  name: mold
+  description: A stone furnace for smelting ore into molten metal.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/furnace.rsi
+    layers:
+      - map: [ enum.FuelLightVisualLayers.Base ]
+        state: icon
+      - map: [ enum.FuelLightVisualLayers.Glow ]
+        state: lit
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      smelted_metal:
+        maxVol: 10
+  - type: Mold
+    resultEntities: 
+      CopperMolten: Fuel
+    slot: result_container
+  - type: InjectableSolution
+    solution: smelted_metal
+  - type: RefillableSolution
+    solution: smelted_metal
+  - type: ItemSlots
+    slots:
+      result_container:
+        #whitelist:
+        #  components:
+        #  - Item
+        blacklist:
+          components:
+          - SolutionContainerManager
+          - Item
+  - type: ContainerContainer
+    containers:
+      result_container: !type:ContainerSlot
+  - type: CoolInWater
+    solution: result_container
+  - type: Temperature

@@ -17,6 +17,9 @@ public sealed partial class SmeltingFurnaceComponent : Component
     public string ContainerId = "ore_container";
 
     [DataField]
+    public string SolutionContainerId = "solution_container";
+
+    [DataField]
     public string Solution = "smelted_metal";
 
     /// <summary>
@@ -26,7 +29,7 @@ public sealed partial class SmeltingFurnaceComponent : Component
     public Container? OreContainer = default!;
 
     [ViewVariables]
-    public Container? SolutionContainer = default!;
+    public ContainerSlot? SolutionContainer = default!;
 
     /// <summary>
     /// Максимальное количество предметов в печи

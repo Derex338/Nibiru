@@ -38,16 +38,16 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         private readonly SpriteSystem _spriteSystem;
-		
-		private readonly SharedConstructionSystem _sharedConstruction;
 
-		private readonly ConstructionRecipeCheck? _RecipeCheck;
+        private readonly SharedConstructionSystem _sharedConstruction;
+
+        private readonly ConstructionRecipeCheck? _RecipeCheck;
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
-		
-		public List<ProtoId<ConstructionPrototype>> ConsRecipes = new();
-		
+
+        public List<ProtoId<ConstructionPrototype>> ConsRecipes = new();
+
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
@@ -80,7 +80,7 @@ namespace Content.Client.Construction.UI
             {
                 if (value && CraftingAvailable)
                 {
-					_RecipeCheck?.RequestRecipeInfo();
+                    _RecipeCheck?.RequestRecipeInfo();
                     if (_constructionView.IsOpen)
                         _constructionView.MoveToFront();
                     else
@@ -104,8 +104,8 @@ namespace Content.Client.Construction.UI
             _constructionView = new ConstructionMenu();
             _whitelistSystem = _entManager.System<EntityWhitelistSystem>();
             _spriteSystem = _entManager.System<SpriteSystem>();
-			
-			_sharedConstruction = _entManager.System<SharedConstructionSystem>();
+
+            _sharedConstruction = _entManager.System<SharedConstructionSystem>();
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
@@ -136,8 +136,6 @@ namespace Content.Client.Construction.UI
 
             SetFavorites(_preferencesManager.Preferences?.ConstructionFavorites ?? []);
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
-			
-			//_constructionSystem?.OnCraftsUpdate += OnConstructionCrafts;
         }
 
         public void OnHudCraftingButtonToggled(BaseButton.ButtonToggledEventArgs args)
@@ -269,13 +267,13 @@ namespace Content.Client.Construction.UI
                 SelectGridButton(itemButton, isCurrentButtonSelected);
             }
         }
-		
-		public void OnConstructionCrafts(List<ProtoId<ConstructionPrototype>> crafts, object? sender)
-		{
-			ConsRecipes = crafts;
-			
-			OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
-		}
+
+        public void OnConstructionCrafts(List<ProtoId<ConstructionPrototype>> crafts, object? sender)
+        {
+            ConsRecipes = crafts;
+
+            OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+        }
 
         private List<ConstructionMenu.ConstructionMenuListData> GetAndSortRecipes((string, string) args)
         {
@@ -299,10 +297,10 @@ namespace Content.Client.Construction.UI
             }
 
             foreach (var id in ConsRecipes)//_prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
-            {		
-				if (!_prototypeManager.TryIndex(id, out var recipe))
-					continue;
-				
+            {
+                if (!_prototypeManager.TryIndex(id, out var recipe))
+                    continue;
+
                 if (recipe.Hide)
                     continue;
 
@@ -342,13 +340,13 @@ namespace Content.Client.Construction.UI
 
             return recipes;
         }
-		
-		public EntityUid Entity;
-		
-		public void SetEntity(EntityUid entity)
-		{
-			Entity = entity;
-		}
+
+        public EntityUid Entity;
+
+        public void SetEntity(EntityUid entity)
+        {
+            Entity = entity;
+        }
 
         private void SelectGridButton(BaseButton button, bool select)
         {
@@ -480,10 +478,10 @@ namespace Content.Client.Construction.UI
                 }
 
                 _placementManager.BeginPlacing(new PlacementInformation
-                    {
-                        IsTile = false,
-                        PlacementOption = _selected.PlacementMode
-                    },
+                {
+                    IsTile = false,
+                    PlacementOption = _selected.PlacementMode
+                },
                     new ConstructionPlacementHijack(_constructionSystem, _selected));
 
                 UpdateGhostPlacement();
@@ -508,10 +506,10 @@ namespace Content.Client.Construction.UI
             var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 
             _placementManager.BeginPlacing(new PlacementInformation()
-                {
-                    IsTile = false,
-                    PlacementOption = _selected.PlacementMode,
-                },
+            {
+                IsTile = false,
+                PlacementOption = _selected.PlacementMode,
+            },
                 new ConstructionPlacementHijack(constructSystem, _selected));
 
             _constructionView.BuildButtonPressed = true;

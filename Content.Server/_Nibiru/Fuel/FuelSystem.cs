@@ -1,5 +1,7 @@
+using Content.Server.Connection.Whitelist.Conditions;
 using Content.Server.Stack;
 using Content.Shared._Nibiru.Fuel;
+using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
@@ -9,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -134,6 +137,11 @@ public sealed class FuelSystem : EntitySystem
                 targetTemp,
                 comp.CurrentTemperature - comp.CoolingRate * dt
             );
+        }
+
+        if (TryComp<TemperatureComponent>(ent, out var tempComp) && tempComp.CurrentTemperature < comp.CurrentTemperature)
+        {
+            tempComp.CurrentTemperature += comp.CurrentTemperature / 10 * dt;
         }
 
         // Проверка изменения операционного статуса

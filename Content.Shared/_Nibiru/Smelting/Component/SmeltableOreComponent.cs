@@ -2,6 +2,8 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
+namespace Content.Shared._Nibiru.Smelting;
+
 /// <summary>
 /// Компонент для руды которую можно плавить
 /// </summary>
