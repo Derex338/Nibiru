@@ -28,6 +28,9 @@ public sealed partial class BuckleComponent : Component
     [MemberNotNullWhen(true, nameof(BuckledTo))]
     public bool Buckled => BuckledTo != null;
 
+    [ViewVariables]
+    public bool OnVehicle = false; //Nibiru
+
     /// <summary>
     /// Whether or not collisions should be possible with the entity we are strapped to
     /// </summary>

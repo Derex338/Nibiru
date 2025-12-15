@@ -1,16 +1,17 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._Nibiru.Vehicle;
+namespace Content.Shared.Movement.Components;
 
 /// <summary>
-/// Компонент для сущностей, которые в данный момент едут верхом
+/// Компонент для сущностей, которые в данный момент управляют транспортом
+/// Автоматически добавляется при пристёгивании к RideableComponent
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RiderComponent : Component
 {
     /// <summary>
-    /// Транспорт, на котором едет всадник
+    /// Транспорт, которым управляет всадник
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public EntityUid Mount;
+    public EntityUid Rideable;
 }

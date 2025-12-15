@@ -213,27 +213,7 @@ public sealed partial class ResearchSystem
     //Nibiru start
     private bool TechEntityRecipe(EntityUid user, TechnologyPrototype technology)
     {
-        //var container = _container.EnsureContainer<Container>(user, "item_construction", out var existed);
-        //var containers = new Dictionary<string, Container>();
         var used = new HashSet<EntityUid>();
-
-        /*Container GetContainer(string name)
-            {
-                if (containers.TryGetValue(name, out var container1))
-                    return container1;
-
-                while (true)
-                {
-                    var random = _robustRandom.Next();
-                    var c = _container.EnsureContainer<Container>(user, random.ToString(), out var exists);
-
-                    if (exists)
-                        continue;
-
-                    containers[name] = c;
-                    return c;
-                }
-            }*/
 
         if (technology.EntityToUnlock is not null)
         {
@@ -268,14 +248,6 @@ public sealed partial class ResearchSystem
 
                     if (splitStack == null)
                         continue;
-
-                    //if (string.IsNullOrEmpty(recipe.Store))
-                    //{
-                    //	if (!_container.Insert(splitStack.Value, container))
-                    //		continue;
-                    //}
-                    //else if (!_container.Insert(splitStack.Value, GetContainer(recipe.Store)))
-                    //    continue;
 
                     return true;
                 }

@@ -19,7 +19,7 @@ namespace Content.Server._Nibiru.Construction;
 /// The server-side implementation of the construction system, which is used for return unloced recipes to client.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
+public sealed partial class ConstructionRecipeCheck : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MindSystem _minds = default!;
@@ -132,8 +132,6 @@ public sealed partial class ConstructionRecipeCheck : SharedConstructionSystem
                             args.Recipes.Add(recipe);
                         }
                     }
-
-                    return;
                 }
                 else
                     args.Recipes.Add(recipe);

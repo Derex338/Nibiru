@@ -175,8 +175,14 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleUpdateCanMove(EntityUid uid, BuckleComponent component, UpdateCanMoveEvent args)
     {
-        if (component.Buckled)
+        if (component.Buckled && !component.OnVehicle) //Nibiru add
             args.Cancel();
+    }
+
+    public void BuckleVehicleChange(EntityUid uid, BuckleComponent component, bool onVehicle) //Nibiru
+    {
+        component.OnVehicle = onVehicle;
+        ActionBlocker.UpdateCanMove(uid);
     }
 
     public bool IsBuckled(EntityUid uid, BuckleComponent? component = null)

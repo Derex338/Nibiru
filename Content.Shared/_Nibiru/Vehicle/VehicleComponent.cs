@@ -1,67 +1,26 @@
-using Content.Shared.Whitelist;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Nibiru.Vehicle;
+namespace Content.Shared.Movement.Components;
 
 /// <summary>
-/// Компонент для сущностей, на которых можно ездить верхом (лошади, транспорт и т.д.)
+/// Компонент для сущностей, которыми можно управлять через Strap (лошади, транспорт)
+/// Работает автоматически при пристёгивании к StrapComponent
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class VehicleComponent : Component
+public sealed partial class RideableComponent : Component
 {
     /// <summary>
     /// Тип передвижения транспорта
     /// </summary>
     [DataField, AutoNetworkedField]
-    public VehicleLocomotionType LocomotionType = VehicleLocomotionType.Legs;
+    public RideableLocomotionType LocomotionType = RideableLocomotionType.Legs;
 
     /// <summary>
-    /// Слот для всадника
-    /// </summary>
-    [ViewVariables]
-    public ContainerSlot RiderSlot = default!;
-
-    [ViewVariables]
-    public readonly string RiderSlotId = "mount-rider-slot";
-
-    /// <summary>
-    /// Белый список существ, которые могут ездить на этом транспорте
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? RiderWhitelist;
-
-    /// <summary>
-    /// Задержка посадки на транспорт
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MountDelay = 1.5f;
-
-    /// <summary>
-    /// Задержка спешивания другого игрока
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float DismountDelay = 2f;
-
-    /// <summary>
-    /// Может ли всадник двигаться, если транспорт мёртв
+    /// Может ли всадник управлять, если транспорт мёртв
     /// </summary>
     [DataField]
     public bool CanMoveWhenDead = false;
-
-    /// <summary>
-    /// Состояние спрайта для визуализации всадника
-    /// </summary>
-    [DataField]
-    public string? RiderState;
-
-    /// <summary>
-    /// Базовое состояние спрайта транспорта
-    /// </summary>
-    [DataField]
-    public string? BaseState;
 
     /// <summary>
     /// Состояние спрайта когда на транспорте есть всадник
@@ -70,20 +29,17 @@ public sealed partial class VehicleComponent : Component
     public string? MountedState;
 
     /// <summary>
-    /// Действие для спешивания
+    /// Базовое состояние спрайта транспорта
     /// </summary>
     [DataField]
-    public EntProtoId DismountAction = "ActionDismount";
-
-    [DataField]
-    public EntityUid? DismountActionEntity;
+    public string? BaseState;
 }
 
 /// <summary>
 /// Тип передвижения транспорта
 /// </summary>
 [Serializable, NetSerializable]
-public enum VehicleLocomotionType : byte
+public enum RideableLocomotionType : byte
 {
     /// <summary>
     /// Передвижение на ногах (лошади, животные)
@@ -107,7 +63,7 @@ public enum VehicleLocomotionType : byte
 }
 
 [Serializable, NetSerializable]
-public enum MountVisuals : byte
+public enum RideableVisuals : byte
 {
     Mounted,
     Dead

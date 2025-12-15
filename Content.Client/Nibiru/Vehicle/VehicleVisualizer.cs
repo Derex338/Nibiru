@@ -1,16 +1,15 @@
-using Content.Shared._Nibiru.Vehicle;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Client.Nibiru.Vehicle;
+namespace Content.Client.Movement;
 
 /// <summary>
 /// Обрабатывает визуализацию транспорта (смена состояния спрайта)
 /// </summary>
-public sealed class VehicleVisualizerSystem : VisualizerSystem<VehicleVisualizerComponent>
+public sealed class RideableVisualizerSystem : VisualizerSystem<RideableVisualizerComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, VehicleVisualizerComponent component,
+    protected override void OnAppearanceChange(EntityUid uid, RideableVisualizerComponent component,
         ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -19,10 +18,10 @@ public sealed class VehicleVisualizerSystem : VisualizerSystem<VehicleVisualizer
         var mounted = false;
         var dead = false;
 
-        if (AppearanceSystem.TryGetData<bool>(uid, MountVisuals.Mounted, out var mountedValue, args.Component))
+        if (AppearanceSystem.TryGetData<bool>(uid, RideableVisuals.Mounted, out var mountedValue, args.Component))
             mounted = mountedValue;
 
-        if (AppearanceSystem.TryGetData<bool>(uid, MountVisuals.Dead, out var deadValue, args.Component))
+        if (AppearanceSystem.TryGetData<bool>(uid, RideableVisuals.Dead, out var deadValue, args.Component))
             dead = deadValue;
 
         // Определяем какое состояние использовать
@@ -33,8 +32,8 @@ public sealed class VehicleVisualizerSystem : VisualizerSystem<VehicleVisualizer
         else if (mounted && component.MountedState != null)
             state = component.MountedState;
 
-        if (state != null && SpriteSystem.LayerExists((uid, args.Sprite), VehicleVisualLayers.Base))
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), VehicleVisualLayers.Base, state);
+        if (state != null && SpriteSystem.LayerExists((uid, args.Sprite), RideableVisualLayers.Base))
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), RideableVisualLayers.Base, state);
     }
 }
 
@@ -42,7 +41,7 @@ public sealed class VehicleVisualizerSystem : VisualizerSystem<VehicleVisualizer
 /// Компонент для визуализации транспорта
 /// </summary>
 [RegisterComponent]
-public sealed partial class VehicleVisualizerComponent : Component
+public sealed partial class RideableVisualizerComponent : Component
 {
     [DataField]
     public string? BaseState;
@@ -55,7 +54,7 @@ public sealed partial class VehicleVisualizerComponent : Component
 }
 
 [Serializable]
-public enum VehicleVisualLayers : byte
+public enum RideableVisualLayers : byte
 {
     Base
 }
