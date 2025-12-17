@@ -2,26 +2,19 @@ using Content.Server._Nibiru.World;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Parallax;
 using Content.Shared._Nibiru.GameTicking.Rules;
-using Content.Shared._Nibiru.World;
 using Content.Shared.Database;
-using Content.Shared.EntityTable;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Nibiru.GameTicking.Rules;
 
-// Взято за основу с RimFortress
+// Взято за основу с RimFortress https://github.com/RimFortress
 /// <summary>
 /// Система управления игровым режимом Nibiru Survival
 /// </summary>
@@ -30,15 +23,8 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     [Dependency] private readonly NibiruWorldSystem _world = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityTableSystem _table = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly BiomeSystem _biome = default!;
-    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IConsoleHost _host = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -46,7 +32,6 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = LogManager.GetSawmill("rf_rule");
 
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
 
@@ -74,45 +59,6 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             return;
         }
     }
-    /*
-    public List<(EntityCoordinates Coords, EntProtoId Proto, WorldRuleComponent Comp)> AvailableRules(Entity<RimFortressPlayerComponent> uid)
-    {
-        var available = new List<(EntityCoordinates, EntProtoId, WorldRuleComponent)>();
-
-        var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var ruleUid, out var rf, out var rule))
-        {
-            if (!GameTicker.IsGameRuleActive(ruleUid, rule))
-                continue;
-
-            foreach (var spawn in _table.GetSpawns(rf.WorldEvents))
-            {
-                var proto = _prototype.Index(spawn);
-
-                if (!proto.TryGetComponent(out WorldRuleComponent? worldRule, EntityManager.ComponentFactory)
-                    || GameTicker.RoundDuration() < worldRule.StartOffset)
-                    continue;
-
-                var coords = _world.GetPlayerSettlements(new(uid, uid.Comp));
-                foreach (var coord in coords)
-                {
-                    if (_transform.GetGrid(coord) is not { } gridUid)
-                        continue;
-
-                    var indicates = _map.TileIndicesFor(gridUid, Comp<MapGridComponent>(gridUid), coord);
-
-                    if (worldRule.RequiredBiomes != null
-                        && (!_biome.TryGetBiome(indicates, gridUid, out var biome)
-                            || !worldRule.RequiredBiomes.Contains(biome)))
-                        continue;
-
-                    available.Add((coord, spawn, worldRule));
-                }
-            }
-        }
-
-        return available;
-    }*/
 
     public override void Update(float frameTime)
     {
@@ -127,8 +73,8 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             StartWorldRule(new(uid, rule));
         }
     }
-    /*
-    public RimFortressRuleComponent GetRule()
+    
+    public NibiruSurvivalRuleComponent GetRule()
     {
         while (EntityQueryEnumerator<NibiruSurvivalRuleComponent>().MoveNext(out var comp))
         {
@@ -136,27 +82,12 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         }
 
         return EntityManager.ComponentFactory.GetComponent<NibiruSurvivalRuleComponent>();
-    }*/
+    }
 
     public bool IsGameRuleActive(EntityUid ruleEntity, WorldRuleComponent? component = null)
     {
         return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
-    /*
-    public bool HasDelayedEvent(Entity<RimFortressPlayerComponent?> entity)
-    {
-        if (!Resolve(entity, ref entity.Comp))
-            return false;
-
-        var query = EntityQueryEnumerator<DelayedStartRuleComponent, WorldRuleComponent>();
-        while (query.MoveNext(out _, out var comp))
-        {
-            if (comp.Target == entity.Owner)
-                return true;
-        }
-
-        return false;
-    }*/
 
     /// <summary>
     /// Adds a world rule to the list, but does not

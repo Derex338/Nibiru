@@ -29,40 +29,17 @@ namespace Content.Server._Nibiru.World;
 /// </summary>
 public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 {
-    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly StationSpawningSystem _station = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IConfigurationManager _cvar = default!;
-    //[Dependency] private readonly IPlayerEquipmentManager _equipment = default!;
-    //[Dependency] private readonly NpcControlSystem _npc = default!;
-
-    private readonly HashSet<ICommonSession> _debugSubscribers = new();
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeNetworkEvent<WorldDebugInfoRequest>(OnDebugRequest);
-    }
 
-    private void OnDebugRequest(WorldDebugInfoRequest msg, EntitySessionEventArgs args)
-    {
-        if (!_admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug))
-        {
-            _debugSubscribers.Remove(args.SenderSession);
-            return;
-        }
 
-        if (_debugSubscribers.Add(args.SenderSession))
-            return;
-
-        _debugSubscribers.Remove(args.SenderSession);
     }
 
     public EntityUid InitializeWorld(NibiruSurvivalRuleComponent rule)
@@ -108,139 +85,5 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         var mob = _station.SpawnPlayerMob(coords, null, ev.Profile, null, null);
         _mind.TransferTo(newMind, mob);
-
-        //var player = EnsureComp<RimFortressPlayerComponent>(mob);
-        //player.FactionColor = new Color(_random.NextFloat(), _random.NextFloat(), _random.NextFloat());
-
-        //RoundstartSpawn(new(mob, player), freeTiles);
-
-        //Dirty(mob, player);
     }
-    /*
-    /// <summary>
-    /// Adds entities to the list of entities controlled by the player
-    /// </summary>
-    public void AddPops(Entity<RimFortressPlayerComponent?> player, List<EntityUid> pops)
-    {
-        if (!Resolve(player.Owner, ref player.Comp))
-            return;
-
-        foreach (var pop in pops)
-        {
-            //_npc.AddNpcControl(player.Owner, pop);
-
-            var beacon = EnsureComp<NavMapBeaconComponent>(pop);
-            //beacon.Color = player.Comp.FactionColor;
-            beacon.Text = MetaData(pop).EntityName;
-        }
-
-        player.Comp.Pops.AddRange(pops);
-        Dirty(player);
-    }
-
-    /// <summary>
-    /// Adds entity to the list of entities controlled by the player
-    /// </summary>
-    public void AddPop(Entity<RimFortressPlayerComponent?> player, EntityUid pop)
-    {
-        if (!Resolve(player.Owner, ref player.Comp))
-            return;
-
-        //_npc.AddNpcControl(player.Owner, pop);
-
-        var beacon = EnsureComp<NavMapBeaconComponent>(pop);
-        beacon.Color = player.Comp.FactionColor;
-        beacon.Text = MetaData(pop).EntityName;
-
-        player.Comp.Pops.Add(pop);
-        Dirty(player);
-    }*/
-    /*
-    /// <summary>
-    /// Spawns starting pops and expedition equipment for the player
-    /// </summary>
-    /// <remarks>
-    /// The number of spawned pops cannot be greater than <see cref="RfVars.MaxRoundstartPops"/>
-    /// </remarks>
-    private void RoundstartSpawn(Entity<RimFortressPlayerComponent?> player, HashSet<TileRef> spawnTiles)
-    {
-        if (Rule is not { } rule
-            || !Resolve(player.Owner, ref player.Comp)
-            || player.Comp.GotRoundstartPops
-            || !_player.TryGetSessionByEntity(player, out var session))
-            return;
-
-        var pops = new List<EntityUid>();
-        var prefs = _preferences.GetPreferences(session.UserId);
-        var grid = Comp<MapGridComponent>(rule.WorldMap);
-        var playerCoords = Transform(player).Coordinates;
-
-        // If we really want to spawn these entities, but we can't,
-        // we remove everything that's in our way.
-        if (spawnTiles.Count == 0)
-        {
-            var tileRef = _map.GetTileRef(rule.WorldMap, grid, playerCoords);
-            var box = Box2.CenteredAround(Turf.GetTileCenter(tileRef).Position, Vector2.One);
-
-            foreach (var entity in _lookup.GetEntitiesIntersecting(rule.WorldMap, box, LookupFlags.Static))
-            {
-                EntityManager.DeleteEntity(entity);
-            }
-
-            spawnTiles.Add(tileRef);
-        }
-
-        // Spawn player equipment
-        if (_equipment.GetPlayerEquipment(session.UserId) is { } equipment)
-        {
-            foreach (var (protoId, count) in equipment)
-            {
-                for (var i = 0; i < count; i++)
-                {
-                    var tileCenter = Turf.GetTileCenter(_random.Pick(spawnTiles));
-                    var randomOffset = new Vector2(_random.NextFloat(-0.35f, 0.35f), _random.NextFloat(-0.35f, 0.35f));
-                    var equip = Spawn(protoId, new EntityCoordinates(tileCenter.EntityId, tileCenter.Position + randomOffset));
-
-                    EnsureComp<OwnedComponent>(equip).Owners.Add(player);
-                }
-            }
-        }
-
-        // Spawn roundstart pops
-        foreach (var (_, profile) in prefs.Characters.Take(_cvar.GetCVar(RfVars.MaxRoundstartPops)))
-        {
-            var coords = Turf.GetTileCenter(_random.Pick(spawnTiles));
-            var character = (HumanoidCharacterProfile) profile;
-            var job = PickPopJob(character.JobPriorities) ?? rule.DefaultPopsJob;
-            var pop = _station.SpawnPlayerMob(coords, job, character, null);
-
-            if (rule.PopsComponentsOverride != null)
-                EntityManager.AddComponents(pop, rule.PopsComponentsOverride);
-
-            pops.Add(pop);
-        }
-
-        //AddPops(player, pops);
-
-        player.Comp.GotRoundstartPops = true;
-    }*/
-    /*
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        if (_debugSubscribers.Count == 0)
-            return;
-
-        var coords = AllPlayersSettlements()
-            .Select(x
-                => (GetNetEntity(x.Key), x.Value.Select(y => GetNetCoordinates(y)).ToList()))
-            .ToDictionary();
-        var msg = new SettlementCoordinatesMessage(coords);
-
-        foreach (var subscriber in _debugSubscribers)
-        {
-            RaiseNetworkEvent(msg, subscriber);
-        }
-    }*/
 }
