@@ -41,7 +41,7 @@
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
                     </PanelContainer.PanelOverride>
-                    <AnimatedTextureRect Name="StaticSprite"
+                    <TextureRect Name="StaticSprite"
                         HorizontalExpand="True"
                         VerticalExpand="True">
                         <goob:ResearchesContainerPanel
@@ -52,7 +52,7 @@
                             RectClipContent="True">
                             <!-- There lives all of technologies -->
                         </goob:ResearchesContainerPanel>
-                    </AnimatedTextureRect>
+                    </TextureRect>
                     <Button Name="RecenterButton" Text="{Loc 'research-console-menu-recenter-button'}" MinHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 -5"/>
                 </PanelContainer>
             </BoxContainer>
