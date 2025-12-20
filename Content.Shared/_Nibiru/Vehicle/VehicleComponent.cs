@@ -33,6 +33,9 @@ public sealed partial class RideableComponent : Component
     /// </summary>
     [DataField]
     public string? BaseState;
+
+    [DataField]
+    public bool NeedSeddle = true;
 }
 
 /// <summary>

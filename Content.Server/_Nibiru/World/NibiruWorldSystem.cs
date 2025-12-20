@@ -4,6 +4,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Mind;
 using Content.Server.Parallax;
 using Content.Server.Preferences.Managers;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
@@ -13,6 +14,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Light.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Preferences;
+using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -33,7 +35,9 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly StationSpawningSystem _station = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawn = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -47,6 +51,14 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         Rule = rule;
         var map = _map.CreateMap();
         _biome.EnsurePlanet(map, _prototype.Index(rule.Biome));
+
+        if (TryComp<MapComponent>(map, out var mapComp))
+        {
+            EnsureComp<StationDataComponent>(map);
+            foreach (var grid in _mapManager.GetAllGrids(mapComp.MapId))
+                _station.AddGridToStation(map, grid.Owner);
+            EnsureComp<StationEventEligibleComponent>(map);
+        }
 
         var cave = _map.CreateMap();
         _biome.EnsurePlanet(cave, _prototype.Index(rule.CaveBiome));
@@ -83,7 +95,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         var newMind = _mind.CreateMind(ev.Player.UserId, ev.Player.Name);
         _mind.SetUserId(newMind, ev.Player.UserId);
 
-        var mob = _station.SpawnPlayerMob(coords, null, ev.Profile, null, null);
+        var mob = _stationSpawn.SpawnPlayerMob(coords, null, ev.Profile, null, null);
         _mind.TransferTo(newMind, mob);
     }
 }

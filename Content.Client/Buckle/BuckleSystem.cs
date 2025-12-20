@@ -1,8 +1,10 @@
 using Content.Client.Rotation;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Rotation;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 
@@ -58,6 +60,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         var angle = _xformSystem.GetWorldRotation(uid) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
 
         var isNorth = angle.GetCardinalDir() == Direction.North;
+        var isSouth = angle.GetCardinalDir() == Direction.South; //Nibiru
         foreach (var buckledEntity in component.BuckledEntities)
         {
             if (!TryComp<BuckleComponent>(buckledEntity, out var buckle))
@@ -65,6 +68,22 @@ internal sealed class BuckleSystem : SharedBuckleSystem
 
             if (!TryComp<SpriteComponent>(buckledEntity, out var buckledSprite))
                 continue;
+
+            if (HasComp<RiderComponent>(buckledEntity)) //Nibiru add
+            {
+                if (isNorth)
+                {
+                    buckle.OriginalDrawDepth ??= buckledSprite.DrawDepth;
+                    _sprite.SetDrawDepth((buckledEntity, buckledSprite), strapSprite.DrawDepth + 1);
+                    continue;
+                }
+                else if (isSouth)
+                {
+                    buckle.OriginalDrawDepth ??= buckledSprite.DrawDepth;
+                    _sprite.SetDrawDepth((buckledEntity, buckledSprite), strapSprite.DrawDepth - 1);
+                    continue;
+                }
+            }
 
             if (isNorth)
             {

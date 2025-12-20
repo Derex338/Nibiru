@@ -1,0 +1,33 @@
+- type: entityTable
+  id: BasicNibiruEvents
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: WeatherRainRule
+
+- type: entity
+  id: WeatherRainRule
+  parent: BaseStationEventShortDelay
+  components:
+  - type: GameRule
+    delay:
+      min:  0
+      max:  2
+  - type: RandomSpawnRule
+    prototype: WeatherRain
+      
+- type: entity
+  id: WeatherRain
+  suffix: Rain
+  parent: AdminInstantEffectBase
+  components:
+  - type: WeatherOnTrigger 
+    weather: Rain
+    duration: 60
+    
+- type: entity
+  id: BasicNibiruRoundstartVariation
+  parent: BaseGameRule
+  components:
+  - type: RoundstartStationVariationRule
+    rules:
+    - id: WeatherRainRule

@@ -5,16 +5,43 @@
   name: rideable horse
   description: A majestic horse you can ride.
   components:
-  - type: Strap # Обязательный компонент для посадки
-    position: Stand
-    buckleOffset: "0,0.15"
-  - type: Rideable # Компонент транспорта
+  - type: Rideable # Важно чтобы этот компонент был выше чем Strap
     locomotionType: Legs
     canMoveWhenDead: false
     baseState: horse
     mountedState: horse_mounted
-  - type: InputMover
-  - type: MobMover
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
-    baseSprintSpeed: 5.0
+  - type: Strap 
+  - type: Inventory
+    templateId: BaseHorse
+  - type: Puller
+    needsHands: false # Тоже обязательно, иначе тащить не будет
+  - type: RequireProjectileTarget
+    
+- type: entity
+  id: Saddle
+  parent: Clothing
+  name: saddle
+  description: A majestic horse you can ride.
+  components:
+  - type: Clothing
+    slots: [back]
+  - type: Saddle
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: icon
+  - type: Item
+    size: Huge
+    
+- type: inventoryTemplate
+  id: BaseHorse
+  slots:
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
+      stripTime: 5
+      uiWindowPos: 1,0
+      strippingWindowPos: 0,1
+      displayName: Back
+      whitelist:
+        components:
+        - Saddle
