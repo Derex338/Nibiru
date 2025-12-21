@@ -1,41 +1,35 @@
+using System.Linq;
+using System.Numerics;
 using Content.Client.Eui;
-using Content.Client.Nibiru.Faction.UI;
-using Content.Client.Nibiru.Key.UI;
-using Content.Shared._Nibiru.Lock;
+using Content.Shared._Nibiru.Factions;
+using Content.Shared._Nibiru.Factions.Messages;
+using Content.Shared._Nibiru.Key;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Shared.Utility;
-using System.Numerics;
 
-namespace Content.Client.Nibiru.Key;
+namespace Content.Client.Nibiru.Key.UI;
 
 [UsedImplicitly]
-public sealed class KeyCodeEui : BaseEui
+public sealed class KeyCodeSetEui : BaseEui
 {
     private readonly KeyCodeSet _window;
 
-    public KeyCodeEui()
+    public KeyCodeSetEui()
     {
         _window = new KeyCodeSet();
 
-        _window.OnClose += () =>
-        {
-            if (_window.CodeLabel.Text == "")
-                SendMessage(new KeyCodeMessage(00000));
-            else
-                SendMessage(new KeyCodeMessage(Parse.Int32(_window.CodeLabel.Text)));
-        };
+        _window.OnCancelled += () => SendMessage(new KeyCodeSetMessage(false, 00000));
 
-        _window.OnSetCode += code =>
+        _window.OnCodeSubmitted += (code) =>
         {
-            SendMessage(new KeyCodeMessage(Parse.Int32(code)));
+            SendMessage(new KeyCodeSetMessage(true, code));
             _window.Close();
         };
     }
     public override void HandleState(EuiStateBase state)
     {
-        //if (state is FactionJoinRequestMessage consentState)
+        //if (state is KeyCodeSetMessage consentState)
         //{
         //    _window.SetConverterName(consentState.ConverterName);
         //}
@@ -47,12 +41,11 @@ public sealed class KeyCodeEui : BaseEui
 
         // Open window somewhere below center of screen!
         // We don't want to hide what is going around the player
-        _window.OpenCentered();
+        _window.OpenCenteredAt(new Vector2(0.5f, 0.75f));
     }
 
     public override void Closed()
     {
         _window.Close();
     }
-
 }

@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Nibiru.Faction.UI;
 
+// Код взят с Reserv'а и изменён под фракции
 [UsedImplicitly]
 public sealed class FactionRequestedEui : BaseEui
 {

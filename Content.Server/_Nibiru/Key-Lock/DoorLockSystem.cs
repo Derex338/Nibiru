@@ -1,56 +1,54 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Prototypes;
-using Content.Server.Mind;
-using Content.Server.Popups;
-using Content.Server.EUI;
-using Content.Shared.IdentityManagement;
-using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
 using Content.Shared.Doors;
 using Content.Shared._Nibiru.Lock;
 using Content.Shared._Nibiru.Key;
 using Content.Server.Administration.Logs;
-using Content.Shared.Item;
 using Content.Shared.Database;
+using Robust.Server.Audio;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Content.Server.Instruments;
+using Content.Shared.Tools.Components;
+using Content.Server.Tools;
+using Content.Server.EUI;
+using Robust.Shared.Player;
+using Content.Server.Mind;
 using Content.Shared._Nibiru.Factions;
+using Content.Server._Nibiru.Factions.UI;
+using Content.Server.Popups;
+using Content.Server._Nibiru.Key.UI;
+using Content.Server.DoAfter;
 
 namespace Content.Server._Nibiru.Key;
 
 public sealed class DoorLockSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ISerializationManager _serMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly ToolSystem _tool = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly EuiManager _euiMan = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<InteractUsingEvent>(CreateLock);
-
         SubscribeLocalEvent<DoorLockComponent, InteractUsingEvent>(TryUnlock);
+        SubscribeLocalEvent<KeyComponent, InteractUsingEvent>(TryKey);
 
         SubscribeLocalEvent<DoorLockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpen);
         SubscribeLocalEvent<DoorLockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClose);
 
         SubscribeLocalEvent<DoorLockComponent, LockPickDoAfter>(OnDoAfterLock);
-
-        //SubscribeLocalEvent<KeyComponent, LockPickCompleateEvent>(OnKeyCraft);
+        SubscribeLocalEvent<DoorLockComponent, KeyCodeSetEvent>(SetCodeDoor);
+        SubscribeLocalEvent<KeyComponent, KeyCodeSetEvent>(SetCodeKey);
     }
 
     private void CreateLock(InteractUsingEvent args)
@@ -62,15 +60,15 @@ public sealed class DoorLockSystem : EntitySystem
 
         if (TryComp<DoorLockComponent>(args.Used, out var DoorLock) && !TryComp<DoorLockComponent>(args.Target, out var target))
         {
-            target = EntityManager.AddComponent<DoorLockComponent>(args.Target);
-
+            target = AddComp<DoorLockComponent>(args.Target);
             _serMan.CopyTo(DoorLock, ref target, notNullableOverride: true);
 
-            EntityManager.DeleteEntity(args.Used);
-
+            QueueDel(args.Used);
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} повесил замок на {ToPrettyString(args.Target)}");
-
             Dirty(args.Target, target);
+
+            if (target.LockSound != null)
+                _audio.PlayPvs(target.LockSound, args.Target);
 
             args.Handled = true;
         }
@@ -81,11 +79,22 @@ public sealed class DoorLockSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (component.LockCode == 0 && TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, "Rasp", tool))
+        {
+            SetCode(args.Target, args.User);
+            return;
+        }
+
         if (TryComp<KeyComponent>(args.Used, out var Key)
         && Key.LockCode == component.LockCode)
         {
             component.Locked = !component.Locked;
             args.Handled = true;
+
+            if (component.UnlockSound != null)
+                _audio.PlayPvs(component.UnlockSound, uid);
+
+            return;
         }
 
         if (TryComp<LockPickComponent>(args.Used, out var LockPick))
@@ -107,6 +116,9 @@ public sealed class DoorLockSystem : EntitySystem
         if (comp.Locked)
         {
             args.Cancel();
+
+            if (comp.CantOpenSound != null)
+                _audio.PlayPvs(comp.CantOpenSound, uid);
         }
     }
 
@@ -115,6 +127,9 @@ public sealed class DoorLockSystem : EntitySystem
         if (comp.Locked)
         {
             args.Cancel();
+
+            if (comp.CantOpenSound != null)
+                _audio.PlayPvs(comp.CantOpenSound, uid);
         }
     }
 
@@ -126,14 +141,51 @@ public sealed class DoorLockSystem : EntitySystem
         component.Locked = !component.Locked;
     }
 
-    //private void OnKeyCraft(EntityUid uid, KeyComponent component, LockPickCompleateEvent args)
-    //{
-    //    //if (_mind.TryGetMind(args.SenderSession, out _, out var mind) &&
-    //    //    _player.TryGetSessionById(mind.UserId, out var session))
-    //    //{
-    //        var window = new SetKeyEui(component, this, EntityManager);
+    private void TryKey(EntityUid uid, KeyComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled || component.LockCode != 0)
+            return;
 
-    //        _euiMan.OpenEui(window, args.);
-    //    //}
-    //}
+        if (TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, "Rasp", tool))
+            SetCode(args.Target, args.User);
+    }
+
+    private void SetCode(EntityUid code, EntityUid user)
+    {
+        if (_mind.TryGetMind(user, out var consentMindId, out var mind) &&
+                _player.TryGetSessionById(mind.UserId, out var session))
+        {
+            var window = new KeyCodeSetEui(code, user, this, _popup, EntityManager);
+
+            _eui.OpenEui(window, session);
+        }
+    }
+
+    public void OnAccept(EntityUid target, EntityUid user, int code)
+    {
+        _doAfterSystem.TryStartDoAfter(
+            new DoAfterArgs(EntityManager, user, 3, new KeyCodeSetEvent(code), target)
+            {
+                BreakOnDamage = true,
+                BreakOnMove = true,
+                NeedHand = true,
+            });
+    }
+
+    private void SetCodeKey(EntityUid uid, KeyComponent comp, KeyCodeSetEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        comp.LockCode = args.Code;
+        Dirty(uid, comp);
+    }
+    private void SetCodeDoor(EntityUid uid, DoorLockComponent comp, KeyCodeSetEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        comp.LockCode = args.Code;
+        Dirty(uid, comp);
+    }
 }

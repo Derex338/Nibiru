@@ -18,6 +18,7 @@ using Content.Server.EUI;
 using Content.Shared.IdentityManagement;
 using Content.Server._Nibiru.Factions.UI;
 
+//Часть кода взята с Reserv 
 namespace Content.Server._Nibiru.Factions
 {
     public sealed class AddFactionVerb : EntitySystem

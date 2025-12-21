@@ -1,0 +1,44 @@
+- type: entity
+  id: Key
+  parent: BaseItem
+  name: key
+  components:
+  - type: Key
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+ 
+- type: entity
+  id: DoorLock
+  parent: BaseItem
+  name: lock
+  components:
+  - type: DoorLock
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+  
+- type: entity
+  id: Rasp
+  parent: BaseItem
+  name: rasp
+  components:
+  - type: Tool
+    qualities:
+    - Rasp
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    
+- type: tool
+  id: Rasp
+  name: tool-quality-prying-name
+  toolName: tool-quality-prying-tool-name
+  spawn: Rasp
+  icon: { sprite: Objects/Tools/crowbar.rsi, state: icon }

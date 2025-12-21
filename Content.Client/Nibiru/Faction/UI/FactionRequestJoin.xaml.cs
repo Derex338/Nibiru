@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Nibiru.Faction.UI;
 
+// Код взят с Reserv 
 [GenerateTypedNameReferences]
 public sealed partial class FactionRequestJoin : FancyWindow
 {

@@ -27,15 +27,3 @@ public sealed partial class LockPickCompleateEvent : EntityEventArgs
 {
 
 }
-
-[Serializable, NetSerializable]
-public sealed class KeyCodeState() : EuiStateBase
-{
-    
-}
-
-[Serializable, NetSerializable]
-public sealed class KeyCodeMessage(int Code) : EuiMessageBase
-{
-    public readonly int Code = Code;
-}

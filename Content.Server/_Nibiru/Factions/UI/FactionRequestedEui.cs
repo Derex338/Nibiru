@@ -9,6 +9,7 @@ using Content.Shared._Nibiru.Factions.Messages;
 
 namespace Content.Server._Nibiru.Factions.UI;
 
+//Код взят с Reserv'а и изменён под фракции
 public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, AddFactionVerb factionVerbSystem, PopupSystem popup, EntityManager entManager) : BaseEui
 {
     public override EuiStateBase GetNewState()
@@ -26,7 +27,7 @@ public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, A
     {
         base.HandleMessage(msg);
 
-        if (msg is FactionJoinRequestMessage consent) //&& revRuleSystem.IsConvertable(target))
+        if (msg is FactionJoinRequestMessage consent)
         {
             if (entManager.TryGetComponent<FactionComponent>(target, out var targetConsFact)
                 || !entManager.TryGetComponent<FactionComponent>(converter, out var consFact))
@@ -36,17 +37,9 @@ public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, A
 
             if (consent.IsAccepted)
             {
-				//var targetComp = entManager.AddComponent<FactionComponent>(target);
-    //            targetComp.FactionName = consFact.FactionName;
-    //            targetComp.Leader = converter;
-    //            targetComp.FactionColor = consFact.FactionColor;
-    //            consFact.Members.Add(target);
-    //            if (consFact.ResearchServer is not null)
-    //                targetComp.ResearchServer = consFact.ResearchServer;
-
                 // Announce that convert was successful
                 popup.PopupEntity(
-                    Loc.GetString("ЗАПРОС ПРИНЯТ", ("target", Identity.Entity(target, entManager))),
+                    Loc.GetString("Запрос принят", ("target", Identity.Entity(target, entManager))),
                     target,
                     converter);
 
@@ -56,7 +49,7 @@ public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, A
             {
                 // Announce that convert failed
                 popup.PopupEntity(
-                    Loc.GetString("ПОШЁЛ НАХУЙ", ("target", Identity.Entity(target, entManager))),
+                    Loc.GetString("Запрос отклонили", ("target", Identity.Entity(target, entManager))),
                     target,
                     converter,
                     PopupType.SmallCaution);

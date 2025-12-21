@@ -12,9 +12,6 @@ public partial class DoorLockComponent : Component
     public int LockCode = 00000;
 	
 	[DataField]
-    public SoundSpecifier? LockSound;
-	
-	[DataField]
     public bool Locked = false;
 	
 	//[DataField]
@@ -22,4 +19,13 @@ public partial class DoorLockComponent : Component
 	
 	[DataField]
     public float CrackDuration = 120f;
+
+    [DataField]
+    public SoundSpecifier? CantOpenSound;
+
+    [DataField]
+    public SoundSpecifier? LockSound;
+
+    [DataField]
+    public SoundSpecifier? UnlockSound;
 }
