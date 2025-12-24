@@ -11,10 +11,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Server._Nibiru.Factions;
+using Content.Shared._Nibiru.Factions;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server._Nibiru.GameTicking.Rules;
 
-// Взято за основу с RimFortress https://github.com/RimFortress
 /// <summary>
 /// Система управления игровым режимом Nibiru Survival
 /// </summary>
@@ -25,8 +28,14 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly FactionSystem _factionSystem = default!;
 
     private ISawmill _sawmill = default!;
+
+    /// <summary>
+    /// Хранилище выбранных фракций игроками
+    /// </summary>
+    public readonly Dictionary<NetUserId, string?> PlayerFactionChoices = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -34,8 +43,23 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         base.Initialize();
 
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
+        //SubscribeNetworkEvent<LateJoinFactionMessage>(OnLateJoinFactionChoice);
 
         //InitializeCommands();
+    }
+
+    /// <summary>
+    /// Сохраняет выбор фракции игрока
+    /// </summary>
+    public void OnLateJoinFactionChoice(ICommonSession session, string? FactionName)
+    {
+       //if (session.UserId is not { } userId)
+       //     return;
+
+        // Сохраняем выбор (null означает одиночный спавн)
+        PlayerFactionChoices[session.UserId] = FactionName;
+
+        _sawmill?.Info($"Player {session.Name} chose faction: {FactionName ?? "solo"}");
     }
 
     protected override void Added(EntityUid uid, NibiruSurvivalRuleComponent comp, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -48,12 +72,27 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
     {
         var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var rule))
+        while (query.MoveNext(out var uid, out var survivalComp, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            _world.SpawnPlayer(ev);
+            // Сначала спавним игрока обычным способом
+            var entity = _world.SpawnPlayer(ev);
+
+            // Затем проверяем, выбрал ли он фракцию
+            if (ev.Player.UserId is { } userId &&
+                PlayerFactionChoices.TryGetValue(userId, out var factionName))
+            {
+                // Если фракция выбрана, присоединяем к ней
+                if (!string.IsNullOrEmpty(factionName) && entity != null)
+                {
+                    _factionSystem.TryJoinPlayerToFaction(entity.Value, factionName);
+                }
+
+                // Удаляем выбор после использования
+                PlayerFactionChoices.Remove(userId);
+            }
 
             ev.Handled = true;
             return;
@@ -73,7 +112,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             StartWorldRule(new(uid, rule));
         }
     }
-    
+
     public NibiruSurvivalRuleComponent GetRule()
     {
         while (EntityQueryEnumerator<NibiruSurvivalRuleComponent>().MoveNext(out var comp))
@@ -232,6 +271,14 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         var ev = new WorldRuleEndedEvent(uid, proto, uid.Comp.Target, uid.Comp.TargetCoordinates);
         RaiseLocalEvent(uid, ref ev, true);
         return true;
+    }
+
+    /// <summary>
+    /// Возвращает список доступных фракций для UI
+    /// </summary>
+    public IReadOnlyList<FactionInfo> GetAvailableFactions()
+    {
+        return _factionSystem.AvailableFactions;
     }
 }
 

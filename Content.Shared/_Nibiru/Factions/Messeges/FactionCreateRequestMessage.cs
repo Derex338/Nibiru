@@ -32,13 +32,6 @@ public sealed class FactionDeleteMessage : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class FactionChangeStateMessage : EntityEventArgs
-{
-    public Color? Color = null;
-    public string? FactionName = null;
-}
-
-[Serializable, NetSerializable]
 public sealed class FactionKickMemberMessage : EntityEventArgs
 {
     public NetEntity Member = default;

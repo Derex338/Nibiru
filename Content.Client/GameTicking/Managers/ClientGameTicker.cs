@@ -11,6 +11,7 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
+using Content.Shared._Nibiru.Factions;
 
 namespace Content.Client.GameTicking.Managers
 {
@@ -43,6 +44,9 @@ namespace Content.Client.GameTicking.Managers
         public event Action? LobbyStatusUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>>? LobbyJobsAvailableUpdated;
+        public IReadOnlyList<FactionInfo> AvailableFactions { get; private set; } = new List<FactionInfo>(); //Nibiru
+        public event Action<IReadOnlyList<FactionInfo>>? AvailableFactionsUpdated;
+
 
         public override void Initialize()
         {
@@ -59,8 +63,17 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
+            SubscribeNetworkEvent<FactionsAvailableMessage>(OnFactionsAvailableUpdated);
+
             _admin.AdminStatusUpdated += OnAdminUpdated;
             OnAdminUpdated();
+        }
+
+        private void OnFactionsAvailableUpdated(FactionsAvailableMessage msg)
+        {
+            AvailableFactions = msg.Factions;
+            AvailableFactionsUpdated?.Invoke(AvailableFactions);
+            Logger.Info($"Factions updated: {AvailableFactions.Count} available");
         }
 
         public override void Shutdown()

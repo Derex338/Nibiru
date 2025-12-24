@@ -48,5 +48,8 @@
     <Compile Update="Nibiru\Workbench\UI\WorkbenchWindow.xaml.cs">
       <DependentUpon>WorkbenchWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UserInterface\Systems\Faction\UI\FactionMenu.xaml.cs">
+      <DependentUpon>FactionMenu.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

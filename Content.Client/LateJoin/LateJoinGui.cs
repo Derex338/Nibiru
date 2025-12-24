@@ -1,327 +1,394 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.CrewManifest;
 using Content.Client.GameTicking.Managers;
-using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
-using Content.Client.Players.PlayTimeTracking;
-using Content.Shared.CCVar;
-using Content.Shared.Preferences;
-using Content.Shared.Roles;
+using Content.Shared._Nibiru.Factions;
 using Content.Shared.StatusIcon;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
+    /// <summary>
+    /// GUI для выбора фракции при позднем присоединении
+    /// </summary>
     public sealed class LateJoinGui : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
-
-        public event Action<(NetEntity, string)> SelectedId;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
-        private readonly CrewManifestSystem _crewManifest;
         private readonly ISawmill _sawmill;
 
-        private readonly Dictionary<NetEntity, Dictionary<string, List<JobButton>>> _jobButtons = new();
-        private readonly Dictionary<NetEntity, Dictionary<string, BoxContainer>> _jobCategories = new();
-        private readonly List<ScrollContainer> _jobLists = new();
-
-        private readonly Control _base;
+        private readonly Dictionary<string, FactionButton> _factionButtons = new();
+        private readonly BoxContainer _factionList;
+        private readonly Button _soloButton;
 
         public LateJoinGui()
         {
-            MinSize = SetSize = new Vector2(450, 560);
+            MinSize = SetSize = new Vector2(600, 500);
             IoCManager.InjectDependencies(this);
+
             _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
-            _crewManifest = _entitySystem.GetEntitySystem<CrewManifestSystem>();
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
-            _sawmill = _logManager.GetSawmill("latejoin.panel");
+            _sawmill = _logManager.GetSawmill("faction.latejoin");
 
             Title = Loc.GetString("late-join-gui-title");
 
-            _base = new BoxContainer()
+            var baseContainer = new BoxContainer()
             {
                 Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
             };
 
-            ContentsContainer.AddChild(_base);
-
-            _jobRequirements.Updated += RebuildUI;
-            RebuildUI();
-
-            SelectedId += x =>
+            // Заголовок
+            baseContainer.AddChild(new StripeBack
             {
-                var (station, jobId) = x;
-                _sawmill.Info($"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
-                Close();
-            };
-
-            _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
-        }
-
-        private void RebuildUI()
-        {
-            _base.RemoveAllChildren();
-            _jobLists.Clear();
-            _jobButtons.Clear();
-            _jobCategories.Clear();
-
-            if (!_gameTicker.DisallowedLateJoin && _gameTicker.StationNames.Count == 0)
-                _sawmill.Warning("No stations exist, nothing to display in late-join GUI");
-
-            foreach (var (id, name) in _gameTicker.StationNames)
-            {
-                var jobList = new BoxContainer
+                Children =
                 {
-                    Orientation = LayoutOrientation.Vertical,
-                    Margin = new Thickness(0, 0, 5f, 0),
-                };
-
-                var collapseButton = new ContainerButton()
-                {
-                    HorizontalAlignment = HAlignment.Right,
-                    ToggleMode = true,
-                    Children =
-                    {
-                        new TextureRect
-                        {
-                            StyleClasses = { OptionButton.StyleClassOptionTriangle },
-                            Margin = new Thickness(8, 0),
-                            HorizontalAlignment = HAlignment.Center,
-                            VerticalAlignment = VAlignment.Center,
-                        }
-                    }
-                };
-
-                _base.AddChild(new StripeBack()
-                {
-                    Children =
-                    {
-                        new PanelContainer()
-                        {
-                            Children =
-                            {
-                                new Label()
-                                {
-                                    StyleClasses = { "LabelBig" },
-                                    Text = name,
-                                    Align = Label.AlignMode.Center,
-                                },
-                                collapseButton
-                            }
-                        }
-                    }
-                });
-
-                if (_configManager.GetCVar(CCVars.CrewManifestWithoutEntity))
-                {
-                    var crewManifestButton = new Button()
-                    {
-                        Text = Loc.GetString("crew-manifest-button-label")
-                    };
-                    crewManifestButton.OnPressed += _ => _crewManifest.RequestCrewManifest(id);
-
-                    _base.AddChild(crewManifestButton);
-                }
-
-                var jobListScroll = new ScrollContainer()
-                {
-                    VerticalExpand = true,
-                    Children = { jobList },
-                    Visible = false,
-                };
-
-                if (_jobLists.Count == 0)
-                    jobListScroll.Visible = true;
-
-                _jobLists.Add(jobListScroll);
-
-                _base.AddChild(jobListScroll);
-
-                collapseButton.OnToggled += _ =>
-                {
-                    foreach (var section in _jobLists)
-                    {
-                        section.Visible = false;
-                    }
-                    jobListScroll.Visible = true;
-                };
-
-                var firstCategory = true;
-                var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToArray();
-                Array.Sort(departments, DepartmentUIComparer.Instance);
-
-                _jobButtons[id] = new Dictionary<string, List<JobButton>>();
-
-                foreach (var department in departments)
-                {
-                    var departmentName = Loc.GetString(department.Name);
-                    _jobCategories[id] = new Dictionary<string, BoxContainer>();
-                    var stationAvailable = _gameTicker.JobsAvailable[id];
-                    var jobsAvailable = new List<JobPrototype>();
-
-                    foreach (var jobId in department.Roles)
-                    {
-                        if (!stationAvailable.ContainsKey(jobId))
-                            continue;
-
-                        jobsAvailable.Add(_prototypeManager.Index<JobPrototype>(jobId));
-                    }
-
-                    jobsAvailable.Sort(JobUIComparer.Instance);
-
-                    // Do not display departments with no jobs available.
-                    if (jobsAvailable.Count == 0)
-                        continue;
-
-                    var category = new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Vertical,
-                        Name = department.ID,
-                        ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
-                            ("departmentName", departmentName))
-                    };
-
-                    if (firstCategory)
-                    {
-                        firstCategory = false;
-                    }
-                    else
-                    {
-                        category.AddChild(new Control
-                        {
-                            MinSize = new Vector2(0, 23),
-                        });
-                    }
-
-                    category.AddChild(new PanelContainer
+                    new PanelContainer
                     {
                         Children =
                         {
                             new Label
                             {
-                                StyleClasses = { "LabelBig" },
-                                Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", departmentName))
+                                StyleClasses = { "LabelHeading" },
+                                Text = Loc.GetString("late-join-gui-faction-header"),
+                                Align = Label.AlignMode.Center,
+                                Margin = new Thickness(10, 8)
                             }
                         }
-                    });
-
-                    _jobCategories[id][department.ID] = category;
-                    jobList.AddChild(category);
-
-                    foreach (var prototype in jobsAvailable)
-                    {
-                        var value = stationAvailable[prototype.ID];
-
-                        var jobLabel = new Label
-                        {
-                            Margin = new Thickness(5f, 0, 0, 0)
-                        };
-
-                        var jobButton = new JobButton(jobLabel, prototype.ID, prototype.LocalizedName, value);
-
-                        var jobSelector = new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Horizontal,
-                            HorizontalExpand = true
-                        };
-
-                        var icon = new TextureRect
-                        {
-                            TextureScale = new Vector2(2, 2),
-                            VerticalAlignment = VAlignment.Center
-                        };
-
-                        var jobIcon = _prototypeManager.Index(prototype.Icon);
-                        icon.Texture = _sprites.Frame0(jobIcon.Icon);
-                        jobSelector.AddChild(icon);
-
-                        jobSelector.AddChild(jobLabel);
-                        jobButton.AddChild(jobSelector);
-                        category.AddChild(jobButton);
-
-                        jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
-
-                        if (!_jobRequirements.IsAllowed(prototype, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
-                        {
-                            jobButton.Disabled = true;
-
-                            if (!reason.IsEmpty)
-                            {
-                                var tooltip = new Tooltip();
-                                tooltip.SetMessage(reason);
-                                jobButton.TooltipSupplier = _ => tooltip;
-                            }
-
-                            jobSelector.AddChild(new TextureRect
-                            {
-                                TextureScale = new Vector2(0.4f, 0.4f),
-                                Stretch = TextureRect.StretchMode.KeepCentered,
-                                Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/lock.svg.192dpi.png"))),
-                                HorizontalExpand = true,
-                                HorizontalAlignment = HAlignment.Right,
-                            });
-                        }
-                        else if (value == 0)
-                        {
-                            jobButton.Disabled = true;
-                        }
-
-                        if (!_jobButtons[id].ContainsKey(prototype.ID))
-                        {
-                            _jobButtons[id][prototype.ID] = new List<JobButton>();
-                        }
-
-                        _jobButtons[id][prototype.ID].Add(jobButton);
                     }
                 }
+            });
+
+            // Описание
+            var descLabel = new RichTextLabel
+            {
+                Margin = new Thickness(15, 10),
+                HorizontalAlignment = HAlignment.Center
+            };
+            descLabel.SetMessage(Loc.GetString("late-join-gui-faction-description"));
+            baseContainer.AddChild(descLabel);
+
+            // Список фракций
+            _factionList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(10, 5),
+                VerticalExpand = true
+            };
+
+            var scrollContainer = new ScrollContainer
+            {
+                VerticalExpand = true,
+                HorizontalExpand = true,
+                Children = { _factionList }
+            };
+
+            baseContainer.AddChild(scrollContainer);
+
+            // Кнопка одиночного спавна
+            _soloButton = new Button
+            {
+                Text = Loc.GetString("late-join-gui-spawn-solo"),
+                HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(10, 5),
+                MinSize = new Vector2(250, 40),
+                StyleClasses = { "ButtonSquare" }
+            };
+            _soloButton.OnPressed += _ =>
+            {
+                _sawmill.Info("Player chose solo spawn");
+                OnFactionSelected(null);
+                _consoleHost.ExecuteCommand($"latejoin_solo");
+            };
+            baseContainer.AddChild(_soloButton);
+
+            Contents.AddChild(baseContainer);
+
+            // Подписываемся на обновления списка фракций от GameTicker
+            _gameTicker.AvailableFactionsUpdated += UpdateAvailableFactions;
+
+            // Обновляем UI при открытии
+            RebuildUI();
+        }
+
+        /// <summary>
+        /// Перестраивает UI, читая текущий список фракций из GameTicker
+        /// </summary>
+        private void RebuildUI()
+        {
+            // Читаем список напрямую из GameTicker (как оригинальный LateJoinGui читает JobsAvailable)
+            UpdateAvailableFactions(_gameTicker.AvailableFactions);
+        }
+
+        /// <summary>
+        /// Вызывается когда игрок выбирает фракцию или одиночный спавн
+        /// </summary>
+        private void OnFactionSelected(string? factionName)
+        {
+            _consoleHost.ExecuteCommand($"latejoin_faction {factionName}");
+            _consoleHost.ExecuteCommand($"latejoin_solo");
+
+            if (factionName != null)
+                _sawmill.Info($"Player chose faction: {factionName}");
+            else
+                _sawmill.Info("Player chose solo spawn");
+
+            // Закрываем окно
+            Close();
+        }
+
+        /// <summary>
+        /// Обновляет список доступных фракций
+        /// Вызывается автоматически при получении обновления от сервера
+        /// </summary>
+        private void UpdateAvailableFactions(IReadOnlyList<FactionInfo> availableFactions)
+        {
+            _factionButtons.Clear();
+            _factionList.RemoveAllChildren();
+
+            if (availableFactions.Count == 0)
+            {
+                _factionList.AddChild(new PanelContainer
+                {
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = Loc.GetString("late-join-gui-no-factions"),
+                            HorizontalAlignment = HAlignment.Center,
+                            Margin = new Thickness(0, 40),
+                            StyleClasses = { "LabelBig" }
+                        }
+                    }
+                });
+                return;
+            }
+
+            // Сортируем фракции по количеству членов (сначала самые большие)
+            var sortedFactions = availableFactions
+                .Where(f => f.IsRecruiting) // Показываем только фракции с открытым набором
+                .OrderByDescending(f => f.MemberCount)
+                .ToList();
+
+            if (sortedFactions.Count == 0)
+            {
+                _factionList.AddChild(new PanelContainer
+                {
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = Loc.GetString("late-join-gui-no-factions"),
+                            HorizontalAlignment = HAlignment.Center,
+                            Margin = new Thickness(0, 40),
+                            StyleClasses = { "LabelBig" }
+                        }
+                    }
+                });
+                return;
+            }
+
+            foreach (var faction in sortedFactions)
+            {
+                var factionButton = CreateFactionButton(faction);
+                _factionButtons[faction.FactionName] = factionButton;
+                _factionList.AddChild(factionButton);
+
+                // Добавляем отступ между кнопками
+                _factionList.AddChild(new Control { MinSize = new Vector2(0, 5) });
             }
         }
 
-        private void JobsAvailableUpdated(IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> updatedJobs)
+        /// <summary>
+        /// Создаёт кнопку для выбора фракции
+        /// </summary>
+        private FactionButton CreateFactionButton(FactionInfo faction)
         {
-            foreach (var stationEntries in updatedJobs)
-            {
-                if (_jobButtons.ContainsKey(stationEntries.Key))
-                {
-                    var jobsAvailable = stationEntries.Value;
+            var button = new FactionButton(faction);
 
-                    var existingJobEntries = _jobButtons[stationEntries.Key];
-                    foreach (var existingJobEntry in existingJobEntries)
+            var mainContainer = new PanelContainer
+            {
+                StyleClasses = { "ButtonRect" },
+                MinSize = new Vector2(0, 80)
+            };
+
+            var contentBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                Margin = new Thickness(15, 10)
+            };
+
+            // Цветная полоска слева
+            var colorBar = new PanelContainer
+            {
+                MinSize = new Vector2(8, 0),
+                MaxSize = new Vector2(8, 1000),
+                VerticalExpand = true,
+                ModulateSelfOverride = faction.Color
+            };
+            contentBox.AddChild(colorBar);
+
+            contentBox.AddChild(new Control { MinSize = new Vector2(10, 0) });
+
+            // Иконка фракции
+            if (!string.IsNullOrEmpty(faction.IconPath))
+            {
+                var iconContainer = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    VerticalAlignment = VAlignment.Center,
+                    Margin = new Thickness(0, 0, 15, 0)
+                };
+
+                var icon = new TextureRect
+                {
+                    TextureScale = new Vector2(2.5f, 2.5f),
+                    VerticalAlignment = VAlignment.Center,
+                    MinSize = new Vector2(64, 64)
+                };
+
+                try
+                {
+                    var spriteSpec = _prototypeManager.Index<StatusIconPrototype>(faction.IconPath);
+                    icon.Texture = _sprites.Frame0(spriteSpec.Icon);
+                }
+                catch
+                {
+                    // Если иконка не найдена, используем placeholder
+                    try
                     {
-                        if (jobsAvailable.ContainsKey(existingJobEntry.Key))
-                        {
-                            var updatedJobValue = jobsAvailable[existingJobEntry.Key];
-                            foreach (var matchingJobButton in existingJobEntry.Value)
-                            {
-                                if (matchingJobButton.Amount != updatedJobValue)
-                                {
-                                    matchingJobButton.RefreshLabel(updatedJobValue);
-                                    matchingJobButton.Disabled |= matchingJobButton.Amount == 0;
-                                }
-                            }
-                        }
+                        var defaultIcon = new SpriteSpecifier.Rsi(
+                            new ResPath("/Textures/Interface/Misc/job_icons.rsi"),
+                            "Unknown");
+                        icon.Texture = _sprites.Frame0(defaultIcon);
+                    }
+                    catch
+                    {
+                        // Игнорируем если не удалось загрузить
                     }
                 }
+
+                iconContainer.AddChild(icon);
+                contentBox.AddChild(iconContainer);
             }
+
+            // Информация о фракции
+            var infoBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                VerticalExpand = true,
+                HorizontalExpand = true
+            };
+
+            // Название фракции
+            var nameLabel = new Label
+            {
+                StyleClasses = { "LabelBig" },
+                Text = faction.FactionName,
+                FontColorOverride = faction.Color
+            };
+            infoBox.AddChild(nameLabel);
+
+            // Описание
+            if (!string.IsNullOrEmpty(faction.Description))
+            {
+                var descLabel = new Label
+                {
+                    Text = faction.Description,
+                    FontColorOverride = Color.LightGray,
+                    ClipText = true,
+                    MaxWidth = 350
+                };
+                infoBox.AddChild(descLabel);
+            }
+
+            infoBox.AddChild(new Control { MinSize = new Vector2(0, 5) });
+
+            // Статистика
+            var statsBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
+
+            // Количество членов
+            var membersLabel = new Label
+            {
+                Text = Loc.GetString("late-join-gui-members-count", ("count", faction.MemberCount)),
+                FontColorOverride = Color.FromHex("#88c0d0"),
+                StyleClasses = { "LabelSmall" }
+            };
+            statsBox.AddChild(membersLabel);
+
+            // Разделитель
+            statsBox.AddChild(new Control { MinSize = new Vector2(20, 0) });
+
+            // Статус фракции
+            var statusLabel = new Label
+            {
+                Text = Loc.GetString($"late-join-gui-faction-status-{faction.Status.ToString().ToLower()}"),
+                FontColorOverride = faction.Status switch
+                {
+                    FactionStatus.Active => Color.FromHex("#a3be8c"),
+                    FactionStatus.Recruiting => Color.FromHex("#ebcb8b"),
+                    FactionStatus.AtWar => Color.FromHex("#bf616a"),
+                    _ => Color.White
+                },
+                StyleClasses = { "LabelSmall" }
+            };
+            statsBox.AddChild(statusLabel);
+
+            infoBox.AddChild(statsBox);
+            contentBox.AddChild(infoBox);
+
+            // Стрелка справа
+            var arrowBox = new BoxContainer
+            {
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Right,
+                Margin = new Thickness(10, 0, 0, 0)
+            };
+
+            var arrow = new TextureRect
+            {
+                TextureScale = new Vector2(1.5f, 1.5f),
+                VerticalAlignment = VAlignment.Center,
+                Modulate = Color.FromHex("#4c566a")
+            };
+
+            try
+            {
+                arrow.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(
+                    new ResPath("/Textures/Interface/Nano/triangle_right.svg.192dpi.png")));
+            }
+            catch
+            {
+                // Игнорируем если не удалось загрузить
+            }
+
+            arrowBox.AddChild(arrow);
+            contentBox.AddChild(arrowBox);
+
+            mainContainer.AddChild(contentBox);
+            button.AddChild(mainContainer);
+
+            // Обработчик клика - отправляем выбор фракции
+            button.OnPressed += _ => OnFactionSelected(faction.FactionName);
+
+            return button;
         }
 
         protected override void Dispose(bool disposing)
@@ -330,43 +397,25 @@ namespace Content.Client.LateJoin
 
             if (disposing)
             {
-                _jobRequirements.Updated -= RebuildUI;
-                _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
-                _jobButtons.Clear();
-                _jobCategories.Clear();
+                _gameTicker.AvailableFactionsUpdated -= UpdateAvailableFactions;
+                _factionButtons.Clear();
             }
         }
     }
 
-    sealed class JobButton : ContainerButton
+    /// <summary>
+    /// Кнопка выбора фракции
+    /// </summary>
+    sealed class FactionButton : ContainerButton
     {
-        public Label JobLabel { get; }
-        public string JobId { get; }
-        public string JobLocalisedName { get; }
-        public int? Amount { get; private set; }
-        private bool _initialised = false;
+        public FactionInfo Faction { get; }
 
-        public JobButton(Label jobLabel, ProtoId<JobPrototype> jobId, string jobLocalisedName, int? amount)
+        public FactionButton(FactionInfo faction)
         {
-            JobLabel = jobLabel;
-            JobId = jobId;
-            JobLocalisedName = jobLocalisedName;
-            RefreshLabel(amount);
+            Faction = faction;
             AddStyleClass(StyleClassButton);
-            _initialised = true;
-        }
-
-        public void RefreshLabel(int? amount)
-        {
-            if (Amount == amount && _initialised)
-            {
-                return;
-            }
-            Amount = amount;
-
-            JobLabel.Text = Amount != null ?
-                Loc.GetString("late-join-gui-job-slot-capped", ("jobName", JobLocalisedName), ("amount", Amount)) :
-                Loc.GetString("late-join-gui-job-slot-uncapped", ("jobName", JobLocalisedName));
+            VerticalExpand = false;
+            HorizontalExpand = true;
         }
     }
 }

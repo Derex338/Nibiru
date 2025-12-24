@@ -114,6 +114,11 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         _factionWindow.Delete.OnPressed += _ => { OnDeleteButtonPressed();};
         _factionWindow.LeaveButton.OnPressed += _ => { OnLeaveButtonPressed();};
 
+        _factionWindow.FactionDescriptionChangeButton.OnPressed += _ => { OnChangeDescription(); };
+        _factionWindow.FactionIconChangeButton.OnPressed += _ => { OnChangeIcon(); };
+        _factionWindow.FactionStatusDropdown.OnItemSelected += _ => { OnChangeStatus(); };
+        _factionWindow.RecruitingToggle.OnPressed += _ => { OnToggleRecruiting(); };
+
         DeactivateStateButton();
 
         CommandBinds.Builder
@@ -346,6 +351,73 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
         UpdateState();
         return false;
+    }
+
+    private void OnChangeDescription()
+    {
+        if (_factionWindow == null)
+            return;
+
+        var newDesc = _factionWindow.FactionDescriptionChange.Text;
+        if (!string.IsNullOrWhiteSpace(newDesc))
+        {
+            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
+            {
+                Description = newDesc
+            });
+            UpdateState();
+        }
+    }
+
+    private void OnChangeIcon()
+    {
+        if (_factionWindow == null)
+            return;
+
+        var newIcon = _factionWindow.FactionIconChange.Text;
+        if (!string.IsNullOrWhiteSpace(newIcon))
+        {
+            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
+            {
+                IconPath = newIcon
+            });
+            UpdateState();
+        }
+    }
+
+    private void OnChangeStatus()
+    {
+        if (_factionWindow == null)
+            return;
+
+        var newStatus = _factionWindow.FactionStatusDropdown.SelectedId;
+
+        if (Enum.TryParse<FactionStatus>(newStatus.ToString(), out var status))
+        {
+            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
+            {
+                Status = status
+            });
+            UpdateState();
+        }
+    }
+
+    private void OnToggleRecruiting()
+    {
+        if (_factionWindow == null || _player.LocalSession is not { } session)
+            return;
+
+        var playerEntity = session.AttachedEntity;
+
+        if (!_entityManager.TryGetComponent<FactionComponent>(playerEntity, out var factionComponent))
+            return;
+
+        _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
+        {
+            IsRecruiting = !factionComponent.IsRecruiting
+        });
+
+        UpdateState();
     }
 }
 

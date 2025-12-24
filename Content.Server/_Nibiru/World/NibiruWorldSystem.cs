@@ -79,17 +79,17 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     /// <summary>
     /// Creates or allocates a free map for the player
     /// </summary>
-    public void SpawnPlayer(PlayerBeforeSpawnEvent ev)
+    public EntityUid? SpawnPlayer(PlayerBeforeSpawnEvent ev)
     {
         if (Rule is not { } rule)
-            return;
+            return null;
 
         var coords = Turf.GetTileCenter(GetSpawnTiles(1).First());
         var spawnBox = Box2.CenteredAround(coords.Position, new Vector2(SpawnAreaRadius));
         var freeTiles = GetFreeTiles(rule.WorldMap, spawnBox, MinSpawnAreaTiles);
 
         if (freeTiles.Count == 0)
-            return;
+            return null;
 
         // Spawn player entity
         var newMind = _mind.CreateMind(ev.Player.UserId, ev.Player.Name);
@@ -97,5 +97,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         var mob = _stationSpawn.SpawnPlayerMob(coords, null, ev.Profile, null, null);
         _mind.TransferTo(newMind, mob);
+
+        return mob;
     }
 }
