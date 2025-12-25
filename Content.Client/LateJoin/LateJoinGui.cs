@@ -354,34 +354,6 @@ namespace Content.Client.LateJoin
             infoBox.AddChild(statsBox);
             contentBox.AddChild(infoBox);
 
-            // Стрелка справа
-            var arrowBox = new BoxContainer
-            {
-                VerticalAlignment = VAlignment.Center,
-                HorizontalAlignment = HAlignment.Right,
-                Margin = new Thickness(10, 0, 0, 0)
-            };
-
-            var arrow = new TextureRect
-            {
-                TextureScale = new Vector2(1.5f, 1.5f),
-                VerticalAlignment = VAlignment.Center,
-                Modulate = Color.FromHex("#4c566a")
-            };
-
-            try
-            {
-                arrow.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(
-                    new ResPath("/Textures/Interface/VerbIcon/group.svg.192dpi.png")));
-            }
-            catch
-            {
-                // Игнорируем если не удалось загрузить
-            }
-
-            arrowBox.AddChild(arrow);
-            contentBox.AddChild(arrowBox);
-
             mainContainer.AddChild(contentBox);
             button.AddChild(mainContainer);
 
