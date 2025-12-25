@@ -414,7 +414,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
         _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
         {
-            IsRecruiting = !factionComponent.IsRecruiting
+            IsRecruiting = _factionWindow.RecruitingToggle.Pressed
         });
 
         UpdateState();

@@ -273,7 +273,7 @@ namespace Content.Client.LateJoin
                     {
                         var defaultIcon = new SpriteSpecifier.Rsi(
                             new ResPath("/Textures/Interface/Misc/job_icons.rsi"),
-                            "Unknown");
+                            "ShaftMiner");
                         icon.Texture = _sprites.Frame0(defaultIcon);
                     }
                     catch
@@ -372,7 +372,7 @@ namespace Content.Client.LateJoin
             try
             {
                 arrow.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(
-                    new ResPath("/Textures/Interface/Nano/triangle_right.svg.192dpi.png")));
+                    new ResPath("/Textures/Interface/VerbIcon/group.svg.192dpi.png")));
             }
             catch
             {

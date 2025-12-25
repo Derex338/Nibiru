@@ -58,22 +58,10 @@ public sealed class FactionSystem : EntitySystem
         SubscribeLocalEvent<FactionComponent, ComponentShutdown>(OnFactionShutdown);
     }
 
-    //public override void Update(float frameTime)
-    //{
-    //    base.Update(frameTime);
-
-    //    // Периодически обновляем список доступных фракций
-    //    //if (Timing.CurTime >= _nextUpdate)
-    //    //{
-    //        //UpdateAvailableFactionsList();
-    //        //_nextUpdate = Timing.CurTime + TimeSpan.FromSeconds(UpdateInterval);
-    //    //}
-    //}
-
     /// <summary>
     /// Обновляет список доступных фракций для клиентов
     /// </summary>
-    private void UpdateAvailableFactionsList()
+    public List<FactionInfo> UpdateAvailableFactionsList()
     {
         var factions = new List<FactionInfo>();
 
@@ -123,6 +111,8 @@ public sealed class FactionSystem : EntitySystem
 
         AvailableFactions = factions;
         _broadcast.BroadcastFactionsList();
+
+        return factions;
     }
 
     /// <summary>

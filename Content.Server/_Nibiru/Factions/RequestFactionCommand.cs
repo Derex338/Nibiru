@@ -13,46 +13,36 @@ using Robust.Shared.Player;
 namespace Content.Server._Nibiru.Factions.Commands;
 
 /// <summary>
-/// Команда для запроса списка фракций (используется клиентом)
+/// Команда для запроса списка фракций
 /// </summary>
-//[AdminCommand(AdminFlags.Admin)]
-//public sealed class RequestFactionsCommand : IConsoleCommand
-//{
-//    //[Dependency] private readonly FactionSystem _faction = default!;
+[AdminCommand(AdminFlags.Admin)]
+public sealed class RequestFactionsCommand : IConsoleCommand
+{
+    public string Command => "requestfactions";
+    public string Description => "Request list of available factions";
+    public string Help => "requestfactions";
 
-//    public string Command => "requestfactions";
-//    public string Description => "Request list of available factions";
-//    public string Help => "requestfactions";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (shell.Player == null)
+        {
+            shell.WriteError("This command can only be used by players");
+            return;
+        }
 
-//    public void Execute(IConsoleShell shell, string argStr, string[] args)
-//    {
-//        if (shell.Player == null)
-//        {
-//            shell.WriteError("This command can only be used by players");
-//            return;
-//        }
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var faction = entityManager.System<FactionSystem>();
 
-//        var entityManager = IoCManager.Resolve<IEntityManager>();
-//        var faction = entityManager.System<FactionSystem>();
+        var list = faction.UpdateAvailableFactionsList();
+        string str = string.Empty;
+        foreach (var factionName in list)
+        {
+            str = str + "\n" + factionName.FactionName + "\n Leader:" + factionName.Leader + "\n Members count:" + factionName.MemberCount;
+        }
+        shell.WriteLine($"List of factions: {str}");
 
-//        var player = shell.Player.AttachedEntity;
-//        if (player == null)
-//        {
-//            shell.WriteError("Player has no attached entity");
-//            return;
-//        }
-//        else
-//        {
-//            var list = faction.GetAvailableFactions(player.Value);
-//            string str = string.Empty;
-//            foreach (var factionName in list)
-//            {
-//                str = str + "\n" + factionName.FactionName + "\n Leader:" + factionName.Leader + "\n Members count:" + factionName.MemberCount;
-//            }
-//            shell.WriteLine($"List of factions: {str}");
-//        }
-//    }
-//}
+    }
+}
 
 /// <summary>
 /// Команда для присоединения к фракции через поздний вход
