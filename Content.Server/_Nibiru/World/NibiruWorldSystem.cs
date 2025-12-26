@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using Content.Server._Nibiru.PVS;
 using Content.Server.Administration.Managers;
 using Content.Server.Mind;
 using Content.Server.Parallax;
@@ -69,9 +68,6 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         var cave = _map.CreateMap();
         _biome.EnsurePlanet(cave, _prototype.Index(rule.CaveBiome));
-
-        EnsureComp<CEPvsOverrideComponent>(map);
-        EnsureComp<CEPvsOverrideComponent>(cave);
 
         if (TryComp(map, out LightCycleComponent? cycle))
         {
