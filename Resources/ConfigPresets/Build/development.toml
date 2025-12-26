@@ -5,6 +5,7 @@ lobbyenabled = true
 map = "Dev"
 role_timers = false
 role_loadout_timers = false
+defaultpreset = "Nibiru"
 
 [events]
 enabled = false

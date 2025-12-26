@@ -75,7 +75,7 @@ public sealed partial class FactionComponent : Component
     /// </summary>
     [AutoNetworkedField]
     [DataField("recruiting")]
-    public bool IsRecruiting { get; set; } = true;
+    public bool IsRecruiting { get; set; } = false;
 }
 
 /// <summary>

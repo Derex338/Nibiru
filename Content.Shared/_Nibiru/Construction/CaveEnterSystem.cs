@@ -38,9 +38,6 @@ public sealed class SharedCaveEnterSystem : EntitySystem
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    private const string PortalFixture = "portalFixture";
-    private const string ProjectileFixture = "projectile";
-
     /// <inheritdoc/>
     public override void Initialize()
     {

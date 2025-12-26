@@ -26,6 +26,7 @@
         hard: false
   - type: CaveEnter
     secondCaveEnterPrototype: CaveEnter2
+  - type: Eye
     
     
 - type: entity
@@ -58,3 +59,4 @@
           - ItemMask
         density: 1000
         hard: false
+  - type: Eye

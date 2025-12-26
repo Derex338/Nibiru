@@ -12,12 +12,6 @@ namespace Content.Shared._Nibiru.GameTicking.Rules;
 public sealed partial class NibiruSurvivalRuleComponent : Component
 {
     /// <summary>
-    /// Prototype of the entity the player will move into after entering a round
-    /// </summary>
-    //[DataField]
-    //public EntProtoId PlayerProtoId = "RimFortressObserver";
-
-    /// <summary>
     /// Biome template that will be used in the creation of the world
     /// </summary>
     [DataField(required: true)]

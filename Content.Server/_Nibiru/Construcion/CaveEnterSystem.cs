@@ -1,3 +1,4 @@
+using Content.Server._Nibiru.PVS;
 using Content.Shared._Nibiru.Construction;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared.Maps;
@@ -8,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using System.Linq;
 using System.Numerics;
 
 namespace Content.Server._Nibiru.Construcion;
@@ -42,31 +44,34 @@ public sealed class CaveEnterSystem : EntitySystem
             var firstXform = Transform(ent);
             var localPos = firstXform.Coordinates.Position;
 
-            if (!_mapManager.TryFindGridAt(rule.CaveMap, localPos, out var caveGridUid, out var caveGrid))
+            if (!_mapManager.TryFindGridAt(firstXform.MapUid == rule.WorldMap ? rule.CaveMap : rule.WorldMap, localPos, out var caveGridUid, out var caveGrid))
                 return;
 
             var caveCoords = new EntityCoordinates(caveGridUid, localPos);
 
-            var box = Box2.CenteredAround(localPos, new Vector2(2, 2));
-
-            foreach (var entity in _lookup.GetEntitiesIntersecting(caveGridUid, box))
-            {
-                if (_tagSystem.HasAllTags(entity, "Rock") && TryComp<MetaDataComponent>(rule.CaveMap, out var comp))
-                {
-                    EntityManager.RunMapInit(rule.CaveMap, comp);
-                    Del(entity);
-                }
-            }
-
             //foreach (var entity in _map.GetAnchoredEntities(caveGridUid, caveGrid, caveCoords))
             //{
-            //    if (_tagSystem.HasAllTags(entity, "Rock"))
+            //    //if (_tagSystem.HasAllTags(entity, "Rock"))
             //        QueueDel(entity);
             //}
 
             ent.Comp.SecondCaveEnter = Spawn(ent.Comp.SecondCaveEnterPrototype, caveCoords);
             if (!_link.TryLink(ent.Comp.FirstCaveEnter!.Value, ent.Comp.SecondCaveEnter.Value, true))
                 QueueDel(ent.Owner);
+
+            EnsureComp<CEPvsOverrideComponent>(ent);
+            EnsureComp<CEPvsOverrideComponent>(ent.Comp.SecondCaveEnter.Value);
+
+            var box = Box2.CenteredAround(localPos, new Vector2(2, 2));
+            foreach (var entity in _lookup.GetEntitiesIntersecting(caveGridUid, box))
+            {
+                if (_tagSystem.HasAllTags(entity, "Rock"))
+                {
+                    var comp = MetaData(rule.CaveMap);
+                    EntityManager.RunMapInit(rule.CaveMap, comp);
+                    QueueDel(entity);
+                }
+            }
 
             //var tileEnumerator = _map.GetTilesEnumerator(caveGridUid, caveGrid, box, ignoreEmpty: false);
 
@@ -76,13 +81,7 @@ public sealed class CaveEnterSystem : EntitySystem
             //    {
             //        continue;
             //    }
-
-
-
-            //    break;
             //}
-
-            Dirty(ent);
 
             return;
         }
