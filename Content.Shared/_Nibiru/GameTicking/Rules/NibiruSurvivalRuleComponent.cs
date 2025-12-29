@@ -24,6 +24,18 @@ public sealed partial class NibiruSurvivalRuleComponent : Component
     public ProtoId<BiomeTemplatePrototype> CaveBiome;
 
     /// <summary>
+    /// Biome template for Mountain Level 1
+    /// </summary>
+    [DataField]
+    public ProtoId<BiomeTemplatePrototype>? MountainL1Biome;
+
+    /// <summary>
+    /// Biome template for Mountain Level 2
+    /// </summary>
+    [DataField]
+    public ProtoId<BiomeTemplatePrototype>? MountainL2Biome;
+
+    /// <summary>
     /// Duration of the day
     /// </summary>
     [DataField]

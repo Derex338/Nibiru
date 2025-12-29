@@ -138,5 +138,29 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField]
         public bool Transparent = false;
+
+        /// <summary>
+        /// Ambient sound to play during the day.
+        /// </summary>
+        [DataField("ambientSoundDay")] // Nibiru
+        public SoundSpecifier? AmbientSoundDay { get; private set; }
+
+        /// <summary>
+        /// Ambient sound to play during the night.
+        /// </summary>
+        [DataField("ambientSoundNight")] // Nibiru
+        public SoundSpecifier? AmbientSoundNight { get; private set; }
+
+        /// <summary>
+        /// Minimum interval for intermittent sounds (0 = continuous loop).
+        /// </summary>
+        [DataField("ambientSoundIntervalMin")] // Nibiru
+        public float AmbientSoundIntervalMin { get; private set; } = 0f;
+
+        /// <summary>
+        /// Maximum interval for intermittent sounds.
+        /// </summary>
+        [DataField("ambientSoundIntervalMax")] // Nibiru
+        public float AmbientSoundIntervalMax { get; private set; } = 0f;
     }
 }

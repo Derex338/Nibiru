@@ -2,7 +2,7 @@
 # Straight in-game baby
 lobbyenabled = true
 # Dev map for faster loading & convenience
-map = "Dev"
+map = "ZMappingTest"
 role_timers = false
 role_loadout_timers = false
 defaultpreset = "Nibiru"

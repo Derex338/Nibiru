@@ -1,0 +1,56 @@
+- type: gameMap
+  id: ZMappingTest
+  mapName: ZMappingTest
+  mapsBelow:
+  - /Maps/_CE/Empty.yml
+  - /Maps/_CE/Empty.yml
+  mapPath: /Maps/_CE/Empty.yml
+  mapsAbove:
+  - /Maps/_CE/Empty.yml
+  - /Maps/_CE/Empty.yml
+  zLevelsComponentOverrides:
+    - type: MapAtmosphere
+      space: False
+      mixture:
+        volume: 2500
+        immutable: True
+        temperature: 293.15
+        moles:
+          Oxygen: 21.824879
+          Nitrogen: 82.10312
+    - type: SunShadow
+    - type: MapLight
+      ambientLightColor: "#efff75"
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Empty"
+
+- type: gameMap
+  id: ZDev
+  mapName: Dev
+  mapsBelow:
+  - /Maps/_CE/Empty.yml
+  mapPath: /Maps/_CE/Empty.yml
+  mapsAbove:
+  - /Maps/_CE/Empty.yml
+  - /Maps/_CE/Empty.yml
+  - /Maps/_CE/Empty.yml
+  zLevelsComponentOverrides:
+    - type: MapAtmosphere
+      space: False
+      mixture:
+        volume: 2500
+        immutable: True
+        temperature: 293.15
+        moles:
+          Oxygen: 21.824879
+          Nitrogen: 82.10312
+    - type: SunShadow
+    - type: MapLight
+      ambientLightColor: "#efff75"
+  minPlayers: 0
+  

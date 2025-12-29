@@ -6,12 +6,14 @@ using Content.Server.Parallax;
 using Content.Server.Preferences.Managers;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server._CE.ZLevels.Core;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
 //using Content.Shared._Nibiru.CCVar;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Light.Components;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Pinpointer;
 using Content.Shared.Preferences;
 using Content.Shared.Station.Components;
@@ -38,12 +40,11 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     [Dependency] private readonly StationSpawningSystem _stationSpawn = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly CEZLevelsSystem _ceZLevels = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-
     }
 
     public EntityUid InitializeWorld(NibiruSurvivalRuleComponent rule)
@@ -55,21 +56,55 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         }
 
         Rule = rule;
-        var map = _map.CreateMap();
-        _biome.EnsurePlanet(map, _prototype.Index(rule.Biome));
 
-        if (TryComp<MapComponent>(map, out var mapComp))
+        // Создаем сеть Z-уровней
+        var network = _ceZLevels.CreateZNetwork();
+
+        // Генерируем общий сид для синхронизации высот
+        var seed = new Random().Next();
+
+        // 1. Создаем подземный мир (шахта) - Уровень -1
+        var caveMap = _map.CreateMap();
+        _biome.EnsurePlanet(caveMap, _prototype.Index(rule.CaveBiome), seed);
+
+
+        // 2. Создаем основной мир (планета) - Уровень 0
+        var worldMap = _map.CreateMap();
+        _biome.EnsurePlanet(worldMap, _prototype.Index(rule.Biome), seed);
+
+
+        // 3. Создаем горные слои - Уровни 1 и 2
+
+        // Уровень 1
+        var sky1Map = _map.CreateMap();
+        if (rule.MountainL1Biome != null    )
+            _biome.EnsurePlanet(sky1Map, _prototype.Index(rule.MountainL1Biome), seed);
+
+        // Уровень 2
+        var sky2Map = _map.CreateMap();
+        if (rule.MountainL2Biome != null)
+            _biome.EnsurePlanet(sky2Map, _prototype.Index(rule.MountainL2Biome), seed);
+
+        // Добавляем все карты в сеть
+        _ceZLevels.TryAddMapsIntoZNetwork(network, new Dictionary<EntityUid, int>
         {
-            EnsureComp<StationDataComponent>(map);
+            { caveMap, -1 },
+            { worldMap, 0 },
+            { sky1Map, 1 },
+            { sky2Map, 2 }
+        });
+
+        // Настройка компонентов карты для основного мира
+        if (TryComp<MapComponent>(worldMap, out var mapComp))
+        {
+            EnsureComp<StationDataComponent>(worldMap);
             foreach (var grid in _mapManager.GetAllGrids(mapComp.MapId))
-                _station.AddGridToStation(map, grid.Owner);
-            EnsureComp<StationEventEligibleComponent>(map);
+                _station.AddGridToStation(worldMap, grid.Owner);
+            EnsureComp<StationEventEligibleComponent>(worldMap);
         }
 
-        var cave = _map.CreateMap();
-        _biome.EnsurePlanet(cave, _prototype.Index(rule.CaveBiome));
-
-        if (TryComp(map, out LightCycleComponent? cycle))
+        // Настройка цикла дня и ночи для основного мира
+        if (TryComp(worldMap, out LightCycleComponent? cycle))
         {
             cycle.Duration = rule.DayDuration;
             cycle.Offset = rule.DayDuration / 3; // For roundstart day time
@@ -77,9 +112,10 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             cycle.MinLightLevel = 1f;
         }
 
-        rule.WorldMap = map;
-        rule.CaveMap = cave;
-        return map;
+        rule.WorldMap = worldMap;
+        rule.CaveMap = caveMap;
+
+        return worldMap;
     }
 
     /// <summary>

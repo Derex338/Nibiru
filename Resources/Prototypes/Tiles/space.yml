@@ -7,3 +7,5 @@
   sturdy: false
   thermalConductivity: 0.4
   heatCapacity: 700000
+  weather: true #CrystallEdge
+  transparent: true #CrystallEdge

@@ -129,6 +129,16 @@
     collection: FootstepSnow
   heatCapacity: 10000
   weather: true
+  ambientSoundDay:
+    path: /Audio/Ambience/ambigen1.ogg
+    params:
+      volume: -5
+  ambientSoundNight:
+    path: /Audio/Ambience/ambicave.ogg
+    params:
+      volume: -5
+  ambientSoundIntervalMin: 10
+  ambientSoundIntervalMax: 30
   indestructible: true
 
 # Ice
