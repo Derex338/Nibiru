@@ -52,4 +52,7 @@
       <DependentUpon>FactionMenu.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Nibiru\Audio\" />
+  </ItemGroup>
 </Project>
