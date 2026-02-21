@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Такен фром ЯрикФД",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sand_1"
+    },
+    {
+      "name": "sand_2"
+    },
+    { 
+	  "name": "sand_3"
+    }
+  ]
+}

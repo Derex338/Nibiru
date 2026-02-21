@@ -1,0 +1,30 @@
+- type: entity
+  id: TinOre
+  name: tin ore
+  parent: BaseItem
+  description: A chunk of tin ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: iron
+    color: "#d3d3d3"
+  - type: Item
+    size: Small
+  - type: Stack
+    count: 1
+    stackType: TinOre
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: TinMolten
+    resultAmount: 50
+    resultTemperature: 1100
+  - type: Tag
+    tags:
+    - Ore
+
+- type: stack
+  id: TinOre
+  name: tin ore
+  spawn: TinOre
+  maxCount: 30

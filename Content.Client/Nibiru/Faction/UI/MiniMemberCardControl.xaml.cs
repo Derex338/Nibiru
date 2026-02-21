@@ -96,7 +96,7 @@ public sealed partial class MiniMemberCardControl : Control
         if (entityManager.TryGetComponent<FactionComponent>(member, out var memberFaction))
         {
             _rankLabel.Text = string.IsNullOrEmpty(memberFaction.Rank)
-                ? "Без ранга"
+                ? Loc.GetString("faction-rank-no-rank")
                 : memberFaction.Rank;
         }
 
@@ -110,7 +110,7 @@ public sealed partial class MiniMemberCardControl : Control
             HorizontalAlignment = HAlignment.Right,
             Text = "🏷️",
             MinWidth = 32,
-            ToolTip = "Изменить ранг"
+            ToolTip = Loc.GetString("faction-button-change-rank-tooltip")
         };
 
         // Кнопка кика
@@ -120,8 +120,9 @@ public sealed partial class MiniMemberCardControl : Control
             HorizontalAlignment = HAlignment.Right,
             Text = "✕",
             MinWidth = 32,
-            ToolTip = "Исключить из фракции"
+            ToolTip = Loc.GetString("faction-button-kick-tooltip")
         };
+
 
         // Добавляем кнопки только если это не сам игрок
         if (playerEntity != null && playerEntity != member)
@@ -233,7 +234,7 @@ public sealed class RankChangePrompt : DefaultWindow
         _member = member;
         _entityManager = entityManager;
 
-        Title = "Изменить ранг";
+        Title = Loc.GetString("faction-rank-change-title");
         MinSize = new Vector2(300, 120);
 
         var container = new BoxContainer
@@ -244,13 +245,13 @@ public sealed class RankChangePrompt : DefaultWindow
 
         container.AddChild(new Label
         {
-            Text = "Введите новый ранг:",
+            Text = Loc.GetString("faction-rank-change-prompt"),
             Margin = new Thickness(0, 0, 0, 5)
         });
 
         _rankInput = new LineEdit
         {
-            PlaceHolder = "Например: Офицер",
+            PlaceHolder = Loc.GetString("faction-rank-change-placeholder"),
             HorizontalExpand = true
         };
 
@@ -271,14 +272,14 @@ public sealed class RankChangePrompt : DefaultWindow
 
         var confirmButton = new Button
         {
-            Text = "Подтвердить",
+            Text = Loc.GetString("faction-button-confirm"),
             MinSize = new Vector2(100, 30)
         };
         confirmButton.OnPressed += _ => OnConfirm();
 
         var cancelButton = new Button
         {
-            Text = "Отмена",
+            Text = Loc.GetString("faction-button-cancel"),
             MinSize = new Vector2(100, 30),
             Margin = new Thickness(5, 0, 0, 0)
         };
@@ -299,7 +300,8 @@ public sealed class RankChangePrompt : DefaultWindow
         var newRank = _rankInput.Text.Trim();
 
         if (string.IsNullOrEmpty(newRank))
-            newRank = "Без ранга";
+            newRank = Loc.GetString("faction-rank-no-rank");
+
 
         _entityManager.RaisePredictiveEvent(new FactionChangeMemberRankMessage
         {

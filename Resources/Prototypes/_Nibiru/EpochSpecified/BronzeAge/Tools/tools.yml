@@ -1,0 +1,361 @@
+- type: entity
+  name: бронзовый молоточек
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzeHammerSmall
+  description: 'Зачарованный силами Богов молоток, способный чинить структуры. Мелким шрифтом выгривировано на бронзе: "1 удар-1 год жизни".'
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
+    state: icon
+  - type: MeleeWeapon
+    range: 1.25
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 8
+        Structural: -5
+    soundHit:
+      collection: MetalThud
+    attackRate: 2
+  - type: Item
+    size: Large
+  - type: Construction
+    graph: BronzeHammerSmall
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 1
+                max: 2
+
+- type: entity
+  name: бронзовая мотыга
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzeHoe
+  description: Используется для вспахивания сорняков. Иди работай.
+  components:
+  - type: Tag
+    tags:
+    - Hoe
+    - BotanyHoe
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    swingLeft: true
+    damage:
+      types:
+        Slash: 8
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
+  - type: Construction
+    graph: BronzeHoe
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 1
+                max: 1
+
+- type: entity
+  name: бронзовый секатор
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzeClippers
+  description: Используется для извлечения семян растений. Иди работай.
+  components:
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    damage:
+      types:
+        Slash: 6
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
+    storedRotation: -90
+  - type: Construction
+    graph: BronzeClippers
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 1
+                max: 1
+
+- type: entity
+  name: бронзовая коса
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzeScythe
+  description: Красивая, длинная, с неровной рукоятью бронзовая коса.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    damage:
+      types:
+        Slash: 12
+  - type: Item
+    size: Normal
+  - type: Clothing
+    sprite: Objects/Tools/Hydroponics/bronzescythe.rsi
+    slots:
+    - back
+  - type: Construction
+    graph: BronzeScythe
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 1
+                max: 2
+
+- type: entity
+  name: бронзовый топорик
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzeHatchet
+  description: Идеально подходящий для рубки, но плохой для боёв бронзовый топор.
+  components:
+  - type: Tag
+    tags:
+    - BotanyHatchet
+  - type: Sharp
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
+    state: icon
+  - type: MeleeWeapon
+    range: 0.75
+    wideAnimationRotation: 135
+    swingLeft: true
+    attackRate: 1.75
+    damage:
+      types:
+        Slash: 8
+        Piercing: 2
+        Structural: 15
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
+  - type: Construction
+    graph: BronzeHatchet
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 1
+                max: 2
+
+- type: entity
+  name: бронзовый нож
+  parent: [BaseKnife, BaseBronzeItem]
+  id: BronzeKnife
+  description: Красивый боевой нож для ближних конфронтаций.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 12
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+  - type: DisarmMalus
+    malus: 0.225
+  - type: ThrowingAngle
+    angle: 225
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.4,-0.2
+          - -0.2,-0.4
+          - 0.4,0.2
+          - 0.2,0.4
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Construction
+    graph: BronzeKnife
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 1
+                max: 2
+- type: entity
+  id: Key
+  parent: [BaseItem, BaseBronzeItem]
+  name: key
+  components:
+  - type: Key
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+
+- type: entity
+  id: DoorLock
+  parent: [BaseItem, BaseBronzeItem]
+  name: lock
+  components:
+  - type: DoorLock
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+
+- type: entity
+  id: Rasp
+  parent: [BaseItem, BaseBronzeItem]
+  name: rasp
+  components:
+  - type: Tool
+    qualities:
+    - Rasp
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+
+- type: entity
+  name: бронзовая кирка
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzePickaxe
+  description: Тяжелая бронзовая кирка для добычи камня и руды.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/pickaxe.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    damage:
+      types:
+        Blunt: 10
+        Structural: 25
+  - type: Tool
+    qualities:
+    - Prying
+  - type: Construction
+    graph: BronzePickaxe
+    node: fin
+  - type: Item
+    size: Large
+
+- type: entity
+  name: бронзовая лопата
+  parent: [BaseItem, BaseBronzeItem]
+  id: BronzeShovel
+  description: Прочная бронзовая лопата для земляных работ.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    damage:
+      types:
+        Blunt: 8
+        Structural: 15
+  - type: Tool
+    qualities:
+    - Shoveling
+  - type: Construction
+    graph: BronzeShovel
+    node: fin
+  - type: Item
+    size: Large
+

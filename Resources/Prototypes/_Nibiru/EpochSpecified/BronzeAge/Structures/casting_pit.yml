@@ -1,0 +1,36 @@
+- type: entity
+  id: CastingPit
+  name: ямка для литья
+  parent: BaseStructure
+  description: Небольшое углубление в земле для установки литейных форм.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/low_wall.rsi
+    state: icon
+    color: "#4B3621"
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 1
+        mask:
+        - None # Transparent hitbox
+        layer:
+        - None
+  - type: Construction
+    graph: CastingPit
+    node: fin
+  - type: ItemSlots
+    slots:
+      mold_slot:
+        name: Форма
+        whitelist:
+          components:
+          - Mold
+  - type: ContainerContainer
+    containers:
+      mold_slot: !type:ContainerSlot {}

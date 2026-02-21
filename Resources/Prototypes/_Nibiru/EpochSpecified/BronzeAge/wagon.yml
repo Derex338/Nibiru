@@ -1,0 +1,58 @@
+- type: entity
+  name: повозка
+  id: Wagon
+  parent: [BaseStructureDynamic, StructureWheeled]
+  description: Деревянная повозка для перевозки грузов.
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      layers:
+        - state: cart
+          color: "#8B4513"
+    - type: Rotatable
+    - type: InteractionOutline
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.4
+          density: 200
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: WoodDestroy
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                WoodenWheel:
+                  min: 2
+                  max: 4
+                MaterialWoodPlank1:
+                  min: 5
+                  max: 10
+    - type: UserInterface
+      interfaces:
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
+    - type: Storage
+      maxItemSize: Huge
+      grid:
+      - 0,0,7,5
+    - type: Construction
+      graph: Wagon
+      node: fin
+    - type: CanVehiclePull

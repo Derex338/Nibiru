@@ -1,0 +1,185 @@
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  id: WoodChestplate
+  name: деревянный нагрудник
+  description: Грубая защита из досок.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
+  - type: Construction
+    graph: WoodChestplate
+    node: fin
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.85
+        Piercing: 0.95
+  - type: ArmorProtection
+    protection:
+      Blunt: 4
+      Slash: 5
+      Piercing: 3
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  id: LetherHelmet
+  name: кожаный шлем
+  description: Простая кожаная защита головы.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: Construction
+    graph: LetherHelmet
+    node: fin
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.85
+        Piercing: 0.95
+  - type: ArmorProtection
+    protection:
+      Blunt: 3
+      Slash: 4
+      Piercing: 2
+
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  id: LetherChestplate
+  name: кожаный нагрудник
+  description: Нагрудник из нескольких слоев кожи.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Construction
+    graph: LetherChestplate
+    node: fin
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.7
+        Piercing: 0.9
+  - type: ArmorProtection
+    protection:
+      Blunt: 5
+      Slash: 6
+      Piercing: 4
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+
+- type: entity
+  parent: ClothingOuterArmorBone
+  id: PrimitiveBoneArmor
+  name: костяной нагрудник
+  description: Нагрудник, собранный из множества заточенных костей. Тяжелый, но надежный.
+  components:
+  - type: Construction
+    graph: PrimitiveBoneArmor
+    node: fin
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.6
+        Piercing: 0.8
+  - type: ArmorProtection
+    protection:
+      Blunt: 6
+      Slash: 8
+      Piercing: 6
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingHeadHelmetBone
+  id: PrimitiveBoneHelmet
+  name: костяной шлем
+  description: Шлем из черепа крупного зверя, укрепленный костяными пластинами.
+  components:
+  - type: Construction
+    graph: PrimitiveBoneHelmet
+    node: fin
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.75
+        Piercing: 0.9
+  - type: ArmorProtection
+    protection:
+      Blunt: 4
+      Slash: 6
+      Piercing: 4
+
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  id: LetherChestplateReinforced
+  name: усиленный кожаный нагрудник
+  description: Кожаный нагрудник с нашитыми костяными пластинами. Вершина защиты Каменного Века.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Construction
+    graph: LetherChestplate
+    node: reinforced
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.55
+        Piercing: 0.75
+  - type: ArmorProtection
+    protection:
+      Blunt: 7
+      Slash: 10
+      Piercing: 8
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  id: LetherHelmetReinforced
+  name: усиленный кожаный шлем
+  description: Кожаный шлем, укрепленный костью для защиты от самых тяжелых ударов.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: Construction
+    graph: LetherHelmet
+    node: reinforced
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.7
+        Piercing: 0.85
+  - type: ArmorProtection
+    protection:
+      Blunt: 5
+      Slash: 8
+      Piercing: 6

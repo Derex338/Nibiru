@@ -40,6 +40,10 @@ public sealed partial class ResearchSystem
     /// </summary>
     public void Sync(EntityUid primaryUid, EntityUid otherUid, TechnologyDatabaseComponent? primaryDb = null, TechnologyDatabaseComponent? otherDb = null)
     {
+        // Nibiru: Не синхронизируем, если это одна и та же сущность
+        if (primaryUid == otherUid)
+            return;
+
         if (!Resolve(primaryUid, ref primaryDb) || !Resolve(otherUid, ref otherDb))
             return;
 
@@ -68,6 +72,10 @@ public sealed partial class ResearchSystem
             return;
 
         if (!TryComp<TechnologyDatabaseComponent>(clientComponent.Server, out var serverDatabase))
+            return;
+
+        // Nibiru: Не синхронизируем, если клиент подключен сам к себе
+        if (uid == clientComponent.Server.Value)
             return;
 
         Sync(uid, clientComponent.Server.Value, databaseComponent, serverDatabase);

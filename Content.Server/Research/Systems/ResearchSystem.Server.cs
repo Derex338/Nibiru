@@ -33,6 +33,11 @@ public sealed partial class ResearchSystem
     {
         foreach (var client in component.Clients)
         {
+            // Nibiru: Не отправляем событие обратно на сам сервер, чтобы избежать бесконечной рекурсии
+            // когда консоль подключена сама к себе
+            if (client == uid)
+                continue;
+
             RaiseLocalEvent(client, ref args);
         }
     }
@@ -143,6 +148,10 @@ public sealed partial class ResearchSystem
         var ev = new ResearchServerGetPointsPerSecondEvent(uid, points);
         foreach (var client in component.Clients)
         {
+            // Nibiru: Не запрашиваем очки у самого сервера
+            if (client == uid)
+                continue;
+
             RaiseLocalEvent(client, ref ev);
         }
         return ev.Points;
@@ -165,6 +174,10 @@ public sealed partial class ResearchSystem
         var ev = new ResearchServerPointsChangedEvent(uid, component.Points, points);
         foreach (var client in component.Clients)
         {
+            // Nibiru: Не отправляем событие обратно на сам сервер
+            if (client == uid)
+                continue;
+
             RaiseLocalEvent(client, ref ev);
         }
         Dirty(uid, component);

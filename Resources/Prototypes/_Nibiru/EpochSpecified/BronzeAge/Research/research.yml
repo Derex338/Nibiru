@@ -1,0 +1,439 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE RESEARCH TREE ███
+# Карта исследований для бронзового века
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ══════════════════════════════════════
+# ОСНОВА - Металлургия бронзы (0,0)
+# ══════════════════════════════════════
+
+- type: technology
+  id: BronzeSmelting
+  name: Выплавка бронзы
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: bronze_3
+  discipline: BronzeAge
+  tier: 2
+  cost: 250
+  epoch: EpochBronze
+  position: 0, 0
+  craftUnlocks:
+    - BronzeInlay
+    - MoldIngot
+    - MoldInlay
+    - MoldAnvil
+
+# ══════════════════════════════════════
+# ЭКОНОМИКА (Правая ветка)
+# ══════════════════════════════════════
+
+- type: technology
+  id: BronzeTools
+  name: Бронзовые инструменты
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 200
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSmelting
+  position: 2, -1
+  craftUnlocks:
+    - MoldKnifeBlade
+    - BronzeKnife
+    - MoldRasp
+    - BronzeHammerSmall
+    - BronzeHatchet
+    - MoldTopAxe
+    - PapyrusLeather
+    - PapyrusGrass
+
+- type: technology
+  id: BronzeAgriculture
+  name: Сельское хозяйство
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 250
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeTools
+  position: 2, -2
+  craftUnlocks:
+    - MoldHoeBlade
+    - BronzeHoe
+    - MoldScytheBlade
+    - BronzeScythe
+    - MoldClippers
+    - BronzeClippers
+    - MoldShovel
+    - BronzeShovel
+
+- type: technology
+  id: BronzeMining
+  name: Горное дело
+  icon:
+    sprite: Objects/Tools/pickaxe.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 250
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeTools
+  position: 2, -3
+  craftUnlocks:
+    - MoldPickaxeBlade
+    - BronzePickaxe
+
+- type: technology
+  id: BronzeEngineering
+  name: Инженерное дело
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 200
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSmelting
+  position: 2, -4
+  craftUnlocks:
+    - MoldLock
+    - MoldKey
+
+# ══════════════════════════════════════
+# ВОЕННОЕ ДЕЛО (Левая ветка)
+# ══════════════════════════════════════
+
+- type: technology
+  id: BronzeSwordLight
+  name: Легкое вооружение
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSmelting
+  position: -2, -1
+  craftUnlocks:
+    - MoldDaggerBlade
+    - BronzeDagger
+    - BronzeScabbard
+
+- type: technology
+  id: BronzeSwordMedium
+  name: Среднее вооружение
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSwordLight
+  position: -2, -2
+  craftUnlocks:
+    - MoldXiphosBlade
+    - BronzeXiphos
+
+- type: technology
+  id: BronzeSwordLong
+  name: Длинное вооружение
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSwordMedium
+  position: -2, -3
+  craftUnlocks:
+    - MoldSwordBlade
+    - BronzeSword
+
+- type: technology
+  id: BronzeSwordHeavy
+  name: Тяжелое вооружение
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSwordLong
+  position: -2, -4
+  craftUnlocks:
+    - MoldKhapeshBlade
+    - BronzeKhapesh
+
+- type: technology
+  id: BronzeWeaponsHeavy
+  name: Тяжелое вооружение
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSwordLight
+  position: -3, -1
+  craftUnlocks:
+    - MoldTopBattleAxe
+    - BronzeAxe
+    - MoldTopMace
+    - BronzeHammer
+
+- type: technology
+  id: BronzePolearms
+  name: Древковое оружие
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSwordLight
+  position: -2, 0
+  craftUnlocks:
+    - MoldTopSpear
+    - BronzeSpear
+    - MoldTrident
+    - BronzeTrident
+    - BronzeHalberd
+
+- type: technology
+  id: BronzeHalberd
+  name: Алебарда
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzePolearms
+    - BronzeWeaponsHeavy
+  position: -3, 0
+  craftUnlocks:
+    - BronzeHalberd
+
+- type: technology
+  id: BronzeArchery
+  name: Стрельба
+  icon:
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 250
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSmelting
+  position: 0, -2
+  craftUnlocks:
+    - MoldArrowTip
+    - BronzeArrow
+
+- type: technology
+  id: BronzeArcheryAP
+  name: Бронебойные стрелы
+  icon:
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeArchery
+  position: 1, -2
+  craftUnlocks:
+    - MoldArrowTipArmor
+    - BronzeArrowAP
+
+- type: technology
+  id: RecursiveBow
+  name: Рекурсивный лук
+  icon:
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeArchery
+  position: 0, -3
+  craftUnlocks:
+    - RecursiveBow
+
+- type: technology
+  id: LongBow
+  name: Длинный лук
+  icon:
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - RecursiveBow
+  position: 0, -4
+  craftUnlocks:
+    - LongBow
+
+- type: technology
+  id: BronzeArmor
+  name: Бронзовая броня
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 350
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSmelting
+  position: 2, 1
+  craftUnlocks:
+    - MoldHelmet
+    - BronzeHelmet
+    - MoldChestplate
+    - BronzeChestplate
+    - MoldShield
+    - BronzeShield
+    - BronzeArmorBuckler
+
+- type: technology
+  id: GladiatorEquip
+  name: Экипировка гладиатора
+  icon:
+    sprite: Clothing/Head/Hats/gladiator.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 400
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeArmor
+  position: 3, 1
+  craftUnlocks:
+    - GladiatorHelmet
+    - GladiatorUniform
+
+# ══════════════════════════════════════
+# СТРОИТЕЛЬСТВО И ТРАНСПОРТ (Центр-Низ)
+# ══════════════════════════════════════
+
+- type: technology
+  id: BronzeConstruction
+  name: Архитектура бронзового века
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: straight
+  discipline: BronzeAge
+  tier: 2
+  cost: 300
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeSmelting
+  position: -2, 1
+  craftUnlocks:
+    - BronzeAnvilWorkbench
+    - BronzeAgeBed
+    - BronzeAgeChest
+    - Mannequin
+    - ChairWoodBench
+    - Bookshelf
+    - Dresser
+    - BronzeBell
+    - CrateCoffin
+    - ShelfWood
+    - NoticeBoard
+    - Harp
+    - Flute
+
+- type: technology
+  id: BronzeHeraldry
+  name: Геральдика бронзового века
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner
+  discipline: BronzeAge
+  tier: 2
+  cost: 200
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeConstruction
+  position: -4, 1
+  craftUnlocks:
+    - BannerCargo
+    - BannerEngineering
+    - BannerMedical
+    - BannerRevolution
+    - BannerScience
+    - BannerBlue
+    - BannerRed
+    - BannerYellow
+    - BannerGreen
+
+- type: technology
+  id: BronzeTransportation
+  name: Транспорт бронзового века
+  icon:
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+  discipline: BronzeAge
+  tier: 2
+  cost: 200
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeConstruction
+  position: 1, -1
+  craftUnlocks:
+    - WheelBlank
+    - WoodenWheel
+    - Wagon
+    - Saddle
+
+- type: technology
+  id: WebWorking
+  name: Плетение из паутины
+  icon:
+    sprite: Entities/Structures/spider_web.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 200
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeConstruction
+  position: -6, 1
+  craftUnlocks:
+    - WallWeb
+    - TableWeb
+    - WebBed
+    - ChairWeb
+    - CrateWeb
+    - WebDoor

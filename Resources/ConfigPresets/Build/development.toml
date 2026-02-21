@@ -2,10 +2,10 @@
 # Straight in-game baby
 lobbyenabled = true
 # Dev map for faster loading & convenience
-map = "ZMappingTest"
+map = "Dev"
 role_timers = false
 role_loadout_timers = false
-defaultpreset = "Nibiru"
+defaultpreset = "Sandbox"
 
 [events]
 enabled = false

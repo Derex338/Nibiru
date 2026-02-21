@@ -43,7 +43,7 @@ public sealed class KeyCodeSetEui(EntityUid target, EntityUid user, DoorLockSyst
             {
                 // Announce that convert failed
                 popup.PopupEntity(
-                    Loc.GetString("Код не сохранен", ("target", Identity.Entity(target, entManager))),
+                    Loc.GetString("key-lock-popup-code-not-saved", ("target", Identity.Entity(target, entManager))),
                     target,
                     user,
                     PopupType.LargeCaution);

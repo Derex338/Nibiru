@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Nibiru.Faction.UI;
 
-// Код взят с Reserv 
+// Код взят с Reserv
 [GenerateTypedNameReferences]
 public sealed partial class FactionRequestJoin : FancyWindow
 {
@@ -21,6 +21,7 @@ public sealed partial class FactionRequestJoin : FancyWindow
 
     public void SetConverterName(string? text)
     {
-        MessageText.Text = text == null ? Loc.GetString("rev-consent-window-convert-text-no-user") : Loc.GetString("rev-consent-window-convert-text", ("user", text));
+        Title = Loc.GetString("faction-request-window-title");
+        MessageText.Text = text == null ? Loc.GetString("faction-request-window-text") : Loc.GetString("faction-request-window-text-user", ("user", text));
     }
 }

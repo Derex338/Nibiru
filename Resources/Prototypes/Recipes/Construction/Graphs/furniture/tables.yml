@@ -11,8 +11,8 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: MetalRod
-              amount: 2
+            - material: WoodStick # Nibiru - was MetalRod
+              amount: 4 # Nibiru - was 2
               doAfter: 1
         - to: CounterWoodFrame
           completed:
@@ -38,8 +38,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-                prototype: PartRodMetal
-                amount: 2
+                prototype: WoodStick1 # Nibiru - was PartRodMetal
+                amount: 3 # Nibiru - was 2
           steps:
             - tool: Anchoring
               doAfter: 1
@@ -284,6 +284,13 @@
             - material: FloorCarpetWhite
               amount: 1
 
+        - to: BasicWorkbench #Nibiru
+          completed:
+            - !type:AddFactionComponent
+          steps:
+            - tool: Hammering
+              doAfter: 5
+
     - node: TableCarpet
       entity: TableCarpet
       edges:
@@ -451,3 +458,11 @@
         steps:
         - tool: Anchoring
           doAfter: 1
+
+    - node: BasicWorkbench
+      entity: BasicWorkbench
+      edges:
+        - to: TableWood
+          steps:
+            - tool: Prying
+              doAfter: 1

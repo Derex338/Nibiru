@@ -1,0 +1,167 @@
+- type: entity
+  name: нож из кости
+  parent: BaseKnife
+  id: BoneKnife
+  description: Заточенная кость с рукояткой. Он был создан убийствои и предназначен убивать.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.2
+    damage:
+      types:
+        Slash: 10
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
+  - type: DisarmMalus
+    malus: 0.225
+  - type: ThrowingAngle
+    angle: 225
+  - type: ArmorPenetration
+    penetration:
+      Slash: 4
+      Piercing: 2
+
+- type: entity
+  name: деревянный посох
+  parent: BaseWoodItem
+  id: WoodenStaff
+  description: Почувствуй себя монахом.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.2
+    damage:
+      types:
+        Blunt: 8
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 12
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+  - type: DisarmMalus
+    malus: 0.225
+  - type: ArmorPenetration
+    penetration:
+      Blunt: 2
+
+- type: entity
+  name: деревянное копье
+  parent: [BaseWoodItem, Spear]
+  id: WoodSpear
+  description: Устрая палка
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
+    state: spear
+  - type: MeleeWeapon
+    attackRate: 1.2
+    damage:
+      types:
+        Piercing: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Piercing: 10
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+  - type: ThrowingAngle
+    angle: 225
+  - type: Construction
+    graph: WoodenSpear
+    node: fin
+  - type: ArmorPenetration
+    penetration:
+      Piercing: 3
+      Blunt: 1
+
+- type: entity
+  name: каменное копье
+  parent: [BaseWoodItem, Spear]
+  id: StoneSpear
+  description: Острый камень на палке.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/StoneSpear.rsi
+    state: spear
+  - type: MeleeWeapon
+    attackRate: 1.2
+    damage:
+      types:
+        Piercing: 15
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Piercing: 13
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/StoneSpear.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 28
+  - type: Construction
+    graph: StoneSpear
+    node: fin
+  - type: ArmorPenetration
+    penetration:
+      Piercing: 5
+      Blunt: 2
+
+- type: entity
+  name: дубина
+  parent: [BaseWoodItem, BaseBallBat]
+  id: WoodBat
+  description: Острый камень на палке.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.2
+    damage:
+      types:
+        Blunt: 10
+        Structural: 8
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 15
+        Structural: 8
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+  - type: Construction
+    graph: Spear
+    node: spear
+  - type: ArmorPenetration
+    penetration:
+      Blunt: 4

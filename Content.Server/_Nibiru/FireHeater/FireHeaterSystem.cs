@@ -47,7 +47,7 @@ public sealed class HeatingSurfaceSystem : EntitySystem
             // Поверхность нагревает только если источник достаточно горячий
             if (fuel.CurrentTemperature < surface.MinSourceTemperature)
             {
-                UpdateVisuals(uid, surface, false, false);
+                //UpdateVisuals(uid, surface, false, false);
                 continue;
             }
 
@@ -104,7 +104,7 @@ public sealed class HeatingSurfaceSystem : EntitySystem
             }
         }
 
-        UpdateVisuals(uid, surface, hasItems, isHeating);
+        //UpdateVisuals(uid, surface, hasItems, isHeating);
         Dirty(uid, surface);
     }
 
@@ -305,7 +305,7 @@ public sealed class HeatingSurfaceSystem : EntitySystem
     /// <summary>
     /// Обновляет визуалы
     /// </summary>
-    private void UpdateVisuals(
+    /*private void UpdateVisuals(
         EntityUid uid,
         HeatingSurfaceComponent surface,
         bool hasItems,
@@ -316,7 +316,7 @@ public sealed class HeatingSurfaceSystem : EntitySystem
 
         _appearance.SetData(uid, HeatingSurfaceVisuals.HasItems, hasItems, appearance);
         _appearance.SetData(uid, HeatingSurfaceVisuals.IsHeating, isHeating, appearance);
-    }
+    }*/
 
     private void OnExamined(EntityUid uid, HeatingSurfaceComponent comp, ExaminedEvent args)
     {

@@ -38,6 +38,9 @@
       - Temperature
   - type: PlaceableSurface
   - type: Clickable
+  - type: Construction #Nibiru
+    graph: Bonfire
+    node: fin
 
 - type: entity
   id: LegionnaireBonfire

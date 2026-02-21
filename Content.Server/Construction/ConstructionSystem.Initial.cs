@@ -100,7 +100,8 @@ namespace Content.Server.Construction
             ConstructionGraphEdge edge,
             ConstructionGraphNode targetNode,
             EntityCoordinates coords,
-            Angle angle = default)
+            Angle angle = default,
+            EntityUid? heldItem = null) // Nibiru - added heldItem for tool step handling
         {
             // We need a place to hold our construction items!
             var container = _container.EnsureContainer<Container>(user, materialContainer, out var existed);
@@ -232,6 +233,16 @@ namespace Content.Server.Construction
                             handled = true;
                             used.Add(entity);
                             break;
+                        }
+
+                        break;
+
+                    // Nibiru - Tool step handling for initial construction
+                    case ToolConstructionGraphStep toolStep:
+                        // Use only held item for tool check
+                        if (heldItem.HasValue && _toolSystem.HasQuality(heldItem.Value, toolStep.Tool))
+                        {
+                            handled = true;
                         }
 
                         break;
@@ -375,7 +386,7 @@ namespace Content.Server.Construction
             }
 
             // No support for conditions here!
-
+/*
             foreach (var step in edge.Steps)
             {
                 switch (step)
@@ -384,6 +395,10 @@ namespace Content.Server.Construction
                         throw new InvalidDataException("Invalid first step for construction recipe!");
                 }
             }
+*/ //Nibiru - removed tool step validation since we now handle it in Construct
+
+            // Nibiru - get held item for tool step handling
+            var heldItem = _handsSystem.GetActiveItem(user);
 
             if (await Construct(
                     user,
@@ -391,7 +406,9 @@ namespace Content.Server.Construction
                     constructionGraph,
                     edge,
                     targetNode,
-                    Transform(user).Coordinates) is not { Valid: true } item)
+                    Transform(user).Coordinates,
+                    default,
+                    heldItem) is not { Valid: true } item)
                 return false;
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
@@ -512,8 +529,11 @@ namespace Content.Server.Construction
                         if (entityInsert.EntityValid(holding, EntityManager, Factory))
                             valid = true;
                         break;
-                    case ToolConstructionGraphStep _:
-                        throw new InvalidDataException("Invalid first step for item recipe!");
+                    // Nibiru - Added tool step handling for initial construction
+                    case ToolConstructionGraphStep toolStep:
+                        if (_toolSystem.HasQuality(holding, toolStep.Tool))
+                            valid = true;
+                        break;
                 }
 
                 if (valid)
@@ -532,7 +552,8 @@ namespace Content.Server.Construction
                     edge,
                     targetNode,
                     GetCoordinates(ev.Location),
-                    constructionPrototype.CanRotate ? ev.Angle : Angle.Zero) is not {Valid: true} structure)
+                    constructionPrototype.CanRotate ? ev.Angle : Angle.Zero,
+                    holding) is not {Valid: true} structure) // Nibiru - pass held item for tool step
             {
                 Cleanup();
                 return;

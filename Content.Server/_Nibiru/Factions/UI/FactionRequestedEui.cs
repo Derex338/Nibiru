@@ -39,7 +39,7 @@ public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, A
             {
                 // Announce that convert was successful
                 popup.PopupEntity(
-                    Loc.GetString("Запрос принят", ("target", Identity.Entity(target, entManager))),
+                    Loc.GetString("faction-popup-request-accepted", ("target", Identity.Entity(target, entManager))),
                     target,
                     converter);
 
@@ -49,7 +49,7 @@ public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, A
             {
                 // Announce that convert failed
                 popup.PopupEntity(
-                    Loc.GetString("Запрос отклонили", ("target", Identity.Entity(target, entManager))),
+                    Loc.GetString("faction-popup-request-denied", ("target", Identity.Entity(target, entManager))),
                     target,
                     converter,
                     PopupType.SmallCaution);

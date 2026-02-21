@@ -18,7 +18,7 @@ using Content.Server.EUI;
 using Content.Shared.IdentityManagement;
 using Content.Server._Nibiru.Factions.UI;
 
-//Часть кода взята с Reserv 
+//Часть кода взята с Reserv
 namespace Content.Server._Nibiru.Factions
 {
     public sealed class AddFactionVerb : EntitySystem
@@ -52,7 +52,7 @@ namespace Content.Server._Nibiru.Factions
 
             AlternativeVerb verb = new()
             {
-                Text = Loc.GetString("Пригласить во фракцию"),
+                Text = Loc.GetString("faction-verb-invite"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/pray.svg.png")),
                 Act = () => RequestJoinFaction(args.Target, args.User)
             };
@@ -69,7 +69,7 @@ namespace Content.Server._Nibiru.Factions
             {
                 // Tell the converter that request was sent
                 _popup.PopupEntity(
-                    Loc.GetString("ЗАПРОС ОТПРАВЛЕН", ("target", Identity.Entity(target, EntityManager))),
+                    Loc.GetString("faction-popup-request-sent", ("target", Identity.Entity(target, EntityManager))),
                     converter,
                     converter);
 
@@ -84,7 +84,7 @@ namespace Content.Server._Nibiru.Factions
             {
                 // Entity doesn't have mind (not controlled by player) to give response, but it's still convertable without it. We'll consent for them
                 _popup.PopupEntity(
-                    Loc.GetString("ОН БЕЗМОЗГЛЫЙ", ("target", Identity.Entity(target, EntityManager))),
+                    Loc.GetString("faction-popup-target-mindless", ("target", Identity.Entity(target, EntityManager))),
                     converter,
                     converter);
             }

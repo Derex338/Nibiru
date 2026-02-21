@@ -1,0 +1,291 @@
+- type: entity
+  parent: BaseWoodItem
+  id: WoodenBowl
+  name: wooden bowl
+  description: A rustic bowl carved from wood.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+      color: "#8B4513" # SaddleBrown
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
+    sprite: Objects/Consumable/Food/bowl.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+  - type: MixableSolution
+    solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+    utensil: Spoon
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Construction
+    graph: WoodenBowl
+    node: fin
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodSmash
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          WoodPlank1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Clay Kitchenware
+
+# Raw Items
+- type: entity
+  parent: BaseStoneItem
+  id: ClayBowlRaw
+  name: сырая глиняная миска
+  description: Еще влажная и мягкая миска из глины. Нужно обжечь ее, чтобы она стала твердой.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    state: bowl
+    color: "#7a6e60" # Greyish clay color
+  - type: Item
+    sprite: Objects/Consumable/Food/bowl.rsi
+  - type: Construction
+    graph: ClayBowl
+    node: raw
+  - type: Temperature
+
+- type: entity
+  parent: BaseStoneItem
+  id: ClayJugRaw
+  name: сырой глиняный кувшин
+  description: Еще влажный и мягкий кувшин из глины. Нужно обжечь его, чтобы он стал твердым.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+    state: icon
+    color: "#7a6e60"
+  - type: Item
+    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+  - type: Construction
+    graph: ClayJug
+    node: raw
+  - type: Temperature
+
+- type: entity
+  parent: BaseStoneItem
+  id: ClayCupRaw
+  name: сырая глиняная кружка
+  description: Еще влажная и мягкая кружка из глины. Нужно обжечь ее, чтобы она стала твердой.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+    state: icon
+    color: "#7a6e60"
+  - type: Item
+    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+  - type: Construction
+    graph: ClayCup
+    node: raw
+  - type: Temperature
+
+- type: entity
+  parent: BaseStoneItem
+  id: ClayPlateRaw
+  name: сырая глиняная тарелка
+  description: Еще влажная и мягкая тарелка из глины. Нужно обжечь ее, чтобы она стала твердой.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plate.rsi
+    state: plate
+    color: "#7a6e60"
+  - type: Item
+    sprite: Objects/Consumable/Food/plate.rsi
+  - type: Construction
+    graph: ClayPlate
+    node: raw
+  - type: Temperature
+
+# Fired Items
+- type: entity
+  parent: BaseStoneItem
+  id: ClayBowl
+  name: глиняная миска
+  description: Прочная миска из обожженной глины.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+      color: "#d2691e" # Terracotta color
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
+    sprite: Objects/Consumable/Food/bowl.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+  - type: MixableSolution
+    solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+    utensil: Spoon
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: food
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: Spillable
+    solution: food
+  - type: Construction
+    graph: ClayBowl
+    node: fin
+
+- type: entity
+  parent: BaseStoneItem
+  id: ClayJug
+  name: глиняный кувшин
+  description: Вместительный кувшин из обожженной глины.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+    layers:
+    - state: icon
+      color: "#d2691e"
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
+    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+  - type: MixableSolution
+    solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: food
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: Spillable
+    solution: food
+  - type: Construction
+    graph: ClayJug
+    node: fin
+
+- type: entity
+  parent: BaseStoneItem
+  id: ClayCup
+  name: глиняная кружка
+  description: Небольшая кружка из обожженной глины.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+    layers:
+    - state: icon
+      color: "#d2691e"
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
+    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+  - type: MixableSolution
+    solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: food
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: Spillable
+    solution: food
+  - type: Construction
+    graph: ClayCup
+    node: fin
+
+- type: entity
+  parent: BaseStoneItem
+  id: ClayPlate
+  name: глиняная тарелка
+  description: Широкая тарелка из обожженной глины.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plate.rsi
+    state: plate
+    color: "#d2691e"
+  - type: Item
+    sprite: Objects/Consumable/Food/plate.rsi
+  - type: Construction
+    graph: ClayPlate
+    node: fin

@@ -1,0 +1,111 @@
+- type: stack
+  parent: BaseTileStack
+  id: CEStoneBlock1
+  name: ce-tiles-base-item
+  spawn: CEStoneBlock1
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEDirtBlock1
+  name: ce-tiles-dirt-item
+  spawn: CEDirtBlock1
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEWoodenPlanks1
+  name: ce-tiles-planks-item
+  spawn: CEWoodenPlanks1
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStonebricks
+  name: ce-tiles-stonebricks-item
+  spawn: CEFloorTileStonebricks
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStonebricksSmallCarved
+  name: ce-tiles-stonebricks-small-carved-item
+  spawn: CEFloorTileStonebricksSmallCarved
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStonebricksSmallCarved2
+  name: ce-tiles-stonebricks-small-carved2-item
+  spawn: CEFloorTileStonebricksSmallCarved2
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStoneLongBricks
+  name: ce-tiles-stonebricks-long-bricks-item
+  spawn: CEFloorTileStoneLongBricks
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStoneMediumBricks
+  name: ce-tiles-stonebricks-medium-item
+  spawn: CEFloorTileStoneMediumBricks
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStoneDiamond
+  name: ce-tiles-stonebricks-diamond-item
+  spawn: CEFloorTileStoneDiamond
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStoneSquarePattern
+  name: ce-tiles-stonebricks-square-pattern-item
+  spawn: CEFloorTileStoneSquarePattern
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStoneMediumCircles
+  name: ce-tiles-stonebricks-medium-circles-item
+  spawn: CEFloorTileStoneMediumCircles
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStoneSmallCircles
+  name: ce-tiles-stonebricks-small-circles-item
+  spawn: CEFloorTileStoneSmallCircles
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileStonebricksSquareCarved
+  name: ce-tiles-stonebricks-square-carved-item
+  spawn: CEFloorTileStonebricksSquareCarved
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileGlass
+  name: ce-tiles-glass-item
+  spawn: CEFloorTileGlass
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileRoofRed
+  name: ce-tiles-roof-red-item
+  spawn: CEFloorTileRoofRed
+  maxCount: 30
+
+- type: stack
+  parent: BaseTileStack
+  id: CEFloorTileRoofGreen
+  name: ce-tiles-roof-green-item
+  spawn: CEFloorTileRoofGreen
+  maxCount: 30

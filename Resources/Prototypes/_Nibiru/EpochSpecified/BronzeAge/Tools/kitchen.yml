@@ -1,0 +1,41 @@
+- type: entity
+  parent: ReagentContainerBase
+  id: CookingPot
+  name: cooking pot
+  description: A simple cooking pot, used for soups.
+  components:
+  - type: Item
+    color: "#D16F2C"
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/Soups/cooking_pot.rsi
+    color: "#D16F2C"
+    layers:
+    - state: base
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      sprite: _CE/Objects/Consumable/Food/Soups/displacement.rsi
+      state: fill-1
+      visible: false
+  - type: MixableSolution
+    solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+    utensil: Spoon
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface

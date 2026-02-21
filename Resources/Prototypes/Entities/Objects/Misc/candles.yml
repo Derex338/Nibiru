@@ -60,6 +60,9 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Construction #Nibiru
+      graph: Candle
+      node: fin
 
 - type: entity
   name: red candle

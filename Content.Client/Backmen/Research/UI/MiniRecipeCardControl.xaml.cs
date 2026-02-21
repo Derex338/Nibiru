@@ -58,6 +58,17 @@ public sealed partial class MiniRecipeCardControl : Control
                 tooltip.SetMessage(FormattedMessage.FromUnformatted(consProto.Description));
                 Main.TooltipSupplier = _ => tooltip;
             }
+
+            if (consProto.EntitysToShowRecipe.Count > 0 && prototypeManager.TryIndex(consProto.EntitysToShowRecipe[0], out var workbenchProto))
+            {
+                WorkbenchIcon.Texture = sprite.Frame0(workbenchProto);
+                WorkbenchIcon.Visible = true;
+                WorkbenchIconSpacer.Visible = true;
+
+                var tooltip = new Tooltip();
+                tooltip.SetMessage(FormattedMessage.FromUnformatted(workbenchProto.Name));
+                WorkbenchIcon.TooltipSupplier = _ => tooltip;
+            }
         }
     }
 }

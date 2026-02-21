@@ -53,7 +53,27 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         Search.OnTextChanged += _ => FilterRecipes(Search.Text);
         BuildButton.OnToggled += OnBuildButtonToggled;
         ClearButton.OnPressed += _ => ClearGhost();
+
+		if (_constructionSystem != null)
+			_constructionSystem.ConstructionGuideAvailable += OnGuideAvailable;
+
     }
+
+	public override void Close()
+    {
+        base.Close();
+
+		if (_constructionSystem != null)
+			_constructionSystem.ConstructionGuideAvailable -= OnGuideAvailable;
+    }
+
+	private void OnGuideAvailable(object? sender, string prototype)
+	{
+		if (_selected == null || _selected.ID != prototype)
+			return;
+
+		SelectRecipe(_selected);
+	}
 
     public event EventHandler<(string search, string category)>? PopulateRecipes;
 

@@ -1,0 +1,83 @@
+- type: entity
+  name: деревянный щит
+  parent: BaseShield
+  id: WoodenShield
+  description: Просто кусок дерева с рукоятью. Лучше чем ничего.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
+    state: icon
+  - type: Item
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.80
+        Piercing: 0.85
+      flatReductions:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: WoodDestroy
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              MaterialWoodPlank1:
+                min: 2
+                max: 3
+  - type: Construction
+    graph: WoodenShield
+    node: fin
+
+- type: entity
+  name: плетёный щит
+  id: WickerShield
+  parent: BaseShield
+  description: Лёгкий щит из переплетённых прутьев. Защищает от стрел, но плох против топоров.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/HerbShield.rsi
+    state: icon
+  - type: Item
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 1.05
+        Slash: 1.05
+        Piercing: 0.95
+    activeBlockModifier:
+      coefficients:
+        Blunt: 1.0
+        Slash: 1.0
+        Piercing: 0.85
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1000
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: WoodDestroy
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              WoodStick1:
+                min: 3
+                max: 5
+  - type: Construction
+    graph: WickerShield
+    node: fin

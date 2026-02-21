@@ -170,17 +170,16 @@ namespace Content.Server.Construction
             if (construction.StepIndex >= edge.Steps.Count)
             {
                 // Edge finished!
-                PerformActions(uid, user, edge.Completed);
-
-                if (construction.Deleted)
-                    return HandleResult.True;
-
                 construction.TargetEdgeIndex = null;
                 construction.EdgeIndex = null;
                 construction.StepIndex = 0;
 
                 // We change the node now.
-                ChangeNode(uid, user, edge.Target, true, construction);
+                var finalUid = ChangeNode(uid, user, edge.Target, true, construction);
+
+                // Perform edge completion actions on the final entity result of the transition.
+                if (Exists(finalUid))
+                    PerformActions(finalUid, user, edge.Completed);
             }
 
             return HandleResult.True;
@@ -410,7 +409,7 @@ namespace Content.Server.Construction
                     if ((!temperatureChangeStep.MinTemperature.HasValue || temp >= temperatureChangeStep.MinTemperature.Value) &&
                         (!temperatureChangeStep.MaxTemperature.HasValue || temp <= temperatureChangeStep.MaxTemperature.Value))
                     {
-                        return HandleResult.True;
+                        return validation ? HandleResult.Validated : HandleResult.True;
                     }
 
                     return HandleResult.False;
@@ -422,7 +421,7 @@ namespace Content.Server.Construction
                         break;
 
                     if (partAssemblyStep.Condition(uid, EntityManager))
-                        return HandleResult.True;
+                        return validation ? HandleResult.Validated : HandleResult.True;
                     return HandleResult.False;
                 }
 

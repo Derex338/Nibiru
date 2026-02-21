@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "frame"
+    },
+    {
+      "name": "base"
+    },
+    {
+      "name": "childrens"
+    },
+    {
+      "name": "devourers"
+    },
+    {
+      "name": "unnameable"
+    }
+  ]
+}

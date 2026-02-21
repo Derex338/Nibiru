@@ -1,0 +1,92 @@
+- type: entity
+  parent: [IngotBase, BaseCopperItem]
+  id: IngotCopper
+  name: медный слиток
+  suffix: Full
+  components:
+  - type: Material
+  - type: Stack
+    stackType: Copper
+    baseLayer: base
+    layerStates:
+    - coper
+    - copper_2
+    - copper_3
+  - type: Sprite
+    state: copper_3
+    layers:
+    - state: copper_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: copper
+  - type: SmeltableOre
+    meltingPoint: 1085
+    meltingSpeed: 1
+    resultReagent: CopperMolten
+    resultAmount: 50
+    resultTemperature: 1200
+  - type: Appearance
+
+- type: entity
+  parent: IngotCopper
+  id: IngotCopper1
+  name: медный слиток
+  suffix: Single
+  components:
+  - type: Sprite
+    state: copper
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: [IngotBase, BaseBronzeItem]
+  id: BronzeScrap
+  name: металлические осколки
+  suffix: Full
+  components:
+  - type: Material
+  - type: Item
+  - type: Appearance
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: BronzeScraps
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 10
+    resultTemperature: 1100
+
+- type: entity
+  parent: [IngotBase, BaseBronzeItem]
+  id: IngotBronze
+  name: бронзовый слиток
+  suffix: Full
+  components:
+  - type: Material
+  - type: Stack
+    stackType: Bronze
+    baseLayer: base
+    layerStates:
+    - Bronze_1
+    - Bronze_2
+    - Bronze_3
+  - type: Item
+  - type: Appearance
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_3
+    layers:
+    - state: Bronze_3
+      map: ["base"]
+
+- type: entity
+  parent: IngotBronze
+  id: IngotBronze1
+  name: бронзовый слиток
+  suffix: Single
+  components:
+  - type: Sprite
+    state: Bronze_1
+  - type: Stack
+    count: 1

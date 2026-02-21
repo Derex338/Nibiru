@@ -1,0 +1,27 @@
+- type: entity
+  id: ResearchTable
+  parent: BaseWoodStructure
+  name: исследовательский стол
+  description: Тут происходит магия прогресса.
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: research_table
+  - type: ResearchClient
+  - type: ResearchConsole
+  - type: TechnologyDatabase
+    supportedDisciplines:
+    - StoneAge
+    - BronzeAge
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ResearchConsoleUiKey.Key:
+        type: ResearchConsoleBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+  - type: Construction
+    graph: ResearchTable
+    node: fin
+  - type: ResearchServer

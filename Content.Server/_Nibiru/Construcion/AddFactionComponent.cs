@@ -10,19 +10,13 @@ namespace Content.Server.Construction.Completions
     [UsedImplicitly]
     [DataDefinition]
     public sealed partial class AddFactionComponent : IGraphAction
-    {	
+    {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             if (userUid == null)
                 return;
 
-			if(entityManager.TryGetComponent<FactionComponent>(userUid, out var user)
-			&& !entityManager.TryGetComponent<FactionComponent>(uid, out var construction))
-			{
-				construction = entityManager.AddComponent<FactionComponent>(uid);
-				
-				construction.FactionName = user.FactionName;
-			}
+			entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddFactionComp(uid, userUid.Value);
         }
     }
 }

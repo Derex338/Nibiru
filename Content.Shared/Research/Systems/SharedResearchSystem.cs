@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Lathe;
+using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
@@ -14,6 +15,7 @@ public abstract partial class SharedResearchSystem : EntitySystem   // Goobstati
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedLatheSystem _lathe = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -75,8 +77,8 @@ public abstract partial class SharedResearchSystem : EntitySystem   // Goobstati
         if (tech.Hidden)
             return false;
 
-        if (!component.SupportedDisciplines.Contains(tech.Discipline))
-            return false;
+        //if (!component.SupportedDisciplines.Contains(tech.Discipline)) // Nibiru Removed
+        //    return false;
 
         // if (tech.Tier > disciplineTiers[tech.Discipline])    // Goobstation R&D Console rework - removed main discipline checks
         //     return false;

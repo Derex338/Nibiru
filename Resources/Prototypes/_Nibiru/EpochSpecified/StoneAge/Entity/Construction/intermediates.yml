@@ -1,0 +1,95 @@
+- type: entity
+  id: StoneBlockIntermediate
+  parent: BaseItem
+  name: груда камней
+  description: Груда камней, подготовленная для обработки.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
+    state: icon
+  - type: Construction
+    graph: StoneBlock
+    node: intermediate
+
+
+- type: entity
+  id: UshankaIntermediate
+  parent: BaseItem
+  name: незавершенная ушанка
+  description: Сшитые куски шкуры.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Construction
+    graph: Ushanka
+    node: intermediate
+
+- type: entity
+  id: CoatTrenchIntermediate
+  parent: BaseItem
+  name: незавершенный плащ
+  description: Заготовка плаща.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Construction
+    graph: CoatTrench
+    node: intermediate
+
+- type: entity
+  id: CoatPirateIntermediate
+  parent: BaseItem
+  name: незавершенный камзол
+  description: Заготовка камзола.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Construction
+    graph: CoatPirate
+    node: intermediate
+
+- type: entity
+  id: LetherHelmetIntermediate
+  parent: BaseItem
+  name: незавершенный шлем
+  description: Заготовка шлема.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Construction
+    graph: LetherHelmet
+    node: intermediate
+
+- type: entity
+  id: LetherChestplateIntermediate
+  parent: BaseItem
+  name: незавершенная броня
+  description: Заготовка кожаной брони.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Construction
+    graph: LetherChestplate
+    node: intermediate
+
+
+
+
+- type: entity
+  id: StoneWallIntermediate
+  parent: BaseStructure
+  name: каменная кладка
+  description: Грубо сложенные камни.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
+    state: icon
+  - type: Construction
+    graph: StoneWall
+    node: intermediate
+

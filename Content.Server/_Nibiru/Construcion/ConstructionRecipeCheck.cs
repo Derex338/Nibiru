@@ -75,7 +75,7 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
         var ev = new CraftsGetRecipesEvent((uid, comp), getUnavailable);
 
         if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Player)
-        && Player.ResearchServer is null)
+        && (Player.ResearchServer is null || !EntityManager.EntityExists(Player.ResearchServer)))
         {
             var allServers = GetServers(uid).ToList();
 
@@ -133,7 +133,9 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
                         }
                     }
                 }
-                else
+                else if (_proto.TryIndex<ConstructionPrototype>(recipe, out var comp1)
+                    && comp1.EntitysToShowRecipe.Count == 0
+                    && !HasComp<WorkbenchComponent>(args.User))
                     args.Recipes.Add(recipe);
             }
         }

@@ -1,0 +1,100 @@
+- type: entity
+  name: бронзовый баклер
+  parent: [BaseShield, BaseBronzeItem]
+  id: BronzeBuckler
+  description: Неаккуратный деревянный баклер со сплавом бронзы вокруг дерева и с бронзой по середине.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
+    state: bronze-buckler-icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
+    heldPrefix: bronze-buckler
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Heat: 3
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.50
+        Slash: 0.50
+        Piercing: 0.50
+        Heat: 2
+      flatReductions:
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+  - type: Construction
+    graph: BronzeArmorBuckler
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 5000
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: WoodDestroy
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              MaterialWoodPlank:
+                min: 3
+                max: 5
+              BronzeScrap:
+                min: 2
+                max: 3
+
+- type: entity
+  name: бронзовый щит
+  parent: [BaseShield, BaseBronzeItem]
+  id: BronzeShield
+  description: Искусная работа полностью из бронзы.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
+    state: bronze-icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
+    heldPrefix: bronze
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 1.5
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.30
+        Slash: 0.30
+        Piercing: 0.30
+        Heat: 0.85
+      flatReductions:
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+  - type: Construction
+    graph: BronzeShield
+    node: fin
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 7500
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalCrunch
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              BronzeScrap:
+                min: 3
+                max: 6

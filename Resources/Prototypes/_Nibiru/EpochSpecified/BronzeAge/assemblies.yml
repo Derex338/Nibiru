@@ -1,0 +1,259 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# BRONZE ASSEMBLIES (Промежуточные заготовки)
+# Эти сущности используются как промежуточный этап крафта для горячей ковки.
+# Имеют компонент Temperature, так как наследуются от BaseBronzeItem.
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: entity
+  id: BaseBronzeAssembly
+  parent: BaseBronzeItem
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#CD7F32" # Bronze color tint
+  - type: Item
+    size: Large
+
+# --- Tools & Weapons ---
+
+- type: entity
+  id: BronzeHammerSmallAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка малого бронзового молота
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeHammerSmall
+    node: assembly
+
+- type: entity
+  id: BronzeHammerAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового молота
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeHammer
+    node: assembly
+
+- type: entity
+  id: BronzeHatchetAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового топорика
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeHatchet
+    node: assembly
+
+- type: entity
+  id: BronzeAxeAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового топора
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeAxe
+    node: assembly
+
+- type: entity
+  id: BronzeSpearAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового копья
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeSpear
+    node: assembly
+
+- type: entity
+  id: BronzeSwordAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового меча
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeSword
+    node: assembly
+
+- type: entity
+  id: BronzeTridentAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового трезубца
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Trident.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeTrident
+    node: assembly
+
+- type: entity
+  id: BronzeHalberdAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзовой алебарды
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeHalberd
+    node: assembly
+
+- type: entity
+  id: BronzePickaxeAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзовой кирки
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/pickaxe.rsi
+    state: icon
+  - type: Construction
+    graph: BronzePickaxe
+    node: assembly
+
+- type: entity
+  id: BronzeShovelAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзовой лопаты
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeShovel
+    node: assembly
+
+- type: entity
+  id: BronzeScytheAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзовой косы
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeScythe
+    node: assembly
+
+- type: entity
+  id: BronzeHoeAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзовой мотыги
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeHoe
+    node: assembly
+
+- type: entity
+  id: BronzeKnifeAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового ножа
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeKnife
+    node: assembly
+
+- type: entity
+  id: BronzeClippersAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового секатора
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeClippers
+    node: assembly
+
+# --- Armor & Gear ---
+
+- type: entity
+  id: BronzeBucklerAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового баклера
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
+    state: bronze-buckler-icon
+  - type: Construction
+    graph: BronzeArmorBuckler
+    node: assembly
+
+- type: entity
+  id: BronzeChestplateAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового нагрудника
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeChestplate
+    node: assembly
+
+- type: entity
+  id: BronzeHelmetAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового шлема
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeHelmet
+    node: assembly
+
+- type: entity
+  id: BronzeXiphosAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового ксифоса
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeXiphos
+    node: assembly
+
+- type: entity
+  id: BronzeDaggerAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового кинжала
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeDagger
+    node: assembly
+
+- type: entity
+  id: BronzeKhapeshAssembly
+  parent: BaseBronzeAssembly
+  name: заготовка бронзового хопеша
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: icon
+  - type: Construction
+    graph: BronzeKhapesh
+    node: assembly

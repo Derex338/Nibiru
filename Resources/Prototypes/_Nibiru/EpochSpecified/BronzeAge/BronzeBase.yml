@@ -1,0 +1,52 @@
+- type: entity
+  name: BaseBronzeItem
+  parent: BaseItem
+  id: BaseBronzeItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+    state: icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 40
+    resultTemperature: 1100
+  - type: Temperature
+
+- type: entity
+  name: BaseBronzeStructure
+  parent: BaseStructure
+  id: BaseBronzeStructure
+  abstract: true
+  components:
+  - type: Sprite
+
+- type: entity
+  name: BaseCopperItem
+  parent: BaseItem
+  id: BaseCopperItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+    state: icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+  - type: SmeltableOre
+    meltingPoint: 1085
+    meltingSpeed: 1
+    resultReagent: CopperMolten
+    resultAmount: 40
+    resultTemperature: 1200
+
+- type: entity
+  name: BaseCopperStructure
+  parent: BaseStructure
+  id: BaseCopperStructure
+  abstract: true
+  components:
+  - type: Sprite

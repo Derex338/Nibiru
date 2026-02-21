@@ -1,0 +1,530 @@
+- type: entity
+  parent: [BaseStoneItem, DrinkVisualsFill]
+  id: StoneMoldBase
+  name: каменная форма
+  abstract: true
+  description: Форма из обожженного камня для отливки предметов.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    layers:
+      - state: icon
+        color: "#808080"
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 100
+  - type: CoolInWater
+    solution: metal
+  - type: Temperature
+  - type: InjectableSolution
+    solution: metal
+  - type: RefillableSolution
+    solution: metal
+  - type: ItemSlots
+    slots:
+      result_container:
+        blacklist:
+          components:
+          - SolutionContainerManager
+          - Item
+  - type: ContainerContainer
+    containers:
+      result_container: !type:ContainerSlot
+  - type: DrawableSolution
+    solution: metal
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill-
+  - type: ExaminableSolution
+    solution: metal
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldIngot
+  name: каменная форма для слитка
+  description: Каменная форма для отливки металлических слитков.
+  components:
+  - type: Mold
+    resultEntities:
+      CopperMolten: IngotCopper1
+      TinMolten: IngotTin1
+      BronzeMolten: IngotBronze1
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 100
+  - type: Construction
+    graph: MoldIngot
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldInlay
+  name: каменная форма для вставки
+  description: Каменная форма для отливки бронзовых вставок.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeInlay
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 40
+  - type: Construction
+    graph: MoldInlay
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldArrowTip
+  name: каменная форма для наконечника стрелы
+  description: Каменная форма для отливки бронзовых наконечников стрел.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeArrowTip
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 20
+  - type: Construction
+    graph: MoldArrowTip
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldArrowTipArmor
+  name: каменная форма для бронебойного наконечника
+  description: Каменная форма для отливки бронебойных наконечников стрел.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeArrowTipArmor
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 30
+  - type: Construction
+    graph: MoldArrowTipArmor
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldTopHammer
+  name: каменная форма для навершия молотка
+  description: Каменная форма для отливки навершия небольшого молотка.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeTopHammerPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 60
+  - type: Construction
+    graph: MoldTopHammer
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldTopMace
+  name: каменная форма для навершия молота
+  description: Каменная форма для отливки навершия боевого молота.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeTopMacePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 100
+  - type: Construction
+    graph: MoldTopMace
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldTopAxe
+  name: каменная форма для навершия топора
+  description: Каменная форма для отливки навершия рабочего топора.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeTopAxePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 80
+  - type: Construction
+    graph: MoldTopAxe
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldTopBattleAxe
+  name: каменная форма для навершия боевого топора
+  description: Каменная форма для отливки навершия боевого топора.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeTopBattleAxePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 120
+  - type: Construction
+    graph: MoldTopBattleAxe
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldTopSpear
+  name: каменная форма для наконечника копья
+  description: Каменная форма для отливки наконечника копья.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeTopSpearPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 90
+  - type: Construction
+    graph: MoldTopSpear
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldSwordBlade
+  name: каменная форма для лезвия меча
+  description: Каменная форма для отливки лезвия меча.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeSwordBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 120
+  - type: Construction
+    graph: MoldSwordBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldDaggerBlade
+  name: каменная форма для лезвия кинжала
+  description: Каменная форма для отливки лезвия кинжала.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeDaggerBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 50
+  - type: Construction
+    graph: MoldDaggerBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldTrident
+  name: каменная форма для навершия трезубца
+  description: Каменная форма для отливки навершия трезубца.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeTridentPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 150
+  - type: Construction
+    graph: MoldTrident
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldShield
+  name: каменная форма для обивки щита
+  description: Каменная форма для отливки элементов щита.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeShieldPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 200
+  - type: Construction
+    graph: MoldShield
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldKnifeBlade
+  name: каменная форма для лезвия ножа
+  description: Каменная форма для отливки лезвия ножа.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeKnifeBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 40
+  - type: Construction
+    graph: MoldKnifeBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldClippers
+  name: каменная форма для детали секатора
+  description: Каменная форма для отливки детали секатора.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeClippersPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 40
+  - type: Construction
+    graph: MoldClippers
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldHoeBlade
+  name: каменная форма для лезвия мотыги
+  description: Каменная форма для отливки лезвия мотыги.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeHoeBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 60
+  - type: Construction
+    graph: MoldHoeBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldPickaxeBlade
+  name: каменная форма для наконечника кирки
+  description: Каменная форма для отливки наконечника кирки.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzePickaxeBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 120
+  - type: Construction
+    graph: MoldPickaxeBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldScytheBlade
+  name: каменная форма для лезвия косы
+  description: Каменная форма для отливки лезвия косы.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeScytheBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 90
+  - type: Construction
+    graph: MoldScytheBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldShovel
+  name: каменная форма для наконечника лопаты
+  description: Каменная форма для отливки наконечника лопаты.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeShovelPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 100
+  - type: Construction
+    graph: MoldShovel
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldHelmet
+  name: каменная форма для шлема
+  description: Каменная форма для отливки основы шлема.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeHelmetPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 250
+  - type: Construction
+    graph: MoldHelmet
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldChestplate
+  name: каменная форма для нагрудника
+  description: Каменная форма для отливки детали нагрудника.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeChestplatePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 500
+  - type: Construction
+    graph: MoldChestplate
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldAnvil
+  name: каменная форма для наковальни
+  description: Огромная каменная форма для отливки наковальни.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeAnvilPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 1250
+  - type: Construction
+    graph: MoldAnvil
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldLock
+  name: каменная форма для замка
+  description: Каменная форма для отливки детали замка.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeLockPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 30
+  - type: Construction
+    graph: MoldLock
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldKey
+  name: каменная форма для ключа
+  description: Каменная форма для отливки ключа.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeKeyPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 20
+  - type: Construction
+    graph: MoldKey
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldRasp
+  name: каменная форма для рашпиля
+  description: Каменная форма для отливки рашпиля.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeRaspPiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 50
+  - type: Construction
+    graph: MoldRasp
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldKhapeshBlade
+  name: каменная форма для лезвия хопеша
+  description: Каменная форма для отливки лезвия хопеша.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeKhapeshBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 90
+  - type: Construction
+    graph: MoldKhapeshBlade
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldXiphosBlade
+  name: каменная форма для лезвия ксифоса
+  description: Каменная форма для отливки лезвия ксифоса.
+  components:
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeXiphosBladePiece
+    slot: result_container
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 90
+  - type: Construction
+    graph: MoldXiphosBlade
+    node: fin

@@ -1,0 +1,174 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformBaseHide
+  name: накидка из шкуры
+  description: Бедное животное, ему теперь наверно холодно.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Uniforms/Jumpsuit/kim.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Uniforms/Jumpsuit/kim.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTunic
+  name: туника
+  description: Простейшая туника из ткани.
+  components:
+    - type: Sprite
+      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
+      state: icon
+    - type: Clothing
+      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
+    - type: Construction
+      graph: Tunic
+      node: fin
+    - type: Armor
+      modifiers:
+        coefficients:
+          Slash: 0.95
+    - type: ArmorProtection
+      protection:
+        Slash: 1
+        Blunt: 0
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformHerbalBelt
+  name: травяной пояс
+  description: Простой пояс, сплетенный из растений.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Uniforms/Jumpsuit/kim.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Uniforms/Jumpsuit/kim.rsi
+    - type: Construction
+      graph: HerbalBelt
+      node: fin
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesHerbal
+  name: травяные башмаки
+  description: Простая обувь сплетенная из травы.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Shoes/Herb.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Shoes/Herb.rsi
+  - type: Construction
+    graph: ShoesHerbal
+    node: fin
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingHerbalBasket
+  name: травяная корзинка
+  description: Плетеная корзина для переноски вещей.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/clown.rsi
+  - type: Storage
+    grid:
+    - 0,0,4,2
+  - type: Construction
+    graph: HerbalBasket
+    node: fin
+
+- type: entity
+  parent: ClothingHeadHatUshanka
+  id: ClothingHeadHatUshankaNibiru
+  suffix: Nibiru
+  components:
+  - type: Construction
+    graph: Ushanka
+    node: fin
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Blunt: 0.95
+        Piercing: 0.98
+  - type: ArmorProtection
+    protection:
+      Slash: 2
+      Blunt: 1
+      Piercing: 1
+
+- type: entity
+  parent: ClothingOuterCoatTrench
+  id: ClothingOuterCoatTrenchNibiru
+  suffix: Nibiru
+  components:
+  - type: Construction
+    graph: CoatTrench
+    node: fin
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.85
+        Blunt: 0.9
+        Piercing: 0.95
+  - type: ArmorProtection
+    protection:
+      Slash: 3
+      Blunt: 2
+      Piercing: 1
+
+- type: entity
+  parent: ClothingOuterCoatPirate
+  id: ClothingOuterCoatPirateNibiru
+  suffix: Nibiru
+  components:
+  - type: Construction
+    graph: CoatPirate
+    node: fin
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.8
+        Blunt: 0.85
+        Piercing: 0.9
+  - type: ArmorProtection
+    protection:
+      Slash: 4
+      Blunt: 3
+      Piercing: 2
+
+- type: entity
+  parent: [BaseStorageItem, ClothingHeadBase]
+  id: ClothingSack
+  name: мешок
+  description: Простой мешок для переноски вещей.
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Tool/sack.rsi
+    state: icon-0
+  - type: Storage
+    grid:
+    - 0,0,2,2
+  - type: UseDelay
+    delay: 0.5
+  - type: StorageFillVisualizer
+    maxFillLevels: 3
+    fillBaseName: icon
+  - type: Dumpable
+  - type: Clothing
+    sprite: _CE/Objects/Tool/sack.rsi
+  - type: Item
+    size: Normal
+  - type: Blindfold
+  - type: FlashImmunity
+
+- type: entity
+  parent: ClothingHeadHatCasa
+  id: ClothingKasaNibiru
+  suffix: Nibiru
+  components:
+    - type: Sprite
+      sprite: _CE/Clothing/Head/Misc/kasa_hat.rsi
+    - type: Clothing
+      sprite: _CE/Clothing/Head/Misc/kasa_hat.rsi
+    - type: Construction
+      graph: CasaHat
+      node: fin

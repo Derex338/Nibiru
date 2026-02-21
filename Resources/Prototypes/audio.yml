@@ -159,23 +159,31 @@
 - type: soundCollection
   id: AmbienceMining
   files:
-    - /Audio/Ambience/ambicave.ogg
-    - /Audio/Ambience/ambidanger.ogg
-    - /Audio/Ambience/ambidanger2.ogg
-    - /Audio/Ambience/ambilava1.ogg
-    - /Audio/Ambience/ambilava2.ogg
-    - /Audio/Ambience/ambilava3.ogg
-    - /Audio/Ambience/ambimaint1.ogg
-    - /Audio/Ambience/ambimine.ogg
-    - /Audio/Ambience/ambiruin.ogg
-    - /Audio/Ambience/ambiruin2.ogg
-    - /Audio/Ambience/ambiruin3.ogg
-    - /Audio/Ambience/ambiruin4.ogg
-    - /Audio/Ambience/ambiruin5.ogg
-    - /Audio/Ambience/ambiruin6.ogg
-    - /Audio/Ambience/ambiruin7.ogg
-    - /Audio/Ambience/voyage_neverending.ogg
-    - /Audio/Ambience/unanchored.ogg
+    #- /Audio/Ambience/ambicave.ogg
+    #- /Audio/Ambience/ambidanger.ogg
+    #- /Audio/Ambience/ambidanger2.ogg
+    #- /Audio/Ambience/ambilava1.ogg
+    #- /Audio/Ambience/ambilava2.ogg
+    #- /Audio/Ambience/ambilava3.ogg
+    #- /Audio/Ambience/ambimaint1.ogg
+    #- /Audio/Ambience/ambimine.ogg
+    #- /Audio/Ambience/ambiruin.ogg
+    #- /Audio/Ambience/ambiruin2.ogg
+    #- /Audio/Ambience/ambiruin3.ogg
+    #- /Audio/Ambience/ambiruin4.ogg
+    #- /Audio/Ambience/ambiruin5.ogg
+    #- /Audio/Ambience/ambiruin6.ogg
+    #- /Audio/Ambience/ambiruin7.ogg
+    #- /Audio/Ambience/voyage_neverending.ogg
+    #- /Audio/Ambience/unanchored.ogg
+    - /Audio/_Nibiru/Ambient/ambient-bongos.ogg
+    - /Audio/_Nibiru/Ambient/gjallar.ogg
+    - /Audio/_Nibiru/Ambient/the-legend-of-narmer.ogg
+    - /Audio/_Nibiru/Ambient/royal-market.ogg
+    - /Audio/_Nibiru/Ambient/tranquil-fields-eastern.ogg
+    - /Audio/_Nibiru/Ambient/we-three-celtic-kings.ogg
+    - /Audio/_Nibiru/Ambient/tribal-joy.ogg
+    - /Audio/_Nibiru/Ambient/the-streets-of-prague.ogg
 
 - type: soundCollection
   id: AmbienceRuins

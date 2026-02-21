@@ -1,0 +1,450 @@
+- type: entity
+  id: Bone1
+  parent: BaseItem
+  suffix: Organs
+  name: кость
+  description: "бедное животное"
+  components:
+  - type: Material
+  - type: Stack
+    stackType: Bones
+    baseLayer: base
+    count: 1
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    layers:
+    - state: bone1
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        bone1: ""
+        bone2: ""
+        bone3: ""
+
+- type: entity
+  id: Fang
+  parent: BaseItem
+  suffix: Organs
+  name: зубы
+  description: "бедное животное"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    layers:
+    - state: fang
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        fang: ""
+        fang2: ""
+  - type: Material
+  - type: Stack
+    stackType: Fang
+    baseLayer: base
+    count: 1
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: Fat
+  parent: BaseItem
+  suffix: Organs
+  name: жир
+  description: "САЛО"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    layers:
+    - state: fat1
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        fat1: ""
+        fat2: ""
+  - type: Item
+    size: Tiny
+  - type: Material
+  - type: Stack
+    stackType: Fat
+    baseLayer: base
+
+- type: entity
+  id: Gut
+  parent: BaseItem
+  suffix: Organs
+  name: потроха
+  description: "фу"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: gut
+  - type: Material
+  - type: Stack
+    stackType: Gut
+    baseLayer: base
+    count: 1
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: Skin
+  parent: BaseItem
+  suffix: Organs
+  name: шкура
+  description: "Шкура животного"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skin
+  - type: Item
+    size: Tiny
+  - type: Butcherable
+    spawned:
+    - id: Skin_notready
+      amount: 1
+
+- type: entity
+  id: Skin_notready
+  parent: BaseItem
+  suffix: Organs
+  name: необработаная кожа
+  description: "почти готова"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skin-notready
+  - type: Item
+    size: Tiny
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - Skin_processed
+    intervalSeconds: 60
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn
+    lifetime: 61
+
+- type: entity
+  id: Skin_processed
+  parent: BaseItem
+  suffix: Organs
+  name: кожа
+  description: "готова кожа"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skin-processed
+  - type: Item
+    size: Tiny
+  - type: Material
+  - type: Stack
+    stackType: Leather
+    baseLayer: base
+
+- type: entity
+  id: Skull_cow
+  parent: BaseItem
+  suffix: Organs
+  name: череп
+  description: "йорик?"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skull_cow
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: Skull_goat
+  parent: BaseItem
+  suffix: Organs
+  name: череп
+  description: "йорик?"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skull_goat
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: Skull_human
+  parent: BaseItem
+  suffix: Organs
+  name: череп
+  description: "йорик?"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skull_human
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: Vein
+  parent: BaseItem
+  suffix: Organs
+  name: жилы
+  description: "макароны"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein
+  - type: Item
+    size: Tiny
+  - type: Butcherable
+    spawned:
+    - id: VeinTimer
+      amount: 1
+
+- type: entity
+  id: VeinTimer
+  parent: BaseItem
+  suffix: Organs
+  name: жилы
+  description: "макароны"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein
+  - type: Item
+    size: Tiny
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - Vein_processed
+    intervalSeconds: 60
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn
+    lifetime: 61
+
+- type: entity
+  id: Vein_processed
+  parent: BaseItem
+  suffix: Organs
+  name: обделаные жилы
+  description: "готовые макароны"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Material
+  - type: Stack
+    stackType: Vein
+    baseLayer: base
+    count: 1
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: HideSmall
+  parent: BaseItem
+  suffix: Organs
+  name: шкура
+  description: "Шкура животного"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skin
+  - type: Item
+    size: Tiny
+  - type: Butcherable
+    spawned:
+    - id: Skin
+      amount: 1
+  - type: Material
+  - type: Stack
+    stackType: SmallHide
+    baseLayer: base
+    count: 1
+
+- type: entity
+  id: HideMedium
+  parent: BaseItem
+  suffix: Organs
+  name: шкура
+  description: "Шкура животного"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skin
+  - type: Item
+    size: Tiny
+  - type: Butcherable
+    spawned:
+    - id: Skin
+      amount: 2
+  - type: Material
+  - type: Stack
+    stackType: MediumHide
+    baseLayer: base
+    count: 1
+
+- type: entity
+  id: HideBig
+  parent: BaseItem
+  suffix: Organs
+  name: шкура
+  description: "Шкура животного"
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: skin
+  - type: Item
+    size: Tiny
+  - type: Butcherable
+    spawned:
+    - id: Skin
+      amount: 4
+  - type: Material
+  - type: Stack
+    stackType: BigHide
+    baseLayer: base
+    count: 1
+
+- type: entity
+  id: SmallBodyButcher
+  parent: BaseItem
+  suffix: Organs
+  name: маленький труп
+  description: маленький труп для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Item
+    size: Large
+  - type: Butcherable
+    spawned:
+      - id: FoodMeat
+        amount: 1
+      - id: Gut
+        amount: 1
+      - id: Bone1
+        amount: 1
+
+- type: entity
+  id: SmallBodyButcherBird
+  parent: SmallBodyButcher
+  suffix: Organs
+  name: маленький труп птицы
+  description: маленький труп птицы для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Item
+    size: Large
+  - type: Butcherable
+    spawned:
+      - id: Feather
+        amount: 4
+
+- type: entity
+  id: MediumBodyButcherFirst
+  parent: BaseItem
+  suffix: Organs
+  name: труп
+  description: труп для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Butcherable
+    spawned:
+      - id: FoodMeat
+        amount: 3
+      - id: Gut
+        amount: 1
+      - id: Fat
+        amount: 2
+      - id: Vein
+        amount: 2
+      - id: MediumBodyButcherSecond
+        amount: 1
+
+- type: entity
+  id: MediumBodyButcherSecond
+  parent: BaseItem
+  suffix: Organs
+  name: труп
+  description: труп для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Butcherable
+    spawned:
+      - id: Bone1
+        amount: 2
+        maxAmount: 4
+      - id: Fang
+        amount: 0
+        maxAmount: 1
+
+- type: entity
+  id: BigBodyButcherFirst
+  parent: BaseItem
+  suffix: Organs
+  name: большой труп
+  description: большой труп для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Butcherable
+    spawned:
+      - id: FoodMeat
+        amount: 3
+        maxAmount: 7
+      - id: Gut
+        amount: 2
+      - id: BigBodyButcherSecond
+        amount: 1
+
+- type: entity
+  id: BigBodyButcherSecond
+  parent: BaseItem
+  suffix: Organs
+  name: большой труп
+  description: большой труп для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Butcherable
+    spawned:
+      - id: Fat
+        amount: 2
+        maxAmount: 5
+      - id: Vein
+        amount: 2
+        maxAmount: 5
+      - id: BigBodyButcherThree
+        amount: 1
+
+- type: entity
+  id: BigBodyButcherThree
+  parent: BaseItem
+  suffix: Organs
+  name: большой труп
+  description: большой труп для дальнейшей разделки
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Organs.rsi
+    state: vein-processed
+  - type: Butcherable
+    spawned:
+      - id: Bone1
+        amount: 3
+        maxAmount: 7
+      - id: Fang
+        amount: 1
+        maxAmount: 3

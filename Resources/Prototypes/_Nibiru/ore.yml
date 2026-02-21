@@ -1,0 +1,5 @@
+- type: ore
+  id: OreCopper
+  oreEntity: CopperOre
+  minOreYield: 1
+  maxOreYield: 5

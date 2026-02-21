@@ -423,6 +423,7 @@ namespace Content.Client.Construction.UI
                 prototype.Name!,
                 prototype.Description!,
                 proto,
+				_constructionSystem.GetResearchPoints(prototype),
                 prototype.Type != ConstructionType.Item,
                 !_favoritedRecipes.Contains(prototype));
 

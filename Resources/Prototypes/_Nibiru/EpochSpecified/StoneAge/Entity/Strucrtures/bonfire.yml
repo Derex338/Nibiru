@@ -1,0 +1,124 @@
+
+- type: entity
+  id: NibiruBonfire
+  parent: BaseStructure
+  name: костёр
+  description: Кучка дров в форме костра
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/bonfire.rsi
+    layers:
+      - map: [ enum.FuelLightVisualLayers.Base ]
+        state: bonfire
+      - map: [ enum.FuelLightVisualLayers.Glow ]
+        state: burning
+        visible: false
+      - map: [ enum.FuelLightVisualLayers.Overlay ]
+        state: burnout
+        visible: false
+  - type: Construction
+    graph: Bonfire
+    node: fin
+  - type: FuelConsumption
+    maxFuelAmount: 600                    # 10 минут
+    targetBurnTemperature: 600            # Средняя температура
+    minOperatingTemperature: 3          # Работает при 300°C+
+    heatingRate: 100
+    coolingRate: 60
+    fuelConsumptionRate: 0.1
+    fadeOutDuration: 20
+    iconStateSpent: burnout
+    turnOnBehaviourID: bonfire_on
+    fadeOutBehaviourID: bonfire_fade
+    loopedSound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
+    litSound:
+      path: /Audio/Items/Flare/flare_on.ogg
+  - type: Appearance
+  - type: PointLight
+    enabled: false
+    color: "#FFC90C"
+    radius: 6.0
+    energy: 4.0
+    netsync: false
+  - type: IgnitionSource
+    temperature: 500
+    ignited: false
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: bonfire_on
+        maxDuration: 10.0
+        startValue: 2.0
+        endValue: 6.0
+      - !type:RandomizeBehaviour
+        id: bonfire_on
+        interpolate: Nearest
+        minDuration: 0.04
+        maxDuration: 0.1
+        startValue: 4.0
+        endValue: 5.0
+        property: Energy
+        isLooped: true
+      - !type:RandomizeBehaviour
+        id: bonfire_fade
+        interpolate: Nearest
+        minDuration: 0.04
+        maxDuration: 0.1
+        startValue: 1.5
+        endValue: 3.0
+        property: Energy
+        isLooped: true
+      - !type:FadeBehaviour
+        id: bonfire_fade
+        maxDuration: 30.0
+        startValue: 6.0
+        endValue: 1.0
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: ItemPlacer
+    maxEntities: 4
+    whitelist:
+      components:
+      - Temperature
+  - type: PlaceableSurface
+  - type: Clickable
+  - type: InteractionOutline
+  - type: HeatingSurface
+    heatingRate: 80                       # Быстро нагревает
+    burnTemperature: 350                  # Сжигает при 500°C
+    minSourceTemperature: 300             # Нужна температура 300°C+
+    requirePlacedOnSurface: true          # Только предметы НА костре
+    cookingSound:
+      path: /Audio/Effects/sizzle.ogg
+    cookingSoundInterval: 4.0
+  - type: Fixtures
+    fixtures:
+      itemcollide:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.14,-0.05,0.15,0.25"
+        layer:
+        - HighImpassable
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+        hard: true

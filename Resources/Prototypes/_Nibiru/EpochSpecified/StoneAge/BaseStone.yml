@@ -1,0 +1,43 @@
+- type: entity
+  name: BaseStoneItem
+  parent: BaseItem
+  id: BaseStoneItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+    state: icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+
+- type: entity
+  name: BaseStoneStructure
+  parent: BaseStructure
+  id: BaseStoneStructure
+  abstract: true
+  components:
+  - type: Sprite
+
+- type: entity
+  name: BaseWoodItem
+  parent: BaseItem
+  id: BaseWoodItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+    state: icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 200
+  - type: Fuel
+
+- type: entity
+  name: BaseWoodStructure
+  parent: BaseStructure
+  id: BaseWoodStructure
+  abstract: true
+  components:
+  - type: Sprite

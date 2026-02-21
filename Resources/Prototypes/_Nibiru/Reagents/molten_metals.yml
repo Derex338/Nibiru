@@ -1,0 +1,35 @@
+- type: reagent
+  id: CopperMolten
+  name: copper
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal
+
+- type: reagent
+  id: TinMolten
+  name: tin
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal
+
+- type: reagent
+  id: BronzeMolten
+  name: bronze
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal

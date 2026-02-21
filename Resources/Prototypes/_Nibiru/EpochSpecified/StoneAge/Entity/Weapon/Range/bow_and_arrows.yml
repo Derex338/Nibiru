@@ -1,0 +1,130 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# Stone Age Ranged Weapons - Bow and Arrows
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wooden Bow (Деревянный лук)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: WoodenBow
+  parent: BaseBow
+  name: wooden bow
+  description: A simple bow made from a flexible branch and plant fiber string.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+    - state: unwielded-plunger
+      map: [ plunger ]
+      visible: false
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    - plunger
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        plunger:
+          True: { state: wielded-plunger }
+          False: { state: unwielded-plunger }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+  - type: Construction
+    graph: WoodenBow
+    node: fin
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wooden Arrow (Деревянная стрела)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  parent: BaseArrow
+  id: ArrowWood
+  name: wooden arrow
+  description: A simple arrow with a sharpened wooden tip. Not very effective, but easy to make.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: "#8B4513"
+    - state: rod
+      color: "#D2B48C"
+    - state: tip
+      color: "#8B451300" # Transparent tip
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 15
+  - type: ArmorPenetration
+    penetration:
+      Piercing: 2
+  - type: Construction
+    graph: WoodenArrow
+    node: fin
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Arrow (Каменная стрела)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  parent: BaseArrow
+  id: ArrowStone
+  name: stone-tipped arrow
+  description: An arrow with a sharpened stone tip, bound with plant fiber. More deadly than wooden arrows.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: "#8B4513"
+    - state: rod
+      color: "#D2B48C"
+    - state: tip
+      color: "#696969"
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 28
+  - type: ArmorPenetration
+    penetration:
+      Piercing: 6
+  - type: Construction
+    graph: StoneArrow
+    node: fin
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Leather Quiver (Кожаный колчан)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  parent: ClothingBeltQuiver
+  id: QuiverLeather
+  name: leather quiver
+  description: A simple leather quiver for holding arrows.
+  components:
+  - type: Construction
+    graph: QuiverLeather
+    node: fin

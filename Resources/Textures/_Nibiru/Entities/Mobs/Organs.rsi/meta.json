@@ -1,0 +1,59 @@
+{
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by ds:prazat911",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bone1"
+    },
+    {
+      "name": "bone2"
+    },
+	{
+      "name": "bone3"
+    },
+	{
+      "name": "fang"
+    },
+	{
+      "name": "fang2"
+    },
+	{
+      "name": "fat1"
+    },
+	{
+      "name": "fat2"
+    },
+	{
+      "name": "gut"
+    },
+	{
+      "name": "skin"
+    },
+	{
+      "name": "skin-notready"
+    },
+	{
+      "name": "skin-processed"
+    },
+	{
+      "name": "skull_cow"
+    },
+	{
+      "name": "skull_goat"
+    },
+	{
+      "name": "skull_human"
+    },
+	{
+      "name": "vein"
+    },
+	{
+      "name": "vein-processed"
+    }
+  ]
+}

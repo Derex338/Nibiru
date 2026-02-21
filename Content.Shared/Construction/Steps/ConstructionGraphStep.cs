@@ -6,7 +6,7 @@ namespace Content.Shared.Construction.Steps
     [ImplicitDataDefinitionForInheritors]
     public abstract partial class ConstructionGraphStep
     {
-        [DataField("completed", serverOnly: true)] private IGraphAction[] _completed = Array.Empty<IGraphAction>();
+        [DataField("completed")] private IGraphAction[] _completed = Array.Empty<IGraphAction>();
 
         [DataField("doAfter")] public float DoAfter { get; private set; }
 

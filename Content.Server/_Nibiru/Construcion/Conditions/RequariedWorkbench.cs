@@ -55,12 +55,12 @@ namespace Content.Server._Nibiru.Construction.Conditions
 
             if (Condition(args.Examined, IoCManager.Resolve<IEntityManager>()))
             {
-                args.PushMarkup(Loc.GetString("лежит на станке"));
+                args.PushMarkup(Loc.GetString("workbench-condition-lay-on-workbench"));
                 return true;
             }
             else
             {
-                args.PushMarkup(Loc.GetString("должен лежать на станке"));
+                args.PushMarkup(Loc.GetString("workbench-condition-must-lay-on-workbench"));
                 return true;
             }
 
@@ -81,7 +81,7 @@ namespace Content.Server._Nibiru.Construction.Conditions
         {
             yield return new ConstructionGuideEntry()
             {
-                Localization = "вина графа",
+                Localization = "construction-guide-condition-workbench",
                 //Arguments = new (string, object)[] { ("workbench", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(WorkbenchId).Name) },
                 //Icon = WorkbenchIcon,
             };

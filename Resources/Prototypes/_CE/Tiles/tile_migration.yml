@@ -1,0 +1,96 @@
+# Base Tiles
+- type: tileAlias
+  id: CEFloorStone
+  target: CEStone
+
+# Natural Tiles
+- type: tileAlias
+  id: CEFloorIce
+  target: CEIce
+
+- type: tileAlias
+  id: CEFloorDirt
+  target: CEDirt
+
+- type: tileAlias
+  id: CEFloorCobblestone
+  target: CECobblestone
+
+- type: tileAlias
+  id: CEFloorSand
+  target: CESand
+
+- type: tileAlias
+  id: CEFloorSnowDeepDeep
+  target: CESnowDeepDeep
+
+- type: tileAlias
+  id: CEFloorSnowDeep
+  target: CESnowDeep
+
+- type: tileAlias
+  id: CEFloorSnow
+  target: CESnow
+
+# Grass Tiles
+- type: tileAlias
+  id: CEFloorGrass
+  target: CEGrass
+
+- type: tileAlias
+  id: CEFloorGrassLight
+  target: CEGrassLight
+
+- type: tileAlias
+  id: CEFloorGrassTall
+  target: CEGrassTall
+
+# Produced Tiles
+- type: tileAlias
+  id: CEFloorFoundation
+  target: CEPlanks
+
+- type: tileAlias
+  id: CEFloorStonebricks
+  target: CEStonebricks
+
+- type: tileAlias
+  id: CEFloorStonebricksSnowed
+  target: CEStonebricksSnowed
+
+- type: tileAlias
+  id: CEFloorStonebricksSmallCarved1
+  target: CEStonebricksSmallCarved1
+
+- type: tileAlias
+  id: CEFloorStonebricksSmallCarved2
+  target: CEStonebricksSmallCarved2
+
+- type: tileAlias
+  id: CEFloorStonebricksSquareCarved
+  target: CEStonebricksSquareCarved
+
+- type: tileAlias
+  id: CEFloorStoneLongBricks
+  target: CEStoneLongBricks
+
+- type: tileAlias
+  id: CEFloorStoneMediumBricks
+  target: CEStoneMediumBricks
+
+- type: tileAlias
+  id: CEFloorStoneDiamond
+  target: CEStoneDiamond
+
+- type: tileAlias
+  id: CEFloorStoneSquarePattern
+  target: CEStoneSquarePattern
+
+- type: tileAlias
+  id: CEFloorStoneMediumCircles
+  target: CEStoneMediumCircles
+
+- type: tileAlias
+  id: CEFloorStoneSmallCircles
+  target: CEStoneSmallCircles
+

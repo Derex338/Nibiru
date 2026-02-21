@@ -1,0 +1,96 @@
+- type: entity
+  id: Sling
+  parent: BaseBow
+  name: праща
+  description: Простое метательное орудие для метания камней.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Entity/Weapon/Range/Sling.rsi # Placeholder
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-stone
+      map: [ arrow ]
+      visible: false
+  - type: Item
+    size: Small
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Stone
+  - type: Gun
+    minAngle: 0
+    maxAngle: 10
+    fireRate: 0.75
+    projectileSpeed: 20
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Stone
+  - type: ContainerContainer
+    containers:
+      projectiles: !type:ContainerSlot
+  - type: Construction
+    graph: Sling
+    node: fin
+
+- type: entity
+  id: SpearThrower
+  parent: BaseBow
+  name: spear thrower
+  description: A simple device using leverage to achieve greater velocity in dart-throwing or spear-throwing.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    color: "#A0522D"
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+  - type: Item
+    size: Normal
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Spear
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 0.5
+    projectileSpeed: 30
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Spear
+  - type: ContainerContainer
+    containers:
+      projectiles: !type:ContainerSlot
+  - type: Construction
+    graph: SpearThrower
+    node: fin

@@ -1,0 +1,495 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ STONE AGE RESEARCH TREE ███
+# Карта исследований для каменного века
+#
+# СТРУКТУРА ДЕРЕВА:
+#
+#              [Примитивная обработка]
+#                      │
+#        ┌─────────────┼─────────────┐
+#        ▼             ▼             ▼
+#   [Оружие]    [Текстиль]    [Строительство]
+#        │             │             │
+#        ▼             ▼             ▼
+#   [Охота]     [Одежда]      [Укрепления]
+#        │             │             │
+#        ▼             ▼             ▼
+#   [Продв.]    [Броня]       [Камень]
+#                                    │
+#                                    ▼
+#                              [Металлургия]
+#
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ══════════════════════════════════════
+# НАЧАЛО - Базовые навыки (position: 0,0)
+# ══════════════════════════════════════
+
+- type: technology
+  id: PrimitiveProcessing
+  name: Истоки
+  icon:
+    sprite: Structures/Decoration/bonfire.rsi
+    state: bonfire
+  discipline: StoneAge
+  tier: 1
+  cost: 50
+  position: 0, 0
+  craftUnlocks:
+    - HerbRope
+    - Bonfire
+    - BasicWorkbench
+    - WoodBat
+
+# ══════════════════════════════════════
+# ВЕТКА 1: ОРУЖИЕ (слева, position: -2, y)
+# ══════════════════════════════════════
+
+- type: technology
+  id: PrimitiveTools
+  name: Примитивные инструменты
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 25
+  technologyPrerequisites:
+    - PrimitiveProcessing
+  position: -2, -1
+  craftUnlocks:
+    - StoneHammer
+    - StoneKnife
+
+- type: technology
+  id: BiggerTools
+  name: Большие инструменты
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Pickaxe.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 50
+  technologyPrerequisites:
+    - PrimitiveTools
+  position: -2, -2
+  craftUnlocks:
+    - StonePickaxe
+    - StoneShovel
+    - StoneHatchet
+
+- type: technology
+  id: PrimitiveWeapons
+  name: Примитивное оружие
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
+    state: spear
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - BiggerTools
+  position: -2, -3
+  craftUnlocks:
+    - WoodSpear
+
+- type: technology
+  id: IndividualProtection
+  name: Индивидуальная защита
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - PrimitiveWeapons
+  position: -1, -3
+  craftUnlocks:
+    - WoodenShield
+    - WickerShield
+
+- type: technology
+  id: HuntingWeapons
+  name: Охотничье оружие
+  icon:
+    sprite: Objects/Weapons/Throwable/bola.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - PrimitiveWeapons
+  position: -2, -4
+  craftUnlocks:
+    - StoneSpear
+    - BolaNibiru
+    - SpearBone
+
+- type: technology
+  id: AdvancedWeapons
+  name: Продвинутое оружие
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 150
+  technologyPrerequisites:
+    - HuntingWeapons
+  position: -2, -5
+  craftUnlocks:
+    - BoneKnife
+
+- type: technology
+  id: Archery
+  name: Стрелковое дело
+  icon:
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: unwielded
+  discipline: StoneAge
+  tier: 1
+  cost: 125
+  technologyPrerequisites:
+    - HuntingWeapons
+  position: -3, -5
+  craftUnlocks:
+    - WoodenBow
+    - WoodenArrow
+    - StoneArrow
+    - QuiverLeather
+
+# ══════════════════════════════════════
+# ВЕТКА 2: ТЕКСТИЛЬ (центр, position: 0, y)
+# ══════════════════════════════════════
+
+- type: technology
+  id: SpindleWorking
+  name: Веретено и нити
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi
+    state: thread_1
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - PrimitiveProcessing
+  position: 0, -2
+  craftUnlocks:
+    - SpindleWorkbench
+    - Thread
+    - BoneNeedle
+
+- type: technology
+  id: Weaving
+  name: Ткачество
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - SpindleWorking
+  position: 0, -3
+  craftUnlocks:
+    - LoomWorkbench
+    - LoomCloth
+
+- type: technology
+  id: BasicClothing
+  name: Базовая одежда
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - Weaving
+  position: 0, -4
+  craftUnlocks:
+    - Tunic
+    - ShoesHerbal
+    - HerbalBelt
+    - HerbalBasket
+    - WizardShoes
+    - CasaHat
+
+- type: technology
+  id: BoneArmor
+  name: Костяная броня
+  icon:
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 150
+  technologyPrerequisites:
+    - BasicClothing
+  position: -1, -4
+  craftUnlocks:
+    - PrimitiveBoneArmor
+    - PrimitiveBoneHelmet
+
+- type: technology
+  id: LeatherClothing
+  name: Кожаная одежда
+  icon:
+    sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 125
+  technologyPrerequisites:
+    - BasicClothing
+  position: 0, -5
+  craftUnlocks:
+    - Ushanka
+    - CoatTrench
+    - CoatPirate
+    - HetmanHat
+
+- type: technology
+  id: LeatherArmor
+  name: Кожаная броня
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 150
+  technologyPrerequisites:
+    - LeatherClothing
+  position: 0, -6
+  craftUnlocks:
+    - LetherHelmet
+    - LetherChestplate
+    - LetherHelmetReinforced
+    - LetherChestplateReinforced
+
+# ══════════════════════════════════════
+# ВЕТКА 3: СТРОИТЕЛЬСТВО (справа, position: 2, y)
+# ══════════════════════════════════════
+
+- type: technology
+  id: BasicConstruction
+  name: Базовое строительство
+  icon:
+    sprite: Decals/Flora/flora_bushes.rsi
+    state: bushk1
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - PrimitiveProcessing
+  position: 2, -1
+  craftUnlocks:
+    - GroundSoil
+    - TreeGrow
+    - StrawTile
+    - HideBed
+    - CrateWoodenGrave
+    - CrateStoneGrave
+    - WoodenSign
+    - WoodenSignRight
+
+- type: technology
+  id: WoodWorking
+  name: Деревообработка
+  icon:
+    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    state: closed
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - BasicConstruction
+  position: 2, -2
+  craftUnlocks:
+    - SawmillWorkbench
+    - WoodWall
+    - Barricade
+    - WoodDoor
+    - WoodenSupport
+    - WoodenSupportBeam
+    - WoodenSupportWall
+
+- type: technology
+  id: Furniture
+  name: Мебель
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: wooden
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - WoodWorking
+  position: 3, -2
+  craftUnlocks:
+    - Barrel
+    - TableWood
+    - ChairWood
+
+- type: technology
+  id: WoodItems
+  name: Деревянные предметы
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/WoodenBucket.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - WoodWorking
+  position: 1, -2
+  craftUnlocks:
+    - WoodenBowl
+    - WoodenBucket
+    - PanFlute
+    - Ocarina
+    - Woodblock
+    - BirdWhistle
+
+- type: technology
+  id: WoodChestplate
+  name: Деревянная броня
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 150
+  technologyPrerequisites:
+    - WoodItems
+    - BasicClothing
+  position: 1, -4
+  craftUnlocks:
+    - WoodChestplate
+
+- type: technology
+  id: Fortifications
+  name: Укрепления
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: straight
+  discipline: StoneAge
+  tier: 1
+  cost: 100
+  technologyPrerequisites:
+    - WoodWorking
+  position: 2, -3
+  craftUnlocks:
+    - FenceStockade
+    - FenceStockadeEnd
+    - FenceStockadeCorner
+    - FenceStockadeTJunction
+    - FenceStockadeGate
+
+- type: technology
+  id: StoneMasonry
+  name: Каменная кладка
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 125
+  technologyPrerequisites:
+    - Fortifications
+  position: 2, -4
+  craftUnlocks:
+    - QuarryWorkbench
+    - StoneBlock
+    - MudBlock
+    - StoneWall
+
+- type: technology
+  id: StoneAnvil
+  name: Каменная наковальня
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: steel
+  discipline: StoneAge
+  tier: 1
+  cost: 150
+  technologyPrerequisites:
+    - StoneMasonry
+  position: 2, -5
+  craftUnlocks:
+    - StoneAnvilWorkbench
+
+- type: technology
+  id: Pottery
+  name: Гончарное дело
+  icon:
+    sprite: Objects/Consumable/Food/bowl.rsi
+    state: bowl
+    color: "#d2691e"
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - BasicConstruction
+  position: 2, 0
+  craftUnlocks:
+    - ClayBowl
+    - ClayJug
+    - ClayCup
+    - ClayPlate
+
+# ══════════════════════════════════════
+# ВЕТКА 4: ОГОНЬ И МЕТАЛЛУРГИЯ (правее, position: 4, y)
+# ══════════════════════════════════════
+
+- type: technology
+  id: FireMaking
+  name: Огонь и свет
+  icon:
+    sprite: Objects/Misc/candles.rsi
+    state: candle-big
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - BasicConstruction
+  position: 4, -1
+  craftUnlocks:
+    - Candle
+    - LightTorch
+
+- type: technology
+  id: Metallurgy
+  name: Основы металлургии
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/furnace.rsi
+    state: icon
+  discipline: StoneAge
+  tier: 1
+  cost: 200
+  technologyPrerequisites:
+    - FireMaking
+    - StoneMasonry
+  position: 3, -6
+  craftUnlocks:
+    - Furnace
+
+# ══════════════════════════════════════
+# ПЕРЕХОД В БРОНЗОВЫЙ ВЕК
+# ══════════════════════════════════════
+
+- type: technology
+  id: BronzeAgeTransition
+  name: Переход в бронзовый век
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: bronze_1
+  discipline: StoneAge
+  tier: 1
+  cost: 500
+  #technologyPrerequisites:
+  #  - Metallurgy
+  #  - LeatherArmor
+  #  - AdvancedWeapons
+  position: 0, -7

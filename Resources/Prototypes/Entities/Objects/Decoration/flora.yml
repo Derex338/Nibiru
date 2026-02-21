@@ -161,6 +161,9 @@
         rocksolid01: ""
         rocksolid02: ""
         rocksolid03: ""
+  - type: Construction # Nibiru
+    graph: StoneAnvilFromBoulder
+    node: boulder
 
 - type: entity
   name: stalagmite

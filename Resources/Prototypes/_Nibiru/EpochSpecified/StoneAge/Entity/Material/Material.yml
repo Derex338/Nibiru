@@ -1,0 +1,391 @@
+- type: entity
+  parent: BaseStoneItem
+  id: StoneBlock
+  name: каменный блок
+  description: Грубо отесанный каменный блок.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
+    state: icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SharpStone:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Damageable
+    damageModifierSet: Stone
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      StoneBlock: 100
+  - type: Stack
+    stackType: StoneBlock
+    count: 5
+    baseLayer: base
+
+- type: entity
+  parent: StoneBlock
+  id: StoneBlock1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseStoneItem
+  id: Mud
+  name: комок грязи
+  description: Липкая и густая грязь.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi
+    state: mud_3
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Mud: 100
+  - type: Stack
+    stackType: Mud
+    count: 20
+    baseLayer: base
+    layerStates:
+    - mud_1
+    - mud_2
+    - mud_3
+
+- type: entity
+  parent: Mud
+  id: Mud1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+  - type: Sprite
+    state: mud_1
+
+- type: entity
+  parent: BaseStoneItem
+  id: MudBlock
+  name: глиняный кирпич
+  description: Высушенный на солнце кирпич из грязи.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+    state: Brick_3
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Mud1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      MudBlock: 100
+  - type: Stack
+    stackType: MudBlock
+    count: 10
+    baseLayer: base
+    layerStates:
+    - Brick_1
+    - Brick_2
+    - Brick_3
+
+- type: entity
+  parent: MudBlock
+  id: MudBlock1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+  - type: Sprite
+    state: Brick_1
+
+- type: entity
+  parent: BaseStoneItem
+  id: MudBlockRaw
+  name: сырой глиняный кирпич
+  description: Еще влажный кирпич из грязи.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+    state: Brick_1
+    color: "#888888"
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Mud1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Mud: 100
+  - type: Stack
+    stackType: MudBlock
+    baseLayer: base
+    layerStates:
+    - Brick_1
+    - Brick_2
+    - Brick_3
+  - type: Temperature
+  - type: Construction
+    graph: MudBlock
+    node: raw
+
+- type: entity
+  parent: MudBlockRaw
+  id: MudBlockRaw1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: [PartBase, BaseWoodItem]
+  id: WoodStick
+  name: палка
+  description: Обычная деревянная палка.
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      WoodStick: 100
+  - type: Stack
+    stackType: WoodStick
+    baseLayer: base
+    layerStates:
+    - stick_1
+    - stick_2
+    - stick_3
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi
+    state: stick_3
+    layers:
+    - state: stick_3
+      map: ["base"]
+  - type: Item
+    size: Normal
+    heldPrefix: stick
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 1
+
+- type: entity
+  parent: WoodStick
+  id: WoodStick10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: stick_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: WoodStick
+  id: WoodStick1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: stick_1
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: PartBase
+  id: MaterialThread
+  name: нить
+  description: Тонкая нить.
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Thread: 100
+  - type: Stack
+    stackType: Thread
+    baseLayer: base
+    layerStates:
+    - thread_1
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi
+    state: thread_1
+    layers:
+    - state: thread_1
+      map: ["base"]
+  - type: Item
+    size: Tiny
+    heldPrefix: rods
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 1
+
+- type: entity
+  parent: MaterialThread
+  id: MaterialThread10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: thread_1
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialThread
+  id: MaterialThread1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: thread_1
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseItem
+  id: HerbRope
+  name: веревка
+  description: Веревка, сплетенная из травы.
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Tool/rope.rsi
+    state: icon
+  - type: Item
+    sprite: _CE/Objects/Tool/rope.rsi
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      HerbRope: 100
+  - type: Stack
+    stackType: HerbRope
+    baseLayer: base
+    count: 1
+  - type: Construction
+    graph: HerbRope
+    node: fin
+  - type: Handcuff
+    cuffedRSI: _CE/Objects/Tool/rope.rsi
+    bodyIconState: body-overlay
+    startCuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endCuffSound:
+      path: /Audio/Items/Handcuffs/rope_end.ogg
+    startUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound:
+      path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+
+- type: entity
+  parent: BaseItem
+  id: FeatherBase
+  name: перо
+  description: Птичье перо.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Item
+    sprite: Objects/Materials/parts.rsi
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Feather: 100
+  - type: Stack
+    stackType: Feather
+    baseLayer: base
+    count: 1
+  - type: Tag
+    tags:
+    - Write
+
+- type: entity
+  parent: FeatherBase
+  id: FeatherWhite
+  name: белое перо
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+
+- type: entity
+  parent: FeatherBase
+  id: FeatherBrown
+  name: коричневое перо
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+
+- type: entity
+  parent: FeatherBase
+  id: FeatherGrey
+  name: серое перо
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+
+- type: entity
+  parent: FeatherBase
+  id: FeatherLight
+  name: светлое перо
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+
+- type: entity
+  parent: FeatherBase
+  id: Feather
+  name: перо
+  description: Птичье перо.
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Bureaucracy/pens.rsi
+    state: feather
+  - type: Item
+    sprite: _CE/Objects/Bureaucracy/pens.rsi

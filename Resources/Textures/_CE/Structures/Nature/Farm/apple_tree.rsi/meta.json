@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by omsoyk (Discord), rename by Derex",
+    "size": {
+      "x": 96,
+      "y": 112
+    },
+    "states": [
+      {
+        "name": "stage-1"
+      },
+      {
+        "name": "stage-2"
+      },
+      {
+        "name": "stage-3"
+      },
+      {
+        "name": "stage-4"
+      },
+      {
+        "name": "stage-5"
+      },
+      {
+        "name": "grown-2"
+      },
+      {
+        "name": "produce-apple-var1-state1"
+      },
+      {
+        "name": "produce-apple-var2-state1"
+      },
+      {
+        "name": "produce-apple-var1-state2"
+      },
+      {
+        "name": "produce-apple-var2-state2"
+      },
+	  {
+		"name": "harvest"
+	  }
+    ]
+}

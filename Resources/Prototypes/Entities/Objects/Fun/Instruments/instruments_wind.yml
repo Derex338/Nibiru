@@ -49,7 +49,7 @@
     slots:
     - neck
   - type: ActivatableUI
-    inHandsOnly: false  
+    inHandsOnly: false
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -94,6 +94,9 @@
     program: 75
   - type: Sprite
     sprite: Objects/Fun/Instruments/panflute.rsi
+  - type: Construction
+    graph: PanFlute
+    node: fin
 
 #if you change this to some cringe-ass zelda reference so help me god i will shoot you dead.
 - type: entity
@@ -108,6 +111,9 @@
     sprite: Objects/Fun/Instruments/ocarina.rsi
   - type: Item
     size: Small
+  - type: Construction
+    graph: Ocarina
+    node: fin
 
 - type: entity
   parent: BaseWoodwindInstrument

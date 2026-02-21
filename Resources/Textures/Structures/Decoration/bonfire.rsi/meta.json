@@ -13,6 +13,9 @@
     {
       "name": "bonfire_extinguished"
     },
+	{
+      "name": "burnout"
+    },
     {
       "name": "burning",
       "delays": [

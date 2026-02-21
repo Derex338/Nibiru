@@ -1,0 +1,37 @@
+- type: tile
+  id: FloorStraw
+  name: tiles-basalt-floor
+  sprite: /Textures/Tiles/Planet/basalt.png
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepGrass
+  heatCapacity: 10000
+  weather: false
+  indestructible: true
+  baseTurf: FloorPlanetDirt
+  itemDrop: FloorTileItemStraw
+  deconstructTools: [ Diging ]
+
+- type: entity
+  name: grass tile
+  parent: FloorTileItemBase
+  id: FloorTileItemStraw
+  components:
+  - type: Sprite
+    state: grass
+  - type: Item
+    heldPrefix: grass
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorStraw
+  - type: Stack
+    stackType: FloorTileStraw
+
+- type: entity
+  name: grass tile
+  parent: FloorTileItemStraw
+  id: FloorTileItemStraw4
+  components:
+  - type: Stack
+    count: 4

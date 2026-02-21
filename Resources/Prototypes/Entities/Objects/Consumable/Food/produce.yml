@@ -206,6 +206,10 @@
   - type: Produce
     seedId: towercap
   - type: Log
+  - type: Material #Nibiru
+  - type: Stack
+    stackType: Log
+    baseLayer: base
 
 - type: entity
   name: steel-cap log

@@ -1,0 +1,18 @@
+- type: entity
+  parent: Paper
+  id: Papyrus
+  name: папирус
+  description: Плотный материал для письма.
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Bureaucracy/paper.rsi
+    state: paper
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+    - Write
+  - type: Construction
+    graph: PapyrusLeather
+    node: fin

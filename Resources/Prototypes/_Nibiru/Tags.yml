@@ -1,2 +1,11 @@
 - type: Tag
   id: Rock
+
+- type: Tag
+  id: Sword
+
+- type: Tag
+  id: Stone
+
+- type: Tag
+  id: Coin # Storage whitelist: CoinPurse

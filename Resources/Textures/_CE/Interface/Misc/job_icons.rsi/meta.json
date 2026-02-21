@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "size": {
+    "x": 9,
+    "y": 9
+  },
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by TheShuEd (Github)",
+  "states": [
+    {
+      "name": "Bard"
+    },
+    {
+      "name": "Bartender"
+    },
+    {
+      "name": "Brigadier"
+    },
+    {
+      "name": "Chef"
+    },
+    {
+      "name": "Farmer"
+    },
+    {
+      "name": "Guard"
+    },
+    {
+      "name": "GuardCommander"
+    },
+    {
+      "name": "Investigator"
+    },
+    {
+      "name": "Tavernmaster"
+    },
+    {
+      "name": "Technician"
+    },
+    {
+      "name": "Townfolk"
+    },
+    {
+      "name": "TailorMerchant"
+    },
+    {
+      "name": "PharmacistMerchant"
+    },
+    {
+      "name": "HomeGoodsMerchant"
+    }
+  ]
+}

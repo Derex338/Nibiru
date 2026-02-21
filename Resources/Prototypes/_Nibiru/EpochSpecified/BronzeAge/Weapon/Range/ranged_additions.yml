@@ -1,0 +1,129 @@
+- type: entity
+  id: Longbow
+  parent: BaseBow
+  name: longbow
+  description: A large, powerful bow. Requires strength to draw but fires arrows with great force.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    color: "#654321"
+    scale: 1.1, 1.1
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+    - state: unwielded-plunger
+      map: [ plunger ]
+      visible: false
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    - plunger
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        plunger:
+          True: { state: wielded-plunger }
+          False: { state: unwielded-plunger }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+  - type: Gun
+    projectileSpeed: 30
+    fireRate: 0.8
+  - type: Construction
+    graph: Longbow
+    node: fin
+
+- type: entity
+  id: RecursiveBow
+  parent: BaseBow
+  name: recurve bow
+  description: A bow with limbs that curve away from the archer when unstrung. Stores more energy and delivers a faster shot.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    color: "#DEB887"
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+    - state: unwielded-plunger
+      map: [ plunger ]
+      visible: false
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    - plunger
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        plunger:
+          True: { state: wielded-plunger }
+          False: { state: unwielded-plunger }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+  - type: Gun
+    projectileSpeed: 25
+  - type: Construction
+    graph: RecursiveBow
+    node: fin
+
+- type: entity
+  name: throwing dart
+  parent: Dart
+  id: ThrowingDart
+  description: A small, balanced dart designed for throwing.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    color: "#CD7F32"
+    state: icon
+  - type: Tag
+    tags:
+    - Knife
+    - Spear
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 10
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: Construction
+    graph: ThrowingDart
+    node: fin
+  - type: ThrowingAngle
+    angle: 315

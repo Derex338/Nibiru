@@ -1,0 +1,211 @@
+- type: entity
+  id: SmeltingFurnace
+  parent: BaseStoneStructure
+  name: сыродутная печь
+  description: Простейшая каменная печь не требующая дополнительный усилий для плавки простейших руд таких как медь и олово.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/furnace.rsi
+    layers:
+      - map: [ enum.FuelLightVisualLayers.Base ]
+        state: icon
+      - map: [ enum.FuelLightVisualLayers.Glow ]
+        state: lit
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+  - type: Appearance
+  - type: Transform
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: SmeltingFurnace
+    containerId: ore_container
+    solutionContainerId: solution_container
+    maxOreCapacity: 10
+    heatingRate: 80    # Быстро нагревается
+    coolingRate: 20    # Медленно остывает
+    solution: smelted_metal
+  - type: SolutionContainerManager
+    solutions:
+      smelted_metal:
+        maxVol: 100
+  - type: DrainableSolution
+    solution: smelted_metal
+  - type: PointLight
+    enabled: false
+    color: "#E25822"
+    radius: 0.5
+    energy: 2.0
+    netsync: false
+  - type: FuelConsumption
+    maxFuelAmount: 1800                   # 30 минут работы
+    targetBurnTemperature: 1400           # Высокая температура для плавки
+    minOperatingTemperature: 800          # Работает при 800°C+
+    heatingRate: 40                       # Медленно нагревается
+    coolingRate: 15                       # Очень медленно остывает
+    fuelConsumptionRate: 0.5              # Экономный расход
+    fadeOutDuration: 30
+    turnOnBehaviourID: turn_on
+    fadeOutBehaviourID: fade_out
+    iconStateSpent: icon
+    # Sounds legit nuff
+    litSound:
+      path: /Audio/Items/Flare/flare_on.ogg
+  - type: Clickable
+  - type: InteractionOutline
+  - type: LightBehaviour
+    behaviours:
+      - !type:RandomizeBehaviour # immediately make it bright and flickery
+        id: turn_on
+        interpolate: Nearest
+        minDuration: 0.02
+        maxDuration: 0.06
+        startValue: 2.0
+        endValue: 4.0
+        property: Energy
+        isLooped: true
+      - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+        id: turn_on
+        maxDuration: 8.0
+        startValue: 1.0
+        endValue: 2.0
+      - !type:RandomizeBehaviour # weaker flicker as it fades out
+        id: fade_out
+        interpolate: Nearest
+        minDuration: 0.02
+        maxDuration: 0.06
+        startValue: 4.0
+        endValue: 8.0
+        property: Energy
+        isLooped: true
+      - !type:FadeBehaviour # fade out radius as it burns out
+        id: fade_out
+        maxDuration: 4.0
+        startValue: 2.0
+        endValue: 1.0
+  - type: ItemSlots
+    slots:
+      solution_container:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ContainerContainer
+    containers:
+      solution_container: !type:ContainerSlot
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
+  - type: Temperature
+  - type: Construction
+    graph: Furnace
+    node: fin
+
+- type: entity
+  id: Fuel
+  name: fuel
+  description: A chunk of copper ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: coal
+  - type: Item
+    size: Small
+  - type: Fuel
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Temperature
+  - type: TemperatureColor
+
+- type: entity
+  id: ScrapMetal
+  name: ScrapMetal
+  description: A chunk of copper ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: coal
+  - type: Item
+    size: Small
+  - type: Clickable
+  - type: InteractionOutline
+
+- type: entity
+  id: BaseMold
+  parent: BaseItem
+  name: mold
+  description: A stone furnace for smelting ore into molten metal.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/furnace.rsi
+    layers:
+      - map: [ enum.FuelLightVisualLayers.Base ]
+        state: icon
+      - map: [ enum.FuelLightVisualLayers.Glow ]
+        state: lit
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      smelted_metal:
+        maxVol: 10
+  - type: Mold
+    resultEntities:
+      CopperMolten: Fuel
+    slot: result_container
+  - type: InjectableSolution
+    solution: smelted_metal
+  - type: RefillableSolution
+    solution: smelted_metal
+  - type: ItemSlots
+    slots:
+      result_container:
+        #whitelist:
+        #  components:
+        #  - Item
+        blacklist:
+          components:
+          - SolutionContainerManager
+          - Item
+  - type: ContainerContainer
+    containers:
+      result_container: !type:ContainerSlot
+  - type: CoolInWater
+    solution: result_container
+  - type: Temperature
+
+- type: entity
+  id: FurnaceBeaker
+  parent: LargeBeaker
+  name: furnace beaker
+  description: A stone furnace for smelting ore into molten metal.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    layers:
+      - state: beaker
+  - type: SolutionContainerManager
+    solutions:
+      smelted_metal:
+        maxVol: 100
+  - type: InjectableSolution
+    solution: smelted_metal
+  - type: RefillableSolution
+    solution: smelted_metal
+  - type: CoolInWater
+    solution: smelted_metal
+  - type: Temperature
+  - type: FitsInDispenser

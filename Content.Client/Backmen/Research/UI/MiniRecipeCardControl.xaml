@@ -21,6 +21,14 @@
                              TextureScale="1 1"/>
                 <Control MinWidth="5"/>
                 <RichTextLabel Name="NameLabel" StyleClasses="LabelSubText" VerticalAlignment="Center"/>
+                <Control MinWidth="5" Name="WorkbenchIconSpacer" Visible="False"/>
+                <TextureRect Name="WorkbenchIcon"
+                             HorizontalExpand="False"
+                             VerticalExpand="False"
+                             Margin="1"
+                             TextureScale="0.5 0.5"
+                             Visible="False"
+                             Stretch="KeepAspectCentered"/>
             </BoxContainer>
         </Button>
     </BoxContainer>

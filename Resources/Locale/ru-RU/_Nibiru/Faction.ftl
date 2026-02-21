@@ -4,7 +4,6 @@ faction-name-label =  Название фракции: { $name }
 # Локализация для системы присоединения к фракциям
 
 ## Основной интерфейс
-late-join-gui-title = Присоединиться к игре
 late-join-gui-faction-header = Выберите фракцию
 late-join-gui-faction-description = Выберите фракцию для присоединения. Вы появитесь рядом с одним из её членов. Или появитесь в одиночку.
 
@@ -28,3 +27,23 @@ faction-join-solo = Вы появились на карте в одиночку
 ## Управление фракцией
 cant-change-rank = Вы не можете изменить ранг этого игрока
 rank-changed = Ваш ранг изменён на: {$rank}
+
+faction-rank-no-rank = Без ранга
+faction-button-change-rank-tooltip = Изменить ранг
+faction-button-kick-tooltip = Исключить из фракции
+faction-rank-change-title = Изменить ранг
+faction-rank-change-prompt = Введите новый ранг:
+faction-rank-change-placeholder = Например: Офицер
+faction-button-confirm = Подтвердить
+faction-button-cancel = Отмена
+faction-verb-invite = Пригласить во фракцию
+faction-popup-request-sent = Запрос отправлен {$target}
+faction-popup-target-mindless = { $target } безмозглый!
+faction-popup-request-accepted = {$target} принял запрос
+faction-popup-request-denied = {$target} отклонил запрос
+faction-popup-kick-member = Вы исключили {$member} из фракции
+
+faction-request-window-title = Приглашение во фракцию
+faction-request-window-text = Вас приглашают присоединиться к фракции.
+faction-request-window-text-user = Пользователь { $user } приглашает вас присоединиться к фракции.
+

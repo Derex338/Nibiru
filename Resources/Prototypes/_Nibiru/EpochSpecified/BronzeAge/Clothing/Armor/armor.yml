@@ -1,0 +1,39 @@
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  id: BronzeChestplate
+  name: бронзовый нагрудник
+  description: Ляпота.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: Construction
+    graph: BronzeChestplate
+    node: fin
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  id: BronzeHelmet
+  name: бронзовый шлем
+  description: Где хохолок?
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Construction
+    graph: BronzeHelmet
+    node: fin

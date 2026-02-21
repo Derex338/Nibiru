@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from ЯрикФД",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bronze-icon"
+    },
+    {
+      "name": "bronze-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bronze-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bronze-buckler-icon"
+    },
+    {
+      "name": "bronze-buckler-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bronze-buckler-inhand-left",
+      "directions": 4
+    }
+  ]
+}

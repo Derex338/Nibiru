@@ -187,11 +187,7 @@ namespace Content.Server.Construction
                 {
                     foreach (var graphStep in edge.Steps)
                     {
-                        // This graph is invalid, we only allow insert steps as the initial construction steps.
-                        if (graphStep is not EntityInsertConstructionGraphStep insertStep)
-                            return null;
-
-                        entries.Add(insertStep.GenerateGuideEntry());
+                        entries.Add(graphStep.GenerateGuideEntry());
                     }
 
                     // Now actually list the construction conditions.

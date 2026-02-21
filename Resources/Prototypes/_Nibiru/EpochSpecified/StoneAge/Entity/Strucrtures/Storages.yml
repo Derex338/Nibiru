@@ -1,0 +1,16 @@
+- type: entity
+  id: Barrel
+  parent: StorageTank
+  name: бочка
+  description: Деревянная бочка готовая к наполнению житкостями.
+  suffix: Empty
+  components:
+  - type: StaticPrice
+    price: 500
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Barrel.rsi
+    layers:
+      - state: woodenbarrel
+  - type: Appearance
+  - type: ExaminableSolution
+    solution: tank

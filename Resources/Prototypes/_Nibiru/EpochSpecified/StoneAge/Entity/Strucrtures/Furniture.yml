@@ -1,0 +1,13 @@
+- type: entity
+  name: bed
+  id: HideBed
+  parent: Bed
+  description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/furniture.rsi
+    state: bed
+    noRot: true
+  - type: Construction
+    graph: HideBed
+    node: bed

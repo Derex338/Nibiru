@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by TheShuEd, rename by Derex",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "states": [
+      {
+        "name": "stage-1"
+      },
+      {
+        "name": "stage-2"
+      },
+      {
+        "name": "stage-3"
+      },
+      {
+        "name": "stage-4"
+      },
+      {
+        "name": "harvest"
+      }
+    ]
+}

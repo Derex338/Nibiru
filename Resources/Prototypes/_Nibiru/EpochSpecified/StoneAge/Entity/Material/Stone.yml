@@ -1,0 +1,112 @@
+- type: entity
+  parent: BaseStoneItem
+  id: Stone
+  name: камень
+  description: тупо камень
+  components:
+  - type: Tag
+    tags:
+      - Stone
+  - type: Sprite
+    sprite: _CE/Objects/Materials/stone.rsi
+    state: stone
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SharpStone:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Material
+  - type: MeleeWeapon
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 3
+  - type: ArmorPenetration
+    penetration:
+      Blunt: 2
+  - type: Stack
+    stackType: Stone
+    count: 10
+    baseLayer: base
+    layerStates:
+    - stone
+    - stone_2
+    - stone_3
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 15
+
+- type: entity
+  parent: Stone
+  id: Stone1
+  name: камень
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseStoneItem
+  id: SharpStone
+  name: острый камень
+  description: тупо острый камень
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
+    state: icon
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
+  - type: MeleeWeapon
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Slash: 5
+  - type: ArmorPenetration
+    penetration:
+      Slash: 3
+      Piercing: 2
+  - type: Sharp
+  - type: Tool
+    qualities:
+      - Slicing
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
+    speedModifier: 0.5
+  - type: Material
+  - type: Stack
+    stackType: SharpStone
+    count: 5
+    baseLayer: base
+
+- type: entity
+  parent: SharpStone
+  id: SharpStone1
+  name: острый камень
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

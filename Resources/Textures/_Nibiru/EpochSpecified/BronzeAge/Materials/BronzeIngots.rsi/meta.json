@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Такен фром ЯрикФД",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "BronzeScraps"
+    },
+    {
+      "name": "Bronze_1"
+    },
+    {
+      "name": "Bronze_2"
+    },
+    {
+      "name": "Bronze_3"
+    }
+  ]
+}

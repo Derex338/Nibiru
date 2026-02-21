@@ -1,0 +1,34 @@
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase]
+  id: ClothingBeltBronzeScabbard
+  name: бронзовые ножны
+  description: Простые кожаные ножны с бронзовыми вставками, предназначенные для хранения мечей.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Clothing/Belt/sheath.rsi
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sword
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - Sword
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - Sword
+  - type: Appearance
+  - type: Construction
+    graph: BronzeScabbard
+    node: fin

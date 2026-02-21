@@ -1,0 +1,310 @@
+- type: entity
+  id: BaseWorkbench
+  parent: [ BaseStructure, ConstructibleMachine ]
+  name: верстак
+  abstract: true
+  components:
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Workbench
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ActivatableUI
+    key: enum.WorkbenchUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.WorkbenchUiKey.Key:
+        type: WorkbenchBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: StaticPrice
+    price: 800
+  - type: Construction
+    graph: BasicWorkbench
+    node: fin
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+
+- type: entity
+  id: SpindleWorkbench
+  parent: BaseWorkbench
+  name: верстак прядения
+  description: Используется для создания нитей и веревок.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Workbenches/Spindle.rsi
+    state: icon
+  - type: Construction
+    graph: Workbench
+    node: fin
+
+- type: entity
+  id: LoomWorkbench
+  parent: BaseWorkbench
+  name: ткацкий станок
+  description: Используется для создания тканей.
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: tanner_table
+  - type: Construction
+    graph: LoomWorkbench
+    node: fin
+
+- type: entity
+  id: BasicWorkbench
+  parent: BaseWorkbench
+  name: верстак
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: workbench
+  - type: Construction
+    graph: Table
+    node: BasicWorkbench
+
+- type: entity
+  id: StoneAnvilWorkbench
+  parent: BaseWorkbench
+  name: каменная наковальня
+  description: Грубая каменная поверхность для обработки материалов.
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: filler
+  - type: Construction
+    graph: StoneAnvilWorkbench
+    node: fin
+
+- type: entity
+  id: BronzeAnvilWorkbench
+  parent: BaseWorkbench
+  name: бронзовая наковальня
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: filler
+  - type: Construction
+    graph: BronzeAnvilWorkbench
+    node: fin
+
+- type: entity
+  id: QuarryWorkbench
+  parent: BaseWorkbench
+  name: камнетес
+  description: Верстак для обработки камня.
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: sewing_table
+  - type: Construction
+    graph: QuarryWorkbench
+    node: fin
+
+- type: entity
+  id: SawmillWorkbench
+  parent: BaseWorkbench
+  name: лесопилка
+  description: Верстак для обработки дерева.
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: filler
+  - type: Construction
+    graph: SawmillWorkbench
+    node: fin
+
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ WORKBENCH FRAMES ███
+# Промежуточные состояния постройки верстаков
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: entity
+  id: BasicWorkbenchFrame
+  parent: BaseStructure
+  name: каркас верстака
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080" # Greyed out
+  - type: Construction
+    graph: BasicWorkbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Research Table Frame (Каркас стола исследований)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: ResearchTableFrame
+  parent: BaseStructure
+  name: каркас стола исследований
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080" # Greyed out
+  - type: Construction
+    graph: ResearchTable
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Spindle Workbench Frame (Каркас верстака прядения)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: SpindleWorkbenchFrame
+  parent: BaseStructure
+  name: каркас верстака прядения
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: Workbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Loom Workbench Frame (Каркас ткацкого станка)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: LoomWorkbenchFrame
+  parent: BaseStructure
+  name: каркас ткацкого станка
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: LoomWorkbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Sawmill Workbench Frame (Каркас лесопилки)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: SawmillWorkbenchFrame
+  parent: BaseStructure
+  name: каркас лесопилки
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: SawmillWorkbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Quarry Workbench Frame (Каркас каменоломни)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: QuarryWorkbenchFrame
+  parent: BaseStructure
+  name: каркас камнетеса
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: QuarryWorkbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Anvil Workbench Frame (Каркас каменной наковальни)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: StoneAnvilWorkbenchFrame
+  parent: BaseStructure
+  name: каркас каменной наковальни
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: StoneAnvilWorkbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Smelting Furnace Frame (Каркас плавильной печи)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: SmeltingFurnaceFrame
+  parent: BaseStructure
+  name: каркас плавильной печи
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: Furnace
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Bronze Anvil Workbench Frame (Каркас бронзовой наковальни)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: BronzeAnvilWorkbenchFrame
+  parent: BaseStructure
+  name: каркас бронзовой наковальни
+  description: Незаконченный каркас.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#CD7F32" # Bronze color
+  - type: Construction
+    graph: BronzeAnvilWorkbench
+    node: frame
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Old Workbench Frame (Legacy)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: entity
+  id: WorkbenchFrame
+  parent: BaseStructure
+  name: каркас верстака
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+    color: "#808080"
+  - type: Construction
+    graph: Workbench
+    node: frame

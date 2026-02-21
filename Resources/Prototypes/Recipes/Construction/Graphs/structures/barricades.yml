@@ -45,6 +45,26 @@
         steps:
         - tool: Prying
           doAfter: 10
+      - to: barricadefull
+        completed:
+        - !type:GivePrototype
+          prototype: MaterialWoodPlank1
+          amount: 1
+        steps:
+        - tool: Prying
+          doAfter: 10
+          
+    - node: woodWindow #Nibiru
+      entity: WallWoodWindow
+      edges:
+      - to: barricadefull
+        completed:
+        - !type:GivePrototype
+          prototype: MaterialWoodPlank1
+          amount: 1
+        steps:
+        - tool: Prying
+          doAfter: 10
 
 - type: constructionGraph
   id: BarricadeDirectional

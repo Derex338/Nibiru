@@ -1,19 +1,17 @@
 - type: researchEpoch
   id: StoneAge
-  name: research-epoch-stone-age
-  description: research-epoch-stone-age-desc
+  name: Каменный век
+  description: Кончится когда кончатся камни
   order: 0
   color: "#8B4513"
-  # ID технологии, которая открывает следующую эпоху
-  #unlockNextEpochTech: NonlethalAmmunition
 
 - type: researchEpoch
   id: EpochBronze
-  name: research-epoch-bronze-age
-  description: research-epoch-bronze-age-desc
+  name: Бронзовый век
+  description: Кончится когда кончатся бронзы
   order: 1
   color: "#CD7F32"
-  unlockNextEpochTech: NonlethalAmmunition
+  unlockNextEpochTech: BronzeAgeTransition # ID технологии из прошлой эпохи которая должна открыть эту
 
 - type: researchEpoch
   id: EpochIron
@@ -23,9 +21,28 @@
   color: "#A9A9A9"
   unlockNextEpochTech: iron_age_final_tech
 
-- type: researchEpoch
-  id: EpochModern
-  name: research-epoch-modern-age
-  description: research-epoch-modern-age-desc
-  order: 3
-  color: "#4169E1"
+- type: techDiscipline
+  id: StoneAge
+  name: Каменный век
+  color: "#dc373b"
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
+    state: icon
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+  uiName: STN
+
+- type: techDiscipline
+  id: BronzeAge
+  name: Бронзовый век
+  color: "#dc373b"
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_3
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+  uiName: BRZ

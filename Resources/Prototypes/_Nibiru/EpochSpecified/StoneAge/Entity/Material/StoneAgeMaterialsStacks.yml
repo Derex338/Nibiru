@@ -1,0 +1,315 @@
+- type: stack
+  id: Stone
+  name: камень
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
+  spawn: Stone
+  maxCount: 10
+
+- type: stack
+  id: SharpStone
+  name: острый камень
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
+  spawn: SharpStone
+  maxCount: 5
+
+- type: material
+  id: SharpStone
+  stackEntity: SharpStone
+  name: острый камень
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
+  color: "#80ffff"
+  price: 5
+
+- type: stack
+  id: StoneBlock
+  name: каменный блок
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi, state: icon }
+  spawn: StoneBlock1
+  maxCount: 5
+
+- type: stack
+  id: Mud
+  name: комок грязи
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi, state: mud_3 }
+  spawn: Mud1
+  maxCount: 20
+
+- type: stack
+  id: MudBlock
+  name: глиняный кирпич (сырой)
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: Brick_3 }
+  spawn: MudBlock1
+  maxCount: 10
+
+- type: material
+  id: Stone
+  stackEntity: Stone
+  name: камень
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
+  color: "#80ffff"
+  price: 20
+
+- type: material
+  id: StoneBlock
+  stackEntity: StoneBlock1
+  name: каменный блок
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi, state: icon }
+  color: "#80ffff"
+  price: 20
+
+- type: material
+  id: Mud
+  stackEntity: Mud1
+  name: комок грязи
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi, state: mud_3 }
+  color: "#80ffff"
+  price: 20
+
+- type: material
+  id: MudBlock
+  stackEntity: MudBlock1
+  name: глиняный кирпич
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: Brick_3 }
+  color: "#80ffff"
+  price: 20
+
+- type: stack
+  parent: BaseSheetStack
+  id: WoodStick
+  name: палка
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_3 }
+  spawn: WoodStick1
+  maxCount: 20
+
+- type: material
+  id: WoodStick
+  stackEntity: WoodStick1
+  name: палка
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_3 }
+  color: "#80ffff"
+  price: 5
+
+- type: stack
+  parent: BaseSheetStack
+  id: Thread
+  name: нить
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi, state: thread_1 }
+  spawn: MaterialThread1
+  maxCount: 20
+
+- type: material
+  id: Thread
+  stackEntity: MaterialThread1
+  name: нить
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi, state: thread_1 }
+  color: "#80ffff"
+  price: 5
+
+- type: stack
+  parent: BaseSheetStack
+  id: Herb
+  name: трава
+  icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
+  spawn: BunchHerb
+  maxCount: 30
+
+- type: material
+  id: Herb
+  stackEntity: BunchHerb
+  name: трава
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
+  color: "#80ffff"
+  price: 2
+
+- type: stack
+  parent: BaseSheetStack
+  id: HerbRope
+  name: травяная веревка
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Rope.rsi, state: rope_1 }
+  spawn: HerbRope
+  maxCount: 10
+
+- type: material
+  id: HerbRope
+  stackEntity: HerbRope
+  name: травяная веревка
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Rope.rsi, state: rope_1 }
+  color: "#80ffff"
+  price: 10
+
+- type: stack
+  parent: BaseSheetStack
+  id: Leather
+  name: кожа
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: skin-processed }
+  spawn: Skin_processed
+  maxCount: 10
+
+- type: material
+  id: Leather
+  stackEntity: Skin_processed
+  name: кожа
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 20
+
+- type: stack
+  parent: BaseSheetStack
+  id: Fat
+  name: жир
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  spawn: Fat
+  maxCount: 20
+
+- type: material
+  id: Fat
+  stackEntity: Fat
+  name: жир
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 10
+
+- type: stack
+  id: Log
+  name: бревно
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  spawn: Log
+  maxCount: 1
+
+- type: material
+  id: Log
+  stackEntity: Log
+  name: бревно
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 50
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStraw
+  name: соломенное покрытие
+  spawn: FloorTileItemStraw
+
+- type: stack
+  id: SmallHide
+  name: малая шкура
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  spawn: HideSmall
+  maxCount: 5
+
+- type: material
+  id: SmallHide
+  stackEntity: HideSmall
+  name: малая шкура
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 15
+
+- type: stack
+  id: MediumHide
+  name: средняя шкура
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  spawn: HideMedium
+  maxCount: 3
+
+- type: material
+  id: MediumHide
+  stackEntity: HideMedium
+  name: средняя шкура
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 25
+
+- type: stack
+  id: BigHide
+  name: большая шкура
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  spawn: HideBig
+  maxCount: 1
+
+- type: material
+  id: BigHide
+  stackEntity: HideBig
+  name: большая шкура
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 40
+
+- type: stack
+  id: Feather
+  name: перо
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  spawn: FeatherWhite
+  maxCount: 30
+
+- type: material
+  id: Feather
+  stackEntity: FeatherWhite
+  name: перо
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  color: "#80ffff"
+  price: 5
+
+- type: stack
+  id: Fang
+  name: клыки
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fang }
+  spawn: Fang
+  maxCount: 20
+
+- type: material
+  id: Fang
+  stackEntity: Fang
+  name: клыки
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fang }
+  color: "#80ffff"
+  price: 10
+
+- type: stack
+  id: Gut
+  name: потроха
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: gut }
+  spawn: Gut
+  maxCount: 10
+
+- type: material
+  id: Gut
+  stackEntity: Gut
+  name: потроха
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: gut }
+  color: "#80ffff"
+  price: 5
+
+- type: stack
+  id: Vein
+  name: жилы
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein-processed }
+  spawn: Vein_processed
+  maxCount: 20
+
+- type: material
+  id: Vein_processed # Matching usage in graphs ("material: Vein_processed")
+  stackEntity: Vein_processed
+  name: жилы
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein-processed }
+  color: "#80ffff"
+  price: 10

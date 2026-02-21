@@ -51,42 +51,61 @@ public sealed class FuelConsumptionSystem : VisualizerSystem<FuelConsumptionComp
 
         switch (state)
         {
+            case FuelLightState.BrandNew:
+                _audioSystem.Stop(comp.PlayingStream);
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out var overlayIdx, true))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayIdx, false);
+
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), FuelLightVisualLayers.Glow, false);
+
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out var baseIdx, true))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), baseIdx, true);
+                break;
+
             case FuelLightState.Lit:
                 _audioSystem.Stop(comp.PlayingStream);
                 comp.PlayingStream = _audioSystem.PlayPvs(
                     comp.LoopedSound, uid)?.Entity;
 
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out var layerIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out overlayIdx, true))
                 {
-                    if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
-                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateLit);
-                    if (!string.IsNullOrWhiteSpace(comp.SpriteShaderLit))
-                        args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderLit);
-                    else
-                        args.Sprite.LayerSetShader(layerIdx, null, null);
-                    if (comp.GlowColorLit.HasValue)
-                        SpriteSystem.LayerSetColor((uid, args.Sprite), layerIdx, comp.GlowColorLit.Value);
-                    SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIdx, true);
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayIdx, false);
                 }
 
                 if (comp.GlowColorLit.HasValue)
                     SpriteSystem.LayerSetColor((uid, args.Sprite), FuelLightVisualLayers.Glow, comp.GlowColorLit.Value);
                 SpriteSystem.LayerSetVisible((uid, args.Sprite), FuelLightVisualLayers.Glow, true);
 
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out baseIdx, true))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), baseIdx, true);
+
                 break;
             case FuelLightState.Dead:
                 comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out layerIdx, true))
+                var hasOverlay = false;
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out overlayIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
-                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateSpent);
-                    if (!string.IsNullOrWhiteSpace(comp.SpriteShaderSpent))
-                        args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderSpent);
+                    {
+                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), overlayIdx, comp.IconStateSpent);
+                        if (!string.IsNullOrWhiteSpace(comp.SpriteShaderSpent))
+                            args.Sprite.LayerSetShader(overlayIdx, comp.SpriteShaderSpent);
+                        else
+                            args.Sprite.LayerSetShader(overlayIdx, null, null);
+
+                        SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayIdx, true);
+                        hasOverlay = true;
+                    }
                     else
-                        args.Sprite.LayerSetShader(layerIdx, null, null);
+                    {
+                        SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayIdx, false);
+                    }
                 }
 
                 SpriteSystem.LayerSetVisible((uid, args.Sprite), FuelLightVisualLayers.Glow, false);
+
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out baseIdx, true))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), baseIdx, !hasOverlay);
                 break;
         }
     }

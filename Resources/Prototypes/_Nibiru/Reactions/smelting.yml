@@ -1,0 +1,10 @@
+- type: reaction
+  id: BronzeReaction
+  minTemp: 1000
+  reactants:
+    CopperMolten:
+      amount: 4
+    TinMolten:
+      amount: 2
+  products:
+    BronzeMolten: 6

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Такен фром ЯрикФД",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "brick_1"
+    },
+    {
+      "name": "brick_2"
+    },
+    { 
+	  "name": "brick_3"
+    }
+  ]
+}

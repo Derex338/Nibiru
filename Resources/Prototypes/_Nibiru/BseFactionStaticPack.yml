@@ -1,14 +1,14 @@
 - type: constructionPack
   id: Base
   startRecipes: True
-  recipes: 
-  - ChestDrawer
-  
+  recipes:
+  - FireStarter
+
 - type: constructionPack
   id: FactionBase
   recipes:
-  - ShelfWood
-  
+  - ResearchTable
+
 - type: constructionPack
   id: ABOBA
   recipes:

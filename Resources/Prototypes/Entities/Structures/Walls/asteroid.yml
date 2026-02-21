@@ -62,6 +62,9 @@
   - type: Tag
     tags:
       - Rock
+  - type: Construction
+    graph: StoneWall
+    node: fin
 
 - type: entity
   abstract: true

@@ -1,0 +1,174 @@
+- type: entity
+  id: HerbBase
+  parent: BaseStructure
+  name: трава
+  components:
+  - type: Sprite
+    sprite: Decals/Flora/flora_bushes.rsi
+    layers:
+    - state: bushd1
+      map: ["0"]
+  - type: Fixtures
+    fixtures:
+      itemcollide:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.14,-0.05,0.15,0.25"
+        layer:
+        - HighImpassable
+        hard: false
+  - type: Butcherable
+    spawned:
+    - id: BunchHerb1
+      amount: 1
+  - type: SyncSprite
+  - type: Clickable
+
+- type: entity
+  id: HerbD
+  parent: HerbBase
+  name: трава
+  components:
+  - type: RandomSprite
+    available:
+      - 0:
+          bushd1: ""
+          bushd2: ""
+          bushd3: ""
+          bushd4: ""
+
+- type: entity
+  id: HerbE
+  parent: HerbBase
+  name: трава
+  components:
+  - type: RandomSprite
+    available:
+      - 0:
+          bushe1: ""
+          bushe2: ""
+          bushe3: ""
+          bushe4: ""
+
+- type: entity
+  id: HerbG
+  parent: HerbBase
+  name: трава
+  components:
+  - type: RandomSprite
+    available:
+      - 0:
+          bushg1: ""
+          bushg2: ""
+          bushg3: ""
+          bushg4: ""
+
+- type: entity
+  id: HerbH
+  parent: HerbBase
+  name: трава
+  components:
+  - type: RandomSprite
+    available:
+      - 0:
+          bushh1: ""
+          bushh2: ""
+          bushh3: ""
+
+- type: entity
+  id: HerbJ
+  parent: HerbBase
+  name: трава
+  components:
+  - type: RandomSprite
+    available:
+      - 0:
+          bushj1: ""
+          bushj2: ""
+          bushj3: ""
+
+- type: entity
+  id: HerbK
+  parent: HerbBase
+  name: трава
+  components:
+  - type: RandomSprite
+    available:
+      - 0:
+          bushk1: ""
+          bushk2: ""
+          bushk3: ""
+
+- type: entity
+  parent: BaseItem
+  id: BunchHerb
+  name: пучок травы
+  description: Пучок свежесобранной травы.
+  suffix: Full
+  components:
+  - type: Material
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+    state: produce
+    layers:
+    - state: produce
+      map: ["base"]
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+  - type: Appearance
+  - type: Stack
+    stackType: Herb
+    baseLayer: base
+
+- type: entity
+  parent: BunchHerb
+  id: BunchHerb1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: produce
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseWoodItem
+  id: Acorn
+  name: жёлудь
+  description: Плоды дуба, можно посадить или использовать в хозяйстве.
+  suffix: Full
+  components:
+  - type: Material
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+    state: produce
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+    size: Small
+  - type: Appearance
+  - type: Stack
+    stackType: acorn
+    baseLayer: base
+
+- type: entity
+  parent: Acorn
+  id: Acorn1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: stack
+  id: acorn
+  name: жёлудь
+  icon: { sprite: "/Textures/_Nibiru/Objects/BronzeAge/Materials/BronzeIngots.rsi", state: Bronze }
+  spawn: Acorn1
+  maxCount: 30
+
+- type: material
+  id: acorn
+  stackEntity: Acorn1
+  name: жёлудь
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
+  color: "#80ffff"
+  price: 2

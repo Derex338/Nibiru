@@ -1,0 +1,11 @@
+- type: entity
+  id: soilPlate
+  name: почва
+  parent: hydroponicsSoil
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Objects/Structures/Soil/soil_plate.rsi
+    state: soil_plate
+  - type: Construction
+    graph: GroundSoil
+    node: fin

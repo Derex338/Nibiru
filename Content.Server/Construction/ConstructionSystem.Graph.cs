@@ -9,6 +9,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared._Nibiru.Factions;
 
 namespace Content.Server.Construction
 {
@@ -33,6 +34,15 @@ namespace Content.Server.Construction
                 return false;
 
             return construction.Containers.Add(container);
+        }
+
+        public void AddFactionComp(EntityUid uid, EntityUid userUid) //Nibiru
+        {
+            if(TryComp<FactionComponent>(userUid, out var user))
+			{
+                var construction = EnsureComp<FactionComponent>(uid);
+                construction.FactionName = user.FactionName;
+			}
         }
 
         /// <summary>
@@ -240,14 +250,14 @@ namespace Content.Server.Construction
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether the node change succeeded or not. Also returns false if the entity does not have a <see cref="ConstructionComponent"/>.</returns>
         /// <remarks>This method also updates the construction pathfinding automatically, if the node change succeeds.</remarks>
-        public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent? construction = null)
+        public EntityUid ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
-                return false;
+                return uid;
 
             if (GetCurrentGraph(uid, construction) is not { } graph
             || GetNodeFromGraph(graph, id) is not { } node)
-                return false;
+                return uid;
 
             var oldNode = construction.Node;
             construction.Node = id;
@@ -258,18 +268,23 @@ namespace Content.Server.Construction
 
             // ChangeEntity will handle the pathfinding update.
             if (node.Entity.GetId(uid, userUid, new(EntityManager)) is { } newEntity
-                && ChangeEntity(uid, userUid, newEntity, construction, oldNode) != null)
-                return true;
+                && ChangeEntity(uid, userUid, newEntity, construction, oldNode) is { } resultUid)
+            {
+                if (performActions)
+                    PerformActions(resultUid, userUid, node.Actions);
+
+                return resultUid;
+            }
 
             if (performActions)
                 PerformActions(uid, userUid, node.Actions);
 
             // An action might have deleted the entity... Account for this.
             if (!Exists(uid))
-                return false;
+                return EntityUid.Invalid;
 
             UpdatePathfinding(uid, construction);
-            return true;
+            return uid;
         }
 
         /// <summary>
@@ -330,6 +345,13 @@ namespace Content.Server.Construction
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
 
+            // Nibiru: Transfer faction component.
+            if (TryComp<FactionComponent>(uid, out var faction))
+            {
+                var newFaction = EnsureComp<FactionComponent>(newUid);
+                newFaction.FactionName = faction.FactionName;
+            }
+
             // Prevent MapInitEvent spawned entities from spawning into the containers.
             // Containers created by ChangeNode() actions do not exist until after this function is complete,
             // but this should be fine, as long as the target entity properly declared its managed containers.
@@ -345,7 +367,7 @@ namespace Content.Server.Construction
             // If not, we effectively restart the construction graph, so the new entity can be completed.
             if (construction.Graph == newConstruction.Graph)
             {
-                ChangeNode(newUid, userUid, construction.Node, false, newConstruction);
+                ChangeNode(newUid, userUid, construction.Node, performActions: false, newConstruction);
 
                 // Retain the target node if an entity change happens in response to deconstruction;
                 // in that case, we must continue to move towards the start node.
@@ -429,16 +451,16 @@ namespace Content.Server.Construction
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
         /// <returns>Whether the construction graph change succeeded or not. Returns false if the entity does not have
         ///          a <see cref="ConstructionComponent"/>.</returns>
-        public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, ConstructionComponent? construction = null)
+        public EntityUid ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
-                return false;
+                return uid;
 
             if (!PrototypeManager.TryIndex<ConstructionGraphPrototype>(graphId, out var graph))
-                return false;
+                return uid;
 
             if (GetNodeFromGraph(graph, nodeId) is not { })
-                return false;
+                return uid;
 
             construction.Graph = graphId;
             return ChangeNode(uid, userUid, nodeId, performActions, construction);
