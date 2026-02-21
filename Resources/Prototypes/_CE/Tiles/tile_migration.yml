@@ -17,6 +17,14 @@
   target: CECobblestone
 
 - type: tileAlias
+  id: CEFloorMycelium
+  target: CEMycelium
+
+- type: tileAlias
+  id: CEFloorMyceliumLight
+  target: CEMyceliumLight
+
+- type: tileAlias
   id: CEFloorSand
   target: CESand
 
@@ -45,6 +53,18 @@
   id: CEFloorGrassTall
   target: CEGrassTall
 
+- type: tileAlias
+  id: CEFloorGrassBlood
+  target: CEGrassBlood
+
+- type: tileAlias
+  id: CEFloorGrassLightBlood
+  target: CEGrassLightBlood
+
+- type: tileAlias
+  id: CEFloorGrassTallBlood
+  target: CEGrassTallBlood
+
 # Produced Tiles
 - type: tileAlias
   id: CEFloorFoundation
@@ -71,6 +91,10 @@
   target: CEStonebricksSquareCarved
 
 - type: tileAlias
+  id: CEFloorDirtSeedbed
+  target: CEDirtSeedbed
+
+- type: tileAlias
   id: CEFloorStoneLongBricks
   target: CEStoneLongBricks
 
@@ -94,3 +118,53 @@
   id: CEFloorStoneSmallCircles
   target: CEStoneSmallCircles
 
+# OAK Wood Planks
+- type: tileAlias
+  id: CEFloorOakWoodPlanks
+  target: CEOakWoodPlanks
+
+- type: tileAlias
+  id: CEFloorOakWoodPlanksBig
+  target: CEOakWoodPlanksBig
+
+- type: tileAlias
+  id: CEFloorOakWoodPlanksCruciform
+  target: CEOakWoodPlanksCruciform
+
+- type: tileAlias
+  id: CEFloorOakWoodPlanksStairways
+  target: CEOakWoodPlanksStairways
+
+# OAK Wood Planks Broken
+- type: tileAlias
+  id: CEFloorOakWoodPlanksBroken
+  target: CEOakWoodPlanksBroken
+
+- type: tileAlias
+  id: CEFloorOakWoodPlanksBigBroken
+  target: CEOakWoodPlanksBigBroken
+
+- type: tileAlias
+  id: CEFloorOakWoodPlanksCruciformBroken
+  target: CEOakWoodPlanksCruciformBroken
+
+- type: tileAlias
+  id: CEFloorOakWoodPlanksStairwaysBroken
+  target: CEOakWoodPlanksStairwaysBroken
+
+# Burned Wood Planks
+- type: tileAlias
+  id: CEFloorWoodPlanksBurned
+  target: CEWoodPlanksBurned
+
+- type: tileAlias
+  id: CEFloorWoodPlanksBigBurned
+  target: CEWoodPlanksBigBurned
+
+- type: tileAlias
+  id: CEFloorWoodPlanksCruciformBurned
+  target: CEWoodPlanksCruciformBurned
+
+- type: tileAlias
+  id: CEFloorWoodPlanksStairwaysBurned
+  target: CEWoodPlanksStairwaysBurned

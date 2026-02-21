@@ -1,0 +1,49 @@
+- type: entity
+  parent: CEClothingEyesGogglesFoldableBase
+  id: CEClothingEyesGlasses
+  name: glasses
+  description: Aristocratic, fancy.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Eyes/glasses.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Eyes/glasses.rsi
+  - type: VisionCorrection
+
+- type: entity
+  parent: CEClothingEyesGogglesFoldableBase
+  id: CEClothingEyesAlchemyGlasses
+  name: alchemy glasses
+  description: Special magic infused glasses that allow you to clearly see the composition of any mixtures.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Eyes/alchemy_glasses.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Eyes/alchemy_glasses.rsi
+  - type: SolutionScanner
+  - type: StaticPrice
+    price: 30
+  - type: VisionCorrection
+
+- type: entity
+  parent: CEClothingEyesGogglesFoldableBase
+  id: CEClothingEyesMiningGlasses
+  name: mining glasses
+  description: Miner's glasses tuned to search for nearby ore veins.
+  components:
+  - type: Item
+    size: Normal #Temporary fix, until waypointers stop working out of pockets
+  - type: Sprite
+    sprite: _CE/Clothing/Eyes/mining_glasses.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Eyes/mining_glasses.rsi
+  - type: VisionCorrection
+  - type: ShowWaypointer
+    waypointerProtoIds:
+    - CEOreCoreWaypointer
+  - type: GuideHelp
+    guides:
+    - CEMiningGuideEN
+    - CEMiningGuideRU
+  - type: StaticPrice
+    price: 60

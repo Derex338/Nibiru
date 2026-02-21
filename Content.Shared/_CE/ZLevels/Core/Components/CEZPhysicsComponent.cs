@@ -30,10 +30,33 @@ public sealed partial class CEZPhysicsComponent : Component
     [DataField, AutoNetworkedField]
     public float LocalPosition;
 
+    /// Optimization Caches
+
+    /// <summary>
+    /// Cached value of the current z-level map height
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int CurrentZLevel;
+
+    /// <summary>
+    /// Cached value of the current distance to the ground in the current z-level. Updates only on MoveEvent and when tiles below change.
+    /// </summary>
+    [DataField]
+    public float CurrentGroundHeight;
+
+    /// <summary>
+    /// Cached value of whether the entity is currently on sticky ground (ladders).
+    /// </summary>
+    [DataField]
+    public bool CurrentStickyGround;
+
     // Physics
 
     [DataField, AutoNetworkedField]
     public float Bounciness = 0.3f;
+
+    [DataField, AutoNetworkedField]
+    public float GravityMultiplier = 1f;
 
     // Visuals
 
@@ -56,4 +79,10 @@ public sealed partial class CEZPhysicsComponent : Component
     /// </summary>
     [DataField]
     public Vector2 SpriteOffsetDefault = Vector2.Zero;
+
+    /// <summary>
+    /// automatically rises if the current localPosition is lower than the height. Enabled by default, but for ghosts, for example, there is no point in climbing stairs
+    /// </summary>
+    [DataField]
+    public bool AutoStep = true;
 }

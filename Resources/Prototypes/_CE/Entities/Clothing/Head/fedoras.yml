@@ -1,0 +1,76 @@
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraGuard
+  name: guard fedora
+  description: A stylish fedora worn by city guards.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/guard.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/guard.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraTavernmaster
+  name: tavernmaster's fedora
+  description: A stylish fedora worn by the tavernmaster.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/guildmaster.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/guildmaster.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraBlack
+  name: black fedora
+  description: A sleek black fedora favored by skilled hunters.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/black.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/black.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraBlue
+  name: blue fedora
+  description: A distinctive blue fedora worn by hunters.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/blue.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/blue.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraGreen
+  name: green fedora
+  description: A forest green fedora perfect for hunters.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/green.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/green.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraRed
+  name: red fedora
+  description: A bold red fedora worn by veteran hunters.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/red.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/red.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadFedoraBrown
+  name: brown fedora
+  description: A bold brown fedora worn by veteran hunters.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Fedoras/brown.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Fedoras/brown.rsi

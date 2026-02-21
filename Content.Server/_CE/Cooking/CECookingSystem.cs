@@ -1,0 +1,135 @@
+/*
+ * This file is sublicensed under MIT License
+ * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
+ */
+
+using System.Linq;
+using Content.Server.Temperature.Systems;
+using Content.Shared._CE.Cooking;
+using Content.Shared._CE.Cooking.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Temperature;
+
+namespace Content.Server._CE.Cooking;
+
+public sealed class CECookingSystem : CESharedCookingSystem
+{
+    [Dependency] private readonly TemperatureSystem _temperature = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<CEFoodCookerComponent, OnTemperatureChangeEvent>(OnCookerTemperatureChange);
+        SubscribeLocalEvent<CETemperatureTransformationComponent, OnTemperatureChangeEvent>(OnTemperatureChanged);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<CEFoodCookerComponent>();
+        while (query.MoveNext(out var uid, out var cooker))
+        {
+            if (DoAfter.IsRunning(cooker.DoAfterId) &&
+                Timing.CurTime > cooker.LastHeatingTime + cooker.HeatingFrequencyRequired)
+                StopCooking((uid, cooker));
+        }
+    }
+
+    private void OnCookerTemperatureChange(Entity<CEFoodCookerComponent> ent, ref OnTemperatureChangeEvent args)
+    {
+        if (args.TemperatureDelta <= 0)
+            return;
+
+        if (!Container.TryGetContainer(ent, ent.Comp.ContainerId, out var container))
+            return;
+
+        if (!TryComp<CEFoodHolderComponent>(ent, out var holder))
+            return;
+
+        if (container.ContainedEntities.Count <= 0 &&
+            holder.FoodData is null) // We can be either cooking (null foodData) or burning (zero contained)
+        {
+            StopCooking(ent);
+            return;
+        }
+
+        ent.Comp.LastHeatingTime = Timing.CurTime;
+
+        if (!DoAfter.IsRunning(ent.Comp.DoAfterId) && holder.FoodData is null)
+        {
+            StartCooking(ent);
+        }
+        else
+        {
+            StartBurning(ent);
+        }
+    }
+
+    private void OnTemperatureChanged(Entity<CETemperatureTransformationComponent> start,
+        ref OnTemperatureChangeEvent args)
+    {
+        foreach (var entry in start.Comp.Entries)
+        {
+            if (args.CurrentTemperature < entry.TemperatureRange.X ||
+                args.CurrentTemperature >= entry.TemperatureRange.Y)
+                continue;
+
+            if (entry.TransformTo == null)
+                continue;
+
+            SpawnNextToOrDrop(entry.TransformTo, start);
+            Del(start);
+
+            break;
+        }
+    }
+
+    protected override void OnCookBurned(Entity<CEFoodCookerComponent> ent, ref CEBurningDoAfter args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        base.OnCookBurned(ent, ref args);
+
+        //if (_random.Prob(ent.Comp.BurntAdditionalSpawnProb))
+        //    Spawn(ent.Comp.BurntAdditionalSpawn, Transform(ent).Coordinates);
+    }
+
+    protected override void OnCookFinished(Entity<CEFoodCookerComponent> ent, ref CECookingDoAfter args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        //We need transform all BEFORE Shared cooking code
+        TryTransformAll(ent);
+
+        base.OnCookFinished(ent, ref args);
+    }
+
+    private void TryTransformAll(Entity<CEFoodCookerComponent> ent)
+    {
+        if (!Container.TryGetContainer(ent, ent.Comp.ContainerId, out var container))
+            return;
+
+        var containedEntities = container.ContainedEntities.ToList();
+
+        foreach (var contained in containedEntities)
+        {
+            if (!TryComp<CETemperatureTransformationComponent>(contained, out var transformable))
+                continue;
+
+            if (!transformable.AutoTransformOnCooked)
+                continue;
+
+            if (transformable.Entries.Count == 0)
+                continue;
+
+            var entry = transformable.Entries[0];
+
+            var newTemp = (entry.TemperatureRange.X + entry.TemperatureRange.Y) / 2;
+            _temperature.ForceChangeTemperature(contained, newTemp);
+        }
+    }
+}

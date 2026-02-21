@@ -1,0 +1,73 @@
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadHelmetGuard
+  name: guard helmet
+  description: A sturdy helmet worn by city guards for protection in dangerous situations.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Helmets/guard.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Helmets/guard.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadHelmetGuardCorinthian
+  name: corinthian guard helmet
+  description: An ornate corinthian-style helmet worn by elite city guards. Its classical design commands respect and authority.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Helmets/guard_corinthian.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Helmets/guard_corinthian.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadHelmetInvestigator
+  name: investigator helmet
+  description: A specialized helmet worn by investigators. Designed for protection while maintaining visibility and mobility during investigations.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Helmets/investigator.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Helmets/investigator.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadMetalHeadband
+  name: metal headband
+  description: A simple but effective metal headband that provides minimal protection while keeping hair out of the way.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Helmets/metalheadband.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Helmets/metalheadband.rsi
+
+- type: entity
+  parent: CEClothingHeadBase
+  id: CEClothingHeadHelmetBrassInsulator
+  name: brass insulator
+  description: A simple but effective magical energy insulator for the head. Not the most robust protection, but it works great for shielding against excess magical energy.
+  components:
+  - type: Sprite
+    sprite: _CE/Clothing/Head/Helmets/brass_insulator.rsi
+  - type: Clothing
+    sprite: _CE/Clothing/Head/Helmets/brass_insulator.rsi
+  - type: CEEnergyRadiationArmor
+    armor: 0.25
+  - type: MultiHandedItem
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.9
+  - type: StaticPrice
+    price: 100
