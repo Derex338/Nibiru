@@ -33,8 +33,6 @@
     sprite: _CE/Clothing/Cloak/Cloak/guard_commander.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Cloak/guard_commander.rsi
-  - type: CETheftValue
-    difficulty: 2
 
 - type: entity
   parent:
@@ -47,10 +45,6 @@
     sprite: _CE/Clothing/Cloak/Cloak/brigadier.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Cloak/brigadier.rsi
-  - type: CETheftValue
-    difficulty: 1
-  - type: CEEnergyRadiationArmor
-    armor: 0.75
 
 - type: entity
   parent:
@@ -63,9 +57,7 @@
     sprite: _CE/Clothing/Cloak/Cloak/guildmaster.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Cloak/guildmaster.rsi
-  - type: CETheftValue
-    difficulty: 1
-
+    
 - type: entity
   parent:
   - CEClothingCloakBase

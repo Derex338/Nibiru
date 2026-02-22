@@ -437,3 +437,73 @@
     - ChairWeb
     - CrateWeb
     - WebDoor
+
+- type: technology
+  id: CETestConstructions
+  name: Тест конструкций
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: straight
+  discipline: BronzeAge
+  tier: 0
+  cost: 0
+  epoch: EpochBronze
+  position: -8, -8
+  craftUnlocks:
+    - CEBedsideTableWooden
+    - CEBenchWood
+    - CECabinetWooden
+    - CEChairFrame
+    - CEBedFrameWooden
+    - CETableWooden
+    - CETableWoodenRound
+    - CETableWoodenCounter
+    - CEWorkbench
+    - CEWallmountBarShelf
+    - CEWallmountKeyRack
+    - CEWoodenChest
+    - CEConveyorBelt
+    - CEConveyorLadder
+    - CEConveyorLadderReverse
+    - CESmallWoodenCrate
+    - CELargeWoodenCrate
+    - CEFenceWooden
+    - CEFenceBigWooden
+    - CEFenceGateBigWooden
+    - CEFenceGateWooden
+    - CEFenceWindowIron
+    - CEFenceIron
+    - CEFenceBrass
+    - CEFenceGateBigIron
+    - CEFenceBigIron
+    - CEZLevelLadderWooden
+    - CEZLevelLadderWoodenCorner
+    - CEZLevelLadderStone
+    - CEZLevelLadderStoneCorner
+    - CEMachine
+    - CESnowball
+    - CEMannequinSnowman
+    - CETombstone
+    - CETombstoneCross
+    - CETombstoneCross2
+    - CEWoodenSpikes
+    - CEWoodenDoor
+    - CEWoodenDoorMirrored
+    - CEWoodenDoorWindowed
+    - CEWoodenDoorWindowedMirrored
+    - CEIronDoor
+    - CEIronDoorMirrored
+    - CEIronDoorWindowed
+    - CEIronDoorWindowedMirrored
+    - CETarget
+    - CETargetEffigy
+    - CEWorkbenchVampire
+    - CEVampireStoneAltar
+    - CEVampireClanHeart
+    - CEWallFrameWoodenFinished
+    - CEWallWoodenPalisade
+    - CEWallDirt
+    - CEWallSnow
+    - CEWallStoneBrick
+    - CEWindowWooden
+    - CEWindowStone

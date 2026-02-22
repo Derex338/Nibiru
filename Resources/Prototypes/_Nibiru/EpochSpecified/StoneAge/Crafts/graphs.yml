@@ -469,7 +469,7 @@
 # Базовый источник огня
 # ──────────────────────────────────────────────────────────────────────────────
 - type: constructionGraph
-  id: Bonfire
+  id: NibiruBonfire
   start: start
   graph:
     - node: start

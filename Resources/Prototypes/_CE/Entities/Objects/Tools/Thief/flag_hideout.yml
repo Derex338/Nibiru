@@ -45,4 +45,3 @@
       - state: folded
         map: [ "foldedLayer" ]
   - type: CEZPhysics
-  - type: CEThiefHideout

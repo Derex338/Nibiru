@@ -128,8 +128,8 @@
 # ════════════════════════════════════════════════════════════════════════════════
 
 - type: construction
-  id: Bonfire
-  graph: Bonfire
+  id: NibiruBonfire
+  graph: NibiruBonfire
   startNode: start
   targetNode: fin
   category: construction-category-structures

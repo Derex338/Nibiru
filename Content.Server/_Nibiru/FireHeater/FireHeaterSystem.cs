@@ -4,6 +4,7 @@ using Content.Server.Temperature.Systems;
 using Content.Shared._Nibiru.Fuel;
 using Content.Shared._Nibiru.Heating;
 using Content.Shared._Nibiru.Smelting;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;

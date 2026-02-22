@@ -62,11 +62,6 @@
     damage:
       types:
         Shock: 10
-  - type: CEHitscanSpellEffect
-    effects:
-    - !type:CESpellSpawnEntityOnUser
-      spawns:
-      - CEOverchargeVFX
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: _CE/Objects/Tools/Weapons/Guns/justice.rsi

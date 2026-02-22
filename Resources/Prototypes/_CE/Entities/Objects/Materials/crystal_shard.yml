@@ -40,18 +40,8 @@
     maxCharge: 25
     startingCharge: 25
   - type: PowerCell
-  - type: CEIrradiateOnDestroy
-    irradiateCoefficient: 0.5
   - type: StaticPrice
     price: 1
-  - type: CEEnergyOverchargeDamage
-    damage:
-      types:
-        Blunt: 2
-  - type: CEEnergyDeficitDamage
-    damage:
-      types:
-        Blunt: 2
 
 - type: entity
   id: CEEnergyCrystalCell
@@ -90,5 +80,3 @@
           collection: GlassBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: CEIrradiateOnDestroy
-    irradiateCoefficient: 0.5

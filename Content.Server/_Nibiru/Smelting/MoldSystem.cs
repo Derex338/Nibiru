@@ -9,7 +9,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Temperature.Systems;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
-using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
 using System.Xml.Linq;

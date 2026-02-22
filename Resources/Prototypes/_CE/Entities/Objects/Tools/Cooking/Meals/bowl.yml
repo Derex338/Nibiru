@@ -82,5 +82,3 @@
     - CEBowlIronTreasure
   - type: StaticPrice
     price: 100
-  - type: CETheftValue
-    difficulty: 1

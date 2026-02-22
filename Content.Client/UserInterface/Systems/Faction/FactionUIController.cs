@@ -17,7 +17,6 @@ using Robust.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
 using System.Xml.Linq;
 using Content.Client.Backmen.Research.UI;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Content.Client.Nibiru.Faction.UI;
 
 namespace Content.Client.UserInterface.Systems.Faction;

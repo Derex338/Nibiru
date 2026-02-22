@@ -40,7 +40,6 @@
   - type: StaticPrice
     price: 30
   - type: VisionCorrection
-  - type: CETheftValue
 
 - type: entity
   parent: CEClothingEyesBase

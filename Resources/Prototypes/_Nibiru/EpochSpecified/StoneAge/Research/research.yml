@@ -37,7 +37,7 @@
   position: 0, 0
   craftUnlocks:
     - HerbRope
-    - Bonfire
+    - NibiruBonfire
     - BasicWorkbench
     - WoodBat
 

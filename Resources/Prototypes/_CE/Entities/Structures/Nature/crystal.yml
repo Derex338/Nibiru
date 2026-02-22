@@ -84,6 +84,5 @@
   - type: Battery
     maxCharge: 50
     startingCharge: 50
-  - type: CEIrradiateOnDestroy
   - type: StaticPrice
     price: 5
