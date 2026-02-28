@@ -36,3 +36,11 @@
     speed: 3
     dis: 4
 
+- type: entity
+  id: CEPlantSunflowerGrown
+  parent: CEPlantSunflower
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 2
+

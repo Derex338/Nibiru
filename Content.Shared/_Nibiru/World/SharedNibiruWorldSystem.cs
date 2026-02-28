@@ -55,7 +55,7 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
                 Subs.CVar(_cvar, RfVars.MinSpawnAreaTiles, value => MinSpawnAreaTiles = value, true);
                 */
     }
-
+/*
     public void CreateMapBeacon(EntityUid gridUid, Vector2i indicates, Color color, string text)
     {
         var coords = _map.ToCoordinates(gridUid, indicates);
@@ -73,7 +73,7 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
 
         entity.Comp.Color = color;
         entity.Comp.Text = text;
-    }
+    }*/
     /*
     public List<EntityCoordinates> GetPlayerCoords()
     {

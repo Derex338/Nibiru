@@ -90,6 +90,9 @@
       - state: base
       - state: fire
         shader: unshaded
+  - type: Construction
+    graph: FloorTorch
+    node: fin
   - type: Fixtures
     fixtures:
       fix1:
@@ -146,6 +149,9 @@
       - state: base
       - state: fire
         shader: unshaded
+  - type: Construction
+    graph: WallTorch
+    node: fin
   - type: PointLight
     color: "#e67c34"
     energy: 2

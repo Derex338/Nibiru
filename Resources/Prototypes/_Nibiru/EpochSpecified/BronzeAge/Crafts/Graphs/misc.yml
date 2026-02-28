@@ -1,0 +1,803 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE MISCELLANEOUS ITEMS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: BannerNanotrasen
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerNanotrasen
+
+- type: constructionGraph
+  id: BannerCargo
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerCargo
+
+- type: constructionGraph
+  id: BannerEngineering
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerEngineering
+
+- type: constructionGraph
+  id: BannerMedical
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerMedical
+
+- type: constructionGraph
+  id: BannerRevolution
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerRevolution
+
+- type: constructionGraph
+  id: BannerSyndicate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerSyndicate
+
+- type: constructionGraph
+  id: BannerScience
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerScience
+
+- type: constructionGraph
+  id: BannerBlue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerBlue
+
+- type: constructionGraph
+  id: BannerRed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerRed
+
+- type: constructionGraph
+  id: BannerYellow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerYellow
+
+- type: constructionGraph
+  id: BannerGreen
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Cloth
+              amount: 3
+    - node: fin
+      entity: BannerGreen
+
+- type: constructionGraph
+  id: BronzeBell
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - material: BronzeInlay
+              amount: 2
+            - material: WoodStick
+              amount: 4
+            - tool: Hammering
+              doAfter: 15
+    - node: fin
+      entity: BronzeBell
+
+- type: constructionGraph
+  id: Harp
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 40
+          steps:
+            - material: WoodPlank
+              amount: 2
+            - material: Thread
+              amount: 4
+            - tool: Slicing
+              doAfter: 15
+    - node: fin
+      entity: HarpInstrument
+
+- type: constructionGraph
+  id: Flute
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: WoodStick
+              amount: 1
+            - tool: Slicing
+              doAfter: 10
+    - node: fin
+      entity: FluteInstrument
+
+- type: constructionGraph
+  id: AngelStatue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 20
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: CEStatueAngel
+
+- type: constructionGraph
+  id: Bell
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Bronze
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: CEBell
+
+- type: constructionGraph
+  id: FedoraBlack
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingHeadFedoraBlack
+
+- type: constructionGraph
+  id: FedoraBlue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingHeadFedoraBlue
+
+- type: constructionGraph
+  id: FedoraGreen
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingHeadFedoraGreen
+
+- type: constructionGraph
+  id: FedoraBrown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingHeadFedoraBrown
+
+- type: constructionGraph
+  id: FedoraRed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingHeadFedoraRed
+
+- type: constructionGraph
+  id: BlacksmithGloves
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingGlovesBlacksmith
+
+- type: constructionGraph
+  id: BlueCarpet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEFloorCarpetItemBlue1
+
+- type: constructionGraph
+  id: RedCarpet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEFloorCarpetItemRed1
+
+- type: constructionGraph
+  id: PurpleCarpet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEFloorCarpetItemPurple1
+
+- type: constructionGraph
+  id: BlackCarpet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEFloorCarpetItemBlack1
+
+- type: constructionGraph
+  id: EyePatch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 1
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingEyesEyePatch
+
+- type: constructionGraph
+  id: FloorTorch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 1
+            - material: WoodStick
+              amount: 2
+              doAfter: 4
+    - node: fin
+      entity: CEFloorTorchAlwaysPowered
+
+- type: constructionGraph
+  id: WallTorch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 1
+            - material: WoodStick
+              amount: 1
+              doAfter: 4
+    - node: fin
+      entity: CEWallmountTorchAlwaysPowered
+
+- type: constructionGraph
+  id: GlovesJagermeister
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingGlovesJagermeister
+
+- type: constructionGraph
+  id: Neckerchief
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskNeckerchief
+
+- type: constructionGraph
+  id: RedNeckerchief
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskRedNeckerchief
+
+- type: constructionGraph
+  id: ShirtWarriorGarb
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 4
+            - tool: Sewing
+              doAfter: 5
+    - node: fin
+      entity: CEClothingShirtWarriorGarb
+
+- type: constructionGraph
+  id: Loincloth
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 2
+    - node: fin
+      entity: CEClothingPantsLoincloth
+
+- type: constructionGraph
+  id: HeadWreath
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Herb
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: CEClothingHeadWreath
+
+- type: constructionGraph
+  id: CEStrawHat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Herb
+              amount: 2
+              doAfter: 5
+    - node: fin
+      entity: CEClothingHeadStrawHat
+
+- type: constructionGraph
+  id: WoodenPlate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodPlank
+              amount: 1
+            - tool: Slicing
+              doAfter: 5
+    - node: fin
+      entity: CEPlateWooden
+
+- type: constructionGraph
+  id: CEWoodenBowl
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodPlank
+              amount: 1
+            - tool: Slicing
+              doAfter: 5
+    - node: fin
+      entity: CEBowlWooden
+
+- type: constructionGraph
+  id: CookingPot
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BronzeInlay
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: CECookingPot
+
+- type: constructionGraph
+  id: FryingPan
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BronzeInlay
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: CEFryingPan
+
+- type: constructionGraph
+  id: TriangularLeatherHat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingHeadTriangularLeather
+
+- type: constructionGraph
+  id: Lyre
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodPlank
+              amount: 3
+            - tool: Slicing
+              doAfter: 3
+            - material: Thread
+              amount: 3
+              doAfter: 1
+    - node: fin
+      entity: CEInstrumentLyra
+
+- type: constructionGraph
+  id: Lute
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodPlank
+              amount: 4
+            - tool: Slicing
+              doAfter: 4
+            - material: Thread
+              amount: 4
+              doAfter: 2
+    - node: fin
+      entity: CEInstrumentLute
+
+- type: constructionGraph
+  id: CEFlute
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodStick
+              amount: 1
+            - tool: Slicing
+              doAfter: 4
+    - node: fin
+      entity: CEInstrumentFlute

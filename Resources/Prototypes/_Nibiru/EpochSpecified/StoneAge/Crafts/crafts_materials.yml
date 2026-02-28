@@ -1,0 +1,57 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 5: MATERIALS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: Thread
+  graph: Thread
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - SpindleWorkbench
+
+- type: construction
+  id: HerbRope
+  graph: HerbRope
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: LoomCloth
+  graph: LoomCloth
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: StoneBlock
+  graph: StoneBlock
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - QuarryWorkbench
+
+- type: construction
+  id: MudBlock
+  graph: MudBlock
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: StrawTile
+  graph: StrawTile
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item

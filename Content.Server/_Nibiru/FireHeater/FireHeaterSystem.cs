@@ -83,7 +83,8 @@ public sealed class HeatingSurfaceSystem : EntitySystem
             itemsToHeat = GetItemsInRadius(uid, surface);
         }
 
-        hasItems = itemsToHeat.Count > 0;
+        if (itemsToHeat.Count <= 0)
+            return;
 
         // Обрабатываем каждый предмет
         foreach (var entity in itemsToHeat)

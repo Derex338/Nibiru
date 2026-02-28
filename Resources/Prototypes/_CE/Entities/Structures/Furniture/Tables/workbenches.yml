@@ -2,7 +2,7 @@
   parent:
   - BaseStructure
   id: CEBaseWorkbench
-  categories: [ ForkFiltered ]
+  #categories: [ ForkFiltered ]
   abstract: true
   components:
   - type: Sprite

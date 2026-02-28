@@ -27,3 +27,11 @@
     produce:
       CEFoodOnion: 4
 
+- type: entity
+  id: CEPlantOnionGrown
+  parent: CEPlantOnion
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 5
+

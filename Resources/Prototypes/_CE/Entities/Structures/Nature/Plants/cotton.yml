@@ -28,3 +28,11 @@
   - type: CEPlantAdditionalProduceOnInteract
     produce:
       CECotton: 4
+
+- type: entity
+  id: CEPlantCottonGrown
+  parent: CEPlantCotton
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 5

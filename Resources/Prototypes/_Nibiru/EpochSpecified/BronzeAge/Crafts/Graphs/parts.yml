@@ -1,0 +1,452 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE CASTING PARTS (ОТЛИВКА БРОНЗОВЫХ ДЕТАЛЕЙ) ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: BronzeArrowTip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeArrowTip
+
+- type: constructionGraph
+  id: BronzeArrowTipArmor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeArrowTipArmor
+
+- type: constructionGraph
+  id: BronzeTopHammerPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeTopHammerPiece
+
+- type: constructionGraph
+  id: BronzeTopMacePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeTopMacePiece
+
+- type: constructionGraph
+  id: BronzeTopAxePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeTopAxePiece
+
+- type: constructionGraph
+  id: BronzeTopBattleAxePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 3
+            - tool: Prying
+              doAfter: 10
+    - node: fin
+      entity: BronzeTopBattleAxePiece
+
+- type: constructionGraph
+  id: BronzeTopSpearPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeTopSpearPiece
+
+- type: constructionGraph
+  id: BronzeSwordBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 3
+            - tool: Prying
+              doAfter: 10
+    - node: fin
+      entity: BronzeSwordBladePiece
+
+- type: constructionGraph
+  id: BronzeDaggerBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeDaggerBladePiece
+
+- type: constructionGraph
+  id: BronzeTridentPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 3
+            - tool: Prying
+              doAfter: 12
+    - node: fin
+      entity: BronzeTridentPiece
+
+- type: constructionGraph
+  id: BronzeShieldPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 4
+            - tool: Prying
+              doAfter: 15
+    - node: fin
+      entity: BronzeShieldPiece
+
+- type: constructionGraph
+  id: BronzeKnifeBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeKnifeBladePiece
+
+- type: constructionGraph
+  id: BronzeClippersPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeClippersPiece
+
+- type: constructionGraph
+  id: BronzeHoeBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeHoeBladePiece
+
+- type: constructionGraph
+  id: BronzePickaxeBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 3
+            - tool: Prying
+              doAfter: 10
+    - node: fin
+      entity: BronzePickaxeBladePiece
+
+- type: constructionGraph
+  id: BronzeScytheBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeScytheBladePiece
+
+- type: constructionGraph
+  id: BronzeShovelPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeShovelPiece
+
+- type: constructionGraph
+  id: BronzeHelmetPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 5
+            - tool: Prying
+              doAfter: 20
+    - node: fin
+      entity: BronzeHelmetPiece
+
+- type: constructionGraph
+  id: BronzeChestplatePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 10
+            - tool: Prying
+              doAfter: 30
+    - node: fin
+      entity: BronzeChestplatePiece
+
+- type: constructionGraph
+  id: BronzeAnvilPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 25
+            - tool: Prying
+              doAfter: 60
+    - node: fin
+      entity: BronzeAnvilPiece
+
+- type: constructionGraph
+  id: BronzeLockPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeLockPiece
+
+- type: constructionGraph
+  id: BronzeKeyPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeKeyPiece
+
+- type: constructionGraph
+  id: BronzeRaspPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeRaspPiece
+
+- type: constructionGraph
+  id: BronzeKhapeshBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 2
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: BronzeKhapeshBladePiece
+
+- type: constructionGraph
+  id: BronzeXiphosBladePiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: IngotBronze
+              amount: 1
+              doAfter: 20
+    - node: fin
+      entity: BronzeXiphosBladePiece

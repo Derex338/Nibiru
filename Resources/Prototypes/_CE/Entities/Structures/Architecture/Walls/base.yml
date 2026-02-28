@@ -10,7 +10,7 @@
     snap:
     - Wall
   components:
-  - type: CEZPhysics
+  #- type: CEZPhysics
   - type: Transform
     noRot: true
   - type: Sprite
@@ -22,7 +22,7 @@
     state: full
   - type: PlacementReplacement
     key: walls
-  - type: CEAutoTilePlacement
+  #- type: CEAutoTilePlacement
   - type: Occluder
   - type: Fixtures
     fixtures:

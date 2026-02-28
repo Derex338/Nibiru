@@ -1,9 +1,16 @@
 - type: entity
   id: BaseWorkbench
-  parent: [ BaseStructure, ConstructibleMachine ]
+  parent: BaseStructure
   name: верстак
   abstract: true
   components:
+  - type: UserInterface
+    interfaces:
+      enum.WorkbenchUiKey.Key:
+        type: WorkbenchBoundUserInterface
+  - type: ActivatableUI
+    key: enum.WorkbenchUiKey.Key
+    requiresComplex: true
   - type: Appearance
   - type: WiresVisuals
   - type: Fixtures
@@ -31,12 +38,6 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: ActivatableUI
-    key: enum.WorkbenchUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.WorkbenchUiKey.Key:
-        type: WorkbenchBoundUserInterface
   - type: Transform
     anchored: true
   - type: Pullable
@@ -48,6 +49,7 @@
   - type: Sprite
     sprite: Structures/Furniture/Tables/wood.rsi
     state: full
+  - type: InteractionOutline
 
 - type: entity
   id: SpindleWorkbench
@@ -56,8 +58,8 @@
   description: Используется для создания нитей и веревок.
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Workbenches/Spindle.rsi
-    state: icon
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: filler
   - type: Construction
     graph: Workbench
     node: fin
@@ -94,8 +96,8 @@
   description: Грубая каменная поверхность для обработки материалов.
   components:
   - type: Sprite
-    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
-    state: filler
+    sprite: _Nibiru/Entities/Workbenches/StoneAnvil.rsi
+    state: icon
   - type: Construction
     graph: StoneAnvilWorkbench
     node: fin
@@ -106,8 +108,8 @@
   name: бронзовая наковальня
   components:
   - type: Sprite
-    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
-    state: filler
+    sprite: _Nibiru/Entities/Workbenches/BronzeAnvil.rsi
+    state: icon
   - type: Construction
     graph: BronzeAnvilWorkbench
     node: fin
@@ -132,8 +134,8 @@
   description: Верстак для обработки дерева.
   components:
   - type: Sprite
-    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
-    state: filler
+    sprite: _Nibiru/Entities/Workbenches/SawmillWorkbench.rsi
+    state: icon
   - type: Construction
     graph: SawmillWorkbench
     node: fin

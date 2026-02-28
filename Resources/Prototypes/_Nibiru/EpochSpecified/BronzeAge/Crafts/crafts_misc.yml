@@ -1,0 +1,542 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE MISCELLANEOUS ITEMS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: BannerNanotrasen
+  name: Знамя Нанотрейзен
+  graph: BannerNanotrasen
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerCargo
+  name: Знамя Карго
+  graph: BannerCargo
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_cargo
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerEngineering
+  name: Знамя Инженерного отдела
+  graph: BannerEngineering
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_engineering
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerMedical
+  name: Знамя Медотдела
+  graph: BannerMedical
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_medical
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerRevolution
+  name: Знамя Революции
+  graph: BannerRevolution
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_revolution
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerSyndicate
+  name: Знамя Синдиката
+  graph: BannerSyndicate
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_syndicate
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerScience
+  name: Знамя Научного отдела
+  graph: BannerScience
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_science
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerBlue
+  name: Синее знамя
+  graph: BannerBlue
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-blue
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerRed
+  name: Красное знамя
+  graph: BannerRed
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-red
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerYellow
+  name: Желтое знамя
+  graph: BannerYellow
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-yellow
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BannerGreen
+  name: Зеленое знамя
+  graph: BannerGreen
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-green
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BronzeBell
+  name: Бронзовый колокол
+  graph: BronzeBell
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  icon:
+    sprite: Structures/Specific/church-bell.rsi
+    state: church-bell
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: Harp
+  name: арфа
+  graph: Harp
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  description: Изящный струнный инструмент. (Использует звуки гарфона).
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: harp
+  objectType: Item
+
+- type: construction
+  id: Flute
+  name: флейта
+  graph: Flute
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  description: Поперечная флейта для утонченных мелодий.
+  icon:
+    sprite: Objects/Fun/Instruments/flute.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  id: AngelStatue
+  name: Статуя ангела
+  graph: AngelStatue
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: Bell
+  name: Колокольчик
+  graph: Bell
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: FedoraBlack
+  name: Черная федора
+  graph: FedoraBlack
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FedoraBlue
+  name: Синяя федора
+  graph: FedoraBlue
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FedoraGreen
+  name: Зеленая федора
+  graph: FedoraGreen
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FedoraBrown
+  name: Коричневая федора
+  graph: FedoraBrown
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FedoraRed
+  name: Красная федора
+  graph: FedoraRed
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BlacksmithGloves
+  name: Перчатки кузнеца
+  graph: BlacksmithGloves
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BlueCarpet
+  name: Синий ковер
+  graph: BlueCarpet
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: RedCarpet
+  name: Красный ковер
+  graph: RedCarpet
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: PurpleCarpet
+  name: Фиолетовый ковер
+  graph: PurpleCarpet
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BlackCarpet
+  name: Черный ковер
+  graph: BlackCarpet
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: EyePatch
+  name: Повязка на глаз
+  graph: EyePatch
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FloorTorch
+  name: Напольный факел
+  graph: FloorTorch
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: WallTorch
+  name: Настенный факел
+  graph: WallTorch
+  startNode: start
+  targetNode: fin
+  category: Decorations
+  objectType: Structure
+  placementMode: SnapToGrid
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: GlovesJagermeister
+  name: Перчатки егермейстера
+  graph: GlovesJagermeister
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: Neckerchief
+  name: Шейный платок
+  graph: Neckerchief
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: RedNeckerchief
+  name: Красный шейный платок
+  graph: RedNeckerchief
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: ShirtWarriorGarb
+  name: Рубашка воина
+  graph: ShirtWarriorGarb
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: Loincloth
+  name: Набедренная повязка
+  graph: Loincloth
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: HeadWreath
+  name: Венок
+  graph: HeadWreath
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: CEStrawHat
+  name: Соломенная шляпа
+  graph: CEStrawHat
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: WoodenPlate
+  name: Деревянная тарелка
+  graph: WoodenPlate
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - SawmillWorkbench
+
+- type: construction
+  id: CEWoodenBowl
+  name: Деревянная миска
+  graph: CEWoodenBowl
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - SawmillWorkbench
+
+- type: construction
+  id: CookingPot
+  name: Котелок
+  graph: CookingPot
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: FryingPan
+  name: Сковородка
+  graph: FryingPan
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: TriangularLeatherHat
+  name: Треугольная кожаная шляпа
+  graph: TriangularLeatherHat
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: Lyre
+  name: Лира
+  graph: Lyre
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - SawmillWorkbench
+
+- type: construction
+  id: Lute
+  name: Лютня
+  graph: Lute
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - SawmillWorkbench
+
+- type: construction
+  id: CEFlute
+  name: Флейта из палки
+  graph: CEFlute
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench

@@ -1,0 +1,416 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Clay Kitchenware (Глиняная посуда)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: ClayBowl
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: raw
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEDirt
+              amount: 1
+              doAfter: 3
+    - node: raw
+      entity: ClayBowlRaw
+      edges:
+        - to: fin
+          steps:
+            - minTemperature: 500
+    - node: fin
+      entity: ClayBowl
+
+- type: constructionGraph
+  id: ClayJug
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: raw
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEDirt
+              amount: 2
+              doAfter: 5
+    - node: raw
+      entity: ClayJugRaw
+      edges:
+        - to: fin
+          steps:
+            - minTemperature: 500
+    - node: fin
+      entity: ClayJug
+
+- type: constructionGraph
+  id: ClayCup
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: raw
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEDirt
+              amount: 1
+              doAfter: 2
+    - node: raw
+      entity: ClayCupRaw
+      edges:
+        - to: fin
+          steps:
+            - minTemperature: 500
+    - node: fin
+      entity: ClayCup
+
+- type: constructionGraph
+  id: ClayPlate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: raw
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEDirt
+              amount: 1
+              doAfter: 3
+    - node: raw
+      entity: ClayPlateRaw
+      edges:
+        - to: fin
+          steps:
+            - minTemperature: 500
+    - node: fin
+      entity: ClayPlate
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Age Shields
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: WoodenShield
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 5
+              doAfter: 10
+    - node: fin
+      entity: WoodenShield
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wicker Shield (Плетёный щит)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WickerShield
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: Herb
+              amount: 6
+              doAfter: 20
+    - node: fin
+      entity: WickerShield
+
+- type: constructionGraph
+  id: FireStarter
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: WoodStick
+              amount: 2
+              doAfter: 10
+    - node: fin
+      entity: FireStarter
+
+- type: constructionGraph
+  id: PanFlute
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 5
+            - tool: Slicing
+              doAfter: 15
+    - node: fin
+      entity: PanFluteInstrument
+
+- type: constructionGraph
+  id: Ocarina
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 2
+            - tool: Slicing
+              doAfter: 10
+    - node: fin
+      entity: OcarinaInstrument
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Graves (Могилы)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: CrateWoodenGrave
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: dug
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEDirtBlock1
+              amount: 2
+          steps:
+            - tool: Diging
+              doAfter: 8
+    - node: dug
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: WoodStick
+              amount: 2
+              doAfter: 5
+    - node: fin
+      entity: CrateWoodenGrave
+
+- type: constructionGraph
+  id: CrateStoneGrave
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: dug
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEDirtBlock1
+              amount: 2
+          steps:
+            - tool: Diging
+              doAfter: 8
+    - node: dug
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 25
+          steps:
+            - material: StoneBlock
+              amount: 1
+              doAfter: 10
+    - node: fin
+      entity: CrateStoneGrave
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Mining Decorations (Декорации шахты)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: WoodenSign
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: WoodenSign
+
+- type: constructionGraph
+  id: WoodenSignRight
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: WoodenSignRight
+
+- type: constructionGraph
+  id: WoodenSupport
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: CEWood
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: WoodenSupport
+
+- type: constructionGraph
+  id: WoodenSupportBeam
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 3
+            - tool: Hammering
+              doAfter: 6
+    - node: fin
+      entity: WoodenSupportBeam
+
+- type: constructionGraph
+  id: WoodenSupportWall
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: intermediate
+          steps:
+            - material: CEWood
+              amount: 3
+    - node: intermediate
+      entity: WoodenSupportBeam
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: CEWood
+              amount: 3
+            - tool: Hammering
+              doAfter: 8
+    - node: fin
+      entity: WoodenSupportWall
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Musical Instruments (Музыкальные инструменты)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: Woodblock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+            - tool: Slicing
+              doAfter: 5
+    - node: fin
+      entity: WoodblockInstrument
+
+- type: constructionGraph
+  id: BirdWhistle
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: CEWood
+              amount: 1
+            - tool: Slicing
+              doAfter: 10
+    - node: fin
+      entity: BirdToyInstrument
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Quiver (Колчан)
+# Требует: Кожа + Шитье
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: QuiverLeather
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 5
+    - node: fin
+      entity: QuiverLeather

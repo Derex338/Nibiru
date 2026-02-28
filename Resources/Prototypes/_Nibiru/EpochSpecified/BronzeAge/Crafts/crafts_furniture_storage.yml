@@ -1,0 +1,110 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE FURNITURE & STORAGE ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: Wagon
+  name: Повозка
+  graph: Wagon
+  startNode: start
+  targetNode: fin
+  category: Structures
+  description: Надежное средство для перевозки большого количества вещей.
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+    state: cart
+  objectType: Structure
+  placementMode: SnapToGrid
+
+- type: construction
+  id: Saddle
+  name: Седло
+  graph: Saddle
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Качественное седло для езды верхом.
+  icon:
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: BronzeAgeBed
+  name: Деревянная кровать
+  graph: BronzeAgeBed
+  startNode: start
+  targetNode: fin
+  category: Furniture
+  description: Простая кровать для сна.
+  icon:
+    sprite: Structures/Furniture/bed.rsi
+    state: bed
+  objectType: Structure
+  placementMode: SnapToGrid
+  canRotate: true
+
+- type: construction
+  id: BronzeAgeChest
+  name: Сундук
+  graph: BronzeAgeChest
+  startNode: start
+  targetNode: fin
+  category: Furniture
+  description: Деревянный сундук для вещей.
+  icon:
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  objectType: Structure
+  placementMode: SnapToGrid
+  canRotate: true
+
+- type: construction
+  id: CoinPurse
+  name: Кошелёк
+  graph: CoinPurse
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Кожаный кошелёк для монет, крепится на пояс.
+  icon:
+    sprite: Clothing/Belt/waistbag_leather.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: LeatherBackBackpack
+  name: Кожаный рюкзак
+  graph: LeatherBackBackpack
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: LeatherBackSatchel
+  name: Кожаная сумка
+  graph: LeatherBackSatchel
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: LeatherBeltPouch
+  name: Кожаный подсумок
+  graph: LeatherBeltPouch
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench

@@ -1,0 +1,75 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 9: WALLS & FORTIFICATIONS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: FenceStockade
+  graph: FenceStockade
+  startNode: start
+  targetNode: straight
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FenceStockadeEnd
+  graph: FenceStockade
+  startNode: start
+  targetNode: end
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FenceStockadeCorner
+  graph: FenceStockade
+  startNode: start
+  targetNode: corner
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FenceStockadeTJunction
+  graph: FenceStockade
+  startNode: start
+  targetNode: tjunction
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FenceStockadeGate
+  graph: FenceStockade
+  startNode: start
+  targetNode: gate
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: StoneWall
+  graph: StoneWall
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

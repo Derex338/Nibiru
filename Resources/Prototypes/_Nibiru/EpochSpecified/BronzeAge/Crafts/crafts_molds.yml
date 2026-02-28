@@ -1,0 +1,423 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE MOLDS (КАМЕННЫЕ ФОРМЫ) ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: MoldIngot
+  name: Форма для слитка
+  graph: MoldIngot
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки металлических слитков.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldInlay
+  name: Форма для вставки
+  graph: MoldInlay
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки бронзовых вставок.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldArrowTip
+  name: Форма для наконечника стрелы
+  graph: MoldArrowTip
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки бронзовых наконечников стрел.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldArrowTipArmor
+  name: Форма для бронебойного наконечника
+  graph: MoldArrowTipArmor
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки бронебойных наконечников стрел.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldTopHammer
+  name: Форма для навершия молотка
+  graph: MoldTopHammer
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки навершия небольшого молотка.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldTopMace
+  name: Форма для навершия молота
+  graph: MoldTopMace
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки навершия боевого молота.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldTopAxe
+  name: Форма для навершия топора
+  graph: MoldTopAxe
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки навершия рабочего топора.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldTopBattleAxe
+  name: Форма для навершия боевого топора
+  graph: MoldTopBattleAxe
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки навершия боевого топора.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldTopSpear
+  name: Форма для наконечника копья
+  graph: MoldTopSpear
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки наконечника копья.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldSwordBlade
+  name: Форма для лезвия меча
+  graph: MoldSwordBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия меча.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldDaggerBlade
+  name: Форма для лезвия кинжала
+  graph: MoldDaggerBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия кинжала.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldTrident
+  name: Форма для навершия трезубца
+  graph: MoldTrident
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки навершия трезубца.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldShield
+  name: Форма для обивки щита
+  graph: MoldShield
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки элементов щита.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldKnifeBlade
+  name: Форма для лезвия ножа
+  graph: MoldKnifeBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия ножа.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldClippers
+  name: Форма для детали секатора
+  graph: MoldClippers
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки детали секатора.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldHoeBlade
+  name: Форма для лезвия мотыги
+  graph: MoldHoeBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия мотыги.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldPickaxeBlade
+  name: Форма для наконечника кирки
+  graph: MoldPickaxeBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки наконечника кирки.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldScytheBlade
+  name: Форма для лезвия косы
+  graph: MoldScytheBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия косы.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldShovel
+  name: Форма для наконечника лопаты
+  graph: MoldShovel
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки наконечника лопаты.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldHelmet
+  name: Форма для шлема
+  graph: MoldHelmet
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки основы шлема.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldChestplate
+  name: Форма для нагрудника
+  graph: MoldChestplate
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки детали нагрудника.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldAnvil
+  name: Форма для наковальни
+  graph: MoldAnvil
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Огромная каменная форма для отливки наковальни.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldLock
+  name: Форма для замка
+  graph: MoldLock
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки детали замка.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldKey
+  name: Форма для ключа
+  graph: MoldKey
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки ключа.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldRasp
+  name: Форма для рашпиля
+  graph: MoldRasp
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки рашпиля.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldKhapeshBlade
+  name: Форма для лезвия хопеша
+  graph: MoldKhapeshBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия хопеша.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldCrown
+  name: Форма для короны
+  graph: MoldCrown
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки короны.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldXiphosBlade
+  name: Форма для лезвия ксифоса
+  graph: MoldXiphosBlade
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки лезвия ксифоса.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench

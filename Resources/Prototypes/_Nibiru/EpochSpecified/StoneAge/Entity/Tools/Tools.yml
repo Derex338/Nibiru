@@ -242,7 +242,7 @@
   description: Острая игла из кости. Используется для шитья.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/needle.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Needle.rsi
     state: icon
   - type: Item
     sprite: Objects/Weapons/Melee/needle.rsi

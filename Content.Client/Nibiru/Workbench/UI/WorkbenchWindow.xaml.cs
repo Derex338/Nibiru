@@ -28,7 +28,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     private ConstructionSystem? _constructionSystem;
     private ConstructionPrototype? _selected;
 
-    // Список доступных рецептов (приходит с сервера)
+    // Список доступных рецептов
     public List<ProtoId<ConstructionPrototype>> ConsRecipes = new();
 
     // Категория -> список рецептов
@@ -41,8 +41,8 @@ public sealed partial class WorkbenchWindow : DefaultWindow
 
     public WorkbenchWindow()
     {
-        IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         _spriteSystem = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
 
@@ -245,12 +245,10 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         TargetDesc.SetMessage(recipe.Description ?? "");
         TargetTexture.SetPrototype(proto.ID);
 
-        // ИСПРАВЛЕНИЕ #2: Принудительно обновляем размер спрайта
         TargetTexture.InvalidateMeasure();
 
         BuildButton.Disabled = false;
 
-        // ИСПРАВЛЕНИЕ #1: Очищаем список перед генерацией новых шагов
         RecipeStepList.Clear();
 
         var stepList = RecipeStepList;
@@ -358,9 +356,6 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         BuildButton.Pressed = false;
     }
 
-    /// <summary>
-    /// ИСПРАВЛЕНИЕ #3: Очищает только призрак конструкции на верстаке
-    /// </summary>
     private void ClearGhost()
     {
         if (!_entityManager.TryGetComponent<WorkbenchComponent>(Entity, out var workbench))

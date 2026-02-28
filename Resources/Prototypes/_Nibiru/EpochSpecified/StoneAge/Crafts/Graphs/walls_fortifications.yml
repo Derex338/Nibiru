@@ -1,0 +1,259 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 9: WALLS & FORTIFICATIONS ███
+# Defensive structures and walls
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stockade Fence (Частокол)
+# Требует: Брёвна + Забивание
+# Деревянная защитная стена (несколько вариантов формы)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: FenceStockade
+  start: start
+  graph:
+    - node: start
+      edges:
+        # Прямой участок
+        - to: straight
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 3
+            - tool: Hammering
+              doAfter: 3
+        # Конец
+        - to: end
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 3
+            - tool: Hammering
+              doAfter: 3
+        # Угол
+        - to: corner
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 3
+            - tool: Hammering
+              doAfter: 3
+        # Т-образное соединение
+        - to: tjunction
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 3
+            - tool: Hammering
+              doAfter: 3
+        # Ворота
+        - to: gate
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 4
+            - material: HerbRope
+              amount: 1
+            - tool: Hammering
+              doAfter: 4
+
+    - node: straight
+      entity: FenceStockadeStraight
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+        - to: sharp_straight
+          steps:
+            - tool: Slicing
+              doAfter: 5
+
+    - node: sharp_straight
+      entity: FenceStockadeSharpStraight
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+
+    - node: end
+      entity: FenceStockadeEnd
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2.5
+        - to: sharp_end
+          steps:
+            - tool: Slicing
+              doAfter: 5
+
+    - node: sharp_end
+      entity: FenceStockadeSharpEnd
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2.5
+
+    - node: corner
+      entity: FenceStockadeCorner
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+        - to: sharp_corner
+          steps:
+            - tool: Slicing
+              doAfter: 5
+
+    - node: sharp_corner
+      entity: FenceStockadeSharpCorner
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+
+    - node: tjunction
+      entity: FenceStockadeTJunction
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+        - to: sharp_tjunction
+          steps:
+            - tool: Slicing
+              doAfter: 5
+
+    - node: sharp_tjunction
+      entity: FenceStockadeSharpTJunction
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+
+    - node: gate
+      entity: FenceStockadeGate
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+        - to: sharp_gate
+          steps:
+            - tool: Slicing
+              doAfter: 5
+
+    - node: sharp_gate
+      entity: FenceStockadeSharpGate
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Wall (Каменная стена)
+# Требует: Камни + Грязь (связующее)
+# Прочная защитная стена
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StoneWall
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: intermediate
+          steps:
+            - material: CEStone
+              amount: 3
+            - material: CEDirt
+              amount: 2
+    - node: intermediate
+      entity: StoneWallIntermediate
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: WallCobblebrick
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEStone
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5

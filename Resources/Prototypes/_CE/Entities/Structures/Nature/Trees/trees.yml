@@ -5,12 +5,12 @@
   name: tree
   description: Decades of life and growth, saturating the surrounding nature with fresh air.
   components:
-  - type: CEZPhysics
+  #- type: CEZPhysics
   - type: Transform
     anchored: true
-  - type: CEWaveShader
-    speed: 1
-    dis: 5
+  #- type: CEWaveShader
+  #  speed: 1
+  #  dis: 5
   - type: SpriteFade
   - type: Clickable
   - type: Sprite
@@ -69,7 +69,7 @@
           CEWoodLog:
             min: 1
             max: 3
-  - type: Material
+  #- type: Material
 
 - type: entity
   parent: CEBaseTree

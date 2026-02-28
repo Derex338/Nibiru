@@ -1,4 +1,4 @@
-using Content.Shared._CE.Trading.Systems;
+//using Content.Shared._CE.Trading.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -70,9 +70,9 @@ public sealed partial class StackResource : CEWorkbenchCraftRequirement
         if (!protoManager.TryIndex(indexedStack.Spawn, out var indexedProto))
             return 0;
 
-        var priceSys = entManager.System<CESharedEconomySystem>();
+        //var priceSys = entManager.System<CESharedEconomySystem>();
 
-        return priceSys.GetEstimatedPrice(indexedProto) * Count;
+        return 0; //priceSys.GetEstimatedPrice(indexedProto) * Count;
     }
 
     public override string GetRequirementTitle(IPrototypeManager protoManager)

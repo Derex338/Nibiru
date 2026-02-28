@@ -152,7 +152,7 @@
   cost: 125
   technologyPrerequisites:
     - HuntingWeapons
-  position: -3, -5
+  position: -3, -4
   craftUnlocks:
     - WoodenBow
     - WoodenArrow
@@ -285,8 +285,8 @@
     - PrimitiveProcessing
   position: 2, -1
   craftUnlocks:
-    - GroundSoil
-    - TreeGrow
+    - CEWallDirt
+    - CEWallSnow
     - StrawTile
     - HideBed
     - CrateWoodenGrave
@@ -307,13 +307,17 @@
     - BasicConstruction
   position: 2, -2
   craftUnlocks:
-    - SawmillWorkbench
-    - WoodWall
-    - Barricade
-    - WoodDoor
+    #- SawmillWorkbench
+    - CEWallFrameWoodenFinished
+    #- Barricade
+    - CEWoodenDoor
+    - CEWoodenDoorMirrored
     - WoodenSupport
     - WoodenSupportBeam
     - WoodenSupportWall
+    - CEWoodenSpikes
+    - CEZLevelLadderWooden
+    - CEZLevelLadderWoodenCorner
 
 - type: technology
   id: Furniture
@@ -329,8 +333,14 @@
   position: 3, -2
   craftUnlocks:
     - Barrel
-    - TableWood
+    - CETableWooden
+    - CETableWoodenRound
+    - CETableWoodenCounter
     - ChairWood
+    - CESmallWoodenCrate
+    - CELargeWoodenCrate
+    - CEWallmountBarShelf
+    - CEChairFrame
 
 - type: technology
   id: WoodItems
@@ -372,8 +382,8 @@
   id: Fortifications
   name: Укрепления
   icon:
-    sprite: Structures/Walls/fence.rsi
-    state: straight
+    sprite: _CE/Structures/Architecture/Walls/wooden_palisade.rsi
+    state: full
   discipline: StoneAge
   tier: 1
   cost: 100
@@ -381,11 +391,14 @@
     - WoodWorking
   position: 2, -3
   craftUnlocks:
-    - FenceStockade
-    - FenceStockadeEnd
-    - FenceStockadeCorner
-    - FenceStockadeTJunction
-    - FenceStockadeGate
+    - CEWallWoodenPalisade
+    - CEFenceWooden
+    - CEFenceGateWooden
+    #- FenceStockade
+    #- FenceStockadeEnd
+    #- FenceStockadeCorner
+    #- FenceStockadeTJunction
+    #- FenceStockadeGate
 
 - type: technology
   id: StoneMasonry
@@ -400,17 +413,24 @@
     - Fortifications
   position: 2, -4
   craftUnlocks:
+    - CEWorkbench
+    - CEWallStoneBrick
     - QuarryWorkbench
     - StoneBlock
     - MudBlock
-    - StoneWall
+    #- StoneWall
+    - CETombstone
+    - CETombstoneCross
+    - CETombstoneCross2
+    - CEZLevelLadderStone
+    - CEZLevelLadderStoneCorner
 
 - type: technology
   id: StoneAnvil
   name: Каменная наковальня
   icon:
-    sprite: Objects/Materials/materials.rsi
-    state: steel
+    sprite: _Nibiru/Entities/Workbenches/StoneAnvil.rsi
+    state: icon
   discipline: StoneAge
   tier: 1
   cost: 150
@@ -458,6 +478,7 @@
   craftUnlocks:
     - Candle
     - LightTorch
+    - WallTorch
 
 - type: technology
   id: Metallurgy
@@ -488,8 +509,62 @@
   discipline: StoneAge
   tier: 1
   cost: 500
-  #technologyPrerequisites:
-  #  - Metallurgy
-  #  - LeatherArmor
-  #  - AdvancedWeapons
+  technologyPrerequisites:
+    - Metallurgy
+    - LeatherArmor
+    - AdvancedWeapons
   position: 0, -7
+
+- type: technology
+  id: TestNewCrafts
+  name: Тест Новых Крафтов
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: matterbin
+  discipline: StoneAge
+  tier: 1
+  cost: 10
+  position: 0, 1
+  craftUnlocks:
+    - AngelStatue
+    - LeatherBackBackpack
+    - LeatherBackSatchel
+    - LeatherBeltPouch
+    - Bell
+    - FedoraBlack
+    - FedoraBlue
+    - FedoraGreen
+    - FedoraBrown
+    - FedoraRed
+    - BlacksmithApron
+    - BlacksmithGloves
+    - BlueCarpet
+    - RedCarpet
+    - PurpleCarpet
+    - BlackCarpet
+    - CloakBarbarian
+    - BoneMask
+    - BoneHornedMask
+    - MimeMask
+    - SkeletonGuitar
+    - BrownFurCoat
+    - FurCloak
+    - FurCape
+    - FurCape2
+    - EyePatch
+    - FloorTorch
+    - GlovesJagermeister
+    - Neckerchief
+    - RedNeckerchief
+    - ShirtWarriorGarb
+    - Loincloth
+    - HeadWreath
+    - CEStrawHat
+    - WoodenPlate
+    - CEWoodenBowl
+    - CookingPot
+    - FryingPan
+    - TriangularLeatherHat
+    - Lyre
+    - Lute
+    - CEFlute

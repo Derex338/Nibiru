@@ -29,3 +29,11 @@
       CEFoodChanterelle: 2
   - type: CEPlantKudzu
     proto: CEPlantChanterelle
+
+- type: entity
+  id: CEPlantChanterelleGrown
+  parent: CEPlantChanterelle
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 2

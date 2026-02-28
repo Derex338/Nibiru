@@ -1,0 +1,192 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE ARMOR & GEAR ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: BronzeArmorBuckler
+  name: Бронзовый баклер
+  graph: BronzeArmorBuckler
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Легкий бронзовый щит.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
+    state: bronze-buckler-icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeChestplate
+  name: Бронзовый нагрудник
+  graph: BronzeChestplate
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Бронированная кираса из бронзы.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeHelmet
+  name: Бронзовый шлем
+  graph: BronzeHelmet
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Защитный головной убор из бронзы.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeScabbard
+  name: Бронзовые ножны
+  graph: BronzeScabbard
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Кожаные ножны для хранения меча.
+  icon:
+    sprite: Clothing/Belt/sheath.rsi
+    state: sheath
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: GladiatorHelmet
+  name: Гладиаторский шлем
+  graph: GladiatorHelmet
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Тяжелый шлем для гладиаторских боев.
+  icon:
+    sprite: Clothing/Head/Hats/gladiator.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: GladiatorUniform
+  name: Гладиаторская одежда
+  graph: GladiatorUniform
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Одежда гладиатора, укрепленная бронзовыми пластинами.
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: CloakBarbarian
+  name: Плащ варвара
+  graph: CloakBarbarian
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BoneMask
+  name: Костяная маска
+  graph: BoneMask
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: BoneHornedMask
+  name: Рогатая костяная маска
+  graph: BoneHornedMask
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MimeMask
+  name: Маска мима
+  graph: MimeMask
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: BrownFurCoat
+  name: Коричневая шуба
+  graph: BrownFurCoat
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FurCloak
+  name: Меховой плащ
+  graph: FurCloak
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FurCape
+  name: Меховая накидка
+  graph: FurCape
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: FurCape2
+  name: Плотная меховая накидка
+  graph: FurCape2
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: BlacksmithApron
+  name: Фартук кузнеца
+  graph: BlacksmithApron
+  startNode: start
+  targetNode: fin
+  category: Gear
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench

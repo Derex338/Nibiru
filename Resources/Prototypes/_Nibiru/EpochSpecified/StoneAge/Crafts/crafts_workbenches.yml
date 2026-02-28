@@ -1,0 +1,94 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 2: WORKBENCHES & STATIONS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: ResearchTable
+  graph: ResearchTable
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BasicWorkbench
+  graph: Table
+  startNode: start
+  targetNode: BasicWorkbench
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SpindleWorkbench
+  graph: Workbench
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: LoomWorkbench
+  graph: LoomWorkbench
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SawmillWorkbench
+  graph: SawmillWorkbench
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: QuarryWorkbench
+  graph: QuarryWorkbench
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: StoneAnvilWorkbench
+  graph: StoneAnvilWorkbench
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

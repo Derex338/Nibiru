@@ -1,0 +1,1728 @@
+# =============================================================
+# NIBIRU PROCEDURAL BIOME GENERATION
+# =============================================================
+# Структура:
+#   Листовые биомы (конкретное содержимое)
+#     -> Пак биомов (≤3 штуки через BiomeMetaLayer)
+#     -> Мега-пак (combinator of packs)
+#
+# Реки / озёра используют единый сид (seed: 99, frequency: 0.003)
+# во всех биомах чтобы продолжались через границы.
+# =============================================================
+
+# =============================================================
+# МЕГА-БИОМ — собирает паки по 2-3 штуки
+# =============================================================
+
+- type: biomeTemplate
+  id: NibiruContinental
+  layers:
+    # Общая база — луга (фолбэк)
+    - !type:BiomeMetaLayer
+      template: NibiruPackGrasslands
+    # Пак лесов (берёза + ель) по оси X
+    - !type:BiomeMetaLayer
+      template: NibiruPackForests
+      threshold: 0.15
+      noise:
+        seed: 10
+        frequency: 0.0008
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 3
+        lacunarity: 2
+    # Пак снега (зима) — перекрывает всё при высокой «широте»
+    - !type:BiomeMetaLayer
+      template: NibiruPackSnow
+      threshold: 0.55
+      noise:
+        seed: 11
+        frequency: 0.0007
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+    # Пустыня — противоположный полюс
+    - !type:BiomeMetaLayer
+      template: NibiruDesert
+      threshold: 0.7
+      noise:
+        seed: 12
+        frequency: 0.0007
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+
+# =============================================================
+# ПАК ЛУГОВ — луга + цветочная поляна + опушка
+# =============================================================
+
+- type: biomeTemplate
+  id: NibiruPackGrasslands
+  layers:
+    - !type:BiomeMetaLayer
+      template: NibiruGrasslands
+    - !type:BiomeMetaLayer
+      template: NibiruFlowerMeadow
+      threshold: 0.3
+      noise:
+        seed: 20
+        frequency: 0.003
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+    - !type:BiomeMetaLayer
+      template: NibiruEdgeland
+      threshold: -0.3
+      noise:
+        seed: 21
+        frequency: 0.004
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+
+# =============================================================
+# ПАК ЛЕСОВ — густой берёзовый + не густой берёзовый + еловый
+# =============================================================
+
+- type: biomeTemplate
+  id: NibiruPackForests
+  layers:
+    - !type:BiomeMetaLayer
+      template: NibiruBirchForestDense
+    - !type:BiomeMetaLayer
+      template: NibiruBirchForestLight
+      threshold: -0.2
+      noise:
+        seed: 30
+        frequency: 0.005
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+    - !type:BiomeMetaLayer
+      template: NibiruSpruceForestDense
+      threshold: 0.35
+      noise:
+        seed: 31
+        frequency: 0.004
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+
+# Расширение пака лесов — ещё подбиомы подключаем через второй мета-пак
+- type: biomeTemplate
+  id: NibiruPackForests2
+  layers:
+    - !type:BiomeMetaLayer
+      template: NibiruSpruceForestLight
+    - !type:BiomeMetaLayer
+      template: NibiruBirchForestDense
+      threshold: 0.25
+      noise:
+        seed: 32
+        frequency: 0.004
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+
+# =============================================================
+# ПАК СНЕГА — густой снег + менее густой
+# =============================================================
+
+- type: biomeTemplate
+  id: NibiruPackSnow
+  layers:
+    - !type:BiomeMetaLayer
+      template: NibiruSnow
+    - !type:BiomeMetaLayer
+      template: NibiruSnowLight
+      threshold: -0.3
+      noise:
+        seed: 40
+        frequency: 0.004
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+
+# =============================================================
+# ЛИСТОВЫЕ БИОМЫ — ЛУГА
+# =============================================================
+
+# Обычные луга
+- type: biomeTemplate
+  id: NibiruGrasslands
+  layers:
+    # --- Реки и озёра (единый сид 99 для всех биомов) ---
+    # --- Камни-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: 0.72
+      noise:
+        seed: 1
+        noiseType: Cellular
+        frequency: 0.6
+      decals:
+        - CEFloraRock01
+        - CEFloraRock02
+        - CEFloraRock03
+        - CEFloraRock04
+        - CEFloraRock05
+    # --- Кусты-декали (редкие) ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      divisions: 2
+      threshold: -0.45
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 1
+      decals:
+        - CEGrassBushes1
+        - CEGrassBushes2
+        - CEGrassBushes3
+    # --- Трава-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        frequency: 1
+      divisions: 1
+      threshold: 0.55
+      decals:
+        - CEFloraGrass1
+        - CEFloraGrass2
+        - CEFloraGrass3
+        - CEFloraGrass4
+        - CEFloraGrass5
+    # --- Камни (entity, редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CERockSmall
+        - CERockBigMoss
+    # --- Камни-штуки (редкие) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEStoneBlock1
+    # --- Высокие кусты (редкие) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.88
+      noise:
+        seed: 2
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEHighBush
+    # --- Редкие деревья (все размеры зелёных) ---
+    - !type:BiomeEntityLayer
+      threshold: 2
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEFloraTreeGreen
+        - CEFloraTreeGreenLarge
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 1.05
+      noise:
+        seed: 1010
+        noiseType: OpenSimplex2
+        frequency: 10
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Культуры полей (кучками) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 1011
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantWheatGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.86
+      noise:
+        seed: 1012
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.145
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantPotatoGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.87
+      noise:
+        seed: 1013
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.155
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantCabbageGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 1014
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.148
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantCarrotGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.88
+      noise:
+        seed: 1015
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.152
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantCucumberGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.84
+      noise:
+        seed: 1016
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantOnionGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.90
+      noise:
+        seed: 1017
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.149
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantCornGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.87
+      noise:
+        seed: 1018
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.153
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantCottonGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.83
+      noise:
+        seed: 1019
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.157
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantTomatoesGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.86
+      noise:
+        seed: 1020
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.154
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantPepperGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEDirt
+    - !type:BiomeTileLayer
+      threshold: -0.75
+      tile: CEGrass
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: None
+    - !type:BiomeTileLayer
+      threshold: 0.4
+      tile: CEGrassLight
+      noise:
+        seed: 1
+        frequency: 0.03
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# Цветочная поляна
+- type: biomeTemplate
+  id: NibiruFlowerMeadow
+  layers:
+    # --- Реки и озёра (общий сид) ---
+    # --- Цветочные декали (много) ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      divisions: 1
+      threshold: -0.8
+      noise:
+        seed: 5
+        noiseType: Cellular
+        frequency: 0.6
+      decals:
+        - Flowersbr1
+        - Flowersbr2
+        - Flowersbr3
+        - Flowerspv1
+        - Flowerspv2
+        - Flowerspv3
+        - Flowersy1
+        - Flowersy2
+        - Flowersy3
+        - Flowersy4
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      divisions: 2
+      threshold: 0.2
+      noise:
+        seed: 6
+        noiseType: Cellular
+        frequency: 1.2
+      decals:
+        - CEFloraGrass1
+        - CEFloraGrass2
+        - CEFloraGrass3
+        - CEFloraGrass4
+        - CEFloraGrass5
+        - CEFloraGrass6
+        - CEFloraGrass7
+        - CEFloraGrass8
+        - CEFloraGrass9
+        - CEFloraGrass10
+        - CEFloraGrass11
+        - CEFloraGrass12
+        - CEFloraGrass13
+        - CEFloraGrass14
+    # --- Кустики (редко) ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+      divisions: 2
+      threshold: 0.55
+      noise:
+        seed: 7
+        noiseType: Cellular
+        frequency: 1
+      decals:
+        - CEGrassBushes1
+        - CEGrassBushes2
+        - CEGrassBushes4
+    # --- Камни-декали (редко) ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: 0.80
+      noise:
+        seed: 8
+        noiseType: Cellular
+        frequency: 0.5
+      decals:
+        - CEFloraRock01
+        - CEFloraRock03
+    # --- Камни (entity, совсем редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.93
+      noise:
+        seed: 9
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CERockSmall
+    # --- Камни-штуки (редкие) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEStoneBlock1
+    # --- Одиночные деревья (очень редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEFloraTreeGreen
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.98
+      noise:
+        seed: 1012
+        noiseType: OpenSimplex2
+        frequency: 2.5
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Культуры цветочных полей (кучками) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 1021
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantCornGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.87
+      noise:
+        seed: 1022
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.145
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantCottonGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.83
+      noise:
+        seed: 1023
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.155
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantTomatoesGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.86
+      noise:
+        seed: 1024
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.148
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantPepperGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.88
+      noise:
+        seed: 1025
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.152
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantGarlicGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.84
+      noise:
+        seed: 1026
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantSunflowerGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEDirt
+    - !type:BiomeTileLayer
+      threshold: -0.6
+      tile: CEGrass
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: None
+    - !type:BiomeTileLayer
+      threshold: 0.2
+      tile: CEGrassLight
+      noise:
+        seed: 3
+        frequency: 0.025
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# Опушка (переходный биом — редкие деревья, много декалей)
+- type: biomeTemplate
+  id: NibiruEdgeland
+  layers:
+    # --- Реки и озёра ---
+    # --- Декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      divisions: 1
+      threshold: -0.55
+      noise:
+        seed: 11
+        noiseType: Cellular
+        frequency: 0.5
+      decals:
+        - CEGrassBushes3
+        - CEGrassBushes5
+        - CEGrassBushes7
+        - CEFloraGrass6
+        - CEFloraGrass8
+        - CEFloraGrass11
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: 0.6
+      noise:
+        seed: 12
+        noiseType: Cellular
+        frequency: 0.6
+      decals:
+        - CEFloraRock01
+        - CEFloraRock02
+        - CEFloraRock04
+        - CEFloraRock05
+    # --- Мшистые валуны ---
+    - !type:BiomeEntityLayer
+      threshold: 0.82
+      noise:
+        seed: 13
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CERockBigMoss
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEStoneBlock1
+    # --- Кусты (entity, средней густоты) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.75
+      noise:
+        seed: 14
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2.5
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEHighBushRandom
+    # --- Редкие деревья (смесь пород) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 15
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEFloraTreeGreen
+        - CEFloraTreeBirchSmall
+        - CEFloraTreeBirchMedium
+        - CEFloraTreeSpruceSmall
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 1014
+        noiseType: OpenSimplex2
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEDirt
+    - !type:BiomeTileLayer
+      threshold: -0.6
+      tile: CEGrass
+      noise:
+        seed: 0
+        frequency: 0.025
+        fractalType: None
+    - !type:BiomeTileLayer
+      threshold: 0.1
+      tile: CEGrassTall
+      noise:
+        seed: 5
+        frequency: 0.04
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# =============================================================
+# ЛИСТОВЫЕ БИОМЫ — БЕРЁЗОВЫЙ ЛЕС
+# =============================================================
+
+# Густой берёзовый лес
+- type: biomeTemplate
+  id: NibiruBirchForestDense
+  layers:
+    # --- Реки и озёра ---
+    # --- Густые декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      divisions: 1
+      threshold: -0.6
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.25
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      decals:
+        - CEGrassBushes4
+        - CEGrassBushes5
+        - CEGrassBushes6
+        - CEGrassBushes7
+        - CEFloraGrass7
+        - CEFloraGrass8
+        - CEFloraGrass9
+        - CEFloraGrass10
+    # --- Камни-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      divisions: 1
+      threshold: 0.65
+      noise:
+        seed: 1
+        noiseType: Cellular
+        frequency: 0.5
+      decals:
+        - CEFloraRock01
+        - CEFloraRock02
+        - CEFloraRock03
+        - CEFloraRock05
+    # --- Мшистые валуны ---
+    - !type:BiomeEntityLayer
+      threshold: 0.78
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CERockBigMoss
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEStoneBlock1
+    # --- Густые кусты ---
+    - !type:BiomeEntityLayer
+      threshold: 0.42
+      noise:
+        seed: 2
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2.5
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEHighBush
+        - CEHighBushRandom
+    # --- Берёзы всех размеров (густо) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.3
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 3.5
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEFloraTreeBirchSmall
+        - CEFloraTreeBirchMedium
+        - CEFloraTreeBirchLarge
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.93
+      noise:
+        seed: 1015
+        noiseType: OpenSimplex2
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEGrassTall
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEGrass
+    - !type:BiomeTileLayer
+      threshold: -0.15
+      tile: CEGrassTall
+      noise:
+        seed: 0
+        frequency: 0.04
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# Не густой берёзовый лес
+- type: biomeTemplate
+  id: NibiruBirchForestLight
+  layers:
+    # --- Реки и озёра ---
+    # --- Декали (умеренно) ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      divisions: 2
+      threshold: -0.4
+      noise:
+        seed: 20
+        noiseType: Cellular
+        frequency: 0.7
+      decals:
+        - CEGrassBushes1
+        - CEGrassBushes3
+        - CEGrassBushes6
+        - CEFloraGrass5
+        - CEFloraGrass6
+        - CEFloraGrass9
+    # --- Камни-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: 0.70
+      noise:
+        seed: 21
+        noiseType: Cellular
+        frequency: 0.5
+      decals:
+        - CEFloraRock01
+        - CEFloraRock03
+        - CEFloraRock05
+    # --- Мшистые валуны (реже) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 22
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CERockBigMoss
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEStoneBlock1
+    # --- Кусты (умеренно) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.72
+      noise:
+        seed: 23
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEHighBushRandom
+    # --- Берёзы (редко, маленькие и средние) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.6
+      noise:
+        seed: 24
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEFloraTreeBirchSmall
+        - CEFloraTreeBirchMedium
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 1016
+        noiseType: OpenSimplex2
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEGrassLight
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEDirt
+    - !type:BiomeTileLayer
+      threshold: -0.5
+      tile: CEGrass
+      noise:
+        seed: 20
+        frequency: 0.025
+        fractalType: None
+    - !type:BiomeTileLayer
+      threshold: 0.3
+      tile: CEGrassLight
+      noise:
+        seed: 21
+        frequency: 0.03
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# =============================================================
+# ЛИСТОВЫЕ БИОМЫ — ЕЛОВЫЙ ЛЕС
+# =============================================================
+
+# Густой еловый лес
+- type: biomeTemplate
+  id: NibiruSpruceForestDense
+  layers:
+    # --- Реки и озёра ---
+    # --- Декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: -0.5
+      noise:
+        seed: 1
+        noiseType: Cellular
+        frequency: 0.22
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      decals:
+        - CEGrassBushes7
+        - CEGrassBushes8
+        - CEGrassBushes9
+        - CEFloraGrass10
+        - CEFloraGrass11
+        - CEFloraGrass12
+        - CEFloraGrass13
+    # --- Камни-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: 0.62
+      noise:
+        seed: 2
+        noiseType: Cellular
+        frequency: 0.5
+      decals:
+        - CEFloraRock02
+        - CEFloraRock03
+        - CEFloraRock04
+    # --- Валуны (обычные + мшистые) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.72
+      noise:
+        seed: 5
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CERockBig
+        - CERockBigMoss
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEStoneBlock1
+    # --- Густые кусты ---
+    - !type:BiomeEntityLayer
+      threshold: 0.4
+      noise:
+        seed: 4
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEHighBush
+    # --- Ели всех размеров (густо) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.3
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 3.5
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEFloraTreeSpruceSmall
+        - CEFloraTreeSpruceMedium
+        - CEFloraTreeSpruceLarge
+        - CEFloraTreeDead
+        - CEFloraTreeDeadSmall
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 1017
+        noiseType: OpenSimplex2
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Тыквы (кучками) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.87
+      noise:
+        seed: 1027
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEPlantPumpkinGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEDirt
+    - !type:BiomeTileLayer
+      threshold: -0.3
+      tile: CEGrass
+      noise:
+        seed: 1
+        frequency: 0.03
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# Не густой еловый лес
+- type: biomeTemplate
+  id: NibiruSpruceForestLight
+  layers:
+    # --- Декали (умеренно) ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 2
+      threshold: -0.35
+      noise:
+        seed: 31
+        noiseType: Cellular
+        frequency: 0.6
+      decals:
+        - CEGrassBushes2
+        - CEGrassBushes5
+        - CEFloraGrass6
+        - CEFloraGrass11
+        - CEFloraGrass14
+    # --- Камни-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      divisions: 1
+      threshold: 0.68
+      noise:
+        seed: 32
+        noiseType: Cellular
+        frequency: 0.5
+      decals:
+        - CEFloraRock01
+        - CEFloraRock04
+        - CEFloraRock05
+    # --- Валуны ---
+    - !type:BiomeEntityLayer
+      threshold: 0.82
+      noise:
+        seed: 33
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CERockSmall
+        - CERockBig
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEStoneBlock1
+    # --- Кусты (редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.78
+      noise:
+        seed: 34
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEHighBushRandom
+    # --- Ели (редко, маленькие и средние) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.62
+      noise:
+        seed: 35
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEFloraTreeSpruceSmall
+        - CEFloraTreeSpruceMedium
+        - CEFloraTreeDead
+    # --- Яблони (одиночные) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 1019
+        noiseType: OpenSimplex2
+        frequency: 2
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEPlantAppleTreeGrown
+    # --- Тыквы (кучками) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.85
+      noise:
+        seed: 1028
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+        - CEDirt
+      entities:
+        - CEPlantPumpkinGrown
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CEDirt
+    - !type:BiomeTileLayer
+      threshold: -0.45
+      tile: CEGrass
+      noise:
+        seed: 31
+        frequency: 0.025
+        fractalType: None
+    - !type:BiomeTileLayer
+      threshold: 0.35
+      tile: CEGrassLight
+      noise:
+        seed: 32
+        frequency: 0.03
+        fractalType: None
+    # --- Реки и озёра ---
+    - !type:BiomeTileLayer
+      tile: CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEDirt
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
+# =============================================================
+# ЛИСТОВЫЕ БИОМЫ — СНЕГ
+# =============================================================
+
+# Густой снежный биом
+- type: biomeTemplate
+  id: NibiruSnow
+  layers:
+    # --- Сугробы ---
+    - !type:BiomeEntityLayer
+      threshold: 0.58
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CESnow
+        - CESnowDeep
+        - CESnowDeepDeep
+      entities:
+        - CESnowdrift
+    # --- Валуны ---
+    - !type:BiomeEntityLayer
+      threshold: 0.83
+      noise:
+        seed: 4
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CESnow
+        - CESnowDeep
+      entities:
+        - CERockBig
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CESnow
+        - CESnowDeep
+      entities:
+        - CEStoneBlock1
+    # --- Заснеженные и мёртвые деревья ---
+    - !type:BiomeEntityLayer
+      threshold: 0.7
+      noise:
+        seed: 2
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.2
+      allowedTiles:
+        - CESnow
+        - CESnowDeep
+      entities:
+        - CEFloraTreeSnow
+        - CEFloraTreeDead
+        - CEFloraTreeDeadSmall
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CESnow
+    - !type:BiomeTileLayer
+      threshold: -0.4
+      tile: CESnowDeep
+      noise:
+        seed: 1
+        frequency: 0.04
+        fractalType: None
+    - !type:BiomeTileLayer
+      threshold: 0.35
+      tile: CESnowDeepDeep
+      noise:
+        seed: 2
+        frequency: 0.05
+        fractalType: None
+    # --- Реки и озёра (лёд) ---
+    - !type:BiomeTileLayer
+      tile: CEIce
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+
+# Лёгкий снежный биом
+- type: biomeTemplate
+  id: NibiruSnowLight
+  layers:
+    # --- Редкие сугробы ---
+    - !type:BiomeEntityLayer
+      threshold: 0.75
+      noise:
+        seed: 43
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CESnow
+        - CESnowDeep
+      entities:
+        - CESnowdrift
+    # --- Валуны (редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.88
+      noise:
+        seed: 44
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1.5
+      allowedTiles:
+        - CESnow
+      entities:
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CESnow
+      entities:
+        - CEStoneBlock1
+    # --- Деревья (редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.82
+      noise:
+        seed: 45
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1
+      allowedTiles:
+        - CESnow
+        - CESnowDeep
+      entities:
+        - CEFloraTreeSnow
+        - CEFloraTreeDead
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CESnow
+    - !type:BiomeTileLayer
+      threshold: 0.2
+      tile: CESnowDeep
+      noise:
+        seed: 41
+        frequency: 0.04
+        fractalType: None
+    # --- Реки и озёра (лёд) ---
+    - !type:BiomeTileLayer
+      tile: CEIce
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+
+# =============================================================
+# ПУСТЫНЯ
+# =============================================================
+
+- type: biomeTemplate
+  id: NibiruDesert
+  layers:
+    # --- Камни-декали ---
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - CESand
+      divisions: 2
+      threshold: 0.50
+      noise:
+        seed: 1
+        noiseType: Cellular
+        frequency: 1
+      decals:
+        - CEFloraRock01
+        - CEFloraRock02
+        - CEFloraRock03
+        - CEFloraRock04
+        - CEFloraRock05
+    # --- Мёртвые деревья ---
+    - !type:BiomeEntityLayer
+      threshold: 0.9
+      noise:
+        seed: 6
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 1
+      allowedTiles:
+        - CESand
+      entities:
+        - CEFloraTreeDead
+        - CEFloraTreeDeadSmall
+    # --- Валуны ---
+    - !type:BiomeEntityLayer
+      threshold: 0.82
+      noise:
+        seed: 5
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - CESand
+      entities:
+        - CERockBig
+        - CERockSmall
+    # --- Камни-штуки ---
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 88
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CESand
+      entities:
+        - CEStoneBlock1
+    # --- Кости (Очень редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 0.99
+      noise:
+        seed: 100
+        noiseType: OpenSimplex2
+        frequency: 2
+      allowedTiles:
+        - CESand
+      entities:
+        - CEBaseBoneRemains
+    # --- Черепа (Экстремально редко) ---
+    - !type:BiomeEntityLayer
+      threshold: 1.0
+      noise:
+        seed: 101
+        noiseType: OpenSimplex2
+        frequency: 3
+      allowedTiles:
+        - CESand
+      entities:
+        - Skull_cow
+        - Skull_goat
+        - Skull_human
+    # --- Тайлы ---
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: CESand
+    # --- Реки и озёра (пустыня, маленькие) ---
+    - !type:BiomeTileLayer
+      tile: CESand
+      threshold: 0.98
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CESand
+      threshold: 0.98
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity

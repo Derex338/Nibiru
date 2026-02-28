@@ -36,7 +36,6 @@
     sprite: _CE/Clothing/Eyes/merchant_monocle.rsi
   - type: Clothing
     sprite: _CE/Clothing/Eyes/merchant_monocle.rsi
-  - type: CEPriceScanner
   - type: StaticPrice
     price: 30
   - type: VisionCorrection
@@ -58,3 +57,6 @@
     sprite: _CE/Clothing/Eyes/eye_patch.rsi
   - type: Clothing
     sprite: _CE/Clothing/Eyes/eye_patch.rsi
+  - type: Construction
+    graph: EyePatch
+    node: fin

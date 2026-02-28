@@ -1,0 +1,152 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 7: ARMOR ███
+# Protective equipment
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wood Chestplate (Деревянный нагрудник)
+# Требует: Доски + Верёвка + Забивание
+# Базовая броня
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodChestplate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: CEWood
+              amount: 5
+            - material: HerbRope
+              amount: 2
+
+    - node: fin
+      entity: WoodChestplate
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Leather Helmet (Кожаный шлем)
+# Требует: Кожа + Шитьё
+# Кожаная защита головы
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: LetherHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: intermediate
+          steps:
+            - material: Leather
+              amount: 5
+            - material: Thread
+              amount: 2
+    - node: intermediate
+      entity: LetherHelmetIntermediate
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - tool: Sewing
+              doAfter: 5
+    - node: fin
+      entity: LetherHelmet
+      edges:
+        - to: reinforced
+          steps:
+            - material: CEBone
+              amount: 5
+            - tool: Sewing
+              doAfter: 10
+    - node: reinforced
+      entity: LetherHelmetReinforced
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Primitive Bone Helmet (Костяной шлем)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: PrimitiveBoneHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: CEBone
+              amount: 15
+            - material: HerbRope
+              amount: 1
+            - tool: Sewing
+              doAfter: 10
+    - node: fin
+      entity: PrimitiveBoneHelmet
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Leather Chestplate (Кожаный нагрудник)
+# Требует: Кожа + Нить + Шитьё
+# Кожаная защита тела
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: LetherChestplate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: intermediate
+          steps:
+            - material: Leather
+              amount: 10
+            - material: Thread
+              amount: 3
+    - node: intermediate
+      entity: LetherChestplateIntermediate
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - tool: Sewing
+              doAfter: 6
+    - node: fin
+      entity: LetherChestplate
+      edges:
+        - to: reinforced
+          steps:
+            - material: CEBone
+              amount: 10
+            - tool: Sewing
+              doAfter: 15
+    - node: reinforced
+      entity: LetherChestplateReinforced
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Primitive Bone Armor (Костяной нагрудник)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: PrimitiveBoneArmor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - material: CEBone
+              amount: 30
+            - material: HerbRope
+              amount: 2
+            - tool: Sewing
+              doAfter: 20
+    - node: fin
+      entity: PrimitiveBoneArmor

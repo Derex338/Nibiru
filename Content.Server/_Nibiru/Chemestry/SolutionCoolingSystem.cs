@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Nibiru.Chemestry;
@@ -19,14 +20,27 @@ public sealed class SolutionCoolingSystem : EntitySystem
 
     public float HeatTransferRate = 0.3f;
 
+    // Throttle: обновляем не чаще раза в секунду,
+    // т.к. SolutionComponent есть у огромного числа объектов на планете
+    private float _updateTimer = 0f;
+    private const float UpdateInterval = 1f;
+    private readonly List<(EntityUid Uid, SolutionComponent Solution, TransformComponent Transform, GasMixture Air)> _toProcess = new();
+
     public override void Initialize()
     {
         base.Initialize();
     }
-    
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        _updateTimer += frameTime;
+        if (_updateTimer < UpdateInterval)
+            return;
+        _updateTimer = 0f;
+
+        _toProcess.Clear();
 
         var query = EntityQueryEnumerator<SolutionComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var solution, out var transform))
@@ -34,6 +48,14 @@ public sealed class SolutionCoolingSystem : EntitySystem
             var air = _atmos.GetContainingMixture((uid, transform));
 
             if (air == null || solution.Solution.Temperature <= air.Temperature + 10)
+                continue;
+
+            _toProcess.Add((uid, solution, transform, air));
+        }
+
+        foreach (var (uid, solution, transform, air) in _toProcess)
+        {
+            if (Deleted(uid))
                 continue;
 
             var temperatureDelta = air.Temperature - solution.Solution.Temperature;
@@ -44,7 +66,7 @@ public sealed class SolutionCoolingSystem : EntitySystem
 
             _solution.AddThermalEnergy((uid, solution), heatTransfer / heatCapacityLiquid);
 
-            if (TryComp<TemperatureComponent>(Transform(solution.Owner).ParentUid, out var temp) && temp.CurrentTemperature < solution.Solution.Temperature)
+            if (TryComp<TemperatureComponent>(transform.ParentUid, out var temp) && temp.CurrentTemperature < solution.Solution.Temperature)
             {
                 temp.CurrentTemperature += solution.Solution.Temperature / 10 * frameTime;
             }

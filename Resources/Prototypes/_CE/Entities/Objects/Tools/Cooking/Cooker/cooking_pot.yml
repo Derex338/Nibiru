@@ -55,3 +55,6 @@
     storageCloseSound: /Audio/_CE/Effects/pan_close.ogg
     storageInsertSound: /Audio/Items/toolbox_insert.ogg
     storageRemoveSound: /Audio/Items/toolbox_insert.ogg
+  - type: Construction
+    graph: CookingPot
+    node: fin

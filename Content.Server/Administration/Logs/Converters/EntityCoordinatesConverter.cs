@@ -31,8 +31,11 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
         writer.WriteEndObject();
     }
 
-    private static void WriteEntityInfo(Utf8JsonWriter writer, EntityUid value, IEntityManager entities, string rootName)
+    private static void WriteEntityInfo(Utf8JsonWriter writer, EntityUid value, IEntityManager entities, string rootName, int depth = 0)
     {
+        if (depth > 5)
+            return;
+
         writer.WriteStartObject(rootName);
         writer.WriteNumber("uid", value.Id);
         if (entities.TryGetComponent(value, out MetaDataComponent? metaData))
@@ -44,9 +47,9 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
             writer.WriteNumber("mapId", mapComponent.MapId.GetHashCode());
             writer.WriteBoolean("mapPaused", mapComponent.MapPaused);
         }
-        if (entities.TryGetComponent(value, out StationMemberComponent? stationMemberComponent))
+        if (entities.TryGetComponent(value, out StationMemberComponent? stationMemberComponent) && stationMemberComponent.Station != value)
         {
-            WriteEntityInfo(writer, stationMemberComponent.Station, entities, "stationMember");
+            WriteEntityInfo(writer, stationMemberComponent.Station, entities, "stationMember", depth + 1);
         }
 
         writer.WriteEndObject();

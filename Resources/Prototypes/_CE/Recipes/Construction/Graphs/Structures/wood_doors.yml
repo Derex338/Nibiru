@@ -48,24 +48,24 @@
             - material: CEWood
               amount: 3
               doAfter: 1.5
-            - material: CENail
-              amount: 2
-              doAfter: 0.5
+            #- material: CENail
+            #  amount: 2
+            #  doAfter: 0.5
             - tool: CEHammering
               doAfter: 1
         - to: CEWoodenDoorWindowed
           conditions:
           - !type:EntityAnchored {}
           steps:
-            - material: CEBrassRod
-              amount: 2
-              doAfter: 1.5
+            #- material: CEBrassRod
+            #  amount: 2
+            #  doAfter: 1.5
             - material: CEWood
               amount: 2
               doAfter: 1.5
-            - material: CENail
-              amount: 2
-              doAfter: 0.5
+            #- material: CENail
+            #  amount: 2
+            #  doAfter: 0.5
             - tool: CEHammering
               doAfter: 1
         - to: CEWoodenDoorFrameMirrored
@@ -97,24 +97,24 @@
             - material: CEWood
               amount: 3
               doAfter: 1.5
-            - material: CENail
-              amount: 2
-              doAfter: 0.5
+            #- material: CENail
+            #  amount: 2
+            #  doAfter: 0.5
             - tool: CEHammering
               doAfter: 1
         - to: CEWoodenDoorWindowedMirrored
           conditions:
           - !type:EntityAnchored {}
           steps:
-            - material: CEBrassRod
-              amount: 2
-              doAfter: 1.5
+            #- material: CEBrassRod
+            #  amount: 2
+            #  doAfter: 1.5
             - material: CEWood
               amount: 2
               doAfter: 1.5
-            - material: CENail
-              amount: 2
-              doAfter: 0.5
+            #- material: CENail
+            #  amount: 2
+            #  doAfter: 0.5
             - tool: CEHammering
               doAfter: 1
         - to: CEWoodenDoorFrame

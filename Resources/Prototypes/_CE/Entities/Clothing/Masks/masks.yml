@@ -22,6 +22,9 @@
     sprite: _CE/Clothing/Masks/neckerchief.rsi
   - type: Clothing
     sprite: _CE/Clothing/Masks/neckerchief.rsi
+  - type: Construction
+    graph: Neckerchief
+    node: fin
 
 - type: entity
   parent: CEClothingMaskIdentityBlockerBase
@@ -33,6 +36,9 @@
     sprite: _CE/Clothing/Masks/red_neckerchief.rsi
   - type: Clothing
     sprite: _CE/Clothing/Masks/red_neckerchief.rsi
+  - type: Construction
+    graph: RedNeckerchief
+    node: fin
 
 - type: entity
   parent: CEClothingMaskIdentityBlockerBase
@@ -55,6 +61,9 @@
     sprite: _CE/Clothing/Masks/bone_mask.rsi
   - type: Clothing
     sprite: _CE/Clothing/Masks/bone_mask.rsi
+  - type: Construction
+    graph: BoneMask
+    node: fin
 
 - type: entity
   parent: CEClothingMaskIdentityBlockerBase
@@ -66,6 +75,9 @@
     sprite: _CE/Clothing/Masks/horned_bone_mask.rsi
   - type: Clothing
     sprite: _CE/Clothing/Masks/horned_bone_mask.rsi
+  - type: Construction
+    graph: BoneHornedMask
+    node: fin
 
 - type: entity
   parent: CEClothingMaskIdentityBlockerBase
@@ -77,4 +89,7 @@
     sprite: _CE/Clothing/Masks/mime_mask.rsi
   - type: Clothing
     sprite: _CE/Clothing/Masks/mime_mask.rsi
+  - type: Construction
+    graph: MimeMask
+    node: fin
 

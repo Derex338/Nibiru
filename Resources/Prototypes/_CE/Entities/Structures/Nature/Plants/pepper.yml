@@ -27,3 +27,11 @@
     produce:
       CEFoodPepper: 4
 
+- type: entity
+  id: CEPlantPepperGrown
+  parent: CEPlantPepper
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 4
+

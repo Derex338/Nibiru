@@ -18,6 +18,10 @@ public sealed partial class ResearchSystem
         var unusedId = EntityQuery<ResearchServerComponent>(true)
             .Max(s => s.Id) + 1;
         component.Id = unusedId;
+
+        if (TryComp<ResearchClientComponent>(uid, out var clientComp)) //Nibiru
+            RegisterClient(uid, uid, clientComp, component);
+
         Dirty(uid, component);
     }
 
@@ -174,10 +178,6 @@ public sealed partial class ResearchSystem
         var ev = new ResearchServerPointsChangedEvent(uid, component.Points, points);
         foreach (var client in component.Clients)
         {
-            // Nibiru: Не отправляем событие обратно на сам сервер
-            if (client == uid)
-                continue;
-
             RaiseLocalEvent(client, ref ev);
         }
         Dirty(uid, component);

@@ -36,3 +36,7 @@
   - type: PhysicalComposition
     materialComposition:
       CECloth: 20
+  - type: Material
+  - type: Stack
+    stackType: HerbRope
+    count: 1

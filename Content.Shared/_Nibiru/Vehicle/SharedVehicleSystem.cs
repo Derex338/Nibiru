@@ -1,4 +1,3 @@
-using Content.Shared._Nibiru.Construction;
 using Content.Shared._Nibiru.Vehicle;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle;
@@ -187,7 +186,7 @@ public sealed class RideableSystem : EntitySystem
 
     private void RemoveRider(EntityUid rideable, EntityUid rider, StrapComponent comp)
     {
-        EnsureComp<ActiveNPCComponent>(rideable);
+        //EnsureComp<ActiveNPCComponent>(rideable);
 
         RemComp<RelayInputMoverComponent>(rider);
         RemComp<InteractionRelayComponent>(rider);

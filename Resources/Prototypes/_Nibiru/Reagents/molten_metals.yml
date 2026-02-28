@@ -33,3 +33,27 @@
   boilingPoint: 2212.0
   meltingPoint: 960.5
   scrapEntity: ScrapMetal
+
+- type: reagent
+  id: GoldMolten
+  name: gold
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal
+
+- type: reagent
+  id: SilverMolten
+  name: silver
+  group: Elements
+  desc: reagent-desc-silver
+  physicalDesc: reagent-physical-desc-reasonably-metallic
+  flavor: metallic
+  color: "#ff8844"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
+  scrapEntity: ScrapMetal

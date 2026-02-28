@@ -74,6 +74,9 @@
     sprite: _CE/Clothing/Head/Misc/straw_hat.rsi
   - type: Clothing
     sprite: _CE/Clothing/Head/Misc/straw_hat.rsi
+  - type: Construction
+    graph: CEStrawHat
+    node: fin
 
 - type: entity
   parent: CEClothingHeadBase
@@ -85,6 +88,9 @@
     sprite: _CE/Clothing/Head/Misc/wreath.rsi
   - type: Clothing
     sprite: _CE/Clothing/Head/Misc/wreath.rsi
+  - type: Construction
+    graph: HeadWreath
+    node: fin
 
 - type: entity
   parent: CEClothingHeadBase

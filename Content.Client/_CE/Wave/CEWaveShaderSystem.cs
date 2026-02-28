@@ -21,14 +21,13 @@ public sealed class CEWaveShaderSystem : EntitySystem
         base.Initialize();
 
         _shader = _protoMan.Index<ShaderPrototype>("CEWave").InstanceUnique();
-        //_enabled = _cfg.GetCVar(CCVars.CEWaveShaderEnabled);
-        _enabled = true;
+        _enabled = _cfg.GetCVar(CCVars.CEWaveShaderEnabled);
 
         SubscribeLocalEvent<CEWaveShaderComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<CEWaveShaderComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<CEWaveShaderComponent, BeforePostShaderRenderEvent>(OnBeforeShaderPost);
 
-        //Subs.CVar(_cfg, CCVars.CEWaveShaderEnabled, GlobalChangeWaveShader, true);
+        Subs.CVar(_cfg, CCVars.CEWaveShaderEnabled, GlobalChangeWaveShader, true);
     }
 
     private void GlobalChangeWaveShader(bool enable)

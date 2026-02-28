@@ -1,0 +1,47 @@
+
+- type: entity
+  parent: [BaseArrow, BaseBronzeItem]
+  id: BronzeArrow
+  name: бронзовая стрела
+  description: Когда надо перестрелять птиц. Не забудьте намазать ядом гидры!
+  components:
+  - type: Sprite
+    #sprite: _Nibiru/Objects/BronzeAge/Weapons/Range/Arrows.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: brown
+    - state: tip
+      color: orange
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25
+  - type: ArmorPenetration
+    penetration:
+      Piercing: 18
+  - type: Construction
+    graph: BronzeArrow
+    node: fin
+
+- type: entity
+  parent: [BronzeArrow]
+  id: BronzeArrowAP
+  name: бронебойная бронзовая стрела
+  description: Тяжелая стрела с узким наконечником, способная пробить доспехи.
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35
+  - type: ArmorPenetration
+    penetration:
+      Piercing: 28
+  - type: Construction
+    graph: BronzeArrowAP
+    node: fin

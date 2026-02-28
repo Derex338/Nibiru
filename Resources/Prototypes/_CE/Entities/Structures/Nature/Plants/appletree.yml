@@ -41,3 +41,11 @@
     toolWhitelist:
       components:
       - Sharp
+
+- type: entity
+  id: CEPlantAppleTreeGrown
+  parent: CEPlantAppleTree
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 4

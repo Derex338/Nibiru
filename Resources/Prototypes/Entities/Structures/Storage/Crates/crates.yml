@@ -810,6 +810,9 @@
       path: /Audio/Items/shovel_dig.ogg
     openSound:
       path: /Audio/Items/shovel_dig.ogg
+  - type: Construction
+    graph: CrateWoodenGrave
+    node: dug
 
 - type: entity
   parent: CrateWoodenGrave
@@ -831,6 +834,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/stone_grave.rsi
     state: base
+  - type: Construction
+    graph: CrateStoneGrave
+    node: dug
 
 - type: entity
   parent: CrateGenericSteel

@@ -93,7 +93,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         StaticSprite.CanShrink = true;
         StaticSprite.Stretch = TextureRect.StretchMode.Scale;
 
-        ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
+        //ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
         DragContainer.OnKeyBindDown += OnKeybindDown;
         DragContainer.OnKeyBindUp += OnKeybindUp;
         RecenterButton.OnPressed += _ => Recenter();

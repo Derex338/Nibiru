@@ -19,9 +19,6 @@
                 <BoxContainer Name="TierDisplayContainer" Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Bottom" Visible="False"/>
                 <!-- This is where we put all of the little graphics that display discipline tiers!-->
             </BoxContainer>
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalAlignment="Right">
-                <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" MinHeight="30"/>
-            </BoxContainer>
         </BoxContainer>
         <BoxContainer Name="EpochTabsContainer"
                       Orientation="Horizontal"

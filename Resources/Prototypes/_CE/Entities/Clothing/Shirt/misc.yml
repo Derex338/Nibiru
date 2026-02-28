@@ -8,3 +8,6 @@
     sprite: _CE/Clothing/Shirt/Misc/warrior_garb.rsi
   - type: Clothing
     sprite: _CE/Clothing/Shirt/Misc/warrior_garb.rsi
+  - type: Construction
+    graph: ShirtWarriorGarb
+    node: fin

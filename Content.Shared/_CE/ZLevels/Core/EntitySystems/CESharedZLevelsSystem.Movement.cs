@@ -296,9 +296,16 @@ public abstract partial class CESharedZLevelsSystem
             }
 
             //No ZEntities found, check floor tiles
-            if (_map.TryGetTileRef(checkingMap, checkingGrid, worldPosI, out var tileRef) &&
-                !tileRef.Tile.IsEmpty)
-                return -floor; // tile ground has groundY == 0 -> -floor
+            if (_map.TryGetTileRef(checkingMap, checkingGrid, worldPosI, out var tileRef))
+            {
+                if (!tileRef.Tile.IsEmpty)
+                    return -floor; // tile ground has groundY == 0 -> -floor
+            }
+            else if (HasComp<Content.Shared.Parallax.Biomes.BiomeComponent>(checkingMap))
+            {
+                // Unloaded chunk on a planet - assume solid ground to prevent falling
+                return -floor;
+            }
         }
 
         return -maxFloors;

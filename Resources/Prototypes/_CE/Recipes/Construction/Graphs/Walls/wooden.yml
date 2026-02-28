@@ -32,9 +32,9 @@
             - material: CEWood
               amount: 1
               doAfter: 1.5
-            - material: CENail
-              amount: 1
-              doAfter: 0.5
+            #- material: CENail
+            #  amount: 1
+            #  doAfter: 0.5
             - tool: CEHammering
               doAfter: 1
 
@@ -51,7 +51,7 @@
             - !type:SpawnPrototype
               prototype: CEWoodenPlanks1
               amount: 1
-            - !type:SpawnPrototype
-              prototype: CENail1
-              amount: 1
+            #- !type:SpawnPrototype
+            #  prototype: CENail1
+            #  amount: 1
 

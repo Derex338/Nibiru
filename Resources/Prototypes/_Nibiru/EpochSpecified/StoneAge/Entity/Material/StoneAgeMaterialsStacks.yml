@@ -29,16 +29,9 @@
   maxCount: 5
 
 - type: stack
-  id: Mud
-  name: комок грязи
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi, state: mud_3 }
-  spawn: Mud1
-  maxCount: 20
-
-- type: stack
   id: MudBlock
   name: глиняный кирпич (сырой)
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: Brick_3 }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: brick_3 }
   spawn: MudBlock1
   maxCount: 10
 
@@ -61,20 +54,11 @@
   price: 20
 
 - type: material
-  id: Mud
-  stackEntity: Mud1
-  name: комок грязи
-  unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi, state: mud_3 }
-  color: "#80ffff"
-  price: 20
-
-- type: material
   id: MudBlock
   stackEntity: MudBlock1
   name: глиняный кирпич
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: Brick_3 }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: brick_3 }
   color: "#80ffff"
   price: 20
 
@@ -133,16 +117,16 @@
   parent: BaseSheetStack
   id: HerbRope
   name: травяная веревка
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Rope.rsi, state: rope_1 }
-  spawn: HerbRope
+  icon: { sprite: _CE/Objects/Tool/rope.rsi, state: icon }
+  spawn: CERope
   maxCount: 10
 
 - type: material
   id: HerbRope
-  stackEntity: HerbRope
+  stackEntity: CERope
   name: травяная веревка
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Rope.rsi, state: rope_1 }
+  icon: { sprite: _CE/Objects/Tool/rope.rsi, state: icon }
   color: "#80ffff"
   price: 10
 

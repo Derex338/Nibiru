@@ -1,0 +1,165 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE FURNITURE & STORAGE ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: Wagon
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: WoodenWheel
+              amount: 2
+            - material: WoodPlank
+              amount: 4
+            - tool: Hammering
+              doAfter: 10
+    - node: frame
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - material: WoodPlank
+              amount: 6
+            - tool: Hammering
+              doAfter: 15
+    - node: fin
+      entity: Wagon
+
+- type: constructionGraph
+  id: Saddle
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: Leather
+              amount: 4
+            - tool: Sewing
+              doAfter: 10
+    - node: frame
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: BronzeInlay
+              amount: 1
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: Saddle
+
+- type: constructionGraph
+  id: BronzeAgeBed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodPlank
+              amount: 5
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: BronzeAgeBed
+
+- type: constructionGraph
+  id: BronzeAgeChest
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodPlank
+              amount: 4
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: BronzeAgeChest
+
+- type: constructionGraph
+  id: CoinPurse
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CoinPurse
+
+- type: constructionGraph
+  id: LeatherBackBackpack
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: Leather
+              amount: 6
+            - tool: Sewing
+              doAfter: 10
+    - node: fin
+      entity: CEClothingBackBackpack
+
+- type: constructionGraph
+  id: LeatherBackSatchel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: Leather
+              amount: 4
+            - tool: Sewing
+              doAfter: 7
+    - node: fin
+      entity: CEClothingBackSatchel
+
+- type: constructionGraph
+  id: LeatherBeltPouch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingBeltPouch
