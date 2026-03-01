@@ -9,6 +9,9 @@
     sprite: _CE/Clothing/Cloak/Cape/barbarian.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Cape/barbarian.rsi
+  - type: Construction
+    graph: CloakBarbarian
+    node: fin
 
 - type: entity
   parent:
@@ -21,6 +24,9 @@
     sprite: _CE/Clothing/Cloak/Cape/furcape.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Cape/furcape.rsi
+  - type: Construction
+    graph: FurCape
+    node: fin
 
 - type: entity
   parent:
@@ -33,3 +39,6 @@
     sprite: _CE/Clothing/Cloak/Cape/furcape2.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Cape/furcape2.rsi
+  - type: Construction
+    graph: FurCape2
+    node: fin

@@ -1,0 +1,21 @@
+- type: entity
+  id: NibiruGoldOre
+  parent: GoldOre
+  suffix: Nibiru
+  components:
+  - type: Stack
+    stackType: NibiruGoldOre
+    count: 1
+  - type: SmeltableOre
+    meltingPoint: 960
+    meltingSpeed: 1
+    resultReagent: GoldMolten
+    resultAmount: 50
+    resultTemperature: 1100
+
+- type: stack
+  parent: BaseMediumStack
+  id: NibiruGoldOre
+  name: stack-gold-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: gold }
+  spawn: NibiruGoldOre

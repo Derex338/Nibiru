@@ -98,7 +98,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             return;
         }
     }
-
+/*
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -112,7 +112,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             StartWorldRule(new(uid, rule));
         }
     }
-
+*/
     public NibiruSurvivalRuleComponent GetRule()
     {
         while (EntityQueryEnumerator<NibiruSurvivalRuleComponent>().MoveNext(out var comp))
@@ -127,7 +127,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     {
         return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
-
+/*
     /// <summary>
     /// Adds a world rule to the list, but does not
     /// start it yet, instead waiting until the rule is actually started by other code
@@ -272,7 +272,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         RaiseLocalEvent(uid, ref ev, true);
         return true;
     }
-
+*/
     /// <summary>
     /// Возвращает список доступных фракций для UI
     /// </summary>

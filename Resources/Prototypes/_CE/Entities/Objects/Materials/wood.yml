@@ -49,6 +49,10 @@
           collection: WoodDestroy
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Material
+  - type: Stack
+    stackType: Log
+    count: 1
   - type: PhysicalComposition
     materialComposition:
       CEWood: 30

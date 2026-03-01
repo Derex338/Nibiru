@@ -19,6 +19,9 @@
   - type: PhysicalComposition
     materialComposition:
       CEWood: 10
+  - type: Construction
+    graph: CEFlute
+    node: fin
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -50,6 +53,9 @@
     materialComposition:
       CEWood: 30
       CECloth: 10
+  - type: Construction
+    graph: Lyre
+    node: fin
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -88,6 +94,9 @@
     materialComposition:
       CEWood: 40
       CECloth: 5
+  - type: Construction
+    graph: Lute
+    node: fin
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -123,4 +132,7 @@
         Slash: 5
     soundHit:
       collection: MetalThud
+  - type: Construction
+    graph: SkeletonGuitar
+    node: fin
 

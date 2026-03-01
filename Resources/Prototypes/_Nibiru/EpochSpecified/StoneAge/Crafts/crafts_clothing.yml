@@ -1,0 +1,91 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 6: CLOTHING ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: HerbalBelt
+  graph: HerbalBelt
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ShoesHerbal
+  graph: ShoesHerbal
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: HerbalBasket
+  graph: HerbalBasket
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: WizardShoes
+  graph: WizardShoes
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: CasaHat
+  graph: CasaHat
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: HetmanHat
+  graph: HetmanHat
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: Tunic
+  graph: Tunic
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: Ushanka
+  graph: Ushanka
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: CoatTrench
+  graph: CoatTrench
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: CoatPirate
+  graph: CoatPirate
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench

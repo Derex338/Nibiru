@@ -38,3 +38,11 @@
     toolWhitelist:
       components:
       - Sharp
+
+- type: entity
+  id: CEPlantTomatoesGrown
+  parent: CEPlantTomatoes
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 4

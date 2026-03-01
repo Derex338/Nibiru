@@ -1,0 +1,158 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 5: MATERIALS & CRAFTING COMPONENTS ███
+# Basic materials used in other recipes
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Thread (Нить)
+# Альтернатива 1: Из травы
+# Альтернатива 2: Из хлопка (лучшее качество)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Thread
+  start: start
+  graph:
+    - node: start
+      edges:
+        # Вариант из травы (быстрее, но больше материала)
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Herb
+              amount: 2
+              doAfter: 1
+        # Вариант из хлопка (дольше, но качественнее)
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Cotton
+              amount: 5
+              doAfter: 4
+    - node: fin
+      entity: MaterialThread10
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Herb Rope (Травяная верёвка)
+# Требует: Трава
+# Базовый материал для связывания
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: HerbRope
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Herb
+              amount: 3
+              doAfter: 2
+    - node: fin
+      entity: CERope
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Cloth (Ткань)
+# Требует: Нитки (на ткацком станке)
+# Материал для одежды
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: LoomCloth
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Thread
+              amount: 5
+              doAfter: 4
+    - node: fin
+      entity: MaterialCloth1
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Block (Каменный блок)
+# Требует: Камни + Инструмент забивания (обработка)
+# Строительный материал
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StoneBlock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: intermediate
+          steps:
+            - material: CEStone
+              amount: 3
+    - node: intermediate
+      entity: StoneBlockIntermediate
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneBlock1
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Mud Block (Глиняный блок)
+# Требует: Грязь → Формование → Обжиг
+# Строительный материал (требует нагрева для завершения)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: MudBlock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: raw
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEDirt
+              amount: 3
+              doAfter: 5
+    - node: raw
+      entity: MudBlockRaw1
+      edges:
+        - to: fin
+          steps:
+            - minTemperature: 335
+    - node: fin
+      entity: MudBlock1
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Straw Tile (Соломенная плитка)
+# Требует: Трава
+# Напольное покрытие
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StrawTile
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Herb
+              amount: 1
+              doAfter: 1
+    - node: fin
+      entity: FloorTileItemStraw4

@@ -17,6 +17,7 @@ using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Tag;
+using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -52,6 +53,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private EntityQuery<BiomeComponent> _biomeQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
@@ -288,11 +291,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                     var mod = biome.ModifiedTiles.GetOrNew(chunk * ChunkSize);
 
-                    if (!mod.Add(index) || !TryGetBiomeTile(index, biome.Layers, biome.Seed, (ev.MapUid, grid), out var tile))
+                    if (!mod.Add(index) || !TryGetVariantizedBiomeTile(index, biome.Layers, biome.Seed, (ev.MapUid, grid), out var tile))
                         continue;
 
                     // If we flag it as modified then the tile is never set so need to do it ourselves.
-                    tiles.Add((index, tile.Value));
+                    tiles.Add((index, tile));
                 }
             }
         }
@@ -383,6 +386,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         var loadBiomes = AllEntityQuery<BiomeComponent, MapGridComponent>();
+        var sw = new System.Diagnostics.Stopwatch();
+        sw.Start();
 
         while (loadBiomes.MoveNext(out var gridUid, out var biome, out var grid))
         {
@@ -394,9 +399,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
 
             // Load new chunks
-            LoadChunks(biome, gridUid, grid, biome.Seed);
+            LoadChunks(biome, gridUid, grid, biome.Seed, sw);
             // Unload old chunks
-            UnloadChunks(biome, gridUid, grid, biome.Seed);
+            UnloadChunks(biome, gridUid, grid, biome.Seed, sw);
         }
 
         _handledEntities.Clear();
@@ -444,21 +449,31 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         BiomeComponent component,
         EntityUid gridUid,
         MapGridComponent grid,
-        int seed)
+        int seed,
+        System.Diagnostics.Stopwatch sw)
     {
         BuildMarkerChunks(component, gridUid, grid, seed);
 
         var active = _activeChunks[component];
+        var chunksLoaded = 0;
 
         foreach (var chunk in active)
         {
             LoadChunkMarkers(component, gridUid, grid, chunk, seed);
+
+            if (component.LoadedChunks.Contains(chunk))
+                continue;
+
+            // Prevent generation lag spike by capping chunk loads per tick
+            if (sw.Elapsed.TotalMilliseconds > 12 && chunksLoaded > 0)
+                continue;
 
             if (!component.LoadedChunks.Add(chunk))
                 continue;
 
             // Load NOW!
             LoadChunk(component, gridUid, grid, chunk, seed);
+            chunksLoaded++;
         }
     }
 
@@ -727,9 +742,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Need to ensure the tile under it has loaded for anchoring.
-                if (TryGetBiomeTile(node, component.Layers, seed, (gridUid, grid), out var tile))
+                if (TryGetVariantizedBiomeTile(node, component.Layers, seed, (gridUid, grid), out var tile))
                 {
-                    _mapSystem.SetTile(gridUid, grid, node, tile.Value);
+                    _mapSystem.SetTile(gridUid, grid, node, tile);
                 }
 
                 string? prototype;
@@ -793,10 +808,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (_mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && !tileRef.Tile.IsEmpty)
                     continue;
 
-                if (!TryGetBiomeTile(indices, component.Layers, seed, (gridUid, grid), out var biomeTile))
+                if (!TryGetVariantizedBiomeTile(indices, component.Layers, seed, (gridUid, grid), out var biomeTile))
                     continue;
 
-                _tiles.Add((indices, biomeTile.Value));
+                _tiles.Add((indices, biomeTile));
             }
         }
 
@@ -883,19 +898,31 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     /// <summary>
     /// Handles all of the queued chunk unloads for a particular biome.
     /// </summary>
-    private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, int seed)
+    private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, int seed, System.Diagnostics.Stopwatch sw)
     {
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
 
+        var toUnload = new ValueList<Vector2i>();
         foreach (var chunk in component.LoadedChunks)
         {
-            if (active.Contains(chunk) || !component.LoadedChunks.Remove(chunk))
+            if (!active.Contains(chunk))
+                toUnload.Add(chunk);
+        }
+
+        var chunksUnloaded = 0;
+        foreach (var chunk in toUnload)
+        {
+            if (sw.Elapsed.TotalMilliseconds > 12 && chunksUnloaded > 0)
+                break;
+
+            if (!component.LoadedChunks.Remove(chunk))
                 continue;
 
             // Unload NOW!
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
             UnloadChunk(component, gridUid, grid, chunk, seed, tiles);
+            chunksUnloaded++;
         }
     }
 
@@ -943,12 +970,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
             }
 
-            if (!EntityManager.IsDefault(ent))
-            {
-                modified.Add(tile);
-                continue;
-            }
-
             Del(ent);
         }
 
@@ -975,8 +996,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
 
                 // If it's default data unload the tile.
-                if (!TryGetBiomeTile(indices, component.Layers, seed, null, out var biomeTile) ||
-                    _mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && tileRef.Tile != biomeTile.Value)
+                if (!TryGetVariantizedBiomeTile(indices, component.Layers, seed, null, out var biomeTile) ||
+                    _mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && tileRef.Tile != biomeTile)
                 {
                     modified.Add(indices);
                     continue;
@@ -1070,7 +1091,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
             }
 
-            if (!TryGetBiomeTile(tileSet.GridIndices, biome.Layers, biome.Seed, (mapUid, mapGrid), out var tile))
+            if (!TryGetVariantizedBiomeTile(tileSet.GridIndices, biome.Layers, biome.Seed, (mapUid, mapGrid), out var tile))
             {
                 continue;
             }
@@ -1078,9 +1099,29 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             chunkOrigin = SharedMapSystem.GetChunkIndices(tileSet.GridIndices, ChunkSize) * ChunkSize;
             modified = biome.ModifiedTiles.GetOrNew(chunkOrigin);
             modified.Add(tileSet.GridIndices);
-            tiles.Add((tileSet.GridIndices, tile.Value));
+            tiles.Add((tileSet.GridIndices, tile));
         }
 
         _mapSystem.SetTiles(mapUid, mapGrid, tiles);
+    }
+
+    private bool TryGetVariantizedBiomeTile(Vector2i index, List<IBiomeLayer> layers, int seed, Entity<MapGridComponent>? component, out Tile tile)
+    {
+        if (!TryGetBiomeTile(index, layers, seed, component, out var biomeTile) || biomeTile == null)
+        {
+            tile = Tile.Empty;
+            return false;
+        }
+
+        var def = _turf.GetContentTileDefinition(biomeTile.Value);
+
+        // Используем хеширование на основе MurmurHash3
+        int tileSeed = unchecked(seed ^ (index.X * 397) ^ (index.Y * 3931));
+        //tileSeed = unchecked((tileSeed ^ (tileSeed >> 16)) * 0x45d9f3b);
+        //tileSeed = unchecked((tileSeed ^ (tileSeed >> 16)) * 0x45d9f3b);
+        //tileSeed = unchecked(tileSeed ^ (tileSeed >> 16));
+
+        tile = new Tile(biomeTile.Value.TypeId, biomeTile.Value.Flags, _tile.PickVariant(def, tileSeed), biomeTile.Value.RotationMirroring);
+        return true;
     }
 }

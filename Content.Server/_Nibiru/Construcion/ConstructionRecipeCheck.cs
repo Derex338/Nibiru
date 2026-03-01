@@ -146,10 +146,14 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
         ClientLookup.Clear();
 
         var clientXform = Transform(client);
-        if (clientXform.GridUid is not { } grid)
-            return ClientLookup;
+        var query = EntityQueryEnumerator<TechnologyDatabaseComponent, TransformComponent>();
 
-        _lookup.GetGridEntities(grid, ClientLookup);
+        while (query.MoveNext(out var uid, out var server, out var xform))
+        {
+            if (xform.MapUid == clientXform.MapUid)
+                ClientLookup.Add((uid, server));
+        }
+
         return ClientLookup;
     }
 }

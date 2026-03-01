@@ -1,7 +1,6 @@
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 using System;
 using System.Collections.Generic;

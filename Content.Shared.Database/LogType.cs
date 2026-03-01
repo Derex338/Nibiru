@@ -482,5 +482,10 @@ public enum LogType
 	/// <summary>
     /// Faction created
     /// </summary>
-    FactionCreated = 199
+    FactionCreated = 199,
+
+    /// <summary>
+    /// Events related to players connecting/disconnecting.
+    /// </summary>
+    Connection = 104,
 }

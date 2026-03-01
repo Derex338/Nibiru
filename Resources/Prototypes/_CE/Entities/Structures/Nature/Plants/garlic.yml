@@ -26,3 +26,11 @@
   - type: CEPlantAdditionalProduceOnInteract
     produce:
       CEFoodGarlic: 4
+
+- type: entity
+  id: CEPlantGarlicGrown
+  parent: CEPlantGarlic
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 5

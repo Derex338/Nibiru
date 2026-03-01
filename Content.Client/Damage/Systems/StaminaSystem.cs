@@ -1,4 +1,4 @@
-﻿using Content.Client.Stunnable;
+using Content.Client.Stunnable;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
@@ -15,7 +15,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly StunSystem _stun = default!; // Clientside Stun System
 
-    private const string StaminaAnimationKey = "stamina";
+    public const string StaminaAnimationKey = "stamina"; //CrystallEdge public
 
     public override void Initialize()
     {

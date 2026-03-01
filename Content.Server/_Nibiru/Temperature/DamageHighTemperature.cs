@@ -109,7 +109,8 @@ public sealed class DamageHighTemperature : EntitySystem
                 totalDamage = DamageSpecifier.ApplyModifierSet(totalDamage, protectiveEntity.Comp.DamageProtection);
             }
 
-            totalDamage = _damageableSystem.TryChangeDamage(User, totalDamage);
+            if (!_damageableSystem.TryChangeDamage(User, totalDamage, out totalDamage));
+                return;
 
             if (totalDamage != null && totalDamage.AnyPositive())
             {

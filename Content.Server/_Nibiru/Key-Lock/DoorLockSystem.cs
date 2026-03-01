@@ -8,7 +8,6 @@ using Content.Shared._Nibiru.Key;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Server.Audio;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Content.Server.Instruments;
 using Content.Shared.Tools.Components;
 using Content.Server.Tools;

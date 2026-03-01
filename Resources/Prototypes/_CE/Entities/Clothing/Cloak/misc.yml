@@ -9,6 +9,9 @@
     sprite: _CE/Clothing/Cloak/Misc/blacksmith_apron.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Misc/blacksmith_apron.rsi
+  - type: Construction
+    graph: BlacksmithApron
+    node: fin
 
 - type: entity
   parent:

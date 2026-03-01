@@ -1,0 +1,520 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 4: WEAPONS & TOOLS ███
+# Combat weapons and utility tools
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wooden Spear (Деревянное копьё)
+# Требует: Палки + Инструмент резки (заточка)
+# Базовое оружие ближнего боя
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodenSpear
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 2
+            - tool: Slicing
+              doAfter: 4
+    - node: fin
+      entity: WoodSpear
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Spear (Каменное копьё)
+# Требует: Палки + Острый камень + Верёвка (для крепления)
+# Улучшенное оружие ближнего боя
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StoneSpear
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: SharpStone
+              amount: 1
+            - material: HerbRope
+              amount: 1
+              doAfter: 5
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: SharpStone
+              amount: 1
+            - material: Vein_processed
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: StoneSpear
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wood Bat (Деревянная дубина)
+# Требует: Доски + Инструмент резки (обработка формы)
+# Простое ударное оружие
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodBat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 5
+              doAfter: 4
+    - node: fin
+      entity: WoodBat
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wooden Bow (Деревянный лук)
+# Требует: Палки + Верёвка (для тетивы) + Инструмент резки
+# Дальнобойное оружие
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodenBow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: HerbRope
+              amount: 2
+              doAfter: 6
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 30
+          steps:
+            - material: WoodStick
+              amount: 3
+            - material: Vein_processed
+              amount: 2
+              doAfter: 6
+    - node: fin
+      entity: WoodenBow
+
+- type: constructionGraph
+  id: SpearThrower
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 1
+            - material: Leather
+              amount: 1
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: SpearThrower
+# ──────────────────────────────────────────────────────────────────────────────
+# Wooden Arrow (Деревянная стрела)
+# Требует: Палки + Перья + Инструмент резки
+# Базовые снаряды для лука
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodenArrow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - tool: Slicing
+              doAfter: 2
+            - material: Feather
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: ArrowWood
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Arrow (Каменная стрела)
+# Требует: Палки + Острый камень + Верёвка (для крепления наконечника)
+# Улучшенные снаряды для лука
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StoneArrow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: SharpStone
+              amount: 1
+            - material: Feather
+              amount: 1
+              doAfter: 3
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: SharpStone
+              amount: 1
+            - material: Vein_processed
+              amount: 1
+            - material: Feather
+              amount: 1
+              doAfter: 3
+    - node: fin
+      entity: ArrowStone
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Sling (Праща)
+# Требует: Кожа + Верёвка
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Sling
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Leather
+              amount: 1
+            - material: HerbRope
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: Sling
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Bone Knife (Костяной нож)
+# Требует: Доски (рукоять) + Кости + Верёвка + Инструмент резки
+# Режущий инструмент и оружие
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: BoneKnife
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 2
+            - material: CEBone
+              amount: 5
+            - material: HerbRope
+              amount: 1
+              doAfter: 5
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 2
+            - material: CEBone
+              amount: 5
+            - material: Vein_processed
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: BoneKnife
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Bola (Бола)
+# Требует: Камни + Верёвка травяная
+# Метательное оружие для связывания
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: BolaWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEStone
+              amount: 3
+            - material: HerbRope
+              amount: 2
+              doAfter: 5
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEStone
+              amount: 3
+            - material: Vein_processed
+              amount: 2
+              doAfter: 5
+    - node: fin
+      entity: Bola
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Wooden Bowl (Деревянная миска)
+# Требует: 1 Доска + Инструмент резки (вырезание)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodenBowl
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+              doAfter: 4
+    - node: fin
+      entity: WoodenBowl
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Tools (Каменные инструменты)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Stone Hammer
+- type: constructionGraph
+  id: StoneHammer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: CEStone
+              amount: 1
+            - material: HerbRope
+              amount: 1
+              doAfter: 3
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: CEStone
+              amount: 1
+            - material: Vein_processed
+              amount: 1
+              doAfter: 3
+    - node: fin
+      entity: StoneHammer
+
+# Stone Hatchet
+- type: constructionGraph
+  id: StoneHatchet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: SharpStone
+              amount: 1
+            - material: HerbRope
+              amount: 1
+              doAfter: 3
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: SharpStone
+              amount: 1
+            - material: Vein_processed
+              amount: 1
+              doAfter: 3
+    - node: fin
+      entity: StoneHatchet
+
+# Stone Knife
+- type: constructionGraph
+  id: StoneKnife
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: SharpStone
+              amount: 1
+            - material: HerbRope
+              amount: 1
+              doAfter: 2
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: SharpStone
+              amount: 1
+            - material: Vein_processed
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: StoneKnife
+
+# Stone Pickaxe
+- type: constructionGraph
+  id: StonePickaxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: CEStone
+              amount: 2
+            - material: HerbRope
+              amount: 2
+              doAfter: 4
+        - to: fin
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: CEStone
+              amount: 2
+            - material: Vein_processed
+              amount: 2
+              doAfter: 4
+    - node: fin
+      entity: StonePickaxe
+
+# Stone Shovel
+- type: constructionGraph
+  id: StoneShovel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: CEStone
+              amount: 2
+            - material: HerbRope
+              amount: 2
+              doAfter: 4
+        - to: fin
+          steps:
+            - material: WoodStick
+              amount: 2
+            - material: CEStone
+              amount: 2
+            - material: Vein_processed
+              amount: 2
+              doAfter: 4
+    - node: fin
+      entity: StoneShovel
+
+# Wooden Bucket
+- type: constructionGraph
+  id: WoodenBucket
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: CEWood
+              amount: 2
+              doAfter: 5
+    - node: fin
+      entity: CEBucket
+
+# Bone Needle
+- type: constructionGraph
+  id: BoneNeedle
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: CEBone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: BoneNeedle

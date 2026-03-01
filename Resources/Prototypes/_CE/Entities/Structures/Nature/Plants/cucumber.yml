@@ -34,3 +34,11 @@
     toolWhitelist:
       components:
       - Sharp
+
+- type: entity
+  id: CEPlantCucumberGrown
+  parent: CEPlantCucumber
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 6

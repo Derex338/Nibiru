@@ -218,7 +218,6 @@
     - BronzeSpear
     - MoldTrident
     - BronzeTrident
-    - BronzeHalberd
 
 - type: technology
   id: BronzeHalberd
@@ -373,6 +372,10 @@
     - NoticeBoard
     - Harp
     - Flute
+    - CEBedFrameWooden
+    - CECabinetWooden
+    - CEBenchWood
+    - CEBedsideTableWooden
 
 - type: technology
   id: BronzeHeraldry
@@ -437,3 +440,4 @@
     - ChairWeb
     - CrateWeb
     - WebDoor
+

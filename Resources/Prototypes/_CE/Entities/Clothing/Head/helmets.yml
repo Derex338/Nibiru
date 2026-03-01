@@ -57,8 +57,6 @@
     sprite: _CE/Clothing/Head/Helmets/brass_insulator.rsi
   - type: Clothing
     sprite: _CE/Clothing/Head/Helmets/brass_insulator.rsi
-  - type: CEEnergyRadiationArmor
-    armor: 0.25
   - type: MultiHandedItem
   - type: HideLayerClothing
     slots:

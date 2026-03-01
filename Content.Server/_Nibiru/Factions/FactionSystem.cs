@@ -116,15 +116,10 @@ public sealed class FactionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Регистрирует фракцию в реестре карты
+    /// Регистрирует фракцию во всех реестрах карт
     /// </summary>
-    private void RegisterFaction(EntityUid mapEntity, FactionComponent faction)
+    private void RegisterFaction(FactionComponent faction)
     {
-        var registry = EnsureComp<FactionRegistryComponent>(mapEntity);
-
-        if (registry.Factions.ContainsKey(faction.FactionName))
-            return;
-
         var leaderNet = GetNetEntity(faction.Leader != default ? faction.Leader : faction.Owner);
         var membersNet = new List<NetEntity> { leaderNet };
 
@@ -133,71 +128,78 @@ public sealed class FactionSystem : EntitySystem
             membersNet.Add(GetNetEntity(member));
         }
 
-        registry.Factions[faction.FactionName] = new FactionRegistryData
+        var query = EntityQueryEnumerator<MapComponent>();
+        while (query.MoveNext(out var mapUid, out _))
         {
-            Name = faction.FactionName,
-            Leader = leaderNet,
-            Members = membersNet,
-            Color = faction.FactionColor,
-            Description = faction.Description,
-            IconPath = faction.IconPath,
-            Status = faction.Status,
-            IsRecruiting = faction.IsRecruiting,
-            //Created = Timing.CurTime
-        };
+            var registry = EnsureComp<FactionRegistryComponent>(mapUid);
 
-        Dirty(mapEntity, registry);
+            registry.Factions[faction.FactionName] = new FactionRegistryData
+            {
+                Name = faction.FactionName,
+                Leader = leaderNet,
+                Members = membersNet,
+                Color = faction.FactionColor,
+                Description = faction.Description,
+                IconPath = faction.IconPath,
+                Status = faction.Status,
+                IsRecruiting = faction.IsRecruiting,
+            };
+
+            Dirty(mapUid, registry);
+        }
 
         // Сразу обновляем список
         UpdateAvailableFactionsList();
     }
 
     /// <summary>
-    /// Обновляет данные фракции в реестре
+    /// Обновляет данные фракции во всех реестрах
     /// </summary>
-    private void UpdateFactionRegistry(EntityUid mapEntity, FactionComponent faction)
+    private void UpdateFactionRegistry(FactionComponent faction)
     {
-        if (!TryComp<FactionRegistryComponent>(mapEntity, out var registry))
-            return;
-
-        if (!registry.Factions.ContainsKey(faction.FactionName))
-            return;
-
-        var data = registry.Factions[faction.FactionName];
-        data.Color = faction.FactionColor;
-        data.Description = faction.Description;
-        data.IconPath = faction.IconPath;
-        data.Status = faction.Status;
-        data.IsRecruiting = faction.IsRecruiting;
-
-        var leaderUid = faction.Leader != default ? faction.Leader : faction.Owner;
-        data.Leader = GetNetEntity(leaderUid);
-
-        // Обновляем список членов
-        var membersNet = new List<NetEntity> { data.Leader };
+        var leaderNet = GetNetEntity(faction.Leader != default ? faction.Leader : faction.Owner);
+        var membersNet = new List<NetEntity> { leaderNet };
         foreach (var member in faction.Members)
         {
             membersNet.Add(GetNetEntity(member));
         }
-        data.Members = membersNet;
 
-        registry.Factions[faction.FactionName] = data;
-        Dirty(mapEntity, registry);
+        var query = EntityQueryEnumerator<FactionRegistryComponent>();
+        while (query.MoveNext(out var mapEntity, out var registry))
+        {
+            if (!registry.Factions.ContainsKey(faction.FactionName))
+                continue;
+
+            var data = registry.Factions[faction.FactionName];
+            data.Color = faction.FactionColor;
+            data.Description = faction.Description;
+            data.IconPath = faction.IconPath;
+            data.Status = faction.Status;
+            data.IsRecruiting = faction.IsRecruiting;
+            data.Leader = leaderNet;
+            data.Members = membersNet;
+
+            registry.Factions[faction.FactionName] = data;
+            Dirty(mapEntity, registry);
+        }
 
         // Обновляем список
         UpdateAvailableFactionsList();
     }
 
     /// <summary>
-    /// Удаляет фракцию из реестра
+    /// Удаляет фракцию из всех реестров
     /// </summary>
-    private void UnregisterFaction(EntityUid mapEntity, string factionName)
+    private void UnregisterFaction(string factionName)
     {
-        if (!TryComp<FactionRegistryComponent>(mapEntity, out var registry))
-            return;
-
-        registry.Factions.Remove(factionName);
-        Dirty(mapEntity, registry);
+        var query = EntityQueryEnumerator<FactionRegistryComponent>();
+        while (query.MoveNext(out var mapEntity, out var registry))
+        {
+            if (registry.Factions.Remove(factionName))
+            {
+                Dirty(mapEntity, registry);
+            }
+        }
 
         // Обновляем список
         UpdateAvailableFactionsList();
@@ -212,11 +214,7 @@ public sealed class FactionSystem : EntitySystem
         if (xform.MapID == MapId.Nullspace)
             return;
 
-        var mapUid = _transform.GetMap(uid);
-        if (mapUid == null)
-            return;
-
-        RegisterFaction(mapUid.Value, component);
+        RegisterFaction(component);
     }
 
     private void OnFactionShutdown(EntityUid uid, FactionComponent component, ComponentShutdown args)
@@ -228,11 +226,7 @@ public sealed class FactionSystem : EntitySystem
         if (xform.MapID == MapId.Nullspace)
             return;
 
-        var mapUid = _transform.GetMap(uid);
-        if (mapUid == null)
-            return;
-
-        UnregisterFaction(mapUid.Value, component.FactionName);
+        UnregisterFaction(component.FactionName);
     }
 
     private void OnFactionCreateRequest(FactionCreateRequestMessage msg, EntitySessionEventArgs args)
@@ -250,9 +244,19 @@ public sealed class FactionSystem : EntitySystem
         if (mapUid == null)
             return;
 
-        // Проверяем существование фракции в реестре
-        if (TryComp<FactionRegistryComponent>(mapUid.Value, out var registry) &&
-            registry.Factions.ContainsKey(msg.FactionName))
+        // Проверяем существование фракции в любом из реестров
+        bool exists = false;
+        var query = EntityQueryEnumerator<FactionRegistryComponent>();
+        while (query.MoveNext(out var registry))
+        {
+            if (registry.Factions.ContainsKey(msg.FactionName))
+            {
+                exists = true;
+                break;
+            }
+        }
+
+        if (exists)
         {
             _popup.PopupEntity(
                 Loc.GetString("faction-already-exist", ("factionName", msg.FactionName)),
@@ -279,9 +283,7 @@ public sealed class FactionSystem : EntitySystem
 
             Dirty(player, factionComponent);
 
-            var mapUid = _transform.GetMap(player);
-            if (mapUid != null)
-                RegisterFaction(mapUid.Value, factionComponent);
+            RegisterFaction(factionComponent);
         }
     }
 
@@ -369,7 +371,7 @@ public sealed class FactionSystem : EntitySystem
             {
                 leaderComp.Members.Add(playerEntity);
                 Dirty(leaderUid, leaderComp);
-                UpdateFactionRegistry(mapUid, leaderComp);
+                UpdateFactionRegistry(leaderComp);
             }
 
             Dirty(playerEntity, playerFaction);
@@ -416,8 +418,7 @@ public sealed class FactionSystem : EntitySystem
 
             Dirty(component.Heir, heir);
 
-            if (mapUid != null)
-                UpdateFactionRegistry(mapUid.Value, heir);
+            UpdateFactionRegistry(heir);
         }
         else if (component.Members.Count > 0)
         {
@@ -442,8 +443,7 @@ public sealed class FactionSystem : EntitySystem
 
                 Dirty(randomMember, memberComp);
 
-                if (mapUid != null)
-                    UpdateFactionRegistry(mapUid.Value, memberComp);
+                UpdateFactionRegistry(memberComp);
             }
         }
     }
@@ -471,9 +471,7 @@ public sealed class FactionSystem : EntitySystem
         factionComponent.Heir = heir;
         Dirty(player.Value, factionComponent);
 
-        var mapUid = _transform.GetMap(player.Value);
-        if (mapUid != null)
-            UpdateFactionRegistry(mapUid.Value, factionComponent);
+        UpdateFactionRegistry(factionComponent);
     }
 
     private void OnTitleTransfer(FactionTitleTransferMessage msg, EntitySessionEventArgs args)
@@ -519,9 +517,7 @@ public sealed class FactionSystem : EntitySystem
         Dirty(player.Value, factionComponent);
         Dirty(entity, entityComponent);
 
-        var mapUid = _transform.GetMap(player.Value);
-        if (mapUid != null)
-            UpdateFactionRegistry(mapUid.Value, entityComponent);
+        UpdateFactionRegistry(entityComponent);
     }
 
     private void OnLeaveFaction(FactionLeaveMessage msg, EntitySessionEventArgs args)
@@ -547,9 +543,7 @@ public sealed class FactionSystem : EntitySystem
         leaderComponent.Members.Remove(player.Value);
         Dirty(factionComponent.Leader, leaderComponent);
 
-        var mapUid = _transform.GetMap(player.Value);
-        if (mapUid != null)
-            UpdateFactionRegistry(mapUid.Value, leaderComponent);
+        UpdateFactionRegistry(leaderComponent);
 
         RemComp<FactionComponent>(player.Value);
     }
@@ -577,9 +571,7 @@ public sealed class FactionSystem : EntitySystem
         factionComponent.Members.Remove(member);
         Dirty(player.Value, factionComponent);
 
-        var mapUid = _transform.GetMap(player.Value);
-        if (mapUid != null)
-            UpdateFactionRegistry(mapUid.Value, factionComponent);
+        UpdateFactionRegistry(factionComponent);
 
         _popup.PopupEntity(
             Loc.GetString("faction-kicked", ("factionName", factionComponent.FactionName)),
@@ -619,9 +611,7 @@ public sealed class FactionSystem : EntitySystem
             }
         }
 
-        var mapUid = _transform.GetMap(player.Value);
-        if (mapUid != null)
-            UnregisterFaction(mapUid.Value, factionComponent.FactionName);
+        UnregisterFaction(factionComponent.FactionName);
 
         RemComp<FactionComponent>(player.Value);
     }
@@ -662,19 +652,24 @@ public sealed class FactionSystem : EntitySystem
         if (!player.HasValue)
             return;
 
-        var mapUid = _transform.GetMap(player.Value);
-
         bool factionNameAvaliable = true;
 
-        // Проверяем через реестр
-        if (mapUid != null && TryComp<FactionRegistryComponent>(mapUid.Value, out var registry) &&
-            msg.FactionName != null && registry.Factions.ContainsKey(msg.FactionName))
+        if (msg.FactionName != null)
         {
-            _popup.PopupEntity(
-                Loc.GetString("faction-already-exist", ("factionName", msg.FactionName)),
-                player.Value,
-                player.Value);
-            factionNameAvaliable = false;
+            // Проверяем через все реестры
+            var query = EntityQueryEnumerator<FactionRegistryComponent>();
+            while (query.MoveNext(out var registry))
+            {
+                if (registry.Factions.ContainsKey(msg.FactionName))
+                {
+                    _popup.PopupEntity(
+                        Loc.GetString("faction-already-exist", ("factionName", msg.FactionName)),
+                        player.Value,
+                        player.Value);
+                    factionNameAvaliable = false;
+                    break;
+                }
+            }
         }
 
         if (!TryComp<FactionComponent>(player.Value, out var factionComponent)
@@ -691,13 +686,14 @@ public sealed class FactionSystem : EntitySystem
 
         if (msg.FactionName != null && factionNameAvaliable && msg.FactionName != factionComponent.FactionName)
         {
-            if (mapUid != null && TryComp<FactionRegistryComponent>(mapUid.Value, out var reg))
+            var query = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
+            while (query.MoveNext(out var mapEntity, out var reg, out _))
             {
                 if (reg.Factions.Remove(factionComponent.FactionName, out var oldData))
                 {
                     oldData.Name = msg.FactionName;
                     reg.Factions[msg.FactionName] = oldData;
-                    Dirty(mapUid.Value, reg);
+                    Dirty(mapEntity, reg);
                 }
             }
 
@@ -793,8 +789,7 @@ public sealed class FactionSystem : EntitySystem
         if (needUpdate)
         {
             Dirty(player.Value, factionComponent);
-            if (mapUid != null)
-                UpdateFactionRegistry(mapUid.Value, factionComponent);
+            UpdateFactionRegistry(factionComponent);
         }
     }
 }

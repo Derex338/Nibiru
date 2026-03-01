@@ -1,0 +1,19 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE WORKBENCHES ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: BronzeAnvilWorkbench
+  name: Бронзовая наковальня
+  graph: BronzeAnvilWorkbench
+  startNode: start
+  targetNode: fin
+  category: Workbenches
+  description: Основной рабочий инструмент для ковки изделий из бронзы.
+  icon:
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapToGrid
+  canRotate: true
+  canSnapToGrid: true

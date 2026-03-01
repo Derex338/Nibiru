@@ -1,0 +1,246 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Clay Kitchenware (Глиняная посуда)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: construction
+  id: ClayBowl
+  graph: ClayBowl
+  startNode: start
+  targetNode: raw
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: ClayJug
+  graph: ClayJug
+  startNode: start
+  targetNode: raw
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: ClayCup
+  graph: ClayCup
+  startNode: start
+  targetNode: raw
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: ClayPlate
+  graph: ClayPlate
+  startNode: start
+  targetNode: raw
+  category: construction-category-utilities
+  objectType: Item
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Age Shields
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: construction
+  id: WoodenShield
+  name: Деревянный щит
+  graph: WoodenShield
+  startNode: start
+  targetNode: fin
+  category: Weapons
+  description: Просто кусок дерева с рукоятью. Каменная эра.
+  icon:
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: buckler-icon
+  objectType: Item
+
+- type: construction
+  id: WickerShield
+  name: Плетёный щит
+  graph: WickerShield
+  startNode: start
+  targetNode: fin
+  category: Weapons
+  description: Лёгкий щит из прутьев. Каменная эра.
+  icon:
+    sprite: Objects/Weapons/Melee/web-shield.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  id: FireStarter
+  graph: FireStarter
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: PanFlute
+  name: пан-флейта
+  graph: PanFlute
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  description: Музыкальный инструмент из палок.
+  icon:
+    sprite: Objects/Fun/Instruments/panflute.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: Ocarina
+  name: окарина
+  graph: Ocarina
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  description: Простой духовой инструмент.
+  icon:
+    sprite: Objects/Fun/Instruments/ocarina.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: Sling
+  name: Праща
+  graph: Sling
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Entity/Weapon/Range/Sling.rsi # Placeholder
+    state: icon
+
+- type: construction
+  id: SpearThrower
+  name: Копьеметалка
+  graph: SpearThrower
+  startNode: start
+  targetNode: fin
+  category: Weapons
+  icon:
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: icon
+  objectType: Item
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Mining Decorations (Декорации шахты)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: construction
+  id: WoodenSign
+  name: деревянная табличка (влево)
+  graph: WoodenSign
+  startNode: start
+  targetNode: fin
+  category: construction-category-furniture
+  description: Указывает куда-то влево.
+  icon:
+    sprite: Objects/Decoration/mines.rsi
+    state: sign_left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: WoodenSignRight
+  name: деревянная табличка (вправо)
+  graph: WoodenSignRight
+  startNode: start
+  targetNode: fin
+  category: construction-category-furniture
+  description: Указывает куда-то вправо.
+  icon:
+    sprite: Objects/Decoration/mines.rsi
+    state: sign_right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: WoodenSupport
+  name: деревянная опора
+  graph: WoodenSupport
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  description: Помогает своду шахты не упасть вам на голову.
+  icon:
+    sprite: Objects/Decoration/mines.rsi
+    state: support
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: WoodenSupportBeam
+  name: деревянные балки
+  graph: WoodenSupportBeam
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  description: Укрепление для потолка шахты.
+  icon:
+    sprite: Objects/Decoration/mines.rsi
+    state: support_beams
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: WoodenSupportWall
+  name: деревянная крепь
+  graph: WoodenSupportWall
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  description: Старая стена, удерживающая породу.
+  icon:
+    sprite: Objects/Decoration/mines.rsi
+    state: support_wall
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Musical Instruments (Музыкальные инструменты)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: construction
+  id: Woodblock
+  name: деревянная коробочка
+  graph: Woodblock
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  description: Простой перкуссионный инструмент.
+  icon:
+    sprite: Objects/Fun/Instruments/woodblock.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  id: BirdWhistle
+  name: птичья свистулька
+  graph: BirdWhistle
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  description: Глиняная свистулька в форме птицы.
+  icon:
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: birdtoy
+  objectType: Item

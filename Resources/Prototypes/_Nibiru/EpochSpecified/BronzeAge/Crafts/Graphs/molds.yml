@@ -1,0 +1,506 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE MOLDS (КАМЕННЫЕ ФОРМЫ) ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: MoldIngot
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldIngot
+
+- type: constructionGraph
+  id: MoldInlay
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldInlay
+
+- type: constructionGraph
+  id: MoldArrowTip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: StoneMoldArrowTip
+
+- type: constructionGraph
+  id: MoldArrowTipArmor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: StoneMoldArrowTipArmor
+
+- type: constructionGraph
+  id: MoldTopHammer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldTopHammer
+
+- type: constructionGraph
+  id: MoldTopMace
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 8
+    - node: fin
+      entity: StoneMoldTopMace
+
+- type: constructionGraph
+  id: MoldTopAxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldTopAxe
+
+- type: constructionGraph
+  id: MoldTopBattleAxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 8
+    - node: fin
+      entity: StoneMoldTopBattleAxe
+
+- type: constructionGraph
+  id: MoldTopSpear
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldTopSpear
+
+- type: constructionGraph
+  id: MoldSwordBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: StoneMoldSwordBlade
+
+- type: constructionGraph
+  id: MoldDaggerBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldDaggerBlade
+
+- type: constructionGraph
+  id: MoldTrident
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: StoneMoldTrident
+
+- type: constructionGraph
+  id: MoldShield
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 4
+            - tool: Hammering
+              doAfter: 15
+    - node: fin
+      entity: StoneMoldShield
+
+- type: constructionGraph
+  id: MoldKnifeBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldKnifeBlade
+
+- type: constructionGraph
+  id: MoldClippers
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldClippers
+
+- type: constructionGraph
+  id: MoldHoeBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldHoeBlade
+
+- type: constructionGraph
+  id: MoldPickaxeBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldPickaxeBlade
+
+- type: constructionGraph
+  id: MoldScytheBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 8
+    - node: fin
+      entity: StoneMoldScytheBlade
+
+- type: constructionGraph
+  id: MoldShovel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldShovel
+
+- type: constructionGraph
+  id: MoldHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 5
+            - tool: Hammering
+              doAfter: 20
+    - node: fin
+      entity: StoneMoldHelmet
+
+- type: constructionGraph
+  id: MoldChestplate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 8
+            - tool: Hammering
+              doAfter: 30
+    - node: fin
+      entity: StoneMoldChestplate
+
+- type: constructionGraph
+  id: MoldAnvil
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 10
+            - tool: Hammering
+              doAfter: 40
+    - node: fin
+      entity: StoneMoldAnvil
+
+- type: constructionGraph
+  id: MoldLock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldLock
+
+- type: constructionGraph
+  id: MoldKey
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: StoneMoldKey
+
+- type: constructionGraph
+  id: MoldRasp
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: StoneMoldRasp
+
+- type: constructionGraph
+  id: MoldKhapeshBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: StoneMoldKhapeshBlade
+
+- type: constructionGraph
+  id: MoldCrown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 3
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: StoneMoldCrown
+
+- type: constructionGraph
+  id: MoldXiphosBlade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 5
+              doAfter: 15
+    - node: fin
+      entity: StoneMoldXiphosBlade

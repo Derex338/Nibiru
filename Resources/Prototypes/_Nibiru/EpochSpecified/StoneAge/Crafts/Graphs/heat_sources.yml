@@ -1,0 +1,121 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 3: HEAT SOURCES & FURNACES ███
+# Structures for heating, cooking and smelting
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Bonfire (Костёр)
+# Требует: Палки + Сухая трава
+# Базовый источник огня
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: NibiruBonfire
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WoodStick
+              amount: 6
+            - material: Herb
+              amount: 2
+              doAfter: 2
+    - node: fin
+      entity: NibiruBonfire
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: WoodStick1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Smelting Furnace (Плавильная печь)
+# Требует: Обожжённые глиняные блоки + Сырая глина + Камни
+# Для обжига и плавки
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Furnace
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: CEStone
+              amount: 5
+            - material: CEDirt
+              amount: 5
+              doAfter: 3
+    - node: frame
+      entity: SmeltingFurnaceFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - material: MudBlock
+              amount: 10
+            - material: CEDirt
+              amount: 5
+              doAfter: 5
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEStone
+              amount: 3
+            - !type:SpawnPrototype
+              prototype: CEDirtBlock1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: SmeltingFurnace
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MudBlock1
+              amount: 5
+            - !type:SpawnPrototype
+              prototype: CEStone
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 15
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Candle (Свеча)
+# Требует: Нить (фитиль) + Жир
+# Источник света
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Candle
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Thread
+              amount: 1
+            - material: Fat
+              amount: 2
+              doAfter: 2
+    - node: fin
+      entity: Candle

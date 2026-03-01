@@ -9,8 +9,6 @@
   - type: Clothing
     sprite: _CE/Clothing/OuterClothing/brass_insulator.rsi
   - type: MultiHandedItem
-  - type: CEEnergyRadiationArmor
-    armor: 0.5
   - type: Armor
     modifiers:
       coefficients:

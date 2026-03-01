@@ -135,9 +135,9 @@
   description: Кожаный нагрудник с нашитыми костяными пластинами. Вершина защиты Каменного Века.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherArmor.rsi
   - type: Clothing
-    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherArmor.rsi
   - type: Construction
     graph: LetherChestplate
     node: reinforced
@@ -163,9 +163,9 @@
   description: Кожаный шлем, укрепленный костью для защиты от самых тяжелых ударов.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherHelmet.rsi
   - type: Clothing
-    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherHelmet.rsi
   - type: Construction
     graph: LetherHelmet
     node: reinforced

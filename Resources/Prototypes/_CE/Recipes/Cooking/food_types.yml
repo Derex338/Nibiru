@@ -1,0 +1,5 @@
+- type: CEFoodType
+  id: Meal
+
+- type: CEFoodType
+  id: Soup

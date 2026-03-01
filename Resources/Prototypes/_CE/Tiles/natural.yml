@@ -15,7 +15,7 @@
   - 1.0
   baseTurf: Space
   isSubfloor: true
-  transparent: true
+  transparent: false
   deconstructTools: [ CEPickaxe ]
   heatCapacity: 10000
   friction: 0.05

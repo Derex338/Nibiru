@@ -82,11 +82,15 @@ namespace Content.Server.Research.Systems
         public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
         {
             var clientXform = Transform(client);
-            if (clientXform.GridUid is not { } grid)
-                return [];
-
             var set = new HashSet<Entity<ResearchServerComponent>>();
-            _lookup.GetGridEntities(grid, set);
+            var query = EntityQueryEnumerator<ResearchServerComponent, TransformComponent>();
+
+            while (query.MoveNext(out var uid, out var server, out var xform))
+            {
+                if (xform.MapUid == clientXform.MapUid)
+                    set.Add((uid, server));
+            }
+
             return set;
         }
 

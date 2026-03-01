@@ -46,55 +46,13 @@
 
 - type: entity
   parent: BaseStoneItem
-  id: Mud
-  name: комок грязи
-  description: Липкая и густая грязь.
-  components:
-  - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi
-    state: mud_3
-  - type: Item
-    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Mud: 100
-  - type: Stack
-    stackType: Mud
-    count: 20
-    baseLayer: base
-    layerStates:
-    - mud_1
-    - mud_2
-    - mud_3
-
-- type: entity
-  parent: Mud
-  id: Mud1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
-  - type: Sprite
-    state: mud_1
-
-- type: entity
-  parent: BaseStoneItem
   id: MudBlock
   name: глиняный кирпич
   description: Высушенный на солнце кирпич из грязи.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
-    state: Brick_3
+    state: brick_3
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
   - type: Destructible
@@ -119,9 +77,9 @@
     count: 10
     baseLayer: base
     layerStates:
-    - Brick_1
-    - Brick_2
-    - Brick_3
+    - brick_1
+    - brick_2
+    - brick_3
 
 - type: entity
   parent: MudBlock
@@ -131,7 +89,7 @@
   - type: Stack
     count: 1
   - type: Sprite
-    state: Brick_1
+    state: brick_1
 
 - type: entity
   parent: BaseStoneItem
@@ -141,7 +99,7 @@
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
-    state: Brick_1
+    state: brick_1
     color: "#888888"
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
@@ -166,9 +124,9 @@
     stackType: MudBlock
     baseLayer: base
     layerStates:
-    - Brick_1
-    - Brick_2
-    - Brick_3
+    - brick_1
+    - brick_2
+    - brick_3
   - type: Temperature
   - type: Construction
     graph: MudBlock
@@ -284,42 +242,6 @@
 
 - type: entity
   parent: BaseItem
-  id: HerbRope
-  name: веревка
-  description: Веревка, сплетенная из травы.
-  components:
-  - type: Sprite
-    sprite: _CE/Objects/Tool/rope.rsi
-    state: icon
-  - type: Item
-    sprite: _CE/Objects/Tool/rope.rsi
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      HerbRope: 100
-  - type: Stack
-    stackType: HerbRope
-    baseLayer: base
-    count: 1
-  - type: Construction
-    graph: HerbRope
-    node: fin
-  - type: Handcuff
-    cuffedRSI: _CE/Objects/Tool/rope.rsi
-    bodyIconState: body-overlay
-    startCuffSound:
-      path: /Audio/Items/Handcuffs/rope_start.ogg
-    endCuffSound:
-      path: /Audio/Items/Handcuffs/rope_end.ogg
-    startUncuffSound:
-      path: /Audio/Items/Handcuffs/rope_start.ogg
-    endUncuffSound:
-      path: /Audio/Items/Handcuffs/rope_breakout.ogg
-    startBreakoutSound:
-      path: /Audio/Items/Handcuffs/rope_takeoff.ogg
-
-- type: entity
-  parent: BaseItem
   id: FeatherBase
   name: перо
   description: Птичье перо.
@@ -377,15 +299,3 @@
   - type: Sprite
     sprite: Objects/Materials/parts.rsi
     state: rods
-
-- type: entity
-  parent: FeatherBase
-  id: Feather
-  name: перо
-  description: Птичье перо.
-  components:
-  - type: Sprite
-    sprite: _CE/Objects/Bureaucracy/pens.rsi
-    state: feather
-  - type: Item
-    sprite: _CE/Objects/Bureaucracy/pens.rsi

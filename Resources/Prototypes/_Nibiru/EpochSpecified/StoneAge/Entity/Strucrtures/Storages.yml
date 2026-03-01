@@ -14,3 +14,6 @@
   - type: Appearance
   - type: ExaminableSolution
     solution: tank
+  - type: Construction
+    graph: Barrel
+    node: fin

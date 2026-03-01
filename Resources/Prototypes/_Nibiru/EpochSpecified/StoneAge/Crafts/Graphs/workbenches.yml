@@ -1,0 +1,401 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 2: WORKBENCHES & STATIONS ███
+# Crafting stations for more advanced recipes
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Research Table (Стол исследований)
+# Требует: Доски + Инструмент резки (для обработки досок)
+# Базовый верстак для изучения новых рецептов
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: ResearchTable
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: WoodStick
+              amount: 4
+              doAfter: 2
+    - node: frame
+      entity: ResearchTableFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: CEWood
+              amount: 2
+              doAfter: 3
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: ResearchTable
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Spindle Workbench (Верстак прядения)
+# Требует: Доски + Палки + Забивание
+# Для создания ниток и верёвок
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Workbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: CEWood
+              amount: 4
+              doAfter: 2
+    - node: frame
+      entity: SpindleWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: WoodStick
+              amount: 3
+            - tool: Hammering
+              doAfter: 3
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: SpindleWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Loom Workbench (Ткацкий станок)
+# Требует: Доски + Нитки + Палки + Забивание
+# Для создания ткани из ниток
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: LoomWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: CEWood
+              amount: 4
+              doAfter: 2
+    - node: frame
+      entity: LoomWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: WoodStick
+              amount: 4
+            - material: Thread
+              amount: 3
+            - tool: Hammering
+              doAfter: 4
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: LoomWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 4
+            - !type:SpawnPrototype
+              prototype: MaterialThread10
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 10
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Sawmill Workbench (Лесопилка)
+# Требует: Доски + Острый камень (как лезвие) + Верёвка + Забивание
+# Для переработки брёвен в доски
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: SawmillWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: CEWood
+              amount: 5
+              doAfter: 2
+    - node: frame
+      entity: SawmillWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: SharpStone
+              amount: 2
+            - material: HerbRope
+              amount: 1
+            - tool: Hammering
+              doAfter: 4
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: SharpStone
+              amount: 2
+            - material: Vein_processed
+              amount: 1
+            - tool: Hammering
+              doAfter: 4
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: SawmillWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 5
+            - !type:SpawnPrototype
+              prototype: SharpStone
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 10
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Quarry Workbench (Каменоломня)
+# Требует: Брёвна + Камни + Верёвка + Забивание
+# Для обработки камней
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: QuarryWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: CEWood
+              amount: 3
+              doAfter: 2
+    - node: frame
+      entity: QuarryWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: CEStone
+              amount: 5
+            - material: HerbRope
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: CEStone
+              amount: 5
+            - material: Vein_processed
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: QuarryWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodLog
+              amount: 3
+            - !type:SpawnPrototype
+              prototype: CEStone
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 10
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Anvil Workbench (Каменная наковальня)
+# Требует: Каменные блоки + Грязь (как связующее) + Забивание
+# Для создания каменных инструментов и оружия
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StoneAnvilWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: StoneBlock
+              amount: 3
+              doAfter: 3
+    - node: frame
+      entity: StoneAnvilWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: CEDirt
+              amount: 3
+            - tool: Hammering
+              doAfter: 5
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: StoneBlock1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: StoneAnvilWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: StoneBlock1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 12
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stone Anvil from Boulder (Наковальня из валуна)
+# Альтернативный способ: вырезать наковальню из валуна (FloraRockSolid)
+# Требует: Инструмент забивания (долгий процесс обтёсывания)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: StoneAnvilFromBoulder
+  start: boulder
+  graph:
+    - node: boulder
+      entity: FloraRockSolid
+      edges:
+        # Обтесать валун в грубую форму
+        - to: roughShape
+          steps:
+            - tool: Hammering
+              doAfter: 15
+    - node: roughShape
+      entity: StoneAnvilWorkbenchFrame
+      edges:
+        # Завершить обработку
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - tool: Hammering
+              doAfter: 10
+        # Разобрать обратно в камни
+        - to: destroy
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEStone
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+    - node: fin
+      entity: StoneAnvilWorkbench
+      edges:
+        - to: destroy
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEStone
+              amount: 8
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 15
+    - node: destroy

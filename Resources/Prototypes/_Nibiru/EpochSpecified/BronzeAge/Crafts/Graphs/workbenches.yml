@@ -1,0 +1,48 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE WORKBENCHES ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: BronzeAnvilWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: Bronze
+              amount: 5
+            - tool: Hammering
+              doAfter: 5
+    - node: frame
+      entity: BronzeAnvilWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - tool: Hammering
+              doAfter: 5
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotBronze1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BronzeAnvilWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotBronze1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 10

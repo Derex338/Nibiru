@@ -12,6 +12,7 @@ using Content.Shared._Nibiru.World;
 //using Content.Shared._Nibiru.CCVar;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Pinpointer;
@@ -25,12 +26,15 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos;
+using Content.Shared.Gravity;
+using Content.Shared._CE.DayCycle;
+using Robust.Shared.Maths;
 
 namespace Content.Server._Nibiru.World;
 
-/// <summary>
 /// Взято за основу с RimFortress
-/// </summary>
 public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 {
     [Dependency] private readonly MindSystem _mind = default!;
@@ -41,6 +45,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly CEZLevelsSystem _ceZLevels = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
     public override void Initialize()
     {
@@ -49,11 +54,11 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
     public EntityUid InitializeWorld(NibiruSurvivalRuleComponent rule)
     {
-        var stations = _station.GetStations();
+        /*var stations = _station.GetStations();
         foreach (var station in stations)
         {
             QueueDel(station);
-        }
+        }*/
 
         Rule = rule;
 
@@ -71,19 +76,15 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         // 2. Создаем основной мир (планета) - Уровень 0
         var worldMap = _map.CreateMap();
         _biome.EnsurePlanet(worldMap, _prototype.Index(rule.Biome), seed);
-
-
-        // 3. Создаем горные слои - Уровни 1 и 2
+        EnsureComp<CEDayCycleComponent>(worldMap);
 
         // Уровень 1
         var sky1Map = _map.CreateMap();
-        if (rule.MountainL1Biome != null    )
-            _biome.EnsurePlanet(sky1Map, _prototype.Index(rule.MountainL1Biome), seed);
+        SetupUpperLayer(sky1Map);
 
         // Уровень 2
         var sky2Map = _map.CreateMap();
-        if (rule.MountainL2Biome != null)
-            _biome.EnsurePlanet(sky2Map, _prototype.Index(rule.MountainL2Biome), seed);
+        SetupUpperLayer(sky2Map);
 
         // Добавляем все карты в сеть
         _ceZLevels.TryAddMapsIntoZNetwork(network, new Dictionary<EntityUid, int>
@@ -95,27 +96,60 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         });
 
         // Настройка компонентов карты для основного мира
-        if (TryComp<MapComponent>(worldMap, out var mapComp))
+        /*if (TryComp<MapComponent>(worldMap, out var mapComp))
         {
             EnsureComp<StationDataComponent>(worldMap);
             foreach (var grid in _mapManager.GetAllGrids(mapComp.MapId))
                 _station.AddGridToStation(worldMap, grid.Owner);
             EnsureComp<StationEventEligibleComponent>(worldMap);
-        }
+        }*/
 
-        // Настройка цикла дня и ночи для основного мира
-        if (TryComp(worldMap, out LightCycleComponent? cycle))
+        if (HasComp<LightCycleComponent>(caveMap))
+            RemComp<LightCycleComponent>(caveMap);
+        if (HasComp<MapLightComponent>(caveMap))
+            RemComp<MapLightComponent>(caveMap);
+
+        // Настройка цикла дня и ночи
+        foreach (var map in new[] { worldMap, sky1Map, sky2Map })
         {
-            cycle.Duration = rule.DayDuration;
-            cycle.Offset = rule.DayDuration / 3; // For roundstart day time
-            cycle.InitialOffset = false;
-            cycle.MinLightLevel = 1f;
+            if (TryComp(map, out LightCycleComponent? cycle))
+            {
+                cycle.Duration = rule.DayDuration;
+                cycle.Offset = rule.DayDuration / 3; // For roundstart day time
+                cycle.InitialOffset = false;
+                cycle.MinLightLevel = 1f;
+            }
         }
 
         rule.WorldMap = worldMap;
         rule.CaveMap = caveMap;
 
         return worldMap;
+    }
+
+    private void SetupUpperLayer(EntityUid mapUid)
+    {
+        EnsureComp<MapGridComponent>(mapUid);
+
+        var gravity = EnsureComp<GravityComponent>(mapUid);
+        gravity.Enabled = true;
+        gravity.Inherent = true;
+
+        var light = EnsureComp<MapLightComponent>(mapUid);
+        light.AmbientLightColor = Color.FromHex("#D8B059");
+
+        EnsureComp<RoofComponent>(mapUid);
+        EnsureComp<LightCycleComponent>(mapUid);
+        EnsureComp<SunShadowComponent>(mapUid);
+        EnsureComp<SunShadowCycleComponent>(mapUid);
+        EnsureComp<CEDayCycleComponent>(mapUid);
+
+        var moles = new float[Atmospherics.AdjustedNumberOfGases];
+        moles[(int)Gas.Oxygen] = 21.824779f;
+        moles[(int)Gas.Nitrogen] = 82.10312f;
+
+        var mixture = new GasMixture(moles, Atmospherics.T20C);
+        _atmos.SetMapAtmosphere(mapUid, false, mixture);
     }
 
     /// <summary>

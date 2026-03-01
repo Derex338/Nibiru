@@ -19,6 +19,9 @@
     sprite: _CE/Clothing/Head/TriangularHat/leather.rsi
   - type: Clothing
     sprite: _CE/Clothing/Head/TriangularHat/leather.rsi
+  - type: Construction
+    graph: TriangularLeatherHat
+    node: fin
 
 - type: entity
   parent: CEClothingHeadBase

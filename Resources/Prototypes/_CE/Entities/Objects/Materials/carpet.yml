@@ -33,6 +33,9 @@
     stackType: CEFloorCarpetBlue
   - type: SpawnAfterInteract
     prototype: CECarpetBlue
+  - type: Construction
+    graph: BlueCarpet
+    node: fin
 
 - type: entity
   name: red carpet
@@ -48,6 +51,9 @@
     stackType: CEFloorCarpetRed
   - type: SpawnAfterInteract
     prototype: CECarpetRed
+  - type: Construction
+    graph: RedCarpet
+    node: fin
 
 - type: entity
   name: purple carpet
@@ -63,6 +69,9 @@
     stackType: CEFloorCarpetPurple
   - type: SpawnAfterInteract
     prototype: CECarpetPurple
+  - type: Construction
+    graph: PurpleCarpet
+    node: fin
 
 - type: entity
   name: black carpet
@@ -76,6 +85,9 @@
     stackType: CEFloorCarpetBlack
   - type: SpawnAfterInteract
     prototype: CECarpetBlack
+  - type: Construction
+    graph: BlackCarpet
+    node: fin
 
 #staks
 

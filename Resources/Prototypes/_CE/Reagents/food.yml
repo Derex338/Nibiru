@@ -1,0 +1,9 @@
+- type: reagent
+  id: CENutriment
+  name: reagent-name-nutriment
+  group: Foods
+  desc: reagent-desc-nutriment
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: nutriment
+  color: "#24591F"
+  pricePerUnit: 0.2

@@ -1,0 +1,720 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE PARTS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeInlay
+  name: бронзовая вставка
+  description: Бронзовая пластина для укрепления конструкций и снаряжения.
+  components:
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 32
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeInlay
+    node: fin
+  - type: Stack
+    stackType: BronzeInlay
+    count: 1
+  - type: Material
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi
+    state: icon
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeArrowTip
+  name: бронзовый наконечник стрелы
+  description: Острый наконечник для изготовления стрел.
+  components:
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 16
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeArrowTip
+    node: fin
+  - type: Stack
+    stackType: BronzeArrowTip
+    count: 1
+  - type: Material
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: transparent
+    - state: rod
+      color: transparent
+    - state: tip
+      color: orange
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeArrowTipArmor
+  name: бронзовый бронебойный наконечник
+  description: Усиленный наконечник, способный пробивать доспехи.
+  components:
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 24
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeArrowTipArmor
+    node: fin
+  - type: Stack
+    stackType: BronzeArrowTipArmor
+    count: 1
+  - type: Material
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: transparent
+    - state: rod
+      color: transparent
+    - state: tip
+      color: orange
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeTopHammerPiece
+  name: бронзовое навершие молотка
+  description: Литая бронзовая часть для небольшого молотка.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 48
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeTopHammerPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeTopHammerPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeTopMacePiece
+  name: бронзовое навершие молота
+  description: Массивное бронзовое навершие для боевого молота.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 80
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeTopMacePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeTopMacePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeTopAxePiece
+  name: бронзовое навершие топора
+  description: Основа для рабочего топора.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 64
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeTopAxePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeTopAxePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeTopBattleAxePiece
+  name: бронзовое навершие боевого топора
+  description: Тяжелая и острая рубящая часть боевого топора.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 96
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeTopBattleAxePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeTopBattleAxePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeTopSpearPiece
+  name: бронзовый наконечник копья
+  description: Длинный и острый наконечник для копья.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 72
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeTopSpearPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeTopSpearPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeSwordBladePiece
+  name: бронзовое лезвие меча
+  description: Прямое лезвие, готовое к насадке на рукоять.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 96
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeSwordBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeSwordBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeDaggerBladePiece
+  name: бронзовое лезвие кинжала
+  description: Небольшое лезвие для кинжала.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 40
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeDaggerBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeDaggerBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeTridentPiece
+  name: бронзовое навершие трезубца
+  description: Трезубое навершие для грозного оружия.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 120
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeTridentPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeTridentPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeShieldPiece
+  name: бронзовая обивка щита
+  description: Бронзовые элементы для защиты лицевой части щита.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 160
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeShieldPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeShieldPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeKnifeBladePiece
+  name: бронзовое лезвие ножа
+  description: Маленькое универсальное лезвие.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 32
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeKnifeBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeKnifeBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeClippersPiece
+  name: бронзовая деталь секатора
+  description: Одна из частей для сборки секатора.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 32
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeClippersPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeClippersPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeHoeBladePiece
+  name: бронзовое лезвие мотыги
+  description: Прочное бронзовое лезвие для сельскохозяйственных работ.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 48
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeHoeBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeHoeBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzePickaxeBladePiece
+  name: бронзовый наконечник кирки
+  description: Тяжелая бронзовая часть для добычи камня.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 96
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzePickaxeBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzePickaxeBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeScytheBladePiece
+  name: бронзовое лезвие косы
+  description: Изогнутое острое лезвие для косы.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 72
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeScytheBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeScytheBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeShovelPiece
+  name: бронзовый наконечник лопаты
+  description: Литой наконечник лопаты.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 80
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeShovelPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeShovelPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeHelmetPiece
+  name: бронзовая основа шлема
+  description: Массивная литая заготовка шлема.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 200
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeHelmetPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeHelmetPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeChestplatePiece
+  name: бронзовая деталь нагрудника
+  description: Большая бронзовая пластина для кирасы.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 400
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeChestplatePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeChestplatePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeAnvilPiece
+  name: бронзовая заготовка наковальни
+  description: Огромный кусок литой бронзы для наковальни.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 1000
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeAnvilPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeAnvilPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Medium
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeLockPiece
+  name: бронзовая деталь замка
+  description: Маленькая деталь для сборки сложного механизма.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 24
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeLockPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeLockPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeKeyPiece
+  name: бронзовая деталь ключа
+  description: Литая заготовка, требующая обработки.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 16
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeKeyPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeKeyPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeRaspPiece
+  name: бронзовая заготовка рашпиля
+  description: Металлическая основа для инструмента.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 40
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeRaspPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeRaspPiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeKhapeshBladePiece
+  name: бронзовое лезвие хопеша
+  description: Изогнутое лезвие для элитного меча-хопеша.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 72
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeKhapeshBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeKhapeshBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseBronzeItem
+  id: BronzeXiphosBladePiece
+  name: бронзовое лезвие ксифоса
+  description: Листовидное бронзовое лезвие для меча-ксифоса, отлично сбалансированное для ударов и уколов.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+    color: "#CD7F32"
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 88
+    resultTemperature: 1100
+  - type: Construction
+    graph: BronzeXiphosBladePiece
+    node: fin
+  - type: Stack
+    stackType: BronzeXiphosBladePiece
+    count: 1
+  - type: Material
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseItem
+  id: WheelBlank
+  name: заготовка колеса
+  description: Круглая деревянная заготовка для колеса.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Materials/Materials.rsi
+    state: stone
+  - type: Item
+    size: Medium
+  - type: Construction
+    graph: WheelBlank
+    node: fin
+  - type: Stack
+    stackType: WheelBlank
+    count: 1
+  - type: Material
+
+- type: entity
+  parent: BaseItem
+  id: WoodenWheel
+  name: деревянное колесо
+  description: Простое, но эффективное средство передвижения.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
+    state: icon
+  - type: Item
+    size: Medium
+  - type: Construction
+    graph: WoodenWheel
+    node: fin
+  - type: Stack
+    stackType: WoodenWheel
+    count: 1
+  - type: Material

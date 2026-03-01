@@ -26,3 +26,11 @@
   - type: CEPlantAdditionalProduceOnInteract
     produce:
       CEFoodCabbage: 4
+
+- type: entity
+  id: CEPlantCabbageGrown
+  parent: CEPlantCabbage
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 5

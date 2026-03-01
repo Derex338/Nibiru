@@ -22,6 +22,9 @@
     sprite: _CE/Clothing/Gloves/jagermeister_gloves.rsi
   - type: Clothing
     sprite: _CE/Clothing/Gloves/jagermeister_gloves.rsi
+  - type: Construction
+    graph: GlovesJagermeister
+    node: fin
 
 - type: entity
   parent: CEClothingGlovesBase
@@ -33,3 +36,6 @@
     sprite: _CE/Clothing/Gloves/blacksmith_gloves.rsi
   - type: Clothing
     sprite: _CE/Clothing/Gloves/blacksmith_gloves.rsi
+  - type: Construction
+    graph: BlacksmithGloves
+    node: fin

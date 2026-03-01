@@ -69,11 +69,6 @@
     flightVfx: CEOverchargeSmallVFX
   - type: CEVehicleFlyer
   - type: CEControllableFlight
-  - type: CEZFlyerBattery
-    energyDraw: 2
-  - type: Battery
-    maxCharge: 100
-    startingCharge: 100
   - type: ExaminableBattery
   - type: Foldable
     folded: false
@@ -99,8 +94,6 @@
           False: {visible: false}
         unfoldedLayer:
           True: {visible: false}
-  - type: CETheftValue
-    difficulty: 2
   - type: MultiHandedItem
   - type: ClothingSpeedModifier
     walkModifier: 0.8

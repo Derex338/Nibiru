@@ -61,3 +61,6 @@
     materialComposition:
       CEIron: 20
       CEWood: 10
+  - type: Construction
+    graph: FryingPan
+    node: fin

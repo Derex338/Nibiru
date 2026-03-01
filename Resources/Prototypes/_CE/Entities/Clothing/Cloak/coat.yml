@@ -9,6 +9,9 @@
     sprite: _CE/Clothing/Cloak/Coat/fur_coat.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Coat/fur_coat.rsi
+  - type: Construction
+    graph: FurCloak
+    node: fin
 
 - type: entity
   parent:
@@ -21,3 +24,6 @@
     sprite: _CE/Clothing/Cloak/Coat/fur_coat_brown.rsi
   - type: Clothing
     sprite: _CE/Clothing/Cloak/Coat/fur_coat_brown.rsi
+  - type: Construction
+    graph: BrownFurCoat
+    node: fin

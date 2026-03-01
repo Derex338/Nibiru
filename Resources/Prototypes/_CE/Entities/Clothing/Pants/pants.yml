@@ -85,6 +85,9 @@
     sprite: _CE/Clothing/Pants/loincloth.rsi
   - type: Clothing
     sprite: _CE/Clothing/Pants/loincloth.rsi
+  - type: Construction
+    graph: Loincloth
+    node: fin
 
 - type: entity
   parent: CEClothingPantsBase

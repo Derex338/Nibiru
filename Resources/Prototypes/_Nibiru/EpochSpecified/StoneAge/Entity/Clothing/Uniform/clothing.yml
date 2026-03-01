@@ -39,9 +39,10 @@
   description: Простой пояс, сплетенный из растений.
   components:
     - type: Sprite
-      sprite: Corvax/Clothing/Uniforms/Jumpsuit/kim.rsi
+      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBelt.rsi
+      state: icon
     - type: Clothing
-      sprite: Corvax/Clothing/Uniforms/Jumpsuit/kim.rsi
+      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBelt.rsi
     - type: Construction
       graph: HerbalBelt
       node: fin
@@ -67,7 +68,8 @@
   description: Плетеная корзина для переноски вещей.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/clown.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBasket.rsi
+    state: icon
   - type: Storage
     grid:
     - 0,0,4,2

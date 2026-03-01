@@ -46,15 +46,6 @@
     maxCharge: 50
   - type: UseDelay
     delay: 5
-  - type: CEMeleeEnergyEffect
-    effects:
-    - !type:CESpellThrowFromUser
-      distance: 3
-    - !type:CESpellSpawnEntityOnTarget
-      spawns:
-      - CEOverchargeVFX
-    - !type:CESpellStaminaDamage
-      damage: 40
   - type: Clothing
     quickEquip: false
   - type: Appearance

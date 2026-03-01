@@ -6,10 +6,10 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
-using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
 using System.Xml.Linq;
@@ -58,7 +58,7 @@ public sealed class MoldSystem : EntitySystem
                     var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
                     var spawn = Spawn(entity, pos);
                     _container.Insert(spawn, container);
-                    if (args.reagent.MeltingPoint is not null)
+                    if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
                         _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
 
                     _solution.RemoveReagent(solutionEnt.Value, reagent, reagentAmount);

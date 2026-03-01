@@ -47,6 +47,9 @@
   - type: Edible
     trash:
     - CEBowlWooden
+  - type: Construction
+    graph: CEWoodenBowl
+    node: fin
 
 - type: entity
   id: CEBowlIron
@@ -82,5 +85,3 @@
     - CEBowlIronTreasure
   - type: StaticPrice
     price: 100
-  - type: CETheftValue
-    difficulty: 1

@@ -1,0 +1,302 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE ARMOR & GEAR ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: BronzeArmorBuckler
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+            - material: BronzeShieldPiece
+              amount: 1
+            - material: WheelBlank
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: assembly
+      entity: BronzeBucklerAssembly
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - tool: Hammering
+              minTemperature: 700
+              doAfter: 10
+    - node: fin
+      entity: BronzeBuckler
+
+- type: constructionGraph
+  id: BronzeChestplate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+            - material: BronzeChestplatePiece
+              amount: 1
+            - material: Leather
+              amount: 4
+            - tool: Hammering
+              doAfter: 5
+    - node: assembly
+      entity: BronzeChestplateAssembly
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - tool: Hammering
+              minTemperature: 700
+              doAfter: 30
+    - node: fin
+      entity: BronzeChestplate
+
+- type: constructionGraph
+  id: BronzeHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+            - material: BronzeHelmetPiece
+              amount: 1
+            - material: Leather
+              amount: 2
+            - tool: Hammering
+              doAfter: 3
+    - node: assembly
+      entity: BronzeHelmetAssembly
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - tool: Hammering
+              minTemperature: 700
+              doAfter: 15
+    - node: fin
+      entity: BronzeHelmet
+
+- type: constructionGraph
+  id: BronzeScabbard
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Leather
+              amount: 2
+            - material: BronzeInlay
+              amount: 1
+            - tool: Sewing
+              doAfter: 10
+    - node: fin
+      entity: ClothingBeltBronzeScabbard
+
+- type: constructionGraph
+  id: GladiatorHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 40
+          steps:
+            - material: Cloth
+              amount: 1
+            - tool: Sewing
+              doAfter: 10
+    - node: fin
+      entity: ClothingHeadHatGladiator
+
+- type: constructionGraph
+  id: GladiatorUniform
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
+          steps:
+            - material: Cloth
+              amount: 3
+            - tool: Sewing
+              doAfter: 15
+    - node: fin
+      entity: ClothingUniformJumpsuitGladiator
+
+- type: constructionGraph
+  id: CloakBarbarian
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BigHide
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingCloakCapeBarbarian
+
+- type: constructionGraph
+  id: BoneMask
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Bones
+              amount: 2
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskBoneMask
+
+- type: constructionGraph
+  id: BoneHornedMask
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Bones
+              amount: 3
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskBoneHornedMask
+
+- type: constructionGraph
+  id: MimeMask
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Bones
+              amount: 2
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskMime
+
+- type: constructionGraph
+  id: BrownFurCoat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BigHide
+              amount: 1
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingCloakCoatFurBrown
+
+- type: constructionGraph
+  id: FurCloak
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BigHide
+              amount: 1
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingCloakCoatFur
+
+- type: constructionGraph
+  id: FurCape
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BigHide
+              amount: 1
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingCloakCapeFur
+
+- type: constructionGraph
+  id: FurCape2
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BigHide
+              amount: 1
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingCloakCapeFur2
+
+- type: constructionGraph
+  id: BlacksmithApron
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Leather
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingCloakBlacksmithApron

@@ -1,0 +1,77 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 4: WEAPONS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: WoodSpear
+  graph: WoodenSpear
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: StoneSpear
+  graph: StoneSpear
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: WoodBat
+  graph: WoodBat
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: BoneKnife
+  graph: BoneKnife
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: BolaNibiru
+  graph: BolaWorkbench
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: WoodenBow
+  graph: WoodenBow
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: QuiverLeather
+  graph: QuiverLeather
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: WoodenArrow
+  graph: WoodenArrow
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: StoneArrow
+  graph: StoneArrow
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item

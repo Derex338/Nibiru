@@ -333,6 +333,19 @@
     access: [["Command"]]
 
 - type: entity
+  parent: CrateBaseSecure
+  id: CrateSyndicateSecure
+  name: secure syndicate crate
+  description: A dark steel crate with red bands and a letter S embossed on the front.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicate_secure.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent", "NuclearOperative"]]
+
+- type: entity
   parent: CrateGeneric
   id: CrateLivestock
   name: livestock crate
@@ -797,6 +810,9 @@
       path: /Audio/Items/shovel_dig.ogg
     openSound:
       path: /Audio/Items/shovel_dig.ogg
+  - type: Construction
+    graph: CrateWoodenGrave
+    node: dug
 
 - type: entity
   parent: CrateWoodenGrave
@@ -818,11 +834,14 @@
   - type: Icon
     sprite: Structures/Storage/Crates/stone_grave.rsi
     state: base
+  - type: Construction
+    graph: CrateStoneGrave
+    node: dug
 
 - type: entity
   parent: CrateGenericSteel
   id: CrateSyndicate
-  name: Syndicate crate
+  name: syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon

@@ -1,0 +1,73 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 7: ARMOR ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: WoodChestplate
+  graph: WoodChestplate
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: LetherHelmet
+  graph: LetherHelmet
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: LetherChestplate
+  graph: LetherChestplate
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: PrimitiveBoneHelmet
+  graph: PrimitiveBoneHelmet
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: PrimitiveBoneArmor
+  graph: PrimitiveBoneArmor
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: LetherHelmetReinforced
+  graph: LetherHelmet
+  startNode: start
+  targetNode: reinforced
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: LetherChestplateReinforced
+  graph: LetherChestplate
+  startNode: start
+  targetNode: reinforced
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench

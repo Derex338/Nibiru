@@ -1,0 +1,126 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE MATERIALS & COMPONENTS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: WheelBlank
+  name: Заготовка колеса
+  graph: WheelBlank
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Круглая оправа для будущего колеса или щита.
+  icon:
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+  objectType: Item
+  entitysToShowRecipe:
+    - SawmillWorkbench
+
+- type: construction
+  id: WoodenWheel
+  name: Деревянное колесо
+  graph: WoodenWheel
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Полностью собранное деревянное колесо.
+  icon:
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+  objectType: Item
+  entitysToShowRecipe:
+    - SawmillWorkbench
+
+- type: construction
+  id: BronzeInlay
+  name: Бронзовая вставка
+  graph: BronzeInlay
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Декоративная и укрепляющая вставка из бронзы.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: PapyrusLeather
+  name: Папирус
+  graph: PapyrusLeather
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: PapyrusGrass
+  name: Папирус
+  graph: PapyrusGrass
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: BronzeXiphosBladePiece
+  name: Лезвие ксифоса
+  graph: BronzeXiphosBladePiece
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Бронзовое лезвие ксифоса, готовое к обработке.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: CoinBronze
+  name: Бронзовая монета
+  graph: CoinBronze
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Небольшая монета из бронзы.
+  icon:
+    sprite: Objects/Misc/coins.rsi
+    state: coin_iron
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: CoinSilver
+  name: Серебряная монета
+  graph: CoinSilver
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Монета из серебра.
+  icon:
+    sprite: Objects/Misc/coins.rsi
+    state: coin_silver
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: CoinGold
+  name: Золотая монета
+  graph: CoinGold
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Блестящая золотая монета.
+  icon:
+    sprite: Objects/Misc/coins.rsi
+    state: coin_gold
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench

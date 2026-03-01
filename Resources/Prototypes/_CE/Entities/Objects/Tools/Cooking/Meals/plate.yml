@@ -46,6 +46,9 @@
   - type: Edible
     trash:
     - CEPlateWooden
+  - type: Construction
+    graph: WoodenPlate
+    node: fin
 
 - type: entity
   id: CEPlateIron

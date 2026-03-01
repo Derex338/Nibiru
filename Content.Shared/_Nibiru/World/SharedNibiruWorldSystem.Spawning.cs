@@ -19,25 +19,25 @@ public partial class SharedNibiruWorldSystem
     /// <param name="popPrototypes">Entity prototypes for spawning</param>
     /// <param name="radius">The minimum distance that should be from the spawn point to any player settlement</param>
     /// <returns>List of spawned entities</returns>
-    public List<EntityUid> SpawnPop(
+    /*public void SpawnPop(
         EntityCoordinates targetCoords,
         List<EntProtoId> popPrototypes,
         int? radius = null)
     {
-        var spawned = new List<EntityUid>();
+        //var spawned = new List<EntityUid>();
         var freeTiles = GetSpawnTiles(targetCoords, popPrototypes.Count, radius ?? _playerSafeRadius).ToList();
 
         // Spawn the entities on a random free tile
-        while (popPrototypes.Count > 0)
-        {
+        //while (popPrototypes.Count > 0)
+        //{
             var spawnCoords = Turf.GetTileCenter(_random.Pick(freeTiles));
             var spawnedUid = Spawn(popPrototypes.Pop(), spawnCoords);
 
-            spawned.Add(spawnedUid);
-        }
+            //spawned.Add(spawnedUid);
+        //}
 
-        return spawned;
-    }
+        //return spawned;
+    }*/
 
     /// <summary>
     /// Spawns entities in random free tiles around a given center
@@ -48,7 +48,7 @@ public partial class SharedNibiruWorldSystem
     /// <param name="entities">Entities spawned elsewhere previously that will be used in place of the prototype spawning</param>
     /// <param name="radius">The minimum distance that should be from the spawn point to any player settlement</param>
     /// <returns>List of spawned entities</returns>
-    public List<EntityUid> SpawnPop(
+    /*public List<EntityUid> SpawnPop(
         EntityCoordinates targetCoords,
         EntProtoId? popProto = null,
         int amount = 1,
@@ -84,8 +84,8 @@ public partial class SharedNibiruWorldSystem
         }
 
         return spawned;
-    }
-    
+    }*/
+
     public HashSet<TileRef> GetSpawnTiles(int amount)
     {
         if (Rule is not { } rule)
@@ -95,7 +95,7 @@ public partial class SharedNibiruWorldSystem
 
         return GetSpawnTiles(coords, amount);
     }
-    
+
     public HashSet<TileRef> GetSpawnTiles(EntityCoordinates targetCoordinates, int amount)
     {
         var tiles = GetSpawnTiles(targetCoordinates);
@@ -165,16 +165,14 @@ public partial class SharedNibiruWorldSystem
 
         var angle = Angle.FromDegrees(_random.NextFloat(360f));
         var distance = radiusFromPlayers;
+        var maxIterations = 50; // Лимит итераций чтобы избежать бесконечного цикла
 
-        while (true)
+        for (var i = 0; i < maxIterations; i++)
         {
             var pos = new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * distance + targetCoords.Position;
-            var valid = true;
 
             distance += radiusFromPlayers / 2;
-
-            if (!valid)
-                continue;
+            angle += Angle.FromDegrees(37f); // Немного меняем угол на каждой итерации
 
             var box = Box2.CenteredAround(pos, new Vector2(spawnAreaRadius));
             var tiles = GetFreeTiles(grid, box, minSpawnAreaTiles);
@@ -184,6 +182,9 @@ public partial class SharedNibiruWorldSystem
 
             return tiles;
         }
+
+        // Если не нашли за 50 итераций — возвращаем пустое
+        return new HashSet<TileRef>();
     }
 
     /// <summary>

@@ -148,7 +148,7 @@ public sealed class FuelSystem : EntitySystem
         var wasOperational = oldTemp >= comp.MinOperatingTemperature;
         var isOperational = comp.CurrentTemperature >= comp.MinOperatingTemperature;
 
-        if (Math.Abs(oldTemp - comp.CurrentTemperature) > 0.1f || wasOperational != isOperational)
+        if (Math.Abs(oldTemp - comp.CurrentTemperature) > 1.0f || wasOperational != isOperational)
         {
             var tempEvent = new TemperatureChangedEvent(
                 oldTemp,

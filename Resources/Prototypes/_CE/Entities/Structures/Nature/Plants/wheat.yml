@@ -30,3 +30,10 @@
     speed: 2.8
     dis: 4
 
+- type: entity
+  id: CEPlantWheatGrown
+  parent: CEPlantWheat
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 4

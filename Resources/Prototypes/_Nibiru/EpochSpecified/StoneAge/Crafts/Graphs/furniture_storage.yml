@@ -1,0 +1,88 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 8: FURNITURE & STORAGE ███
+# Functional furniture and containers
+# ════════════════════════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Barrel (Бочка)
+# Требует: Доски + Верёвка + Забивание
+# Контейнер для хранения
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Barrel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CEWood
+              amount: 5
+            - material: HerbRope
+              amount: 2
+
+    - node: fin
+      entity: Barrel
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Hide Bed (Кровать из шкур)
+# Альтернатива 1: Большая шкура (1 шт)
+# Альтернатива 2: Средние шкуры (2 шт)
+# Место для сна и отдыха
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: HideBed
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        # Вариант из большой шкуры
+        - to: bed
+          completed:
+            - !type:SnapToGrid {}
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: BigHide
+              amount: 1
+            - material: Herb
+              amount: 3
+              doAfter: 2
+        # Вариант из средних шкур
+        - to: bed
+          completed:
+            - !type:SnapToGrid {}
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: MediumHide
+              amount: 2
+            - material: Herb
+              amount: 3
+              doAfter: 2
+    - node: bed
+      entity: HideBed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: BigHide
+              amount: 1
+          steps:
+            - tool: Screwing
+              doAfter: 3

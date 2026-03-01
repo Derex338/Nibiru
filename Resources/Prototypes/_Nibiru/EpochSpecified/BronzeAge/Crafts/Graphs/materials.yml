@@ -1,0 +1,141 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ BRONZE AGE MATERIALS & COMPONENTS ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: constructionGraph
+  id: WheelBlank
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: WoodPlank
+              amount: 2
+            - tool: Prying
+              doAfter: 3
+    - node: fin
+      entity: WheelBlank
+
+- type: constructionGraph
+  id: WoodenWheel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: WheelBlank
+              amount: 1
+            - material: WoodStick
+              amount: 4
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: WoodenWheel
+
+- type: constructionGraph
+  id: BronzeInlay
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Bronze
+              amount: 1
+            - tool: Prying # Representing mold handling
+              doAfter: 8
+    - node: fin
+      entity: BronzeInlay
+
+- type: constructionGraph
+  id: PapyrusLeather
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: Leather
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: Papyrus
+
+- type: constructionGraph
+  id: PapyrusGrass
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: Herb
+              amount: 3
+              doAfter: 10
+    - node: fin
+      entity: Papyrus
+
+- type: constructionGraph
+  id: CoinBronze
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Bronze
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: CoinBronze
+
+- type: constructionGraph
+  id: CoinSilver
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: Silver
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: CoinSilver
+
+- type: constructionGraph
+  id: CoinGold
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Gold
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: CoinGold

@@ -1,0 +1,21 @@
+- type: entity
+  id: NibiruSilverOre
+  parent: SilverOre
+  suffix: Nibiru
+  components:
+  - type: Stack
+    stackType: NibiruSilverOre
+    count: 1
+  - type: SmeltableOre
+    meltingPoint: 960
+    meltingSpeed: 1
+    resultReagent: SilverMolten
+    resultAmount: 50
+    resultTemperature: 1100
+
+- type: stack
+  parent: BaseMediumStack
+  id: NibiruSilverOre
+  name: stack-silver-ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: silver }
+  spawn: NibiruSilverOre

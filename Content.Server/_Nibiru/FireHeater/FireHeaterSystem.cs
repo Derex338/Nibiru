@@ -4,6 +4,7 @@ using Content.Server.Temperature.Systems;
 using Content.Shared._Nibiru.Fuel;
 using Content.Shared._Nibiru.Heating;
 using Content.Shared._Nibiru.Smelting;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -82,7 +83,8 @@ public sealed class HeatingSurfaceSystem : EntitySystem
             itemsToHeat = GetItemsInRadius(uid, surface);
         }
 
-        hasItems = itemsToHeat.Count > 0;
+        if (itemsToHeat.Count <= 0)
+            return;
 
         // Обрабатываем каждый предмет
         foreach (var entity in itemsToHeat)

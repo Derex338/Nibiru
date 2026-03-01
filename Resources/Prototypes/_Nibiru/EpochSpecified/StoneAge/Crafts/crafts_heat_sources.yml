@@ -1,0 +1,101 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ███ SECTION 3: HEAT SOURCES & FURNACES ███
+# ════════════════════════════════════════════════════════════════════════════════
+
+- type: construction
+  id: NibiruBonfire
+  graph: NibiruBonfire
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Furnace
+  graph: Furnace
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Candle
+  graph: Candle
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: WoodenBowl
+  graph: WoodenBowl
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: StoneHammer
+  graph: StoneHammer
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: StoneHatchet
+  graph: StoneHatchet
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: StonePickaxe
+  graph: StonePickaxe
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: StoneShovel
+  graph: StoneShovel
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: WoodenBucket
+  graph: WoodenBucket
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: BoneNeedle
+  graph: BoneNeedle
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: StoneKnife
+  graph: StoneKnife
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item

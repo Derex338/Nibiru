@@ -89,7 +89,8 @@ public sealed partial class ResearchSystem
         }
         else
         {
-            UnregisterClient(ent, ent.Comp);
+            if (ent.Comp.Server != ent.Owner)
+                UnregisterClient(ent, ent.Comp);
         }
     }
 
