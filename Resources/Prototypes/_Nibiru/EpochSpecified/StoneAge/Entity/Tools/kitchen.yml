@@ -84,7 +84,7 @@
   description: Еще влажный и мягкий кувшин из глины. Нужно обжечь его, чтобы он стал твердым.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
     state: icon
     color: "#7a6e60"
   - type: Item
@@ -101,11 +101,11 @@
   description: Еще влажная и мягкая кружка из глины. Нужно обжечь ее, чтобы она стала твердой.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+    sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon
     color: "#7a6e60"
   - type: Item
-    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+    sprite: Objects/Consumable/Drinks/mug.rsi
   - type: Construction
     graph: ClayCup
     node: raw

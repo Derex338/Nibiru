@@ -1,24 +1,23 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Такен фром ЯрикФД",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "crate"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Такен фром ЯрикФД",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "crate_door"
-    },
-    {
-      "name": "crate_icon"
-    },
-    {
-    {
-      "name": "crate_open"
-    }
-  ]
+    "states": [
+        {
+            "name": "crate"
+        },
+        {
+            "name": "crate_door"
+        },
+        {
+            "name": "crate_icon"
+        },
+        {
+            "name": "crate_open"
+        }
+    ]
 }

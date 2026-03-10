@@ -103,27 +103,12 @@
     - BasicWorkbench
 
 - type: construction
-  id: Sling
-  name: Праща
-  graph: Sling
+  id: FlintAndSteel
+  name: огниво
+  graph: FlintAndSteel
   startNode: start
   targetNode: fin
-  category: construction-category-weapons
-  objectType: Item
-  icon:
-    sprite: _Nibiru/EpochSpecified/StoneAge/Entity/Weapon/Range/Sling.rsi # Placeholder
-    state: icon
-
-- type: construction
-  id: SpearThrower
-  name: Копьеметалка
-  graph: SpearThrower
-  startNode: start
-  targetNode: fin
-  category: Weapons
-  icon:
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
-    state: icon
+  category: construction-category-utilities
   objectType: Item
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -244,3 +229,58 @@
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: birdtoy
   objectType: Item
+
+- type: construction
+  id: WoodenPlate
+  name: Деревянная тарелка
+  graph: WoodenPlate
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: CEWoodenBowl
+  name: Деревянная миска
+  graph: CEWoodenBowl
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: Lyre
+  name: Лира
+  graph: Lyre
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: Lute
+  name: Лютня
+  graph: Lute
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: CEFlute
+  name: Флейта из палки
+  graph: CEFlute
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench

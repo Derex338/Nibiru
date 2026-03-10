@@ -10,10 +10,28 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Barrel.rsi
     layers:
-      - state: woodenbarrel
+      - state: base
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: closed
+        map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
   - type: ExaminableSolution
     solution: tank
   - type: Construction
     graph: Barrel
     node: fin
+  - type: Transform
+    noRot: true
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 500
+        mask:
+        - SmallMobMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer

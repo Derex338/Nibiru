@@ -17,3 +17,9 @@
   - type: Tag
     tags:
     - CELighter
+  - type: IgnitionSource
+    temperature: 500
+    ignited: true
+  - type: Construction
+    graph: FlintAndSteel
+    node: fin

@@ -64,7 +64,7 @@
               points: 50
           steps:
             - material: MudBlock
-              amount: 10
+              amount: 5
             - material: CEDirt
               amount: 5
               doAfter: 5

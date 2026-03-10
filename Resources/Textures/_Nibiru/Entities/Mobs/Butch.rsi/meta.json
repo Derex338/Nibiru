@@ -1,0 +1,29 @@
+{
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Derex",
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "big1"
+        },
+        {
+            "name": "big2"
+        },
+        {
+            "name": "big3"
+        },
+        {
+            "name": "mid1"
+        },
+        {
+            "name": "mid2"
+        },
+        {
+            "name": "small1"
+        }
+    ]
+}

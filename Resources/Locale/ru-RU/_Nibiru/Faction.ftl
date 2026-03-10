@@ -47,3 +47,10 @@ faction-request-window-title = Приглашение во фракцию
 faction-request-window-text = Вас приглашают присоединиться к фракции.
 faction-request-window-text-user = Пользователь { $user } приглашает вас присоединиться к фракции.
 
+faction-members = Члены фракции:
+
+faction-status-active = Активна
+faction-status-recruiting = Набор открыт
+faction-status-at-war = В состоянии войны
+
+rev-consent-window-convert-title = Приглашение в фракцию

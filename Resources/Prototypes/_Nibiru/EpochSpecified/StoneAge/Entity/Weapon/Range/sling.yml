@@ -5,11 +5,12 @@
   description: Простое метательное орудие для метания камней.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Entity/Weapon/Range/Sling.rsi # Placeholder
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    color: "#A0522D"
     layers:
     - state: unwielded
       map: [ base ]
-    - state: unwielded-stone
+    - state: unwielded-arrow
       map: [ arrow ]
       visible: false
   - type: Item

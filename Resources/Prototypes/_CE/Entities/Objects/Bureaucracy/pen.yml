@@ -1,5 +1,5 @@
 - type: entity
-  parent: Pen
+  parent: [Pen, FeatherBase]
   id: CEPenFeather
   name: fountain pen
   categories: [ ForkFiltered ]

@@ -688,8 +688,8 @@
   description: Круглая деревянная заготовка для колеса.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Materials/Materials.rsi
-    state: stone
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
+    state: icon
   - type: Item
     size: Medium
   - type: Construction

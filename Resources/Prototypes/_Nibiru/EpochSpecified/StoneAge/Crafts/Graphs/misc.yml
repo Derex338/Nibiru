@@ -206,7 +206,7 @@
               prototype: CEDirtBlock1
               amount: 2
           steps:
-            - tool: Diging
+            - tool: Digging
               doAfter: 8
     - node: dug
       edges:
@@ -233,7 +233,7 @@
               prototype: CEDirtBlock1
               amount: 2
           steps:
-            - tool: Diging
+            - tool: Digging
               doAfter: 8
     - node: dug
       edges:
@@ -414,3 +414,125 @@
               doAfter: 5
     - node: fin
       entity: QuiverLeather
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Kitchenware
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: WoodenPlate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodPlank
+              amount: 1
+            - tool: Slicing
+              doAfter: 5
+    - node: fin
+      entity: CEPlateWooden
+
+- type: constructionGraph
+  id: CEWoodenBowl
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodPlank
+              amount: 1
+            - tool: Slicing
+              doAfter: 5
+    - node: fin
+      entity: CEBowlWooden
+
+# ──────────────────────────────────────────────────────────────────────────────
+# String Instruments
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Lyre
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: WoodPlank
+              amount: 3
+            - tool: Slicing
+              doAfter: 3
+            - material: Thread
+              amount: 3
+              doAfter: 1
+    - node: fin
+      entity: CEInstrumentLyra
+
+- type: constructionGraph
+  id: Lute
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: WoodPlank
+              amount: 4
+            - tool: Slicing
+              doAfter: 4
+            - material: Thread
+              amount: 4
+              doAfter: 2
+    - node: fin
+      entity: CEInstrumentLute
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Flutes
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: CEFlute
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: WoodStick
+              amount: 1
+            - tool: Slicing
+              doAfter: 4
+    - node: fin
+      entity: CEInstrumentFlute
+
+- type: constructionGraph
+  id: FlintAndSteel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: CEStone
+              amount: 2
+              doAfter: 1
+    - node: fin
+      entity: CELighter

@@ -7,7 +7,7 @@ soft_max_players = 999
 # peaceful_end = false
 
 [server]
-rules_file = "CorvaxLRPRuleset"
+rules_file = "NibiruRuleset"
 lobby_name = "️🌍 Nibiru"
 
 [game.panic_bunker]

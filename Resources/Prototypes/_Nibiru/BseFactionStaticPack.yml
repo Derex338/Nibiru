@@ -1,21 +1,21 @@
-- type: constructionPack
-  id: Base
-  startRecipes: True
-  recipes:
-  - FireStarter
+#- type: constructionPack
+  #id: Base
+  #startRecipes: True
+  #recipes:
+  #- FireStarter
 
 - type: constructionPack
   id: FactionBase
   recipes:
   - ResearchTable
 
-- type: constructionPack
-  id: ABOBA
-  recipes:
-  - MimeHardsuit
-  - SheetRGlass
-  - SheetClockworkGlass
-  - SheetPGlass
-  - SheetRPGlass
-  - SheetRPGlass0
-  - SheetUGlass
+#- type: constructionPack
+#  id: ABOBA
+#  recipes:
+#  - MimeHardsuit
+#  - SheetRGlass
+#  - SheetClockworkGlass
+#  - SheetPGlass
+#  - SheetRPGlass
+#  - SheetRPGlass0
+#  - SheetUGlass

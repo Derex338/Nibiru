@@ -29,7 +29,7 @@
         sound:
           collection: MetalBreak
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: Rock
   - type: Material
   - type: MeleeWeapon
     soundHit:
@@ -88,7 +88,6 @@
   - type: ArmorPenetration
     penetration:
       Slash: 3
-      Piercing: 2
   - type: Sharp
   - type: Tool
     qualities:

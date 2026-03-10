@@ -9,6 +9,7 @@ using Content.Shared.Station;
 using Content.Shared.Station.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
+using Robust.Shared.IoC;
 
 namespace Content.Server._Nibiru.Factions.Commands;
 
@@ -62,10 +63,23 @@ public sealed class LateJoinFactionCommand : IConsoleCommand
             return;
         }
 
+        var player = shell.Player;
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var rule = entityManager.System<NibiruSurvivalRuleSystem>();
 
-        rule.OnLateJoinFactionChoice(shell.Player, args.Length > 0 ? args[0] : null);
+        // Сохраняем выбор фракции
+        rule.OnLateJoinFactionChoice(player, args.Length > 0 ? args[0] : null);
+
+        // Запускаем спавн игрока (аналогично latejoin_solo)
+        var ticker = entityManager.System<GameTicker>();
+        var query = entityManager.EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            ticker.MakeJoinGame(player, uid);
+            break;
+        }
+
+        shell.WriteLine($"Joining faction: {(args.Length > 0 ? args[0] : "none")}");
     }
 }
 

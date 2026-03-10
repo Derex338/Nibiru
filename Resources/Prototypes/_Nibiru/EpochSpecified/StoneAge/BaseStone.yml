@@ -32,7 +32,6 @@
   - type: PhysicalComposition
     materialComposition:
       Wood: 200
-  - type: Fuel
 
 - type: entity
   name: BaseWoodStructure

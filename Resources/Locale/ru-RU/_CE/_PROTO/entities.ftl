@@ -779,8 +779,8 @@ ent-CEDirtBlock10 = { ent-CEDirtBlock1 }
     .desc = { ent-CEDirtBlock1.desc }
     .suffix = 10
 
-ent-CEStoneBlock1 = каменный блок
-    .desc = Блок холодного камня.
+ent-CEStoneBlock1 = камень
+    .desc = Холодный камень.
 
 ent-CEStoneBlock10 = { ent-CEStoneBlock1 }
     .desc = { ent-CEStoneBlock1.desc }
@@ -1670,17 +1670,6 @@ ent-CEFloorCrystal = кристаллические наросты
 ent-CEBaseRock = камень
     .desc = Кусок камня. Твёрдый, тяжёлый, бесполезный.
 
-ent-CERockSmall = { ent-CEBaseRock }
-    .desc = { ent-CEBaseRock.desc }
-    .suffix = Маленький
-
-ent-CERockBig = { ent-CEBaseRock }
-    .desc = { ent-CEBaseRock.desc }
-    .suffix = Большой
-
-ent-CERockBigMoss = { ent-CERockBig }
-    .desc = { ent-CERockBig.desc }
-    .suffix = Большой. Мох.
 
 ent-CESpiderWeb = паутина
     .desc = Нитевидная и липкая.
@@ -2279,39 +2268,567 @@ ent-CEPipeBrassBigBase = None
 ent-CEHighBush = куст
     .desc = Толстый быстрорастущий сорняк
 
+ent-CEHighBushGrown = куст
+    .desc = { ent-CEHighBush.desc }
+    .suffix = Выросший
+
 ent-CEPlantAppleTree = яблоня
     .desc = Крепкое дерево, приносящее вкусные яблоки.
+
+ent-CEPlantAppleTreeGrown = яблоня
+    .desc = { ent-CEPlantAppleTree.desc }
+    .suffix = Выросшее
 
 ent-CEPlantCabbage = капуста
     .desc = Вы видите перед собой капусту. Возможно, вы родились в одной из них.
 
+ent-CEPlantCabbageGrown = капуста
+    .desc = { ent-CEPlantCabbage.desc }
+    .suffix = Выросшее
+
 ent-CEPlantChanterelle = лисичка
     .desc = Вид дикого гриба с характерным жёлтым цветом и слегка фруктовым ароматом.
+
+ent-CEPlantChanterelleGrown = лисичка
+    .desc = { ent-CEPlantChanterelle.desc }
+    .suffix = Выросшая
 
 ent-CEPlantCotton = хлопок
     .desc = В некотором смысле вы выращиваете будущую одежду.
 
+ent-CEPlantCottonGrown = хлопок
+    .desc = { ent-CEPlantCotton.desc }
+    .suffix = Выросший
+
 ent-CEPlantCucumber = огурец
     .desc = Не доверяйте людям, которые умеют превращаться в огурцы.
+
+ent-CEPlantCucumberGrown = огурец
+    .desc = { ent-CEPlantCucumber.desc }
+    .suffix = Выросший
 
 ent-CEPlantOnion = лук
     .desc = Он такой милый, что до слёз, когда его режешь.
 
+ent-CEPlantOnionGrown = лук
+    .desc = { ent-CEPlantOnion.desc }
+    .suffix = Выросший
+
 ent-CEPlantPepper = перец
     .desc = Русская рулетка. Острый он, или сладкий перец?
+
+ent-CEPlantPepperGrown = перец
+    .desc = { ent-CEPlantPepper.desc }
+    .suffix = Выросший
 
 ent-CEPlantPotato = картофель
     .desc = Некоторые любят ассоциировать себя с картошкой. Такие люди не плохие люди.
 
+ent-CEPlantPotatoGrown = картофель
+    .desc = { ent-CEPlantPotato.desc }
+    .suffix = Выросший
+
 ent-CEPlantPumpkin = тыква
     .desc = Легенды гласят, что есть тыквенный король, который смотрит в вашу душу сквозь кроны деревьев.
+
+ent-CEPlantPumpkinGrown = тыква
+    .desc = { ent-CEPlantPumpkin.desc }
+    .suffix = Выросшая
 
 ent-CEPlantSunflower = подсолнух
     .desc = Высокое солнцелюбивое растение, которое производит крупные ярко-жёлтые цветы.
 
+ent-CEPlantSunflowerGrown = подсолнух
+    .desc = { ent-CEPlantSunflower.desc }
+    .suffix = Выросший
+
 ent-CEPlantTomatoes = помидоры
     .desc = С одной стороны, это вкусный фрукт. Но зачем его есть, когда гораздо веселее использовать помидоры как метательный снаряд?
+
+ent-CEPlantTomatoesGrown = помидоры
+    .desc = { ent-CEPlantTomatoes.desc }
+    .suffix = Выросшие
 
 ent-CEPlantWheat = пшеница
     .desc = Самая популярная культура. Неприхотливая, она открывает путь к изобилию мучных изделий.
 
+ent-CEPlantWheatGrown = пшеница
+    .desc = { ent-CEPlantWheat.desc }
+    .suffix = Выросшая
+
+
+ent-CEStatueAngel = статуя ангела
+    .desc = Статуя молящегося ангела.
+
+ent-CEStatueAngelMarble = статуя ангела
+    .desc = { ent-CEStatueAngel.desc }
+
+ent-CEStatueAngelLimestone = статуя ангела
+    .desc = { ent-CEStatueAngel.desc }
+
+ent-CEStatueStoneHeadHigh = каменная голова
+    .desc = Странные каменные головы, кажется, они наблюдают.
+
+ent-CEStatueStoneHeadLow = каменная голова
+    .desc = { ent-CEStatueStoneHeadHigh.desc }
+
+ent-CEStatueWizard = статуя волшебника
+    .desc = Статуя волшебника, держащего магию.
+
+ent-CEClothingBackBackpack = рюкзак
+    .desc = Стандартный рюкзак с достаточным объёмом. Идеально подходит для повседневного использования. Прикрывает спину от ударов!
+
+ent-CEClothingBackSatchel = сумка
+    .desc = Кожаная сумка с деревенским шармом. Обеспечивает скромное хранение в традиционном стиле. Можно носить на плече.
+
+# Food - Produce
+ent-CEFoodGarlic = чеснок
+    .desc = Резкий аромат, но идеально подходит для отпугивания вампиров... или друзей.
+
+ent-CEFoodGarlicClove = зубчик чеснока
+    .desc = Маленький кусочек чеснока.
+
+ent-CEFoodCorn = кукуруза
+    .desc = Золотистый початок солнца.
+
+ent-CEFoodCornKernel = зерно кукурузы
+    .desc = Маленькое зёрнышко кукурузы.
+
+ent-CEFoodCarrot = морковь
+    .desc = Оранжевый корнеплод, полезный для глаз.
+
+ent-CEFoodCarrotSlice = ломтик моркови
+    .desc = Тонкий кружочек моркови.
+
+# Food - Cheese
+ent-CEFoodCheeseWheel = головка сыра
+    .desc = Большая головка мягкого, ароматного сыра.
+
+ent-CEFoodCheesePart = кусок сыра
+    .desc = Треугольник мягкого, ароматного сыра.
+
+ent-CEFoodCheeseSlice = ломтик сыра
+    .desc = Тонкий ломтик вкусного сыра.
+
+ent-CEFoodBlueCheeseWheel = головка сыра с плесенью
+    .desc = Головка сыра с характерными синими прожилками. Сильный аромат!
+
+ent-CEFoodBlueCheesePart = кусок сыра с плесенью
+    .desc = Треугольник пикантного сыра с синими прожилками.
+
+ent-CEFoodBlueCheeseSlice = ломтик сыра с плесенью
+    .desc = Тонкий ломтик пикантного сыра с плесенью.
+
+ent-CEFoodAgedCheeseWheel = головка выдержанного сыра
+    .desc = Твёрдый сыр, выдержанный месяцами для развития богатого вкуса.
+
+ent-CEFoodAgedCheesePart = кусок выдержанного сыра
+    .desc = Треугольник выдержанного сыра с богатым вкусом.
+
+ent-CEFoodAgedCheeseSlice = ломтик выдержанного сыра
+    .desc = Тонкий ломтик выдержанного сыра с богатым вкусом.
+
+# Food - Eggs
+ent-CEEggshells = яичная скорлупа
+    .desc = Ты ходишь по ней, дружок.
+
+ent-CEFoodEgg = яйцо
+    .desc = Самое обычное яйцо.
+
+ent-CEFoodEggCooked = варёное яйцо
+    .desc = Яйцо, приготовленное до совершенства.
+
+# Food - Dough & Bread
+ent-CEFoodDoughLarge = большой кусок теста
+    .desc = Идеальный ингредиент для любого мучного изделия. Осталось только придать ему форму.
+
+ent-CEFoodBread = хлеб
+    .desc = Хрустящий и такой ароматный!
+
+ent-CEFoodBreadSlice = ломтик хлеба
+    .desc = Отрезанный ломтик хлеба.
+
+ent-CEFoodDoughMedium = средний кусок теста
+    .desc = Средний кусок теста, готовый к выпечке или разделке.
+
+ent-CEFoodBreadBun = булочка
+    .desc = Это как обычный хлеб, только меньше и забавнее.
+
+ent-CEFoodBreadBunBottom = нижняя половина булочки
+    .desc = Это как обычный хлеб, только меньше и забавнее. И разрезан пополам.
+
+ent-CEFoodBreadBunTop = верхняя половина булочки
+    .desc = Это как обычный хлеб, только меньше и забавнее. И разрезан пополам.
+
+ent-CEFoodDoughMediumFlat = раскатанное тесто
+    .desc = Тонко раскатанный пласт теста.
+
+# Food - Meat
+ent-CEFoodMeatLamb = сырая баранина
+    .desc = Сочный стейк из баранины.
+
+ent-CEFoodMeatLambCooked = жареный баранний стейк
+    .desc = { ent-CEFoodMeatLamb.desc }
+
+ent-CEFoodMeatLambSlice = кусочки мяса
+    .desc = Сочный стейк из баранины.
+
+ent-CEFoodMeatLambCookedSlice = жареные кусочки мяса
+    .desc = { ent-CEFoodMeatLambSlice.desc }
+
+ent-CEFoodMeatLambCutlet = баранья котлета
+    .desc = Результат смешивания нарезанной баранины и яйца — сырая круглая котлета.
+
+ent-CEFoodMeatLambCutletCooked = жареная баранья котлета
+    .desc = Вкуснотища!
+
+ent-CEFoodMeatFrogLeg = лягушачья лапка
+    .desc = Говорят, что где-то их едят.
+
+ent-CEFoodMeatFrogLegCooked = жареная лягушачья лапка
+    .desc = Кажется, это даже съедобно.
+
+ent-CEFoodMeatHuman = сырая человечина
+    .desc = У этого мяса какой-то подозрительный вид.
+
+ent-CEFoodMeatHumanCooked = жареная человечина
+    .desc = { ent-CEFoodMeatHuman.desc }
+
+ent-CEFoodMeatDino = сырое мясо динозавра
+    .desc = И кто теперь кого съест?
+
+ent-CEFoodMeatDinoCooked = жареное мясо динозавра
+    .desc = { ent-CEFoodMeatDino.desc }
+
+ent-CEFoodMeatHydra = сырое мясо гидры
+    .desc = Не так много мяса, как хотелось бы.
+
+ent-CEFoodMeatHydraCooked = жареное мясо гидры
+    .desc = { ent-CEFoodMeatHydra.desc }
+
+ent-CEFoodMeatRabbit = сырая крольчатина
+    .desc = Мясо кажется жестким, а запах — неприятным.
+
+ent-CEFoodMeatRabbitCooked = жареная крольчатина
+    .desc = Жарка пошла на пользу, теперь мясо кажется сочным и нежным.
+
+ent-CEFoodMeatPig = сырая свинина
+    .desc = Я ел свинину, я ем свинину, и похоже, я буду есть свинину во веки веков.
+
+ent-CEFoodMeatPigCooked = жареная свинина
+    .desc = { ent-CEFoodMeatPig.desc }
+
+ent-CEFoodMeatPigLeg = сырой свиной окорок
+    .desc = Приличный хамон, хотя кости многовато.
+
+ent-CEFoodMeatPigLegCooked = жареный свиной окорок
+    .desc = { ent-CEFoodMeatPigLeg.desc }
+
+ent-CEFoodMeatBoar = сырая кабанина
+    .desc = Похоже на свинину, только более пахучее.
+
+ent-CEFoodMeatBoarCooked = жареная кабанина
+    .desc = После хорошей жарки почти не отличить от свинины.
+
+ent-CEFoodMeatPigSlice = кусочки мяса (свинина)
+    .desc = Шарик свинины с прожилками сала.
+
+ent-CEFoodMeatPigCookedSlice = жареные кусочки мяса (свинина)
+    .desc = { ent-CEFoodMeatPigSlice.desc }
+
+ent-CEFoodMeatMonster = сырое мясо монстра
+    .desc = Цвет довольно подозрительный, не каждый решится такое попробовать. Может, отдать гоблину?
+
+ent-CEFoodMeatMonsterCooked = жареное мясо монстра
+    .desc = { ent-CEFoodMeatMonster.desc }
+
+ent-CEFoodMeatMonsterLeg = сырая нога монстра
+    .desc = Подозрительный цвет мяса заставляет усомниться в его съедобности, но если вы очень голодны...
+
+ent-CEFoodMeatMonsterLegCooked = жареная нога монстра
+    .desc = { ent-CEFoodMeatMonsterLeg.desc }
+
+ent-CEFoodMeatMonsterSlice = кусочек мяса монстра
+    .desc = Шарики из мяса монстра фирменного подозрительного цвета.
+
+ent-CEFoodMeatMonsterCookedSlice = жареный кусочек мяса монстра
+    .desc = { ent-CEFoodMeatMonsterSlice.desc }
+
+ent-CEFoodMeatFlemHead = сырая голова флема
+    .desc = Честно говоря, выглядит вполне аппетитно.
+
+ent-CEFoodMeatFlemHeadCooked = жареная голова флема
+    .desc = { ent-CEFoodMeatFlemHead.desc }
+
+ent-CEFoodMeatFlemTorso = сырое туловище флема
+    .desc = Кажется, оно полое.
+
+ent-CEFoodMeatFlemTorsoCooked = жареное туловище флема
+    .desc = { ent-CEFoodMeatFlemTorso.desc }
+
+ent-CEFoodMeatFlemTorsoCut = сырое кольцо флема
+    .desc = Лук в комплект не входит.
+
+ent-CEFoodMeatFlemTorsoCookedCut = рыбные кольца
+    .desc = { ent-CEFoodMeatFlemTorsoCut.desc }
+
+ent-CEFoodMeatFlemLeg = сырая нога флема
+    .desc = Вероятно, не самая лучшая часть для еды, но вы никогда не узнаете, пока не попробуете.
+
+ent-CEFoodMeatFlemLegCooked = рыбные палочки
+    .desc = Как картошка фри. Только рыба!
+
+
+ent-CEClothingCloakCapeBarbarian = плащ варвара
+    .desc = Грубый плащ, который носят варвары, часто сделанный из грубой шкуры.
+
+ent-CEClothingCloakCapeFur = меховой плащ
+    .desc = Тёплый плащ, сделанный из меха.
+
+ent-CEClothingCloakCapeFur2 = меховой плащ
+    .desc = Тёплый плащ, сделанный из меха.
+
+ent-CEBaseBoneRemains = кости
+    .desc = Останки костей, которые проросли в землю.
+
+ent-CEBoneSpine = позвоночник
+    .desc = Огромный костяной торс неизвестного существа, словно его разорвали на части.
+
+ent-CEBoneDragon = скелет дракона
+    .desc = Огромный скелет дракона, возможность встретить такое существо одновременно завораживает и пугает.
+
+
+
+ent-CEClothingHeadHelmetBrassInsulator = латунный изолятор
+    .desc = Простой, но эффективный магический изолятор для головы. Не самая надежная защита, но отлично подходит для экранирования от излишков магической энергии.
+
+
+ent-CEClothingCloakBrigadier = плащ бригадира
+    .desc = Статусный предмет, который разрешено носить только старшим мастерам, отвечающим за целостность острова. Ткань прошита тонкими латунными нитями, обеспечивающими отличную изоляцию от магического излучения.
+
+
+
+ent-CEClothingShirtEngineeringJacket = инженерная куртка
+    .desc = Прочная инженерная куртка, предназначенная для практического использования в технической среде.
+
+ent-CEClothingShirtEngineeringShirt = инженерная рубашка
+    .desc = Прочная инженерная рубашка, предназначенная для практического использования в технической среде.
+
+
+ent-CEClothingShirtEngineeringDress = инженерное платье
+    .desc = Девушки тоже выполняют тяжелую работу, но при этом хотят выглядеть мило!
+
+
+ent-CEClothingPantsEngineering = инженерные брюки
+    .desc = Прочные брюки для прочных людей.
+
+
+# Clothing - Outer
+ent-CEClothingOuterClothingBrassInsulator = латунный нагрудник-изолятор
+    .desc = Простой, но эффективный магический изолятор для груди. Не самая надежная защита, но отлично подходит для экранирования от излишков магической энергии.
+
+
+ent-CEClothingBeltPouch = подсумок
+    .desc = Маленький базовый подсумок для предметов первой необходимости. Можно носить на поясе.
+
+# Clothing - Gloves & Accessories
+ent-CEClothingGlovesGirdles = железные наручи
+    .desc = Бронированные боевые наручи.
+
+ent-CEClothingGlovesJagermeister = перчатки егермейстера
+    .desc = Кожаные перчатки, излюбленные местными егермейстерами.
+
+ent-CEClothingGlovesBlacksmith = перчатки кузнеца
+    .desc = Говорят, в них можно держать свежеотлитый слиток, но проверять все же не стоит.
+
+
+
+
+
+
+ent-CEWallFrameWoodenFinished = готовый деревянный каркас стены
+    .desc = Почти готовая стена, осталось только заколотить доски.
+
+
+ent-CEWallWoodenDecorated = украшенная деревянная стена
+    .desc = Деревянная стена с декоративными элементами.
+
+ent-CEWallWoodenDark = темная деревянная стена
+    .desc = Стена из темного дерева.
+
+ent-CEWallWoodenLight = светлая деревянная стена
+    .desc = Стена из светлого дерева.
+
+
+
+
+ent-CEChairFrame = каркас деревянного стула
+    .desc = Основание для стула или табуретки.
+
+
+ent-CEWoodenBedLight = светлая деревянная кровать
+    .desc = { ent-CEWoodenBed.desc }
+
+
+# Structures - Decorations & Statues
+ent-CEStatueGob = статуя Гоба
+    .desc = Она прекрасна.
+
+ent-CEStatueGobVines = заросшая статуя Гоба
+    .desc = { ent-CEStatueGob.desc }
+
+ent-CEStatueGobRuined = сломанная статуя Гоба
+    .desc = { ent-CEStatueGob.desc }
+
+ent-CEStatueGobRuinedVines = сломанная заросшая статуя Гоба
+    .desc = { ent-CEStatueGob.desc }
+
+
+
+ent-CESnowdrift = сугроб
+    .desc = Большая, холодная куча снега.
+
+
+
+
+
+
+# Materials - Industrial & Coins
+ent-CEMediumBrassPipe1 = средняя латунная труба
+    .desc = Труба для передачи энергии маны. Латунный корпус изолирует от случайных утечек, но при повреждении поток может навредить окружающим.
+
+ent-CEBigBrassPipe1 = большая латунная труба
+    .desc = Большая труба для передачи энергии маны. Латунный корпус изолирует от случайных утечек, но при повреждении поток может навредить окружающим.
+
+ent-CEPipeValve1 = трубный вентиль
+    .desc = При установке на мана-трубу позволяет легко контролировать поток энергии.
+
+
+
+
+ent-CEEnergyCrystalCell = энергетическая ячейка кристалла
+    .desc = Энергетический кристалл, заключенный в надежную латунную ячейку. Это защищает кристалл от случайного разрушения и утечки энергии в воздух.
+
+# Machine Cores
+ent-CEBaseMachineCore = машинное ядро
+    .desc = Модульное ядро управления, содержащее схемы и логику, необходимые для сборки и эксплуатации сложных машин.
+
+ent-CEMachineCoreMeltingFurnace = ядро плавильной печи
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreRecycler = ядро переработчика
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreDrill = ядро бура
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreCharger = ядро зарядного устройства
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreFunnel = ядро воронки
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreSalaryPlatform = ядро зарплатной платформы
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreHeater = ядро нагревателя
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreDistributionUnit = ядро распределительного блока
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreAccumulatorVessel = ядро накопительного сосуда
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTerminal = ядро терминала
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreGeneratorMagicCapacitor = ядро магического конденсатора
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformEmpireGuard = ядро торговой платформы (Имперская Гвардия)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformBlackMarket = ядро торговой платформы (Черный Рынок)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformHomeDecor = ядро торговой платформы (Домашний Декор)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformTailors = ядро торговой платформы (Портные)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformHorticulture = ядро торговой платформы (Садоводство)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformDwarfMiners = ядро торговой платформы (Гномы-шахтеры)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformAlcohol = ядро торговой платформы (Алкоголь)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+ent-CEMachineCoreTradingPlatformApothecariesGuild = ядро торговой платформы (Гильдия Аптекарей)
+    .desc = { ent-CEBaseMachineCore.desc }
+
+# Machine Parts
+ent-CEMachinePartEnergyLine1 = энерголиния
+    .desc = Усиленные энергетические ячейки, соединенные в линию. Механический компонент, часто используемый для создания больших машин.
+
+ent-CEMachinePartCoalDiffuser1 = угольный диффузор
+    .desc = Стеклянно-углеродный рассеиватель энергии. Используется как материал для машиностроения.
+
+ent-CEMachinePartDimensionalMatrix1 = размерная матрица
+    .desc = Фрагменты ядер полупланов, наполненные пространственными искажениями, используются как ингредиенты для создания более сложных машин.
+
+
+# Decoration Variations (Garland Colors)
+ent-CEWallmountGarlandRed = гирлянда из красных кристаллов
+    .desc = { ent-CEWallmauntGarlandBase.desc }
+
+ent-CEWallmountGarlandYellow = гирлянда из желтых кристаллов
+    .desc = { ent-CEWallmauntGarlandBase.desc }
+
+ent-CEWallmountGarlandGreen = гирлянда из зеленых кристаллов
+    .desc = { ent-CEWallmauntGarlandBase.desc }
+
+ent-CEWallmountGarlandPurple = гирлянда из фиолетовых кристаллов
+    .desc = { ent-CEWallmauntGarlandBase.desc }
+
+ent-CEWallmountGarlandBlue = гирлянда из синих кристаллов
+    .desc = { ent-CEWallmauntGarlandBase.desc }
+
+# Furniture Variations (Infinite Torches)
+ent-CEFloorTorchAlwaysPowered = вечный напольный факел
+    .desc = Магическое пламя, которое никогда не погаснет. По крайней мере, так говорят.
+
+ent-CEWallmountTorchAlwaysPowered = вечный настенный факел
+    .desc = { ent-CEFloorTorchAlwaysPowered.desc }
+
+
+# Furniture - Bedside Tables
+ent-CEBedsideTableWooden = деревянная прикроватная тумбочка
+    .desc = Небольшое место для хранения вещей первой необходимости.
+
+# Furniture - Benches
+ent-CEBenchWood = деревянная лавка
+    .desc = Лавка, вытесанная из дерева, уютная часть интерьера, предназначенная для сидения и отдыха.
+
+ent-CEBenchWoodFrame = каркас деревянной лавки
+    .desc = { ent-CEBenchWood.desc }
+
+ent-CEBenchWoodLight = светлая деревянная лавка
+    .desc = { ent-CEBenchWood.desc }
+
+ent-CEBenchWoodDark = темная деревянная лавка
+    .desc = { ent-CEBenchWood.desc }
+
+# Furniture - Bookshelves
+ent-CEBookshelfWooden = деревянная книжная полка
+    .desc = Почти полностью заполнена книгами.
+
+ent-CEBookshelfWoodenFilled = деревянная книжная полка (заполненная)
+    .desc = { ent-CEBookshelfWooden.desc }
+
+# Furniture - Cabinets
+ent-CECabinetWooden = деревянный шкаф
+    .desc = Следите за скелетами в своем шкафу.

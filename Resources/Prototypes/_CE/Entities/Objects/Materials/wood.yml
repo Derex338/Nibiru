@@ -56,6 +56,8 @@
   - type: PhysicalComposition
     materialComposition:
       CEWood: 30
+  - type: Fuel
+    value: 270
 
 - type: entity
   id: CEWoodenPlanks1
@@ -98,6 +100,8 @@
   - type: PhysicalComposition
     materialComposition:
       CEWood: 10
+  - type: Fuel
+    value: 90
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
@@ -120,6 +124,9 @@
         volume: 2
     outputs:
       - CEPlanks
+  - type: Log
+    spawnedPrototype: WoodStick1
+    spawnCount: 4
 
 - type: entity
   id: CEWoodenPlanks10

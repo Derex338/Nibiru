@@ -1,15 +1,15 @@
-- type: guideEntry
-  hidden: false
-  locFilter: "en-US"
-  id: BaselineWelcomeEN
-  name: Welcome to CrystallEdge
-  text: "/ServerInfo/_CE/Guidebook_EN/Welcome.xml"
-  children:
-  - CESpeciesGuideEN
-  - CECookingRecipesEN
-  - CEFarmingGuideEN
-  - CEMiningGuideEN
-  - CEImperialLawsEN
+# - type: guideEntry
+#   hidden: false
+#   locFilter: "en-US"
+#   id: BaselineWelcomeEN
+#   name: Welcome to CrystallEdge
+#   text: "/ServerInfo/_CE/Guidebook_EN/Welcome.xml"
+#   children:
+#   - CESpeciesGuideEN
+#   - CECookingRecipesEN
+#   - CEFarmingGuideEN
+#   - CEMiningGuideEN
+#   - CEImperialLawsEN
 
 - type: guideEntry
   hidden: false

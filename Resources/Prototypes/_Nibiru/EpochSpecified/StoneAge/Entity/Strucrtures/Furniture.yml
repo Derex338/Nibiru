@@ -5,8 +5,8 @@
   description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/furniture.rsi
-    state: bed
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/bed.rsi
+    state: icon
     noRot: true
   - type: Construction
     graph: HideBed

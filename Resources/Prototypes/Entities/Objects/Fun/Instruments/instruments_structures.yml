@@ -75,6 +75,9 @@
     program: 46
   - type: Sprite
     state: harp
+  - type: Construction
+    graph: Harp
+    node: fin
 
 - type: entity
   id: TimpaniInstrument

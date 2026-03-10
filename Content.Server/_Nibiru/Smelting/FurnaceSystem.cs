@@ -309,19 +309,6 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (TryComp<FuelConsumptionComponent>(uid, out var fuel))
-        {
-            args.PushMarkup(Loc.GetString(
-                "smelting-furnace-examine-temperature",
-                ("temperature", $"{fuel.CurrentTemperature:F0}")
-            ));
-
-            if (fuel.IsOperational)
-                args.PushMarkup(Loc.GetString("smelting-furnace-examine-operational"));
-            else
-                args.PushMarkup(Loc.GetString("smelting-furnace-examine-cold"));
-        }
-
         var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
 
         var oreCount = inputContainer.ContainedEntities.Count;

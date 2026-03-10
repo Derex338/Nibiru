@@ -1,14 +1,23 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Derex",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-	{
-	  "name": "woodenbarrel"
-	}
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Derex",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "woodenbarrel"
+        },
+        {
+            "name": "base"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "closed"
+        }
+    ]
 }

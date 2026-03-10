@@ -69,6 +69,8 @@
     - ore3
   - type: StackPrice
     price: 2
+  - type: Fuel
+    value: 150
 
 - type: entity
   id: CECoal10

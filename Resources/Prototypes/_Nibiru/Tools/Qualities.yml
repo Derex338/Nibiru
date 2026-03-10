@@ -1,5 +1,5 @@
 - type: tool
-  id: Diging
+  id: Digging
   name: копание
   toolName: лопата
   spawn: Shovel

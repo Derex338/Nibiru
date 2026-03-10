@@ -30,9 +30,9 @@ public sealed class PointsFromStuffSystem : EntitySystem
 
         _accumulator += frameTime;
 
-        while (_accumulator >= 1.0f)
+        while (_accumulator >= 3.0f)
         {
-            _accumulator -= 1.0f;
+            _accumulator -= 3.0f;
             var query = EntityQueryEnumerator<ResearchServerComponent>();
             while (query.MoveNext(out var uid, out var research))
             {

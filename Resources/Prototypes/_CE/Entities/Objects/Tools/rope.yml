@@ -40,3 +40,6 @@
   - type: Stack
     stackType: HerbRope
     count: 1
+  - type: Construction
+    graph: HerbRope
+    node: fin

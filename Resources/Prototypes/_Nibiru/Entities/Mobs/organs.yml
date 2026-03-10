@@ -72,6 +72,7 @@
   - type: Stack
     stackType: Fat
     baseLayer: base
+    count: 1
 
 - type: entity
   id: Gut
@@ -146,6 +147,7 @@
   - type: Stack
     stackType: Leather
     baseLayer: base
+    count: 1
 
 - type: entity
   id: Skull_cow
@@ -251,8 +253,8 @@
   description: "Шкура животного"
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: skin
+    sprite: _Nibiru/Entities/Mobs/Hide.rsi
+    state: small
   - type: Item
     size: Tiny
   - type: Butcherable
@@ -273,8 +275,8 @@
   description: "Шкура животного"
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: skin
+    sprite: _Nibiru/Entities/Mobs/Hide.rsi
+    state: mid
   - type: Item
     size: Tiny
   - type: Butcherable
@@ -295,8 +297,8 @@
   description: "Шкура животного"
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: skin
+    sprite: _Nibiru/Entities/Mobs/Hide.rsi
+    state: big
   - type: Item
     size: Tiny
   - type: Butcherable
@@ -317,8 +319,8 @@
   description: маленький труп для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: small1
   - type: Item
     size: Large
   - type: Butcherable
@@ -338,13 +340,13 @@
   description: маленький труп птицы для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: small1
   - type: Item
     size: Large
   - type: Butcherable
     spawned:
-      - id: Feather
+      - id: CEPenFeather
         amount: 4
 
 - type: entity
@@ -355,8 +357,8 @@
   description: труп для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: mid1
   - type: Butcherable
     spawned:
       - id: FoodMeat
@@ -378,8 +380,8 @@
   description: труп для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: mid2
   - type: Butcherable
     spawned:
       - id: Bone1
@@ -388,6 +390,8 @@
       - id: Fang
         amount: 0
         maxAmount: 1
+      - id: Skull_goat
+        amount: 1
 
 - type: entity
   id: BigBodyButcherFirst
@@ -397,8 +401,8 @@
   description: большой труп для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: big1
   - type: Butcherable
     spawned:
       - id: FoodMeat
@@ -417,8 +421,8 @@
   description: большой труп для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: big2
   - type: Butcherable
     spawned:
       - id: Fat
@@ -438,8 +442,8 @@
   description: большой труп для дальнейшей разделки
   components:
   - type: Sprite
-    sprite: _Nibiru/Entities/Mobs/Organs.rsi
-    state: vein-processed
+    sprite: _Nibiru/Entities/Mobs/Butch.rsi
+    state: big3
   - type: Butcherable
     spawned:
       - id: Bone1
@@ -448,3 +452,5 @@
       - id: Fang
         amount: 1
         maxAmount: 3
+      - id: Skull_cow
+        amount: 1

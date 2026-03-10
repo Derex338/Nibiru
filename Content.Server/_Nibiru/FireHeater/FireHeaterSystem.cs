@@ -35,7 +35,7 @@ public sealed class HeatingSurfaceSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HeatingSurfaceComponent, ExaminedEvent>(OnExamined);
+        //SubscribeLocalEvent<HeatingSurfaceComponent, ExaminedEvent>(OnExamined);
     }
 
     public override void Update(float frameTime)

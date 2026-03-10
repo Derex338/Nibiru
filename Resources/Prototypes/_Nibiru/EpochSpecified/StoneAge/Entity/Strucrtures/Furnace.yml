@@ -13,7 +13,7 @@
         state: lit
         color: "#FFFFFF"
         visible: false
-        shader: unshaded
+        #shader: unshaded
   - type: Appearance
   - type: Transform
   - type: Physics

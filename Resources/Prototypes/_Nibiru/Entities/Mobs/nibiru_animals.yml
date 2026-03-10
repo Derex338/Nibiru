@@ -1,0 +1,129 @@
+- type: entity
+  parent: MobPig
+  id: NibiruMobPig
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideMedium
+      amount: 1
+    - id: MediumBodyButcherFirst
+      amount: 1
+  - type: PointsFromKill
+    points: 25
+
+- type: entity
+  parent: MobGoat
+  id: NibiruMobGoat
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideMedium
+      amount: 1
+    - id: MediumBodyButcherFirst
+      amount: 1
+  - type: PointsFromKill
+    points: 30
+
+- type: entity
+  parent: MobCow
+  id: NibiruMobCow
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideBig
+      amount: 1
+    - id: BigBodyButcherFirst
+      amount: 1
+  - type: PointsFromKill
+    points: 40
+
+- type: entity
+  parent: MobChicken
+  id: NibiruMobChicken
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcher
+      amount: 1
+    - id: CEPenFeather
+      amount: 4
+  - type: PointsFromKill
+    points: 5
+
+- type: entity
+  parent: MobDuckMallard
+  id: NibiruMobDuckMallard
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcher
+      amount: 1
+    - id: CEPenFeather
+      amount: 4
+  - type: PointsFromKill
+    points: 7
+
+- type: entity
+  parent: MobBat
+  id: NibiruMobBat
+  components:
+  - type: PointsFromKill
+    points: 5
+
+- type: entity
+  parent: MobButterfly
+  id: NibiruMobButterfly
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcher
+      amount: 1
+  - type: PointsFromKill
+    points: 1
+
+- type: entity
+  parent: MobFox
+  id: NibiruMobFox
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcher
+      amount: 1
+  - type: PointsFromKill
+    points: 15
+
+- type: entity
+  parent: MobLizard
+  id: NibiruMobLizard
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcher
+      amount: 1
+  - type: PointsFromKill
+    points: 8
+
+- type: entity
+  parent: MobReindeerBuck
+  id: NibiruMobReindeerBuck
+  components:
+  - type: Butcherable
+    spawned:
+    - id: HideBig
+      amount: 1
+    - id: BigBodyButcherFirst
+      amount: 1
+    - id: skull_goat
+      amount: 1
+  - type: PointsFromKill
+    points: 45

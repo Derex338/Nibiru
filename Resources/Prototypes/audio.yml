@@ -74,16 +74,16 @@
   rules: InSpace
   priority: 1
 
-- type: ambientMusic
-  id: Mining
-  sound:
-    params:
-      volume: -12
-    collection: AmbienceMining
-  rules: OnMapGrid
-  fadeIn: true
-  interruptable: true
-  priority: 1
+#- type: ambientMusic
+  #id: Mining
+  #sound:
+  #  params:
+  #    volume: -12
+  #  collection: AmbienceMining
+  #rules: OnMapGrid
+  #fadeIn: true
+  #interruptable: true
+  #priority: 1
 
 ## Fallback if nothing else found
 - type: ambientMusic
@@ -156,9 +156,9 @@
   files:
     - /Audio/Ambience/ambinice.ogg
 
-- type: soundCollection
-  id: AmbienceMining
-  files:
+#- type: soundCollection
+  #id: AmbienceMining
+  #files:
     #- /Audio/Ambience/ambicave.ogg
     #- /Audio/Ambience/ambidanger.ogg
     #- /Audio/Ambience/ambidanger2.ogg
@@ -176,14 +176,6 @@
     #- /Audio/Ambience/ambiruin7.ogg
     #- /Audio/Ambience/voyage_neverending.ogg
     #- /Audio/Ambience/unanchored.ogg
-    - /Audio/_Nibiru/Ambient/ambient-bongos.ogg
-    - /Audio/_Nibiru/Ambient/gjallar.ogg
-    - /Audio/_Nibiru/Ambient/the-legend-of-narmer.ogg
-    - /Audio/_Nibiru/Ambient/royal-market.ogg
-    - /Audio/_Nibiru/Ambient/tranquil-fields-eastern.ogg
-    - /Audio/_Nibiru/Ambient/we-three-celtic-kings.ogg
-    - /Audio/_Nibiru/Ambient/tribal-joy.ogg
-    - /Audio/_Nibiru/Ambient/the-streets-of-prague.ogg
 
 - type: soundCollection
   id: AmbienceRuins

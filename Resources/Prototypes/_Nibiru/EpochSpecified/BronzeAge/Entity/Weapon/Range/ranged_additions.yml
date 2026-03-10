@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
     color: "#654321"
-    scale: 1.1, 1.1
     layers:
     - state: unwielded
       map: [ base ]

@@ -3,6 +3,7 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
+using System.Collections.Generic;
 using System.Numerics;
 using Content.Shared._CE.ZLevels.Core.Components;
 using Content.Shared.Chasm;
@@ -104,9 +105,16 @@ public abstract partial class CESharedZLevelsSystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<CEZPhysicsComponent, CEActiveZPhysicsComponent, TransformComponent, PhysicsComponent>();
+        var activeEnts = new List<(EntityUid uid, CEZPhysicsComponent zPhys, TransformComponent xform, PhysicsComponent physics)>();
         while (query.MoveNext(out var uid, out var zPhys, out _, out var xform, out var physics))
         {
-            if (!_zMapQuery.HasComp(xform.MapUid))
+            if (_zMapQuery.HasComp(xform.MapUid))
+                activeEnts.Add((uid, zPhys, xform, physics));
+        }
+
+        foreach (var (uid, zPhys, xform, physics) in activeEnts)
+        {
+            if (TerminatingOrDeleted(uid))
                 continue;
 
             var oldVelocity = zPhys.Velocity;

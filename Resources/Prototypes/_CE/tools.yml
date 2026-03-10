@@ -17,4 +17,4 @@
   name: ce-tool-quality-hammering-name
   toolName: ce-tool-quality-hammering-tool-name
   spawn: CEBaseWeaponHammer
-  icon: { sprite: _CE/Objects/Tools/Weapons/Melee/Hammer/iron.rsi, state: icon}
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi, state: icon}

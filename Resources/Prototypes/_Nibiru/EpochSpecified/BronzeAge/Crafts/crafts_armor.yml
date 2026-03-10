@@ -136,16 +136,6 @@
   entitysToShowRecipe:
     - BasicWorkbench
 
-- type: construction
-  id: BrownFurCoat
-  name: Коричневая шуба
-  graph: BrownFurCoat
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: FurCloak

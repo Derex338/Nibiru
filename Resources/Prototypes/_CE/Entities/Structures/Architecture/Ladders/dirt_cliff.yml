@@ -33,10 +33,10 @@
   - CEZLevelLadderBase
   - CEZLevelsLadderDirtCliffBase
   id: CEZLevelLadderDirtCliff
-  #components:
-  #- type: Construction
-  #  graph: CEZLevelLadderStone
-  #  node: CEZLevelLadderStone
+  components:
+  - type: Construction
+    graph: CEZLevelLadderDirt
+    node: CEZLevelLadderDirt
 
 - type: entity
   parent:
@@ -44,10 +44,10 @@
   - CEZLevelsLadderDirtCliffBase
   id: CEZLevelLadderDirtCliffCorner
   suffix: Corner
-  #components:
-  #- type: Construction
-  #  graph: CEZLevelLadderStone
-  #  node: CEZLevelLadderStoneCorner
+  components:
+  - type: Construction
+    graph: CEZLevelLadderDirt
+    node: CEZLevelLadderDirtCorner
 
 - type: entity
   parent:
@@ -55,7 +55,7 @@
   - CEZLevelsLadderDirtCliffBase
   id: CEZLevelLadderDirtCliffCornerInner
   suffix: Inner Corner
-  #components:
-  #- type: Construction
-  #  graph: CEZLevelLadderStone
-  #  node: CEZLevelLadderStoneCorner
+  components:
+  - type: Construction
+    graph: CEZLevelLadderDirt
+    node: CEZLevelLadderDirtCornerInner

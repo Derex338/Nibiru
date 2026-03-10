@@ -14,7 +14,7 @@
     attackRate: 1
     damage:
       types:
-        Slash: 35
+        Slash: 20
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -23,15 +23,6 @@
     slots:
     - Back
   - type: DisarmMalus
-  - type: Blocking
-    passiveBlockModifier:
-      coefficients:
-        Slash: 0.75
-    activeBlockModifier:
-      coefficients:
-        Slash: 0.60
-      flatReductions:
-        Slash: 5
   - type: Construction
     graph: BronzeSword
     node: fin
@@ -78,9 +69,7 @@
     attackRate: 0.75
     damage:
       types:
-        Blunt: 10
         Slash: 10
-        Structural: 10
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -88,9 +77,8 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 20
+        Slash: 15
         Structural: 15
-        Blunt: 5
   - type: Item
     size: Ginormous
   - type: Clothing
@@ -114,7 +102,6 @@
     penetration:
       Blunt: 8
       Slash: 12
-      Structural: 8
   - type: Destructible
     thresholds:
       - trigger:
@@ -151,21 +138,21 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Piercing: 15
+        Piercing: 10
   - type: Projectile
     damage:
       types:
-        Piercing: 20
+        Piercing: 5
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 30
+        Piercing: 20
   - type: Wieldable
   - type: MeleeRequiresWield
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 23
+        Piercing: 10
     attackRate: 1,5
   - type: Construction
     graph: BronzeSpear
@@ -173,7 +160,6 @@
   - type: ArmorPenetration
     penetration:
       Piercing: 18
-      Blunt: 5
   - type: Destructible
     thresholds:
       - trigger:
@@ -206,15 +192,15 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 12
+        Piercing: 5
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 20
+        Piercing: 10
   - type: Projectile
     damage:
       types:
-        Piercing: 15
+        Piercing: 25
   - type: Fixtures
     fixtures:
       fix1:
@@ -253,14 +239,14 @@
         Structural: 10
     soundHit:
       collection: MetalThud
-    attackRate: 0.5
+    attackRate: 0.3
   - type: Wieldable
   - type: MeleeRequiresWield
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 50
-        Structural: 100
+        Blunt: 20
+        Structural: 40
   - type: Item
     size: Ginormous
   - type: Construction
@@ -301,27 +287,16 @@
     attackRate: 1.35
     damage:
       types:
-        Piercing: 20
+        Piercing: 15
   - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 30
-  - type: Blocking
-    passiveBlockModifier:
-      coefficients:
-        Slash: 50.0
-    activeBlockModifier:
-      coefficients:
-        Slash: 25.0
-      flatReductions:
-        Slash: 15
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 28
-        Structural: 10
-        Blunt: 3
+        Piercing: 10
   - type: Construction
     graph: BronzeTrident
     node: fin
@@ -364,18 +339,18 @@
     attackRate: 0.75
     damage:
       types:
-        Blunt: 10
-        Slash: 20
-        Structural: 35
+        Piercing: 10
+        Slash: 10
+        Structural: 15
     soundHit:
       collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 15
-        Slash: 30
-        Structural: 50
+        Piercing: 5
+        Slash: 5
+        Structural: 10
   - type: Item
     size: Ginormous
   - type: Clothing
@@ -391,8 +366,7 @@
   - type: ArmorPenetration
     penetration:
       Slash: 16
-      Blunt: 12
-      Structural: 20
+      Piercing: 16
   - type: Destructible
     thresholds:
       - trigger:
@@ -426,8 +400,7 @@
     attackRate: 1.15
     damage:
       types:
-        Slash: 25
-        Piercing: 15
+        Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -438,7 +411,6 @@
   - type: ArmorPenetration
     penetration:
       Slash: 12
-      Piercing: 10
 
 - type: entity
   name: бронзовый кинжал
@@ -456,8 +428,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 15
-        Piercing: 20
+        Piercing: 7
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -467,8 +438,7 @@
     node: fin
   - type: ArmorPenetration
     penetration:
-      Piercing: 15
-      Slash: 8
+      Piercing: 10
 
 - type: entity
   name: бронзовый хопеш
@@ -486,7 +456,7 @@
     attackRate: 0.9
     damage:
       types:
-        Slash: 45
+        Slash: 25
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -496,5 +466,4 @@
     node: fin
   - type: ArmorPenetration
     penetration:
-      Slash: 18
-      Blunt: 5
+      Slash: 19

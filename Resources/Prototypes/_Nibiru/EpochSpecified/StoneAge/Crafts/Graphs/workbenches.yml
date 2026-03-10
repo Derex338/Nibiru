@@ -53,6 +53,51 @@
             - tool: Prying
               doAfter: 8
 
+- type: constructionGraph
+  id: BasicWorkbench
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: WoodStick
+              amount: 4
+              doAfter: 2
+    - node: frame
+      entity: BasicWorkbenchFrame
+      edges:
+        - to: fin
+          completed:
+            - !type:AddFactionComponent
+            - !type:PointsFromCraft
+              points: 100
+          steps:
+            - material: CEWood
+              amount: 2
+              doAfter: 3
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5
+    - node: fin
+      entity: BasicWorkbench
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: CEWoodenPlanks1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 8
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Spindle Workbench (Верстак прядения)
 # Требует: Доски + Палки + Забивание

@@ -46,50 +46,50 @@
   name: Тяжёлые нарушения
   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/CrimeSeverity/Hard.xml"
 
-- type: guideEntry
-  hidden: false
-  id: CEImperialLawsEN
-  locFilter: "en-US"
-  name: Imperial Laws
-  text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/ImperialLaws.xml"
-  children:
-  - CECrimeLightEN
-  - CECrimeLightMediumEN
-  - CECrimeMediumEN
-  - CECrimeMediumHardEN
-  - CECrimeHardEN
-
-- type: guideEntry
-  hidden: false
-  id: CECrimeLightEN
-  locFilter: "en-US"
-  name: Minor Offenses
-  text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Light.xml"
-
-- type: guideEntry
-  hidden: false
-  id: CECrimeLightMediumEN
-  locFilter: "en-US"
-  name: Minor-Medium Offenses
-  text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Light-Medium.xml"
-
-- type: guideEntry
-  hidden: false
-  id: CECrimeMediumEN
-  locFilter: "en-US"
-  name: Medium Offenses
-  text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Medium.xml"
-
-- type: guideEntry
-  hidden: false
-  id: CECrimeMediumHardEN
-  locFilter: "en-US"
-  name: Medium-Serious Offenses
-  text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Medium-Hard.xml"
-
-- type: guideEntry
-  hidden: false
-  id: CECrimeHardEN
-  locFilter: "en-US"
-  name: Serious Crimes
-  text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Hard.xml"
+# - type: guideEntry
+#   hidden: false
+#   id: CEImperialLawsEN
+#   locFilter: "en-US"
+#   name: Imperial Laws
+#   text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/ImperialLaws.xml"
+#   children:
+#   - CECrimeLightEN
+#   - CECrimeLightMediumEN
+#   - CECrimeMediumEN
+#   - CECrimeMediumHardEN
+#   - CECrimeHardEN
+#
+# - type: guideEntry
+#   hidden: false
+#   id: CECrimeLightEN
+#   locFilter: "en-US"
+#   name: Minor Offenses
+#   text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Light.xml"
+#
+# - type: guideEntry
+#   hidden: false
+#   id: CECrimeLightMediumEN
+#   locFilter: "en-US"
+#   name: Minor-Medium Offenses
+#   text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Light-Medium.xml"
+#
+# - type: guideEntry
+#   hidden: false
+#   id: CECrimeMediumEN
+#   locFilter: "en-US"
+#   name: Medium Offenses
+#   text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Medium.xml"
+#
+# - type: guideEntry
+#   hidden: false
+#   id: CECrimeMediumHardEN
+#   locFilter: "en-US"
+#   name: Medium-Serious Offenses
+#   text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Medium-Hard.xml"
+#
+# - type: guideEntry
+#   hidden: false
+#   id: CECrimeHardEN
+#   locFilter: "en-US"
+#   name: Serious Crimes
+#   text: "/ServerInfo/_CE/Guidebook_EN/ImperialLaws/CrimeSeverity/Hard.xml"

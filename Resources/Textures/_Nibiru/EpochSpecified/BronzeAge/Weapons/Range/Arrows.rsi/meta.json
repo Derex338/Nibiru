@@ -1,17 +1,17 @@
 {
-  "version": 1,
-  "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Такен фром ЯрикФД",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "unwielded-arrow"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Такен фром ЯрикФД",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    { 
-	  "name": "wielded-arrow"
-    }
-  ]
+    "states": [
+        {
+            "name": "unwielded-arrow"
+        },
+        {
+            "name": "wielded-arrow"
+        }
+    ]
 }

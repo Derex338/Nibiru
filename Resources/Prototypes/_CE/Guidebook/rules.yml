@@ -6,7 +6,7 @@
   text: "/ServerInfo/_CE/Rules/CE_Rules.xml"
   children:
   - CERulesRU
-  - CERulesEN
+  # - CERulesEN
 
 - type: guideEntry
   hidden: false
@@ -14,8 +14,8 @@
   name: "(RU) Правила сервера"
   text: "/ServerInfo/_CE/Rules/CE_Rules_RU.xml"
 
-- type: guideEntry
-  hidden: false
-  id: CERulesEN
-  name: "(EN) Server rules"
-  text: "/ServerInfo/_CE/Rules/CE_Rules_EN.xml"
+# - type: guideEntry
+#   hidden: false
+#   id: CERulesEN
+#   name: "(EN) Server rules"
+#   text: "/ServerInfo/_CE/Rules/CE_Rules_EN.xml"

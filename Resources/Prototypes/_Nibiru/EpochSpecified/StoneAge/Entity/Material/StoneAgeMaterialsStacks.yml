@@ -30,7 +30,7 @@
 
 - type: stack
   id: MudBlock
-  name: глиняный кирпич (сырой)
+  name: глиняный кирпич
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: brick_3 }
   spawn: MudBlock1
   maxCount: 10
@@ -66,7 +66,7 @@
   parent: BaseSheetStack
   id: WoodStick
   name: палка
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_3 }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_1 }
   spawn: WoodStick1
   maxCount: 20
 
@@ -75,7 +75,7 @@
   stackEntity: WoodStick1
   name: палка
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_3 }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_1 }
   color: "#80ffff"
   price: 5
 
@@ -143,7 +143,7 @@
   stackEntity: Skin_processed
   name: кожа
   unit: materials-unit-piece
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: skin-processed }
   color: "#80ffff"
   price: 20
 
@@ -151,7 +151,7 @@
   parent: BaseSheetStack
   id: Fat
   name: жир
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fat1 }
   spawn: Fat
   maxCount: 20
 
@@ -160,14 +160,14 @@
   stackEntity: Fat
   name: жир
   unit: materials-unit-piece
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fat1 }
   color: "#80ffff"
   price: 10
 
 - type: stack
   id: Log
   name: бревно
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _CE/Objects/Materials/wood.rsi, state: log }
   spawn: Log
   maxCount: 1
 
@@ -176,7 +176,7 @@
   stackEntity: Log
   name: бревно
   unit: materials-unit-piece
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _CE/Objects/Materials/wood.rsi, state: log }
   color: "#80ffff"
   price: 50
 
@@ -189,7 +189,7 @@
 - type: stack
   id: SmallHide
   name: малая шкура
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: small }
   spawn: HideSmall
   maxCount: 5
 
@@ -198,14 +198,14 @@
   stackEntity: HideSmall
   name: малая шкура
   unit: materials-unit-piece
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: small }
   color: "#80ffff"
   price: 15
 
 - type: stack
   id: MediumHide
   name: средняя шкура
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: mid }
   spawn: HideMedium
   maxCount: 3
 
@@ -214,14 +214,14 @@
   stackEntity: HideMedium
   name: средняя шкура
   unit: materials-unit-piece
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: mid }
   color: "#80ffff"
   price: 25
 
 - type: stack
   id: BigHide
   name: большая шкура
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: big }
   spawn: HideBig
   maxCount: 1
 
@@ -230,7 +230,7 @@
   stackEntity: HideBig
   name: большая шкура
   unit: materials-unit-piece
-  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
+  icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: big }
   color: "#80ffff"
   price: 40
 
@@ -297,3 +297,19 @@
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein-processed }
   color: "#80ffff"
   price: 10
+
+- type: stack
+  id: CECotton
+  name: хлопок
+  icon: { sprite: _CE/Objects/Consumable/Food/cotton.rsi, state: base1 }
+  spawn: CECotton
+  maxCount: 30
+
+- type: material
+  id: CECotton
+  stackEntity: CECotton
+  name: хлопок
+  unit: materials-unit-piece
+  icon: { sprite: _CE/Objects/Consumable/Food/cotton.rsi, state: base1 }
+  color: "#ffffff"
+  price: 5

@@ -1,10 +1,10 @@
-- type: guideEntry
-  hidden: false
-  locFilter: "en-US"
-  id: CEFarmingGuideEN
-  name: Farming
-  text: "/ServerInfo/_CE/Guidebook_EN/Farming/Farming.xml"
-  filterEnabled: True
+# - type: guideEntry
+#   hidden: false
+#   locFilter: "en-US"
+#   id: CEFarmingGuideEN
+#   name: Farming
+#   text: "/ServerInfo/_CE/Guidebook_EN/Farming/Farming.xml"
+#   filterEnabled: True
 
 - type: guideEntry
   hidden: false

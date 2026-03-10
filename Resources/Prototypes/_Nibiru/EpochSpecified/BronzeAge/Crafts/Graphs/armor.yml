@@ -211,23 +211,6 @@
     - node: fin
       entity: CEClothingMaskMime
 
-- type: constructionGraph
-  id: BrownFurCoat
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: fin
-          completed:
-            - !type:PointsFromCraft
-              points: 5
-          steps:
-            - material: BigHide
-              amount: 1
-            - tool: Sewing
-              doAfter: 4
-    - node: fin
-      entity: CEClothingCloakCoatFurBrown
 
 - type: constructionGraph
   id: FurCloak

@@ -6,7 +6,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Thread (Нить)
 # Альтернатива 1: Из травы
-# Альтернатива 2: Из хлопка (лучшее качество)
+# Альтернатива 2: Из хлопка
 # ──────────────────────────────────────────────────────────────────────────────
 - type: constructionGraph
   id: Thread
@@ -23,14 +23,14 @@
             - material: Herb
               amount: 2
               doAfter: 1
-        # Вариант из хлопка (дольше, но качественнее)
+        # Вариант из хлопка
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 10
           steps:
-            - material: Cotton
-              amount: 5
+            - material: CECotton
+              amount: 1
               doAfter: 4
     - node: fin
       entity: MaterialThread10
@@ -75,7 +75,16 @@
           steps:
             - material: Thread
               amount: 5
-              doAfter: 4
+              doAfter: 6
+        # Альтернатива напрямую из хлопка
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: CECotton
+              amount: 4
+              doAfter: 8
     - node: fin
       entity: MaterialCloth1
 

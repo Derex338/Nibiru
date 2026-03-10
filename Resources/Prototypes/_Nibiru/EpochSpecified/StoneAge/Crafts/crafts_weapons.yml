@@ -75,3 +75,27 @@
   targetNode: fin
   category: construction-category-weapons
   objectType: Item
+
+- type: construction
+  id: Sling
+  name: Праща
+  graph: Sling
+  startNode: start
+  targetNode: fin
+  category: construction-category-weapons
+  objectType: Item
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Entity/Weapon/Range/Sling.rsi # Placeholder
+    state: icon
+
+- type: construction
+  id: SpearThrower
+  name: Копьеметалка
+  graph: SpearThrower
+  startNode: start
+  targetNode: fin
+  category: Weapons
+  icon:
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: icon
+  objectType: Item

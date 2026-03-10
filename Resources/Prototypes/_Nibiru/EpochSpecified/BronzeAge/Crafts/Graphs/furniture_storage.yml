@@ -12,7 +12,7 @@
           steps:
             - material: WoodenWheel
               amount: 2
-            - material: WoodPlank
+            - material: CEWood
               amount: 4
             - tool: Hammering
               doAfter: 10
@@ -23,7 +23,7 @@
             - !type:PointsFromCraft
               points: 50
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 6
             - tool: Hammering
               doAfter: 15
@@ -67,7 +67,7 @@
             - !type:PointsFromCraft
               points: 20
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 5
             - tool: Hammering
               doAfter: 10
@@ -85,7 +85,7 @@
             - !type:PointsFromCraft
               points: 20
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 4
             - tool: Hammering
               doAfter: 10

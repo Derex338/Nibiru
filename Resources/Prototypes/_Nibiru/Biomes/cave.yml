@@ -103,6 +103,17 @@
       entities:
         - CEWallStoneOreGold
 
+    # --- Животные ---
+    - !type:BiomeEntityLayer
+      threshold: 0.99
+      noise:
+        seed: 2009
+        noiseType: OpenSimplex2
+        frequency: 1
+      allowedTiles:
+        - CEStone
+      entities:
+        - NibiruMobBat
     # --- Подложка (пол) ---
     - !type:BiomeTileLayer
       threshold: -1.0

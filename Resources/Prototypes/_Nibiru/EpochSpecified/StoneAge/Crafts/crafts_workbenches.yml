@@ -17,9 +17,9 @@
 
 - type: construction
   id: BasicWorkbench
-  graph: Table
+  graph: BasicWorkbench
   startNode: start
-  targetNode: BasicWorkbench
+  targetNode: fin
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter

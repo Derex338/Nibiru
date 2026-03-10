@@ -22,7 +22,7 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            component.RSIPath ??= sprite.BaseRSI!.Path;
+            component.RSIPath ??= sprite.BaseRSI?.Path;
         }
     }
 
@@ -50,7 +50,10 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
         foreach (var sprite in component.SpriteLayers)
         {
             _sprite.LayerMapReserve((owner, spriteComponent), sprite);
-            _sprite.LayerSetSprite((owner, spriteComponent), sprite, new SpriteSpecifier.Rsi(component.RSIPath!.Value, sprite));
+
+            if (component.RSIPath != null)
+                _sprite.LayerSetSprite((owner, spriteComponent), sprite, new SpriteSpecifier.Rsi(component.RSIPath.Value, sprite));
+
             _sprite.LayerSetVisible((owner, spriteComponent), sprite, false);
         }
     }

@@ -1,25 +1,5 @@
 # ════════════════════════════════════════════════════════════════════════════════
 # ███ STONE AGE RESEARCH TREE ███
-# Карта исследований для каменного века
-#
-# СТРУКТУРА ДЕРЕВА:
-#
-#              [Примитивная обработка]
-#                      │
-#        ┌─────────────┼─────────────┐
-#        ▼             ▼             ▼
-#   [Оружие]    [Текстиль]    [Строительство]
-#        │             │             │
-#        ▼             ▼             ▼
-#   [Охота]     [Одежда]      [Укрепления]
-#        │             │             │
-#        ▼             ▼             ▼
-#   [Продв.]    [Броня]       [Камень]
-#                                    │
-#                                    ▼
-#                              [Металлургия]
-#
-# ════════════════════════════════════════════════════════════════════════════════
 
 # ══════════════════════════════════════
 # НАЧАЛО - Базовые навыки (position: 0,0)
@@ -40,6 +20,7 @@
     - NibiruBonfire
     - BasicWorkbench
     - WoodBat
+    - FlintAndSteel
 
 # ══════════════════════════════════════
 # ВЕТКА 1: ОРУЖИЕ (слева, position: -2, y)
@@ -142,6 +123,22 @@
     - BoneKnife
 
 - type: technology
+  id: PrimitiveRanged
+  name: Метательное дело
+  icon:
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: unwielded
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - HuntingWeapons
+  position: -3, -4
+  craftUnlocks:
+    - Sling
+    - SpearThrower
+
+- type: technology
   id: Archery
   name: Стрелковое дело
   icon:
@@ -151,8 +148,8 @@
   tier: 1
   cost: 125
   technologyPrerequisites:
-    - HuntingWeapons
-  position: -3, -4
+    - PrimitiveRanged
+  position: -4, -4
   craftUnlocks:
     - WoodenBow
     - WoodenArrow
@@ -215,6 +212,8 @@
     - HerbalBasket
     - WizardShoes
     - CasaHat
+    - HeadWreath
+    - CEStrawHat
 
 - type: technology
   id: BoneArmor
@@ -231,6 +230,9 @@
   craftUnlocks:
     - PrimitiveBoneArmor
     - PrimitiveBoneHelmet
+    - BoneMask
+    - BoneHornedMask
+    - MimeMask
 
 - type: technology
   id: LeatherClothing
@@ -249,6 +251,12 @@
     - CoatTrench
     - CoatPirate
     - HetmanHat
+    - BrownFurCoat
+    - CloakBarbarian
+    - Neckerchief
+    - RedNeckerchief
+    - ShirtWarriorGarb
+    - Loincloth
 
 - type: technology
   id: LeatherArmor
@@ -287,12 +295,14 @@
   craftUnlocks:
     - CEWallDirt
     - CEWallSnow
-    - StrawTile
+    #- StrawTile
     - HideBed
     - CrateWoodenGrave
     - CrateStoneGrave
     - WoodenSign
     - WoodenSignRight
+    - CEZLevelLadderDirt
+    - CEZLevelLadderDirtCorner
 
 - type: technology
   id: WoodWorking
@@ -336,7 +346,7 @@
     - CETableWooden
     - CETableWoodenRound
     - CETableWoodenCounter
-    - ChairWood
+    #- ChairWood
     - CESmallWoodenCrate
     - CELargeWoodenCrate
     - CEWallmountBarShelf
@@ -355,12 +365,17 @@
     - WoodWorking
   position: 1, -2
   craftUnlocks:
-    - WoodenBowl
+    #- WoodenBowl
     - WoodenBucket
     - PanFlute
     - Ocarina
     - Woodblock
     - BirdWhistle
+    - WoodenPlate
+    - CEWoodenBowl
+    - Lyre
+    - Lute
+    - CEFlute
 
 - type: technology
   id: WoodChestplate
@@ -413,7 +428,7 @@
     - Fortifications
   position: 2, -4
   craftUnlocks:
-    - CEWorkbench
+    #- CEWorkbench
     - CEWallStoneBrick
     - QuarryWorkbench
     - StoneBlock
@@ -440,24 +455,24 @@
   craftUnlocks:
     - StoneAnvilWorkbench
 
-- type: technology
-  id: Pottery
-  name: Гончарное дело
-  icon:
-    sprite: Objects/Consumable/Food/bowl.rsi
-    state: bowl
-    color: "#d2691e"
-  discipline: StoneAge
-  tier: 1
-  cost: 75
-  technologyPrerequisites:
-    - BasicConstruction
-  position: 2, 0
-  craftUnlocks:
-    - ClayBowl
-    - ClayJug
-    - ClayCup
-    - ClayPlate
+#- type: technology
+#  id: Pottery
+#  name: Гончарное дело
+#  icon:
+#    sprite: Objects/Consumable/Food/bowl.rsi
+#    state: bowl
+#    color: "#d2691e"
+#  discipline: StoneAge
+#  tier: 1
+#  cost: 75
+#  technologyPrerequisites:
+#    - BasicConstruction
+#  position: 2, 0
+#  craftUnlocks:
+#    - ClayBowl
+#    - ClayJug
+#    - ClayCup
+#    - ClayPlate
 
 # ══════════════════════════════════════
 # ВЕТКА 4: ОГОНЬ И МЕТАЛЛУРГИЯ (правее, position: 4, y)
@@ -479,6 +494,7 @@
     - Candle
     - LightTorch
     - WallTorch
+    - FloorTorch
 
 - type: technology
   id: Metallurgy
@@ -504,8 +520,8 @@
   id: BronzeAgeTransition
   name: Переход в бронзовый век
   icon:
-    sprite: Objects/Materials/materials.rsi
-    state: bronze_1
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_3
   discipline: StoneAge
   tier: 1
   cost: 500
@@ -515,56 +531,3 @@
     - AdvancedWeapons
   position: 0, -7
 
-- type: technology
-  id: TestNewCrafts
-  name: Тест Новых Крафтов
-  icon:
-    sprite: Objects/Materials/materials.rsi
-    state: matterbin
-  discipline: StoneAge
-  tier: 1
-  cost: 10
-  position: 0, 1
-  craftUnlocks:
-    - AngelStatue
-    - LeatherBackBackpack
-    - LeatherBackSatchel
-    - LeatherBeltPouch
-    - Bell
-    - FedoraBlack
-    - FedoraBlue
-    - FedoraGreen
-    - FedoraBrown
-    - FedoraRed
-    - BlacksmithApron
-    - BlacksmithGloves
-    - BlueCarpet
-    - RedCarpet
-    - PurpleCarpet
-    - BlackCarpet
-    - CloakBarbarian
-    - BoneMask
-    - BoneHornedMask
-    - MimeMask
-    - SkeletonGuitar
-    - BrownFurCoat
-    - FurCloak
-    - FurCape
-    - FurCape2
-    - EyePatch
-    - FloorTorch
-    - GlovesJagermeister
-    - Neckerchief
-    - RedNeckerchief
-    - ShirtWarriorGarb
-    - Loincloth
-    - HeadWreath
-    - CEStrawHat
-    - WoodenPlate
-    - CEWoodenBowl
-    - CookingPot
-    - FryingPan
-    - TriangularLeatherHat
-    - Lyre
-    - Lute
-    - CEFlute

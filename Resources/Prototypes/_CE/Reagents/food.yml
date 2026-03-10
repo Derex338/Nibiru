@@ -7,3 +7,8 @@
   flavor: nutriment
   color: "#24591F"
   pricePerUnit: 0.2
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+

@@ -498,7 +498,7 @@
   stackEntity: WheelBlank
   name: заготовка колеса
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Materials/Materials.rsi, state: stone }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: icon }
   color: "#8B4513"
   price: 1
 
@@ -507,6 +507,6 @@
   stackEntity: WoodenWheel
   name: деревянное колесо
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Materials/Materials.rsi, state: stone }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: icon }
   color: "#8B4513"
   price: 1

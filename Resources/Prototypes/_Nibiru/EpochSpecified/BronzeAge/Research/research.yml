@@ -11,8 +11,8 @@
   id: BronzeSmelting
   name: Выплавка бронзы
   icon:
-    sprite: Objects/Materials/materials.rsi
-    state: bronze_3
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi
+    state: icon
   discipline: BronzeAge
   tier: 2
   cost: 250
@@ -78,8 +78,8 @@
   id: BronzeMining
   name: Горное дело
   icon:
-    sprite: Objects/Tools/pickaxe.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
+    state: pickaxe
   discipline: BronzeAge
   tier: 2
   cost: 250
@@ -95,15 +95,15 @@
   id: BronzeEngineering
   name: Инженерное дело
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    sprite: _CE/Objects/Tools/keys.rsi
+    state: lock_iron
   discipline: BronzeAge
   tier: 2
   cost: 200
   epoch: EpochBronze
   technologyPrerequisites:
     - BronzeSmelting
-  position: 2, -4
+  position: 1, 0
   craftUnlocks:
     - MoldLock
     - MoldKey
@@ -116,7 +116,7 @@
   id: BronzeSwordLight
   name: Легкое вооружение
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Dagger.rsi
     state: icon
   discipline: BronzeAge
   tier: 2
@@ -134,7 +134,7 @@
   id: BronzeSwordMedium
   name: Среднее вооружение
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi
     state: icon
   discipline: BronzeAge
   tier: 2
@@ -168,7 +168,7 @@
   id: BronzeSwordHeavy
   name: Тяжелое вооружение
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Khapesh.rsi
     state: icon
   discipline: BronzeAge
   tier: 2
@@ -204,8 +204,8 @@
   id: BronzePolearms
   name: Древковое оружие
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
+    state: spear
   discipline: BronzeAge
   tier: 2
   cost: 300
@@ -216,6 +216,7 @@
   craftUnlocks:
     - MoldTopSpear
     - BronzeSpear
+    #- LightBronzeSpear
     - MoldTrident
     - BronzeTrident
 
@@ -223,7 +224,7 @@
   id: BronzeHalberd
   name: Алебарда
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
     state: icon
   discipline: BronzeAge
   tier: 2
@@ -240,8 +241,8 @@
   id: BronzeArchery
   name: Стрельба
   icon:
-    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: icon
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: wielded-arrow
   discipline: BronzeAge
   tier: 2
   cost: 250
@@ -252,13 +253,14 @@
   craftUnlocks:
     - MoldArrowTip
     - BronzeArrow
+    - ThrowingDart
 
 - type: technology
   id: BronzeArcheryAP
   name: Бронебойные стрелы
   icon:
-    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: icon
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: wielded-arrow
   discipline: BronzeAge
   tier: 2
   cost: 300
@@ -274,8 +276,8 @@
   id: RecursiveBow
   name: Рекурсивный лук
   icon:
-    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: icon
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: unwielded
   discipline: BronzeAge
   tier: 2
   cost: 300
@@ -290,8 +292,8 @@
   id: LongBow
   name: Длинный лук
   icon:
-    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: icon
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: unwielded
   discipline: BronzeAge
   tier: 2
   cost: 300
@@ -346,36 +348,88 @@
 # ══════════════════════════════════════
 
 - type: technology
-  id: BronzeConstruction
-  name: Архитектура бронзового века
+  id: BronzeArchitecture
+  name: Архитектура
   icon:
-    sprite: Structures/Walls/fence.rsi
-    state: straight
+    sprite: _Nibiru/Entities/Workbenches/BronzeAnvil.rsi
+    state: icon
   discipline: BronzeAge
   tier: 2
-  cost: 300
+  cost: 250
   epoch: EpochBronze
   technologyPrerequisites:
     - BronzeSmelting
   position: -2, 1
   craftUnlocks:
     - BronzeAnvilWorkbench
-    - BronzeAgeBed
-    - BronzeAgeChest
-    - Mannequin
-    - ChairWoodBench
-    - Bookshelf
-    - Dresser
-    - BronzeBell
-    - CrateCoffin
-    - ShelfWood
-    - NoticeBoard
-    - Harp
-    - Flute
+    #- ChairWoodBench
+    #- Bookshelf
+    #- Dresser
+    #- CrateCoffin
+    #- ShelfWood
     - CEBedFrameWooden
     - CECabinetWooden
     - CEBenchWood
     - CEBedsideTableWooden
+    - CookingPot
+    - FryingPan
+
+- type: technology
+  id: BronzeUrbanPlanning
+  name: Городское обустройство
+  icon:
+    sprite: _CE/Structures/Decoration/angel_statue.rsi
+    state: statue1
+  discipline: BronzeAge
+  tier: 2
+  cost: 250
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeArchitecture
+  position: -2, 3
+  craftUnlocks:
+    - BronzeBell
+    - AngelStatue
+    - Bell
+    - BlueCarpet
+    - RedCarpet
+    - PurpleCarpet
+    - BlackCarpet
+    #- NoticeBoard
+    #- Harp
+    - Flute
+
+- type: technology
+  id: BronzeClothing
+  name: Кожевенное дело и одежда
+  icon:
+    sprite: _CE/Clothing/Back/Backpacks/backpack.rsi
+    state: icon
+  discipline: BronzeAge
+  tier: 2
+  cost: 250
+  epoch: EpochBronze
+  technologyPrerequisites:
+    - BronzeArmor
+  position: 2, 2
+  craftUnlocks:
+    #- Mannequin
+    - LeatherBackBackpack
+    - LeatherBackSatchel
+    - LeatherBeltPouch
+    - FedoraBlack
+    - FedoraBlue
+    - FedoraGreen
+    - FedoraBrown
+    - FedoraRed
+    - BlacksmithApron
+    - BlacksmithGloves
+    - FurCloak
+    - FurCape
+    - FurCape2
+    - EyePatch
+    - GlovesJagermeister
+    - TriangularLeatherHat
 
 - type: technology
   id: BronzeHeraldry
@@ -388,8 +442,8 @@
   cost: 200
   epoch: EpochBronze
   technologyPrerequisites:
-    - BronzeConstruction
-  position: -4, 1
+    - BronzeArchitecture
+  position: -3, 2
   craftUnlocks:
     - BannerCargo
     - BannerEngineering
@@ -405,15 +459,15 @@
   id: BronzeTransportation
   name: Транспорт бронзового века
   icon:
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
+    state: icon
   discipline: BronzeAge
   tier: 2
   cost: 200
   epoch: EpochBronze
   technologyPrerequisites:
-    - BronzeConstruction
-  position: 1, -1
+    - BronzeArchitecture
+  position: -1, 2
   craftUnlocks:
     - WheelBlank
     - WoodenWheel
@@ -424,15 +478,15 @@
   id: WebWorking
   name: Плетение из паутины
   icon:
-    sprite: Entities/Structures/spider_web.rsi
-    state: icon
+    sprite: Structures/Walls/web.rsi
+    state: full
   discipline: BronzeAge
   tier: 2
   cost: 200
   epoch: EpochBronze
   technologyPrerequisites:
-    - BronzeConstruction
-  position: -6, 1
+    - BronzeArchitecture
+  position: -3, 1
   craftUnlocks:
     - WallWeb
     - TableWeb

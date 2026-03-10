@@ -1,0 +1,9 @@
+# Default rules
+- type: guideEntry
+  id: NibiruRuleset
+  name: Правила сервера
+  priority: 0
+  locFilter: "ru-RU"
+  hidden: false
+  ruleEntry: true
+  text: "/ServerInfo/_Nibiru/Rules/Rules_RU.xml"

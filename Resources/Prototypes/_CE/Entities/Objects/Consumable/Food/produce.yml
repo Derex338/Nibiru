@@ -67,6 +67,13 @@
     slice: CESeedCotton
   - type: StaticPrice
     price: 1
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      CECotton: 1
+  - type: Stack
+    stackType: CECotton
+    count: 1
 
 - type: entity
   id: CEFoodCabbage

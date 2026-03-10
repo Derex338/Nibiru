@@ -24,7 +24,7 @@
         Piercing: 25
   - type: ArmorPenetration
     penetration:
-      Piercing: 18
+      Piercing: 14
   - type: Construction
     graph: BronzeArrow
     node: fin
@@ -38,10 +38,10 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 35
+        Piercing: 15
   - type: ArmorPenetration
     penetration:
-      Piercing: 28
+      Piercing: 20
   - type: Construction
     graph: BronzeArrowAP
     node: fin

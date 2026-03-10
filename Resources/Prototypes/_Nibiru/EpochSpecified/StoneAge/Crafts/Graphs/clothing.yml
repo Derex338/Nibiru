@@ -255,3 +255,139 @@
               doAfter: 7
     - node: fin
       entity: ClothingOuterCoatPirateNibiru
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Fur Coat (Шуба)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: BrownFurCoat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: BigHide
+              amount: 1
+            - tool: Sewing
+              doAfter: 5
+    - node: fin
+      entity: CEClothingCloakCoatFurBrown
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Neckerchiefs (Шейные платки)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: Neckerchief
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskNeckerchief
+
+- type: constructionGraph
+  id: RedNeckerchief
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 4
+    - node: fin
+      entity: CEClothingMaskRedNeckerchief
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Warrior Garb (Одежда воина)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: ShirtWarriorGarb
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 15
+          steps:
+            - material: Cloth
+              amount: 4
+            - tool: Sewing
+              doAfter: 5
+    - node: fin
+      entity: CEClothingShirtWarriorGarb
+
+- type: constructionGraph
+  id: Loincloth
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 2
+            - tool: Sewing
+              doAfter: 2
+    - node: fin
+      entity: CEClothingPantsLoincloth
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Hats (Головные уборы)
+# ──────────────────────────────────────────────────────────────────────────────
+- type: constructionGraph
+  id: HeadWreath
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Herb
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: CEClothingHeadWreath
+
+- type: constructionGraph
+  id: CEStrawHat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Herb
+              amount: 2
+              doAfter: 5
+    - node: fin
+      entity: CEClothingHeadStrawHat

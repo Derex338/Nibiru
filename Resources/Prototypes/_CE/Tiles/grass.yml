@@ -22,7 +22,7 @@
     North: /Textures/_CE/Tiles/Grass/double_edge_N.png
     West: /Textures/_CE/Tiles/Grass/double_edge_W.png
   baseTurf: CEDirt
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
@@ -53,7 +53,7 @@
     North: /Textures/_CE/Tiles/GrassLight/double_edge_N.png
     West: /Textures/_CE/Tiles/GrassLight/double_edge_W.png
   baseTurf: CEGrass
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
@@ -84,7 +84,7 @@
     North: /Textures/_CE/Tiles/GrassTall/double_edge_N.png
     West: /Textures/_CE/Tiles/GrassTall/double_edge_W.png
   baseTurf: CEGrassLight
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass

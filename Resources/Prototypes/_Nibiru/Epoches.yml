@@ -26,8 +26,8 @@
   name: Каменный век
   color: "#dc373b"
   icon:
-    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
-    state: icon
+    sprite: _CE/Objects/Materials/stone.rsi
+    state: stone
   tierPrerequisites:
     1: 0
     2: 0.75

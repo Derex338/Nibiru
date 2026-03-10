@@ -25,6 +25,7 @@ public sealed class FactionSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly FactionBroadcaster _broadcast = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private static readonly HashSet<Entity<FactionComponent>> ClientLookup = new();
 
@@ -74,19 +75,30 @@ public sealed class FactionSystem : EntitySystem
                 // Конвертируем NetEntity обратно в EntityUid
                 var leaderUid = GetEntity(data.Leader);
 
-                // Проверяем, что лидер жив
-                if (!TryComp<MobStateComponent>(leaderUid, out var mobState) ||
+                // Проверяем, что лидер существует и жив
+                if (!_entityManager.EntityExists(leaderUid) ||
+                    !TryComp<MobStateComponent>(leaderUid, out var mobState) ||
                     mobState.CurrentState != MobState.Alive)
                     continue;
 
                 // Считаем живых членов
                 var aliveMembers = 0;
+                var deadNetMembers = new List<NetEntity>();
                 foreach (var netMember in data.Members)
                 {
                     var memberUid = GetEntity(netMember);
+                    if (!_entityManager.EntityExists(memberUid))
+                    {
+                        deadNetMembers.Add(netMember);
+                        continue;
+                    }
                     if (TryComp<MobStateComponent>(memberUid, out var ms) && ms.CurrentState == MobState.Alive)
                         aliveMembers++;
                 }
+
+                // Удаляем несуществующих членов
+                foreach (var dead in deadNetMembers)
+                    data.Members.Remove(dead);
 
                 if (aliveMembers == 0 || !data.IsRecruiting)
                     continue;
@@ -320,7 +332,8 @@ public sealed class FactionSystem : EntitySystem
 
             // Сначала проверяем лидера
             var leaderUid = GetEntity(factionData.Leader);
-            if (TryComp<MobStateComponent>(leaderUid, out var leaderMob) &&
+            if (_entityManager.EntityExists(leaderUid) &&
+                TryComp<MobStateComponent>(leaderUid, out var leaderMob) &&
                 leaderMob.CurrentState == MobState.Alive)
             {
                 spawnNear = leaderUid;
@@ -328,9 +341,15 @@ public sealed class FactionSystem : EntitySystem
             else
             {
                 // Ищем любого живого члена
+                var deadNetMembers = new List<NetEntity>();
                 foreach (var netMember in factionData.Members)
                 {
                     var memberUid = GetEntity(netMember);
+                    if (!_entityManager.EntityExists(memberUid))
+                    {
+                        deadNetMembers.Add(netMember);
+                        continue;
+                    }
                     if (TryComp<MobStateComponent>(memberUid, out var memberMob) &&
                         memberMob.CurrentState == MobState.Alive)
                     {
@@ -338,6 +357,10 @@ public sealed class FactionSystem : EntitySystem
                         break;
                     }
                 }
+
+                // Удаляем несуществующих членов из данных реестра
+                foreach (var dead in deadNetMembers)
+                    factionData.Members.Remove(dead);
             }
 
             if (spawnNear == null)

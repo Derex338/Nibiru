@@ -34,6 +34,7 @@
 - type: entity
   id: BronzeBell
   name: бронзовый колокол
+  parent: BaseStructure
   description: Большой бронзовый колокол. Его звон разносится на многие мили.
   placement:
     mode: SnapgridCenter
@@ -45,6 +46,7 @@
     sprite: Structures/Specific/church-bell.rsi
     layers:
     - state: church-bell
+      color: "#804000"
   - type: InteractionPopup
     interactDelay: 1
     successChance: 1
@@ -52,8 +54,6 @@
       collection: ChurchBell
   - type: Clickable
   - type: Rotatable
-  - type: CollisionWake
-    enabled: false
   - type: Physics
     canCollide: false
     bodyType: Static

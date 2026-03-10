@@ -109,9 +109,7 @@ namespace Content.Client.LateJoin
             };
             _soloButton.OnPressed += _ =>
             {
-                _sawmill.Info("Player chose solo spawn");
                 OnFactionSelected(null);
-                _consoleHost.ExecuteCommand($"latejoin_solo");
             };
             baseContainer.AddChild(_soloButton);
 
@@ -138,13 +136,16 @@ namespace Content.Client.LateJoin
         /// </summary>
         private void OnFactionSelected(string? factionName)
         {
-            _consoleHost.ExecuteCommand($"latejoin_faction {factionName}");
-            _consoleHost.ExecuteCommand($"latejoin_solo");
-
             if (factionName != null)
+            {
+                _consoleHost.ExecuteCommand($"latejoin_faction \"{factionName}\"");
                 _sawmill.Info($"Player chose faction: {factionName}");
+            }
             else
+            {
+                _consoleHost.ExecuteCommand($"latejoin_solo");
                 _sawmill.Info("Player chose solo spawn");
+            }
 
             // Закрываем окно
             Close();

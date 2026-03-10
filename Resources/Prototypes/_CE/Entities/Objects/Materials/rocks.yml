@@ -47,8 +47,8 @@
 - type: entity
   id: CEStoneBlock1
   parent: BaseItem
-  name: stone block
-  description: A block of cold stone.
+  name: stone
+  description: A cold stone.
   categories: [ ForkFiltered ]
   components:
   - type: Item
@@ -81,6 +81,42 @@
     outputs:
       - CECobblestone
       - CEStone
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SharpStone:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: MeleeWeapon
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+    angle: 1
+    attackRate: 0.75
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 3
+  - type: ArmorPenetration
+    penetration:
+      Blunt: 2
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 10
+  - type: Tag
+    tags:
+      - Stone
+  - type: Damageable
 
 - type: entity
   id: CEStoneBlock10

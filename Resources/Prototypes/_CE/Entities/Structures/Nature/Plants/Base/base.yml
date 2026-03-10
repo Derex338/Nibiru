@@ -115,9 +115,9 @@
   - type: CEPlantAdditionalProduceOnDestruct
     produce:
       CEWoodLog: 3
-  - type: CEWaveShader
-    speed: 3
-    dis: 4
+  #- type: CEWaveShader
+  #  speed: 3
+  #  dis: 4
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood

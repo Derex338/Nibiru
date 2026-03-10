@@ -41,6 +41,9 @@
   id: StoneBlock1
   suffix: Single
   components:
+  - type: Construction
+    graph: StoneBlock
+    node: fin
   - type: Stack
     count: 1
 
@@ -86,6 +89,9 @@
   id: MudBlock1
   suffix: Single
   components:
+  - type: Construction
+    graph: MudBlock
+    node: fin
   - type: Stack
     count: 1
   - type: Sprite
@@ -116,29 +122,13 @@
             max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Material
   - type: PhysicalComposition
     materialComposition:
       Mud: 100
-  - type: Stack
-    stackType: MudBlock
-    baseLayer: base
-    layerStates:
-    - brick_1
-    - brick_2
-    - brick_3
   - type: Temperature
   - type: Construction
     graph: MudBlock
     node: raw
-
-- type: entity
-  parent: MudBlockRaw
-  id: MudBlockRaw1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1
 
 - type: entity
   parent: [PartBase, BaseWoodItem]
@@ -152,6 +142,7 @@
       WoodStick: 100
   - type: Stack
     stackType: WoodStick
+    count: 20
     baseLayer: base
     layerStates:
     - stick_1
@@ -170,6 +161,8 @@
     price: 0
   - type: StackPrice
     price: 1
+  - type: Fuel
+    value: 25
 
 - type: entity
   parent: WoodStick
@@ -219,6 +212,8 @@
     price: 0
   - type: StackPrice
     price: 1
+  - type: Fuel
+    value: 15
 
 - type: entity
   parent: MaterialThread
@@ -227,6 +222,9 @@
   components:
   - type: Sprite
     state: thread_1
+  - type: Construction
+    graph: MaterialThread
+    node: fin
   - type: Stack
     count: 10
 
@@ -263,6 +261,8 @@
   - type: Tag
     tags:
     - Write
+  - type: Fuel
+    value: 5
 
 - type: entity
   parent: FeatherBase

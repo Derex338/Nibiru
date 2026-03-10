@@ -14,8 +14,6 @@
     state: banner
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerCargo
@@ -29,8 +27,6 @@
     state: banner_cargo
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerEngineering
@@ -44,8 +40,6 @@
     state: banner_engineering
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerMedical
@@ -59,8 +53,6 @@
     state: banner_medical
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerRevolution
@@ -74,8 +66,6 @@
     state: banner_revolution
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerSyndicate
@@ -89,8 +79,6 @@
     state: banner_syndicate
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerScience
@@ -104,8 +92,6 @@
     state: banner_science
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerBlue
@@ -119,8 +105,6 @@
     state: banner-blue
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerRed
@@ -134,8 +118,6 @@
     state: banner-red
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerYellow
@@ -149,8 +131,6 @@
     state: banner-yellow
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BannerGreen
@@ -164,8 +144,6 @@
     state: banner-green
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - LoomWorkbench
 
 - type: construction
   id: BronzeBell
@@ -179,8 +157,6 @@
     state: church-bell
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - BronzeAnvilWorkbench
 
 - type: construction
   id: Harp
@@ -193,7 +169,7 @@
   icon:
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: harp
-  objectType: Item
+  objectType: Structure
 
 - type: construction
   id: Flute
@@ -217,8 +193,6 @@
   category: Decorations
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - BasicWorkbench
 
 - type: construction
   id: Bell
@@ -361,8 +335,6 @@
   category: Decorations
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - BasicWorkbench
 
 - type: construction
   id: WallTorch
@@ -373,8 +345,6 @@
   category: Decorations
   objectType: Structure
   placementMode: SnapToGrid
-  entitysToShowRecipe:
-    - BasicWorkbench
 
 - type: construction
   id: GlovesJagermeister
@@ -387,93 +357,6 @@
   entitysToShowRecipe:
     - LoomWorkbench
 
-- type: construction
-  id: Neckerchief
-  name: Шейный платок
-  graph: Neckerchief
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - LoomWorkbench
-
-- type: construction
-  id: RedNeckerchief
-  name: Красный шейный платок
-  graph: RedNeckerchief
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - LoomWorkbench
-
-- type: construction
-  id: ShirtWarriorGarb
-  name: Рубашка воина
-  graph: ShirtWarriorGarb
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - LoomWorkbench
-
-- type: construction
-  id: Loincloth
-  name: Набедренная повязка
-  graph: Loincloth
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - LoomWorkbench
-
-- type: construction
-  id: HeadWreath
-  name: Венок
-  graph: HeadWreath
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - BasicWorkbench
-
-- type: construction
-  id: CEStrawHat
-  name: Соломенная шляпа
-  graph: CEStrawHat
-  startNode: start
-  targetNode: fin
-  category: Gear
-  objectType: Item
-  entitysToShowRecipe:
-    - BasicWorkbench
-
-- type: construction
-  id: WoodenPlate
-  name: Деревянная тарелка
-  graph: WoodenPlate
-  startNode: start
-  targetNode: fin
-  category: construction-category-utilities
-  objectType: Item
-  entitysToShowRecipe:
-    - SawmillWorkbench
-
-- type: construction
-  id: CEWoodenBowl
-  name: Деревянная миска
-  graph: CEWoodenBowl
-  startNode: start
-  targetNode: fin
-  category: construction-category-utilities
-  objectType: Item
-  entitysToShowRecipe:
-    - SawmillWorkbench
 
 - type: construction
   id: CookingPot
@@ -508,35 +391,4 @@
   entitysToShowRecipe:
     - LoomWorkbench
 
-- type: construction
-  id: Lyre
-  name: Лира
-  graph: Lyre
-  startNode: start
-  targetNode: fin
-  category: construction-category-utilities
-  objectType: Item
-  entitysToShowRecipe:
-    - SawmillWorkbench
 
-- type: construction
-  id: Lute
-  name: Лютня
-  graph: Lute
-  startNode: start
-  targetNode: fin
-  category: construction-category-utilities
-  objectType: Item
-  entitysToShowRecipe:
-    - SawmillWorkbench
-
-- type: construction
-  id: CEFlute
-  name: Флейта из палки
-  graph: CEFlute
-  startNode: start
-  targetNode: fin
-  category: construction-category-utilities
-  objectType: Item
-  entitysToShowRecipe:
-    - BasicWorkbench

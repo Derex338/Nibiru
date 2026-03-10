@@ -8,7 +8,7 @@
           completed:
             - !type:SnapToGrid
           steps:
-            - material: CEWood
+            - material: Log
               amount: 3
               doAfter: 2
     - node: CEWallWoodenPalisade

@@ -36,6 +36,7 @@ namespace Content.Client.Lobby
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
+        private LateJoinGui? _lateJoinGui;
 
         protected override void Startup()
         {
@@ -92,6 +93,9 @@ namespace Content.Client.Lobby
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
 
+            _lateJoinGui?.Close();
+            _lateJoinGui = null;
+
             Lobby = null;
         }
 
@@ -114,7 +118,18 @@ namespace Content.Client.Lobby
                 return;
             }
 
-            new LateJoinGui().OpenCentered();
+            if (_lateJoinGui != null && _lateJoinGui.IsOpen)
+            {
+                _lateJoinGui.Close();
+                return;
+            }
+
+            if (_lateJoinGui == null || _lateJoinGui.Disposed)
+            {
+                _lateJoinGui = new LateJoinGui();
+            }
+
+            _lateJoinGui.OpenCentered();
         }
 
         private void OnReadyToggled(BaseButton.ButtonToggledEventArgs args)

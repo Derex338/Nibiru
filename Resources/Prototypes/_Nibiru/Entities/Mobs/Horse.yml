@@ -30,6 +30,12 @@
   - type: InputMover
   - type: MobMover
   - type: Physics
+  - type: Tag
+    tags:
+    - FootstepSound
+    - VimPilot
+  - type: PointsFromKill
+    points: 50
 
 
 - type: entity

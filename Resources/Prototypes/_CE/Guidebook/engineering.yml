@@ -1,10 +1,10 @@
-- type: guideEntry
-  hidden: false
-  locFilter: "en-US"
-  id: CEMiningGuideEN
-  name: Mining
-  text: "/ServerInfo/_CE/Guidebook_EN/Engineering/Mining.xml"
-  filterEnabled: True
+# - type: guideEntry
+#   hidden: false
+#   locFilter: "en-US"
+#   id: CEMiningGuideEN
+#   name: Mining
+#   text: "/ServerInfo/_CE/Guidebook_EN/Engineering/Mining.xml"
+#   filterEnabled: True
 
 - type: guideEntry
   hidden: false

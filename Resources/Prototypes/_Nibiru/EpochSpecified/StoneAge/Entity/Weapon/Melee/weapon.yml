@@ -24,13 +24,16 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 15
+        Slash: 10
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
   - type: DisarmMalus
     malus: 0.225
   - type: ThrowingAngle
     angle: 225
+  - type: Construction
+    graph: BoneKnife
+    node: fin
   - type: ArmorPenetration
     penetration:
       Slash: 4
@@ -50,12 +53,12 @@
     attackRate: 1.2
     damage:
       types:
-        Blunt: 8
+        Blunt: 6
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 12
+        Blunt: 10
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
   - type: DisarmMalus
@@ -160,8 +163,8 @@
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
   - type: Construction
-    graph: Spear
-    node: spear
+    graph: WoodBat
+    node: fin
   - type: ArmorPenetration
     penetration:
       Blunt: 4

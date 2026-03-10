@@ -135,7 +135,6 @@
               amount: 1
             - material: Leather
               amount: 1
-            - tool: Prying
               doAfter: 5
     - node: fin
       entity: SpearThrower
@@ -247,7 +246,7 @@
             - material: CEWood
               amount: 2
             - material: CEBone
-              amount: 5
+              amount: 2
             - material: HerbRope
               amount: 1
               doAfter: 5
@@ -259,9 +258,9 @@
             - material: CEWood
               amount: 2
             - material: CEBone
-              amount: 5
+              amount: 2
             - material: Vein_processed
-              amount: 1
+              amount: 2
               doAfter: 5
     - node: fin
       entity: BoneKnife
@@ -444,7 +443,7 @@
             - material: CEStone
               amount: 2
             - material: HerbRope
-              amount: 2
+              amount: 1
               doAfter: 4
         - to: fin
           steps:
@@ -475,7 +474,7 @@
             - material: CEStone
               amount: 2
             - material: HerbRope
-              amount: 2
+              amount: 1
               doAfter: 4
         - to: fin
           steps:

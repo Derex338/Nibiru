@@ -49,3 +49,29 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  hide: false
+  id: CEZLevelLadderDirt
+  graph: CEZLevelLadderDirt
+  startNode: start
+  targetNode: CEZLevelLadderDirt
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  hide: false
+  id: CEZLevelLadderDirtCorner
+  graph: CEZLevelLadderDirt
+  startNode: start
+  targetNode: CEZLevelLadderDirtCorner
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

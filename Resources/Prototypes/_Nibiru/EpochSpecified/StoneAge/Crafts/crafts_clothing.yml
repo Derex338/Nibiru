@@ -89,3 +89,80 @@
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
+
+- type: construction
+  id: BrownFurCoat
+  name: Коричневая шуба
+  graph: BrownFurCoat
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: Neckerchief
+  name: Шейный платок
+  graph: Neckerchief
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: RedNeckerchief
+  name: Красный шейный платок
+  graph: RedNeckerchief
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: ShirtWarriorGarb
+  name: Рубашка воина
+  graph: ShirtWarriorGarb
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: Loincloth
+  name: Набедренная повязка
+  graph: Loincloth
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - LoomWorkbench
+
+- type: construction
+  id: HeadWreath
+  name: Венок
+  graph: HeadWreath
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: CEStrawHat
+  name: Соломенная шляпа
+  graph: CEStrawHat
+  startNode: start
+  targetNode: fin
+  category: construction-category-clothing
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench

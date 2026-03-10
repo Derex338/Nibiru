@@ -12,12 +12,20 @@ using Content.Shared.Atmos;
 using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Gravity;
+using Content.Shared.Item;
 using Content.Shared.Light.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Containers;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Tag;
 using Content.Shared.Maps;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -33,6 +41,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager;
 using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
 namespace Content.Server.Parallax;
@@ -43,6 +52,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallelManager _parallel = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -465,7 +475,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
 
             // Prevent generation lag spike by capping chunk loads per tick
-            if (sw.Elapsed.TotalMilliseconds > 12 && chunksLoaded > 0)
+            if (sw.Elapsed.TotalMilliseconds > 8 && chunksLoaded > 0)
                 continue;
 
             if (!component.LoadedChunks.Add(chunk))
@@ -766,7 +776,17 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 RemComp<GhostTakeoverAvailableComponent>(uid);
                 RemComp<GhostRoleComponent>(uid);
                 EntityManager.InitializeAndStartEntity(uid);
-                modified.Add(node);
+
+                if (component.LoadedEntities.TryGetValue(chunk, out var loadedEntities))
+                {
+                    loadedEntities.Add(uid, node);
+                }
+                else
+                {
+                    loadedEntities = new Dictionary<EntityUid, Vector2i>();
+                    loadedEntities.Add(uid, node);
+                    component.LoadedEntities.Add(chunk, loadedEntities);
+                }
             }
         }
 
@@ -844,7 +864,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (_xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
-                    _transform.AnchorEntity((ent, xform), (gridUid, grid), indices);
+                    if (!HasComp<MobStateComponent>(ent) && !HasComp<ItemComponent>(ent) && !HasComp<PullableComponent>(ent))
+                        _transform.AnchorEntity((ent, xform), (gridUid, grid), indices);
                 }
 
                 loadedEntities.Add(ent, indices);
@@ -913,7 +934,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var chunksUnloaded = 0;
         foreach (var chunk in toUnload)
         {
-            if (sw.Elapsed.TotalMilliseconds > 12 && chunksUnloaded > 0)
+            if (sw.Elapsed.TotalMilliseconds > 20 && chunksUnloaded > 0)
                 break;
 
             if (!component.LoadedChunks.Remove(chunk))
@@ -952,23 +973,63 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // This is because if we want to save the map (e.g. persistent server) it makes the file much smaller
         // and also if the map is enormous will make stuff like physics broadphase much faster
         var xformQuery = GetEntityQuery<TransformComponent>();
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
 
         foreach (var (ent, tile) in component.LoadedEntities[chunk])
         {
-            if (Deleted(ent) || !xformQuery.TryGetComponent(ent, out var xform))
+            if (Deleted(ent) || !xformQuery.TryGetComponent(ent, out var xform) || !metaQuery.TryGetComponent(ent, out var metadata))
             {
                 modified.Add(tile);
                 continue;
             }
 
-            // It's moved
-            var entTile = _mapSystem.LocalToTile(gridUid, grid, xform.Coordinates);
-
-            if (!xform.Anchored || entTile != tile)
+            // It's moved to another tile
+            if (_mapSystem.LocalToTile(gridUid, grid, xform.Coordinates) != tile)
             {
                 modified.Add(tile);
                 continue;
             }
+
+            // Is it picked up or in a container?
+            if (xform.ParentUid != gridUid)
+            {
+                modified.Add(tile);
+                continue;
+            }
+
+            // Has it been renamed/modified by player?
+            if (metadata.EntityPrototype != null &&
+                (metadata.EntityName != metadata.EntityPrototype.Name ||
+                 metadata.EntityDescription != metadata.EntityPrototype.Description))
+            {
+                modified.Add(tile);
+                continue;
+            }
+
+            // If it's an item, did it move from its exact spawn position?
+            if (HasComp<ItemComponent>(ent))
+            {
+                var spawnCoords = _mapSystem.GridTileToLocal(gridUid, grid, tile);
+                if (!xform.Coordinates.Position.EqualsApprox(spawnCoords.Position, 0.01f))
+                {
+                    modified.Add(tile);
+                    continue;
+                }
+            }
+
+            // 1. Проверяем, должен ли этот ентити здесь находиться (мягкая проверка имени прототипа и маркеров)
+            if (!IsExpectedByGenerator(ent, tile, metadata.EntityPrototype?.ID, component, gridUid, grid))
+            {
+                modified.Add(tile);
+                continue;
+            }
+/*
+            // 2. Если сущность "родная", проверяем, не изменил ли её игрок (игнорируя системные компоненты).
+            if (!IsBiomeDefault(ent, _ignoredBiomeComps))
+            {
+                modified.Add(tile);
+                continue;
+            }*/
 
             Del(ent);
         }
@@ -993,6 +1054,50 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 {
                     modified.Add(indices);
                     continue;
+                }
+
+                var entities = _turf.GetEntitiesInTile(_mapSystem.GridTileToLocal(gridUid, grid, indices), LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate | LookupFlags.Uncontained);
+
+                foreach (var ent in entities)
+                {
+                    if (Deleted(ent) || ent == gridUid)
+                        continue;
+
+                    if (!TryComp<MetaDataComponent>(ent, out var metadata))
+                    {
+                        modified.Add(indices);
+                        break;
+                    }
+
+                    // 1. Проверяем, ожидается ли этот прототип в данном месте
+                    if (!IsExpectedByGenerator(ent, indices, metadata.EntityPrototype?.ID, component, gridUid, grid))
+                    {
+                        modified.Add(indices);
+                        break;
+                    }
+
+                    // 2. Для предметов проверяем, не сдвинул ли их игрок со спавна
+                    if (HasComp<ItemComponent>(ent))
+                    {
+                        var spawnCoords = _mapSystem.GridTileToLocal(gridUid, grid, indices);
+                        if (!xformQuery.GetComponent(ent).Coordinates.Position.EqualsApprox(spawnCoords.Position, 0.01f))
+                        {
+                            modified.Add(indices);
+                            break;
+                        }
+                    }
+                }
+
+                if (modified.Contains(indices))
+                    continue;
+
+                // Если мы здесь, значит все сущности на тайле - "родные" и не измененные.
+                // Удаляем их перед отгрузкой тайла, чтобы не было дублей при повторной загрузке.
+                foreach (var ent in entities)
+                {
+                    if (Deleted(ent) || ent == gridUid)
+                        continue;
+                    Del(ent);
                 }
 
                 // If it's default data unload the tile.
@@ -1117,11 +1222,92 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         // Используем хеширование на основе MurmurHash3
         int tileSeed = unchecked(seed ^ (index.X * 397) ^ (index.Y * 3931));
-        //tileSeed = unchecked((tileSeed ^ (tileSeed >> 16)) * 0x45d9f3b);
-        //tileSeed = unchecked((tileSeed ^ (tileSeed >> 16)) * 0x45d9f3b);
-        //tileSeed = unchecked(tileSeed ^ (tileSeed >> 16));
+        tileSeed = unchecked((tileSeed ^ (tileSeed >> 16)) * 0x45d9f3b);
+        tileSeed = unchecked((tileSeed ^ (tileSeed >> 16)) * 0x45d9f3b);
+        tileSeed = unchecked(tileSeed ^ (tileSeed >> 16));
 
         tile = new Tile(biomeTile.Value.TypeId, biomeTile.Value.Flags, _tile.PickVariant(def, tileSeed), biomeTile.Value.RotationMirroring);
+        return true;
+    }
+
+    private bool IsExpectedByGenerator(EntityUid ent, Vector2i tile, string? currentProto, BiomeComponent biome, EntityUid gridUid, MapGridComponent grid)
+    {
+        if (currentProto == null) return false;
+
+        // Если сущность получила урон или была сильно изменена игроком, она больше не должна считаться "ожидаемой"
+        // Это заменяет медленную проверку IsBiomeDefault для разрушаемых объектов.
+        if (TryComp<DamageableComponent>(ent, out var damage) && damage.TotalDamage > FixedPoint2.Zero)
+            return false;
+
+        // 1. Проверяем базовый слой
+        if (TryGetEntity(tile, biome, (gridUid, grid), out var expectedProto) && expectedProto != null)
+        {
+            if (currentProto == expectedProto)
+            {
+                return true;
+            }
+        }
+
+        // 2. Проверяем маркеры.
+        foreach (var markerId in biome.MarkerLayers)
+        {
+            var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(markerId);
+            if (layerProto.Prototype == currentProto || layerProto.EntityMask.Values.Contains(currentProto))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static readonly HashSet<string> _ignoredBiomeComps = new()
+    {
+        "CEActiveZPhysics", "CEZPhysics", "SolutionRegeneration", "Battery"
+    };
+
+    private bool IsBiomeDefault(EntityUid uid, ICollection<string>? ignoredComps)
+    {
+        if (!EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata) || metadata.EntityPrototype == null)
+            return false;
+
+        var prototype = metadata.EntityPrototype;
+
+        // Если игрок переименовал сущность - она модифицирована
+        if (metadata.EntityName != prototype.Name || metadata.EntityDescription != prototype.Description)
+            return false;
+
+        var protoData = _proto.GetPrototypeData(prototype);
+
+        foreach (var component in EntityManager.GetComponents(uid))
+        {
+            if (component.Deleted)
+                continue;
+
+            var compType = component.GetType();
+            if (compType == typeof(TransformComponent) || compType == typeof(MetaDataComponent))
+                continue;
+
+            var compName = EntityManager.ComponentFactory.GetComponentName(compType);
+            if (ignoredComps?.Contains(compName) == true)
+                continue;
+
+            if (!protoData.TryGetValue(compName, out var protoMapping))
+                continue;
+
+            try
+            {
+                var diffFromDefault = _serManager.WriteValueAs<MappingDataNode>(compType, component, alwaysWrite: false);
+                if (diffFromDefault.AnyExcept(protoMapping))
+                    return false;
+            }
+            catch
+            {
+                // В случае ошибки сериализации считаем модифицированным
+                return false;
+            }
+        }
+
         return true;
     }
 }

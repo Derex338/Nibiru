@@ -581,16 +581,24 @@
   graph:
     - node: start
       edges:
+        - to: assembly
+          steps:
+            - material: BronzeTopSpearPiece
+              amount: 1
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 2
+    - node: assembly
+      entity: BronzeSpearAssembly
+      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 20
           steps:
-            - material: IngotBronze
-              amount: 1
-            - material: WoodStick
-              amount: 2
             - tool: Hammering
+              minTemperature: 700
               doAfter: 5
     - node: fin
       entity: LightBronzeSpear

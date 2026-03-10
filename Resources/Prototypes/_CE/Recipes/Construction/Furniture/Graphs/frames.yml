@@ -10,7 +10,7 @@
           steps:
             - material: CEWood
               amount: 2
-            - material: CECloth
+            - material: Cloth
               amount: 1
               doAfter: 2
     - node: CEBedFrameWooden

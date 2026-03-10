@@ -56,7 +56,7 @@
     North: /Textures/_CE/Tiles/Dirt/double_edge_N.png
     West: /Textures/_CE/Tiles/Dirt/double_edge_W.png
   baseTurf: CEStone
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   itemDrop: CEDirtBlock1
   isSubfloor: true
   footstepSounds:
@@ -87,7 +87,7 @@
     North: /Textures/_CE/Tiles/Cobblestone/double_edge_N.png
     West: /Textures/_CE/Tiles/Cobblestone/double_edge_W.png
   baseTurf: CEDirt
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   itemDrop: CEStoneBlock1
   isSubfloor: true
   footstepSounds:
@@ -121,7 +121,7 @@
     North: /Textures/_CE/Tiles/Mycelium/double_edge_N.png
     West: /Textures/_CE/Tiles/Mycelium/double_edge_W.png
   baseTurf: CEDirt
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
@@ -154,7 +154,7 @@
     North: /Textures/_CE/Tiles/MyceliumLight/double_edge_N.png
     West: /Textures/_CE/Tiles/MyceliumLight/double_edge_W.png
   baseTurf: CEMycelium
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
@@ -184,7 +184,7 @@
     North: /Textures/_CE/Tiles/Sand/double_edge_N.png
     West: /Textures/_CE/Tiles/Sand/double_edge_W.png
   baseTurf: CEStone
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   isSubfloor: true
   footstepSounds:
     collection: FootstepSnow #TODO
@@ -215,7 +215,7 @@
     North: /Textures/_CE/Tiles/SnowDeepDeep/double_edge_N.png
     West: /Textures/_CE/Tiles/SnowDeepDeep/double_edge_W.png
   baseTurf: CEDirt
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   itemDrop: CESnowBlock1
   isSubfloor: true
   footstepSounds:
@@ -247,7 +247,7 @@
     North: /Textures/_CE/Tiles/SnowDeep/double_edge_N.png
     West: /Textures/_CE/Tiles/SnowDeep/double_edge_W.png
   baseTurf: CESnowDeepDeep
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   itemDrop: CESnowBlock1
   isSubfloor: true
   footstepSounds:
@@ -279,7 +279,7 @@
     North: /Textures/_CE/Tiles/Snow/double_edge_N.png
     West: /Textures/_CE/Tiles/Snow/double_edge_W.png
   baseTurf: CESnowDeep
-  deconstructTools: [ CEShovel ]
+  deconstructTools: [ Digging ]
   itemDrop: CESnowBlock1
   isSubfloor: true
   footstepSounds:
