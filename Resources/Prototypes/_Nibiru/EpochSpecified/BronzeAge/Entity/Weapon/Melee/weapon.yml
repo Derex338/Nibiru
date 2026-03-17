@@ -2,6 +2,7 @@
   name: бронзовый меч
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeSword
+  suffix: Nibiru, BronzeAge
   description: Довольно неровный меч из сплава меди и олова. Выглядит древне, даже если является новоскованным.
   components:
   - type: Tag
@@ -18,6 +19,9 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
     slots:
@@ -52,6 +56,7 @@
   name: бронзовый топор
   parent: BaseBronzeItem
   id: BronzeAxe
+  suffix: Nibiru, BronzeAge
   description: Элитное и тяжёлое оружие настоящего варвара.
   components:
   - type: Tag
@@ -81,6 +86,9 @@
         Structural: 15
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,1,0
+    - 0,1,0,3
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
     quickEquip: false
@@ -123,6 +131,7 @@
   name: бронзовое копьё
   parent: [Spear, BaseBronzeItem]
   id: BronzeSpear
+  suffix: Nibiru, BronzeAge
   description: Древнее оружие, которое всё ещё может пробить вашу черепушку.
   components:
   - type: Tag
@@ -133,6 +142,8 @@
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
     size: Ginormous
+    shape:
+    - 0,0,0,4
   - type: MeleeWeapon
     range: 2.5
     wideAnimationRotation: -135
@@ -140,6 +151,7 @@
       types:
         Piercing: 10
   - type: Projectile
+    onlyCollideWhenShot: true
     damage:
       types:
         Piercing: 5
@@ -182,6 +194,7 @@
   name: облегченное бронзовое копьё
   parent: BronzeSpear
   id: LightBronzeSpear
+  suffix: Nibiru, BronzeAge
   description: Более легкая версия бронзового копья. Летит дальше, но наносит меньше урона.
   components:
   - type: Tag
@@ -189,6 +202,8 @@
       - Spear
   - type: Item
     size: Large
+    shape:
+    - 0,0,0,4
   - type: MeleeWeapon
     damage:
       types:
@@ -198,6 +213,7 @@
       types:
         Piercing: 10
   - type: Projectile
+    onlyCollideWhenShot: true
     damage:
       types:
         Piercing: 25
@@ -226,6 +242,7 @@
   name: бронзовый молот
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHammer
+  suffix: Nibiru, BronzeAge
   description: Если ты попробуешь поднять его, то поймёшь, что весит он дохуя. И зачем ему сделали настолько огромный хвост..?
   components:
   - type: Sprite
@@ -249,6 +266,9 @@
         Structural: 40
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,2,0
+    - 1,1,1,4
   - type: Construction
     graph: BronzeHammer
     node: fin
@@ -276,6 +296,7 @@
   name: бронзовый трезубец
   parent: [Spear, BaseBronzeItem]
   id: BronzeTrident
+  suffix: Nibiru, BronzeAge
   description: Элитное, красивое, величественное, грациозное орудие для настоящего воеводы или царя из бронзы. При помощи трёх зубцов может блокировать удары оппонента.
   components:
   - type: Sprite
@@ -297,6 +318,11 @@
     damage:
       types:
         Piercing: 10
+  - type: Item
+    size: Ginormous
+    shape:
+    - 0,0,1,0
+    - 0,1,0,4
   - type: Construction
     graph: BronzeTrident
     node: fin
@@ -324,6 +350,7 @@
   name: бронзовая алебарда
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHalberd
+  suffix: Nibiru, BronzeAge
   description: Красивая и сильная. Идеально подходит для того, чтобы рубить врагов на куски.
   components:
   - type: Tag
@@ -352,12 +379,11 @@
         Slash: 5
         Structural: 10
   - type: Item
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
     size: Ginormous
-  - type: Clothing
-    sprite: Objects/Weapons/Melee/bronzehalberd.rsi
-    quickEquip: false
-    slots:
-    - back
+    shape:
+    - 0,0,1,0
+    - 0,1,0,4
   - type: UseDelay
     delay: 1
   - type: Construction
@@ -388,6 +414,7 @@
   name: бронзовый ксифос
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeXiphos
+  suffix: Nibiru, BronzeAge
   description: Листовидный меч, идеально подходящий для колющих и рубящих ударов.
   components:
   - type: Tag
@@ -405,6 +432,9 @@
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: Construction
     graph: BronzeXiphos
     node: fin
@@ -416,6 +446,7 @@
   name: бронзовый кинжал
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeDagger
+  suffix: Nibiru, BronzeAge
   description: Короткий, но смертоносный бронзовый кинжал.
   components:
   - type: Tag
@@ -433,6 +464,9 @@
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    size: Normal
+    shape:
+    - 0,0,0,1
   - type: Construction
     graph: BronzeDagger
     node: fin
@@ -444,6 +478,7 @@
   name: бронзовый хопеш
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeKhapesh
+  suffix: Nibiru, BronzeAge
   description: Изогнутый меч с тяжёлым лезвием, способный наносить сокрушительные рубящие удары.
   components:
   - type: Tag
@@ -461,6 +496,9 @@
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: Construction
     graph: BronzeKhapesh
     node: fin

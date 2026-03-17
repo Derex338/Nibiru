@@ -8,7 +8,6 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
     state: icon
   - type: Item
-    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -16,6 +15,8 @@
     resultAmount: 40
     resultTemperature: 1100
   - type: Temperature
+  - type: AtmosExposed
+  - type: TemperatureColor
 
 - type: entity
   name: BaseBronzeStructure
@@ -42,6 +43,8 @@
     resultReagent: CopperMolten
     resultAmount: 40
     resultTemperature: 1200
+  - type: Temperature
+  - type: AtmosExposed
 
 - type: entity
   name: BaseCopperStructure

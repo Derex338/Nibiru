@@ -2,6 +2,7 @@
   id: MobHorseRideable
   parent: MobPig
   name: rideable horse
+  suffix: Nibiru
   description: A majestic horse you can ride.
   components:
   - type: FootstepModifier
@@ -36,12 +37,21 @@
     - VimPilot
   - type: PointsFromKill
     points: 50
+  - type: Body
+    prototype: NibiruAnimal
+  - type: Butcherable
+    spawned:
+    - id: HideBig
+      amount: 1
+    - id: BigBodyButcherFirst
+      amount: 1
 
 
 - type: entity
   id: Saddle
   parent: Clothing
   name: седло
+  suffix: Nibiru
   description: Кожаное седло с бронзовыми вставками для верховой езды.
   components:
   - type: Clothing

@@ -7,6 +7,8 @@
   components:
   - type: Item
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: Sprite
     noRot: true
     sprite: _CE/Objects/Materials/dirt.rsi
@@ -53,6 +55,8 @@
   components:
   - type: Item
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: Sprite
     noRot: true
     sprite: _CE/Objects/Materials/stone.rsi
@@ -105,18 +109,37 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Blunt: 3
+        Slash: 3
   - type: ArmorPenetration
     penetration:
-      Blunt: 2
+      Slash: 2
   - type: Projectile
+    onlyCollideWhenShot: true
     damage:
       types:
-        Blunt: 10
+        Blunt: 15
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 40
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Physics
+    bodyType: Dynamic
+  - type: CollisionWake
   - type: Tag
     tags:
       - Stone
   - type: Damageable
+    damageModifierSet: Stone
 
 - type: entity
   id: CEStoneBlock10
@@ -136,6 +159,8 @@
   components:
   - type: Item
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: Sprite
     noRot: true
     sprite: _CE/Objects/Materials/snow.rsi

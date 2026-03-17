@@ -5,7 +5,7 @@
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
   flavor: metallic
-  color: "#ff8844"
+  color: "#FF9021"
   boilingPoint: 2212.0
   meltingPoint: 960.5
   scrapEntity: ScrapMetal
@@ -17,7 +17,7 @@
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
   flavor: metallic
-  color: "#ff8844"
+  color: "#545454"
   boilingPoint: 2212.0
   meltingPoint: 960.5
   scrapEntity: ScrapMetal
@@ -29,7 +29,7 @@
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
   flavor: metallic
-  color: "#ff8844"
+  color: "#B36215"
   boilingPoint: 2212.0
   meltingPoint: 960.5
   scrapEntity: ScrapMetal
@@ -41,7 +41,7 @@
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
   flavor: metallic
-  color: "#ff8844"
+  color: "#FFAD00"
   boilingPoint: 2212.0
   meltingPoint: 960.5
   scrapEntity: ScrapMetal
@@ -53,7 +53,7 @@
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
   flavor: metallic
-  color: "#ff8844"
+  color: "#C2C2C2"
   boilingPoint: 2212.0
   meltingPoint: 960.5
   scrapEntity: ScrapMetal

@@ -1,6 +1,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformBaseHide
+  suffix: Нибиру, Каменный век
   name: накидка из шкуры
   description: Бедное животное, ему теперь наверно холодно.
   components:
@@ -12,6 +13,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformTunic
+  suffix: Нибиру, Каменный век
   name: туника
   description: Простейшая туника из ткани.
   components:
@@ -23,6 +25,10 @@
     - type: Construction
       graph: Tunic
       node: fin
+    - type: Item
+      size: Normal
+      shape:
+      - 0,0,1,1
     - type: Armor
       modifiers:
         coefficients:
@@ -35,6 +41,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformHerbalBelt
+  suffix: Нибиру, Каменный век
   name: травяной пояс
   description: Простой пояс, сплетенный из растений.
   components:
@@ -46,10 +53,15 @@
     - type: Construction
       graph: HerbalBelt
       node: fin
+    - type: Item
+      size: Normal
+      shape:
+      - 0,0,1,1
 
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesHerbal
+  suffix: Нибиру, Каменный век
   name: травяные башмаки
   description: Простая обувь сплетенная из травы.
   components:
@@ -60,10 +72,15 @@
   - type: Construction
     graph: ShoesHerbal
     node: fin
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: ClothingBackpack
   id: ClothingHerbalBasket
+  suffix: Нибиру, Каменный век
   name: травяная корзинка
   description: Плетеная корзина для переноски вещей.
   components:
@@ -73,6 +90,10 @@
   - type: Storage
     grid:
     - 0,0,4,2
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: HerbalBasket
     node: fin
@@ -80,7 +101,7 @@
 - type: entity
   parent: ClothingHeadHatUshanka
   id: ClothingHeadHatUshankaNibiru
-  suffix: Nibiru
+  suffix: Nibiru, Нибиру, Каменный век
   components:
   - type: Construction
     graph: Ushanka
@@ -100,7 +121,7 @@
 - type: entity
   parent: ClothingOuterCoatTrench
   id: ClothingOuterCoatTrenchNibiru
-  suffix: Nibiru
+  suffix: Nibiru, Нибиру, Каменный век
   components:
   - type: Construction
     graph: CoatTrench
@@ -120,7 +141,7 @@
 - type: entity
   parent: ClothingOuterCoatPirate
   id: ClothingOuterCoatPirateNibiru
-  suffix: Nibiru
+  suffix: Nibiru, Нибиру, Каменный век
   components:
   - type: Construction
     graph: CoatPirate
@@ -140,6 +161,7 @@
 - type: entity
   parent: [BaseStorageItem, ClothingHeadBase]
   id: ClothingSack
+  suffix: Нибиру, Каменный век
   name: мешок
   description: Простой мешок для переноски вещей.
   components:
@@ -159,13 +181,15 @@
     sprite: _CE/Objects/Tool/sack.rsi
   - type: Item
     size: Normal
+    shape:
+    - 0,0,1,1
   - type: Blindfold
   - type: FlashImmunity
 
 - type: entity
   parent: ClothingHeadHatCasa
   id: ClothingKasaNibiru
-  suffix: Nibiru
+  suffix: Nibiru, Нибиру, Каменный век
   components:
     - type: Sprite
       sprite: _CE/Clothing/Head/Misc/kasa_hat.rsi

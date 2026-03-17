@@ -21,7 +21,7 @@ public sealed partial class FactionComponent : Component
     /// All of the recipe packs that the faction type has by default
     /// </summary>
     [DataField]
-    public List<ProtoId<ConstructionPackPrototype>> StaticPacks = new();
+    public List<ProtoId<ConstructionPackPrototype>> StaticPacks = new() { "FactionBase" };
 
     [ViewVariables]
     public EntityUid? ResearchServer;

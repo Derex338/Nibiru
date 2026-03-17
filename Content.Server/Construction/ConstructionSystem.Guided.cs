@@ -97,14 +97,45 @@ namespace Content.Server.Construction
 
                 if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)
                 {
-                    var preventStepExamine = false;
+                    if (GetCurrentNode(uid, component) is {} currentNode)
+                    {
+                        var targetNodeName = targetEdge.Target;
+                        var alternativeEdges = new List<ConstructionGraphEdge>();
+                        foreach (var e in currentNode.Edges)
+                        {
+                            if (e.Target == targetNodeName)
+                                alternativeEdges.Add(e);
+                        }
+
+                        if (alternativeEdges.Count > 0)
+                        {
+                            for (var i = 0; i < alternativeEdges.Count; i++)
+                            {
+                                var altEdge = alternativeEdges[i];
+                                if (i > 0)
+                                    args.PushMarkup(Loc.GetString("construction-presenter-alternative") + "\n");
+
+                                var preventStepExamine = false;
+                                foreach (var condition in altEdge.Conditions)
+                                {
+                                    preventStepExamine |= condition.DoExamine(args);
+                                }
+
+                                if (!preventStepExamine && altEdge.Steps.Count > 0)
+                                    altEdge.Steps[0].DoExamine(args);
+                            }
+                            return;
+                        }
+                    }
+
+                    var preventStepExamineFallback = false;
 
                     foreach (var condition in targetEdge.Conditions)
                     {
-                        preventStepExamine |= condition.DoExamine(args);
+                        preventStepExamineFallback |= condition.DoExamine(args);
                     }
 
-                    if (!preventStepExamine)
+                    if (!preventStepExamineFallback && targetEdge.Steps.Count > 0)
                         targetEdge.Steps[0].DoExamine(args);
                     return;
                 }
@@ -178,79 +209,144 @@ namespace Content.Server.Construction
             var index = 0;
             while(node != targetNode)
             {
-                // Can't find path, therefore can't generate guide...
-                if (!node.TryGetEdge(path[index].Name, out var edge))
+                var targetEdgeName = path[index].Name;
+                var edges = new List<ConstructionGraphEdge>();
+                foreach (var e in node.Edges)
+                {
+                    if (e.Target == targetEdgeName)
+                        edges.Add(e);
+                }
+
+                if (edges.Count == 0)
                     return null;
 
-                // First steps are handled specially.
-                if (step == 1)
-                {
-                    foreach (var graphStep in edge.Steps)
-                    {
-                        entries.Add(graphStep.GenerateGuideEntry());
-                    }
-
-                    // Now actually list the construction conditions.
-                    foreach (var condition in construction.Conditions)
-                    {
-                        if (condition.GenerateGuideEntry() is not {} conditionEntry)
-                            continue;
-
-                        conditionEntry.Padding += 4;
-                        entries.Add(conditionEntry);
-                    }
-
-                    step++;
-                    node = path[index++];
-
-                    // Add a bit of padding if there will be more steps after this.
-                    if(node != targetNode)
-                        entries.Add(new ConstructionGuideEntry());
-
-                    continue;
-                }
-
+                var initialStep = step;
+                var maxStep = step;
                 var old = conditions;
-                conditions = new HashSet<string>();
+                var newConditionsAccumulator = new HashSet<string>();
 
-                foreach (var condition in edge.Conditions)
+                for (var edgeIdx = 0; edgeIdx < edges.Count; edgeIdx++)
                 {
-                    foreach (var conditionEntry in condition.GenerateGuideEntry())
+                    var edge = edges[edgeIdx];
+                    var currentStep = initialStep;
+
+                    if (edgeIdx > 0)
                     {
-                        conditions.Add(conditionEntry.Localization);
-
-                        // Okay so if the condition entry had a non-null value here, we take it as a numbered step.
-                        // This is for cases where there is a lot of snowflake behavior, such as machine frames...
-                        // So that the step of inserting a machine board and inserting all of its parts is numbered.
-                        if (conditionEntry.EntryNumber != null)
-                            conditionEntry.EntryNumber = step++;
-
-                        // To prevent spamming the same stuff over and over again. This is a bit naive, but..ye.
-                        // Also we will only hide this condition *if* it isn't numbered.
-                        else
+                        entries.Add(new ConstructionGuideEntry()
                         {
-                            if (old.Contains(conditionEntry.Localization))
-                                continue;
+                            Localization = "construction-presenter-alternative"
+                        });
+                    }
 
-                            // We only add padding for non-numbered entries.
-                            conditionEntry.Padding += 4;
+                    // First steps are handled specially.
+                    if (initialStep == 1)
+                    {
+                        foreach (var graphStep in edge.Steps)
+                        {
+                            entries.Add(graphStep.GenerateGuideEntry());
                         }
 
-                        entries.Add(conditionEntry);
+                        // Now actually list the construction conditions.
+                        if (edgeIdx == 0)
+                        {
+                            foreach (var condition in construction.Conditions)
+                            {
+                                if (condition.GenerateGuideEntry() is not {} conditionEntry)
+                                    continue;
+
+                                conditionEntry.Padding += 4;
+                                entries.Add(conditionEntry);
+                            }
+                        }
+
+                        currentStep++;
+                        if (currentStep > maxStep) maxStep = currentStep;
+                        continue;
                     }
+
+                    var edgeConditions = new HashSet<string>();
+
+                    foreach (var condition in edge.Conditions)
+                    {
+                        foreach (var conditionEntry in condition.GenerateGuideEntry())
+                        {
+                            edgeConditions.Add(conditionEntry.Localization);
+
+                            // Okay so if the condition entry had a non-null value here, we take it as a numbered step.
+                            // This is for cases where there is a lot of snowflake behavior, such as machine frames...
+                            // So that the step of inserting a machine board and inserting all of its parts is numbered.
+                            if (conditionEntry.EntryNumber != null)
+                                conditionEntry.EntryNumber = currentStep++;
+
+                            // To prevent spamming the same stuff over and over again. This is a bit naive, but..ye.
+                            // Also we will only hide this condition *if* it isn't numbered.
+                            else
+                            {
+                                if (old.Contains(conditionEntry.Localization))
+                                    continue;
+
+                                // We only add padding for non-numbered entries.
+                                conditionEntry.Padding += 4;
+                            }
+
+                            entries.Add(conditionEntry);
+                        }
+                    }
+
+                    foreach (var graphStep in edge.Steps)
+                    {
+                        var entry = graphStep.GenerateGuideEntry();
+                        entry.EntryNumber = currentStep++;
+                        entries.Add(entry);
+                    }
+
+                    foreach (var c in edgeConditions)
+                        newConditionsAccumulator.Add(c);
+
+                    if (currentStep > maxStep) maxStep = currentStep;
                 }
 
-                foreach (var graphStep in edge.Steps)
-                {
-                    var entry = graphStep.GenerateGuideEntry();
-                    entry.EntryNumber = step++;
-                    entries.Add(entry);
-                }
-
+                step = maxStep;
+                conditions = newConditionsAccumulator;
                 node = path[index++];
+
+                if (initialStep == 1 && node != targetNode)
+                {
+                    // Add a bit of padding if there will be more steps after this.
+                    entries.Add(new ConstructionGuideEntry());
+                }
             }
 
-            guide = new ConstructionGuide(entries.ToArray());
+            var researchPoints = 0;
+            var currentNode2 = startNode;
+            foreach (var nextNode2 in path)
+            {
+                if (currentNode2.TryGetEdge(nextNode2.Name, out var edge))
+                {
+                    foreach (var action in edge.Completed)
+                    {
+                        if (action is Content.Shared._Nibiru.Construction.Completions.PointsFromCraft pointsAction)
+                        {
+                            var actionPoints = pointsAction.Points;
+                            if (pointsAction.Decreasing && targetNode.Entity.GetId(null, null, new(EntityManager)) is { } entityId)
+                            {
+                                var count = 0;
+                                var query = EntityQueryEnumerator<MetaDataComponent>();
+                                while (query.MoveNext(out _, out var meta))
+                                {
+                                    if (meta.EntityPrototype?.ID == entityId)
+                                        count++;
+                                }
+                                actionPoints /= (count + 1);
+                            }
+                            researchPoints += actionPoints;
+                        }
+                    }
+                }
+                currentNode2 = nextNode2;
+            }
+
+            guide = new ConstructionGuide(entries.ToArray(), researchPoints);
             _guideCache[construction] = guide;
             return guide;
         }

@@ -374,6 +374,64 @@ public abstract class SharedBiomeSystem : EntitySystem
         return TryGetDecals(indices, layers, seed, grid == null ? null : (grid.Owner, grid), out decals);
     }
 
+    /// <summary>
+    /// Tries to get the biome template ID at the specified indices.
+    /// </summary>
+    public bool TryGetBiomeTemplate(EntityUid uid, BiomeComponent biome, Vector2i indices, [NotNullWhen(true)] out string? templateId)
+    {
+        if (TryGetBiomeTemplate(indices, biome.Layers, biome.Seed, (uid, Comp<MapGridComponent>(uid)), out var subTemplateId))
+        {
+            templateId = subTemplateId ?? (string?) biome.Template;
+            return templateId != null;
+        }
+
+        templateId = (string?) biome.Template;
+        return templateId != null;
+    }
+
+    private bool TryGetBiomeTemplate(Vector2i indices, List<IBiomeLayer> layers, int seed, Entity<MapGridComponent>? grid, out string? templateId)
+    {
+        for (var i = layers.Count - 1; i >= 0; i--)
+        {
+            var layer = layers[i];
+
+            if (layer is BiomeMetaLayer meta)
+            {
+                var noiseCopy = GetNoise(layer.Noise, seed);
+                var value = noiseCopy.GetNoise(indices.X, indices.Y);
+                if (layer.Invert) value *= -1;
+
+                if (value < layer.Threshold)
+                    continue;
+
+                if (TryGetBiomeTemplate(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, seed, grid, out var subTemplateId))
+                {
+                    templateId = subTemplateId ?? meta.Template;
+                    return true;
+                }
+
+                templateId = meta.Template;
+                return true;
+            }
+
+            if (layer is BiomeTileLayer tileLayer)
+            {
+                var noiseCopy = GetNoise(layer.Noise, seed);
+                var value = noiseCopy.GetNoise(indices.X, indices.Y);
+                if (layer.Invert) value *= -1;
+
+                if (value >= layer.Threshold)
+                {
+                    templateId = null;
+                    return true;
+                }
+            }
+        }
+
+        templateId = null;
+        return false;
+    }
+
     private FastNoiseLite GetNoise(FastNoiseLite seedNoise, int seed)
     {
         var noiseCopy = new FastNoiseLite();

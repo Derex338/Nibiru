@@ -1,0 +1,65 @@
+[game]
+hostname = "🌍 Nibiru"
+desc = "Первый из первых. Первый кто назвал себя первым и самый первый из моего же списка из одного сервера"
+maxplayers = 1050
+soft_max_players = 999
+lobbyenabled = true
+map = "Empty"
+defaultpreset = "Nibiru"
+map_rotation = false
+peaceful_end = false
+maxcharacterslots = 3
+
+[server]
+rules_file = "NibiruRuleset"
+lobby_name = "️🌍 Nibiru"
+
+[game.panic_bunker]
+enabled = false
+show_reason = true
+min_account_age = 10000
+min_overall_minutes = 1000
+deny_vpn = false
+enable_without_admins = false
+disable_with_admins = false
+
+[rules]
+time = 40.0
+
+[hub]
+advertise = false
+tags = "lang:ru,rp:low,rp:med,region:eu_e"
+hub_urls = "https://hub.spacestation14.com/"
+
+[infolinks]
+discord = "https://discord.gg/9aBXebcWGs"
+
+[net]
+tickrate = 30
+port = 1212
+bindto = "::,0.0.0.0"
+max_connections = 256
+upnp = true
+
+[status]
+enabled = true
+
+[mapping]
+autosave = false
+
+[ahelp]
+admin_prefix = true
+
+[admin]
+server_ban_erase_player = true
+
+[console]
+login_host_user = "Derex"
+
+[shuttle]
+auto_call_time = 0
+emergency = false
+arrivals = false
+
+[viewport]
+maximum_width = 26

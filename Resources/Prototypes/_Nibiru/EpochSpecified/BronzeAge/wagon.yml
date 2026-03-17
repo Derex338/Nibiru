@@ -5,11 +5,8 @@
   description: Деревянная повозка для перевозки грузов.
   components:
     - type: Sprite
-      noRot: true
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-      layers:
-        - state: cart
-          color: "#8B4513"
+      sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/Wagon.rsi
+      state: wagon
     - type: Rotatable
     - type: InteractionOutline
     - type: Fixtures

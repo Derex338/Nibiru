@@ -2,6 +2,7 @@
   name: бронзовый баклер
   parent: [BaseShield, BaseBronzeItem]
   id: BronzeBuckler
+  suffix: Nibiru, BronzeAge
   description: Неаккуратный деревянный баклер со сплавом бронзы вокруг дерева и с бронзой по середине.
   components:
   - type: Sprite
@@ -10,6 +11,9 @@
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
     heldPrefix: bronze-buckler
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Blocking
     passiveBlockModifier:
       coefficients:
@@ -54,6 +58,7 @@
   name: бронзовый щит
   parent: [BaseShield, BaseBronzeItem]
   id: BronzeShield
+  suffix: Nibiru, BronzeAge
   description: Искусная работа полностью из бронзы.
   components:
   - type: Sprite
@@ -62,6 +67,9 @@
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
     heldPrefix: bronze
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Blocking
     passiveBlockModifier:
       coefficients:

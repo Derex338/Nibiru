@@ -2,6 +2,7 @@
   id: BaseWorkbench
   parent: BaseStructure
   name: верстак
+  suffix: Nibiru
   abstract: true
   components:
   - type: UserInterface
@@ -47,17 +48,20 @@
     graph: BasicWorkbench
     node: fin
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
   - type: InteractionOutline
 
 - type: entity
   id: SpindleWorkbench
   parent: BaseWorkbench
   name: верстак прядения
+  suffix: Nibiru
   description: Используется для создания нитей и веревок.
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _CE/Structures/Furniture/Tables/workbench.rsi
     state: filler
   - type: Construction
@@ -68,9 +72,11 @@
   id: LoomWorkbench
   parent: BaseWorkbench
   name: ткацкий станок
+  suffix: Nibiru
   description: Используется для создания тканей.
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _CE/Structures/Furniture/Tables/workbench.rsi
     state: tanner_table
   - type: Construction
@@ -81,8 +87,10 @@
   id: BasicWorkbench
   parent: BaseWorkbench
   name: верстак
+  suffix: Nibiru
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _CE/Structures/Furniture/Tables/workbench.rsi
     state: workbench
   - type: Construction
@@ -93,9 +101,11 @@
   id: StoneAnvilWorkbench
   parent: BaseWorkbench
   name: каменная наковальня
+  suffix: Nibiru
   description: Грубая каменная поверхность для обработки материалов.
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _Nibiru/Entities/Workbenches/StoneAnvil.rsi
     state: icon
   - type: Construction
@@ -106,8 +116,10 @@
   id: BronzeAnvilWorkbench
   parent: BaseWorkbench
   name: бронзовая наковальня
+  suffix: Nibiru
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _Nibiru/Entities/Workbenches/BronzeAnvil.rsi
     state: icon
   - type: Construction
@@ -118,9 +130,11 @@
   id: QuarryWorkbench
   parent: BaseWorkbench
   name: камнетес
+  suffix: Nibiru
   description: Верстак для обработки камня.
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _CE/Structures/Furniture/Tables/workbench.rsi
     state: sewing_table
   - type: Construction
@@ -131,9 +145,11 @@
   id: SawmillWorkbench
   parent: BaseWorkbench
   name: лесопилка
+  suffix: Nibiru
   description: Верстак для обработки дерева.
   components:
   - type: Sprite
+    drawdepth: WallTops
     sprite: _Nibiru/Entities/Workbenches/SawmillWorkbench.rsi
     state: icon
   - type: Construction
@@ -149,11 +165,13 @@
   id: BasicWorkbenchFrame
   parent: BaseStructure
   name: каркас верстака
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080" # Greyed out
   - type: Construction
     graph: BasicWorkbench
@@ -166,11 +184,13 @@
   id: ResearchTableFrame
   parent: BaseStructure
   name: каркас стола исследований
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080" # Greyed out
   - type: Construction
     graph: ResearchTable
@@ -183,11 +203,13 @@
   id: SpindleWorkbenchFrame
   parent: BaseStructure
   name: каркас верстака прядения
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: Workbench
@@ -200,11 +222,13 @@
   id: LoomWorkbenchFrame
   parent: BaseStructure
   name: каркас ткацкого станка
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: LoomWorkbench
@@ -217,11 +241,13 @@
   id: SawmillWorkbenchFrame
   parent: BaseStructure
   name: каркас лесопилки
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: SawmillWorkbench
@@ -234,11 +260,13 @@
   id: QuarryWorkbenchFrame
   parent: BaseStructure
   name: каркас камнетеса
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: QuarryWorkbench
@@ -251,11 +279,13 @@
   id: StoneAnvilWorkbenchFrame
   parent: BaseStructure
   name: каркас каменной наковальни
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: StoneAnvilWorkbench
@@ -268,11 +298,13 @@
   id: SmeltingFurnaceFrame
   parent: BaseStructure
   name: каркас плавильной печи
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: Furnace
@@ -285,11 +317,13 @@
   id: BronzeAnvilWorkbenchFrame
   parent: BaseStructure
   name: каркас бронзовой наковальни
+  suffix: Nibiru
   description: Незаконченный каркас.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#CD7F32" # Bronze color
   - type: Construction
     graph: BronzeAnvilWorkbench
@@ -302,10 +336,12 @@
   id: WorkbenchFrame
   parent: BaseStructure
   name: каркас верстака
+  suffix: Nibiru
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    drawdepth: WallTops
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
     color: "#808080"
   - type: Construction
     graph: Workbench

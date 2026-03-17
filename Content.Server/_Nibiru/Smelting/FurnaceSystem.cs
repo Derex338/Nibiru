@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server._Nibiru.Smelting;
 
@@ -188,16 +189,29 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         SmeltingFurnaceComponent furnace,
         SmeltableOreComponent ore)
     {
+        var amountLeft = FixedPoint2.New((double)ore.ResultAmount);
         var outputContainer = _itemSlotsSystem.GetItemOrNull(furnaceUid, furnace.SolutionContainerId);
-        if (outputContainer is not null && _solution.TryGetFitsInDispenser(outputContainer.Value, out var target, out _))
+
+        if (outputContainer is not null && _solution.TryGetFitsInDispenser(outputContainer.Value, out var target, out var targetSolution))
         {
-            _solution.TryAddReagent(target.Value, ore.ResultReagent, ore.ResultAmount, temperature: ore.ResultTemperature);
-            _solution.SetTemperature(target.Value, ore.ResultTemperature);
+            var canAdd = targetSolution.AvailableVolume;
+            if (canAdd > 0)
+            {
+                var toAddAmount = FixedPoint2.Min(canAdd, amountLeft);
+
+                if (_solution.TryAddReagent(target.Value, ore.ResultReagent, toAddAmount, out var accepted, temperature: ore.ResultTemperature))
+                {
+                    amountLeft -= accepted;
+                    _solution.SetTemperature(target.Value, ore.ResultTemperature);
+                }
+            }
         }
-        else if (_solution.TryGetSolution(furnaceUid, furnace.Solution, out var furnaceSolution, out var furnaceSolutionComp))
+
+        if (amountLeft > 0 && _solution.TryGetSolution(furnaceUid, furnace.Solution, out var furnaceSoln, out var furnaceSolutionComp))
         {
-            furnaceSolutionComp.AddReagent(ore.ResultReagent, ore.ResultAmount);
-            furnaceSolutionComp.Temperature = ore.ResultTemperature;
+            _solution.TryAddReagent(furnaceSoln.Value, ore.ResultReagent, amountLeft, out var accepted, temperature: ore.ResultTemperature);
+            if (accepted > 0)
+                _solution.SetTemperature(furnaceSoln.Value, ore.ResultTemperature);
         }
 
         // Звук плавления
@@ -338,19 +352,56 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
 
         var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
 
-        if (inputContainer.ContainedEntities.Count == 0)
+        if (inputContainer.ContainedEntities.Count > 0)
+        {
+            var verb = new AlternativeVerb
+            {
+                Text = Loc.GetString("smelting-furnace-verb-empty"),
+                Icon = new SpriteSpecifier.Texture(
+                    new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")
+                ),
+                Act = () => EmptyFurnace(uid, comp, args.User)
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, comp.SolutionContainerId);
+        if (outputContainer != null && _solution.TryGetSolution(uid, comp.Solution, out var furnaceSoln, out var furnaceSolutionComp) && furnaceSolutionComp.Volume > 0)
+        {
+            var verbPour = new AlternativeVerb
+            {
+                Text = Loc.GetString("smelting-furnace-verb-pour"),
+                Icon = new SpriteSpecifier.Texture(
+                    new("/Textures/Interface/VerbIcons/spill.svg.192dpi.png")
+                ),
+                Priority = 1,
+                Act = () => PourIntoContainer(uid, comp, args.User, outputContainer.Value, furnaceSoln.Value, furnaceSolutionComp)
+            };
+            args.Verbs.Add(verbPour);
+        }
+    }
+
+    private void PourIntoContainer(EntityUid furnaceUid, SmeltingFurnaceComponent comp, EntityUid user, EntityUid targetContainer, Entity<SolutionComponent> furnaceSoln, Solution furnaceSolutionData)
+    {
+        if (!_solution.TryGetFitsInDispenser(targetContainer, out var targetSoln, out var targetSolutionData))
             return;
 
-        var verb = new AlternativeVerb
-        {
-            Text = Loc.GetString("smelting-furnace-verb-empty"),
-            Icon = new SpriteSpecifier.Texture(
-                new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")
-            ),
-            Act = () => EmptyFurnace(uid, comp, args.User)
-        };
+        var transferAmount = FixedPoint2.Min(furnaceSolutionData.Volume, targetSolutionData.AvailableVolume);
 
-        args.Verbs.Add(verb);
+        if (transferAmount <= 0)
+        {
+            _popup.PopupEntity(Loc.GetString("smelting-furnace-container-full"), furnaceUid, user);
+            return;
+        }
+
+        var split = _solution.SplitSolution(furnaceSoln, transferAmount);
+        _solution.TryAddSolution(targetSoln.Value, split);
+
+        if (comp.MeltCompleteSound != null)
+            _audio.PlayPvs(comp.MeltCompleteSound, furnaceUid);
+
+        _popup.PopupEntity(Loc.GetString("smelting-furnace-poured"), furnaceUid, user);
     }
 
     /// <summary>

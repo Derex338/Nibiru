@@ -63,3 +63,6 @@
   - type: TileEntityEffect
     effects:
     - !type:Extinguish
+  - type: Tag
+    tags:
+      - CEAmbientWater

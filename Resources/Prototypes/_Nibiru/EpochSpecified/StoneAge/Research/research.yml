@@ -105,51 +105,52 @@
   craftUnlocks:
     - StoneSpear
     - BolaNibiru
-    - SpearBone
 
 - type: technology
-  id: AdvancedWeapons
-  name: Продвинутое оружие
+  id: BoneWeapons
+  name: Костяное оружие
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
     state: icon
   discipline: StoneAge
   tier: 1
-  cost: 150
+  cost: 50
   technologyPrerequisites:
-    - HuntingWeapons
-  position: -2, -5
+    - PrimitiveWeapons
+  position: -3, -3
   craftUnlocks:
     - BoneKnife
+    - SpearBone
 
-- type: technology
-  id: PrimitiveRanged
-  name: Метательное дело
-  icon:
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
-    state: unwielded
-  discipline: StoneAge
-  tier: 1
-  cost: 75
-  technologyPrerequisites:
-    - HuntingWeapons
-  position: -3, -4
-  craftUnlocks:
-    - Sling
-    - SpearThrower
+#- type: technology
+#  id: PrimitiveRanged
+#  name: Метательное дело
+#  icon:
+#    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+#    state: unwielded
+#  discipline: StoneAge
+#  tier: 1
+#  cost: 75
+#  technologyPrerequisites:
+#    - HuntingWeapons
+#  position: -3, -4
+#  craftUnlocks:
+#    - Sling
+#    - SpearThrower
 
 - type: technology
   id: Archery
   name: Стрелковое дело
   icon:
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
     state: unwielded
   discipline: StoneAge
   tier: 1
   cost: 125
   technologyPrerequisites:
-    - PrimitiveRanged
-  position: -4, -4
+    #- PrimitiveRanged
+    - HuntingWeapons
+  position: -3, -4
   craftUnlocks:
     - WoodenBow
     - WoodenArrow
@@ -252,7 +253,7 @@
     - CoatPirate
     - HetmanHat
     - BrownFurCoat
-    - CloakBarbarian
+    #- CloakBarbarian
     - Neckerchief
     - RedNeckerchief
     - ShirtWarriorGarb
@@ -353,6 +354,37 @@
     - CEChairFrame
 
 - type: technology
+  id: Flooring
+  name: Напольные покрытия
+  icon:
+    sprite: _CE/Objects/tile.rsi
+    state: oak_woodplanks
+  discipline: StoneAge
+  tier: 1
+  cost: 75
+  technologyPrerequisites:
+    - Furniture
+  position: 3, -3
+  craftUnlocks:
+    #- TileGlass
+    - TileOakWoodplanks
+    - TileOakWoodplanksBig
+    - TileOakWoodplanksCruciform
+    - TileOakWoodplanksStairs
+    - TileStonebricks
+    - TileStonebricksSmallCarved
+    - TileStonebricksSmallCarved2
+    - TileStoneLongBricks
+    - TileStoneMediumBricks
+    - TileStoneSquarePattern
+    - TileStoneDiamond
+    - TileStoneMediumCircles
+    - TileStoneSmallCircles
+    - TileStonebricksSquareCarved
+    #- TileRoofRed
+    #- TileRoofGreen
+
+- type: technology
   id: WoodItems
   name: Деревянные предметы
   icon:
@@ -440,20 +472,20 @@
     - CEZLevelLadderStone
     - CEZLevelLadderStoneCorner
 
-- type: technology
-  id: StoneAnvil
-  name: Каменная наковальня
-  icon:
-    sprite: _Nibiru/Entities/Workbenches/StoneAnvil.rsi
-    state: icon
-  discipline: StoneAge
-  tier: 1
-  cost: 150
-  technologyPrerequisites:
-    - StoneMasonry
-  position: 2, -5
-  craftUnlocks:
-    - StoneAnvilWorkbench
+#- type: technology
+#  id: StoneAnvil
+#  name: Каменная наковальня
+#  icon:
+#    sprite: _Nibiru/Entities/Workbenches/StoneAnvil.rsi
+#    state: icon
+#  discipline: StoneAge
+#  tier: 1
+#  cost: 150
+#  technologyPrerequisites:
+#    - StoneMasonry
+#  position: 2, -5
+#  craftUnlocks:
+#    - StoneAnvilWorkbench
 
 #- type: technology
 #  id: Pottery
@@ -524,10 +556,10 @@
     state: Bronze_3
   discipline: StoneAge
   tier: 1
-  cost: 500
+  cost: 300
   technologyPrerequisites:
     - Metallurgy
     - LeatherArmor
-    - AdvancedWeapons
+    - HuntingWeapons
   position: 0, -7
 

@@ -1,5 +1,6 @@
 - type: entity
   id: SmeltingFurnace
+  suffix: Нибиру, Каменный век
   parent: BaseStoneStructure
   name: сыродутная печь
   description: Простейшая каменная печь не требующая дополнительный усилий для плавки простейших руд таких как медь и олово.
@@ -115,6 +116,7 @@
 
 - type: entity
   id: Fuel
+  suffix: Нибиру, Каменный век
   name: fuel
   description: A chunk of copper ore.
   components:
@@ -131,8 +133,9 @@
 
 - type: entity
   id: ScrapMetal
+  suffix: Нибиру, Каменный век
   name: ScrapMetal
-  description: A chunk of copper ore.
+  description: A chunk of fucked up ore.
   components:
   - type: Sprite
     sprite: Objects/Materials/ore.rsi
@@ -143,60 +146,20 @@
   - type: InteractionOutline
 
 - type: entity
-  id: BaseMold
-  parent: BaseItem
-  name: mold
-  description: A stone furnace for smelting ore into molten metal.
-  components:
-  - type: Sprite
-    sprite: _Nibiru/furnace.rsi
-    layers:
-      - map: [ enum.FuelLightVisualLayers.Base ]
-        state: icon
-      - map: [ enum.FuelLightVisualLayers.Glow ]
-        state: lit
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-  - type: SolutionContainerManager
-    solutions:
-      smelted_metal:
-        maxVol: 10
-  - type: Mold
-    resultEntities:
-      CopperMolten: Fuel
-    slot: result_container
-  - type: InjectableSolution
-    solution: smelted_metal
-  - type: RefillableSolution
-    solution: smelted_metal
-  - type: ItemSlots
-    slots:
-      result_container:
-        #whitelist:
-        #  components:
-        #  - Item
-        blacklist:
-          components:
-          - SolutionContainerManager
-          - Item
-  - type: ContainerContainer
-    containers:
-      result_container: !type:ContainerSlot
-  - type: CoolInWater
-    solution: result_container
-  - type: Temperature
-
-- type: entity
   id: FurnaceBeaker
+  suffix: Нибиру, Каменный век
   parent: LargeBeaker
-  name: furnace beaker
-  description: A stone furnace for smelting ore into molten metal.
+  name: тигель
+  description: Каменный тигель для плавки руды в расплавленный металл.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
     layers:
       - state: beaker
+      - state: beakerlarge1
+        sprite: Objects/Tools/bucket.rsi
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: SolutionContainerManager
     solutions:
       smelted_metal:
@@ -205,7 +168,29 @@
     solution: smelted_metal
   - type: RefillableSolution
     solution: smelted_metal
+  - type: DrainableSolution
+    solution: smelted_metal
+  - type: ExaminableSolution
+    solution: smelted_metal
+  - type: DrawableSolution
+    solution: smelted_metal
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: smelted_metal
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Spillable
+    solution: smelted_metal
   - type: CoolInWater
     solution: smelted_metal
   - type: Temperature
   - type: FitsInDispenser
+    solution: smelted_metal
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    inHandsFillBaseName: null
+    fillBaseName: fill-
+  - type: AtmosExposed

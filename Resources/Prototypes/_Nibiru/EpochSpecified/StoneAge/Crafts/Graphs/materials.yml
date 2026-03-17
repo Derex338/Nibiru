@@ -30,7 +30,7 @@
               points: 10
           steps:
             - material: CECotton
-              amount: 1
+              amount: 2
               doAfter: 4
     - node: fin
       entity: MaterialThread10
@@ -83,7 +83,7 @@
               points: 20
           steps:
             - material: CECotton
-              amount: 4
+              amount: 1
               doAfter: 8
     - node: fin
       entity: MaterialCloth1
@@ -136,7 +136,7 @@
               amount: 3
               doAfter: 5
     - node: raw
-      entity: MudBlockRaw1
+      entity: MudBlockRaw
       edges:
         - to: fin
           steps:
@@ -165,3 +165,296 @@
               doAfter: 1
     - node: fin
       entity: FloorTileItemStraw4
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Tiles (Плитка)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: TileGlass
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEGlass
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileGlass
+
+- type: constructionGraph
+  id: TileOakWoodplanks
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileOakWoodplanks
+
+- type: constructionGraph
+  id: TileOakWoodplanksBig
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileOakWoodplanksBig
+
+- type: constructionGraph
+  id: TileOakWoodplanksCruciform
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileOakWoodplanksCruciform
+
+- type: constructionGraph
+  id: TileOakWoodplanksStairs
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEWood
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileOakWoodplanksStairs
+
+- type: constructionGraph
+  id: TileStonebricks
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStonebricks
+
+- type: constructionGraph
+  id: TileStonebricksSmallCarved
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStonebricksSmallCarved
+
+- type: constructionGraph
+  id: TileStonebricksSmallCarved2
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStonebricksSmallCarved2
+
+- type: constructionGraph
+  id: TileStoneLongBricks
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStoneLongBricks
+
+- type: constructionGraph
+  id: TileStoneMediumBricks
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStoneMediumBricks
+
+- type: constructionGraph
+  id: TileStoneSquarePattern
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStoneSquarePattern
+
+- type: constructionGraph
+  id: TileStoneDiamond
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStoneDiamond
+
+- type: constructionGraph
+  id: TileStoneMediumCircles
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStoneMediumCircles
+
+- type: constructionGraph
+  id: TileStoneSmallCircles
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStoneSmallCircles
+
+- type: constructionGraph
+  id: TileStonebricksSquareCarved
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileStonebricksSquareCarved
+
+- type: constructionGraph
+  id: TileRoofRed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileRoofRed
+
+- type: constructionGraph
+  id: TileRoofGreen
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 1
+              doAfter: 2
+    - node: fin
+      entity: CEFloorTileRoofGreen

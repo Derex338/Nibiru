@@ -435,6 +435,24 @@
       entity: StoneMoldKey
 
 - type: constructionGraph
+  id: MoldLockpick
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 20
+          steps:
+            - material: Stone
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: StoneMoldLockpick
+
+- type: constructionGraph
   id: MoldRasp
   start: start
   graph:

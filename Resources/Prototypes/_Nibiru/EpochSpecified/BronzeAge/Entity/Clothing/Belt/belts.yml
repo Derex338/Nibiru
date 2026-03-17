@@ -1,6 +1,7 @@
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase]
   id: ClothingBeltBronzeScabbard
+  suffix: Nibiru, BronzeAge
   name: бронзовые ножны
   description: Простые кожаные ножны с бронзовыми вставками, предназначенные для хранения мечей.
   components:
@@ -10,7 +11,9 @@
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
-    size: Ginormous
+    size: Large
+    shape:
+    - 0,0,0,1
   - type: ItemSlots
     slots:
       item:

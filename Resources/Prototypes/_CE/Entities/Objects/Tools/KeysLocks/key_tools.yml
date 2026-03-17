@@ -32,8 +32,43 @@
     sprite: _CE/Objects/Tools/keys.rsi
     state: file
   - type: CEKeyFile
+  - type: CELockEditor
+    useSound:
+      path: /Audio/_CE/Effects/sharpening_stone.ogg
   - type: UseDelay
     delay: 1.0
-  #- type: PhysicalComposition
   #  materialComposition:
   #    CEIron: 10
+
+
+- type: entity
+  parent: CEBaseLockpick
+  id: BronzeLockpick
+  name: бронзовая отмычка
+  description: A thief's tool that, with proper skill, allows you to pick any lock.
+  categories: [ ForkFiltered ]
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Tools/keys.rsi
+    state: lockpick_iron
+    color: "#804000"
+
+- type: entity
+  parent: BaseItem
+  id: BronzeKeyFile
+  name: бронзовый напильник
+  description: Напильник, идеально подходящий для формирования ключей.
+  categories: [ ForkFiltered ]
+  components:
+  - type: Item
+    storedRotation: 45
+  - type: Sprite
+    sprite: _CE/Objects/Tools/keys.rsi
+    state: file
+    color: "#804000"
+  - type: CEKeyFile
+  - type: CELockEditor
+    useSound:
+      path: /Audio/_CE/Effects/sharpening_stone.ogg
+  - type: UseDelay
+    delay: 1.0

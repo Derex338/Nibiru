@@ -7,5 +7,10 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
   recognizable: true
   friction: 0.4

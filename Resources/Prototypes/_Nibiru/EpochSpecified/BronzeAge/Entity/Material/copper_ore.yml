@@ -1,7 +1,8 @@
 - type: entity
   id: CopperOre
+  suffix: Nibiru, BronzeAge
   name: медная руда
-  parent: BaseItem
+  parent: [BaseItem, BaseCopperItem]
   description: A chunk of copper ore.
   components:
   - type: Sprite
@@ -30,9 +31,9 @@
 
 - type: entity
   id: WallRockBasaltCopper
-  parent: WallRockBasalt
+  parent: [WallRockBasalt, BaseCopperStructure]
   description: An ore vein rich with copper.
-  suffix: Copper
+  suffix: Copper, Nibiru, BronzeAge
   components:
   - type: OreVein
     oreChance: 1.0

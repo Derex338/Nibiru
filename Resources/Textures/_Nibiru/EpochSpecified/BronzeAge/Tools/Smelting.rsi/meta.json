@@ -14,13 +14,25 @@
             "name": "fill-1"
         },
         {
-            "name": "fill-2"
-        },
-        {
-            "name": "fill-3"
-        },
-        {
             "name": "beaker"
+        },
+        {
+            "name": "base-old"
+        },
+        {
+            "name": "sharp-tip1"
+        },
+        {
+            "name": "hammer1"
+        },
+        {
+            "name": "blade1"
+        },
+        {
+            "name": "axe1"
+        },
+        {
+            "name": "round1"
         }
     ]
 }

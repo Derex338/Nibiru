@@ -10,7 +10,7 @@
               southRotation: true
           steps:
             - material: StoneBlock
-              amount: 2
+              amount: 1
               doAfter: 3
 
     - node: CEWallFrameStoneBrick
@@ -20,7 +20,7 @@
           completed:
             - !type:SpawnPrototype
               prototype: CEStoneBlock1
-              amount: 2
+              amount: 1
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -28,7 +28,7 @@
         - to: CEWallStoneBrick
           steps:
             - material: StoneBlock
-              amount: 2
+              amount: 1
               doAfter: 3
 
     - node: CEWallStoneBrick
@@ -45,5 +45,5 @@
           completed:
             - !type:SpawnPrototype
               prototype: CEStoneBlock1
-              amount: 2
+              amount: 1
 

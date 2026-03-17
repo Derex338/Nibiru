@@ -1,44 +1,41 @@
 - type: entity
   id: Longbow
+  suffix: Nibiru, BronzeAge
   parent: BaseBow
   name: longbow
   description: A large, powerful bow. Requires strength to draw but fires arrows with great force.
   components:
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
+    size: Huge
+    shape:
+    - 0,0,0,3
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
-    color: "#654321"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/LongBow.rsi
     layers:
     - state: unwielded
       map: [ base ]
     - state: unwielded-arrow
+      sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/RecursiveBow.rsi
       map: [ arrow ]
-      visible: false
-    - state: unwielded-plunger
-      map: [ plunger ]
       visible: false
   - type: Appearance
   - type: ItemMapper
     spriteLayers:
     - arrow
-    - plunger
     mapLayers:
       arrow:
         whitelist:
           tags:
           - Arrow
-      plunger:
-        whitelist:
-          tags:
-          - Plunger
   - type: GenericVisualizer
     visuals:
       enum.WieldableVisuals.Wielded:
         arrow:
           True: { state: wielded-arrow }
           False: { state: unwielded-arrow }
-        plunger:
-          True: { state: wielded-plunger }
-          False: { state: unwielded-plunger }
         base:
           True: { state: wielded }
           False: { state: unwielded }
@@ -51,45 +48,41 @@
 
 - type: entity
   id: RecursiveBow
+  suffix: Nibiru, BronzeAge
   parent: BaseBow
   name: recurve bow
   description: A bow with limbs that curve away from the archer when unstrung. Stores more energy and delivers a faster shot.
   components:
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
+  - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
-    color: "#DEB887"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/RecursiveBow.rsi
     layers:
     - state: unwielded
       map: [ base ]
     - state: unwielded-arrow
       map: [ arrow ]
       visible: false
-    - state: unwielded-plunger
-      map: [ plunger ]
-      visible: false
   - type: Appearance
   - type: ItemMapper
     spriteLayers:
     - arrow
-    - plunger
     mapLayers:
       arrow:
         whitelist:
           tags:
           - Arrow
-      plunger:
-        whitelist:
-          tags:
-          - Plunger
   - type: GenericVisualizer
     visuals:
       enum.WieldableVisuals.Wielded:
         arrow:
           True: { state: wielded-arrow }
           False: { state: unwielded-arrow }
-        plunger:
-          True: { state: wielded-plunger }
-          False: { state: unwielded-plunger }
         base:
           True: { state: wielded }
           False: { state: unwielded }
@@ -100,11 +93,16 @@
     node: fin
 
 - type: entity
-  name: throwing dart
-  parent: Dart
   id: ThrowingDart
+  suffix: Nibiru, BronzeAge
+  name: throwing dart
+  parent: [Dart, BaseBronzeItem]
   description: A small, balanced dart designed for throwing.
   components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Sprite
     sprite: Objects/Fun/Darts/dart_red.rsi
     color: "#CD7F32"

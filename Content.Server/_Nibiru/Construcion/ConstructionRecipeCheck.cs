@@ -49,7 +49,7 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
         if (!EntityManager.TryGetComponent<FactionComponent>(entity, out var comp))
             return;
 
-        comp.StaticPacks.Add(new ProtoId<ConstructionPackPrototype>("FactionBase"));
+        // comp.StaticPacks.Add(new ProtoId<ConstructionPackPrototype>("FactionBase"));
 
         List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp, comp.StaticPacks);
 
@@ -100,7 +100,20 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
         }
 
         AddRecipesFromPacks(ev.Recipes, packs);
-        return ev.Recipes.ToList();
+
+        var result = new List<ProtoId<ConstructionPrototype>>();
+        foreach (var recipeId in ev.Recipes)
+        {
+            if (!_proto.TryIndex(recipeId, out var recipe))
+                continue;
+
+            if (IsRecipeUnique(recipe) && IsAlreadyBuilt(recipe, comp.FactionName))
+                continue;
+
+            result.Add(recipeId);
+        }
+
+        return result;
     }
 
     public void AddRecipesFromPacks(HashSet<ProtoId<ConstructionPrototype>> recipes, List<ProtoId<ConstructionPackPrototype>> packs)
@@ -155,5 +168,46 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
         }
 
         return ClientLookup;
+    }
+
+    private bool IsRecipeUnique(ConstructionPrototype recipe)
+    {
+        if (!_proto.TryIndex(recipe.Graph, out ConstructionGraphPrototype? graph))
+            return false;
+
+        foreach (var node in graph.Nodes.Values)
+        {
+            foreach (var edge in node.Edges)
+            {
+                foreach (var action in edge.Completed)
+                {
+                    if (action is Content.Shared._Nibiru.Construction.Completions.UniqueCraft)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool IsAlreadyBuilt(ConstructionPrototype recipe, string factionName)
+    {
+        if (!_proto.TryIndex(recipe.Graph, out ConstructionGraphPrototype? graph))
+            return false;
+
+        if (!graph.Nodes.TryGetValue(recipe.TargetNode, out var targetNode))
+            return false;
+
+        var entityId = targetNode.Entity?.GetId(null, null, new(EntityManager));
+        if (entityId == null)
+            return false;
+
+        var query = EntityQueryEnumerator<FactionComponent, MetaDataComponent>();
+        while (query.MoveNext(out _, out var entityFaction, out var meta))
+        {
+            if (entityFaction.FactionName == factionName && meta.EntityPrototype?.ID == entityId)
+                return true;
+        }
+
+        return false;
     }
 }

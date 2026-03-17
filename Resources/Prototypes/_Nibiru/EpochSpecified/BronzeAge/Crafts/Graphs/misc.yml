@@ -231,7 +231,7 @@
             - !type:PointsFromCraft
               points: 40
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 2
             - material: Thread
               amount: 4

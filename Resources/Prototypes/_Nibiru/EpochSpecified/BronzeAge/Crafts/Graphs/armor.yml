@@ -10,10 +10,12 @@
       edges:
         - to: assembly
           steps:
-            - material: BronzeShieldPiece
+            - material: BronzeInlay
               amount: 1
             - material: WheelBlank
               amount: 1
+            - material: CEWood
+              amount: 2
             - tool: Hammering
               doAfter: 3
     - node: assembly

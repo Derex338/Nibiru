@@ -7,20 +7,22 @@
 # ──────────────────────────────────────────────────────────────────────────────
 - type: entity
   id: WoodenBow
+  suffix: Нибиру, Каменный век
   parent: BaseBow
   name: wooden bow
   description: A simple bow made from a flexible branch and plant fiber string.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
     layers:
     - state: unwielded
       map: [ base ]
     - state: unwielded-arrow
       map: [ arrow ]
-      visible: false
-    - state: unwielded-plunger
-      map: [ plunger ]
       visible: false
   - type: Appearance
   - type: ItemMapper
@@ -58,9 +60,14 @@
 - type: entity
   parent: BaseArrow
   id: ArrowWood
+  suffix: Нибиру, Каменный век
   name: wooden arrow
   description: A simple arrow with a sharpened wooden tip. Not very effective, but easy to make.
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
     layers:
@@ -83,6 +90,8 @@
   - type: Construction
     graph: WoodenArrow
     node: fin
+  - type: ThrowingAngle
+    angle: 0
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Stone Arrow (Каменная стрела)
@@ -90,9 +99,14 @@
 - type: entity
   parent: BaseArrow
   id: ArrowStone
+  suffix: Нибиру, Каменный век
   name: stone-tipped arrow
   description: An arrow with a sharpened stone tip, bound with plant fiber. More deadly than wooden arrows.
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
     layers:
@@ -115,6 +129,8 @@
   - type: Construction
     graph: StoneArrow
     node: fin
+  - type: ThrowingAngle
+    angle: 0
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Leather Quiver (Кожаный колчан)
@@ -122,9 +138,14 @@
 - type: entity
   parent: ClothingBeltQuiver
   id: QuiverLeather
+  suffix: Нибиру, Каменный век
   name: leather quiver
   description: A simple leather quiver for holding arrows.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: QuiverLeather
     node: fin

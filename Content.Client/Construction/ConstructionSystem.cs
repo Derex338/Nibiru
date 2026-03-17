@@ -195,6 +195,16 @@ namespace Content.Client.Construction
         public event EventHandler<string>? ConstructionGuideAvailable;
         public event EventHandler? ToggleCraftingWindow;
         public event EventHandler? FlipConstructionPrototype;
+        public event EventHandler? RecipesUpdated;
+
+        public List<ProtoId<ConstructionPrototype>> ConsRecipes { get; } = new();
+
+        public void UpdateRecipes(List<ProtoId<ConstructionPrototype>> recipes)
+        {
+            ConsRecipes.Clear();
+            ConsRecipes.AddRange(recipes);
+            RecipesUpdated?.Invoke(this, EventArgs.Empty);
+        }
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
@@ -450,46 +460,7 @@ namespace Content.Client.Construction
 			return string.Empty;
 		}
 
-		public int GetResearchPoints(ConstructionPrototype proto)
-		{
-			if (!_proto.TryIndex(proto.Graph, out ConstructionGraphPrototype? graph))
-				return 0;
 
-			if (!graph.Nodes.TryGetValue(proto.TargetNode, out var targetNode))
-				return 0;
-
-			var points = 0;
-
-			// Iterate backwards from target node to find the last step's action
-			// Actually, we need to find the edge leading to the target node.
-			// But since we don't have back-references, we might need to search the graph.
-			// However, usually PointsFromCraft is on the edge incoming to 'fin' (TargetNode).
-
-			// Let's iterate over correct path
-			if(graph.Path(proto.StartNode, proto.TargetNode) is not {} path)
-				return 0;
-
-			var currentNode = graph.Nodes[proto.StartNode];
-			foreach (var nextNode in path)
-			{
-				if (currentNode.TryGetEdge(nextNode.Name, out var edge))
-				{
-					foreach (var step in edge.Steps)
-					{
-						foreach (var action in step.Completed)
-						{
-							if (action is Content.Server.Construction.Completions.PointsFromCraft pointsAction)
-							{
-								points += pointsAction.Points;
-							}
-						}
-					}
-				}
-				currentNode = nextNode;
-			}
-
-			return points;
-		}
 
 		# endregion
     }

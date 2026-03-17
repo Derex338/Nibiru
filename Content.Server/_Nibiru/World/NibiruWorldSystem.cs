@@ -31,6 +31,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared._CE.DayCycle;
 using Robust.Shared.Maths;
+using Content.Shared._CE.ZLevels.Roof;
 
 namespace Content.Server._Nibiru.World;
 
@@ -71,12 +72,14 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         // 1. Создаем подземный мир (шахта) - Уровень -1
         var caveMap = _map.CreateMap();
         _biome.EnsurePlanet(caveMap, _prototype.Index(rule.CaveBiome), seed);
+        EnsureComp<CEZLevelMapRoofComponent>(caveMap);
 
 
         // 2. Создаем основной мир (планета) - Уровень 0
         var worldMap = _map.CreateMap();
         _biome.EnsurePlanet(worldMap, _prototype.Index(rule.Biome), seed);
         EnsureComp<CEDayCycleComponent>(worldMap);
+        EnsureComp<CEZLevelMapRoofComponent>(worldMap);
 
         // Уровень 1
         var sky1Map = _map.CreateMap();
@@ -143,6 +146,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         EnsureComp<SunShadowComponent>(mapUid);
         EnsureComp<SunShadowCycleComponent>(mapUid);
         EnsureComp<CEDayCycleComponent>(mapUid);
+        EnsureComp<CEZLevelMapRoofComponent>(mapUid);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int)Gas.Oxygen] = 21.824779f;

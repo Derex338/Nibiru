@@ -1,6 +1,7 @@
 - type: entity
   parent: BaseStoneItem
   id: StoneBlock
+  suffix: Нибиру, Каменный век
   name: каменный блок
   description: Грубо отесанный каменный блок.
   components:
@@ -9,6 +10,9 @@
     state: icon
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,7 +43,7 @@
 - type: entity
   parent: StoneBlock
   id: StoneBlock1
-  suffix: Single
+  suffix: Single, Нибиру, Каменный век
   components:
   - type: Construction
     graph: StoneBlock
@@ -50,14 +54,15 @@
 - type: entity
   parent: BaseStoneItem
   id: MudBlock
+  suffix: Нибиру, Каменный век
   name: глиняный кирпич
   description: Высушенный на солнце кирпич из грязи.
   components:
-  - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
-    state: brick_3
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Destructible
     thresholds:
     - trigger:
@@ -83,11 +88,18 @@
     - brick_1
     - brick_2
     - brick_3
+  - type: Appearance
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+    state: brick_3
+    layers:
+    - state: brick_3
+      map: ["base"]
 
 - type: entity
   parent: MudBlock
   id: MudBlock1
-  suffix: Single
+  suffix: Single, Нибиру, Каменный век
   components:
   - type: Construction
     graph: MudBlock
@@ -100,6 +112,7 @@
 - type: entity
   parent: BaseStoneItem
   id: MudBlockRaw
+  suffix: Нибиру, Каменный век
   name: сырой глиняный кирпич
   description: Еще влажный кирпич из грязи.
   components:
@@ -109,6 +122,9 @@
     color: "#888888"
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Destructible
     thresholds:
     - trigger:
@@ -135,7 +151,7 @@
   id: WoodStick
   name: палка
   description: Обычная деревянная палка.
-  suffix: Full
+  suffix: Full, Нибиру, Каменный век
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -148,6 +164,7 @@
     - stick_1
     - stick_2
     - stick_3
+  - type: Appearance
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi
     state: stick_3
@@ -156,6 +173,8 @@
       map: ["base"]
   - type: Item
     size: Normal
+    shape:
+    - 0,0,0,1
     heldPrefix: stick
   - type: StaticPrice
     price: 0
@@ -167,7 +186,7 @@
 - type: entity
   parent: WoodStick
   id: WoodStick10
-  suffix: 10
+  suffix: 10, Нибиру, Каменный век
   components:
   - type: Sprite
     state: stick_2
@@ -177,7 +196,7 @@
 - type: entity
   parent: WoodStick
   id: WoodStick1
-  suffix: Single
+  suffix: Single, Нибиру, Каменный век
   components:
   - type: Sprite
     state: stick_1
@@ -189,7 +208,7 @@
   id: MaterialThread
   name: нить
   description: Тонкая нить.
-  suffix: Full
+  suffix: Full, Нибиру, Каменный век
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -207,7 +226,8 @@
       map: ["base"]
   - type: Item
     size: Tiny
-    heldPrefix: rods
+    shape:
+    - 0,0,0,0
   - type: StaticPrice
     price: 0
   - type: StackPrice
@@ -218,7 +238,7 @@
 - type: entity
   parent: MaterialThread
   id: MaterialThread10
-  suffix: 10
+  suffix: 10, Нибиру, Каменный век
   components:
   - type: Sprite
     state: thread_1
@@ -231,7 +251,7 @@
 - type: entity
   parent: MaterialThread
   id: MaterialThread1
-  suffix: Single
+  suffix: Single, Нибиру, Каменный век
   components:
   - type: Sprite
     state: thread_1
@@ -241,6 +261,7 @@
 - type: entity
   parent: BaseItem
   id: FeatherBase
+  suffix: Нибиру, Каменный век
   name: перо
   description: Птичье перо.
   abstract: true
@@ -250,6 +271,9 @@
     state: rods
   - type: Item
     sprite: Objects/Materials/parts.rsi
+    size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -267,6 +291,7 @@
 - type: entity
   parent: FeatherBase
   id: FeatherWhite
+  suffix: Нибиру, Каменный век
   name: белое перо
   components:
   - type: Sprite
@@ -276,6 +301,7 @@
 - type: entity
   parent: FeatherBase
   id: FeatherBrown
+  suffix: Нибиру, Каменный век
   name: коричневое перо
   components:
   - type: Sprite
@@ -285,6 +311,7 @@
 - type: entity
   parent: FeatherBase
   id: FeatherGrey
+  suffix: Нибиру, Каменный век
   name: серое перо
   components:
   - type: Sprite
@@ -294,6 +321,7 @@
 - type: entity
   parent: FeatherBase
   id: FeatherLight
+  suffix: Нибиру, Каменный век
   name: светлое перо
   components:
   - type: Sprite

@@ -31,7 +31,7 @@ public abstract partial class CESharedLockKeySystem
         var user = args.User;
         AlternativeVerb verb = new()
         {
-            Disabled = !_lock.CanToggleLock((ent, lockComp), args.User),
+            Disabled = !_actionBlocker.CanComplexInteract(args.User),
             Act = () =>
             {
 
@@ -49,9 +49,9 @@ public abstract partial class CESharedLockKeySystem
                 }
 
                 if (lockComp.Locked)
-                    _lock.TryUnlock(ent, user, lockComp);
+                    _lock.Unlock(ent, user, lockComp);
                 else
-                    _lock.TryLock(ent, user, lockComp);
+                    _lock.Lock(ent, user, lockComp);
             },
             Text = Loc.GetString(lockComp.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
             Icon = !lockComp.Locked

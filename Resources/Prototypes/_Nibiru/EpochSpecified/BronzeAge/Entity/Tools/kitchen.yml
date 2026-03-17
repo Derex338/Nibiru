@@ -1,13 +1,15 @@
 - type: entity
-  parent: ReagentContainerBase
+  parent: [ReagentContainerBase, BaseBronzeItem]
   id: CookingPot
+  suffix: Nibiru, BronzeAge
   name: cooking pot
   description: A simple cooking pot, used for soups.
   components:
   - type: Item
     color: "#D16F2C"
+    size: Large
     shape:
-    - 0,0,1,0
+    - 0,0,1,1
     storedOffset: 0,-3
   - type: SolutionContainerManager
     solutions:

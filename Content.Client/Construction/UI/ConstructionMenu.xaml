@@ -22,6 +22,7 @@
                         <EntityPrototypeView Name="TargetTexture" HorizontalAlignment="Right" Stretch="Fill" Margin="0 0 10 0"/>
                         <BoxContainer Orientation="Vertical">
                             <RichTextLabel Name="TargetName"/>
+                            <RichTextLabel Name="TargetPoints" Visible="False"/>
                             <RichTextLabel Name="TargetDesc"/>
                         </BoxContainer>
                     </BoxContainer>

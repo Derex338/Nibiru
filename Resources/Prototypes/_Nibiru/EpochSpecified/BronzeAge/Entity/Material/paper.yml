@@ -1,6 +1,7 @@
 - type: entity
   parent: Paper
   id: Papyrus
+  suffix: Nibiru, BronzeAge
   name: папирус
   description: Плотный материал для письма.
   components:

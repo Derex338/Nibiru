@@ -12,7 +12,11 @@
   description: Каменная форма для отливки металлических слитков.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -27,7 +31,11 @@
   description: Каменная форма для отливки бронзовых вставок.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -42,7 +50,11 @@
   description: Каменная форма для отливки бронзовых наконечников стрел.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -57,7 +69,11 @@
   description: Каменная форма для отливки бронебойных наконечников стрел.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -72,7 +88,11 @@
   description: Каменная форма для отливки навершия небольшого молотка.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: hammer1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -87,7 +107,11 @@
   description: Каменная форма для отливки навершия боевого молота.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: hammer1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -102,7 +126,11 @@
   description: Каменная форма для отливки навершия рабочего топора.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: axe1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -117,7 +145,11 @@
   description: Каменная форма для отливки навершия боевого топора.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: axe1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -132,7 +164,11 @@
   description: Каменная форма для отливки наконечника копья.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -147,7 +183,11 @@
   description: Каменная форма для отливки лезвия меча.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -162,7 +202,11 @@
   description: Каменная форма для отливки лезвия кинжала.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -177,7 +221,11 @@
   description: Каменная форма для отливки навершия трезубца.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -192,7 +240,11 @@
   description: Каменная форма для отливки элементов щита.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -207,7 +259,11 @@
   description: Каменная форма для отливки лезвия ножа.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -222,7 +278,11 @@
   description: Каменная форма для отливки детали секатора.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -237,7 +297,11 @@
   description: Каменная форма для отливки лезвия мотыги.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: axe1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -252,7 +316,11 @@
   description: Каменная форма для отливки наконечника кирки.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -267,7 +335,11 @@
   description: Каменная форма для отливки лезвия косы.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -282,7 +354,11 @@
   description: Каменная форма для отливки наконечника лопаты.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -297,7 +373,11 @@
   description: Каменная форма для отливки основы шлема.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -312,7 +392,11 @@
   description: Каменная форма для отливки детали нагрудника.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -327,7 +411,11 @@
   description: Огромная каменная форма для отливки наковальни.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -342,7 +430,11 @@
   description: Каменная форма для отливки детали замка.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -357,7 +449,30 @@
   description: Каменная форма для отливки ключа.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: MoldLockpick
+  name: Форма для отмычки
+  graph: MoldLockpick
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки отмычки.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -372,7 +487,11 @@
   description: Каменная форма для отливки рашпиля.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -387,7 +506,11 @@
   description: Каменная форма для отливки лезвия хопеша.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -402,7 +525,11 @@
   description: Каменная форма для отливки короны.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -417,7 +544,11 @@
   description: Каменная форма для отливки лезвия ксифоса.
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    state: icon
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench

@@ -1,6 +1,7 @@
 - type: entity
   parent: MobPig
   id: NibiruMobPig
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -10,10 +11,13 @@
       amount: 1
   - type: PointsFromKill
     points: 25
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobGoat
   id: NibiruMobGoat
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -23,10 +27,13 @@
       amount: 1
   - type: PointsFromKill
     points: 30
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobCow
   id: NibiruMobCow
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -36,10 +43,13 @@
       amount: 1
   - type: PointsFromKill
     points: 40
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobChicken
   id: NibiruMobChicken
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -51,10 +61,13 @@
       amount: 4
   - type: PointsFromKill
     points: 5
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobDuckMallard
   id: NibiruMobDuckMallard
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -66,30 +79,33 @@
       amount: 4
   - type: PointsFromKill
     points: 7
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobBat
   id: NibiruMobBat
+  suffix: Nibiru
   components:
   - type: PointsFromKill
     points: 5
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobButterfly
   id: NibiruMobButterfly
+  suffix: Nibiru
   components:
-  - type: Butcherable
-    spawned:
-    - id: HideSmall
-      amount: 1
-    - id: SmallBodyButcher
-      amount: 1
   - type: PointsFromKill
     points: 1
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobFox
   id: NibiruMobFox
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -99,10 +115,13 @@
       amount: 1
   - type: PointsFromKill
     points: 15
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobLizard
   id: NibiruMobLizard
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -112,10 +131,13 @@
       amount: 1
   - type: PointsFromKill
     points: 8
+  - type: Body
+    prototype: NibiruAnimal
 
 - type: entity
   parent: MobReindeerBuck
   id: NibiruMobReindeerBuck
+  suffix: Nibiru
   components:
   - type: Butcherable
     spawned:
@@ -127,3 +149,5 @@
       amount: 1
   - type: PointsFromKill
     points: 45
+  - type: Body
+    prototype: NibiruAnimal

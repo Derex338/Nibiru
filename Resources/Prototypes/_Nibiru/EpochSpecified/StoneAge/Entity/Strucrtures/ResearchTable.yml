@@ -1,5 +1,6 @@
 - type: entity
   id: ResearchTable
+  suffix: Нибиру, Каменный век
   parent: BaseWoodStructure
   name: исследовательский стол
   description: Тут происходит магия прогресса.

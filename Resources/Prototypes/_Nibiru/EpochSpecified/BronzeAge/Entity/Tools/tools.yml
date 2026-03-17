@@ -2,6 +2,7 @@
   name: бронзовый молоточек
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHammerSmall
+  suffix: Nibiru, BronzeAge
   description: 'Зачарованный силами Богов молоток, способный чинить структуры. Мелким шрифтом выгривировано на бронзе: "1 удар-1 год жизни".'
   components:
   - type: Sprite
@@ -19,6 +20,9 @@
     attackRate: 2
   - type: Item
     size: Large
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Construction
     graph: BronzeHammerSmall
     node: fin
@@ -43,6 +47,7 @@
   name: бронзовая мотыга
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHoe
+  suffix: Nibiru, BronzeAge
   description: Используется для вспахивания сорняков. Иди работай.
   components:
   - type: Tag
@@ -60,6 +65,10 @@
         Slash: 8
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
+    size: Huge
+    shape:
+    - 0,0,1,0
+    - 0,1,0,2
   - type: Construction
     graph: BronzeHoe
     node: fin
@@ -84,6 +93,7 @@
   name: бронзовый секатор
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeClippers
+  suffix: Nibiru, BronzeAge
   description: Используется для извлечения семян растений. Иди работай.
   components:
   - type: Tag
@@ -100,6 +110,9 @@
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
     storedRotation: -90
+    size: Normal
+    shape:
+    - 0,0,0,1
   - type: Construction
     graph: BronzeClippers
     node: fin
@@ -124,6 +137,7 @@
   name: бронзовая коса
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeScythe
+  suffix: Nibiru, BronzeAge
   description: Красивая, длинная, с неровной рукоятью бронзовая коса.
   components:
   - type: Sharp
@@ -136,7 +150,10 @@
       types:
         Slash: 12
   - type: Item
-    size: Normal
+    size: Huge
+    shape:
+    - 0,0,0,4
+    - 1,4,1,4
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/bronzescythe.rsi
     slots:
@@ -165,6 +182,7 @@
   name: бронзовый топорик
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHatchet
+  suffix: Nibiru, BronzeAge
   description: Идеально подходящий для рубки, но плохой для боёв бронзовый топор.
   components:
   - type: Tag
@@ -186,6 +204,9 @@
         Structural: 15
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
+    size: Normal
+    shape:
+    - 0,0,0,2
   - type: Construction
     graph: BronzeHatchet
     node: fin
@@ -210,6 +231,7 @@
   name: бронзовый нож
   parent: [BaseKnife, BaseBronzeItem]
   id: BronzeKnife
+  suffix: Nibiru, BronzeAge
   description: Красивый боевой нож для ближних конфронтаций.
   components:
   - type: Tag
@@ -235,6 +257,9 @@
         Slash: 15
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+    size: Normal
+    shape:
+    - 0,0,0,1
   - type: DisarmMalus
     malus: 0.225
   - type: ThrowingAngle
@@ -275,6 +300,7 @@
                 max: 2
 - type: entity
   id: Key
+  suffix: Nibiru, BronzeAge
   parent: [BaseItem, BaseBronzeItem]
   name: key
   components:
@@ -284,9 +310,13 @@
     state: cowbar
   - type: Item
     sprite: Objects/Tools/Cowtools/cowbar.rsi
+    size: Tiny
+    shape:
+    - 0,0,0,0
 
 - type: entity
   id: DoorLock
+  suffix: Nibiru, BronzeAge
   parent: [BaseItem, BaseBronzeItem]
   name: lock
   components:
@@ -296,9 +326,13 @@
     state: cowbar
   - type: Item
     sprite: Objects/Tools/Cowtools/cowbar.rsi
+    size: Tiny
+    shape:
+    - 0,0,0,0
 
 - type: entity
   id: Rasp
+  suffix: Nibiru, BronzeAge
   parent: [BaseItem, BaseBronzeItem]
   name: rasp
   components:
@@ -310,11 +344,15 @@
     state: cowbar
   - type: Item
     sprite: Objects/Tools/Cowtools/cowbar.rsi
+    size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   name: бронзовая кирка
   parent: [BaseItem, BaseBronzeItem]
   id: BronzePickaxe
+  suffix: Nibiru, BronzeAge
   description: Тяжелая бронзовая кирка для добычи камня и руды.
   components:
   - type: Sprite
@@ -326,19 +364,32 @@
       types:
         Blunt: 10
         Structural: 25
-  - type: Tool
-    qualities:
-    - Prying
   - type: Construction
     graph: BronzePickaxe
     node: fin
   - type: Item
-    size: Large
+    size: Huge
+    shape:
+    - 0,0,2,0
+    - 1,1,1,4
+  - type: Tool
+    qualities:
+      - CEPickaxe
+      - Prying
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 4
+        Structural: 10
+  - type: ToolTileCompatible
+    delay: 5
 
 - type: entity
   name: бронзовая лопата
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeShovel
+  suffix: Nibiru, BronzeAge
   description: Прочная бронзовая лопата для земляных работ.
   components:
   - type: Sprite
@@ -350,12 +401,20 @@
       types:
         Blunt: 8
         Structural: 15
-  - type: Tool
-    qualities:
-    - Shoveling
   - type: Construction
     graph: BronzeShovel
     node: fin
   - type: Item
-    size: Large
+    size: Huge
+    shape:
+    - 0,0,0,4
+  - type: Tool
+    qualities:
+      - Digging
+      - Prying
+      - CEShovel
+      - Shoveling
+    useSound:
+      path: /Audio/Items/shovel_dig.ogg
+  - type: ToolTileCompatible
 

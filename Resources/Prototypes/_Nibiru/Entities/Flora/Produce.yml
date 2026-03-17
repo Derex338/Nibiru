@@ -1,0 +1,73 @@
+- type: entity
+  id: CEFoodPoppy
+  parent: FoodInjectableBase
+  categories: [ ForkFiltered ]
+  name: poppy
+  description: A flower with extracts often used in the production of medicine.
+  components:
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: Sprite
+    sprite: _Nibiru/Flora/Plants/poppy.rsi
+    layers:
+      - state: produce
+        map: [ "random" ]
+  - type: RandomSprite
+    available:
+      - random:
+          produce: ""
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 22
+        reagents:
+        - ReagentId: CENutriment
+          Quantity: 1
+        - ReagentId: Bicaridine
+          Quantity: 10
+  - type: SliceableFood
+    count: 2
+    sliceTime: 1.5
+    slice: CESeedPoppy
+
+- type: entity
+  id: CEFoodAloe
+  parent: FoodInjectableBase
+  categories: [ ForkFiltered ]
+  name: aloe
+  description: A fragrant plant with soothing properties.
+  components:
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: Sprite
+    sprite: _Nibiru/Flora/Plants/aloe.rsi
+    layers:
+      - state: produce
+        map: [ "random" ]
+  - type: RandomSprite
+    available:
+      - random:
+          produce: ""
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Aloe
+          Quantity: 5
+        - ReagentId: Dermaline
+          Quantity: 5
+  - type: SliceableFood
+    count: 2
+    sliceTime: 1.5
+    slice: CESeedAloe

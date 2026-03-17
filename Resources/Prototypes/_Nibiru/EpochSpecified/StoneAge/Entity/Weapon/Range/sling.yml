@@ -1,5 +1,6 @@
 - type: entity
   id: Sling
+  suffix: Нибиру, Каменный век
   parent: BaseBow
   name: праща
   description: Простое метательное орудие для метания камней.
@@ -14,7 +15,9 @@
       map: [ arrow ]
       visible: false
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,0,1
   - type: ItemMapper
     spriteLayers:
     - arrow
@@ -49,6 +52,7 @@
 
 - type: entity
   id: SpearThrower
+  suffix: Нибиру, Каменный век
   parent: BaseBow
   name: spear thrower
   description: A simple device using leverage to achieve greater velocity in dart-throwing or spear-throwing.
@@ -63,7 +67,9 @@
       map: [ arrow ]
       visible: false
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: ItemMapper
     spriteLayers:
     - arrow

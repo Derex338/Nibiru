@@ -2,6 +2,7 @@
   id: HerbBase
   parent: BaseStructure
   name: трава
+  suffix: Nibiru
   components:
   - type: Sprite
     sprite: Decals/Flora/flora_bushes.rsi
@@ -28,6 +29,7 @@
   id: HerbD
   parent: HerbBase
   name: трава
+  suffix: Nibiru
   components:
   - type: RandomSprite
     available:
@@ -41,6 +43,7 @@
   id: HerbE
   parent: HerbBase
   name: трава
+  suffix: Nibiru
   components:
   - type: RandomSprite
     available:
@@ -54,6 +57,7 @@
   id: HerbG
   parent: HerbBase
   name: трава
+  suffix: Nibiru
   components:
   - type: RandomSprite
     available:
@@ -67,6 +71,7 @@
   id: HerbH
   parent: HerbBase
   name: трава
+  suffix: Nibiru
   components:
   - type: RandomSprite
     available:
@@ -79,6 +84,7 @@
   id: HerbJ
   parent: HerbBase
   name: трава
+  suffix: Nibiru
   components:
   - type: RandomSprite
     available:
@@ -91,6 +97,7 @@
   id: HerbK
   parent: HerbBase
   name: трава
+  suffix: Nibiru
   components:
   - type: RandomSprite
     available:
@@ -104,7 +111,7 @@
   id: BunchHerb
   name: пучок травы
   description: Пучок свежесобранной травы.
-  suffix: Full
+  suffix: Full Nibiru
   components:
   - type: Material
   - type: Sprite
@@ -123,7 +130,7 @@
 - type: entity
   parent: BunchHerb
   id: BunchHerb1
-  suffix: Single
+  suffix: Single Nibiru
   components:
   - type: Sprite
     state: produce
@@ -135,7 +142,7 @@
   id: Acorn
   name: жёлудь
   description: Плоды дуба, можно посадить или использовать в хозяйстве.
-  suffix: Full
+  suffix: Full Nibiru
   components:
   - type: Material
   - type: Sprite
@@ -152,7 +159,7 @@
 - type: entity
   parent: Acorn
   id: Acorn1
-  suffix: Single
+  suffix: Single Nibiru
   components:
   - type: Stack
     count: 1

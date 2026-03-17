@@ -209,6 +209,8 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  - type: PointsFromKill
+    points: 100
 
 - type: entity
   save: false

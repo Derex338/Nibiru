@@ -53,12 +53,12 @@
 
     # --- Медная руда ---
     - !type:BiomeEntityLayer
-      threshold: 0.75
+      threshold: 0.7
       noise:
         seed: 503
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.12
+        frequency: 0.005
       allowedTiles:
         - CEStone
       entities:
@@ -66,12 +66,12 @@
 
     # --- Оловянная руда ---
     - !type:BiomeEntityLayer
-      threshold: 0.78
+      threshold: 0.7
       noise:
         seed: 504
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.12
+        frequency: 0.005
       allowedTiles:
         - CEStone
       entities:
@@ -79,7 +79,7 @@
 
     # --- Серебряная руда (редко) ---
     - !type:BiomeEntityLayer
-      threshold: 0.85
+      threshold: 0.8
       noise:
         seed: 506
         noiseType: OpenSimplex2
@@ -92,7 +92,7 @@
 
     # --- Золотая руда (очень редко) ---
     - !type:BiomeEntityLayer
-      threshold: 0.9
+      threshold: 0.8
       noise:
         seed: 507
         noiseType: OpenSimplex2

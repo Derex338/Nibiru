@@ -1,25 +1,73 @@
 - type: ambientMusic
+  id: NibiruDesertMusic
+  sound:
+    params:
+      volume: -8
+    collection: NibiruDesertAmbience
+  rules: NibiruDesert
+  fadeIn: true
+  interruptable: true
+  priority: 2
+
+## Fallback if nothing else found
+- type: ambientMusic
   id: NibiruMining
   sound:
     params:
       volume: -12
     collection: NibiruPlanetaryAmbience
-  rules: OnMapGrid
+  rules: AlwaysTrue
   fadeIn: true
   interruptable: true
   priority: 1
 
+# Rules
+- type: rules
+  id: NibiruForestDay
+  rules:
+    - !type:CEIsNight
+      inverted: true
+    - !type:StayOnTileRule
+      biomeId: NibiruPackForests
+
+- type: rules
+  id: NibiruForestNight
+  rules:
+    - !type:CEIsNight
+    - !type:StayOnTileRule
+      biomeId: NibiruPackForests
+
+- type: rules
+  id: NibiruFieldDay
+  rules:
+    - !type:CEIsNight
+      inverted: true
+    - !type:StayOnTileRule
+      biomeId: NibiruPackGrasslands
+
+- type: rules
+  id: NibiruFieldNight
+  rules:
+    - !type:CEIsNight
+    - !type:StayOnTileRule
+      biomeId: NibiruPackGrasslands
+
+- type: rules
+  id: NibiruDesert
+  rules:
+    - !type:StayOnTileRule
+      biomeId: NibiruDesert
+
+# Sound Collections
 - type: soundCollection
   id: NibiruPlanetaryAmbience
   files:
-    - /Audio/_Nibiru/Ambient/ambient-bongos.ogg
-    - /Audio/_Nibiru/Ambient/gjallar.ogg
-    - /Audio/_Nibiru/Ambient/the-legend-of-narmer.ogg
-    - /Audio/_Nibiru/Ambient/royal-market.ogg
-    - /Audio/_Nibiru/Ambient/tranquil-fields-eastern.ogg
-    - /Audio/_Nibiru/Ambient/we-three-celtic-kings.ogg
-    - /Audio/_Nibiru/Ambient/tribal-joy.ogg
-    - /Audio/_Nibiru/Ambient/the-streets-of-prague.ogg
+    - /Audio/_Nibiru/Ambient/music/ambient-bongos.ogg
+    - /Audio/_Nibiru/Ambient/music/gjallar.ogg
+    - /Audio/_Nibiru/Ambient/music/royal-market.ogg
+    - /Audio/_Nibiru/Ambient/music/we-three-celtic-kings.ogg
+    - /Audio/_Nibiru/Ambient/music/tribal-joy.ogg
+    - /Audio/_Nibiru/Ambient/music/the-streets-of-prague.ogg
 
     - /Audio/_tc14/Rimworld/A_Place_of_Our_Own.ogg
     - /Audio/_tc14/Rimworld/Back_to_Work.ogg
@@ -46,3 +94,34 @@
     - /Audio/_tc14/Rimworld/Spacekattommy.ogg
     - /Audio/_tc14/Rimworld/Sunlight.ogg
     - /Audio/_tc14/Rimworld/United.ogg
+
+- type: soundCollection
+  id: NibiruDesertAmbience
+  files:
+    - /Audio/_Nibiru/Ambient/music/the-legend-of-narmer.ogg
+    - /Audio/_Nibiru/Ambient/music/tranquil-fields-eastern.ogg
+
+- type: soundCollection
+  id: NibiruForestDayLoopCollection
+  files:
+    - /Audio/_Nibiru/Ambient/background/Forest_Day1.ogg
+    - /Audio/_Nibiru/Ambient/background/Forest1.ogg
+
+- type: soundCollection
+  id: NibiruForestNightLoopCollection
+  files:
+    - /Audio/_Nibiru/Ambient/background/Forest_Night.ogg
+    - /Audio/_Nibiru/Ambient/background/Forest1.ogg
+
+- type: soundCollection
+  id: NibiruFieldDayLoopCollection
+  files:
+    - /Audio/_Nibiru/Ambient/background/Field_Day1.ogg
+    - /Audio/_Nibiru/Ambient/background/Birds_Day1.ogg
+    - /Audio/_Nibiru/Ambient/background/Birds_Day2.ogg
+
+- type: soundCollection
+  id: NibiruFieldNightLoopCollection
+  files:
+    - /Audio/_Nibiru/Ambient/background/Crows.ogg
+

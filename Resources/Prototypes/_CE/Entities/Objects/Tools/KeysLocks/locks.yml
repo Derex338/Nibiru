@@ -35,3 +35,19 @@
   - type: PhysicalComposition
     materialComposition:
       CEIron: 10
+
+- type: entity
+  parent: CEBaseLock
+  id: CELockBronze
+  name: бронзовый замок
+  components:
+  - type: Sprite
+    state: lock_iron
+    color: "#804000"
+  - type: CELock
+    shape:
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2

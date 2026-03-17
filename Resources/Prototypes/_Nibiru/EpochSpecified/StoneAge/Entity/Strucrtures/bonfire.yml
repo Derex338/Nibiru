@@ -1,6 +1,7 @@
 
 - type: entity
   id: NibiruBonfire
+  suffix: Нибиру, Каменный век
   parent: BaseStructure
   name: костёр
   description: Кучка дров в форме костра

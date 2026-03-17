@@ -1,6 +1,7 @@
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
   id: BronzeChestplate
+  suffix: Nibiru, BronzeAge
   name: бронзовый нагрудник
   description: Ляпота.
   components:
@@ -22,6 +23,10 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: BronzeChestplate
     node: fin
@@ -29,6 +34,7 @@
 - type: entity
   parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
   id: BronzeHelmet
+  suffix: Nibiru, BronzeAge
   name: бронзовый шлем
   description: Где хохолок?
   components:
@@ -44,6 +50,10 @@
       Blunt: 12
       Slash: 15
       Piercing: 14
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: BronzeHelmet
     node: fin

@@ -3,6 +3,7 @@ using Robust.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
+using Content.Client.Construction;
 
 namespace Content.Client.Nibiru.Construction;
 
@@ -38,6 +39,7 @@ public sealed class ConstructionRecipeCheck : EntitySystem
         var data = new RecipeData(msg.Crafts);
 
         OnConstructionRecipeUpdate?.Invoke(data);
+        EntityManager.System<ConstructionSystem>().UpdateRecipes(msg.Crafts);
     }
 
     public readonly record struct RecipeData(

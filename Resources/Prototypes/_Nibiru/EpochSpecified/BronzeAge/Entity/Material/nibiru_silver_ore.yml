@@ -1,7 +1,7 @@
 - type: entity
   id: NibiruSilverOre
   parent: SilverOre
-  suffix: Nibiru
+  suffix: Nibiru, BronzeAge
   components:
   - type: Stack
     stackType: NibiruSilverOre

@@ -42,6 +42,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.EntitySerialization.Systems;
 using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
 namespace Content.Server.Parallax;
@@ -65,6 +66,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
 
     private EntityQuery<BiomeComponent> _biomeQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
@@ -75,6 +77,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
     private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
+    private static readonly ProtoId<TagPrototype> BiomeMobTag = "BiomeMob";
 
     private List<(Vector2i, Tile)> _tiles = new();
 
@@ -108,6 +111,19 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Subs.CVar(_configManager, CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(ProtoReload);
+        _mapLoader.OnIsSerializable += OnIsSerializable;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _mapLoader.OnIsSerializable -= OnIsSerializable;
+    }
+
+    private void OnIsSerializable(Entity<MetaDataComponent> ent, ref bool serializable)
+    {
+        if (serializable && _tags.HasTag(ent, BiomeMobTag))
+            serializable = false;
     }
 
     private void ProtoReload(PrototypesReloadedEventArgs obj)
@@ -777,6 +793,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 RemComp<GhostRoleComponent>(uid);
                 EntityManager.InitializeAndStartEntity(uid);
 
+                if (HasComp<MobStateComponent>(uid))
+                    _tags.AddTag(uid, BiomeMobTag);
+
                 if (component.LoadedEntities.TryGetValue(chunk, out var loadedEntities))
                 {
                     loadedEntities.Add(uid, node);
@@ -867,6 +886,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     if (!HasComp<MobStateComponent>(ent) && !HasComp<ItemComponent>(ent) && !HasComp<PullableComponent>(ent))
                         _transform.AnchorEntity((ent, xform), (gridUid, grid), indices);
                 }
+
+                if (HasComp<MobStateComponent>(ent))
+                    _tags.AddTag(ent, BiomeMobTag);
 
                 loadedEntities.Add(ent, indices);
             }

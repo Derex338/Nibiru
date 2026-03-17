@@ -1,6 +1,7 @@
 - type: entity
   parent: BaseWoodItem
   id: WoodenBowl
+  suffix: Нибиру, Каменный век
   name: wooden bowl
   description: A rustic bowl carved from wood.
   components:
@@ -63,6 +64,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayBowlRaw
+  suffix: Нибиру, Каменный век
   name: сырая глиняная миска
   description: Еще влажная и мягкая миска из глины. Нужно обжечь ее, чтобы она стала твердой.
   components:
@@ -80,6 +82,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayJugRaw
+  suffix: Нибиру, Каменный век
   name: сырой глиняный кувшин
   description: Еще влажный и мягкий кувшин из глины. Нужно обжечь его, чтобы он стал твердым.
   components:
@@ -97,6 +100,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayCupRaw
+  suffix: Нибиру, Каменный век
   name: сырая глиняная кружка
   description: Еще влажная и мягкая кружка из глины. Нужно обжечь ее, чтобы она стала твердой.
   components:
@@ -114,6 +118,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayPlateRaw
+  suffix: Нибиру, Каменный век
   name: сырая глиняная тарелка
   description: Еще влажная и мягкая тарелка из глины. Нужно обжечь ее, чтобы она стала твердой.
   components:
@@ -132,6 +137,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayBowl
+  suffix: Нибиру, Каменный век
   name: глиняная миска
   description: Прочная миска из обожженной глины.
   components:
@@ -181,6 +187,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayJug
+  suffix: Нибиру, Каменный век
   name: глиняный кувшин
   description: Вместительный кувшин из обожженной глины.
   components:
@@ -229,6 +236,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayCup
+  suffix: Нибиру, Каменный век
   name: глиняная кружка
   description: Небольшая кружка из обожженной глины.
   components:
@@ -277,6 +285,7 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayPlate
+  suffix: Нибиру, Каменный век
   name: глиняная тарелка
   description: Широкая тарелка из обожженной глины.
   components:

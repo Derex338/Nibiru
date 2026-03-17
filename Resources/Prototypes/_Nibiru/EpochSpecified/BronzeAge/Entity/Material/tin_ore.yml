@@ -1,5 +1,6 @@
 - type: entity
   id: TinOre
+  suffix: Nibiru, BronzeAge
   name: tin ore
   parent: BaseItem
   description: A chunk of tin ore.

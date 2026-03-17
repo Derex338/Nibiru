@@ -8,16 +8,6 @@
   graph:
     - node: start
       edges:
-        - to: frame
-          steps:
-            - material: WheelBlank
-              amount: 1
-            - material: WoodPlank
-              amount: 2
-            - tool: Hammering
-              doAfter: 5
-    - node: frame
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
@@ -26,7 +16,14 @@
             - material: BronzeInlay
               amount: 1
             - tool: Hammering
+              minTemperature: 700
               doAfter: 10
+            - material: WheelBlank
+              amount: 1
+            - material: CEWood
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
     - node: fin
       entity: BronzeShield
 
@@ -36,25 +33,20 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopHammerPiece
-              amount: 1
-            - material: WoodStick
-              amount: 1
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeHammerSmallAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTopHammerPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 5
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 2
     - node: fin
       entity: BronzeHammerSmall
 
@@ -64,25 +56,20 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopMacePiece
-              amount: 1
-            - material: WoodStick
-              amount: 2
-            - tool: Hammering
-              doAfter: 3
-    - node: assembly
-      entity: BronzeHammerAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTopMacePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 10
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 3
     - node: fin
       entity: BronzeHammer
 
@@ -92,25 +79,20 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopAxePiece
-              amount: 1
-            - material: WoodStick
-              amount: 1
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeHatchetAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTopAxePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 5
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 2
     - node: fin
       entity: BronzeHatchet
 
@@ -120,25 +102,20 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopBattleAxePiece
-              amount: 1
-            - material: WoodStick
-              amount: 2
-            - tool: Hammering
-              doAfter: 3
-    - node: assembly
-      entity: BronzeAxeAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTopBattleAxePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 10
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 3
     - node: fin
       entity: BronzeAxe
 
@@ -148,25 +125,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopSpearPiece
-              amount: 1
-            - material: WoodStick
-              amount: 3
-            - tool: Hammering
-              doAfter: 3
-    - node: assembly
-      entity: BronzeSpearAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTopSpearPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 8
+            - material: WoodStick
+              amount: 3
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: BronzeSpearBase
     - node: fin
       entity: BronzeSpear
 
@@ -176,25 +150,20 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeSwordBladePiece
-              amount: 1
-            - material: Leather
-              amount: 1
-            - tool: Hammering
-              doAfter: 3
-    - node: assembly
-      entity: BronzeSwordAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeSwordBladePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 12
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 3
     - node: fin
       entity: BronzeSword
 
@@ -204,25 +173,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTridentPiece
-              amount: 1
-            - material: WoodStick
-              amount: 3
-            - tool: Hammering
-              doAfter: 4
-    - node: assembly
-      entity: BronzeTridentAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTridentPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 15
+            - material: WoodStick
+              amount: 3
+            - tool: Hammering
+              doAfter: 4
+    - node: fin
+      entity: BronzeTridentBase
     - node: fin
       entity: BronzeTrident
 
@@ -232,27 +198,24 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopBattleAxePiece
-              amount: 1
-            - material: BronzeTopSpearPiece
-              amount: 1
-            - material: WoodStick
-              amount: 4
-            - tool: Hammering
-              doAfter: 5
-    - node: assembly
-      entity: BronzeHalberdAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeTopBattleAxePiece
+              amount: 1
+            - material: BronzeTopSpearPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 20
+            - material: WoodStick
+              amount: 4
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: BronzeHalberdAssembly
     - node: fin
       entity: BronzeHalberd
 
@@ -262,25 +225,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzePickaxeBladePiece
-              amount: 1
-            - material: WoodStick
-              amount: 2
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzePickaxeAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzePickaxeBladePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 8
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzePickaxeAssembly
     - node: fin
       entity: BronzePickaxe
 
@@ -290,25 +250,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeShovelPiece
-              amount: 1
-            - material: WoodStick
-              amount: 2
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeShovelAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeShovelPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
-              doAfter: 5
+              doAfter: 8
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeShovelAssembly
     - node: fin
       entity: BronzeShovel
 
@@ -318,25 +275,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeScytheBladePiece
-              amount: 1
-            - material: WoodStick
-              amount: 3
-            - tool: Hammering
-              doAfter: 3
-    - node: assembly
-      entity: BronzeScytheAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeScytheBladePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
-              doAfter: 10
+              doAfter: 8
+            - material: WoodStick
+              amount: 3
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeScytheAssembly
     - node: fin
       entity: BronzeScythe
 
@@ -346,25 +300,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeHoeBladePiece
-              amount: 1
-            - material: WoodStick
-              amount: 2
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeHoeAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeHoeBladePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
-              doAfter: 5
+              doAfter: 8
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeHoeAssembly
     - node: fin
       entity: BronzeHoe
 
@@ -374,25 +325,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeKnifeBladePiece
-              amount: 1
-            - material: Leather
-              amount: 1
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeKnifeAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeKnifeBladePiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
-              doAfter: 5
+              doAfter: 8
+            - material: WoodStick
+              amount: 2
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeKnifeAssembly
     - node: fin
       entity: BronzeKnife
 
@@ -402,25 +350,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeClippersPiece
-              amount: 1
-            - material: Leather
-              amount: 1
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeClippersAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 50
           steps:
+            - material: BronzeClippersPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
-              doAfter: 5
+              doAfter: 8
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeClippersAssembly
     - node: fin
       entity: BronzeClippers
 
@@ -437,6 +382,9 @@
           steps:
             - material: BronzeArrowTip
               amount: 1
+            - tool: Hammering
+              minTemperature: 700
+              doAfter: 3
             - material: WoodStick
               amount: 1
             - tool: Hammering
@@ -450,20 +398,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
           steps:
             - material: BronzeXiphosBladePiece
               amount: 1
-            - material: WoodStick
-              amount: 1
-    - node: assembly
-      entity: BronzeXiphosAssembly
-      edges:
-        - to: fin
-          steps:
             - tool: Hammering
               minTemperature: 700
               doAfter: 15
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: BronzeXiphosAssembly
     - node: fin
       entity: BronzeXiphos
 
@@ -473,20 +423,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
           steps:
             - material: BronzeDaggerBladePiece
               amount: 1
-            - material: Leather
-              amount: 1
-    - node: assembly
-      entity: BronzeDaggerAssembly
-      edges:
-        - to: fin
-          steps:
             - tool: Hammering
               minTemperature: 700
               doAfter: 10
+            - material: Leather
+              amount: 1
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeDaggerAssembly
     - node: fin
       entity: BronzeDagger
 
@@ -496,20 +448,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 50
           steps:
             - material: BronzeKhapeshBladePiece
               amount: 1
-            - material: Leather
-              amount: 1
-    - node: assembly
-      entity: BronzeKhapeshAssembly
-      edges:
-        - to: fin
-          steps:
             - tool: Hammering
               minTemperature: 700
               doAfter: 20
+            - material: Leather
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: BronzeKhapeshAssembly
     - node: fin
       entity: BronzeKhapesh
 
@@ -526,6 +480,9 @@
           steps:
             - material: BronzeArrowTipArmor
               amount: 1
+            - tool: Hammering
+              minTemperature: 700
+              doAfter: 4
             - material: WoodStick
               amount: 1
             - tool: Hammering
@@ -568,12 +525,12 @@
             - material: WoodStick
               amount: 5
             - material: HerbRope
-              amount: 3
+              amount: 2
               doAfter: 5
             - tool: Slicing
               doAfter: 5
     - node: fin
-      entity: LongBow
+      entity: Longbow
 
 - type: constructionGraph
   id: LightBronzeSpear
@@ -581,25 +538,22 @@
   graph:
     - node: start
       edges:
-        - to: assembly
-          steps:
-            - material: BronzeTopSpearPiece
-              amount: 1
-            - material: WoodStick
-              amount: 1
-            - tool: Hammering
-              doAfter: 2
-    - node: assembly
-      entity: BronzeSpearAssembly
-      edges:
         - to: fin
           completed:
             - !type:PointsFromCraft
               points: 20
           steps:
+            - material: BronzeTopSpearPiece
+              amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 5
+            - material: WoodStick
+              amount: 1
+            - tool: Hammering
+              doAfter: 2
+    - node: fin
+      entity: BronzeSpearAssembly
     - node: fin
       entity: LightBronzeSpear
 
@@ -619,6 +573,9 @@
           steps:
             - material: IngotBronze
               amount: 1
+            - tool: Hammering
+              minTemperature: 700
+              doAfter: 5
             - tool: Hammering
               doAfter: 5
     - node: fin

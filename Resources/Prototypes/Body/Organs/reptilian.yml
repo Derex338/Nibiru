@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: OrganReptilianStomach
   parent: OrganAnimalStomach
   categories: [ HideSpawnMenu ]
@@ -12,6 +12,10 @@
       - Pill
       - Crayon
       - Paper
+      - CEMeat
+      - CEMeatSlice
+      - CEEgg
+      - CEVegetable
   - type: SolutionContainerManager
     solutions:
       stomach:

@@ -3,6 +3,7 @@
   name: каменный молоток
   parent: [BaseItem, BaseStoneItem]
   id: StoneHammer
+  suffix: Нибиру, Каменный век
   description: Грубый молоток, сделанный из камня, привязанного к палке. Незаменим в строительстве.
   components:
   - type: Sprite
@@ -25,7 +26,11 @@
     penetration:
       Blunt: 5
   - type: Item
-    size: Normal
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi
+    size: Large
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
   - type: Tool
     qualities:
       - Hammering
@@ -53,6 +58,7 @@
   name: каменный топор
   parent: [BaseItem, BaseStoneItem]
   id: StoneHatchet
+  suffix: Нибиру, Каменный век
   description: Простой топор с каменным лезвием. Полезен для рубки деревьев и голов.
   components:
   - type: Tag
@@ -81,6 +87,9 @@
       Blunt: 3
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Axe.rsi
+    size: Normal
+    shape:
+    - 0,0,0,1
   - type: Destructible
     thresholds:
       - trigger:
@@ -99,6 +108,7 @@
   name: каменный нож
   parent: [BaseKnife, BaseStoneItem]
   id: StoneKnife
+  suffix: Нибиру, Каменный век
   description: Острый осколок камня с примитивной рукояткой.
   components:
   - type: Tag
@@ -131,6 +141,9 @@
         Slash: 15
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Knife.rsi
+    size: Normal
+    shape:
+    - 0,0,0,1
   - type: Tool
     qualities:
       - Slicing
@@ -154,6 +167,7 @@
   name: каменная кирка
   parent: BaseStoneItem
   id: StonePickaxe
+  suffix: Нибиру, Каменный век
   description: Тяжелый камень, закрепленный на палке, для дробления породы.
   components:
   - type: Sprite
@@ -177,6 +191,10 @@
     node: fin
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Pickaxe.rsi
+    size: Huge
+    shape:
+    - 0,0,2,0
+    - 1,1,1,4
     useSound:
       collection: MetalThud
   - type: Destructible
@@ -201,12 +219,15 @@
       types:
         Blunt: 4
         Structural: 10
+  - type: ToolTileCompatible
+    delay: 5
 
 
 - type: entity
   name: каменная лопата
   parent: [BaseItem, BaseStoneItem]
   id: StoneShovel
+  suffix: Нибиру, Каменный век
   description: Примитивный инструмент для копания земли.
   components:
   - type: Sprite
@@ -225,6 +246,9 @@
       Blunt: 3
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Shovel.rsi
+    size: Huge
+    shape:
+    - 0,0,0,4
   - type: Tool
     qualities:
       - Digging
@@ -254,6 +278,7 @@
   name: деревянное ведро
   parent: [Bucket, BaseWoodItem]
   id: WoodenBucket
+  suffix: Нибиру, Каменный век
   description: Ведро, выдолбленное из дерева. Может переносить 50 ед. жидкости.
   components:
   - type: Sprite
@@ -261,6 +286,9 @@
     state: icon
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/WoodenBucket.rsi
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: WoodenBucket
     node: fin
@@ -269,6 +297,7 @@
   name: костяная игла
   parent: BaseItem
   id: BoneNeedle
+  suffix: Нибиру, Каменный век
   description: Острая игла из кости. Используется для шитья.
   components:
   - type: Sprite
@@ -276,6 +305,9 @@
     state: icon
   - type: Item
     sprite: Objects/Weapons/Melee/needle.rsi
+    size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Construction
     graph: BoneNeedle
     node: fin
@@ -305,6 +337,7 @@
   name: приспособление для разжигания огня
   parent: BaseItem
   id: FireStarter
+  suffix: Нибиру, Каменный век
   description: Две деревянные палочки, которые при быстром трении создают искру.
   components:
   - type: Sprite
@@ -312,6 +345,9 @@
     state: rods_2
   - type: Item
     sprite: Objects/Materials/parts.rsi
+    size: Small
+    shape:
+    - 0,0,1,0
   - type: Construction
     graph: FireStarter
     node: fin

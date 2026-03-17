@@ -15,7 +15,7 @@
   hidden: false
   locFilter: "ru-RU"
   id: BaselineWelcomeRU
-  name: Welcome to CrystallEdge
+  name: Welcome to Nibiru
   text: "/ServerInfo/_CE/Guidebook_RU/Welcome.xml"
   children:
   - CESpeciesGuideRU

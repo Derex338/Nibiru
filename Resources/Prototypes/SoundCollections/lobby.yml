@@ -19,5 +19,5 @@
     #- /Audio/Lobby/atomicamnesiammx.ogg
     #- /Audio/Corvax/Lobby/service.ogg # Corvax-LobbyMusic
     #- /Audio/Corvax/Lobby/nodecision.ogg # Corvax-LobbyMusic
-    - /Audio/_Nibiru/Ambient/the-legend-of-narmer.ogg # Nibiru-LobbyMusic
-    - /Audio/_Nibiru/Ambient/tranquil-fields-eastern.ogg # Nibiru-LobbyMusic
+    - /Audio/_Nibiru/Ambient/music/the-legend-of-narmer.ogg # Nibiru-LobbyMusic
+    - /Audio/_Nibiru/Ambient/music/tranquil-fields-eastern.ogg # Nibiru-LobbyMusic

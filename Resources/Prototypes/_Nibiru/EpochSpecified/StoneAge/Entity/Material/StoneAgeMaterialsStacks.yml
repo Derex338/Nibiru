@@ -285,12 +285,19 @@
 - type: stack
   id: Vein
   name: жилы
+  icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein }
+  spawn: Vein
+  maxCount: 20
+
+- type: stack
+  id: Vein_processed
+  name: жилы
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein-processed }
   spawn: Vein_processed
   maxCount: 20
 
 - type: material
-  id: Vein_processed # Matching usage in graphs ("material: Vein_processed")
+  id: Vein_processed
   stackEntity: Vein_processed
   name: жилы
   unit: materials-unit-piece

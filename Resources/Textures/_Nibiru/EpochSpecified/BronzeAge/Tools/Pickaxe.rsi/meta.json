@@ -17,6 +17,9 @@
         },
         {
             "name": "pickaxe"
+        },
+        {
+            "name": "tip"
         }
     ]
 }

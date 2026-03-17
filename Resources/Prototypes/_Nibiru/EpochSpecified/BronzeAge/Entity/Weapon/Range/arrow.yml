@@ -2,9 +2,14 @@
 - type: entity
   parent: [BaseArrow, BaseBronzeItem]
   id: BronzeArrow
+  suffix: Nibiru, BronzeAge
   name: бронзовая стрела
   description: Когда надо перестрелять птиц. Не забудьте намазать ядом гидры!
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
   - type: Sprite
     #sprite: _Nibiru/Objects/BronzeAge/Weapons/Range/Arrows.rsi
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
@@ -32,6 +37,7 @@
 - type: entity
   parent: [BronzeArrow]
   id: BronzeArrowAP
+  suffix: Nibiru, BronzeAge
   name: бронебойная бронзовая стрела
   description: Тяжелая стрела с узким наконечником, способная пробить доспехи.
   components:

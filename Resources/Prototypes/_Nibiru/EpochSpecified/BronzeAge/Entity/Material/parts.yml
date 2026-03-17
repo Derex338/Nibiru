@@ -5,6 +5,7 @@
 - type: entity
   parent: BaseBronzeItem
   id: BronzeInlay
+  suffix: Nibiru, BronzeAge
   name: бронзовая вставка
   description: Бронзовая пластина для укрепления конструкций и снаряжения.
   components:
@@ -24,10 +25,15 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi
     state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeArrowTip
+  suffix: Nibiru, BronzeAge
   name: бронзовый наконечник стрелы
   description: Острый наконечник для изготовления стрел.
   components:
@@ -53,10 +59,15 @@
       color: transparent
     - state: tip
       color: orange
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,0
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeArrowTipArmor
+  suffix: Nibiru, BronzeAge
   name: бронзовый бронебойный наконечник
   description: Усиленный наконечник, способный пробивать доспехи.
   components:
@@ -82,17 +93,21 @@
       color: transparent
     - state: tip
       color: orange
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,0
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeTopHammerPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое навершие молотка
   description: Литая бронзовая часть для небольшого молотка.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -107,18 +122,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeTopMacePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое навершие молота
   description: Массивное бронзовое навершие для боевого молота.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -133,18 +150,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeTopAxePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое навершие топора
   description: Основа для рабочего топора.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -159,18 +178,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeTopBattleAxePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое навершие боевого топора
   description: Тяжелая и острая рубящая часть боевого топора.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -185,18 +206,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeTopSpearPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовый наконечник копья
   description: Длинный и острый наконечник для копья.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -212,17 +235,19 @@
   - type: Material
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeSwordBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие меча
   description: Прямое лезвие, готовое к насадке на рукоять.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -237,18 +262,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,0,2
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeDaggerBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие кинжала
   description: Небольшое лезвие для кинжала.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Dagger.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -264,17 +291,19 @@
   - type: Material
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeTridentPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое навершие трезубца
   description: Трезубое навершие для грозного оружия.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -289,11 +318,14 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeShieldPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая обивка щита
   description: Бронзовые элементы для защиты лицевой части щита.
   components:
@@ -315,18 +347,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeKnifeBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие ножа
   description: Маленькое универсальное лезвие.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -342,17 +376,19 @@
   - type: Material
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeClippersPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая деталь секатора
   description: Одна из частей для сборки секатора.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -368,17 +404,19 @@
   - type: Material
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeHoeBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие мотыги
   description: Прочное бронзовое лезвие для сельскохозяйственных работ.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -393,18 +431,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzePickaxeBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовый наконечник кирки
   description: Тяжелая бронзовая часть для добычи камня.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -419,18 +459,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeScytheBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие косы
   description: Изогнутое острое лезвие для косы.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -446,17 +488,19 @@
   - type: Material
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeShovelPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовый наконечник лопаты
   description: Литой наконечник лопаты.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Shovel.rsi
+    state: tip
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -471,18 +515,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeHelmetPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая основа шлема
   description: Массивная литая заготовка шлема.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
+    state: piece
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -497,18 +543,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeChestplatePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая деталь нагрудника
   description: Большая бронзовая пластина для кирасы.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
+    state: piece
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -523,11 +571,14 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeAnvilPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая заготовка наковальни
   description: Огромный кусок литой бронзы для наковальни.
   components:
@@ -549,11 +600,14 @@
     count: 1
   - type: Material
   - type: Item
-    size: Medium
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeLockPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая деталь замка
   description: Маленькая деталь для сборки сложного механизма.
   components:
@@ -575,11 +629,14 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,0,0
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeKeyPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая деталь ключа
   description: Литая заготовка, требующая обработки.
   components:
@@ -601,11 +658,14 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,0,0
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeRaspPiece
+  suffix: Nibiru, BronzeAge
   name: бронзовая заготовка рашпиля
   description: Металлическая основа для инструмента.
   components:
@@ -628,17 +688,19 @@
   - type: Material
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeKhapeshBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие хопеша
   description: Изогнутое лезвие для элитного меча-хопеша.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Khapesh.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -653,18 +715,20 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,0,2
 
 - type: entity
   parent: BaseBronzeItem
   id: BronzeXiphosBladePiece
+  suffix: Nibiru, BronzeAge
   name: бронзовое лезвие ксифоса
   description: Листовидное бронзовое лезвие для меча-ксифоса, отлично сбалансированное для ударов и уколов.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
-    color: "#CD7F32"
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi
+    state: blade
   - type: SmeltableOre
     meltingPoint: 950
     meltingSpeed: 1
@@ -679,19 +743,24 @@
     count: 1
   - type: Material
   - type: Item
-    size: Small
+    size: Normal
+    shape:
+    - 0,0,0,2
 
 - type: entity
   parent: BaseItem
   id: WheelBlank
+  suffix: Nibiru, BronzeAge
   name: заготовка колеса
   description: Круглая деревянная заготовка для колеса.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
-    state: icon
+    state: frame
   - type: Item
-    size: Medium
+    size: Normal
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: WheelBlank
     node: fin
@@ -703,6 +772,7 @@
 - type: entity
   parent: BaseItem
   id: WoodenWheel
+  suffix: Nibiru, BronzeAge
   name: деревянное колесо
   description: Простое, но эффективное средство передвижения.
   components:
@@ -710,7 +780,9 @@
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
     state: icon
   - type: Item
-    size: Medium
+    size: Normal
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: WoodenWheel
     node: fin

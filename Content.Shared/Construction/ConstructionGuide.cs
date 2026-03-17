@@ -7,10 +7,12 @@ namespace Content.Shared.Construction
     public sealed class ConstructionGuide
     {
         public readonly ConstructionGuideEntry[] Entries;
+        public readonly int ResearchPoints;
 
-        public ConstructionGuide(ConstructionGuideEntry[] entries)
+        public ConstructionGuide(ConstructionGuideEntry[] entries, int researchPoints = 0)
         {
             Entries = entries;
+            ResearchPoints = researchPoints;
         }
     }
 

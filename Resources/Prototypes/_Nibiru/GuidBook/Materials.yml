@@ -1,0 +1,44 @@
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMaterialsGuideRU
+  name: Материалы
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Welcome.xml"
+  filterEnabled: True
+  children:
+  - NibiruMaterialsGuideStoneRU
+  - NibiruMaterialsGuideHerbsRU
+  - NibiruMaterialsGuideWoodRU
+  - NibiruMaterialsGuideVeinsRU
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMaterialsGuideStoneRU
+  name: Камень
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Stone.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMaterialsGuideHerbsRU
+  name: Кусты
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Herbs.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMaterialsGuideWoodRU
+  name: Дерево
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Wood.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMaterialsGuideVeinsRU
+  name: Разделка животных
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Veins.xml"
+  filterEnabled: True

@@ -25,6 +25,7 @@
         - to: fin
           completed:
             - !type:AddFactionComponent
+            - !type:UniqueCraft
             - !type:PointsFromCraft
               points: 100
           steps:
@@ -72,6 +73,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: CEWood
               amount: 2
@@ -122,6 +124,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: WoodStick
               amount: 3
@@ -173,6 +176,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: WoodStick
               amount: 4
@@ -229,6 +233,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: SharpStone
               amount: 2
@@ -241,6 +246,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: SharpStone
               amount: 2
@@ -297,6 +303,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: CEStone
               amount: 5
@@ -309,6 +316,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: CEStone
               amount: 5
@@ -365,6 +373,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - material: CEDirt
               amount: 3
@@ -418,6 +427,7 @@
             - !type:AddFactionComponent
             - !type:PointsFromCraft
               points: 100
+              decreasing: true
           steps:
             - tool: Hammering
               doAfter: 10

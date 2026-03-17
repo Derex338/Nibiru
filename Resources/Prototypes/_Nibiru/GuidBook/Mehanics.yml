@@ -1,0 +1,35 @@
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMehanicsGuideRU
+  name: Механики
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Mehanics.xml"
+  filterEnabled: True
+  children:
+  - NibiruMehanicsGuideFactionRU
+  - NibiruMehanicsGuideFireRU
+  - NibiruMehanicsGuideSmeltingRU
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMehanicsGuideFactionRU
+  name: Фракции
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Faction.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMehanicsGuideFireRU
+  name: Огонь
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Fire.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "ru-RU"
+  id: NibiruMehanicsGuideSmeltingRU
+  name: Плавление
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Smelting.xml"
+  filterEnabled: True

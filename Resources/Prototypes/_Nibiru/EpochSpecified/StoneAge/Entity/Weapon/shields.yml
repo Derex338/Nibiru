@@ -2,12 +2,17 @@
   name: деревянный щит
   parent: BaseShield
   id: WoodenShield
+  suffix: Нибиру, Каменный век
   description: Просто кусок дерева с рукоятью. Лучше чем ничего.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
     state: icon
   - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Blocking
     passiveBlockModifier:
       coefficients:
@@ -44,6 +49,7 @@
 - type: entity
   name: плетёный щит
   id: WickerShield
+  suffix: Нибиру, Каменный век
   parent: BaseShield
   description: Лёгкий щит из переплетённых прутьев. Защищает от стрел, но плох против топоров.
   components:
@@ -51,6 +57,10 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/HerbShield.rsi
     state: icon
   - type: Item
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/HerbShield.rsi
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Blocking
     passiveBlockModifier:
       coefficients:

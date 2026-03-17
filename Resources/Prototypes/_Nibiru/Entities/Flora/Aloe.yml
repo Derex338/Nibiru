@@ -1,0 +1,44 @@
+- type: entity
+  id: CEPlantAloe
+  parent:
+  - CEPlantBase
+  - CEPlantBaseSolarEnergy
+  - CEPlantBaseSingleHarvest
+  - CEPlantBaseFloralDelicateType
+  - CEPlantBaseGrowing1Day
+  - CEPlantBaseMetabolizer1Day
+  - CEPlantBaseMetabolizerWater
+  name: aloe
+  description: A fragrant plant with soothing properties.
+  components:
+  - type: CEPlant
+    updateFrequency: 1
+  - type: CEPlantVisuals
+    growthSteps: 5
+    readyVariations: 1
+  - type: Sprite
+    sprite: _Nibiru/Flora/Plants/aloe.rsi
+    snapCardinals: false
+    noRot: true
+    drawdepth: Mobs
+    layers:
+    - state: liq-1
+      sprite: _CE/Structures/Nature/Farm/watered.rsi
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: grow-1
+      map: ["enum.PlantVisualLayers.Base"]
+  - type: CEPlantAdditionalProduceOnInteract
+    produce:
+      CEFoodAloe: 1
+  - type: CEWaveShader
+    speed: 3
+    dis: 4
+
+- type: entity
+  id: CEPlantAloeGrown
+  parent: CEPlantAloe
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 5

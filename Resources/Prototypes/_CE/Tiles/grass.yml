@@ -28,6 +28,7 @@
     collection: FootstepGrass
   heatCapacity: 10000
   weather: true
+  itemDrop: CEDirtBlock1
 
 - type: tile
   id: CEGrassLight
@@ -59,6 +60,7 @@
     collection: FootstepGrass
   heatCapacity: 10000
   weather: true
+  itemDrop: CEDirtBlock1
 
 - type: tile
   id: CEGrassTall
@@ -90,6 +92,7 @@
     collection: FootstepGrass
   heatCapacity: 10000
   weather: true
+  itemDrop: CEDirtBlock1
 
 - type: tile
   id: CEGrassBlood
@@ -121,6 +124,7 @@
     collection: FootstepGrass
   heatCapacity: 10000
   weather: true
+  itemDrop: CEDirtBlock1
 
 - type: tile
   id: CEGrassLightBlood
@@ -152,6 +156,7 @@
     collection: FootstepGrass
   heatCapacity: 10000
   weather: true
+  itemDrop: CEDirtBlock1
 
 - type: tile
   id: CEGrassTallBlood

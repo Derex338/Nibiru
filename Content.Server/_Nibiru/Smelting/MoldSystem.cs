@@ -38,36 +38,48 @@ public sealed class MoldSystem : EntitySystem
 
         if (TryComp<MoldComponent>(args.uid, out var comp))
         {
+            bool success = false;
+
             foreach (var (reagent, entity) in comp.ResultEntities)
             {
                 var reagentAmount = _solution.GetTotalPrototypeQuantity(args.uid, reagent);
-                var containers = component.Containers;
+                if (reagentAmount <= 0)
+                    continue;
 
-                foreach (var name in containers)
+                foreach (var name in component.Containers)
                 {
                     _solution.TryGetSolution((args.uid, component), name, out var solutionEnt, out var solution);
 
-                    if (solution is not null && reagentAmount < solution.MaxVolume || solutionEnt is null)
-                    {
-                        ScrapSpawn((args.uid, component), args);
+                    if (solution == null || solutionEnt == null)
                         continue;
-                    }
 
-                    var pos = _transform.GetMapCoordinates(args.uid);
-
-                    var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
-                    var spawn = Spawn(entity, pos);
-                    _container.Insert(spawn, container);
-                    if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
-                        _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
-
-                    _solution.RemoveReagent(solutionEnt.Value, reagent, reagentAmount);
-
-                    if (comp.DeleteAfterUse)
+                    if (reagentAmount >= solution.MaxVolume)
                     {
-                        QueueDel(args.uid);
+                        var pos = _transform.GetMapCoordinates(args.uid);
+
+                        var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
+                        var spawn = Spawn(entity, pos);
+                        _container.Insert(spawn, container);
+                        if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
+                            _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
+
+                        _solution.RemoveReagent(solutionEnt.Value, reagent, reagentAmount);
+                        success = true;
+                        break;
                     }
                 }
+
+                if (success)
+                    break;
+            }
+
+            if (!success)
+            {
+                ScrapSpawn((args.uid, component), args);
+            }
+            else if (comp.DeleteAfterUse)
+            {
+                QueueDel(args.uid);
             }
         }
         else

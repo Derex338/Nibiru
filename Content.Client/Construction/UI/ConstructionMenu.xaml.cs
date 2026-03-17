@@ -168,15 +168,16 @@ namespace Content.Client.Construction.UI
             BuildButton.Disabled = false;
             BuildButton.Text = Loc.GetString(isItem ? "construction-menu-place-ghost" : "construction-menu-craft");
             TargetName.SetMessage(name);
-            //TargetDesc.SetMessage(description);
-			if (points > 0)
-			{
-				TargetDesc.SetMessage($"{description}\n\n[color=cyan]Research Points: {points}[/color]");
-			}
-			else
-			{
-				TargetDesc.SetMessage(description);
-			}
+            if (points > 0)
+            {
+                TargetPoints.SetMessage($"[color=cyan]Research Points: {points}[/color]");
+                TargetPoints.Visible = true;
+            }
+            else
+            {
+                TargetPoints.Visible = false;
+            }
+            TargetDesc.SetMessage(description);
 
             TargetTexture.SetPrototype(targetPrototype?.ID);
             FavoriteButton.Visible = true;

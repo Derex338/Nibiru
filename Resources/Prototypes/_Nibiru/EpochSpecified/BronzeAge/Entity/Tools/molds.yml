@@ -1,6 +1,7 @@
 - type: entity
   parent: [BaseStoneItem, DrinkVisualsFill]
   id: StoneMoldBase
+  suffix: Nibiru, BronzeAge
   name: каменная форма
   abstract: true
   description: Форма из обожженного камня для отливки предметов.
@@ -8,10 +9,12 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
     layers:
-      - state: icon
+      - state: base-old
         color: "#808080"
   - type: Item
-    size: Small
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -36,23 +39,51 @@
   - type: DrawableSolution
     solution: metal
   - type: SolutionContainerVisuals
+    solutionName: metal
     maxFillLevels: 1
     fillBaseName: fill-
+    inHandsFillBaseName: null
+  - type: SolutionContainerWhitelist
+    reagents:
+    - CopperMolten
+    - TinMolten
+    - BronzeMolten
+    - GoldMolten
+    - SilverMolten
   - type: ExaminableSolution
     solution: metal
 
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldIngot
+  suffix: Nibiru, BronzeAge
   name: каменная форма для слитка
   description: Каменная форма для отливки металлических слитков.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: Mold
     resultEntities:
       CopperMolten: IngotCopper1
       TinMolten: IngotTin1
       BronzeMolten: IngotBronze1
+      GoldMolten: IngotGold1
+      SilverMolten: IngotSilver1
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - CopperMolten
+    - TinMolten
+    - BronzeMolten
+    - GoldMolten
+    - SilverMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -64,13 +95,30 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldInlay
+  suffix: Nibiru, BronzeAge
   name: каменная форма для вставки
   description: Каменная форма для отливки бронзовых вставок.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeInlay
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -82,17 +130,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldArrowTip
+  suffix: Nibiru, BronzeAge
   name: каменная форма для наконечника стрелы
   description: Каменная форма для отливки бронзовых наконечников стрел.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
+      - state: sharp-tip1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: sharp-tip
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeArrowTip
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 20
+        maxVol: 5
   - type: Construction
     graph: MoldArrowTip
     node: fin
@@ -100,17 +165,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldArrowTipArmor
+  suffix: Nibiru, BronzeAge
   name: каменная форма для бронебойного наконечника
   description: Каменная форма для отливки бронебойных наконечников стрел.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
+      - state: sharp-tip1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: sharp-tip
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeArrowTipArmor
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 30
+        maxVol: 8
   - type: Construction
     graph: MoldArrowTipArmor
     node: fin
@@ -118,13 +200,30 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldTopHammer
+  suffix: Nibiru, BronzeAge
   name: каменная форма для навершия молотка
   description: Каменная форма для отливки навершия небольшого молотка.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: hammer1
+        color: "#2B2B2B"
+      - state: hammer1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: hammer
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeTopHammerPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -136,17 +235,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldTopMace
+  suffix: Nibiru, BronzeAge
   name: каменная форма для навершия молота
   description: Каменная форма для отливки навершия боевого молота.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: hammer1
+        color: "#2B2B2B"
+      - state: hammer1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: hammer
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeTopMacePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 100
+        maxVol: 200
   - type: Construction
     graph: MoldTopMace
     node: fin
@@ -154,17 +270,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldTopAxe
+  suffix: Nibiru, BronzeAge
   name: каменная форма для навершия топора
   description: Каменная форма для отливки навершия рабочего топора.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: axe1
+        color: "#2B2B2B"
+      - state: axe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: axe
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeTopAxePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 80
+        maxVol: 60
   - type: Construction
     graph: MoldTopAxe
     node: fin
@@ -172,17 +305,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldTopBattleAxe
+  suffix: Nibiru, BronzeAge
   name: каменная форма для навершия боевого топора
   description: Каменная форма для отливки навершия боевого топора.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: axe1
+        color: "#2B2B2B"
+      - state: axe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: axe
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeTopBattleAxePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 120
+        maxVol: 100
   - type: Construction
     graph: MoldTopBattleAxe
     node: fin
@@ -190,17 +340,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldTopSpear
+  suffix: Nibiru, BronzeAge
   name: каменная форма для наконечника копья
   description: Каменная форма для отливки наконечника копья.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
+      - state: sharp-tip1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: sharp-tip
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeTopSpearPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 90
+        maxVol: 50
   - type: Construction
     graph: MoldTopSpear
     node: fin
@@ -208,17 +375,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldSwordBlade
+  suffix: Nibiru, BronzeAge
   name: каменная форма для лезвия меча
   description: Каменная форма для отливки лезвия меча.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeSwordBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 120
+        maxVol: 140
   - type: Construction
     graph: MoldSwordBlade
     node: fin
@@ -226,13 +410,30 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldDaggerBlade
+  suffix: Nibiru, BronzeAge
   name: каменная форма для лезвия кинжала
   description: Каменная форма для отливки лезвия кинжала.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeDaggerBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -244,13 +445,30 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldTrident
+  suffix: Nibiru, BronzeAge
   name: каменная форма для навершия трезубца
   description: Каменная форма для отливки навершия трезубца.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
+      - state: sharp-tip1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: sharp-tip
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeTridentPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -262,13 +480,30 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldShield
+  suffix: Nibiru, BronzeAge
   name: каменная форма для обивки щита
   description: Каменная форма для отливки элементов щита.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeShieldPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -280,17 +515,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldKnifeBlade
+  suffix: Nibiru, BronzeAge
   name: каменная форма для лезвия ножа
   description: Каменная форма для отливки лезвия ножа.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeKnifeBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 40
+        maxVol: 30
   - type: Construction
     graph: MoldKnifeBlade
     node: fin
@@ -298,17 +550,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldClippers
+  suffix: Nibiru, BronzeAge
   name: каменная форма для детали секатора
   description: Каменная форма для отливки детали секатора.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeClippersPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 40
+        maxVol: 15
   - type: Construction
     graph: MoldClippers
     node: fin
@@ -316,17 +585,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldHoeBlade
+  suffix: Nibiru, BronzeAge
   name: каменная форма для лезвия мотыги
   description: Каменная форма для отливки лезвия мотыги.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: axe1
+        color: "#2B2B2B"
+      - state: axe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: axe
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeHoeBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 60
+        maxVol: 15
   - type: Construction
     graph: MoldHoeBlade
     node: fin
@@ -334,17 +620,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldPickaxeBlade
+  suffix: Nibiru, BronzeAge
   name: каменная форма для наконечника кирки
   description: Каменная форма для отливки наконечника кирки.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: sharp-tip1
+        color: "#2B2B2B"
+      - state: sharp-tip1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: sharp-tip
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzePickaxeBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 120
+        maxVol: 70
   - type: Construction
     graph: MoldPickaxeBlade
     node: fin
@@ -352,17 +655,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldScytheBlade
+  suffix: Nibiru, BronzeAge
   name: каменная форма для лезвия косы
   description: Каменная форма для отливки лезвия косы.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeScytheBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 90
+        maxVol: 60
   - type: Construction
     graph: MoldScytheBlade
     node: fin
@@ -370,17 +690,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldShovel
+  suffix: Nibiru, BronzeAge
   name: каменная форма для наконечника лопаты
   description: Каменная форма для отливки наконечника лопаты.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeShovelPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 100
+        maxVol: 50
   - type: Construction
     graph: MoldShovel
     node: fin
@@ -388,17 +725,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldHelmet
+  suffix: Nibiru, BronzeAge
   name: каменная форма для шлема
   description: Каменная форма для отливки основы шлема.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeHelmetPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 250
+        maxVol: 130
   - type: Construction
     graph: MoldHelmet
     node: fin
@@ -406,17 +760,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldChestplate
+  suffix: Nibiru, BronzeAge
   name: каменная форма для нагрудника
   description: Каменная форма для отливки детали нагрудника.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: fill-
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeChestplatePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 500
+        maxVol: 250
   - type: Construction
     graph: MoldChestplate
     node: fin
@@ -424,17 +795,34 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldAnvil
+  suffix: Nibiru, BronzeAge
   name: каменная форма для наковальни
   description: Огромная каменная форма для отливки наковальни.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: fill-
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeAnvilPiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 1250
+        maxVol: 500
   - type: Construction
     graph: MoldAnvil
     node: fin
@@ -442,13 +830,30 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldLock
+  suffix: Nibiru, BronzeAge
   name: каменная форма для замка
   description: Каменная форма для отливки детали замка.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: fill-
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
-      BronzeMolten: BronzeLockPiece
+      BronzeMolten: CELockBronze
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
@@ -460,35 +865,102 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldKey
+  suffix: Nibiru, BronzeAge
   name: каменная форма для ключа
   description: Каменная форма для отливки ключа.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
-      BronzeMolten: BronzeKeyPiece
+      BronzeMolten: KeyBronzeBlank
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 20
+        maxVol: 10
   - type: Construction
     graph: MoldKey
     node: fin
 
 - type: entity
   parent: StoneMoldBase
-  id: StoneMoldRasp
-  name: каменная форма для рашпиля
-  description: Каменная форма для отливки рашпиля.
+  id: StoneMoldLockpick
+  name: каменная форма для отмычки
+  description: Каменная форма для отливки отмычки.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
-      BronzeMolten: BronzeRaspPiece
+      BronzeMolten: BronzeLockpick
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 50
+        maxVol: 20
+  - type: Construction
+    graph: MoldLockpick
+    node: fin
+
+- type: entity
+  parent: StoneMoldBase
+  id: StoneMoldRasp
+  name: каменная форма для напильника
+  description: Каменная форма для отливки напильника.
+  components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
+  - type: Mold
+    resultEntities:
+      BronzeMolten: BronzeKeyFile
+    slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 20
   - type: Construction
     graph: MoldRasp
     node: fin
@@ -499,14 +971,30 @@
   name: каменная форма для лезвия хопеша
   description: Каменная форма для отливки лезвия хопеша.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeKhapeshBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 90
+        maxVol: 170
   - type: Construction
     graph: MoldKhapeshBlade
     node: fin
@@ -517,14 +1005,30 @@
   name: каменная форма для лезвия ксифоса
   description: Каменная форма для отливки лезвия ксифоса.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: blade1
+        color: "#2B2B2B"
+      - state: blade1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: blade
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       BronzeMolten: BronzeXiphosBladePiece
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - BronzeMolten
   - type: SolutionContainerManager
     solutions:
       metal:
-        maxVol: 90
+        maxVol: 100
   - type: Construction
     graph: MoldXiphosBlade
     node: fin
@@ -535,10 +1039,26 @@
   name: каменная форма для короны
   description: Каменная форма для отливки короны.
   components:
+  - type: Sprite
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+      - state: round1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    fillBaseName: round
+    maxFillLevels: 1
   - type: Mold
     resultEntities:
       GoldMolten: ClothingHeadHatFancyCrown
     slot: result_container
+  - type: SolutionContainerWhitelist
+    reagents:
+    - GoldMolten
   - type: SolutionContainerManager
     solutions:
       metal:

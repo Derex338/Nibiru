@@ -13,7 +13,7 @@
             - !type:PointsFromCraft
               points: 10
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 2
             - tool: Prying
               doAfter: 3

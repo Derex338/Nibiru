@@ -11,9 +11,9 @@
   category: Workbenches
   description: Основной рабочий инструмент для ковки изделий из бронзы.
   icon:
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+    sprite: _CE/Structures/Furniture/Tables/wood.rsi
+    state: frame
   objectType: Structure
-  placementMode: SnapToGrid
+  placementMode: SnapgridCenter
   canRotate: true
   canSnapToGrid: true

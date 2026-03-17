@@ -1,0 +1,44 @@
+- type: entity
+  id: CEPlantPoppy
+  parent:
+  - CEPlantBase
+  - CEPlantBaseSolarEnergy
+  - CEPlantBaseSingleHarvest
+  - CEPlantBaseFloralDelicateType
+  - CEPlantBaseGrowing1Day
+  - CEPlantBaseMetabolizer1Day
+  - CEPlantBaseMetabolizerWater
+  name: poppy
+  description: A flower with extracts often used in the production of medicine.
+  components:
+  - type: CEPlant
+    updateFrequency: 1
+  - type: CEPlantVisuals
+    growthSteps: 3
+    readyVariations: 1
+  - type: Sprite
+    sprite: _Nibiru/Flora/Plants/poppy.rsi
+    snapCardinals: false
+    noRot: true
+    drawdepth: Mobs
+    layers:
+    - state: liq-1
+      sprite: _CE/Structures/Nature/Farm/watered.rsi
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: grow-1
+      map: ["enum.PlantVisualLayers.Base"]
+  - type: CEPlantAdditionalProduceOnInteract
+    produce:
+      CEFoodPoppy: 1
+  - type: CEWaveShader
+    speed: 3
+    dis: 4
+
+- type: entity
+  id: CEPlantPoppyGrown
+  parent: CEPlantPoppy
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 3

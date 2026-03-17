@@ -2,6 +2,7 @@
   name: нож из кости
   parent: BaseKnife
   id: BoneKnife
+  suffix: Нибиру, Каменный век
   description: Заточенная кость с рукояткой. Он был создан убийствои и предназначен убивать.
   components:
   - type: Tag
@@ -27,6 +28,9 @@
         Slash: 10
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
+    size: Normal
+    shape:
+    - 0,0,0,0
   - type: DisarmMalus
     malus: 0.225
   - type: ThrowingAngle
@@ -43,6 +47,7 @@
   name: деревянный посох
   parent: BaseWoodItem
   id: WoodenStaff
+  suffix: Нибиру, Каменный век
   description: Почувствуй себя монахом.
   components:
   - type: Sprite
@@ -61,6 +66,9 @@
         Blunt: 10
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+    size: Huge
+    shape:
+    - 0,0,0,4
   - type: DisarmMalus
     malus: 0.225
   - type: ArmorPenetration
@@ -71,6 +79,7 @@
   name: деревянное копье
   parent: [BaseWoodItem, Spear]
   id: WoodSpear
+  suffix: Нибиру, Каменный век
   description: Устрая палка
   components:
   - type: Sprite
@@ -80,7 +89,7 @@
     attackRate: 1.2
     damage:
       types:
-        Piercing: 10
+        Piercing: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -88,6 +97,9 @@
         Piercing: 10
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
+    size: Huge
+    shape:
+    - 0,0,0,4
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
     offset: -0.15,0.0
@@ -96,8 +108,6 @@
     damage:
       types:
         Piercing: 15
-  - type: ThrowingAngle
-    angle: 225
   - type: Construction
     graph: WoodenSpear
     node: fin
@@ -105,11 +115,14 @@
     penetration:
       Piercing: 3
       Blunt: 1
+  - type: ThrowingAngle
+    angle: 0
 
 - type: entity
   name: каменное копье
   parent: [BaseWoodItem, Spear]
   id: StoneSpear
+  suffix: Нибиру, Каменный век
   description: Острый камень на палке.
   components:
   - type: Sprite
@@ -127,6 +140,9 @@
         Piercing: 13
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/StoneSpear.rsi
+    size: Huge
+    shape:
+    - 0,0,0,4
   - type: DamageOtherOnHit
     damage:
       types:
@@ -138,18 +154,21 @@
     penetration:
       Piercing: 5
       Blunt: 2
+  - type: ThrowingAngle
+    angle: 0
 
 - type: entity
   name: дубина
   parent: [BaseWoodItem, BaseBallBat]
   id: WoodBat
+  suffix: Нибиру, Каменный век
   description: Острый камень на палке.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodBat.rsi
     state: icon
   - type: MeleeWeapon
-    attackRate: 1.2
+    attackRate: 0.6
     damage:
       types:
         Blunt: 10
@@ -158,13 +177,20 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 15
+        Blunt: 10
         Structural: 8
   - type: Item
-    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodBat.rsi
+    size: Large
+    shape:
+    - 0,0,0,2
   - type: Construction
     graph: WoodBat
     node: fin
   - type: ArmorPenetration
     penetration:
       Blunt: 4
+  - type: UseDelayOnMeleeHit
+  - type: MeleeThrowOnHit
+    stunTime: 0.5
+    activateOnThrown: false

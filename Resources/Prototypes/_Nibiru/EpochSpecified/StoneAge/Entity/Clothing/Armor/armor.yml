@@ -1,6 +1,7 @@
 - type: entity
-  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  parent: [ ClothingOuterBaseLarge, BaseWoodItem, AllowSuitStorageClothing ]
   id: WoodChestplate
+  suffix: Нибиру, Каменный век
   name: деревянный нагрудник
   description: Грубая защита из досок.
   components:
@@ -8,6 +9,10 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: WoodChestplate
     node: fin
@@ -27,8 +32,9 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  parent: ClothingHeadHelmetArmoredBase
   id: LetherHelmet
+  suffix: Нибиру, Каменный век
   name: кожаный шлем
   description: Простая кожаная защита головы.
   components:
@@ -36,6 +42,10 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: LetherHelmet
     node: fin
@@ -55,8 +65,9 @@
       Piercing: 2
 
 - type: entity
-  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothing ]
   id: LetherChestplate
+  suffix: Нибиру, Каменный век
   name: кожаный нагрудник
   description: Нагрудник из нескольких слоев кожи.
   components:
@@ -64,6 +75,10 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: LetherChestplate
     node: fin
@@ -85,9 +100,14 @@
 - type: entity
   parent: ClothingOuterArmorBone
   id: PrimitiveBoneArmor
+  suffix: Нибиру, Каменный век
   name: костяной нагрудник
   description: Нагрудник, собранный из множества заточенных костей. Тяжелый, но надежный.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: PrimitiveBoneArmor
     node: fin
@@ -107,9 +127,14 @@
 - type: entity
   parent: ClothingHeadHelmetBone
   id: PrimitiveBoneHelmet
+  suffix: Нибиру, Каменный век
   name: костяной шлем
   description: Шлем из черепа крупного зверя, укрепленный костяными пластинами.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: PrimitiveBoneHelmet
     node: fin
@@ -129,8 +154,9 @@
       Piercing: 4
 
 - type: entity
-  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothing ]
   id: LetherChestplateReinforced
+  suffix: Нибиру, Каменный век
   name: усиленный кожаный нагрудник
   description: Кожаный нагрудник с нашитыми костяными пластинами. Вершина защиты Каменного Века.
   components:
@@ -138,6 +164,10 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherArmor.rsi
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherArmor.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: LetherChestplate
     node: reinforced
@@ -157,8 +187,9 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  parent:  ClothingHeadHelmetArmoredBase
   id: LetherHelmetReinforced
+  suffix: Нибиру, Каменный век
   name: усиленный кожаный шлем
   description: Кожаный шлем, укрепленный костью для защиты от самых тяжелых ударов.
   components:
@@ -166,6 +197,10 @@
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherHelmet.rsi
   - type: Clothing
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherHelmet.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
   - type: Construction
     graph: LetherHelmet
     node: reinforced

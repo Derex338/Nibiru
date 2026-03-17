@@ -3,8 +3,9 @@
 # ════════════════════════════════════════════════════════════════════════════════
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseBronzeItem]
   id: CoinBronze
+  suffix: Nibiru, BronzeAge
   name: бронзовая монета
   description: Небольшая монета из бронзы. Ходовая валюта бронзового века.
   components:
@@ -16,6 +17,8 @@
       map: ["base"]
   - type: Item
     size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Stack
     stackType: CoinBronze
     count: 100
@@ -38,7 +41,7 @@
 - type: entity
   id: CoinBronze10
   parent: CoinBronze
-  suffix: 10
+  suffix: 10, Nibiru, BronzeAge
   components:
   - type: Stack
     count: 10
@@ -48,7 +51,7 @@
 - type: entity
   id: CoinBronze1
   parent: CoinBronze
-  suffix: 1
+  suffix: 1, Nibiru, BronzeAge
   components:
   - type: Stack
     count: 1
@@ -58,6 +61,7 @@
 - type: entity
   parent: BaseItem
   id: CoinSilver
+  suffix: Nibiru, BronzeAge
   name: серебряная монета
   description: Монета из серебра. Ценится выше бронзовой.
   components:
@@ -69,6 +73,8 @@
       map: ["base"]
   - type: Item
     size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Stack
     stackType: CoinSilver
     count: 100
@@ -91,7 +97,7 @@
 - type: entity
   id: CoinSilver10
   parent: CoinSilver
-  suffix: 10
+  suffix: 10, Nibiru, BronzeAge
   components:
   - type: Stack
     count: 10
@@ -101,7 +107,7 @@
 - type: entity
   id: CoinSilver1
   parent: CoinSilver
-  suffix: 1
+  suffix: 1, Nibiru, BronzeAge
   components:
   - type: Stack
     count: 1
@@ -111,6 +117,7 @@
 - type: entity
   parent: BaseItem
   id: CoinGold
+  suffix: Nibiru, BronzeAge
   name: золотая монета
   description: Блестящая золотая монета. Редкость и символ богатства.
   components:
@@ -122,6 +129,8 @@
       map: ["base"]
   - type: Item
     size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Stack
     stackType: CoinGold
     count: 100
@@ -144,7 +153,7 @@
 - type: entity
   id: CoinGold10
   parent: CoinGold
-  suffix: 10
+  suffix: 10, Nibiru, BronzeAge
   components:
   - type: Stack
     count: 10
@@ -154,7 +163,7 @@
 - type: entity
   id: CoinGold1
   parent: CoinGold
-  suffix: 1
+  suffix: 1, Nibiru, BronzeAge
   components:
   - type: Stack
     count: 1
@@ -168,6 +177,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: CoinPurse
+  suffix: Nibiru, BronzeAge
   name: кошелёк
   description: Кожаный кошелёк для хранения монет. Крепится на пояс.
   components:
@@ -180,6 +190,8 @@
     sprite: _CE/Objects/Storage/wallet.rsi
   - type: Item
     size: Small
+    shape:
+    - 0,0,0,1
   - type: Storage
     grid:
     - 0,0,1,1

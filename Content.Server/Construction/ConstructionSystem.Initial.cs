@@ -101,7 +101,8 @@ namespace Content.Server.Construction
             ConstructionGraphNode targetNode,
             EntityCoordinates coords,
             Angle angle = default,
-            EntityUid? heldItem = null) // Nibiru - added heldItem for tool step handling
+            EntityUid? heldItem = null,
+            bool popup = true) // Nibiru - added popup param to suppress messages when checking multiple edges
         {
             // We need a place to hold our construction items!
             var container = _container.EnsureContainer<Container>(user, materialContainer, out var existed);
@@ -259,7 +260,8 @@ namespace Content.Server.Construction
 
             if (failed)
             {
-                _popup.PopupEntity(Loc.GetString("construction-system-construct-no-materials"), user, user);
+                if (popup)
+                    _popup.PopupEntity(Loc.GetString("construction-system-construct-no-materials"), user, user);
                 FailCleanup();
                 return null;
             }
@@ -377,44 +379,41 @@ namespace Content.Server.Construction
                     $"Can't find path from starting node to target node in construction! Recipe: {prototype}");
             }
 
-            var edge = startNode.GetEdge(pathFind[0].Name);
-
-            if (edge == null)
-            {
-                throw new InvalidDataException(
-                    $"Can't find edge from starting node to the next node in pathfinding! Recipe: {prototype}");
-            }
-
-            // No support for conditions here!
-/*
-            foreach (var step in edge.Steps)
-            {
-                switch (step)
-                {
-                    case ToolConstructionGraphStep _:
-                        throw new InvalidDataException("Invalid first step for construction recipe!");
-                }
-            }
-*/ //Nibiru - removed tool step validation since we now handle it in Construct
-
-            // Nibiru - get held item for tool step handling
+            var targetNodeName = pathFind[0].Name;
             var heldItem = _handsSystem.GetActiveItem(user);
 
-            if (await Construct(
-                    user,
-                    "item_construction",
-                    constructionGraph,
-                    edge,
-                    targetNode,
-                    Transform(user).Coordinates,
-                    default,
-                    heldItem) is not { Valid: true } item)
-                return false;
+            // Iterate through all edges leading to the next node - Nibiru
+            var edges = startNode.Edges.Where(e => e.Target == targetNodeName).ToList();
+            if (edges.Count == 0)
+            {
+                throw new InvalidDataException(
+                    $"Can't find any edges from starting node to the next node in pathfinding! Recipe: {prototype}");
+            }
 
-            // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
-            // or drop the item as normal.
-            _stackSystem.TryMergeToHands(item, user);
-            return true;
+            for (var i = 0; i < edges.Count; i++)
+            {
+                var edge = edges[i];
+                var isLast = i == edges.Count - 1;
+
+                if (await Construct(
+                        user,
+                        $"item_construction_{i}",
+                        constructionGraph,
+                        edge,
+                        targetNode,
+                        Transform(user).Coordinates,
+                        default,
+                        heldItem,
+                        isLast) is { Valid: true } item)
+                {
+                    // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
+                    // or drop the item as normal.
+                    _stackSystem.TryMergeToHands(item, user);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -506,41 +505,49 @@ namespace Content.Server.Construction
             if (pathFind == null)
                 throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
 
-            var edge = startNode.GetEdge(pathFind[0].Name);
+            var targetNodeName = pathFind[0].Name;
 
-            if(edge == null)
-                throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
-
-            var valid = false;
-
-            if (_handsSystem.GetActiveItem((user, hands)) is not {Valid: true} holding)
+            if (_handsSystem.GetActiveItem((user, hands)) is not { Valid: true } holding)
             {
                 Cleanup();
                 return;
             }
 
-            // No support for conditions here!
+            ConstructionGraphEdge? chosenEdge = null;
 
-            foreach (var step in edge.Steps)
+            foreach (var edge in startNode.Edges)
             {
-                switch (step)
+                if (edge.Target != targetNodeName)
+                    continue;
+
+                var valid = false;
+                foreach (var step in edge.Steps)
                 {
-                    case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding, EntityManager, Factory))
-                            valid = true;
-                        break;
-                    // Nibiru - Added tool step handling for initial construction
-                    case ToolConstructionGraphStep toolStep:
-                        if (_toolSystem.HasQuality(holding, toolStep.Tool))
-                            valid = true;
+                    switch (step)
+                    {
+                        case EntityInsertConstructionGraphStep entityInsert:
+                            if (entityInsert.EntityValid(holding, EntityManager, Factory))
+                                valid = true;
+                            break;
+                        // Nibiru - Added tool step handling for initial construction
+                        case ToolConstructionGraphStep toolStep:
+                            if (_toolSystem.HasQuality(holding, toolStep.Tool))
+                                valid = true;
+                            break;
+                    }
+
+                    if (valid)
                         break;
                 }
 
                 if (valid)
+                {
+                    chosenEdge = edge;
                     break;
+                }
             }
 
-            if (!valid)
+            if (chosenEdge == null)
             {
                 Cleanup();
                 return;
@@ -549,11 +556,11 @@ namespace Content.Server.Construction
             if (await Construct(user,
                     (ev.Ack + constructionPrototype.GetHashCode()).ToString(),
                     constructionGraph,
-                    edge,
+                    chosenEdge,
                     targetNode,
                     GetCoordinates(ev.Location),
                     constructionPrototype.CanRotate ? ev.Angle : Angle.Zero,
-                    holding) is not {Valid: true} structure) // Nibiru - pass held item for tool step
+                    holding) is not { Valid: true } structure)
             {
                 Cleanup();
                 return;

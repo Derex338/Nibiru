@@ -334,7 +334,7 @@
   targetNode: fin
   category: Decorations
   objectType: Structure
-  placementMode: SnapToGrid
+  placementMode: SnapgridCenter
 
 - type: construction
   id: WallTorch
@@ -344,7 +344,7 @@
   targetNode: fin
   category: Decorations
   objectType: Structure
-  placementMode: SnapToGrid
+  placementMode: SnapgridCenter
 
 - type: construction
   id: GlovesJagermeister

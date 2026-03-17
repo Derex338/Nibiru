@@ -2,14 +2,25 @@
   parent: [IngotBase, BaseCopperItem]
   id: IngotCopper
   name: медный слиток
-  suffix: Full
+  suffix: Full, Nibiru, BronzeAge
   components:
-  - type: Material
+  - type: Item
+    heldPrefix: copper
+    size: Normal
+    shape:
+    - 0,0,0,0
+  - type: SmeltableOre
+    meltingPoint: 1085
+    meltingSpeed: 1
+    resultReagent: CopperMolten
+    resultAmount: 100
+    resultTemperature: 1200
+  - type: Appearance
   - type: Stack
     stackType: Copper
     baseLayer: base
     layerStates:
-    - coper
+    - copper
     - copper_2
     - copper_3
   - type: Sprite
@@ -17,21 +28,12 @@
     layers:
     - state: copper_3
       map: ["base"]
-  - type: Item
-    heldPrefix: copper
-  - type: SmeltableOre
-    meltingPoint: 1085
-    meltingSpeed: 1
-    resultReagent: CopperMolten
-    resultAmount: 50
-    resultTemperature: 1200
-  - type: Appearance
 
 - type: entity
   parent: IngotCopper
   id: IngotCopper1
   name: медный слиток
-  suffix: Single
+  suffix: Single, Nibiru, BronzeAge
   components:
   - type: Sprite
     state: copper
@@ -39,13 +41,60 @@
     count: 1
 
 - type: entity
+  parent: [IngotBase, BaseItem]
+  id: IngotTin
+  name: оловянный слиток
+  suffix: Full, Nibiru, BronzeAge
+  components:
+  - type: Item
+    heldPrefix: iron
+    size: Normal
+    shape:
+    - 0,0,0,0
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: TinMolten
+    resultAmount: 100
+    resultTemperature: 1100
+  - type: Appearance
+  - type: Stack
+    stackType: Tin
+    baseLayer: base
+    layerStates:
+    - iron
+    - iron_2
+    - iron_3
+  - type: Sprite
+    state: iron_3
+    layers:
+    - state: iron_3
+      map: ["base"]
+      color: "#d3d3d3"
+
+- type: entity
+  parent: IngotTin
+  id: IngotTin1
+  name: оловянный слиток
+  suffix: Single, Nibiru, BronzeAge
+  components:
+  - type: Sprite
+    state: iron
+    color: "#d3d3d3"
+  - type: Stack
+    count: 1
+
+- type: entity
   parent: [IngotBase, BaseBronzeItem]
   id: BronzeScrap
   name: металлические осколки
-  suffix: Full
+  suffix: Full, Nibiru, BronzeAge
   components:
   - type: Material
   - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,0
   - type: Appearance
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -61,7 +110,7 @@
   parent: [IngotBase, BaseBronzeItem]
   id: IngotBronze
   name: бронзовый слиток
-  suffix: Full
+  suffix: Full, Nibiru, BronzeAge
   components:
   - type: Material
   - type: Stack
@@ -72,6 +121,15 @@
     - Bronze_2
     - Bronze_3
   - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,0
+  - type: SmeltableOre
+    meltingPoint: 950
+    meltingSpeed: 1
+    resultReagent: BronzeMolten
+    resultAmount: 100
+    resultTemperature: 1100
   - type: Appearance
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -84,7 +142,7 @@
   parent: IngotBronze
   id: IngotBronze1
   name: бронзовый слиток
-  suffix: Single
+  suffix: Single, Nibiru, BronzeAge
   components:
   - type: Sprite
     state: Bronze_1

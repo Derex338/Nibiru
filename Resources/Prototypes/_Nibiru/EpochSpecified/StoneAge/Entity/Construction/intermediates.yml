@@ -1,5 +1,6 @@
 - type: entity
   id: StoneBlockIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseItem
   name: груда камней
   description: Груда камней, подготовленная для обработки.
@@ -14,65 +15,75 @@
 
 - type: entity
   id: UshankaIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseItem
   name: незавершенная ушанка
   description: Сшитые куски шкуры.
   components:
   - type: Sprite
-    sprite: Objects/Materials/parts.rsi
-    state: rods
+    sprite: Clothing/Head/Hats/ushanka.rsi
+    state: icon
+    color: "#A0A0A0"
   - type: Construction
     graph: Ushanka
     node: intermediate
 
 - type: entity
   id: CoatTrenchIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseItem
   name: незавершенный плащ
   description: Заготовка плаща.
   components:
   - type: Sprite
-    sprite: Objects/Materials/parts.rsi
-    state: rods
+    sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
+    state: icon
+    color: "#A0A0A0"
   - type: Construction
     graph: CoatTrench
     node: intermediate
 
 - type: entity
   id: CoatPirateIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseItem
   name: незавершенный камзол
   description: Заготовка камзола.
   components:
   - type: Sprite
-    sprite: Objects/Materials/parts.rsi
-    state: rods
+    sprite: Clothing/OuterClothing/Coats/pirate.rsi
+    state: icon
+    color: "#A0A0A0"
   - type: Construction
     graph: CoatPirate
     node: intermediate
 
 - type: entity
   id: LetherHelmetIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseItem
   name: незавершенный шлем
   description: Заготовка шлема.
   components:
   - type: Sprite
-    sprite: Objects/Materials/parts.rsi
-    state: rods
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+    state: icon
+    color: "#A0A0A0"
   - type: Construction
     graph: LetherHelmet
     node: intermediate
 
 - type: entity
   id: LetherChestplateIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseItem
   name: незавершенная броня
   description: Заготовка кожаной брони.
   components:
   - type: Sprite
-    sprite: Objects/Materials/parts.rsi
-    state: rods
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+    state: icon
+    color: "#A0A0A0"
   - type: Construction
     graph: LetherChestplate
     node: intermediate
@@ -82,6 +93,7 @@
 
 - type: entity
   id: StoneWallIntermediate
+  suffix: Нибиру, Каменный век
   parent: BaseStructure
   name: каменная кладка
   description: Грубо сложенные камни.

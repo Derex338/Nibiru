@@ -22,7 +22,7 @@
     - BronzeInlay
     - MoldIngot
     - MoldInlay
-    - MoldAnvil
+    #- MoldAnvil
 
 # ══════════════════════════════════════
 # ЭКОНОМИКА (Правая ветка)
@@ -44,7 +44,6 @@
   craftUnlocks:
     - MoldKnifeBlade
     - BronzeKnife
-    - MoldRasp
     - BronzeHammerSmall
     - BronzeHatchet
     - MoldTopAxe
@@ -107,6 +106,8 @@
   craftUnlocks:
     - MoldLock
     - MoldKey
+    - MoldLockpick
+    - MoldRasp
 
 # ══════════════════════════════════════
 # ВОЕННОЕ ДЕЛО (Левая ветка)
@@ -276,7 +277,7 @@
   id: RecursiveBow
   name: Рекурсивный лук
   icon:
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/RecursiveBow.rsi
     state: unwielded
   discipline: BronzeAge
   tier: 2
@@ -292,7 +293,7 @@
   id: LongBow
   name: Длинный лук
   icon:
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/LongBow.rsi
     state: unwielded
   discipline: BronzeAge
   tier: 2

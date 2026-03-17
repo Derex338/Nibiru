@@ -1,0 +1,71 @@
+- type: ambientLoop
+  id: OpenWinds
+  sound:
+    params:
+      volume: -6
+    collection: CELoopWinds
+  rules: UnderOpenSky
+
+- type: ambientLoop
+  id: Water
+  sound:
+    params:
+      volume: 18
+    collection: CELoopWater
+  rules: NearWater
+
+- type: ambientLoop
+  id: Cave
+  sound:
+    params:
+      volume: 2
+    collection: CELoopCave
+  rules: CaveFloor
+
+- type: ambientLoop
+  id: NightGrass
+  sound:
+    params:
+      volume: 2
+    collection: CELoopNightGrass
+  rules: GrassNight
+
+- type: ambientLoop
+  id: ForestDay
+  sound:
+    params:
+      volume: 0
+    collection: CELoopForestDay
+  rules: DayForest
+
+# Sound collections
+- type: soundCollection
+  id: CELoopWinds
+  files:
+    - /Audio/_CE/Ambience/Loops/winds.ogg
+    - /Audio/_Nibiru/Ambient/background/Field_Day1.ogg
+    - /Audio/_Nibiru/Ambient/background/Birds_Day1.ogg
+    - /Audio/_Nibiru/Ambient/background/Birds_Day2.ogg
+
+- type: soundCollection
+  id: CELoopWater
+  files:
+    - /Audio/_CE/Ambience/Loops/water.ogg
+
+- type: soundCollection
+  id: CELoopCave
+  files:
+    - /Audio/_CE/Ambience/Loops/cave.ogg
+
+- type: soundCollection
+  id: CELoopNightGrass
+  files:
+    - /Audio/_CE/Ambience/Loops/ambiforest_night.ogg
+    - /Audio/_Nibiru/Ambient/background/Crows.ogg
+
+- type: soundCollection
+  id: CELoopForestDay
+  files:
+    - /Audio/_CE/Ambience/Loops/ambiforest_day.ogg
+    - /Audio/_Nibiru/Ambient/background/Forest_Day1.ogg
+    - /Audio/_Nibiru/Ambient/background/Forest1.ogg

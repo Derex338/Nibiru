@@ -237,12 +237,12 @@
         - CEStoneBlock1
     # --- Высокие кусты (редкие) ---
     - !type:BiomeEntityLayer
-      threshold: 0.88
+      threshold: 0.7
       noise:
         seed: 2
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 3
+        frequency: 1
       allowedTiles:
         - CEGrass
         - CEGrassLight
@@ -665,6 +665,28 @@
         - CEGrass
       entities:
         - CEPlantSunflowerGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.84
+      noise:
+        seed: 1027
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantPoppyGrown
+    - !type:BiomeEntityLayer
+      threshold: 0.84
+      noise:
+        seed: 1028
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 0.150
+      allowedTiles:
+        - CEGrass
+      entities:
+        - CEPlantAloeGrown
     # --- Животные ---
     - !type:BiomeEntityLayer
       threshold: 0.995

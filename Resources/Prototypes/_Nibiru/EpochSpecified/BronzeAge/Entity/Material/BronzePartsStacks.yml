@@ -16,8 +16,15 @@
 - type: stack
   id: Bronze
   name: бронза
-  icon: { sprite: "/Textures/_Nibiru/Objects/BronzeAge/Materials/BronzeIngots.rsi", state: Bronze_1 }
+  icon: { sprite: "/Textures/_Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi", state: Bronze_1 }
   spawn: IngotBronze1
+  maxCount: 30
+
+- type: stack
+  id: Tin
+  name: олово
+  icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: iron }
+  spawn: IngotTin1
   maxCount: 30
 
 - type: stack
@@ -30,77 +37,77 @@
 - type: stack
   id: BronzeInlay
   name: бронзовая вставка
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi, state: icon }
   spawn: BronzeInlay
   maxCount: 1
 
 - type: stack
   id: BronzeArrowTip
   name: бронзовый наконечник стрелы
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi, state: tip }
   spawn: BronzeArrowTip
   maxCount: 1
 
 - type: stack
   id: BronzeArrowTipArmor
   name: бронзовый бронебойный наконечник
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi, state: tip }
   spawn: BronzeArrowTipArmor
   maxCount: 1
 
 - type: stack
   id: BronzeTopHammerPiece
   name: бронзовое навершие молотка
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi, state: tip }
   spawn: BronzeTopHammerPiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopMacePiece
   name: бронзовое навершие молота
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi, state: tip }
   spawn: BronzeTopMacePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopAxePiece
   name: бронзовое навершие топора
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi, state: tip }
   spawn: BronzeTopAxePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopBattleAxePiece
   name: бронзовое навершие боевого топора
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi, state: blade }
   spawn: BronzeTopBattleAxePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopSpearPiece
   name: бронзовый наконечник копья
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi, state: tip }
   spawn: BronzeTopSpearPiece
   maxCount: 1
 
 - type: stack
   id: BronzeSwordBladePiece
   name: бронзовое лезвие меча
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi, state: blade }
   spawn: BronzeSwordBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeDaggerBladePiece
   name: бронзовое лезвие кинжала
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Dagger.rsi, state: blade }
   spawn: BronzeDaggerBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTridentPiece
   name: бронзовое навершие трезубца
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi, state: tip }
   spawn: BronzeTridentPiece
   maxCount: 1
 
@@ -114,42 +121,42 @@
 - type: stack
   id: BronzeKnifeBladePiece
   name: бронзовое лезвие ножа
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi, state: blade }
   spawn: BronzeKnifeBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeClippersPiece
   name: бронзовая деталь секатора
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi, state: tip }
   spawn: BronzeClippersPiece
   maxCount: 1
 
 - type: stack
   id: BronzeHoeBladePiece
   name: бронзовое лезвие мотыги
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi, state: tip }
   spawn: BronzeHoeBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzePickaxeBladePiece
   name: бронзовый наконечник кирки
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi, state: tip }
   spawn: BronzePickaxeBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeScytheBladePiece
   name: бронзовое лезвие косы
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi, state: blade }
   spawn: BronzeScytheBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeShovelPiece
   name: бронзовый наконечник лопаты
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Shovel.rsi, state: tip }
   spawn: BronzeShovelPiece
   maxCount: 1
 
@@ -198,7 +205,7 @@
 - type: stack
   id: BronzeKhapeshBladePiece
   name: бронзовое лезвие хопеша
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Khapesh.rsi, state: blade }
   spawn: BronzeKhapeshBladePiece
   maxCount: 1
 
@@ -248,6 +255,15 @@
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ingots.rsi, state: copper }
   color: "#b87333"
+  price: 1
+
+- type: material
+  id: Tin
+  stackEntity: IngotTin
+  name: олово
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/ingots.rsi, state: iron }
+  color: "#d3d3d3"
   price: 1
 
 - type: material

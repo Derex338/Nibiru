@@ -36,3 +36,18 @@
   - type: PhysicalComposition
     materialComposition:
       CEIron: 5
+
+- type: entity
+  parent: CEBaseKey
+  id: KeyBronzeBlank
+  components:
+  - type: Sprite
+    state: key_iron
+    color: "#804000"
+  - type: CEKey
+    shape:
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2

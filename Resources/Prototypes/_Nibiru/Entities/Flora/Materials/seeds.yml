@@ -1,0 +1,45 @@
+- type: entity
+  id: CESeedPoppy
+  name: poppy seeds
+  description: Poppy seeds, commonly used in medicine production.
+  parent: CEBaseSeed
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Flora/Plants/poppy.rsi
+    state: seed
+  - type: CESeed
+    plantProto: CEPlantPoppy
+  - type: Stack
+    stackType: CESeedPoppy
+
+- type: entity
+  id: CESeedPoppy30
+  parent: CESeedPoppy
+  suffix: 30
+  components:
+  - type: Stack
+    stackType: CESeedPoppy
+    count: 30
+
+- type: entity
+  id: CESeedAloe
+  name: aloe seeds
+  description: Tiny aloe seeds.
+  parent: CEBaseSeed
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Flora/Plants/aloe.rsi
+    state: seed
+  - type: CESeed
+    plantProto: CEPlantAloe
+  - type: Stack
+    stackType: CESeedAloe
+
+- type: entity
+  id: CESeedAloe30
+  parent: CESeedAloe
+  suffix: 30
+  components:
+  - type: Stack
+    stackType: CESeedAloe
+    count: 30

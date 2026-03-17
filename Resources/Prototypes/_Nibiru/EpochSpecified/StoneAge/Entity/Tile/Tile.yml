@@ -16,6 +16,7 @@
   name: grass tile
   parent: FloorTileItemBase
   id: FloorTileItemStraw
+  suffix: Нибиру, Каменный век
   components:
   - type: Sprite
     state: grass
@@ -32,6 +33,7 @@
   name: grass tile
   parent: FloorTileItemStraw
   id: FloorTileItemStraw4
+  suffix: Нибиру, Каменный век, 4
   components:
   - type: Stack
     count: 4

@@ -55,3 +55,173 @@
   targetNode: fin
   category: construction-category-materials
   objectType: Item
+
+- type: construction
+  id: TileGlass
+  graph: TileGlass
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileOakWoodplanks
+  graph: TileOakWoodplanks
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileOakWoodplanksBig
+  graph: TileOakWoodplanksBig
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileOakWoodplanksCruciform
+  graph: TileOakWoodplanksCruciform
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileOakWoodplanksStairs
+  graph: TileOakWoodplanksStairs
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStonebricks
+  graph: TileStonebricks
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStonebricksSmallCarved
+  graph: TileStonebricksSmallCarved
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStonebricksSmallCarved2
+  graph: TileStonebricksSmallCarved2
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStoneLongBricks
+  graph: TileStoneLongBricks
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStoneMediumBricks
+  graph: TileStoneMediumBricks
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStoneSquarePattern
+  graph: TileStoneSquarePattern
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStoneDiamond
+  graph: TileStoneDiamond
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStoneMediumCircles
+  graph: TileStoneMediumCircles
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStoneSmallCircles
+  graph: TileStoneSmallCircles
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileStonebricksSquareCarved
+  graph: TileStonebricksSquareCarved
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileRoofRed
+  graph: TileRoofRed
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
+
+- type: construction
+  id: TileRoofGreen
+  graph: TileRoofGreen
+  startNode: start
+  targetNode: fin
+  category: construction-category-materials
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench

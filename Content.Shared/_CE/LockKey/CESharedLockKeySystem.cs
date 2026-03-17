@@ -4,6 +4,7 @@ using Content.Shared._CE.LockKey.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -26,6 +27,7 @@ public abstract partial class CESharedLockKeySystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedDoorSystem _door = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     private EntityQuery<LockComponent> _lockQuery;
     private EntityQuery<CELockComponent> _ceLockQuery;
@@ -52,6 +54,12 @@ public abstract partial class CESharedLockKeySystem : EntitySystem
 
         SubscribeLocalEvent<CEKeyComponent, ExaminedEvent>(OnKeyExamine);
         SubscribeLocalEvent<CELockComponent, ExaminedEvent>(OnLockExamine);
+        SubscribeLocalEvent<CELockComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
+    }
+
+    private void OnLockToggleAttempt(Entity<CELockComponent> ent, ref LockToggleAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 
     private void OnLockInserted(Entity<CELockComponent> ent, ref LockInsertDoAfterEvent args)
@@ -125,7 +133,7 @@ public abstract partial class CESharedLockKeySystem : EntitySystem
             {
                 if (lockComp.Locked)
                 {
-                    _lock.TryUnlock(ent, args.User, lockComp);
+                    _lock.Unlock(ent, args.User, lockComp);
                     _popup.PopupPredicted(Loc.GetString("ce-lock-unlock", ("lock", MetaData(ent).EntityName)),
                         ent,
                         args.User);
@@ -135,7 +143,7 @@ public abstract partial class CESharedLockKeySystem : EntitySystem
                     return;
                 }
 
-                _lock.TryLock(ent, args.User, lockComp);
+                _lock.Lock(ent, args.User, lockComp);
 
                 _popup.PopupPredicted(Loc.GetString("ce-lock-lock", ("lock", MetaData(ent).EntityName)),
                     ent,
@@ -204,9 +212,9 @@ public abstract partial class CESharedLockKeySystem : EntitySystem
         if (isEqual)
         {
             if (lockComp.Locked)
-                _lock.TryUnlock(target, user);
+                _lock.Unlock(target, user, lockComp);
             else
-                _lock.TryLock(target, user);
+                _lock.Lock(target, user, lockComp);
         }
         else
             _popup.PopupClient(Loc.GetString("ce-lock-key-no-fit"), target, user);

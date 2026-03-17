@@ -110,6 +110,7 @@ namespace Content.Client.Construction.UI
             _sawmill = _logManager.GetSawmill("construction.ui");
 
             _sharedConstruction = _entManager.System<SharedConstructionSystem>();
+            _RecipeCheck = _entManager.System<ConstructionRecipeCheck>();
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
@@ -274,9 +275,14 @@ namespace Content.Client.Construction.UI
 
         public void OnConstructionCrafts(List<ProtoId<ConstructionPrototype>> crafts, object? sender)
         {
-            ConsRecipes = crafts;
+            foreach (var craft in crafts)
+            {
+                if (!ConsRecipes.Contains(craft))
+                    ConsRecipes.Add(craft);
+            }
 
-            OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+            PopulateCategories(_selectedCategory);
+            OnViewPopulateRecipes(_constructionView, (string.Empty, _selectedCategory));
         }
 
         private List<ConstructionMenu.ConstructionMenuListData> GetAndSortRecipes((string, string) args)
@@ -423,11 +429,17 @@ namespace Content.Client.Construction.UI
             if (!_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? proto))
                 return;
 
+            var points = 0;
+            if (_constructionSystem.GetGuide(prototype) is { } guide)
+            {
+                points = guide.ResearchPoints;
+            }
+
             _constructionView.SetRecipeInfo(
                 prototype.Name!,
                 prototype.Description!,
                 proto,
-				_constructionSystem.GetResearchPoints(prototype),
+                points,
                 prototype.Type != ConstructionType.Item,
                 !_favoritedRecipes.Contains(prototype));
 
@@ -606,6 +618,7 @@ namespace Content.Client.Construction.UI
             system.FlipConstructionPrototype += SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable += SystemGuideAvailable;
+            system.RecipesUpdated += SystemRecipesUpdated;
             if (_uiManager.GetActiveUIWidgetOrNull<GameTopMenuBar>() != null)
             {
                 CraftingAvailable = system.CraftingEnabled;
@@ -623,7 +636,16 @@ namespace Content.Client.Construction.UI
             system.FlipConstructionPrototype -= SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged -= SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable -= SystemGuideAvailable;
+            system.RecipesUpdated -= SystemRecipesUpdated;
             _constructionSystem = null;
+        }
+
+        private void SystemRecipesUpdated(object? sender, EventArgs e)
+        {
+            if (_constructionSystem == null)
+                return;
+
+            OnConstructionCrafts(_constructionSystem.ConsRecipes, this);
         }
 
         private void SystemCraftingAvailabilityChanged(object? sender, CraftingAvailabilityChangedArgs e)

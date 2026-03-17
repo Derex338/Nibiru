@@ -1,7 +1,7 @@
 - type: entity
   id: Bone1
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: кость
   description: "бедное животное"
   components:
@@ -27,7 +27,7 @@
 - type: entity
   id: Fang
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: зубы
   description: "бедное животное"
   components:
@@ -52,7 +52,7 @@
 - type: entity
   id: Fat
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: жир
   description: "САЛО"
   components:
@@ -73,11 +73,13 @@
     stackType: Fat
     baseLayer: base
     count: 1
+  - type: Fuel
+    value: 50
 
 - type: entity
   id: Gut
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: потроха
   description: "фу"
   components:
@@ -91,11 +93,14 @@
     count: 1
   - type: Item
     size: Tiny
+  - type: CEFoodTag
+    tags:
+    - CEMeat
 
 - type: entity
   id: Skin
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: шкура
   description: "Шкура животного"
   components:
@@ -112,7 +117,7 @@
 - type: entity
   id: Skin_notready
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: необработаная кожа
   description: "почти готова"
   components:
@@ -134,7 +139,7 @@
 - type: entity
   id: Skin_processed
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: кожа
   description: "готова кожа"
   components:
@@ -152,7 +157,7 @@
 - type: entity
   id: Skull_cow
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: череп
   description: "йорик?"
   components:
@@ -165,7 +170,7 @@
 - type: entity
   id: Skull_goat
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: череп
   description: "йорик?"
   components:
@@ -178,7 +183,7 @@
 - type: entity
   id: Skull_human
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: череп
   description: "йорик?"
   components:
@@ -191,7 +196,7 @@
 - type: entity
   id: Vein
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: жилы
   description: "макароны"
   components:
@@ -208,7 +213,7 @@
 - type: entity
   id: VeinTimer
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: жилы
   description: "макароны"
   components:
@@ -230,7 +235,7 @@
 - type: entity
   id: Vein_processed
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: обделаные жилы
   description: "готовые макароны"
   components:
@@ -239,7 +244,7 @@
     state: vein-processed
   - type: Material
   - type: Stack
-    stackType: Vein
+    stackType: Vein_processed
     baseLayer: base
     count: 1
   - type: Item
@@ -248,7 +253,7 @@
 - type: entity
   id: HideSmall
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: шкура
   description: "Шкура животного"
   components:
@@ -270,7 +275,7 @@
 - type: entity
   id: HideMedium
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: шкура
   description: "Шкура животного"
   components:
@@ -292,7 +297,7 @@
 - type: entity
   id: HideBig
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: шкура
   description: "Шкура животного"
   components:
@@ -314,7 +319,7 @@
 - type: entity
   id: SmallBodyButcher
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: маленький труп
   description: маленький труп для дальнейшей разделки
   components:
@@ -325,17 +330,17 @@
     size: Large
   - type: Butcherable
     spawned:
-      - id: FoodMeat
+      - id: CEFoodMeatRabbit
         amount: 1
       - id: Gut
         amount: 1
-      - id: Bone1
+      - id: CEBone1
         amount: 1
 
 - type: entity
   id: SmallBodyButcherBird
   parent: SmallBodyButcher
-  suffix: Organs
+  suffix: Organs Nibiru
   name: маленький труп птицы
   description: маленький труп птицы для дальнейшей разделки
   components:
@@ -352,7 +357,7 @@
 - type: entity
   id: MediumBodyButcherFirst
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: труп
   description: труп для дальнейшей разделки
   components:
@@ -361,7 +366,7 @@
     state: mid1
   - type: Butcherable
     spawned:
-      - id: FoodMeat
+      - id: CEFoodMeatLamb
         amount: 3
       - id: Gut
         amount: 1
@@ -375,7 +380,7 @@
 - type: entity
   id: MediumBodyButcherSecond
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: труп
   description: труп для дальнейшей разделки
   components:
@@ -384,7 +389,7 @@
     state: mid2
   - type: Butcherable
     spawned:
-      - id: Bone1
+      - id: CEBone1
         amount: 2
         maxAmount: 4
       - id: Fang
@@ -396,7 +401,7 @@
 - type: entity
   id: BigBodyButcherFirst
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: большой труп
   description: большой труп для дальнейшей разделки
   components:
@@ -405,7 +410,7 @@
     state: big1
   - type: Butcherable
     spawned:
-      - id: FoodMeat
+      - id: CEFoodMeatBoar
         amount: 3
         maxAmount: 7
       - id: Gut
@@ -416,7 +421,7 @@
 - type: entity
   id: BigBodyButcherSecond
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: большой труп
   description: большой труп для дальнейшей разделки
   components:
@@ -437,7 +442,7 @@
 - type: entity
   id: BigBodyButcherThree
   parent: BaseItem
-  suffix: Organs
+  suffix: Organs Nibiru
   name: большой труп
   description: большой труп для дальнейшей разделки
   components:
@@ -446,7 +451,7 @@
     state: big3
   - type: Butcherable
     spawned:
-      - id: Bone1
+      - id: CEBone1
         amount: 3
         maxAmount: 7
       - id: Fang

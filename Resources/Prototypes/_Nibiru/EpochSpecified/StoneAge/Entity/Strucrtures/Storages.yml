@@ -3,7 +3,7 @@
   parent: StorageTank
   name: бочка
   description: Деревянная бочка готовая к наполнению житкостями.
-  suffix: Empty
+  suffix: Empty, Нибиру, Каменный век
   components:
   - type: StaticPrice
     price: 500
@@ -12,9 +12,34 @@
     layers:
       - state: base
         map: ["enum.StorageVisualLayers.Base"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
       - state: closed
-        map: ["enum.StorageVisualLayers.Door"]
+        map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
+  - type: Openable
+    closeable: true
+    sound: /Audio/Effects/woodenclosetopen.ogg
+    closeSound: /Audio/Effects/woodenclosetclose.ogg
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "open"}
+          False: {state: "closed"}
+  - type: SolutionContainerVisuals
+    solutionName: tank
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: RefillableSolution
+    solution: tank
   - type: ExaminableSolution
     solution: tank
   - type: Construction

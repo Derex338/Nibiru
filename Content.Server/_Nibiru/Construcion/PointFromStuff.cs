@@ -46,38 +46,14 @@ public sealed class PointsFromStuffSystem : EntitySystem
         if (args.NewMobState != MobState.Dead || args.OldMobState >= args.NewMobState)
             return;
 
-        // impulse is the entity that did the finishing blow.
-        var killImpulse = GetKillSource(args.Origin);
-
-        KillSource killSource;
-
-        // the impulse gets the kill and the most damage gets the assist
-        killSource = killImpulse;
-
-        // it's a suicide if:
-        // - you caused your own death
-        // - the kill source was the entity that died
-        // - the entity that died had an assist on themselves
-        var suicide = args.Origin == uid ||
-                      killSource is KillNpcSource npc && npc.NpcEnt == uid ||
-                      killSource is KillPlayerSource player && player.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId;
-
 		if(EntityManager.TryGetComponent<FactionComponent>(args.Origin, out var user)
 		&& EntityManager.TryGetComponent<FactionComponent>(user.ResearchServer, out var server)
 		&& EntityManager.TryGetComponent<ResearchServerComponent>(user.ResearchServer, out var research)
 		&& server.FactionName == user.FactionName)
 		{
-            _research.ModifyServerPoints(user.ResearchServer.Value, component.Points, research);
+            research.Points += component.Points;
+            //_research.ModifyServerPoints(user.ResearchServer.Value, component.Points, research);
 		}
-    }
-
-    private KillSource GetKillSource(EntityUid? sourceEntity)
-    {
-        if (TryComp<ActorComponent>(sourceEntity, out var actor))
-            return new KillPlayerSource(actor.PlayerSession.UserId);
-        if (HasComp<HTNComponent>(sourceEntity))
-            return new KillNpcSource(sourceEntity.Value);
-        return new KillEnvironmentSource();
     }
 
     private void OnHarvest(EntityUid user, FactionComponent comp, HarvestPlantMessage msg)
@@ -89,7 +65,8 @@ public sealed class PointsFromStuffSystem : EntitySystem
         && EntityManager.TryGetComponent<ResearchServerComponent>(comp.ResearchServer, out var research)
         && server.FactionName == comp.FactionName)
         {
-            _research.ModifyServerPoints(comp.ResearchServer.Value, msg._seed.Points, research);
+            research.Points += msg._seed.Points;
+            //_research.ModifyServerPoints(comp.ResearchServer.Value, msg._seed.Points, research);
         }
     }
     //private void OnDestruction(EntityUid uid, PointsFromDestructionComponent component, DestructionEventArgs args)
