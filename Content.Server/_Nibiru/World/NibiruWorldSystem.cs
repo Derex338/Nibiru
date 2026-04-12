@@ -9,9 +9,13 @@ using Content.Server.Station.Systems;
 using Content.Server._CE.ZLevels.Core;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
+using Content.Server._Nibiru.SaveLoad;
 //using Content.Shared._Nibiru.CCVar;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.GameTicking;
+using Content.Server.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
@@ -32,6 +36,7 @@ using Content.Shared.Gravity;
 using Content.Shared._CE.DayCycle;
 using Robust.Shared.Maths;
 using Content.Shared._CE.ZLevels.Roof;
+using Robust.Shared.Random;
 
 namespace Content.Server._Nibiru.World;
 
@@ -47,10 +52,24 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly CEZLevelsSystem _ceZLevels = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<LoadingMapsEvent>(OnLoadingMaps);
+    }
+
+    private void OnLoadingMaps(LoadingMapsEvent ev)
+    {
+        var saveSys = EntityManager.System<Content.Server._Nibiru.SaveLoad.NibiruRoundSaveSystem>();
+        if (saveSys.SaveToLoad != null)
+        {
+            // Clear maps selected in lobby to let our save have priority
+            ev.Maps.Clear();
+        }
     }
 
     public EntityUid InitializeWorld(NibiruSurvivalRuleComponent rule)
@@ -62,6 +81,21 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         }*/
 
         Rule = rule;
+
+        var saveSys = EntityManager.System<Content.Server._Nibiru.SaveLoad.NibiruRoundSaveSystem>();
+        if (saveSys.SaveToLoad != null)
+        {
+            var success = saveSys.LoadSavedMaps(out var loadedCave, out var loadedWorld, out var loadedSky1, out var loadedSky2);
+            if (success)
+            {
+                rule.WorldMap = loadedWorld;
+                rule.CaveMap = loadedCave;
+                saveSys.ClearLoad(); // сбрасываем статус загрузки после успешного применения
+                return loadedWorld;
+            }
+        }
+
+
 
         // Создаем сеть Z-уровней
         var network = _ceZLevels.CreateZNetwork();
@@ -164,12 +198,75 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         if (Rule is not { } rule)
             return null;
 
-        var coords = Turf.GetTileCenter(GetSpawnTiles(1).First());
+        if (rule.WorldMap == EntityUid.Invalid)
+            return null;
+
+        // Check for saved body first
+        var userId = ev.Player.UserId.ToString();
+        var selectedName = ev.Profile.Name;
+        var savedQuery = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
+        while (savedQuery.MoveNext(out var uid, out var saved, out var meta))
+        {
+            if (saved.UserId == userId)
+            {
+                if (meta.EntityName == selectedName)
+                {
+                    Log.Info($"Nibiru: Auto-reconnecting player {ev.Player.Name} to saved entity {uid} at round start because profile matches.");
+
+                    RemComp<ActorComponent>(uid);
+                    
+                    // Nibiru: Clean up any ghost minds to prevent Assert crash in MindSystem.TryGetMind
+                    if (_mind.TryGetMind(ev.Player.UserId, out var existingMindId, out var existingMindComp))
+                    {
+                        // If the mind already thinks it owns this entity, we must detach it first 
+                        // to avoid 'TransferTo' early return logic (if (entity == mind.OwnedEntity) return;)
+                        _mind.TransferTo(existingMindId.Value, null, createGhost: false, mind: existingMindComp);
+                    }
+
+                    // Ensure the target entity also thinks it is empty
+                    RemComp<MindContainerComponent>(uid);
+                    _mind.MakeSentient(uid);
+
+                    var xform = Transform(uid);
+                    if (xform.MapID == MapId.Nullspace || xform.MapUid == null)
+                    {
+                        var spawnPoint = _gameTicker.GetObserverSpawnPoint();
+                        _transform.SetCoordinates(uid, spawnPoint);
+                        Log.Info($"Nibiru: Rescued {ev.Player.Name} from nullspace and moved to spawn point BEFORE mind transfer.");
+                    }
+
+                    _mind.ControlMob(ev.Player.UserId, uid);
+                    
+                    RemComp<NibiruSavedPlayerComponent>(uid);
+                    return uid;
+                }
+                else
+                {
+                    Log.Info($"Nibiru: Not auto-reconnecting player {ev.Player.Name} because profile '{selectedName}' doesn't match saved entity '{meta.EntityName}'.");
+                }
+            }
+        }
+
+        var spawnTiles = GetSpawnTiles(1);
+        EntityCoordinates coords;
+
+        if (spawnTiles.Count > 0)
+        {
+            coords = Turf.GetTileCenter(spawnTiles.First());
+        }
+        else
+        {
+            Log.Warning($"Nibiru: Could not find spawn tiles on map {rule.WorldMap}! Falling back to (0,0).");
+            coords = new EntityCoordinates(rule.WorldMap, Vector2.Zero);
+        }
+
         var spawnBox = Box2.CenteredAround(coords.Position, new Vector2(SpawnAreaRadius));
         var freeTiles = GetFreeTiles(rule.WorldMap, spawnBox, MinSpawnAreaTiles);
 
-        if (freeTiles.Count == 0)
-            return null;
+        if (freeTiles.Count > 0)
+        {
+            coords = Turf.GetTileCenter(_random.Pick(freeTiles));
+        }
 
         // Spawn player entity
         var newMind = _mind.CreateMind(ev.Player.UserId, ev.Player.Name);

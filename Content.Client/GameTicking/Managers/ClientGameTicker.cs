@@ -47,6 +47,9 @@ namespace Content.Client.GameTicking.Managers
         public event Action<IReadOnlyDictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>>? LobbyJobsAvailableUpdated;
         public IReadOnlyList<FactionInfo> AvailableFactions { get; private set; } = new List<FactionInfo>(); //Nibiru
         public event Action<IReadOnlyList<FactionInfo>>? AvailableFactionsUpdated;
+        
+        public List<string> SavedCharacters { get; private set; } = new List<string>();
+        public event Action<List<string>>? SavedCharactersAvailableUpdated;
 
 
         public override void Initialize()
@@ -65,6 +68,7 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
             SubscribeNetworkEvent<FactionsAvailableMessage>(OnFactionsAvailableUpdated);
+            SubscribeNetworkEvent<Content.Shared._Nibiru.SaveLoad.SavedCharacterAvailableMessage>(OnSavedCharacterAvailable);
 
             _admin.AdminStatusUpdated += OnAdminUpdated;
             OnAdminUpdated();
@@ -75,6 +79,18 @@ namespace Content.Client.GameTicking.Managers
             AvailableFactions = msg.Factions;
             AvailableFactionsUpdated?.Invoke(AvailableFactions);
             Logger.Info($"Factions updated: {AvailableFactions.Count} available");
+        }
+
+        private void OnSavedCharacterAvailable(Content.Shared._Nibiru.SaveLoad.SavedCharacterAvailableMessage msg)
+        {
+            SavedCharacters = msg.CharacterNames;
+            SavedCharactersAvailableUpdated?.Invoke(SavedCharacters);
+            Logger.Info($"Saved characters available: {SavedCharacters.Count}");
+        }
+
+        public void RequestSavedCharacter()
+        {
+            RaiseNetworkEvent(new Content.Shared._Nibiru.SaveLoad.RequestSavedCharacterMessage());
         }
 
         public override void Shutdown()

@@ -11,6 +11,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Client.Lobby;
+using Content.Shared.Preferences;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
@@ -32,7 +34,12 @@ namespace Content.Client.LateJoin
 
         private readonly Dictionary<string, FactionButton> _factionButtons = new();
         private readonly BoxContainer _factionList;
+        private readonly ScrollContainer _factionScroll;
+        private readonly BoxContainer _characterList;
+        private readonly ScrollContainer _characterScroll;
         private readonly Button _soloButton;
+        private readonly Robust.Client.UserInterface.Controls.RichTextLabel _nibiruDescription;
+        [Dependency] private readonly IClientPreferencesManager _prefsManager = default!;
 
         public LateJoinGui()
         {
@@ -73,13 +80,13 @@ namespace Content.Client.LateJoin
             });
 
             // Описание
-            var descLabel = new RichTextLabel
+            _nibiruDescription = new Robust.Client.UserInterface.Controls.RichTextLabel
             {
                 Margin = new Thickness(15, 10),
                 HorizontalAlignment = HAlignment.Center
             };
-            descLabel.SetMessage(Loc.GetString("late-join-gui-faction-description"));
-            baseContainer.AddChild(descLabel);
+            _nibiruDescription.SetMessage(Loc.GetString("late-join-gui-faction-description"));
+            baseContainer.AddChild(_nibiruDescription);
 
             // Список фракций
             _factionList = new BoxContainer
@@ -89,14 +96,32 @@ namespace Content.Client.LateJoin
                 VerticalExpand = true
             };
 
-            var scrollContainer = new ScrollContainer
+            _factionScroll = new ScrollContainer
             {
                 VerticalExpand = true,
                 HorizontalExpand = true,
                 Children = { _factionList }
             };
 
-            baseContainer.AddChild(scrollContainer);
+            baseContainer.AddChild(_factionScroll);
+
+            // Список персонажей
+            _characterList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(10, 5),
+                VerticalExpand = true
+            };
+
+            _characterScroll = new ScrollContainer
+            {
+                VerticalExpand = true,
+                HorizontalExpand = true,
+                Children = { _characterList },
+                Visible = false
+            };
+
+            baseContainer.AddChild(_characterScroll);
 
             // Кнопка одиночного спавна
             _soloButton = new Button
@@ -115,8 +140,12 @@ namespace Content.Client.LateJoin
 
             Contents.AddChild(baseContainer);
 
-            // Подписываемся на обновления списка фракций от GameTicker
+            // Подписываемся на обновления
             _gameTicker.AvailableFactionsUpdated += UpdateAvailableFactions;
+            _gameTicker.SavedCharactersAvailableUpdated += _ => RebuildUI();
+
+            // Запрашиваем информацию о сохраненном персонаже
+            _gameTicker.RequestSavedCharacter();
 
             // Обновляем UI при открытии
             RebuildUI();
@@ -127,7 +156,62 @@ namespace Content.Client.LateJoin
         /// </summary>
         private void RebuildUI()
         {
-            // Читаем список напрямую из GameTicker (как оригинальный LateJoinGui читает JobsAvailable)
+            var savedCharacters = _gameTicker.SavedCharacters;
+            bool hasSaved = savedCharacters.Count > 0;
+
+            if (hasSaved)
+            {
+                _factionScroll.Visible = false;
+                _soloButton.Visible = false;
+                _characterScroll.Visible = true;
+                _nibiruDescription.SetMessage(Loc.GetString("late-join-gui-faction-description-loaded") ?? "Choose a saved character to load into:");
+
+                _characterList.RemoveAllChildren();
+                foreach (var characterName in savedCharacters)
+                {
+                    var btn = new Button
+                    {
+                        Text = Loc.GetString("late-join-gui-load-button", ("character", characterName)),
+                        HorizontalAlignment = HAlignment.Center,
+                        Margin = new Thickness(10, 5),
+                        MinSize = new Vector2(250, 40),
+                        StyleClasses = { "ButtonSquare" },
+                        ModulateSelfOverride = Color.LimeGreen
+                    };
+                    btn.OnPressed += _ =>
+                    {
+                        _consoleHost.ExecuteCommand($"latejoin_load \"{characterName}\"");
+                        Close();
+                    };
+                    _characterList.AddChild(btn);
+                }
+
+                // Кнопка "Начать нового персонажа"
+                var newBtn = new Button
+                {
+                    Text = Loc.GetString("late-join-gui-new-character-button") ?? "Start New Character",
+                    HorizontalAlignment = HAlignment.Center,
+                    Margin = new Thickness(10, 20),
+                    MinSize = new Vector2(250, 40),
+                };
+                newBtn.OnPressed += _ =>
+                {
+                    _characterScroll.Visible = false;
+                    _factionScroll.Visible = true;
+                    _soloButton.Visible = true;
+                    _nibiruDescription.SetMessage(Loc.GetString("late-join-gui-faction-description"));
+                };
+                _characterList.AddChild(newBtn);
+            }
+            else
+            {
+                _factionScroll.Visible = true;
+                _soloButton.Visible = true;
+                _characterScroll.Visible = false;
+                _nibiruDescription.SetMessage(Loc.GetString("late-join-gui-faction-description"));
+            }
+
+            // Читаем список напрямую из GameTicker
             UpdateAvailableFactions(_gameTicker.AvailableFactions);
         }
 

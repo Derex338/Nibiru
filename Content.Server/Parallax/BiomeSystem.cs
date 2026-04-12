@@ -79,6 +79,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
     private static readonly ProtoId<TagPrototype> BiomeMobTag = "BiomeMob";
 
+    public bool SaveBiomeMobs { get; set; } = false;
+
     private List<(Vector2i, Tile)> _tiles = new();
 
     private ObjectPool<HashSet<Vector2i>> _tilePool =
@@ -122,7 +124,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private void OnIsSerializable(Entity<MetaDataComponent> ent, ref bool serializable)
     {
-        if (serializable && _tags.HasTag(ent, BiomeMobTag))
+        if (serializable && !SaveBiomeMobs && _tags.HasTag(ent, BiomeMobTag))
             serializable = false;
     }
 
