@@ -36,6 +36,7 @@ using Content.Shared.Gravity;
 using Content.Shared._CE.DayCycle;
 using Robust.Shared.Maths;
 using Content.Shared._CE.ZLevels.Roof;
+using Content.Shared._CE.ZLevels.Light.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server._Nibiru.World;
@@ -107,13 +108,14 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         var caveMap = _map.CreateMap();
         _biome.EnsurePlanet(caveMap, _prototype.Index(rule.CaveBiome), seed);
         EnsureComp<CEZLevelMapRoofComponent>(caveMap);
-
+        EnsureComp<SunLightRayComponent>(caveMap);
 
         // 2. Создаем основной мир (планета) - Уровень 0
         var worldMap = _map.CreateMap();
         _biome.EnsurePlanet(worldMap, _prototype.Index(rule.Biome), seed);
         EnsureComp<CEDayCycleComponent>(worldMap);
         EnsureComp<CEZLevelMapRoofComponent>(worldMap);
+        EnsureComp<SunLightRayComponent>(worldMap);
 
         // Уровень 1
         var sky1Map = _map.CreateMap();
@@ -181,6 +183,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         EnsureComp<SunShadowCycleComponent>(mapUid);
         EnsureComp<CEDayCycleComponent>(mapUid);
         EnsureComp<CEZLevelMapRoofComponent>(mapUid);
+        EnsureComp<SunLightRayComponent>(mapUid);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int)Gas.Oxygen] = 21.824779f;
@@ -214,11 +217,11 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
                     Log.Info($"Nibiru: Auto-reconnecting player {ev.Player.Name} to saved entity {uid} at round start because profile matches.");
 
                     RemComp<ActorComponent>(uid);
-                    
+
                     // Nibiru: Clean up any ghost minds to prevent Assert crash in MindSystem.TryGetMind
                     if (_mind.TryGetMind(ev.Player.UserId, out var existingMindId, out var existingMindComp))
                     {
-                        // If the mind already thinks it owns this entity, we must detach it first 
+                        // If the mind already thinks it owns this entity, we must detach it first
                         // to avoid 'TransferTo' early return logic (if (entity == mind.OwnedEntity) return;)
                         _mind.TransferTo(existingMindId.Value, null, createGhost: false, mind: existingMindComp);
                     }
@@ -236,7 +239,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
                     }
 
                     _mind.ControlMob(ev.Player.UserId, uid);
-                    
+
                     RemComp<NibiruSavedPlayerComponent>(uid);
                     return uid;
                 }
