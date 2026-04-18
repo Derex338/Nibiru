@@ -23,6 +23,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Enums;
 using Content.Shared._Nibiru.SaveLoad;
 using Content.Shared.Mind;
+using Content.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Nibiru.SaveLoad;
 
@@ -35,8 +37,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly Robust.Server.Player.IPlayerManager _playerManager = default!;
-
 
     public string? SaveToLoad { get; private set; }
     private bool _savingLivingEntities = false;
@@ -58,64 +58,83 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         var userId = session.UserId.ToString();
         var query = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
         var characterNames = new HashSet<string>();
-        while (query.MoveNext(out var uid, out var saved, out var meta))
+        while (query.MoveNext(out _, out var saved, out var meta))
         {
             if (saved.UserId == userId && !string.IsNullOrWhiteSpace(meta.EntityName))
             {
                 characterNames.Add(meta.EntityName);
             }
         }
-        
+
         RaiseNetworkEvent(new SavedCharacterAvailableMessage(characterNames.ToList()), session.Channel);
     }
 
+    /// <summary>
+    /// Reconnects a player to their saved entity. Used for late-join reconnection.
+    /// Uses the same two-step observer → entity approach as SpawnPlayer in NibiruWorldSystem
+    /// to ensure the client's game UI is fully initialized before entity attachment.
+    /// </summary>
     public void TryLoadSavedPlayer(ICommonSession player, string? targetCharacter = null)
     {
-        var savedQuery = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
         var userId = player.UserId.ToString();
         var mindSystem = EntityManager.System<MindSystem>();
-        var playerManager = IoCManager.Resolve<Robust.Server.Player.IPlayerManager>();
+        var savedQuery = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
 
         while (savedQuery.MoveNext(out var uid, out var saved, out var meta))
         {
-            if (saved.UserId == userId && (targetCharacter == null || meta.EntityName == targetCharacter))
-            {
-                Log.Info($"Nibiru: Reconnecting player {player.Name} to saved entity {uid}.");
-                
-                var ticker = EntityManager.System<GameTicker>();
-                ticker.PlayerJoinGame(player);
+            if (saved.UserId != userId)
+                continue;
 
-                RemComp<ActorComponent>(uid);
-                
-                // Nibiru: Clean up any ghost minds to prevent Assert crash in MindSystem.TryGetMind
-                if (mindSystem.TryGetMind(player.UserId, out var existingMindId, out var existingMindComp))
+            if (targetCharacter != null && meta.EntityName != targetCharacter)
+                continue;
+
+            Log.Info($"Nibiru: Reconnecting {player.Name} to saved entity {uid} ({meta.EntityName}).");
+
+            // Remove the saved marker immediately to prevent double-reconnect.
+            RemComp<NibiruSavedPlayerComponent>(uid);
+
+            var savedEntity = uid;
+            var session = player;
+            var data = player.ContentData();
+
+            _ticker.PlayerJoinGame(session, true);
+
+            var newMind = mindSystem.CreateMind(data!.UserId, meta.EntityName);
+            mindSystem.SetUserId(newMind, data.UserId);
+
+
+                if (session.Status == SessionStatus.Disconnected)
                 {
-                    // If the mind already thinks it owns this entity, we must detach it first 
-                    // to avoid 'TransferTo' early return logic (if (entity == mind.OwnedEntity) return;)
-                    mindSystem.TransferTo(existingMindId.Value, null, createGhost: false, mind: existingMindComp);
+                    Log.Warning($"Nibiru: {session.Name} disconnected before deferred reconnect to {savedEntity}.");
+                    return;
                 }
 
-                // Ensure the target entity also thinks it is empty
-                RemComp<MindContainerComponent>(uid);
-                mindSystem.MakeSentient(uid);
-
-                var xform = Transform(uid);
-                if (xform.MapID == MapId.Nullspace || xform.MapUid == null)
+                if (!Exists(savedEntity))
                 {
-                    var spawnPoint = ticker.GetObserverSpawnPoint();
-                    var transformSystem = EntityManager.System<SharedTransformSystem>();
-                    transformSystem.SetCoordinates(uid, spawnPoint);
-                    Log.Info($"Nibiru: Rescued {player.Name} from nullspace and moved to spawn point BEFORE mind transfer.");
+                    Log.Warning($"Nibiru: Saved entity {savedEntity} for {session.Name} no longer exists.");
+                    return;
                 }
 
-                mindSystem.ControlMob(player.UserId, uid);
-                
-                RemComp<NibiruSavedPlayerComponent>(uid);
-                return;
-            }
+                var mind = session.GetMind();
+                if (mind == null)
+                {
+                    Log.Warning($"Nibiru: No mind found for {session.Name} during deferred reconnect.");
+                    return;
+                }
+
+                // Ensure the entity has MindContainerComponent before transfer.
+                //mindSystem.MakeSentient(savedEntity);
+
+                // Transfer from observer ghost → saved entity. The ghost auto-deletes.
+                mindSystem.TransferTo(newMind, savedEntity);
+
+                Log.Info($"Nibiru: Successfully reconnected {session.Name} to saved entity {savedEntity}.");
+
+
+            return;
         }
-        
-        Log.Warning($"Nibiru: Failed to find saved entity for user {player.Name}.");
+
+        Log.Warning($"Nibiru: No saved entity found for {player.Name} (target: {targetCharacter ?? "any"}).");
     }
 
     private void OnIsSerializable(Entity<MetaDataComponent> ent, ref bool serializable)
@@ -157,8 +176,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         // Save Maps
         foreach (var mapId in _map.GetAllMapIds())
         {
-            // ... (existing map saving logic)
-            // Note: mobs are excluded via OnIsSerializable
             if (mapId == MapId.Nullspace) continue;
 
             var mapUid = _map.GetMapEntityId(mapId);
@@ -203,7 +220,7 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         // Save Living Entities
         _savingLivingEntities = true;
 
-        // Temporarily make mob prototypes savable to allow MapLoaderSystem to process them
+        // Temporarily make mob prototypes savable
         var impactedProtos = new HashSet<EntityPrototype>();
         var mobProtoQuery = EntityQueryEnumerator<MobStateComponent, MetaDataComponent>();
         while (mobProtoQuery.MoveNext(out _, out _, out var meta))
@@ -226,19 +243,16 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
 
             var npcsToSave = new HashSet<EntityUid>();
             var playersToSave = new List<EntityUid>();
-            
+
             var query = EntityQueryEnumerator<MetaDataComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var meta, out var xform))
             {
                 if (HasComp<MapComponent>(uid) || HasComp<MapGridComponent>(uid))
                     continue;
 
-                // Check if it's a living entity (MobState) or something we want to save specifically
-                // Users might want other things saved too, but for now we focus on mobs as requested
                 if (!HasComp<MobStateComponent>(uid))
                     continue;
 
-                // NPC or Player
                 var mapId = (int)xform.MapID;
                 var parentComp = EnsureComp<NibiruSaveParentComponent>(uid);
                 parentComp.MapId = mapId;
@@ -280,7 +294,7 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                         File = playerFile.ToString()
                     });
                 }
-                
+
                 RemComp<NibiruSaveParentComponent>(uid);
             }
 
@@ -304,7 +318,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         }
         finally
         {
-            // Restore prototypes
             foreach (var proto in impactedProtos)
             {
                 proto.MapSavable = false;
@@ -320,7 +333,7 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
             stream.Write(jsonStr);
         }
 
-        Log.Info($"Round saved successfully to {savename}. Preset: {preset}");
+        Log.Info($"Nibiru: Round saved to '{savename}'. Preset: {preset}");
     }
 
     public void RequestLoad(string savename)
@@ -330,7 +343,7 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
 
         if (!_res.UserData.Exists(manifestPath))
         {
-            Log.Error($"Save {savename} not found!");
+            Log.Error($"Nibiru: Save '{savename}' not found!");
             return;
         }
 
@@ -343,10 +356,9 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         if (manifest != null && !string.IsNullOrEmpty(manifest.PresetId))
         {
             _ticker.SetGamePreset(manifest.PresetId, force: false);
-
             SaveToLoad = savename;
             _ticker.RestartRound();
-            Log.Info($"Loaded round preset {manifest.PresetId} from save {savename}. Priority map override engaged.");
+            Log.Info($"Nibiru: Loading save '{savename}' with preset '{manifest.PresetId}'.");
         }
     }
 
@@ -364,10 +376,16 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
 
         if (SaveToLoad == null) return false;
 
+        Log.Info($"Nibiru: Loading saved maps from '{SaveToLoad}'.");
+
         var basePath = new ResPath($"/Saves/{SaveToLoad}");
         var manifestPath = basePath / "manifest.json";
 
-        if (!_res.UserData.Exists(manifestPath)) return false;
+        if (!_res.UserData.Exists(manifestPath))
+        {
+            Log.Error($"Nibiru: Manifest not found at {manifestPath}!");
+            return false;
+        }
 
         RoundSaveManifest? manifest;
         using (var stream = _res.UserData.OpenRead(manifestPath))
@@ -375,9 +393,15 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
             manifest = JsonSerializer.Deserialize<RoundSaveManifest>(stream);
         }
 
-        if (manifest == null) return false;
+        if (manifest == null)
+        {
+            Log.Error("Nibiru: Failed to deserialize manifest!");
+            return false;
+        }
 
-        // Group loaded maps by their original network ID
+        Log.Info($"Nibiru: Manifest: {manifest.Maps.Count} maps, {manifest.Players.Count} players, NPC file: {manifest.NpcFile ?? "none"}.");
+
+        // Load maps and reconstruct Z-networks
         var networks = new Dictionary<int, Dictionary<EntityUid, int>>();
         var loadedMapsByZ = new Dictionary<int, EntityUid>();
         var oldToNewMapMapping = new Dictionary<int, EntityUid>();
@@ -398,42 +422,47 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                 }
 
                 loadedMapsByZ[mapData.ZLevel] = mapUid;
+                Log.Info($"Nibiru: Loaded map '{mapData.MapFile}' as UID {mapUid} (Z={mapData.ZLevel}).");
+            }
+            else
+            {
+                Log.Error($"Nibiru: Failed to load map '{mapData.MapFile}'!");
             }
         }
 
-        // Reconstruct Z-Networks
         foreach (var networkMaps in networks.Values)
         {
             var newNetwork = _zLevels.CreateZNetwork();
             _zLevels.TryAddMapsIntoZNetwork(newNetwork, networkMaps);
         }
 
-        // Load NPCs and Players
+        // Load entity files (players and NPCs)
         var entityFiles = new List<string>();
-        foreach (var p in manifest.Players) entityFiles.Add(p.File);
+        foreach (var p in manifest.Players)
+            entityFiles.Add(p.File);
         if (!string.IsNullOrEmpty(manifest.NpcFile))
             entityFiles.Add(manifest.NpcFile);
-
-        Log.Info($"Loading {entityFiles.Count} entity files from save...");
 
         foreach (var file in entityFiles)
         {
             var resPath = new ResPath(file);
             if (!_res.UserData.Exists(resPath))
             {
-                Log.Error($"Entity save file not found: {file}");
+                Log.Error($"Nibiru: Entity file not found: {file}");
                 continue;
             }
 
             if (_mapLoader.TryLoadGeneric(resPath, out var result))
             {
-                int count = 0;
+                int reparented = 0;
                 var isPlayerFile = file.Contains("Players/");
                 var userId = isPlayerFile ? Path.GetFileNameWithoutExtension(file) : string.Empty;
 
                 foreach (var uid in result.Entities.Concat(result.Orphans))
                 {
-                    if (isPlayerFile)
+                    bool isRoot = HasComp<NibiruSaveParentComponent>(uid);
+
+                    if (isPlayerFile && isRoot)
                     {
                         var savedComp = EnsureComp<NibiruSavedPlayerComponent>(uid);
                         savedComp.UserId = userId;
@@ -444,16 +473,17 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                         if (oldToNewMapMapping.TryGetValue(parentComp.MapId, out var targetMap))
                         {
                             _xform.SetParent(uid, targetMap);
-                            count++;
+                            reparented++;
                         }
                         RemComp<NibiruSaveParentComponent>(uid);
                     }
                 }
-                Log.Info($"Loaded and re-parented {count} entities from {file}");
+
+                Log.Info($"Nibiru: Loaded {result.Entities.Count + result.Orphans.Count} entities from '{file}', re-parented {reparented}.");
             }
             else
             {
-                Log.Error($"Failed to load entity file: {file}");
+                Log.Error($"Nibiru: Failed to load entity file: {file}");
             }
         }
 
@@ -462,6 +492,7 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         loadedSky1 = loadedMapsByZ.GetValueOrDefault(1, EntityUid.Invalid);
         loadedSky2 = loadedMapsByZ.GetValueOrDefault(2, EntityUid.Invalid);
 
+        Log.Info($"Nibiru: Maps loaded — World: {loadedWorld}, Cave: {loadedCave}.");
         return true;
     }
 }

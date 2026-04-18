@@ -10,7 +10,6 @@ using Content.Server._CE.ZLevels.Core;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
 using Content.Server._Nibiru.SaveLoad;
-//using Content.Shared._Nibiru.CCVar;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -37,7 +36,9 @@ using Content.Shared._CE.DayCycle;
 using Robust.Shared.Maths;
 using Content.Shared._CE.ZLevels.Roof;
 using Content.Shared._CE.ZLevels.Light.Components;
-using Robust.Shared.Random;
+using Robust.Shared.Enums;
+using Robust.Shared.Timing;
+using Content.Shared.Players;
 
 namespace Content.Server._Nibiru.World;
 
@@ -75,12 +76,6 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
     public EntityUid InitializeWorld(NibiruSurvivalRuleComponent rule)
     {
-        /*var stations = _station.GetStations();
-        foreach (var station in stations)
-        {
-            QueueDel(station);
-        }*/
-
         Rule = rule;
 
         var saveSys = EntityManager.System<Content.Server._Nibiru.SaveLoad.NibiruRoundSaveSystem>();
@@ -91,12 +86,10 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             {
                 rule.WorldMap = loadedWorld;
                 rule.CaveMap = loadedCave;
-                saveSys.ClearLoad(); // сбрасываем статус загрузки после успешного применения
+                saveSys.ClearLoad();
                 return loadedWorld;
             }
         }
-
-
 
         // Создаем сеть Z-уровней
         var network = _ceZLevels.CreateZNetwork();
@@ -133,15 +126,6 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             { sky1Map, 1 },
             { sky2Map, 2 }
         });
-
-        // Настройка компонентов карты для основного мира
-        /*if (TryComp<MapComponent>(worldMap, out var mapComp))
-        {
-            EnsureComp<StationDataComponent>(worldMap);
-            foreach (var grid in _mapManager.GetAllGrids(mapComp.MapId))
-                _station.AddGridToStation(worldMap, grid.Owner);
-            EnsureComp<StationEventEligibleComponent>(worldMap);
-        }*/
 
         if (HasComp<LightCycleComponent>(caveMap))
             RemComp<LightCycleComponent>(caveMap);
@@ -194,7 +178,9 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     }
 
     /// <summary>
-    /// Creates or allocates a free map for the player
+    /// Creates or allocates a free map for the player.
+    /// Called from PlayerBeforeSpawnEvent. If a saved entity exists, reconnects to it.
+    /// Otherwise spawns a new character.
     /// </summary>
     public EntityUid? SpawnPlayer(PlayerBeforeSpawnEvent ev)
     {
@@ -204,52 +190,62 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         if (rule.WorldMap == EntityUid.Invalid)
             return null;
 
-        // Check for saved body first
+        // Check for a saved body matching this player
         var userId = ev.Player.UserId.ToString();
         var selectedName = ev.Profile.Name;
         var savedQuery = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
+
         while (savedQuery.MoveNext(out var uid, out var saved, out var meta))
         {
-            if (saved.UserId == userId)
+            if (saved.UserId != userId)
+                continue;
+
+            if (meta.EntityName != selectedName)
             {
-                if (meta.EntityName == selectedName)
-                {
-                    Log.Info($"Nibiru: Auto-reconnecting player {ev.Player.Name} to saved entity {uid} at round start because profile matches.");
-
-                    RemComp<ActorComponent>(uid);
-
-                    // Nibiru: Clean up any ghost minds to prevent Assert crash in MindSystem.TryGetMind
-                    if (_mind.TryGetMind(ev.Player.UserId, out var existingMindId, out var existingMindComp))
-                    {
-                        // If the mind already thinks it owns this entity, we must detach it first
-                        // to avoid 'TransferTo' early return logic (if (entity == mind.OwnedEntity) return;)
-                        _mind.TransferTo(existingMindId.Value, null, createGhost: false, mind: existingMindComp);
-                    }
-
-                    // Ensure the target entity also thinks it is empty
-                    RemComp<MindContainerComponent>(uid);
-                    _mind.MakeSentient(uid);
-
-                    var xform = Transform(uid);
-                    if (xform.MapID == MapId.Nullspace || xform.MapUid == null)
-                    {
-                        var spawnPoint = _gameTicker.GetObserverSpawnPoint();
-                        _transform.SetCoordinates(uid, spawnPoint);
-                        Log.Info($"Nibiru: Rescued {ev.Player.Name} from nullspace and moved to spawn point BEFORE mind transfer.");
-                    }
-
-                    _mind.ControlMob(ev.Player.UserId, uid);
-
-                    RemComp<NibiruSavedPlayerComponent>(uid);
-                    return uid;
-                }
-                else
-                {
-                    Log.Info($"Nibiru: Not auto-reconnecting player {ev.Player.Name} because profile '{selectedName}' doesn't match saved entity '{meta.EntityName}'.");
-                }
+                Log.Info($"Nibiru: Saved entity found for {ev.Player.Name} but name mismatch (saved: '{meta.EntityName}', selected: '{selectedName}'). Skipping.");
+                continue;
             }
+
+            Log.Info($"Nibiru: Found saved entity {uid} ({meta.EntityName}) for {ev.Player.Name}. Starting reconnect.");
+
+            // Remove the saved marker immediately to prevent any double-reconnect attempts.
+            RemComp<NibiruSavedPlayerComponent>(uid);
+
+            var savedEntity = uid;
+            var session = ev.Player;
+            var data = session.ContentData();
+
+            _gameTicker.PlayerJoinGame(session, true);
+
+            var savedMind = _mind.CreateMind(data!.UserId, meta.EntityName);
+            _mind.SetUserId(savedMind, data.UserId);
+
+            if (session.Status == SessionStatus.Disconnected)
+            {
+                Log.Warning($"Nibiru: {session.Name} disconnected before deferred reconnect to {savedEntity}.");
+                return null;
+            }
+
+            if (!Exists(savedEntity))
+            {
+                Log.Warning($"Nibiru: Saved entity {savedEntity} for {session.Name} no longer exists.");
+                return null;
+            }
+
+            var mind = session.GetMind();
+            if (mind == null)
+            {
+                Log.Warning($"Nibiru: No mind found for {session.Name} during deferred reconnect.");
+                return null;
+            }
+
+            // Transfer from observer ghost -> saved entity. The ghost auto-deletes.
+            _mind.TransferTo(savedMind, savedEntity);
+
+            return savedEntity;
         }
 
+        // No saved entity — spawn a new character normally.
         var spawnTiles = GetSpawnTiles(1);
         EntityCoordinates coords;
 
@@ -271,7 +267,6 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             coords = Turf.GetTileCenter(_random.Pick(freeTiles));
         }
 
-        // Spawn player entity
         var newMind = _mind.CreateMind(ev.Player.UserId, ev.Player.Name);
         _mind.SetUserId(newMind, ev.Player.UserId);
 
