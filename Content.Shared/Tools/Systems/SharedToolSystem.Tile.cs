@@ -53,6 +53,14 @@ public abstract partial class SharedToolSystem
         if (!TryDeconstructWithToolQualities(tileRef, tool.Qualities))
             return;
 
+        // Nibiru Start
+        if (IsTileLast(tileRef) && IsWallBelow(gridUid, grid, tileRef.GridIndices))
+        {
+            _popup.PopupEntity(Loc.GetString("ce-zlevel-tile-dig-fail-wall-below"), args.User, args.User);
+            return;
+        }
+        // Nibiru End
+
         AdminLogger.Add(
             LogType.LatticeCut,
             LogImpact.Medium,
@@ -83,6 +91,18 @@ public abstract partial class SharedToolSystem
         if (comp.RequiresUnobstructed && _turfs.IsTileBlocked(gridUid, tileRef.GridIndices, CollisionGroup.MobMask))
             return false;
 
+        // Nibiru Start
+        if (IsTileLast(tileRef) && IsWallBelow(gridUid, mapGrid, tileRef.GridIndices))
+        {
+            if (_timing.IsFirstTimePredicted)
+            {
+                var popupPos = _maps.GridTileToLocal(gridUid, mapGrid, tileRef.GridIndices);
+                _popup.PopupCoordinates(Loc.GetString("ce-zlevel-tile-dig-fail-wall-below"), popupPos, user);
+            }
+            return true;
+        }
+        // Nibiru End
+
         var coordinates = _maps.GridTileToLocal(gridUid, mapGrid, tileRef.GridIndices);
         if (!InteractionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
@@ -100,6 +120,36 @@ public abstract partial class SharedToolSystem
             // don't do this on the client or else the tile entity spawn mispredicts and looks horrible
             return _net.IsClient || _tiles.DeconstructTile(tileRef);
         }
+        return false;
+    }
+
+    private bool IsTileLast(TileRef tileRef)
+    {
+        var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
+        return tileDef.BaseTurf == ContentTileDefinition.SpaceID;
+    }
+
+    private bool IsWallBelow(EntityUid gridUid, MapGridComponent grid, Vector2i indices)
+    {
+        var mapUid = Transform(gridUid).MapUid;
+        if (mapUid == null)
+            return false;
+
+        if (!_zLevels.TryMapDown(mapUid.Value, out var belowMapUid))
+            return false;
+
+        if (!TryComp<MapComponent>(belowMapUid, out var mapComp))
+            return false;
+
+        var worldPos = _maps.GridTileToWorld(gridUid, grid, indices);
+        var belowPos = new MapCoordinates(worldPos.Position, mapComp.MapId);
+
+        foreach (var ent in _lookup.GetEntitiesInRange(belowPos, 0.2f, LookupFlags.Static))
+        {
+            if (_tag.HasTag(ent, "Wall"))
+                return true;
+        }
+
         return false;
     }
 }
