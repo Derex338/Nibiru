@@ -25,6 +25,13 @@ using Content.Shared._Nibiru.SaveLoad;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Shared.Timing;
+using Content.Shared.SSDIndicator;
+using Content.Shared.Atmos;
+using System.Reflection;
+using Robust.Shared.Analyzers;
+using Content.Shared.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Body.Components;
 
 namespace Content.Server._Nibiru.SaveLoad;
 
@@ -37,6 +44,8 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly RespiratorSystem _respirator = default!;
 
     public string? SaveToLoad { get; private set; }
     private bool _savingLivingEntities = false;
@@ -88,8 +97,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
             if (targetCharacter != null && meta.EntityName != targetCharacter)
                 continue;
 
-            Log.Info($"Nibiru: Reconnecting {player.Name} to saved entity {uid} ({meta.EntityName}).");
-
             // Remove the saved marker immediately to prevent double-reconnect.
             RemComp<NibiruSavedPlayerComponent>(uid);
 
@@ -102,39 +109,21 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
             var newMind = mindSystem.CreateMind(data!.UserId, meta.EntityName);
             mindSystem.SetUserId(newMind, data.UserId);
 
+            if (session.Status == SessionStatus.Disconnected)
+                return;
 
-                if (session.Status == SessionStatus.Disconnected)
-                {
-                    Log.Warning($"Nibiru: {session.Name} disconnected before deferred reconnect to {savedEntity}.");
-                    return;
-                }
+            if (!Exists(savedEntity))
+                return;
 
-                if (!Exists(savedEntity))
-                {
-                    Log.Warning($"Nibiru: Saved entity {savedEntity} for {session.Name} no longer exists.");
-                    return;
-                }
+            var mind = session.GetMind();
+            if (mind == null)
+                return;
 
-                var mind = session.GetMind();
-                if (mind == null)
-                {
-                    Log.Warning($"Nibiru: No mind found for {session.Name} during deferred reconnect.");
-                    return;
-                }
-
-                // Ensure the entity has MindContainerComponent before transfer.
-                //mindSystem.MakeSentient(savedEntity);
-
-                // Transfer from observer ghost → saved entity. The ghost auto-deletes.
-                mindSystem.TransferTo(newMind, savedEntity);
-
-                Log.Info($"Nibiru: Successfully reconnected {session.Name} to saved entity {savedEntity}.");
-
-
+            // Transfer from observer ghost → saved entity. The ghost auto-deletes.
+            mindSystem.TransferTo(newMind, savedEntity);
+            RemComp<Content.Shared.SSDIndicator.SSDIndicatorComponent>(savedEntity);
             return;
         }
-
-        Log.Warning($"Nibiru: No saved entity found for {player.Name} (target: {targetCharacter ?? "any"}).");
     }
 
     private void OnIsSerializable(Entity<MetaDataComponent> ent, ref bool serializable)
@@ -267,8 +256,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                 }
             }
 
-            Log.Info($"Nibiru Save: Found {playersToSave.Count} players and {npcsToSave.Count} NPCs to save.");
-
             var saveOpts = new SerializationOptions { ErrorOnOrphan = false };
 
             foreach (var uid in playersToSave)
@@ -303,11 +290,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                 if (_mapLoader.TrySaveGeneric(npcsToSave, npcFile, out _, saveOpts))
                 {
                     manifest.NpcFile = npcFile.ToString();
-                    Log.Info($"Nibiru Save: Saved {npcsToSave.Count} NPCs to {npcFile}");
-                }
-                else
-                {
-                    Log.Error($"Nibiru Save: Failed to save {npcsToSave.Count} NPCs!");
                 }
 
                 foreach (var npc in npcsToSave)
@@ -332,8 +314,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         {
             stream.Write(jsonStr);
         }
-
-        Log.Info($"Nibiru: Round saved to '{savename}'. Preset: {preset}");
     }
 
     public void RequestLoad(string savename)
@@ -358,7 +338,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
             _ticker.SetGamePreset(manifest.PresetId, force: false);
             SaveToLoad = savename;
             _ticker.RestartRound();
-            Log.Info($"Nibiru: Loading save '{savename}' with preset '{manifest.PresetId}'.");
         }
     }
 
@@ -375,8 +354,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         loadedSky2 = EntityUid.Invalid;
 
         if (SaveToLoad == null) return false;
-
-        Log.Info($"Nibiru: Loading saved maps from '{SaveToLoad}'.");
 
         var basePath = new ResPath($"/Saves/{SaveToLoad}");
         var manifestPath = basePath / "manifest.json";
@@ -399,8 +376,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
             return false;
         }
 
-        Log.Info($"Nibiru: Manifest: {manifest.Maps.Count} maps, {manifest.Players.Count} players, NPC file: {manifest.NpcFile ?? "none"}.");
-
         // Load maps and reconstruct Z-networks
         var networks = new Dictionary<int, Dictionary<EntityUid, int>>();
         var loadedMapsByZ = new Dictionary<int, EntityUid>();
@@ -422,7 +397,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                 }
 
                 loadedMapsByZ[mapData.ZLevel] = mapUid;
-                Log.Info($"Nibiru: Loaded map '{mapData.MapFile}' as UID {mapUid} (Z={mapData.ZLevel}).");
             }
             else
             {
@@ -454,7 +428,6 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
 
             if (_mapLoader.TryLoadGeneric(resPath, out var result))
             {
-                int reparented = 0;
                 var isPlayerFile = file.Contains("Players/");
                 var userId = isPlayerFile ? Path.GetFileNameWithoutExtension(file) : string.Empty;
 
@@ -466,20 +439,31 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                     {
                         var savedComp = EnsureComp<NibiruSavedPlayerComponent>(uid);
                         savedComp.UserId = userId;
+
+                        var ssd = EnsureComp<SSDIndicatorComponent>(uid);
+                        ssd.IsSSD = true;
+                        EnsureComp<NibiruNoSSDSleepComponent>(uid);
                     }
+
+                    if (TryComp<RespiratorComponent>(uid, out var respirator))
+                    {
+                        // Restore max saturation so they don't immediately gasp for air.
+                        _respirator.UpdateSaturation(uid, 10.0f, respirator);
+                    }
+
+                    // Universally reset all timers (breathing, metabolism, hunger, thirst, etc.)
+                    // to prevent "catching up" to time gaps after loading.
+                    ResetAllAutoPausedFields(uid);
 
                     if (TryComp<NibiruSaveParentComponent>(uid, out var parentComp))
                     {
                         if (oldToNewMapMapping.TryGetValue(parentComp.MapId, out var targetMap))
                         {
                             _xform.SetParent(uid, targetMap);
-                            reparented++;
                         }
                         RemComp<NibiruSaveParentComponent>(uid);
                     }
                 }
-
-                Log.Info($"Nibiru: Loaded {result.Entities.Count + result.Orphans.Count} entities from '{file}', re-parented {reparented}.");
             }
             else
             {
@@ -492,7 +476,62 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         loadedSky1 = loadedMapsByZ.GetValueOrDefault(1, EntityUid.Invalid);
         loadedSky2 = loadedMapsByZ.GetValueOrDefault(2, EntityUid.Invalid);
 
-        Log.Info($"Nibiru: Maps loaded — World: {loadedWorld}, Cave: {loadedCave}.");
         return true;
+    }
+
+    /// <summary>
+    /// Dynamically finds all [AutoPausedField] components on an entity
+    /// and resets their TimeSpan timers to current server time.
+    /// This fixes the "rapid breathing / metabolism" glitch after save reloads.
+    /// </summary>
+    private void ResetAllAutoPausedFields(EntityUid uid)
+    {
+        var curTime = _gameTiming.CurTime;
+
+        foreach (var component in EntityManager.GetComponents(uid))
+        {
+            var compType = component.GetType();
+
+            // Check fields
+            foreach (var field in compType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                if (Attribute.IsDefined(field, typeof(AutoPausedFieldAttribute)))
+                {
+                    if (field.FieldType == typeof(TimeSpan))
+                    {
+                        var val = (TimeSpan)field.GetValue(component)!;
+                        // If it's zero or in the past, reset it to now
+                        if (val == TimeSpan.Zero || val < curTime)
+                            field.SetValue(component, curTime);
+                    }
+                    else if (field.FieldType == typeof(TimeSpan?))
+                    {
+                        var val = (TimeSpan?)field.GetValue(component);
+                        if (val != null && (val.Value == TimeSpan.Zero || val.Value < curTime))
+                            field.SetValue(component, curTime);
+                    }
+                }
+            }
+
+            // Check properties
+            foreach (var prop in compType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                if (Attribute.IsDefined(prop, typeof(AutoPausedFieldAttribute)))
+                {
+                    if (prop.PropertyType == typeof(TimeSpan))
+                    {
+                        var val = (TimeSpan)prop.GetValue(component)!;
+                        if (val == TimeSpan.Zero || val < curTime)
+                            prop.SetValue(component, curTime);
+                    }
+                    else if (prop.PropertyType == typeof(TimeSpan?))
+                    {
+                        var val = (TimeSpan?)prop.GetValue(component);
+                        if (val != null && (val.Value == TimeSpan.Zero || val.Value < curTime))
+                            prop.SetValue(component, curTime);
+                    }
+                }
+            }
+        }
     }
 }

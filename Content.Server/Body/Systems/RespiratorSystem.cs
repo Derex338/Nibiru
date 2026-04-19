@@ -63,6 +63,11 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
+        ResetTimer(ent);
+    }
+
+    public void ResetTimer(Entity<RespiratorComponent> ent)
+    {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 

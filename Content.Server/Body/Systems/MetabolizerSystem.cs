@@ -52,6 +52,11 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
     private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
     {
+        ResetTimer(ent);
+    }
+
+    public void ResetTimer(Entity<MetabolizerComponent> ent)
+    {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 

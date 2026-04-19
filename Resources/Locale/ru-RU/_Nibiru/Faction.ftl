@@ -9,10 +9,13 @@ late-join-gui-faction-description = Выберите фракцию для пр�
 
 ## Кнопки
 late-join-gui-spawn-solo = Появиться в одиночку
+late-join-gui-new-character-button = Начать новым персонажем
 
 ## Информация о фракциях
 late-join-gui-members-count = Членов: {$count}
 late-join-gui-no-factions = На карте нет доступных фракций
+late-join-gui-faction-description-loaded = Выберите сохраненного персонажа для загрузки:
+late-join-gui-load-button = Загрузить: {$character}
 
 ## Статусы фракций
 late-join-gui-faction-status-active = Активна

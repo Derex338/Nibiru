@@ -297,7 +297,7 @@ public sealed class MindSystem : SharedMindSystem
         if (mind.UserId != null)
         {
             UserMinds.Remove(mind.UserId.Value);
-            if (_players.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
+            if (_players.TryGetPlayerData(mind.UserId.Value, out var pData) && pData.ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
         }
@@ -311,7 +311,8 @@ public sealed class MindSystem : SharedMindSystem
             SetUserId(oldMindId, null, oldMind);
         }
 
-        DebugTools.AssertNull(_players.GetPlayerData(userId.Value).ContentData()?.Mind);
+        if (_players.TryGetPlayerData(userId.Value, out var pDataCheck))
+            DebugTools.AssertNull(pDataCheck.ContentData()?.Mind);
 
         UserMinds[userId.Value] = mindId;
         mind.UserId = userId;
@@ -319,7 +320,7 @@ public sealed class MindSystem : SharedMindSystem
 
         // The UserId may not have a current session, but user data may still exist for disconnected players.
         // So we cannot combine this with the TryGetSessionById() check below.
-        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
+        if (_players.TryGetPlayerData(userId.Value, out var pDataAssign) && pDataAssign.ContentData() is { } data)
             data.Mind = mindId;
 
         if (_players.TryGetSessionById(userId.Value, out var session))

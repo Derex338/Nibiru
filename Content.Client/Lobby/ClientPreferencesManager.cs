@@ -23,6 +23,7 @@ namespace Content.Client.Lobby
         private ISharedSponsorsManager? _sponsorsManager; // Corvax-Sponsors
 
         public event Action? OnServerDataLoaded;
+        public event Action? OnPreferencesChanged;
 
         public GameSettings Settings { get; private set; } = default!;
         public PlayerPreferences Preferences { get; private set; } = default!;
@@ -60,6 +61,7 @@ namespace Content.Client.Lobby
                 SelectedCharacterIndex = slot
             };
             _netManager.ClientSendMessage(msg);
+            OnPreferencesChanged?.Invoke();
         }
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
@@ -77,6 +79,7 @@ namespace Content.Client.Lobby
                 Slot = slot
             };
             _netManager.ClientSendMessage(msg);
+            OnPreferencesChanged?.Invoke();
         }
 
         public void CreateCharacter(ICharacterProfile profile)
@@ -112,6 +115,7 @@ namespace Content.Client.Lobby
                 Slot = slot
             };
             _netManager.ClientSendMessage(msg);
+            OnPreferencesChanged?.Invoke();
         }
 
         public void UpdateConstructionFavorites(List<ProtoId<ConstructionPrototype>> favorites)
@@ -130,6 +134,7 @@ namespace Content.Client.Lobby
             Settings = message.Settings;
 
             OnServerDataLoaded?.Invoke();
+            OnPreferencesChanged?.Invoke();
         }
     }
 }

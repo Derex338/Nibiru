@@ -143,11 +143,17 @@ namespace Content.Client.LateJoin
             // Подписываемся на обновления
             _gameTicker.AvailableFactionsUpdated += UpdateAvailableFactions;
             _gameTicker.SavedCharactersAvailableUpdated += _ => RebuildUI();
+            _prefsManager.OnPreferencesChanged += RebuildUI;
 
-            // Запрашиваем информацию о сохраненном персонаже
+            // Обновляем UI при создании
+            RebuildUI();
+        }
+
+        protected override void Opened()
+        {
+            base.Opened();
+            // Запрашиваем актуальную информацию о сохраненном персонаже при открытии
             _gameTicker.RequestSavedCharacter();
-
-            // Обновляем UI при открытии
             RebuildUI();
         }
 
@@ -164,7 +170,7 @@ namespace Content.Client.LateJoin
                 _factionScroll.Visible = false;
                 _soloButton.Visible = false;
                 _characterScroll.Visible = true;
-                _nibiruDescription.SetMessage(Loc.GetString("late-join-gui-faction-description-loaded") ?? "Choose a saved character to load into:");
+                _nibiruDescription.SetMessage(Loc.GetString("late-join-gui-faction-description-loaded"));
 
                 _characterList.RemoveAllChildren();
                 foreach (var characterName in savedCharacters)
@@ -187,12 +193,16 @@ namespace Content.Client.LateJoin
                 }
 
                 // Кнопка "Начать нового персонажа"
+                var selectedCharacterName = _prefsManager.Preferences?.SelectedCharacter?.Name;
+                bool profileInSave = selectedCharacterName != null && savedCharacters.Contains(selectedCharacterName);
+
                 var newBtn = new Button
                 {
-                    Text = Loc.GetString("late-join-gui-new-character-button") ?? "Start New Character",
+                    Text = Loc.GetString("late-join-gui-new-character-button"),
                     HorizontalAlignment = HAlignment.Center,
                     Margin = new Thickness(10, 20),
                     MinSize = new Vector2(250, 40),
+                    Visible = !profileInSave
                 };
                 newBtn.OnPressed += _ =>
                 {
@@ -455,6 +465,7 @@ namespace Content.Client.LateJoin
             if (disposing)
             {
                 _gameTicker.AvailableFactionsUpdated -= UpdateAvailableFactions;
+                _prefsManager.OnPreferencesChanged -= RebuildUI;
                 _factionButtons.Clear();
             }
         }

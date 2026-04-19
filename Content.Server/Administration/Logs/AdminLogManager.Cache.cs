@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Database;
 using Content.Shared.Administration.Logs;
@@ -44,7 +44,7 @@ public sealed partial class AdminLogManager
 
         list ??= new List<SharedAdminLog>(LogListInitialSize);
 
-        _roundsLogCache.Add(_currentRoundId, list);
+        _roundsLogCache[_currentRoundId] = list;
         CacheRoundCount.Set(_roundsLogCache.Count);
     }
 

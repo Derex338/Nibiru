@@ -200,13 +200,8 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             if (saved.UserId != userId)
                 continue;
 
-            if (meta.EntityName != selectedName)
-            {
-                Log.Info($"Nibiru: Saved entity found for {ev.Player.Name} but name mismatch (saved: '{meta.EntityName}', selected: '{selectedName}'). Skipping.");
-                continue;
-            }
-
-            Log.Info($"Nibiru: Found saved entity {uid} ({meta.EntityName}) for {ev.Player.Name}. Starting reconnect.");
+            // In Nibiru, we force use of the saved character if one exists for the user.
+            Log.Info($"Nibiru: Found saved entity {uid} ({meta.EntityName}) for {ev.Player.Name}. Forcing reconnect.");
 
             // Remove the saved marker immediately to prevent any double-reconnect attempts.
             RemComp<NibiruSavedPlayerComponent>(uid);
@@ -221,26 +216,18 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             _mind.SetUserId(savedMind, data.UserId);
 
             if (session.Status == SessionStatus.Disconnected)
-            {
-                Log.Warning($"Nibiru: {session.Name} disconnected before deferred reconnect to {savedEntity}.");
                 return null;
-            }
 
             if (!Exists(savedEntity))
-            {
-                Log.Warning($"Nibiru: Saved entity {savedEntity} for {session.Name} no longer exists.");
                 return null;
-            }
 
             var mind = session.GetMind();
             if (mind == null)
-            {
-                Log.Warning($"Nibiru: No mind found for {session.Name} during deferred reconnect.");
                 return null;
-            }
 
             // Transfer from observer ghost -> saved entity. The ghost auto-deletes.
             _mind.TransferTo(savedMind, savedEntity);
+            RemComp<Content.Shared.SSDIndicator.SSDIndicatorComponent>(savedEntity);
 
             return savedEntity;
         }
