@@ -121,6 +121,8 @@
   - type: Construction
     graph: WoodenSupport
     node: fin
+  - type: ZLevelSupport
+    radius: 5
 
 - type: entity
   id: WoodenSupportBeam

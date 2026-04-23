@@ -50,7 +50,7 @@ namespace Content.Server.Database
             if (synchronous)
             {
                 prefsCtx.Database.Migrate();
-                EnsureFactionColumns(prefsCtx);
+                // EnsureFactionColumns(prefsCtx);
                 _dbReadyTask = Task.CompletedTask;
                 prefsCtx.Dispose();
             }
@@ -59,7 +59,7 @@ namespace Content.Server.Database
                 _dbReadyTask = Task.Run(() =>
                 {
                     prefsCtx.Database.Migrate();
-                EnsureFactionColumns(prefsCtx);
+                // EnsureFactionColumns(prefsCtx);
                     prefsCtx.Dispose();
                 });
             }
@@ -67,14 +67,14 @@ namespace Content.Server.Database
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
 
-        private void EnsureFactionColumns(SqliteServerDbContext db)
-        {
-            try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_name TEXT DEFAULT '';"); } catch { }
-            try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_description TEXT DEFAULT '';"); } catch { }
-            try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_color TEXT DEFAULT '';"); } catch { }
-            try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_icon TEXT DEFAULT '';"); } catch { }
-            try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_recruiting INTEGER DEFAULT 1;"); } catch { }
-        }
+        // private void EnsureFactionColumns(SqliteServerDbContext db)
+        // {
+        //     try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_name TEXT DEFAULT '';"); } catch { }
+        //     try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_description TEXT DEFAULT '';"); } catch { }
+        //     try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_color TEXT DEFAULT '';"); } catch { }
+        //     try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_icon TEXT DEFAULT '';"); } catch { }
+        //     try { db.Database.ExecuteSqlRaw("ALTER TABLE profile ADD COLUMN faction_recruiting INTEGER DEFAULT 1;"); } catch { }
+        // }
 
         #region Ban
         public override async Task<ServerBanDef?> GetServerBanAsync(int id)
