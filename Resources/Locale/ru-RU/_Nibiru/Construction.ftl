@@ -1,0 +1,3 @@
+construction-step-condition-multilevel-tile-available = Необходимо свободное пространство на других уровнях высоты.
+climbable-start-climbing = Вы начинаете карабкаться по верёвке...
+climbable-finish-climbing = Вы закончили карабкаться по верёвке.

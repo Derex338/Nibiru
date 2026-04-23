@@ -1,0 +1,87 @@
+- type: construction
+  id: MultiLevelRope
+  name: hanging rope
+  graph: MultiLevelRope
+  startNode: start
+  targetNode: rope
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+  conditions:
+    - !type:MultiLevelTileCondition
+      offsets: [-1]
+      requireSpace: true
+      useRotation: true
+
+- type: constructionGraph
+  id: MultiLevelRope
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: rope
+          steps:
+            - material: HerbRope
+              amount: 5
+    - node: rope
+      entity: CERopeTop
+
+- type: entity
+  id: CERopeBase
+  parent: BaseStructure
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: _CE/Objects/Tool/rope.rsi
+      state: icon
+    - type: MultiLevelConstruction
+    - type: Damageable
+      damageContainer: StructuralInorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: MultiLevelClimbable
+      climbDuration: 2.0
+    - type: InteractionOutline
+
+- type: entity
+  id: CERopeTop
+  parent: CERopeBase
+  name: rope peg
+  components:
+    - type: Construction
+      graph: MultiLevelRope
+      node: rope
+    - type: MultiLevelConstruction
+      isOrigin: true
+      offsetByRotation: true
+      projections:
+        - offset: -1
+          prototype: CERopeHanging
+
+- type: entity
+  id: CERopeHanging
+  parent: CERopeBase
+  name: hanging rope
+  components:
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+          mask:
+            - GhostImpassable
+          layer:
+            - MidImpassable
+          density: 1
+          hard: false
