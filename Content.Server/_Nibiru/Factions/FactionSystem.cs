@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.Construction.Prototypes;
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
 using Content.Shared.Database;
 using Content.Shared.Mobs;
 using Robust.Shared.Random;
@@ -11,6 +12,11 @@ using Content.Shared.Mobs.Components;
 using Content.Server.Mind;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
+using Content.Shared.GameTicking;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Timing;
+
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -25,7 +31,9 @@ public sealed class FactionSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly FactionBroadcaster _broadcast = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     private static readonly HashSet<Entity<FactionComponent>> ClientLookup = new();
 
@@ -38,12 +46,20 @@ public sealed class FactionSystem : EntitySystem
     private TimeSpan _nextUpdate = TimeSpan.Zero;
     private const float UpdateInterval = 2f; // Обновляем каждые 2 секунды
 
+    /// <summary>
+    /// Временное хранилище предпочтений для лидеров фракций, присланных из лобби
+    /// </summary>
+    private readonly Dictionary<NetUserId, NibiruFactionLeaderPrefsMessage> _pendingFactionLeaderPrefs = new();
+
+    public IReadOnlyDictionary<NetUserId, NibiruFactionLeaderPrefsMessage> PendingFactionLeaderPrefs => _pendingFactionLeaderPrefs;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeNetworkEvent<FactionCreateRequestMessage>(OnFactionCreateRequest);
         SubscribeNetworkEvent<FactionStateRequestMessage>(OnFactionStateRequest);
+        SubscribeNetworkEvent<NibiruFactionLeaderPrefsMessage>(OnFactionLeaderPrefs);
 
         SubscribeNetworkEvent<HeirChooseMessage>(OnHeirChoose);
         SubscribeNetworkEvent<FactionTitleTransferMessage>(OnTitleTransfer);
@@ -57,6 +73,25 @@ public sealed class FactionSystem : EntitySystem
         SubscribeLocalEvent<FactionComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<FactionComponent, ComponentStartup>(OnFactionStartup);
         SubscribeLocalEvent<FactionComponent, ComponentShutdown>(OnFactionShutdown);
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeLocalEvent<MapCreatedEvent>(OnMapCreated);
+    }
+
+    private void OnMapCreated(MapCreatedEvent ev)
+    {
+        // Когда создается новая карта, регистрируем на ней все существующие фракции
+        var query = EntityQueryEnumerator<FactionComponent>();
+        while (query.MoveNext(out var factionUid, out var faction))
+        {
+            if (faction.IsCreator)
+                RegisterFaction(faction);
+        }
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        _pendingFactionLeaderPrefs.Clear();
     }
 
     /// <summary>
@@ -75,14 +110,15 @@ public sealed class FactionSystem : EntitySystem
                 // Конвертируем NetEntity обратно в EntityUid
                 var leaderUid = GetEntity(data.Leader);
 
-                // Проверяем, что лидер существует и жив
-                if (!_entityManager.EntityExists(leaderUid) ||
-                    !TryComp<MobStateComponent>(leaderUid, out var mobState) ||
-                    mobState.CurrentState != MobState.Alive)
-                    continue;
+                // Считаем живых участников (включая лидера)
+                var aliveCount = 0;
+                if (_entityManager.EntityExists(leaderUid) &&
+                    TryComp<MobStateComponent>(leaderUid, out var leaderMs) &&
+                    leaderMs.CurrentState == MobState.Alive)
+                {
+                    aliveCount++;
+                }
 
-                // Считаем живых членов
-                var aliveMembers = 0;
                 var deadNetMembers = new List<NetEntity>();
                 foreach (var netMember in data.Members)
                 {
@@ -93,14 +129,14 @@ public sealed class FactionSystem : EntitySystem
                         continue;
                     }
                     if (TryComp<MobStateComponent>(memberUid, out var ms) && ms.CurrentState == MobState.Alive)
-                        aliveMembers++;
+                        aliveCount++;
                 }
 
                 // Удаляем несуществующих членов
                 foreach (var dead in deadNetMembers)
                     data.Members.Remove(dead);
 
-                if (aliveMembers == 0 || !data.IsRecruiting)
+                if (aliveCount == 0 || !data.IsRecruiting)
                     continue;
 
                 // Не добавляем дубликаты
@@ -110,7 +146,7 @@ public sealed class FactionSystem : EntitySystem
                 factions.Add(new FactionInfo
                 {
                     FactionName = factionName,
-                    MemberCount = aliveMembers,
+                    MemberCount = aliveCount,
                     Color = data.Color,
                     Description = data.Description,
                     IconPath = data.IconPath,
@@ -130,21 +166,25 @@ public sealed class FactionSystem : EntitySystem
     /// <summary>
     /// Регистрирует фракцию во всех реестрах карт
     /// </summary>
-    private void RegisterFaction(FactionComponent faction)
+    public void RegisterFaction(FactionComponent faction)
     {
+        if (string.IsNullOrWhiteSpace(faction.FactionName))
+            return;
+
         var leaderNet = GetNetEntity(faction.Leader != default ? faction.Leader : faction.Owner);
-        var membersNet = new List<NetEntity> { leaderNet };
+        var membersNet = new List<NetEntity>();
 
         foreach (var member in faction.Members)
         {
-            membersNet.Add(GetNetEntity(member));
+            var netMember = GetNetEntity(member);
+            if (netMember != leaderNet)
+                membersNet.Add(netMember);
         }
 
-        var query = EntityQueryEnumerator<MapComponent>();
-        while (query.MoveNext(out var mapUid, out _))
+        var mapQuery = EntityQueryEnumerator<MapComponent>();
+        while (mapQuery.MoveNext(out var mapUid, out _))
         {
             var registry = EnsureComp<FactionRegistryComponent>(mapUid);
-
             registry.Factions[faction.FactionName] = new FactionRegistryData
             {
                 Name = faction.FactionName,
@@ -155,13 +195,48 @@ public sealed class FactionSystem : EntitySystem
                 IconPath = faction.IconPath,
                 Status = faction.Status,
                 IsRecruiting = faction.IsRecruiting,
+                Created = _timing.CurTime
             };
 
             Dirty(mapUid, registry);
         }
 
+        Dirty(faction.Owner, faction);
+
         // Сразу обновляем список
         UpdateAvailableFactionsList();
+    }
+
+    /// <summary>
+    /// Регистрирует фракцию из лобби в реестре
+    /// </summary>
+    public void RegisterLobbyPref(NibiruFactionLeaderPrefsMessage pref)
+    {
+        if (string.IsNullOrWhiteSpace(pref.FactionName))
+            return;
+
+        var query = EntityQueryEnumerator<MapComponent>();
+        while (query.MoveNext(out var mapUid, out _))
+        {
+            var registry = EnsureComp<FactionRegistryComponent>(mapUid);
+            
+            // Если фракция уже есть (например, от победителя лотереи), не перезаписываем
+            if (registry.Factions.ContainsKey(pref.FactionName))
+                continue;
+
+            registry.Factions[pref.FactionName] = new FactionRegistryData
+            {
+                Name = pref.FactionName,
+                Leader = NetEntity.Invalid,
+                Members = new List<NetEntity>(),
+                Color = pref.Color,
+                Description = pref.Description,
+                IconPath = pref.IconPath,
+                Status = FactionStatus.Active,
+                IsRecruiting = pref.IsRecruiting,
+            };
+            Dirty(mapUid, registry);
+        }
     }
 
     /// <summary>
@@ -170,10 +245,12 @@ public sealed class FactionSystem : EntitySystem
     private void UpdateFactionRegistry(FactionComponent faction)
     {
         var leaderNet = GetNetEntity(faction.Leader != default ? faction.Leader : faction.Owner);
-        var membersNet = new List<NetEntity> { leaderNet };
+        var membersNet = new List<NetEntity>();
         foreach (var member in faction.Members)
         {
-            membersNet.Add(GetNetEntity(member));
+            var netMember = GetNetEntity(member);
+            if (netMember != leaderNet)
+                membersNet.Add(netMember);
         }
 
         var query = EntityQueryEnumerator<FactionRegistryComponent>();
@@ -243,41 +320,21 @@ public sealed class FactionSystem : EntitySystem
 
     private void OnFactionCreateRequest(FactionCreateRequestMessage msg, EntitySessionEventArgs args)
     {
-        if (string.IsNullOrWhiteSpace(msg.FactionName))
+        var name = msg.FactionName?.Trim();
+        if (string.IsNullOrWhiteSpace(name))
             return;
 
         var player = args.SenderSession.AttachedEntity;
         if (!player.HasValue)
             return;
 
-        var xform = Transform(player.Value);
-        var mapUid = _transform.GetMap(player.Value);
-
-        if (mapUid == null)
-            return;
-
-        // Проверяем существование фракции в любом из реестров
-        bool exists = false;
-        var query = EntityQueryEnumerator<FactionRegistryComponent>();
-        while (query.MoveNext(out var registry))
+        if (!ValidateFactionName(name, args.SenderSession.UserId, null, out var error))
         {
-            if (registry.Factions.ContainsKey(msg.FactionName))
-            {
-                exists = true;
-                break;
-            }
-        }
-
-        if (exists)
-        {
-            _popup.PopupEntity(
-                Loc.GetString("faction-already-exist", ("factionName", msg.FactionName)),
-                player.Value,
-                player.Value);
+            _chatManager.DispatchServerMessage(args.SenderSession, error);
             return;
         }
 
-        CreateFaction(player.Value, msg.FactionName);
+        CreateFaction(player.Value, name);
     }
 
     private void CreateFaction(EntityUid player, string factionName)
@@ -313,6 +370,26 @@ public sealed class FactionSystem : EntitySystem
 
             msg.FactionName = factionComponent.FactionName;
         }
+    }
+
+    private void OnFactionLeaderPrefs(NibiruFactionLeaderPrefsMessage msg, EntitySessionEventArgs args)
+    {
+        var name = msg.FactionName?.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+            return;
+
+        if (!ValidateFactionName(name, args.SenderSession.UserId, null, out var error))
+        {
+            _chatManager.DispatchServerMessage(args.SenderSession, error);
+            return;
+        }
+
+        msg.FactionName = name;
+        msg.Description = msg.Description?.Trim() ?? "";
+        if (msg.Description.Length > 500)
+            msg.Description = msg.Description.Substring(0, 500);
+
+        _pendingFactionLeaderPrefs[args.SenderSession.UserId] = msg;
     }
 
     /// <summary>
@@ -363,21 +440,24 @@ public sealed class FactionSystem : EntitySystem
                     factionData.Members.Remove(dead);
             }
 
-            if (spawnNear == null)
+            if (spawnNear != null)
             {
-                _popup.PopupEntity(
-                    Loc.GetString("faction-join-no-spawn", ("faction", factionName)),
-                    playerEntity,
-                    playerEntity);
-                return false;
+                // Телепортируем игрока рядом с членом фракции
+                var targetXform = Transform(spawnNear.Value);
+                var offset = _random.NextVector2(1f, 2f);
+                var newCoords = targetXform.Coordinates.Offset(offset);
+
+                _transform.SetCoordinates(playerEntity, newCoords);
             }
-
-            // Телепортируем игрока рядом с членом фракции
-            var targetXform = Transform(spawnNear.Value);
-            var offset = _random.NextVector2(1f, 2f);
-            var newCoords = targetXform.Coordinates.Offset(offset);
-
-            _transform.SetCoordinates(playerEntity, newCoords);
+            else
+            {
+                // Если нет никого рядом, значит либо это первая фракция из лобби, либо все мертвы
+                // Если в реестре еще нет лидера, то первый зашедший становится лидером
+                if (leaderUid == EntityUid.Invalid && factionData.Members.Count == 0)
+                {
+                    leaderUid = playerEntity;
+                }
+            }
 
             // Добавляем в фракцию
             var playerFaction = EnsureComp<FactionComponent>(playerEntity);
@@ -388,11 +468,23 @@ public sealed class FactionSystem : EntitySystem
             playerFaction.IconPath = factionData.IconPath;
             playerFaction.Status = factionData.Status;
             playerFaction.IsRecruiting = factionData.IsRecruiting;
-            playerFaction.Rank = "Новобранец";
+
+            if (leaderUid == playerEntity)
+            {
+                playerFaction.Rank = "Лидер";
+                playerFaction.IsCreator = true;
+            }
+            else
+            {
+                playerFaction.Rank = "Новобранец";
+                playerFaction.IsCreator = false;
+            }
 
             if (TryComp<FactionComponent>(leaderUid, out var leaderComp))
             {
-                leaderComp.Members.Add(playerEntity);
+                if (leaderUid != playerEntity && !leaderComp.Members.Contains(playerEntity))
+                    leaderComp.Members.Add(playerEntity);
+                
                 Dirty(leaderUid, leaderComp);
                 UpdateFactionRegistry(leaderComp);
             }
@@ -675,26 +767,6 @@ public sealed class FactionSystem : EntitySystem
         if (!player.HasValue)
             return;
 
-        bool factionNameAvaliable = true;
-
-        if (msg.FactionName != null)
-        {
-            // Проверяем через все реестры
-            var query = EntityQueryEnumerator<FactionRegistryComponent>();
-            while (query.MoveNext(out var registry))
-            {
-                if (registry.Factions.ContainsKey(msg.FactionName))
-                {
-                    _popup.PopupEntity(
-                        Loc.GetString("faction-already-exist", ("factionName", msg.FactionName)),
-                        player.Value,
-                        player.Value);
-                    factionNameAvaliable = false;
-                    break;
-                }
-            }
-        }
-
         if (!TryComp<FactionComponent>(player.Value, out var factionComponent)
             || !factionComponent.IsCreator)
         {
@@ -707,50 +779,67 @@ public sealed class FactionSystem : EntitySystem
 
         bool needUpdate = false;
 
-        if (msg.FactionName != null && factionNameAvaliable && msg.FactionName != factionComponent.FactionName)
+        if (msg.FactionName != null)
         {
-            var query = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
-            while (query.MoveNext(out var mapEntity, out var reg, out _))
+            var name = msg.FactionName.Trim();
+            if (name != factionComponent.FactionName)
             {
-                if (reg.Factions.Remove(factionComponent.FactionName, out var oldData))
+                if (!ValidateFactionName(name, args.SenderSession.UserId, factionComponent.FactionName, out var error))
                 {
-                    oldData.Name = msg.FactionName;
-                    reg.Factions[msg.FactionName] = oldData;
-                    Dirty(mapEntity, reg);
+                    _chatManager.DispatchServerMessage(args.SenderSession, error);
+                    return;
                 }
-            }
 
-            factionComponent.FactionName = msg.FactionName;
-
-            foreach (var member in factionComponent.Members)
-            {
-                if (TryComp<FactionComponent>(member, out var memberComp))
+                var query = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
+                while (query.MoveNext(out var mapEntity, out var reg, out _))
                 {
-                    memberComp.FactionName = msg.FactionName;
-                    Dirty(member, memberComp);
-
-                    _popup.PopupEntity(
-                        Loc.GetString("faction-name-changed", ("factionName", msg.FactionName)),
-                        member,
-                        member);
+                    if (reg.Factions.Remove(factionComponent.FactionName, out var oldData))
+                    {
+                        oldData.Name = name;
+                        reg.Factions[name] = oldData;
+                        Dirty(mapEntity, reg);
+                    }
                 }
-            }
 
-            needUpdate = true;
+                factionComponent.FactionName = name;
+
+                foreach (var member in factionComponent.Members)
+                {
+                    if (TryComp<FactionComponent>(member, out var memberComp))
+                    {
+                        memberComp.FactionName = name;
+                        Dirty(member, memberComp);
+
+                        _popup.PopupEntity(
+                            Loc.GetString("faction-name-changed", ("factionName", name)),
+                            member,
+                            member);
+                    }
+                }
+
+                needUpdate = true;
+            }
         }
 
-        if (msg.Description != null && msg.Description != factionComponent.Description)
+        if (msg.Description != null)
         {
-            factionComponent.Description = msg.Description;
-            foreach (var member in factionComponent.Members)
+            var desc = msg.Description.Trim();
+            if (desc.Length > 500)
+                desc = desc.Substring(0, 500);
+
+            if (desc != factionComponent.Description)
             {
-                if (TryComp<FactionComponent>(member, out var memberComp))
+                factionComponent.Description = desc;
+                foreach (var member in factionComponent.Members)
                 {
-                    memberComp.Description = msg.Description;
-                    Dirty(member, memberComp);
+                    if (TryComp<FactionComponent>(member, out var memberComp))
+                    {
+                        memberComp.Description = desc;
+                        Dirty(member, memberComp);
+                    }
                 }
+                needUpdate = true;
             }
-            needUpdate = true;
         }
 
         if (msg.IconPath != null && msg.IconPath != factionComponent.IconPath)
@@ -814,5 +903,59 @@ public sealed class FactionSystem : EntitySystem
             Dirty(player.Value, factionComponent);
             UpdateFactionRegistry(factionComponent);
         }
+    }
+
+    /// <summary>
+    /// Валидация названия фракции
+    /// </summary>
+    private bool ValidateFactionName(string name, NetUserId excludeUserId, string? currentFactionName, out string error)
+    {
+        error = "";
+        name = name.Trim();
+
+        if (name.Length < 3)
+        {
+            error = Loc.GetString("faction-name-too-short");
+            return false;
+        }
+
+        if (name.Length > 32)
+        {
+            error = Loc.GetString("faction-name-too-long");
+            return false;
+        }
+
+        // Проверка в лобби
+        foreach (var (userId, pref) in _pendingFactionLeaderPrefs)
+        {
+            if (userId == excludeUserId)
+                continue;
+
+            if (pref.FactionName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                error = Loc.GetString("faction-already-exist", ("factionName", name));
+                return false;
+            }
+        }
+
+        // Проверка в реестре
+        var query = EntityQueryEnumerator<FactionRegistryComponent>();
+        while (query.MoveNext(out var registry))
+        {
+            foreach (var (fName, _) in registry.Factions)
+            {
+                // Если мы переименовываем текущую фракцию, то игнорируем совпадение с её старым названием
+                if (currentFactionName != null && fName == currentFactionName)
+                    continue;
+
+                if (fName.Equals(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    error = Loc.GetString("faction-already-exist", ("factionName", name));
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

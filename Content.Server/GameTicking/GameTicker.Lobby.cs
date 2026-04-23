@@ -4,6 +4,8 @@ using Content.Server.Station.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using System.Text;
+using Content.Shared._Nibiru.GameTicking.Rules;
+using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.GameTicking
 {
@@ -171,6 +173,26 @@ namespace Content.Server.GameTicking
             if (RunLevel != GameRunLevel.PreRoundLobby)
             {
                 return;
+            }
+
+            if (ready)
+            {
+                // Nibiru: Check if faction name is set
+                var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
+                while (query.MoveNext(out var uid, out _, out var rule))
+                {
+                    if (IsGameRuleActive(uid, rule))
+                    {
+                        var profile = GetPlayerProfile(player);
+                        if (string.IsNullOrWhiteSpace(profile.FactionName))
+                        {
+                            _chatManager.DispatchServerMessage(player, Loc.GetString("nibiru-faction-required-to-ready"));
+                            RaiseNetworkEvent(GetStatusMsg(player), player.Channel);
+                            return;
+                        }
+                        break;
+                    }
+                }
             }
 
             _playerGameStatuses[player.UserId] = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;

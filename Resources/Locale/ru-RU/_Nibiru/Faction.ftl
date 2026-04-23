@@ -57,3 +57,11 @@ faction-status-recruiting = Набор открыт
 faction-status-at-war = В состоянии войны
 
 rev-consent-window-convert-title = Приглашение в фракцию
+nibiru-faction-required-to-ready = Вам необходимо указать название фракции в профиле персонажа, чтобы начать раунд.
+nibiru-faction-lottery-lost = Вы не прошли лотерею на лидера фракции и остались в лобби.
+
+faction-already-exist = Фракция с названием "{ $factionName }" уже существует.
+faction-name-too-short = Название фракции слишком короткое (минимум 3 символа).
+faction-name-too-long = Название фракции слишком длинное (максимум 32 символа).
+faction-description-too-long = Описание фракции слишком длинное (максимум 500 символов).
+

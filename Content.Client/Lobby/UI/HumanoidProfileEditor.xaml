@@ -111,19 +111,19 @@
                         </BoxContainer>
                     </ScrollContainer>
                 </BoxContainer>
+                <!--
                 <BoxContainer Orientation="Vertical">
-                    <!-- Jobs -->
                     <OptionButton Name="PreferenceUnavailableButton" />
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="JobList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" Margin="10">
-                    <!-- Antags -->
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="AntagList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
+                -->
                 <BoxContainer Orientation="Vertical" Margin="10">
                     <!-- Traits -->
                     <ScrollContainer VerticalExpand="True">
@@ -134,6 +134,42 @@
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Name="FactionTab" Orientation="Vertical" Margin="10">
+                    <!-- Faction -->
+                    <ScrollContainer VerticalExpand="True">
+                        <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                            <!-- Faction Name -->
+                            <BoxContainer Orientation="Vertical">
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-name-label'}" />
+                                <LineEdit Name="FactionNameEdit" MinWidth="200" PlaceHolder="{Loc 'humanoid-profile-editor-faction-name-placeholder'}" />
+                            </BoxContainer>
+
+                            <!-- Description -->
+                            <BoxContainer Orientation="Vertical">
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-description-label'}" />
+                                <LineEdit Name="FactionDescEdit" MinWidth="200" PlaceHolder="{Loc 'humanoid-profile-editor-faction-description-placeholder'}" />
+                            </BoxContainer>
+
+                            <!-- Color -->
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-color-label'}" MinWidth="80" />
+                                <LineEdit Name="FactionColorEdit" MinWidth="100" Text="#FFFFFF" />
+                            </BoxContainer>
+
+                            <!-- Icon (Text for now) -->
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-icon-label'}" MinWidth="80" />
+                                <LineEdit Name="FactionIconEdit" MinWidth="200" Text="/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png" />
+                            </BoxContainer>
+
+                            <!-- Recruiting -->
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-recruiting-label'}" MinWidth="80" />
+                                <CheckBox Name="FactionRecruitingCheck" Pressed="True" />
+                            </BoxContainer>
+                        </BoxContainer>
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>

@@ -287,7 +287,12 @@ namespace Content.Server.Database
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
-                loadouts
+                loadouts,
+                profile.FactionName,
+                profile.FactionDescription,
+                profile.FactionColor,
+                profile.FactionIcon,
+                profile.FactionRecruiting
             );
         }
 
@@ -319,6 +324,11 @@ namespace Content.Server.Database
             profile.Markings = markings;
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
+            profile.FactionName = humanoid.FactionName;
+            profile.FactionDescription = humanoid.FactionDescription;
+            profile.FactionColor = humanoid.FactionColor;
+            profile.FactionIcon = humanoid.FactionIcon;
+            profile.FactionRecruiting = humanoid.FactionRecruiting;
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(

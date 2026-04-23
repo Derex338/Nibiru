@@ -10,6 +10,8 @@ using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared._Nibiru.GameTicking.Rules;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -48,7 +50,7 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
-        private List<EntityUid> GetSpawnableStations()
+        public List<EntityUid> GetSpawnableStations()
         {
             var spawnableStations = new List<EntityUid>();
             var query = EntityQueryEnumerator<StationJobsComponent, StationSpawningComponent>();
@@ -64,6 +66,37 @@ namespace Content.Server.GameTicking
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
             bool force)
         {
+            // Nibiru: Check if faction name is set
+            var ruleQuery = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
+            var nibiruActive = false;
+            while (ruleQuery.MoveNext(out var uid, out _, out var rule))
+            {
+                if (IsGameRuleActive(uid, rule))
+                {
+                    nibiruActive = true;
+                    break;
+                }
+            }
+
+            if (nibiruActive)
+            {
+                for (var i = readyPlayers.Count - 1; i >= 0; i--)
+                {
+                    var player = readyPlayers[i];
+                    if (profiles.TryGetValue(player.UserId, out var profile))
+                    {
+                        if (string.IsNullOrWhiteSpace(profile.FactionName))
+                        {
+                            _chatManager.DispatchServerMessage(player, Loc.GetString("nibiru-faction-required-to-ready"));
+                            _playerGameStatuses[player.UserId] = PlayerGameStatus.NotReadyToPlay;
+                            readyPlayers.RemoveAt(i);
+                            profiles.Remove(player.UserId);
+                            RaiseNetworkEvent(GetStatusMsg(player), player.Channel);
+                        }
+                    }
+                }
+            }
+
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
             RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
 
@@ -139,6 +172,21 @@ namespace Content.Server.GameTicking
             bool silent = false)
         {
             var character = GetPlayerProfile(player);
+
+            // Nibiru: Check if faction name is set
+            var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
+            while (query.MoveNext(out var uid, out _, out var rule))
+            {
+                if (IsGameRuleActive(uid, rule))
+                {
+                    if (string.IsNullOrWhiteSpace(character.FactionName))
+                    {
+                        _chatManager.DispatchServerMessage(player, Loc.GetString("nibiru-faction-required-to-ready"));
+                        return;
+                    }
+                    break;
+                }
+            }
 
             var jobBans = _banManager.GetJobBans(player.UserId);
             if (jobBans == null || jobId != null && jobBans.Contains(jobId)) //TODO: use IsRoleBanned directly?

@@ -32,6 +32,8 @@ using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
+using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
@@ -391,8 +393,9 @@ namespace Content.Client.Lobby.UI
 
             #region Jobs
 
-            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
+            // TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
 
+            /*
             PreferenceUnavailableButton.AddItem(
                 Loc.GetString("humanoid-profile-editor-preference-unavailable-stay-in-lobby-button"),
                 (int) PreferenceUnavailableMode.StayInLobby);
@@ -407,23 +410,24 @@ namespace Content.Client.Lobby.UI
                 Profile = Profile?.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
                 SetDirty();
             };
+            */
 
             _jobCategories = new Dictionary<string, BoxContainer>();
 
-            RefreshAntags();
-            RefreshJobs();
+            // RefreshAntags();
+            // RefreshJobs();
 
             #endregion Jobs
 
-            TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
+            // TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
 
             RefreshTraits();
 
-            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab")); // Corvax-TTS-Edit
+            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-traits-tab")); // Corvax-TTS-Edit
 
             #region Markings
 
-            TabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-markings-tab"));
+            TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-markings-tab"));
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -431,6 +435,16 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
+
+            #region Factions
+            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-faction-tab"));
+
+            FactionNameEdit.OnTextChanged += args => { Profile = Profile?.WithFactionName(args.Text); IsDirty = true; };
+            FactionDescEdit.OnTextChanged += args => { Profile = Profile?.WithFactionDescription(args.Text); IsDirty = true; };
+            FactionColorEdit.OnTextChanged += args => { Profile = Profile?.WithFactionColor(args.Text); IsDirty = true; };
+            FactionIconEdit.OnTextChanged += args => { Profile = Profile?.WithFactionIcon(args.Text); IsDirty = true; };
+            FactionRecruitingCheck.OnToggled += args => { Profile = Profile?.WithFactionRecruiting(args.Pressed); IsDirty = true; };
+            #endregion Factions
 
             RefreshFlavorText();
 
@@ -696,7 +710,7 @@ namespace Content.Client.Lobby.UI
 
         public void RefreshAntags()
         {
-            AntagList.RemoveAllChildren();
+            // AntagList.RemoveAllChildren();
             var items = new[]
             {
                 ("humanoid-profile-editor-antag-preference-yes-button", 0),
@@ -754,7 +768,7 @@ namespace Content.Client.Lobby.UI
                     Margin = new Thickness(3f, 0f, 0f, 0f),
                 });
 
-                AntagList.AddChild(antagContainer);
+                // AntagList.AddChild(antagContainer);
             }
         }
 
@@ -835,19 +849,22 @@ namespace Content.Client.Lobby.UI
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
+            UpdateFactionControls();
 
-            RefreshAntags();
-            RefreshJobs();
+            // RefreshAntags();
+            // RefreshJobs();
             RefreshLoadouts();
             RefreshSpecies();
             RefreshTraits();
             RefreshFlavorText();
             ReloadPreview();
 
+            /*
             if (Profile != null)
             {
                 PreferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
             }
+            */
         }
 
 
@@ -891,7 +908,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void RefreshJobs()
         {
-            JobList.RemoveAllChildren();
+            // JobList.RemoveAllChildren();
             _jobCategories.Clear();
             _jobPriorities.Clear();
             var firstCategory = true;
@@ -957,7 +974,7 @@ namespace Content.Client.Lobby.UI
                     });
 
                     _jobCategories[department.ID] = category;
-                    JobList.AddChild(category);
+                    // JobList.AddChild(category);
                 }
 
                 var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
@@ -1320,6 +1337,18 @@ namespace Content.Client.Lobby.UI
         private void UpdateAgeEdit()
         {
             AgeEdit.Text = Profile?.Age.ToString() ?? "";
+        }
+
+        private void UpdateFactionControls()
+        {
+            if (Profile == null)
+                return;
+
+            FactionNameEdit.Text = Profile.FactionName;
+            FactionDescEdit.Text = Profile.FactionDescription;
+            FactionColorEdit.Text = Profile.FactionColor;
+            FactionIconEdit.Text = Profile.FactionIcon;
+            FactionRecruitingCheck.Pressed = Profile.FactionRecruiting;
         }
 
         /// <summary>

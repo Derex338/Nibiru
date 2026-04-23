@@ -15,6 +15,7 @@ using Content.Server._Nibiru.Factions;
 using Content.Shared._Nibiru.Factions;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Content.Shared.Preferences;
 
 namespace Content.Server._Nibiru.GameTicking.Rules;
 
@@ -81,17 +82,25 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             var entity = _world.SpawnPlayer(ev);
 
             // Затем проверяем, выбрал ли он фракцию
-            if (ev.Player.UserId is { } userId &&
-                PlayerFactionChoices.TryGetValue(userId, out var factionName))
+            string? factionName = null;
+            if (ev.Player.UserId is { } userId && PlayerFactionChoices.TryGetValue(userId, out var choice))
             {
-                // Если фракция выбрана, присоединяем к ней
-                if (!string.IsNullOrEmpty(factionName) && entity != null)
-                {
-                    _factionSystem.TryJoinPlayerToFaction(entity.Value, factionName);
-                }
-
-                // Удаляем выбор после использования
+                factionName = choice;
                 PlayerFactionChoices.Remove(userId);
+            }
+            
+            // Если через сетку выбора не выбрано, пробуем взять из профиля
+            if (string.IsNullOrEmpty(factionName) && ev.Profile is HumanoidCharacterProfile profile)
+            {
+                if (!string.IsNullOrWhiteSpace(profile.FactionName))
+                {
+                    factionName = profile.FactionName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(factionName) && entity != null)
+            {
+                _factionSystem.TryJoinPlayerToFaction(entity.Value, factionName);
             }
 
             ev.Handled = true;

@@ -104,6 +104,21 @@ namespace Content.Shared.Preferences
         [DataField]
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
 
+        [DataField]
+        public string FactionName { get; set; } = string.Empty;
+
+        [DataField]
+        public string FactionDescription { get; set; } = string.Empty;
+
+        [DataField]
+        public string FactionColor { get; set; } = "#FFFFFF";
+
+        [DataField]
+        public string FactionIcon { get; set; } = "/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png";
+
+        [DataField]
+        public bool FactionRecruiting { get; set; } = true;
+
         /// <summary>
         /// <see cref="_jobPriorities"/>
         /// </summary>
@@ -140,7 +155,12 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
-            Dictionary<string, RoleLoadout> loadouts)
+            Dictionary<string, RoleLoadout> loadouts,
+            string factionName = "",
+            string factionDescription = "",
+            string factionColor = "#FFFFFF",
+            string factionIcon = "/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png",
+            bool factionRecruiting = true)
         {
             Name = name;
             FlavorText = flavortext;
@@ -156,6 +176,11 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
+            FactionName = factionName;
+            FactionDescription = factionDescription;
+            FactionColor = factionColor;
+            FactionIcon = factionIcon;
+            FactionRecruiting = factionRecruiting;
 
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
@@ -187,7 +212,12 @@ namespace Content.Shared.Preferences
                 other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
-                new Dictionary<string, RoleLoadout>(other.Loadouts))
+                new Dictionary<string, RoleLoadout>(other.Loadouts),
+                other.FactionName,
+                other.FactionDescription,
+                other.FactionColor,
+                other.FactionIcon,
+                other.FactionRecruiting)
         {
         }
 
@@ -469,6 +499,31 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile WithFactionName(string name)
+        {
+            return new(this) { FactionName = name };
+        }
+
+        public HumanoidCharacterProfile WithFactionDescription(string desc)
+        {
+            return new(this) { FactionDescription = desc };
+        }
+
+        public HumanoidCharacterProfile WithFactionColor(string color)
+        {
+            return new(this) { FactionColor = color };
+        }
+
+        public HumanoidCharacterProfile WithFactionIcon(string icon)
+        {
+            return new(this) { FactionIcon = icon };
+        }
+
+        public HumanoidCharacterProfile WithFactionRecruiting(bool recruiting)
+        {
+            return new(this) { FactionRecruiting = recruiting };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -492,6 +547,11 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (FactionName != other.FactionName) return false;
+            if (FactionDescription != other.FactionDescription) return false;
+            if (FactionColor != other.FactionColor) return false;
+            if (FactionIcon != other.FactionIcon) return false;
+            if (FactionRecruiting != other.FactionRecruiting) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -634,6 +694,11 @@ namespace Content.Shared.Preferences
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
+            FactionName = string.IsNullOrEmpty(FactionName) ? string.Empty : FactionName;
+            FactionDescription = FactionDescription ?? string.Empty;
+            FactionColor = FactionColor ?? string.Empty;
+            FactionIcon = FactionIcon ?? string.Empty;
+            FactionRecruiting = FactionRecruiting;
 
             _jobPriorities.Clear();
 

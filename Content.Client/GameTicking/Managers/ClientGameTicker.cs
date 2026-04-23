@@ -93,6 +93,11 @@ namespace Content.Client.GameTicking.Managers
             RaiseNetworkEvent(new Content.Shared._Nibiru.SaveLoad.RequestSavedCharacterMessage());
         }
 
+        public void SendFactionLeaderPrefs(NibiruFactionLeaderPrefsMessage msg)
+        {
+            RaiseNetworkEvent(msg);
+        }
+
         public override void Shutdown()
         {
             _admin.AdminStatusUpdated -= OnAdminUpdated;

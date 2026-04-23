@@ -293,6 +293,13 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
             _factionWindow.FactionName.SetMessage(Loc.GetString("faction-name-label", ("name", factionComponent.FactionName)), defaultColor: factionComponent.FactionColor);
 
+            _factionWindow.FactionNameChange.Text = factionComponent.FactionName;
+            _factionWindow.FactionDescriptionChange.Text = factionComponent.Description;
+            _factionWindow.FactionColorChange.Text = factionComponent.FactionColor.ToHex();
+            _factionWindow.FactionIconChange.Text = factionComponent.IconPath;
+            _factionWindow.RecruitingToggle.Pressed = factionComponent.IsRecruiting;
+            _factionWindow.FactionStatusDropdown.SelectId((int) factionComponent.Status);
+
             _factionWindow.MemberContainer.RemoveAllChildren();
             foreach (var member in factionComponent.Members)
             {

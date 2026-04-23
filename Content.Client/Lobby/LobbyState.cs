@@ -7,6 +7,7 @@ using Content.Client.Playtime;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Content.Shared.CCVar;
+using Content.Shared.Preferences;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
@@ -30,6 +31,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
@@ -135,6 +137,22 @@ namespace Content.Client.Lobby
         private void OnReadyToggled(BaseButton.ButtonToggledEventArgs args)
         {
             SetReady(args.Pressed);
+            
+            if (args.Pressed)
+            {
+                if (_preferencesManager.Preferences?.SelectedCharacter is HumanoidCharacterProfile profile)
+                {
+                    var msg = new Content.Shared._Nibiru.Factions.NibiruFactionLeaderPrefsMessage()
+                    {
+                        FactionName = profile.FactionName,
+                        Description = profile.FactionDescription,
+                        Color = Color.TryFromHex(profile.FactionColor) ?? Color.White,
+                        IconPath = profile.FactionIcon,
+                        IsRecruiting = profile.FactionRecruiting
+                    };
+                    _entityManager.System<Content.Client.GameTicking.Managers.ClientGameTicker>().SendFactionLeaderPrefs(msg);
+                }
+            }
         }
 
         public override void FrameUpdate(FrameEventArgs e)
@@ -204,7 +222,7 @@ namespace Content.Client.Lobby
             {
                 Lobby!.StartTime.Text = string.Empty;
                 Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
-                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
+                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-will-become-leader-button" : "lobby-state-become-leader-button");
                 Lobby!.ReadyButton.ToggleMode = true;
                 Lobby!.ReadyButton.Disabled = false;
                 Lobby!.ObserveButton.Disabled = true;

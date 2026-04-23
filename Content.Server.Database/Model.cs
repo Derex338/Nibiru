@@ -422,6 +422,11 @@ namespace Content.Server.Database
         public List<ProfileRoleLoadout> Loadouts { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
+        [Column("faction_name")] public string FactionName { get; set; } = string.Empty;
+        [Column("faction_description")] public string FactionDescription { get; set; } = string.Empty;
+        [Column("faction_color")] public string FactionColor { get; set; } = string.Empty;
+        [Column("faction_icon")] public string FactionIcon { get; set; } = string.Empty;
+        [Column("faction_recruiting")] public bool FactionRecruiting { get; set; } = true;
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;

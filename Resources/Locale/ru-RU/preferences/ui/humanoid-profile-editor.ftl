@@ -55,3 +55,12 @@ humanoid-profile-editor-trait-count-hint = Доступно очков: [{ $curr
 trait-category-disabilities = Ограничения
 trait-category-speech = Черты речи
 trait-category-quirks = Причуды
+
+humanoid-profile-editor-faction-tab = Фракция
+humanoid-profile-editor-faction-name-label = Название фракции
+humanoid-profile-editor-faction-name-placeholder = Введите название фракции...
+humanoid-profile-editor-faction-description-label = Описание фракции
+humanoid-profile-editor-faction-description-placeholder = Введите описание вашей фракции...
+humanoid-profile-editor-faction-color-label = Цвет (Hex)
+humanoid-profile-editor-faction-icon-label = Иконка (путь)
+humanoid-profile-editor-faction-recruiting-label = Открыт набор
