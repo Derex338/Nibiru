@@ -25,6 +25,26 @@ public sealed class FactionChangeMemberRankMessage : EntityEventArgs
     public string NewRank = string.Empty;
 }
 
+[Serializable, NetSerializable]
+public sealed class FactionMoveMemberMessage : EntityEventArgs
+{
+    public NetEntity Member = default;
+    public bool MoveUp = false;
+}
+
+[Serializable, NetSerializable]
+public sealed class FactionCreateRoleMessage : EntityEventArgs
+{
+    public FactionRole Role = default;
+    public string? OldName = null;
+}
+
+[Serializable, NetSerializable]
+public sealed class FactionDeleteRoleMessage : EntityEventArgs
+{
+    public string RoleName = string.Empty;
+}
+
 /// <summary>
 /// Сообщение от сервера с обновлённым списком фракций
 /// Отправляется периодически (аналог LobbyJobsAvailableUpdated)

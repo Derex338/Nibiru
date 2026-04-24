@@ -15,9 +15,10 @@ using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 using Robust.Shared.Timing;
 using Robust.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
-using System.Xml.Linq;
-using Content.Client.Backmen.Research.UI;
 using Content.Client.Nibiru.Faction.UI;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Systems.Faction;
 
@@ -37,7 +38,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
     //public override void Initialize()
     //{
     //    base.Initialize();
-
+    //
     //    CommandBinds.Builder
     //            .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, true, true))
     //            .Register<FactionUIController>();
@@ -79,15 +80,20 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             return;
 
         if (_factionWindow.TransferTitle == button)
+        {
             _factionWindow.Heir!.SetClickPressed(false);
+        }
         else if (_factionWindow.Heir == button)
+        {
             _factionWindow.TransferTitle!.SetClickPressed(false);
+        }
         else
         {
             _factionWindow.TransferTitle!.SetClickPressed(false);
             _factionWindow.Heir!.SetClickPressed(false);
             _factionWindow.Delete!.SetClickPressed(false);
             _factionWindow.LeaveButton!.SetClickPressed(false);
+            ToggleMemberOutlines(false);
         }
     }
 
@@ -97,7 +103,11 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
         _factionWindow = UIManager.CreateWindow<FactionMenu>();
 
-        _factionWindow.OnClose += DeactivateButton;
+        _factionWindow.OnClose += () =>
+        {
+            DeactivateButton();
+            ToggleMemberOutlines(false);
+        };
         _factionWindow.OnOpen += ActivateButton;
 
         _factionWindow.CreateButton.OnPressed += _ =>
@@ -108,14 +118,32 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         _factionWindow.FactionNameChangeButton.OnPressed += _ =>{ OnChangeFactionName();};
         _factionWindow.FactionColorChangeButton.OnPressed += _ => { OnChangeFactionColor();};
 
-        _factionWindow.TransferTitle.OnPressed += _ => ChangeStateButton(_factionWindow.TransferTitle);
-        _factionWindow.Heir.OnPressed += _ => ChangeStateButton(_factionWindow.Heir);
+        _factionWindow.TransferTitle.OnPressed += _ =>
+        {
+            ChangeStateButton(_factionWindow.TransferTitle);
+            ToggleMemberOutlines(_factionWindow.TransferTitle.Pressed);
+        };
+        _factionWindow.Heir.OnPressed += _ =>
+        {
+            ChangeStateButton(_factionWindow.Heir);
+            ToggleMemberOutlines(_factionWindow.Heir.Pressed);
+        };
         _factionWindow.Delete.OnPressed += _ => { OnDeleteButtonPressed();};
         _factionWindow.LeaveButton.OnPressed += _ => { OnLeaveButtonPressed();};
 
+        _factionWindow.CreateRoleButton.OnPressed += _ =>
+        {
+            if (_player.LocalSession is not { } session)
+                return;
+            var playerEntity = session.AttachedEntity;
+            if (!_entityManager.TryGetComponent<FactionComponent>(playerEntity, out var fc))
+                return;
+            var prompt = new RoleManagePrompt(fc.Roles, _entityManager);
+            prompt.OpenCentered();
+        };
+
         _factionWindow.FactionDescriptionChangeButton.OnPressed += _ => { OnChangeDescription(); };
         _factionWindow.FactionIconChangeButton.OnPressed += _ => { OnChangeIcon(); };
-        _factionWindow.FactionStatusDropdown.OnItemSelected += _ => { OnChangeStatus(); };
         _factionWindow.RecruitingToggle.OnPressed += _ => { OnToggleRecruiting(); };
 
         DeactivateStateButton();
@@ -298,12 +326,11 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             _factionWindow.FactionColorChange.Text = factionComponent.FactionColor.ToHex();
             _factionWindow.FactionIconChange.Text = factionComponent.IconPath;
             _factionWindow.RecruitingToggle.Pressed = factionComponent.IsRecruiting;
-            _factionWindow.FactionStatusDropdown.SelectId((int) factionComponent.Status);
 
             _factionWindow.MemberContainer.RemoveAllChildren();
-            foreach (var member in factionComponent.Members)
+            foreach (var memberData in factionComponent.MemberData)
             {
-                _factionWindow.MemberContainer.AddChild(new MiniMemberCardControl(member, playerEntity, _entityManager));
+                _factionWindow.MemberContainer.AddChild(new MiniMemberCardControl(memberData, playerEntity, factionComponent.Roles, _entityManager));
             }
         }
     }
@@ -391,23 +418,6 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         }
     }
 
-    private void OnChangeStatus()
-    {
-        if (_factionWindow == null)
-            return;
-
-        var newStatus = _factionWindow.FactionStatusDropdown.SelectedId;
-
-        if (Enum.TryParse<FactionStatus>(newStatus.ToString(), out var status))
-        {
-            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
-            {
-                Status = status
-            });
-            UpdateState();
-        }
-    }
-
     private void OnToggleRecruiting()
     {
         if (_factionWindow == null || _player.LocalSession is not { } session)
@@ -424,6 +434,43 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         });
 
         UpdateState();
+    }
+
+    /// <summary>
+    /// Подсветка членов фракции при выборе наследника или передаче титула
+    /// </summary>
+    private void ToggleMemberOutlines(bool enable)
+    {
+        if (_player.LocalSession is not { } session)
+            return;
+
+        var playerEntity = session.AttachedEntity;
+        if (!_entityManager.TryGetComponent<FactionComponent>(playerEntity, out var factionComponent))
+            return;
+
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+        foreach (var member in factionComponent.Members)
+        {
+            if (member == playerEntity)
+                continue;
+
+            if (!_entityManager.TryGetComponent<SpriteComponent>(member, out var sprite))
+                continue;
+
+            if (enable)
+            {
+                var shader = protoManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
+                shader.SetParameter("outline_width", 1f);
+                sprite.PostShader = shader;
+                sprite.RenderOrder = 1;
+            }
+            else
+            {
+                sprite.PostShader = null;
+                sprite.RenderOrder = 0;
+            }
+        }
     }
 }
 

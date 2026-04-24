@@ -34,29 +34,17 @@ namespace Content.Client.UserInterface.Systems.Faction.UI
                 _focused = false;
                 LabelLineEdit.Text = _label;
             };
-
-            var statuses = Enum.GetValues<FactionStatus>();
-            FactionStatusDropdown.Clear();
-
-            foreach (var status in statuses)
-            {
-                var localizedName = status switch
-                {
-                    FactionStatus.Active => Loc.GetString("faction-status-active"),
-                    FactionStatus.Recruiting => Loc.GetString("faction-status-recruiting"),
-                    FactionStatus.AtWar => Loc.GetString("faction-status-at-war"),
-                    _ => status.ToString()
-                };
-
-                FactionStatusDropdown.AddItem(localizedName, (int)status);
-            }
         }
 
         protected override void Opened()
         {
             base.Opened();
+        }
 
-            //LabelLineEdit.GrabKeyboardFocus();
+        public void InitializeTabs()
+        {
+            LeaderTabs.SetTabTitle(0, Loc.GetString("Настройки"));
+            LeaderTabs.SetTabTitle(1, Loc.GetString("Члены фракции"));
         }
 
         public void SetCurrentLabel(string label)

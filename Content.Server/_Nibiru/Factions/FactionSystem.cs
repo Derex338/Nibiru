@@ -16,6 +16,7 @@ using Robust.Shared.Network;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
+using Content.Shared.IdentityManagement;
 
 
 namespace Content.Server._Nibiru.Factions;
@@ -69,6 +70,9 @@ public sealed class FactionSystem : EntitySystem
 
         SubscribeNetworkEvent<FactionChangeStateMessage>(OnFactionStateChange);
         SubscribeNetworkEvent<FactionChangeMemberRankMessage>(OnChangeMemberRank);
+        SubscribeNetworkEvent<FactionMoveMemberMessage>(OnMoveMember);
+        SubscribeNetworkEvent<FactionCreateRoleMessage>(OnCreateRole);
+        SubscribeNetworkEvent<FactionDeleteRoleMessage>(OnDeleteRole);
 
         SubscribeLocalEvent<FactionComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<FactionComponent, ComponentStartup>(OnFactionStartup);
@@ -152,7 +156,8 @@ public sealed class FactionSystem : EntitySystem
                     IconPath = data.IconPath,
                     Status = data.Status,
                     IsRecruiting = data.IsRecruiting,
-                    Leader = data.Leader
+                    Leader = data.Leader,
+                    Roles = data.Roles
                 });
             }
         }
@@ -195,8 +200,13 @@ public sealed class FactionSystem : EntitySystem
                 IconPath = faction.IconPath,
                 Status = faction.Status,
                 IsRecruiting = faction.IsRecruiting,
-                Created = _timing.CurTime
+                Created = _timing.CurTime,
+                Roles = faction.Roles.Count > 0 ? faction.Roles : GetDefaultRoles()
             };
+
+            if (faction.Roles.Count == 0)
+                faction.Roles = GetDefaultRoles();
+
 
             Dirty(mapUid, registry);
         }
@@ -219,7 +229,7 @@ public sealed class FactionSystem : EntitySystem
         while (query.MoveNext(out var mapUid, out _))
         {
             var registry = EnsureComp<FactionRegistryComponent>(mapUid);
-            
+
             // Если фракция уже есть (например, от победителя лотереи), не перезаписываем
             if (registry.Factions.ContainsKey(pref.FactionName))
                 continue;
@@ -234,6 +244,7 @@ public sealed class FactionSystem : EntitySystem
                 IconPath = pref.IconPath,
                 Status = FactionStatus.Active,
                 IsRecruiting = pref.IsRecruiting,
+                Roles = GetDefaultRoles()
             };
             Dirty(mapUid, registry);
         }
@@ -267,10 +278,13 @@ public sealed class FactionSystem : EntitySystem
             data.IsRecruiting = faction.IsRecruiting;
             data.Leader = leaderNet;
             data.Members = membersNet;
+            data.Roles = faction.Roles;
 
             registry.Factions[faction.FactionName] = data;
             Dirty(mapEntity, registry);
         }
+
+        UpdateMemberDataUI(faction.Owner, faction);
 
         // Обновляем список
         UpdateAvailableFactionsList();
@@ -468,10 +482,11 @@ public sealed class FactionSystem : EntitySystem
             playerFaction.IconPath = factionData.IconPath;
             playerFaction.Status = factionData.Status;
             playerFaction.IsRecruiting = factionData.IsRecruiting;
+            playerFaction.Roles = factionData.Roles;
 
             if (leaderUid == playerEntity)
             {
-                playerFaction.Rank = "Лидер";
+                playerFaction.Rank = Loc.GetString("faction-rank-leader");
                 playerFaction.IsCreator = true;
             }
             else
@@ -484,7 +499,7 @@ public sealed class FactionSystem : EntitySystem
             {
                 if (leaderUid != playerEntity && !leaderComp.Members.Contains(playerEntity))
                     leaderComp.Members.Add(playerEntity);
-                
+
                 Dirty(leaderUid, leaderComp);
                 UpdateFactionRegistry(leaderComp);
             }
@@ -507,33 +522,63 @@ public sealed class FactionSystem : EntitySystem
         if (args.NewMobState != MobState.Dead || args.OldMobState >= args.NewMobState || !component.IsCreator)
             return;
 
-        var xform = Transform(uid);
-        var mapUid = _transform.GetMap(uid);
+        EntityUid newLeader = EntityUid.Invalid;
 
-        if (TryComp<FactionComponent>(component.Heir, out var heir)
-        && heir.FactionName == component.FactionName
+        if (TryComp<FactionComponent>(component.Heir, out var heirComponent)
+        && heirComponent.FactionName == component.FactionName
         && component.Heir.Valid
-        && TryComp<MobStateComponent>(component.Heir, out var mobStateComponent)
-        && mobStateComponent.CurrentState == MobState.Alive)
+        && TryComp<MobStateComponent>(component.Heir, out var heirMobStateComponent)
+        && heirMobStateComponent.CurrentState == MobState.Alive)
         {
-            heir.IsCreator = true;
-            heir.Members = component.Members;
-            heir.Members.Remove(component.Heir);
-            heir.Rank = "Лідер";
-            component.IsCreator = false;
-
-            foreach (var member in heir.Members)
+            // У нас уже есть живой наследник
+            newLeader = component.Heir;
+        }
+        else
+        {
+            // Ищем подходящего наследника по списку сверху вниз
+            foreach (var memberUid in component.Members)
             {
-                if (TryComp<FactionComponent>(member, out var memberComp))
+                if (!TryComp<MobStateComponent>(memberUid, out var ms) || ms.CurrentState != MobState.Alive)
+                    continue;
+
+                if (!TryComp<FactionComponent>(memberUid, out var memberComp) || memberComp.FactionName != component.FactionName)
+                    continue;
+
+                bool canInherit = false;
+                var roleIndex = component.Roles.FindIndex(r => r.Name == memberComp.Rank);
+                if (roleIndex >= 0 && component.Roles[roleIndex].CanInherit)
+                    canInherit = true;
+
+                if (canInherit)
                 {
-                    memberComp.Leader = component.Heir;
-                    Dirty(member, memberComp);
+                    newLeader = memberUid;
+                    break;
                 }
             }
 
-            Dirty(component.Heir, heir);
+            // Если никто не подошел по рангу, берем просто первого живого по списку
+            if (!newLeader.Valid)
+            {
+                foreach (var memberUid in component.Members)
+                {
+                    if (TryComp<MobStateComponent>(memberUid, out var ms) && ms.CurrentState == MobState.Alive &&
+                        TryComp<FactionComponent>(memberUid, out var memberComp) && memberComp.FactionName == component.FactionName)
+                    {
+                        newLeader = memberUid;
+                        break;
+                    }
+                }
+            }
+        }
 
-            UpdateFactionRegistry(heir);
+        if (newLeader.Valid && TryComp<FactionComponent>(newLeader, out var newLeaderComp))
+        {
+            newLeaderComp.IsCreator = true;
+            newLeaderComp.Members = component.Members;
+            newLeaderComp.Members.Remove(newLeader);
+            newLeaderComp.Roles = component.Roles;
+            newLeaderComp.Rank = Loc.GetString("faction-rank-leader");
+            component.IsCreator = false;
         }
         else if (component.Members.Count > 0)
         {
@@ -544,7 +589,7 @@ public sealed class FactionSystem : EntitySystem
                 memberComp.IsCreator = true;
                 memberComp.Members = component.Members;
                 memberComp.Members.Remove(randomMember);
-                memberComp.Rank = "Лідер";
+                memberComp.Rank = Loc.GetString("faction-rank-leader");
                 component.IsCreator = false;
 
                 foreach (var member in memberComp.Members)
@@ -618,7 +663,8 @@ public sealed class FactionSystem : EntitySystem
         entityComponent.Members.Remove(entity);
         entityComponent.Members.Add(player.Value);
         entityComponent.IsCreator = true;
-        entityComponent.Rank = "Лідер";
+        entityComponent.Rank = Loc.GetString("faction-rank-leader");
+        entityComponent.Roles = factionComponent.Roles;
 
         foreach (var member in factionComponent.Members)
         {
@@ -754,10 +800,134 @@ public sealed class FactionSystem : EntitySystem
         memberComponent.Rank = msg.NewRank;
         Dirty(member, memberComponent);
 
+        if (TryComp<FactionComponent>(factionComponent.Leader, out var leaderComp))
+        {
+             UpdateMemberDataUI(factionComponent.Leader, leaderComp);
+        }
+
         _popup.PopupEntity(
             Loc.GetString("rank-changed", ("rank", msg.NewRank)),
             member,
             member);
+    }
+
+    private void OnMoveMember(FactionMoveMemberMessage msg, EntitySessionEventArgs args)
+    {
+        var player = args.SenderSession.AttachedEntity;
+        var member = GetEntity(msg.Member);
+
+        if (!player.HasValue)
+            return;
+
+        if (!TryComp<FactionComponent>(player.Value, out var factionComponent)
+            || !factionComponent.IsCreator)
+            return;
+
+        var index = factionComponent.Members.IndexOf(member);
+        if (index == -1)
+            return;
+
+        if (msg.MoveUp && index > 0)
+        {
+            factionComponent.Members.RemoveAt(index);
+            factionComponent.Members.Insert(index - 1, member);
+        }
+        else if (!msg.MoveUp && index < factionComponent.Members.Count - 1)
+        {
+            factionComponent.Members.RemoveAt(index);
+            factionComponent.Members.Insert(index + 1, member);
+        }
+        else
+        {
+            return;
+        }
+
+        UpdateMemberDataUI(player.Value, factionComponent);
+        UpdateFactionRegistry(factionComponent);
+    }
+
+    private void OnCreateRole(FactionCreateRoleMessage msg, EntitySessionEventArgs args)
+    {
+        var player = args.SenderSession.AttachedEntity;
+
+        if (!player.HasValue)
+            return;
+
+        if (!TryComp<FactionComponent>(player.Value, out var factionComponent)
+            || !factionComponent.IsCreator)
+            return;
+
+        // If we are renaming
+        if (!string.IsNullOrEmpty(msg.OldName))
+        {
+            var oldIndex = factionComponent.Roles.FindIndex(r => r.Name == msg.OldName);
+            if (oldIndex >= 0)
+            {
+                factionComponent.Roles[oldIndex] = msg.Role;
+
+                // Update members with old rank
+                if (msg.OldName != msg.Role.Name)
+                {
+                    foreach (var memberUid in factionComponent.Members)
+                    {
+                        if (TryComp<FactionComponent>(memberUid, out var memberComp) && memberComp.Rank == msg.OldName)
+                        {
+                            memberComp.Rank = msg.Role.Name;
+                            Dirty(memberUid, memberComp);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Check if role already exists by name
+            var existingIndex = factionComponent.Roles.FindIndex(r => r.Name == msg.Role.Name);
+            if (existingIndex >= 0)
+            {
+                factionComponent.Roles[existingIndex] = msg.Role;
+            }
+            else
+            {
+                factionComponent.Roles.Add(msg.Role);
+            }
+        }
+
+        Dirty(player.Value, factionComponent);
+        UpdateFactionRegistry(factionComponent);
+        UpdateMemberDataUI(player.Value, factionComponent);
+    }
+
+    private void OnDeleteRole(FactionDeleteRoleMessage msg, EntitySessionEventArgs args)
+    {
+        var player = args.SenderSession.AttachedEntity;
+
+        if (!player.HasValue)
+            return;
+
+        if (!TryComp<FactionComponent>(player.Value, out var factionComponent)
+            || !factionComponent.IsCreator)
+            return;
+
+        var index = factionComponent.Roles.FindIndex(r => r.Name == msg.RoleName);
+        if (index == -1)
+            return;
+
+        factionComponent.Roles.RemoveAt(index);
+
+        // Also reset rank for members who had this role
+        foreach (var memberUid in factionComponent.Members)
+        {
+            if (TryComp<FactionComponent>(memberUid, out var memberComp) && memberComp.Rank == msg.RoleName)
+            {
+                memberComp.Rank = string.Empty;
+                Dirty(memberUid, memberComp);
+            }
+        }
+
+        Dirty(player.Value, factionComponent);
+        UpdateFactionRegistry(factionComponent);
+        UpdateMemberDataUI(player.Value, factionComponent);
     }
 
     private void OnFactionStateChange(FactionChangeStateMessage msg, EntitySessionEventArgs args)
@@ -905,6 +1075,21 @@ public sealed class FactionSystem : EntitySystem
         }
     }
 
+    private List<FactionRole> GetDefaultRoles()
+    {
+        return new List<FactionRole>
+        {
+            new FactionRole
+            {
+                Name = "Новобранец",
+                CanInvite = false,
+                CanResearch = false,
+                CanManageRoles = false,
+                CanInherit = false
+            }
+        };
+    }
+
     /// <summary>
     /// Валидация названия фракции
     /// </summary>
@@ -957,5 +1142,30 @@ public sealed class FactionSystem : EntitySystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Обновляет кэш данных о членах фракции для UI лидера
+    /// </summary>
+    public void UpdateMemberDataUI(EntityUid leaderUid, FactionComponent leaderComp)
+    {
+        leaderComp.MemberData.Clear();
+        foreach (var memberUid in leaderComp.Members)
+        {
+            var data = new FactionMemberData()
+            {
+                Entity = GetNetEntity(memberUid),
+                Name = Name(memberUid),
+                Rank = Loc.GetString("faction-rank-no-rank")
+            };
+
+            if (TryComp<FactionComponent>(memberUid, out var memberComp))
+            {
+                data.Rank = string.IsNullOrEmpty(memberComp.Rank) ? Loc.GetString("faction-rank-no-rank") : memberComp.Rank;
+            }
+
+            leaderComp.MemberData.Add(data);
+        }
+        Dirty(leaderUid, leaderComp);
     }
 }

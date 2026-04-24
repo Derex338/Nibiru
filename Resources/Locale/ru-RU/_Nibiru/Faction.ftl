@@ -1,5 +1,7 @@
 faction-leader = Лидер фракции: { $leaderName }
 faction-name-label =  Название фракции: { $name }
+faction-rank-leader = Лидер
+
 
 # Локализация для системы присоединения к фракциям
 
@@ -52,11 +54,21 @@ faction-request-window-text-user = Пользователь { $user } пригл
 
 faction-members = Члены фракции:
 
-faction-status-active = Активна
-faction-status-recruiting = Набор открыт
-faction-status-at-war = В состоянии войны
+faction-ui-recruiting-toggle = Открыть набор во фракцию
 
-rev-consent-window-convert-title = Приглашение в фракцию
+faction-role-manage-title = Управление ролями
+faction-role-select = Выбрать роль
+faction-role-new = Новая роль
+faction-role-name-placeholder = Название роли
+faction-role-can-invite = Может приглашать
+faction-role-can-research = Может исследовать
+faction-role-can-manage-roles = Может управлять ролями
+faction-role-can-inherit = Может наследовать лидерство
+faction-role-create = Создать
+faction-role-update = Сохранить
+faction-role-delete = Удалить
+
+rev-consent-window-convert-title = Приглашение во фракцию
 nibiru-faction-required-to-ready = Вам необходимо указать название фракции в профиле персонажа, чтобы начать раунд.
 nibiru-faction-lottery-lost = Вы не прошли лотерею на лидера фракции и остались в лобби.
 
@@ -64,4 +76,7 @@ faction-already-exist = Фракция с названием "{ $factionName }" 
 faction-name-too-short = Название фракции слишком короткое (минимум 3 символа).
 faction-name-too-long = Название фракции слишком длинное (максимум 32 символа).
 faction-description-too-long = Описание фракции слишком длинное (максимум 500 символов).
+
+faction-button-move-up-tooltip = Переместить выше
+faction-button-move-down-tooltip = Переместить ниже
 

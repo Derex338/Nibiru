@@ -30,6 +30,12 @@ public sealed partial class FactionComponent : Component
     [ViewVariables]
     public List<EntityUid> Members { get; set; } = new();
 
+    /// <summary>
+    /// Данные о членах фракции для отображения в UI (кэш для клиента)
+    /// </summary>
+    [AutoNetworkedField]
+    public List<FactionMemberData> MemberData { get; set; } = new();
+
     [AutoNetworkedField]
     [ViewVariables]
     public EntityUid Leader = default!;
@@ -62,7 +68,6 @@ public sealed partial class FactionComponent : Component
     [AutoNetworkedField]
     [DataField("rank")]
     public string Rank { get; set; } = string.Empty;
-
     /// <summary>
     /// Статус фракции
     /// </summary>
@@ -76,6 +81,47 @@ public sealed partial class FactionComponent : Component
     [AutoNetworkedField]
     [DataField("recruiting")]
     public bool IsRecruiting { get; set; } = false;
+    /// <summary>
+    /// Роли/Ранги фракции
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("roles")]
+    public List<FactionRole> Roles { get; set; } = new();
+}
+
+[Serializable, NetSerializable, DataDefinition]
+public partial struct FactionRole
+{
+    [DataField("name")]
+    public string Name;
+
+    [DataField("canInvite")]
+    public bool CanInvite;
+
+    [DataField("canResearch")]
+    public bool CanResearch;
+
+    [DataField("canManageRoles")]
+    public bool CanManageRoles;
+
+    [DataField("canInherit")]
+    public bool CanInherit;
+}
+
+/// <summary>
+/// Данные о члене фракции для UI
+/// </summary>
+[Serializable, NetSerializable, DataDefinition]
+public partial struct FactionMemberData
+{
+    [DataField("entity")]
+    public NetEntity Entity;
+
+    [DataField("name")]
+    public string Name;
+
+    [DataField("rank")]
+    public string Rank;
 }
 
 /// <summary>
@@ -155,6 +201,12 @@ public partial struct FactionRegistryData
     /// </summary>
     [DataField("created")]
     public TimeSpan Created;
+
+    /// <summary>
+    /// Список ролей фракции
+    /// </summary>
+    [DataField("roles")]
+    public List<FactionRole> Roles;
 }
 
 /// <summary>
@@ -182,6 +234,7 @@ public sealed class FactionInfo
     public FactionStatus Status { get; set; } = FactionStatus.Active;
     public bool IsRecruiting { get; set; } = false;
     public NetEntity Leader { get; set; }
+    public List<FactionRole> Roles { get; set; } = new();
 }
 
 /// <summary>
