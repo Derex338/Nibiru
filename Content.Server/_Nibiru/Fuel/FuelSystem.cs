@@ -1,6 +1,7 @@
 using Content.Server.Connection.Whitelist.Conditions;
 using Content.Server.Stack;
 using Content.Shared._Nibiru.Fuel;
+using Content.Shared.Atmos;
 using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -12,10 +13,14 @@ using Content.Shared.Light.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Stacks;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Nibiru.Fuel;
 
@@ -27,8 +32,10 @@ public sealed class FuelSystem : EntitySystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
 
     public override void Initialize()
     {
@@ -36,7 +43,11 @@ public sealed class FuelSystem : EntitySystem
 
         SubscribeLocalEvent<FuelConsumptionComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<FuelConsumptionComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<FuelConsumptionComponent, ExtinguishEvent>(OnExtinguishEvent);
+        SubscribeLocalEvent<FuelConsumptionComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FuelConsumptionComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<FuelConsumptionComponent, ExtinguishDoAfterEvent>(OnExtinguishDoAfter);
+        SubscribeLocalEvent<FuelConsumptionComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
     }
 
     public override void Update(float frameTime)
@@ -55,7 +66,8 @@ public sealed class FuelSystem : EntitySystem
         //comp.StateExpiryTime = 0f;
         comp.CurrentTemperature = 20f;
 
-        EnsureComp<PointLightComponent>(uid);
+        var light = EnsureComp<PointLightComponent>(uid);
+        _light.SetEnabled(uid, false, light);
 
         if (TryComp<ItemComponent>(uid, out var item))
             _item.SetHeldPrefix(uid, "unlit", component: item);
@@ -148,7 +160,7 @@ public sealed class FuelSystem : EntitySystem
         var wasOperational = oldTemp >= comp.MinOperatingTemperature;
         var isOperational = comp.CurrentTemperature >= comp.MinOperatingTemperature;
 
-        if (Math.Abs(oldTemp - comp.CurrentTemperature) > 1.0f || wasOperational != isOperational)
+        if (wasOperational != isOperational)
         {
             var tempEvent = new TemperatureChangedEvent(
                 oldTemp,
@@ -157,6 +169,13 @@ public sealed class FuelSystem : EntitySystem
             );
             RaiseLocalEvent(ent, ref tempEvent);
             Dirty(ent, comp);
+            UpdateVisualizer(ent);
+        }
+        else if (Math.Abs(oldTemp - comp.CurrentTemperature) > 5.0f)
+        {
+            // Редкое обновление для синхронизации температуры
+            Dirty(ent, comp);
+            UpdateVisualizer(ent);
         }
     }
 
@@ -173,6 +192,35 @@ public sealed class FuelSystem : EntitySystem
                 args.Handled = true;
             }
             return;
+        }
+
+        // Тушение инструментом
+        if (comp.CanBeExtinguished && (comp.CurrentState == FuelLightState.Lit || comp.CurrentState == FuelLightState.Fading))
+        {
+            var isTool = false;
+            if (comp.ExtinguisherWhitelist != null && _whitelist.IsValid(comp.ExtinguisherWhitelist, args.Used))
+            {
+                isTool = true;
+            }
+            else if (!string.IsNullOrEmpty(comp.ExtinguisherQuality) && _tool.HasQuality(args.Used, comp.ExtinguisherQuality))
+            {
+                isTool = true;
+            }
+
+            if (isTool)
+            {
+                var ev = new ExtinguishDoAfterEvent();
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, comp.ExtinguishToolDuration, ev, uid, target: uid, used: args.Used)
+                {
+                    BreakOnMove = true,
+                    BreakOnDamage = true,
+                    NeedHand = true
+                };
+
+                _doAfter.TryStartDoAfter(doAfterArgs);
+                args.Handled = true;
+                return;
+            }
         }
 
         // Добавление топлива
@@ -214,6 +262,51 @@ public sealed class FuelSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnExtinguishEvent(EntityUid uid, FuelConsumptionComponent comp, ref ExtinguishEvent args)
+    {
+        if (comp.CanBeExtinguished)
+            Extinguish((uid, comp));
+    }
+
+    private void OnExtinguishDoAfter(EntityUid uid, FuelConsumptionComponent comp, ExtinguishDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        Extinguish((uid, comp));
+        args.Handled = true;
+    }
+
+    private void OnGetVerbs(EntityUid uid, FuelConsumptionComponent comp, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || !comp.CanBeExtinguished || !comp.CanExtinguishByHand)
+            return;
+
+        if (comp.CurrentState != FuelLightState.Lit && comp.CurrentState != FuelLightState.Fading)
+            return;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () => Extinguish((uid, comp)),
+            Text = Loc.GetString("fuel-system-verb-extinguish"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/extinguish.svg.192dpi.png")),
+            Priority = 0
+        };
+        args.Verbs.Add(verb);
+    }
+
+    private void OnActivate(EntityUid uid, FuelConsumptionComponent comp, ActivateInWorldEvent args)
+    {
+        if (args.Handled || !comp.CanBeExtinguished || !comp.CanExtinguishByHand)
+            return;
+
+        if (comp.CurrentState == FuelLightState.Lit || comp.CurrentState == FuelLightState.Fading)
+        {
+            Extinguish((uid, comp));
+            args.Handled = true;
+        }
+    }
+
     /// <summary>
     /// Поджигает объект
     /// </summary>
@@ -221,7 +314,7 @@ public sealed class FuelSystem : EntitySystem
     {
         var comp = ent.Comp;
 
-        if (comp.CurrentState != FuelLightState.BrandNew || comp.StateExpiryTime <= 0f)
+        if ((comp.CurrentState != FuelLightState.BrandNew && comp.CurrentState != FuelLightState.Dead) || comp.StateExpiryTime <= 0f)
             return false;
 
         comp.CurrentState = FuelLightState.Lit;
@@ -240,6 +333,13 @@ public sealed class FuelSystem : EntitySystem
         RaiseLocalEvent(ent, ref stateEvent);
 
         _audio.PlayPvs(comp.LitSound, ent);
+
+        // Запуск зацикленного звука горения
+        if (comp.LoopedSound != null && comp.PlayingStream == null)
+        {
+            comp.PlayingStream = _audio.PlayPvs(comp.LoopedSound, ent, AudioParams.Default.WithLoop(true))?.Entity;
+        }
+
         UpdateVisualizer(ent);
 
         return true;
@@ -252,8 +352,7 @@ public sealed class FuelSystem : EntitySystem
     {
         var comp = ent.Comp;
 
-        comp.CurrentState = FuelLightState.Dead;
-        comp.StateExpiryTime = 0f;
+        comp.CurrentState = FuelLightState.BrandNew;
 
         if (TryComp<ItemComponent>(ent, out var item))
             _item.SetHeldPrefix(ent, "unlit", component: item);
@@ -269,6 +368,10 @@ public sealed class FuelSystem : EntitySystem
         RaiseLocalEvent(ent, ref stateEvent);
 
         _audio.PlayPvs(comp.DieSound, ent);
+
+        // Остановка зацикленного звука
+        comp.PlayingStream = _audio.Stop(comp.PlayingStream);
+
         _nameModifier.RefreshNameModifiers(ent.Owner);
         UpdateVisualizer(ent);
     }
@@ -277,26 +380,44 @@ public sealed class FuelSystem : EntitySystem
     {
         var comp = ent.Comp;
 
+        if (!TryComp<PointLightComponent>(ent, out var light))
+            return;
+
+        var isLit = comp.CurrentState == FuelLightState.Lit || comp.CurrentState == FuelLightState.Fading;
+        if (light.Enabled != isLit)
+        {
+            _light.SetEnabled(ent, isLit, light);
+        }
+
         if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        _appearance.SetData(ent, FuelLightVisuals.State, comp.CurrentState, appearance);
-
-        switch (comp.CurrentState)
+        var behavior = string.Empty;
+        if (comp.CurrentState == FuelLightState.Lit)
         {
-            case FuelLightState.Lit:
-                _appearance.SetData(ent, FuelLightVisuals.Behavior, comp.TurnOnBehaviourID, appearance);
-                break;
-
-            case FuelLightState.Fading:
-                _appearance.SetData(ent, FuelLightVisuals.Behavior, comp.FadeOutBehaviourID, appearance);
-                break;
-
-            case FuelLightState.Dead:
-            case FuelLightState.BrandNew:
-                _appearance.SetData(ent, FuelLightVisuals.Behavior, string.Empty, appearance);
-                break;
+            // Если костер еще не нагрелся до 80% — показываем анимацию разгорания
+            // Иначе переходим на стабильное горение. Это предотвращает перезапуск
+            // анимации разгорания при возвращении в PVS уже горячего костра.
+            behavior = comp.CurrentTemperature < comp.TargetBurnTemperature * 0.8f
+                ? (string.IsNullOrEmpty(comp.TurnOnBehaviourID) ? comp.LitBehaviourID : comp.TurnOnBehaviourID)
+                : (string.IsNullOrEmpty(comp.LitBehaviourID) ? comp.TurnOnBehaviourID : comp.LitBehaviourID);
         }
+        else if (comp.CurrentState == FuelLightState.Fading)
+        {
+            behavior = comp.FadeOutBehaviourID;
+        }
+
+        if (_appearance.TryGetData<string>(ent, FuelLightVisuals.Behavior, out var oldBehavior, appearance) && oldBehavior == behavior)
+        {
+            // Ничего не меняем если ID тот же
+        }
+        else
+        {
+            _appearance.SetData(ent, FuelLightVisuals.Behavior, behavior, appearance);
+        }
+
+        _appearance.SetData(ent, FuelLightVisuals.State, comp.CurrentState, appearance);
+        Dirty(ent, comp);
     }
 
     private void OnExamined(EntityUid uid, FuelConsumptionComponent comp, ExaminedEvent args)

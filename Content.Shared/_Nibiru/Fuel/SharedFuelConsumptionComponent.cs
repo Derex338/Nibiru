@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -15,6 +16,9 @@ public abstract partial class SharedFuelConsumptionComponent : Component
 
     [DataField]
     public string TurnOnBehaviourID = string.Empty;
+
+    [DataField]
+    public string LitBehaviourID = string.Empty;
 
     [DataField]
     public string FadeOutBehaviourID = string.Empty;
@@ -81,6 +85,36 @@ public abstract partial class SharedFuelConsumptionComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? FuelWhitelist;
+
+    /// <summary>
+    /// Можно ли вообще потушить этот источник огня
+    /// </summary>
+    [DataField]
+    public bool CanBeExtinguished = true;
+
+    /// <summary>
+    /// Можно ли потушить голыми руками (без инструмента)
+    /// </summary>
+    [DataField]
+    public bool CanExtinguishByHand = false;
+
+    /// <summary>
+    /// Whitelist инструментов для тушения. Null — любой предмет подходит
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? ExtinguisherWhitelist;
+
+    /// <summary>
+    /// Качество инструмента, которое требуется для тушения (например, Digging для лопаты)
+    /// </summary>
+    [DataField]
+    public string? ExtinguisherQuality;
+
+    /// <summary>
+    /// Задержка тушения инструментом
+    /// </summary>
+    [DataField]
+    public float ExtinguishToolDuration = 2f;
 }
 
 [Serializable, NetSerializable]
@@ -97,6 +131,11 @@ public enum FuelLightVisuals : byte
 {
     State,
     Behavior,
+}
+
+[Serializable, NetSerializable]
+public sealed partial class ExtinguishDoAfterEvent : SimpleDoAfterEvent
+{
 }
 
 /// <summary>

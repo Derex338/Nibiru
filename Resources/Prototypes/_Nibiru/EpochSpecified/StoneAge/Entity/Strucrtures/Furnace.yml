@@ -58,6 +58,7 @@
     fuelConsumptionRate: 0.5              # Экономный расход
     fadeOutDuration: 30
     turnOnBehaviourID: turn_on
+    extinguisherQuality: Digging
     fadeOutBehaviourID: fade_out
     iconStateSpent: icon
     # Sounds legit nuff

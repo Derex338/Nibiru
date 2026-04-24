@@ -24,14 +24,16 @@
   - type: FuelConsumption
     maxFuelAmount: 600                    # 10 минут
     targetBurnTemperature: 600            # Средняя температура
-    minOperatingTemperature: 3          # Работает при 300°C+
+    minOperatingTemperature: 300          # Работает при 300°C+
     heatingRate: 100
     coolingRate: 60
     fuelConsumptionRate: 0.1
     fadeOutDuration: 20
     iconStateSpent: burnout
-    turnOnBehaviourID: bonfire_on
+    turnOnBehaviourID: bonfire_start
+    litBehaviourID: bonfire_on
     fadeOutBehaviourID: bonfire_fade
+    extinguisherQuality: Digging
     loopedSound:
       path: /Audio/Ambience/Objects/fireplace.ogg
     litSound:
@@ -49,7 +51,7 @@
   - type: LightBehaviour
     behaviours:
       - !type:FadeBehaviour
-        id: bonfire_on
+        id: bonfire_start
         maxDuration: 10.0
         startValue: 2.0
         endValue: 6.0

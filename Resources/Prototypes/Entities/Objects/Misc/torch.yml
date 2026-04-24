@@ -10,6 +10,7 @@
       iconStateSpent: torch_spent
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
+      canExtinguishByHand: true
       # Sounds legit nuff
       litSound:
         path: /Audio/Items/Flare/flare_on.ogg
