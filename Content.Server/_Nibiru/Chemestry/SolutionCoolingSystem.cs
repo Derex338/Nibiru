@@ -18,7 +18,7 @@ public sealed class SolutionCoolingSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    public float HeatTransferRate = 0.3f;
+    public float HeatTransferRate = 10f;
 
     // Throttle: обновляем не чаще раза в секунду,
     // т.к. SolutionComponent есть у огромного числа объектов на планете

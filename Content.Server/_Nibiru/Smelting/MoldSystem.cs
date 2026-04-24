@@ -53,7 +53,7 @@ public sealed class MoldSystem : EntitySystem
                     if (solution == null || solutionEnt == null)
                         continue;
 
-                    if (reagentAmount >= solution.MaxVolume)
+                    if (solution.Volume >= solution.MaxVolume && reagentAmount >= solution.MaxVolume * 0.8f)
                     {
                         var pos = _transform.GetMapCoordinates(args.uid);
 
@@ -63,7 +63,7 @@ public sealed class MoldSystem : EntitySystem
                         if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
                             _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
 
-                        _solution.RemoveReagent(solutionEnt.Value, reagent, reagentAmount);
+                        _solution.RemoveAllSolution(solutionEnt.Value);
                         success = true;
                         break;
                     }
