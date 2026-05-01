@@ -54,11 +54,37 @@
   - type: Sprite
     sprite: Mobs/Animals/chicken.rsi
     state: chicken
+  - type: NibiruNpcBehavior
+    ambientSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/AmbientSound.ogg
+    deathSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/DeathSound.ogg
+    hurtSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/HurtSound.ogg
+    fleeSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/FleeSound.ogg
+  - type: NibiruSleepCycle
+  - type: NibiruMountFear
+    maxFear: 100
+    panicThreshold: 80
+    panicSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/PanicSound.ogg
+  - type: NibiruLeashable
+    leashSound:
+      path: "/Audio/_Nibiru/Mobs/Chicken/LeashSound .ogg"
   - type: NibiruTamable
     diet: Herbivore
     trustThreshold: 10
+    feedingSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/FeedingSound.ogg
+    tamedSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/TamedSound.ogg
+    followSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/FollowSound.ogg
   - type: NibiruLivestock
     canBreed: false
+    birthSound:
+      path: /Audio/_Nibiru/Mobs/Chicken/BirthSound.ogg
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg

@@ -71,7 +71,7 @@
   - type: Tag
     tags:
     - Meat
-  - type: Food
+    - Food
   - type: Material
   - type: Stack
     stackType: Fat
@@ -100,7 +100,7 @@
   - type: Tag
     tags:
     - Meat
-  - type: Food
+    - Food
 
 - type: entity
   id: Skin
@@ -210,10 +210,6 @@
     state: vein
   - type: Item
     size: Tiny
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Butcherable
     spawned:
     - id: VeinTimer
@@ -335,10 +331,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: small1
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Item
     size: Large
   - type: Butcherable
@@ -360,10 +352,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: small1
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Item
     size: Large
   - type: Butcherable
@@ -381,10 +369,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: mid1
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Butcherable
     spawned:
       - id: CEFoodMeatLamb
@@ -408,10 +392,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: mid2
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Butcherable
     spawned:
       - id: CEBone1
@@ -433,10 +413,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big1
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Butcherable
     spawned:
       - id: CEFoodMeatBoar
@@ -457,10 +433,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big2
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Butcherable
     spawned:
       - id: Fat
@@ -482,10 +454,6 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big3
-  - type: Tag
-    tags:
-    - Meat
-  - type: Food
   - type: Butcherable
     spawned:
       - id: CEBone1

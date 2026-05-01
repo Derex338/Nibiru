@@ -1,0 +1,15 @@
+- files:
+  - AmbientSound.ogg
+  - BirthSound.ogg
+  - DeathSound.ogg
+  - Dli Petyxa.ogg
+  - FeedingSound.ogg
+  - FleeSound.ogg
+  - FollowSound.ogg
+  - HurtSound.ogg
+  - "LeashSound .ogg"
+  - PanicSound.ogg
+  - TamedSound.ogg
+  license: "Creative Commons Attribution 3.0 Unported License"
+  copyright: "unknown"
+  source: "unknown"
