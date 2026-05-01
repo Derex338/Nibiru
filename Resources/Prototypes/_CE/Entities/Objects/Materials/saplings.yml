@@ -22,3 +22,29 @@
     state: seeds
   - type: CESeed
     plantProto: CEPlantAppleTree
+
+- type: entity
+  id: CESeedOakTree
+  name: acorns
+  description: Small acorns. Plant them to grow oak trees.
+  parent: CESaplingBase
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/sunflower.rsi
+    state: seeds
+  - type: CESeed
+    plantProto: CEPlantOakTree
+  - type: Fuel
+    value: 20
+
+- type: entity
+  id: CESeedHighBush
+  name: bush seeds
+  description: Seeds of a thick bush.
+  parent: CESaplingBase
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/sunflower.rsi
+    state: seeds
+  - type: CESeed
+    plantProto: CEHighBush

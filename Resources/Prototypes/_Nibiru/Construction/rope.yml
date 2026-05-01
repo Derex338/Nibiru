@@ -21,10 +21,17 @@
   graph:
     - node: start
       edges:
+        - to: peg
+          steps:
+            - material: WoodStick
+              amount: 1
+    - node: peg
+      entity: CERopePeg
+      edges:
         - to: rope
           steps:
             - material: HerbRope
-              amount: 5
+              amount: 3
     - node: rope
       entity: CERopeTop
 
@@ -34,8 +41,11 @@
   abstract: true
   components:
     - type: Sprite
-      sprite: _CE/Objects/Tool/rope.rsi
-      state: icon
+      sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
+      state: front
+      rotation: 180
+    - type: Physics
+      canCollide: false
     - type: MultiLevelConstruction
     - type: Damageable
       damageContainer: StructuralInorganic
@@ -52,10 +62,27 @@
     - type: InteractionOutline
 
 - type: entity
+  id: CERopePeg
+  parent: CERopeBase
+  name: колышек
+  components:
+    - type: Sprite
+      sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
+      state: clear
+      rotation: 180
+    - type: Construction
+      graph: MultiLevelRope
+      node: peg
+
+- type: entity
   id: CERopeTop
   parent: CERopeBase
-  name: rope peg
+  name: колышек с веревкой
   components:
+    - type: Sprite
+      sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
+      state: front
+      rotation: 180
     - type: Construction
       graph: MultiLevelRope
       node: rope
@@ -69,8 +96,11 @@
 - type: entity
   id: CERopeHanging
   parent: CERopeBase
-  name: hanging rope
+  name: свисающая веревка
   components:
+    - type: Sprite
+      sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
+      state: rope
     - type: Physics
       bodyType: Static
     - type: Fixtures

@@ -1,0 +1,42 @@
+- type: entity
+  id: CEPlantOakTree
+  parent:
+  - CEPlantTreeBase
+  - CEPlantBaseSolarEnergy
+  - CEPlantBaseFloralWildType
+  - CEPlantBaseGrowing2Day
+  - CEPlantBaseMetabolizer1Day
+  - CEPlantBaseMetabolizerWater
+  name: oak tree
+  description: A young oak tree growing steadily.
+  components:
+  - type: CEPlantVisuals
+    growthSteps: 4
+    readyVariations: 2
+  - type: CEPlantAdditionalProduceOnDestruct
+    produce:
+      CEWoodLog: 3
+      CESeedOakTree: 2
+  - type: Sprite
+    sprite: _CE/Structures/Nature/Farm/apple_tree.rsi
+    layers:
+    - state: liq-1
+      sprite: _CE/Structures/Nature/Farm/watered.rsi
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: grow-1
+      offset: 0, 0.9
+      map: ["enum.PlantVisualLayers.Base"]
+
+- type: entity
+  id: CEPlantOakTreeGrown
+  parent: CEPlantOakTree
+  suffix: Grown
+  components:
+  - type: CEPlant
+    growthLevel: 4
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_trees.rsi
+    layers:
+    - state: tree01
+      map: ["enum.PlantVisualLayers.Base"]

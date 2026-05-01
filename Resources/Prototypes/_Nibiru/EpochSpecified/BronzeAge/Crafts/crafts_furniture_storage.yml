@@ -9,12 +9,7 @@
   startNode: start
   targetNode: fin
   category: Structures
-  description: Надежное средство для перевозки большого количества вещей.
-  icon:
-    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-    state: cart
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: Saddle
@@ -23,10 +18,6 @@
   startNode: start
   targetNode: fin
   category: Gear
-  description: Качественное седло для езды верхом.
-  icon:
-    sprite: Clothing/Back/Backpacks/backpack.rsi
-    state: icon
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -38,12 +29,7 @@
   startNode: start
   targetNode: fin
   category: Furniture
-  description: Простая кровать для сна.
-  icon:
-    sprite: Structures/Furniture/bed.rsi
-    state: bed
   objectType: Structure
-  placementMode: SnapToGrid
   canRotate: true
 
 - type: construction
@@ -53,12 +39,7 @@
   startNode: start
   targetNode: fin
   category: Furniture
-  description: Деревянный сундук для вещей.
-  icon:
-    sprite: Structures/Storage/Crates/piratechest.rsi
-    state: crate_icon
   objectType: Structure
-  placementMode: SnapToGrid
   canRotate: true
 
 - type: construction
@@ -68,10 +49,6 @@
   startNode: start
   targetNode: fin
   category: Gear
-  description: Кожаный кошелёк для монет, крепится на пояс.
-  icon:
-    sprite: Clothing/Belt/waistbag_leather.rsi
-    state: icon
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench

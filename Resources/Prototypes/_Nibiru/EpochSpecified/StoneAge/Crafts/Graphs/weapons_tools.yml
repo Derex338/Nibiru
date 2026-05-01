@@ -17,7 +17,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
@@ -40,7 +40,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
@@ -52,7 +52,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
@@ -78,7 +78,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 5
@@ -100,7 +100,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: WoodStick
               amount: 3
@@ -110,7 +110,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: WoodStick
               amount: 3
@@ -129,7 +129,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 1
@@ -152,14 +152,11 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
             - tool: Slicing
-              doAfter: 2
-            - material: Feather
-              amount: 1
               doAfter: 2
     - node: fin
       entity: ArrowWood
@@ -178,27 +175,23 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
             - material: SharpStone
               amount: 1
-            - material: Feather
-              amount: 1
               doAfter: 3
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
             - material: SharpStone
               amount: 1
             - material: Vein_processed
-              amount: 1
-            - material: Feather
               amount: 1
               doAfter: 3
     - node: fin
@@ -217,7 +210,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: Leather
               amount: 1
@@ -241,7 +234,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 2
@@ -253,7 +246,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 2
@@ -279,7 +272,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEStone
               amount: 3
@@ -289,7 +282,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEStone
               amount: 3
@@ -312,7 +305,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEWood
               amount: 1
@@ -334,7 +327,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
@@ -346,7 +339,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
@@ -368,7 +361,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
@@ -380,7 +373,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
@@ -402,7 +395,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
@@ -414,7 +407,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 1
@@ -436,11 +429,11 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
-            - material: CEStone
+            - material: SharpStone
               amount: 2
             - material: HerbRope
               amount: 1
@@ -449,7 +442,7 @@
           steps:
             - material: WoodStick
               amount: 2
-            - material: CEStone
+            - material: SharpStone
               amount: 2
             - material: Vein_processed
               amount: 2
@@ -467,11 +460,11 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
-            - material: CEStone
+            - material: SharpStone
               amount: 2
             - material: HerbRope
               amount: 1
@@ -480,7 +473,7 @@
           steps:
             - material: WoodStick
               amount: 2
-            - material: CEStone
+            - material: SharpStone
               amount: 2
             - material: Vein_processed
               amount: 2
@@ -517,3 +510,4 @@
               doAfter: 2
     - node: fin
       entity: BoneNeedle
+

@@ -46,6 +46,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner
+  - type: Construction
+    graph: BannerNanotrasen
+    node: fin
 
 - type: entity
   id: BannerCargo
@@ -56,6 +59,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_cargo
+  - type: Construction
+    graph: BannerCargo
+    node: fin
 
 - type: entity
   id: BannerEngineering
@@ -66,6 +72,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_engineering
+  - type: Construction
+    graph: BannerEngineering
+    node: fin
 
 - type: entity
   id: BannerMedical
@@ -76,6 +85,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_medical
+  - type: Construction
+    graph: BannerMedical
+    node: fin
 
 - type: entity
   id: BannerRevolution
@@ -86,6 +98,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_revolution
+  - type: Construction
+    graph: BannerRevolution
+    node: fin
 
 - type: entity
   id: BannerSyndicate
@@ -96,6 +111,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_syndicate
+  - type: Construction
+    graph: BannerSyndicate
+    node: fin
 
 - type: entity
   id: BannerScience
@@ -106,6 +124,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_science
+  - type: Construction
+    graph: BannerScience
+    node: fin
 
 - type: entity
   id: BannerSecurity
@@ -126,6 +147,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-blue
+  - type: Construction
+    graph: BannerBlue
+    node: fin
 
 - type: entity
   id: BannerRed
@@ -136,6 +160,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-red
+  - type: Construction
+    graph: BannerRed
+    node: fin
 
 - type: entity
   id: BannerYellow
@@ -146,6 +173,9 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-yellow
+  - type: Construction
+    graph: BannerYellow
+    node: fin
 
 - type: entity
   id: BannerGreen
@@ -156,5 +186,8 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner-green
+  - type: Construction
+    graph: BannerGreen
+    node: fin
 
 

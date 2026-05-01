@@ -11,11 +11,11 @@
             "name": "icon"
         },
         {
-            "name": "equipped-CLOAK",
+            "name": "equipped-OUTERCLOTHING",
             "directions": 4
         },
         {
-            "name": "equipped-CLOAK-carcat",
+            "name": "equipped-OUTERCLOTHING-carcat",
             "directions": 4
         }
     ]

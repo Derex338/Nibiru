@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: BasePercussionInstrument
   abstract: true
@@ -76,6 +76,9 @@
     program: 115
   - type: Sprite
     sprite: Objects/Fun/Instruments/woodblock.rsi
+  - type: Construction
+    graph: Woodblock
+    node: fin
 
 - type: entity
   parent: BasePercussionInstrument

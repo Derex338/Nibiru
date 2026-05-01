@@ -56,8 +56,8 @@
   category: Gear
   description: Кожаные ножны для хранения меча.
   icon:
-    sprite: Clothing/Belt/sheath.rsi
-    state: sheath
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Belt/Nozni.rsi
+    state: icon
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench

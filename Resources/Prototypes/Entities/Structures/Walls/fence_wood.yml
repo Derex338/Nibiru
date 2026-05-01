@@ -54,6 +54,7 @@
         acts: [ "Destruction" ]
   - type: Climbable
     delay: 5.0
+  - type: NibiruLeashAnchor
   - type: Appearance
 
 - type: entity
@@ -90,6 +91,7 @@
         acts: [ "Destruction" ]
   - type: Climbable
     delay: 2.5
+  - type: NibiruLeashAnchor
   - type: RequireProjectileTarget
 
 #High

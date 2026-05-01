@@ -18,7 +18,7 @@
         - to: straight
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 3
@@ -28,7 +28,7 @@
         - to: end
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 3
@@ -38,7 +38,7 @@
         - to: corner
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 3
@@ -48,7 +48,7 @@
         - to: tjunction
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 3
@@ -58,7 +58,7 @@
         - to: gate
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 4
@@ -241,7 +241,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - tool: Hammering
               doAfter: 5
@@ -257,3 +257,4 @@
           steps:
             - tool: Prying
               doAfter: 5
+

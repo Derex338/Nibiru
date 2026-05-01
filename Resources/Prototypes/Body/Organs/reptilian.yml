@@ -12,10 +12,6 @@
       - Pill
       - Crayon
       - Paper
-      - CEMeat
-      - CEMeatSlice
-      - CEEgg
-      - CEVegetable
   - type: SolutionContainerManager
     solutions:
       stomach:

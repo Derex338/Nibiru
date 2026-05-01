@@ -17,7 +17,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: CEWood
               amount: 5
@@ -50,7 +50,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - tool: Sewing
               doAfter: 5
@@ -78,7 +78,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: CEBone
               amount: 15
@@ -112,7 +112,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - tool: Sewing
               doAfter: 6
@@ -140,7 +140,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: CEBone
               amount: 30
@@ -150,3 +150,4 @@
               doAfter: 20
     - node: fin
       entity: PrimitiveBoneArmor
+

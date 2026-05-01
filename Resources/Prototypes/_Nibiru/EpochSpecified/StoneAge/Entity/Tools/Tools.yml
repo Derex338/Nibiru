@@ -254,6 +254,7 @@
       - Digging
       - Prying
       - CEShovel
+  - type: Shovel
     useSound:
       path: /Audio/Items/shovel_dig.ogg
   - type: ToolTileCompatible

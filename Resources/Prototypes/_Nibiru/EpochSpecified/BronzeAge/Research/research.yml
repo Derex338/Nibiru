@@ -22,6 +22,7 @@
     - BronzeInlay
     - MoldIngot
     - MoldInlay
+    - StoneCrucible
     #- MoldAnvil
 
 # ══════════════════════════════════════
@@ -48,7 +49,6 @@
     - BronzeHatchet
     - MoldTopAxe
     - PapyrusLeather
-    - PapyrusGrass
 
 - type: technology
   id: BronzeAgriculture
@@ -398,7 +398,7 @@
     - BlackCarpet
     #- NoticeBoard
     #- Harp
-    - Flute
+    #- Flute
 
 - type: technology
   id: BronzeClothing

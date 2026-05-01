@@ -17,7 +17,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 5
@@ -54,9 +54,8 @@
         # Вариант из большой шкуры
         - to: bed
           completed:
-            - !type:SnapToGrid {}
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: BigHide
               amount: 1
@@ -66,9 +65,8 @@
         # Вариант из средних шкур
         - to: bed
           completed:
-            - !type:SnapToGrid {}
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: MediumHide
               amount: 2
@@ -86,3 +84,4 @@
           steps:
             - tool: Screwing
               doAfter: 3
+

@@ -812,7 +812,7 @@
       path: /Audio/Items/shovel_dig.ogg
   - type: Construction
     graph: CrateWoodenGrave
-    node: dug
+    node: fin
 
 - type: entity
   parent: CrateWoodenGrave
@@ -836,7 +836,7 @@
     state: base
   - type: Construction
     graph: CrateStoneGrave
-    node: dug
+    node: fin
 
 - type: entity
   parent: CrateGenericSteel

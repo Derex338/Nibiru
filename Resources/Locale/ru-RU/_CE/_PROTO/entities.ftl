@@ -772,8 +772,8 @@ ent-CEIronOre30 = { ent-CEIronOre1 }
     .desc = { ent-CEIronOre1.desc }
     .suffix = 30
 
-ent-CEDirtBlock1 = грязный блок
-    .desc = Блок отличной чёрной земли.
+ent-CEDirtBlock1 = грязь
+    .desc = Кусок отличной чёрной земли.
 
 ent-CEDirtBlock10 = { ent-CEDirtBlock1 }
     .desc = { ent-CEDirtBlock1.desc }

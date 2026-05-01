@@ -15,7 +15,7 @@
     attackRate: 1
     damage:
       types:
-        Slash: 20
+        Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -158,13 +158,13 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 20
+        Piercing: 15
   - type: Wieldable
   - type: MeleeRequiresWield
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 10
+        Piercing: 5
     attackRate: 1,5
   - type: Construction
     graph: BronzeSpear
@@ -216,7 +216,7 @@
     onlyCollideWhenShot: true
     damage:
       types:
-        Piercing: 25
+        Piercing: 15
   - type: Fixtures
     fixtures:
       fix1:

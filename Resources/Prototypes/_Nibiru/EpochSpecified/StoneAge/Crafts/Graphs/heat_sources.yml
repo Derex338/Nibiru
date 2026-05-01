@@ -17,7 +17,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 6
@@ -61,7 +61,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: MudBlock
               amount: 5
@@ -110,7 +110,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: Thread
               amount: 1
@@ -119,3 +119,4 @@
               doAfter: 2
     - node: fin
       entity: Candle
+

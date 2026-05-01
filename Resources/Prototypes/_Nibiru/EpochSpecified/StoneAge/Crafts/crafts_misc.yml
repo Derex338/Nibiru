@@ -284,3 +284,25 @@
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Medicine (Медицина)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: construction
+  id: BandageCloth
+  name: Бинт
+  graph: BandageCloth
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: AloeCream
+  name: Крем из алоэ
+  graph: AloeCream
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item

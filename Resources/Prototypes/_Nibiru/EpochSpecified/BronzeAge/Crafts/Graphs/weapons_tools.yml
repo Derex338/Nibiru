@@ -11,7 +11,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeInlay
               amount: 1
@@ -36,7 +36,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTopHammerPiece
               amount: 1
@@ -59,7 +59,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTopMacePiece
               amount: 1
@@ -82,7 +82,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTopAxePiece
               amount: 1
@@ -105,7 +105,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTopBattleAxePiece
               amount: 1
@@ -128,7 +128,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTopSpearPiece
               amount: 1
@@ -153,7 +153,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeSwordBladePiece
               amount: 1
@@ -176,7 +176,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTridentPiece
               amount: 1
@@ -201,7 +201,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeTopBattleAxePiece
               amount: 1
@@ -228,7 +228,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzePickaxeBladePiece
               amount: 1
@@ -253,7 +253,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeShovelPiece
               amount: 1
@@ -278,7 +278,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeScytheBladePiece
               amount: 1
@@ -303,7 +303,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeHoeBladePiece
               amount: 1
@@ -328,7 +328,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeKnifeBladePiece
               amount: 1
@@ -353,7 +353,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeClippersPiece
               amount: 1
@@ -378,7 +378,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: BronzeArrowTip
               amount: 1
@@ -401,7 +401,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeXiphosBladePiece
               amount: 1
@@ -426,7 +426,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeDaggerBladePiece
               amount: 1
@@ -451,7 +451,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: BronzeKhapeshBladePiece
               amount: 1
@@ -476,7 +476,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
             - material: BronzeArrowTipArmor
               amount: 1
@@ -499,7 +499,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: WoodStick
               amount: 5
@@ -520,7 +520,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: WoodStick
               amount: 5
@@ -541,7 +541,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: BronzeTopSpearPiece
               amount: 1
@@ -565,18 +565,16 @@
       edges:
         - to: fin
           completed:
-            - !type:SpawnPrototype
-              prototype: ThrowingDart
-              amount: 4
             - !type:PointsFromCraft
-              points: 10
+              points: 2
           steps:
-            - material: IngotBronze
+            - material: BronzeArrowTip
               amount: 1
             - tool: Hammering
               minTemperature: 700
               doAfter: 5
             - tool: Hammering
-              doAfter: 5
+              doAfter: 3
     - node: fin
       entity: ThrowingDart
+

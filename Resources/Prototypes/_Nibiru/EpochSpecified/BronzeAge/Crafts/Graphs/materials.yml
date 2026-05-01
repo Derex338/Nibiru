@@ -11,7 +11,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEWood
               amount: 2
@@ -29,7 +29,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WheelBlank
               amount: 1
@@ -49,11 +49,11 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: Bronze
               amount: 1
-            - tool: Prying # Representing mold handling
+            - tool: Hammering
               doAfter: 8
     - node: fin
       entity: BronzeInlay
@@ -69,13 +69,6 @@
             - material: Leather
               amount: 1
               doAfter: 5
-    - node: fin
-      entity: Papyrus
-
-- type: constructionGraph
-  id: PapyrusGrass
-  start: start
-  graph:
     - node: start
       edges:
         - to: fin
@@ -113,7 +106,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: Silver
               amount: 1
@@ -131,7 +124,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: Gold
               amount: 1
@@ -139,3 +132,4 @@
               doAfter: 3
     - node: fin
       entity: CoinGold
+

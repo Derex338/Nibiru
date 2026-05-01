@@ -414,7 +414,57 @@
       - Prying
       - CEShovel
       - Shoveling
+  - type: Shovel
     useSound:
       path: /Audio/Items/shovel_dig.ogg
   - type: ToolTileCompatible
 
+- type: entity
+  parent: [BaseStoneItem, DrinkVisualsFill]
+  id: StoneCrucible
+  suffix: Nibiru, BronzeAge
+  name: каменный тигель
+  description: Тяжелый сосуд из обожженного камня для переноски расплавленного металла.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: fill-1
+        color: "#2B2B2B"
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
+  - type: SolutionContainerManager
+    solutions:
+      metal:
+        maxVol: 500
+  - type: CoolInWater
+    solution: metal
+  - type: Temperature
+  - type: InjectableSolution
+    solution: metal
+  - type: RefillableSolution
+    solution: metal
+  - type: DrawableSolution
+    solution: metal
+  - type: SolutionContainerVisuals
+    solutionName: metal
+    maxFillLevels: 1
+    fillBaseName: fill-
+  - type: SolutionContainerWhitelist
+    reagents:
+    - CopperMolten
+    - TinMolten
+    - BronzeMolten
+    - GoldMolten
+    - SilverMolten
+  - type: ExaminableSolution
+    solution: metal
+  - type: Construction
+    graph: StoneCrucible
+    node: fin

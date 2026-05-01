@@ -24,7 +24,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - tool: Hammering
               minTemperature: 700
@@ -41,7 +41,7 @@
         - to: assembly
           steps:
             - material: BronzeChestplatePiece
-              amount: 1
+              amount: 2
             - material: Leather
               amount: 4
             - tool: Hammering
@@ -52,7 +52,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - tool: Hammering
               minTemperature: 700
@@ -69,7 +69,7 @@
         - to: assembly
           steps:
             - material: BronzeHelmetPiece
-              amount: 1
+              amount: 2
             - material: Leather
               amount: 2
             - tool: Hammering
@@ -80,7 +80,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - tool: Hammering
               minTemperature: 700
@@ -97,7 +97,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: Leather
               amount: 2
@@ -117,7 +117,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 40
+              points: 5
           steps:
             - material: Cloth
               amount: 1
@@ -135,7 +135,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - material: Cloth
               amount: 3
@@ -173,7 +173,7 @@
             - !type:PointsFromCraft
               points: 5
           steps:
-            - material: Bones
+            - material: CEBone
               amount: 2
               doAfter: 4
     - node: fin
@@ -190,7 +190,7 @@
             - !type:PointsFromCraft
               points: 5
           steps:
-            - material: Bones
+            - material: CEBone
               amount: 3
               doAfter: 4
     - node: fin
@@ -207,7 +207,7 @@
             - !type:PointsFromCraft
               points: 5
           steps:
-            - material: Bones
+            - material: CEBone
               amount: 2
               doAfter: 4
     - node: fin
@@ -285,3 +285,4 @@
               doAfter: 4
     - node: fin
       entity: CEClothingCloakBlacksmithApron
+

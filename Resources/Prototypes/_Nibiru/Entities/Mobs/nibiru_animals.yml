@@ -1,144 +1,480 @@
 - type: entity
-  parent: MobPig
-  id: NibiruMobPig
-  suffix: Nibiru
+  id: MobNibiruPig
+  parent: NibiruAnimalBase
+  name: свинья
+  description: Хрю-хрю.
   components:
+  - type: Sprite
+    sprite: Mobs/Animals/pig.rsi
+    state: pig
+  - type: NibiruTamable
+    diet: Omnivore
+    trustThreshold: 30
+    trainable: true
+  - type: NibiruLivestock
+    canBreed: true
+    offspringPrototype: MobNibiruPiglet
   - type: Butcherable
     spawned:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
       amount: 1
-  - type: PointsFromKill
-    points: 25
-  - type: Body
-    prototype: NibiruAnimal
 
 - type: entity
-  parent: MobGoat
-  id: NibiruMobGoat
-  suffix: Nibiru
+  id: MobNibiruGoat
+  parent: NibiruAnimalBase
+  name: коза
+  description: Рогатое животное.
   components:
+  - type: Sprite
+    sprite: Mobs/Animals/goat.rsi
+    state: goat
+  - type: NibiruTamable
+    diet: Herbivore
+    trustThreshold: 40
+    trainable: true
+  - type: NibiruLivestock
+    canBreed: true
   - type: Butcherable
     spawned:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
       amount: 1
-  - type: PointsFromKill
-    points: 30
-  - type: Body
-    prototype: NibiruAnimal
+
+
 
 - type: entity
-  parent: MobCow
-  id: NibiruMobCow
-  suffix: Nibiru
+  id: MobNibiruChicken
+  parent: NibiruAnimalBase
+  name: курица
+  description: Птица, дающая яйца.
   components:
+  - type: Sprite
+    sprite: Mobs/Animals/chicken.rsi
+    state: chicken
+  - type: NibiruTamable
+    diet: Herbivore
+    trustThreshold: 10
+  - type: NibiruLivestock
+    canBreed: false
+  - type: EggLayer
+    eggSpawn:
+    - id: FoodEgg
+  - type: Butcherable
+    spawned:
+    - id: SmallBodyButcherBird
+      amount: 1
+    - id: HideSmall
+      amount: 1
+
+- type: entity
+  id: NibiruMobDuckMallard
+  parent: NibiruAnimalBase
+  suffix: Nibiru
+  name: утка
+  description: Кряк.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/duck.rsi
+    state: duck-0
+  - type: NibiruTamable
+    diet: Omnivore
+    trustThreshold: 10
+  - type: NibiruNpcBehavior
+    behaviorType: Passive
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcherBird
+      amount: 1
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.0
+    baseSprintSpeed: 1.5
+
+- type: entity
+  id: NibiruMobBat
+  parent: NibiruAnimalBase
+  suffix: Nibiru
+  name: летучая мышь
+  description: Живет в пещерах.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/bat.rsi
+    state: bat
+  - type: NibiruNpcBehavior
+    behaviorType: Passive
+
+- type: entity
+  id: NibiruMobButterfly
+  parent: NibiruAnimalBase
+  suffix: Nibiru
+  name: бабочка
+  description: Красивая.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  - type: NibiruNpcBehavior
+    behaviorType: Passive
+
+- type: entity
+  id: NibiruMobFox
+  parent: NibiruAnimalBase
+  suffix: Nibiru
+  name: лиса
+  description: Хитрая рыжая морда.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/fox.rsi
+    state: fox
+  - type: NibiruTamable
+    diet: Carnivore
+    trustThreshold: 50
+    favoriteFoods: [ FoodMeatSteak ]
+  - type: Butcherable
+    spawned:
+    - id: HideMedium
+      amount: 1
+    - id: MediumBodyButcherFirst
+      amount: 1
+
+- type: entity
+  id: NibiruMobLizard
+  parent: NibiruAnimalBase
+  suffix: Nibiru
+  name: ящерица
+  description: Маленькая рептилия.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/lizard.rsi
+    state: lizard
+  - type: NibiruNpcBehavior
+    behaviorType: Passive
+  - type: Butcherable
+    spawned:
+    - id: HideSmall
+      amount: 1
+    - id: SmallBodyButcher
+      amount: 1
+
+
+
+- type: entity
+  id: NibiruAnimalBase
+  parent: SimpleMobBase
+  abstract: true
+  components:
+  - type: ActiveNPC
+  - type: NPCSteering
+  - type: NibiruNpcBehavior
+    memoryDuration: 60
+    patrolRadius: 10
+    combatStyle: Default
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.0
+    baseSprintSpeed: 3.0
+  - type: NibiruNpcPerception
+    visionRange: 15
+    hearingRange: 10
+  - type: NibiruAnimalMood
+  - type: NibiruAnimalAbility
+  - type: Damageable
+    damageContainer: Biological
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: UserInterface
+    interfaces:
+      enum.NibiruAnimalTrainingUiKey.Key:
+        type: NibiruAnimalTrainingBoundUserInterface
+      enum.NibiruBirdDeliveryUiKey.Key:
+        type: NibiruBirdDeliveryBoundUserInterface
+
+# Волк (Агрессивный, стайный)
+- type: entity
+  id: MobNibiruWolf
+  parent: NibiruAnimalBase
+  name: волк
+  description: Опасный хищник Нибиру. Охотится стаями.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Wolf.rsi
+    state: Wolf
+  - type: NibiruNpcBehavior
+    combatStyle: Default
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.0
+    baseSprintSpeed: 3.0
+  - type: NibiruTamable
+    diet: Carnivore
+    trustThreshold: 70
+    maxTrust: 150
+    favoriteFoods: [ FoodMeatSteak, NibiruFoodMeatTest ]
+    trainable: true
+    possibleCommands: [ Follow, Stay, Attack, Guard, Search ]
+  - type: NibiruSleepCycle
+    isNocturnal: true
+  - type: NibiruFireFear
+    fireDetectionRange: 8
+    fireTags: [ "Fire", "Torch", "Candle", "Lighter" ]
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 15
+  - type: Butcherable
+    spawned:
+    - id: HideMedium
+      amount: 1
+    - id: MediumBodyButcherFirst
+      amount: 1
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+
+# Овца (Мирная, ресурсная, приручаемая)
+- type: entity
+  id: MobNibiruSheep
+  parent: NibiruAnimalBase
+  name: овца
+  description: Пушистое создание. Даёт шерсть.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/goat.rsi
+    state: goat
+  - type: NibiruNpcBehavior
+    behaviorType: Passive
+    fleeRange: 7
+    fleeDistance: 15
+    combatStyle: Default
+  - type: NibiruTamable
+    diet: Herbivore
+    trustThreshold: 40
+    maxTrust: 100
+    acceptedFood: [ FoodApple, FoodWheat ]
+    favoriteFoodTags: [ Fruit ]
+    trainable: true
+    possibleCommands: [ Follow, Stay ]
+  - type: NibiruLivestock
+    canBreed: true
+    offspringPrototype: MobNibiruLamb
+    harvestableResources:
+    - itemPrototype: NibiruWool
+      growthTime: 300
+      yield: 2
+      requiredTool: Scissors
+    femaleSprite:
+      sprite: Mobs/Animals/goat.rsi
+      state: goat
+    maleSprite:
+      sprite: Mobs/Animals/goat.rsi
+      state: goat
+  - type: NibiruLeashable
+  - type: NibiruSleepCycle
+    isNocturnal: false
+    sleepDuration: 300
+    wakeDuration: 600
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.0
+    baseSprintSpeed: 1.5
+  - type: Butcherable
+    spawned:
+    - id: HideMedium
+      amount: 1
+    - id: MediumBodyButcherFirst
+      amount: 1
+
+# Ягненок (Потомство овцы)
+- type: entity
+  id: MobNibiruLamb
+  parent: MobNibiruSheep
+  name: ягненок
+  description: Маленькая овечка.
+  components:
+  - type: Sprite
+    scale: 0.6, 0.6
+  - type: NibiruLivestock
+    canBreed: false
+
+# Корова (Нейтральная, крупная)
+- type: entity
+  id: MobNibiruCow
+  parent: NibiruAnimalBase
+  name: корова
+  description: Даёт молоко. Может боднуть, если разозлить.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/cow.rsi
+    state: cow
+  - type: NibiruNpcBehavior
+    combatStyle: Default
+  - type: NibiruTamable
+    diet: Herbivore
+    trustThreshold: 60
+    maxTrust: 120
+    acceptedFood: [ FoodWheat, FoodApple ]
+    trainable: true
+    possibleCommands: [ Follow, Stay ]
+  - type: NibiruMountFear
+    maxFear: 100
+    panicThreshold: 80
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 20
+  - type: Rideable
+  - type: Buckle
   - type: Butcherable
     spawned:
     - id: HideBig
       amount: 1
     - id: BigBodyButcherFirst
       amount: 1
-  - type: PointsFromKill
-    points: 40
-  - type: Body
-    prototype: NibiruAnimal
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: Milk
+          Quantity: 30
+  - type: Udder
+    reagentId: Milk
+    quantityPerUpdate: 25
+    growthDelay: 30
 
+# Лев (Агрессивный, опасный)
 - type: entity
-  parent: MobChicken
-  id: NibiruMobChicken
-  suffix: Nibiru
+  id: MobNibiruLion
+  parent: NibiruAnimalBase
+  name: лев
+  description: Грозный царь зверей.
   components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Lion/Lion.rsi
+    layers:
+    - state: Lion
+      map: [ "Base" ]
+    scale: 1.4, 1.4
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MobStateVisuals.State:
+        enum.MobState.Dead:
+          Base: { state: DeadLion }
   - type: Butcherable
     spawned:
-    - id: HideSmall
+    - id: ClothingHeadLionSkin
       amount: 1
-    - id: SmallBodyButcher
+    - id: HideBig
       amount: 1
-    - id: CEPenFeather
-      amount: 4
-  - type: PointsFromKill
-    points: 5
-  - type: Body
-    prototype: NibiruAnimal
+    - id: BigBodyButcherFirst
+      amount: 1
+  - type: NibiruNpcBehavior
+    behaviorType: Aggressive
+    combatStyle: Default
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.0
+    baseSprintSpeed: 3.0
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 20
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
 
+# Почтовый голубь (Для проверки доставки)
 - type: entity
-  parent: MobDuckMallard
-  id: NibiruMobDuckMallard
-  suffix: Nibiru
+  id: MobNibiruPigeon
+  parent: NibiruAnimalBase
+  name: почтовый голубь
+  description: Маленькая, но очень важная птица.
   components:
-  - type: Butcherable
-    spawned:
-    - id: HideSmall
-      amount: 1
-    - id: SmallBodyButcher
-      amount: 1
-    - id: CEPenFeather
-      amount: 4
-  - type: PointsFromKill
-    points: 7
-  - type: Body
-    prototype: NibiruAnimal
+  - type: Sprite
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  - type: NibiruNpcBehavior
+    behaviorType: Passive
+  - type: NibiruTamable
+    diet: Herbivore
+    trustThreshold: 20
+    trainable: true
+    possibleCommands: [ Follow, Stay, Deliver ]
+  - type: NibiruBird
+  - type: Item
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.0
+    baseSprintSpeed: 1.5
 
+# Голубятня (Для проверки доставки)
 - type: entity
-  parent: MobBat
-  id: NibiruMobBat
-  suffix: Nibiru
+  id: NibiruPigeonPost
+  name: голубятня
+  description: Место, куда слетаются почтовые птицы.
   components:
-  - type: PointsFromKill
-    points: 5
-  - type: Body
-    prototype: NibiruAnimal
+  - type: Sprite
+    sprite: Objects/Storage/petcarrier.rsi
+    state: icon
+  - type: Transform
+    anchored: true
+  - type: InteractionOutline
+  - type: NibiruPigeonPost
+    postName: Центральная Голубятня
+  - type: ContainerContainer
+    containers:
+      bird_delivery_cage: !type:Container
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
 
+# Северный олень (Для примера разных спрайтов)
 - type: entity
-  parent: MobButterfly
-  id: NibiruMobButterfly
-  suffix: Nibiru
+  id: MobNibiruReindeer
+  parent: NibiruAnimalBase
+  name: северный олень
+  description: Величественное животное севера.
   components:
-  - type: PointsFromKill
-    points: 1
-  - type: Body
-    prototype: NibiruAnimal
-
-- type: entity
-  parent: MobFox
-  id: NibiruMobFox
-  suffix: Nibiru
-  components:
-  - type: Butcherable
-    spawned:
-    - id: HideSmall
-      amount: 1
-    - id: SmallBodyButcher
-      amount: 1
-  - type: PointsFromKill
-    points: 15
-  - type: Body
-    prototype: NibiruAnimal
-
-- type: entity
-  parent: MobLizard
-  id: NibiruMobLizard
-  suffix: Nibiru
-  components:
-  - type: Butcherable
-    spawned:
-    - id: HideSmall
-      amount: 1
-    - id: SmallBodyButcher
-      amount: 1
-  - type: PointsFromKill
-    points: 8
-  - type: Body
-    prototype: NibiruAnimal
-
-- type: entity
-  parent: MobReindeerBuck
-  id: NibiruMobReindeerBuck
-  suffix: Nibiru
-  components:
+  - type: Sprite
+    sprite: Mobs/Animals/reindeer_doe.rsi
+    state: reindeer_doe
+  - type: NibiruNpcBehavior
+    behaviorType: Shy
+    fleeRange: 8
+    fleeDistance: 15
+    combatStyle: Default
+  - type: NibiruLivestock
+    canBreed: true
+    femaleSprite:
+      sprite: Mobs/Animals/reindeer_doe.rsi
+      state: reindeer_doe
+    maleSprite:
+      sprite: Mobs/Animals/reindeer_buck.rsi
+      state: reindeer_buck
+  - type: NibiruTamable
+    diet: Herbivore
+    trustThreshold: 80
+    trainable: true
+    possibleCommands: [ Follow, Stay ]
+  - type: Rideable
+  - type: Buckle
   - type: Butcherable
     spawned:
     - id: HideBig
@@ -147,7 +483,86 @@
       amount: 1
     - id: skull_goat
       amount: 1
-  - type: PointsFromKill
-    points: 45
-  - type: Body
-    prototype: NibiruAnimal
+
+# Предметы
+- type: entity
+  id: NibiruWool
+  name: шерсть
+  description: Мягкая овечья шерсть.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Materials/wool.rsi
+    state: icon
+
+- type: entity
+  id: NibiruMilkBucket
+  name: ведро молока
+  description: Свежее молоко.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Misc/bucket.rsi
+    state: bucket_full
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Milk
+          Quantity: 50
+
+# Собака (Приручаемая, обучаемая)
+- type: entity
+  id: MobNibiruDog
+  parent: NibiruAnimalBase
+  name: собака
+  description: Верный друг. Можно обучать командам.
+  components:
+  - type: Sprite
+    sprite: Mobs/Pets/walter.rsi
+    state: walter
+  - type: NibiruNpcBehavior
+    behaviorType: Neutral
+    combatStyle: Default
+  - type: NibiruTamable
+    diet: Carnivore
+    trainable: true
+    trustThreshold: 40
+    maxTrust: 120
+    favoriteFoods: [ NibiruFoodMeatTest ]
+    possibleCommands: [ Follow, Stay, Attack, Guard, Search ]
+  - type: NibiruLivestock
+    canBreed: true
+    femaleSprite:
+      sprite: Mobs/Pets/walter.rsi
+      state: walter
+    maleSprite:
+      sprite: Mobs/Pets/walter.rsi
+      state: walter
+  - type: NibiruAnimalAbility
+    abilities: [ Guard, Search ]
+    guardRadius: 8
+    searchRadius: 20
+  - type: NibiruLeashable
+  - type: Butcherable
+    spawned:
+    - id: HideMedium
+      amount: 1
+    - id: MediumBodyButcherFirst
+      amount: 1
+
+- type: entity
+  id: ClothingHeadLionSkin
+  parent: ClothingHeadBase
+  name: шкура льва
+  description: Величественная шкура льва, которую можно носить на голове как символ силы.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Lion/LionSkinHead.rsi
+    state: LionSkin
+  - type: Clothing
+    sprite: _Nibiru/Entities/Mobs/Lion/LionSkinHead.rsi
+    state: equipped-HELMET
+  - type: Item
+    size: Large
+

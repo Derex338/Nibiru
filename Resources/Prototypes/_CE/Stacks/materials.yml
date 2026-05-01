@@ -136,4 +136,4 @@
   name: ce-stack-bones-pile
   icon: { sprite: _CE/Objects/Materials/bones.rsi, state: bone_1 }
   spawn: CEBone1
-  maxCount: 10
+  maxCount: 30

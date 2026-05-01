@@ -23,6 +23,7 @@ public sealed class MoldSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TemperatureSystem _temp = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -93,6 +94,9 @@ public sealed class MoldSystem : EntitySystem
         var pos = _transform.GetMapCoordinates(args.uid);
         var uid = Spawn(args.reagent.ScrapEntity, pos);
         EnsureComp<SmeltableOreComponent>(uid, out var comp);
+
+        var reagentName = args.reagent.LocalizedName;
+        _metaData.SetEntityName(uid, Loc.GetString("smelting-metal-scrap-name", ("metal", reagentName)));
 
         var reagentAmount = _solution.GetTotalPrototypeQuantity(args.uid, args.reagent.ID);
         comp.ResultAmount = (float)reagentAmount * 0.8f;

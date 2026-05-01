@@ -1,3 +1,4 @@
+using System;
 using Content.Shared._Nibiru.Armor.Components;
 using Content.Shared._Nibiru.Weapon.Components;
 using Content.Shared.Armor;
@@ -8,6 +9,8 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -22,6 +25,7 @@ public sealed class ArmorPenetrationSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
@@ -39,14 +43,35 @@ public sealed class ArmorPenetrationSystem : EntitySystem
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return;
 
+        ArmorPenetrationComponent? penetration = null;
+
+        if (args.Args.Origin != null)
+        {
+            // Try origin itself first (projectiles, traps)
+            if (!TryComp(args.Args.Origin, out penetration))
+            {
+                // Try hands if it's a mob
+                if (HasComp<HandsComponent>(args.Args.Origin) && _hands.TryGetActiveItem(args.Args.Origin.Value, out var held))
+                {
+                    TryComp(held, out penetration);
+                }
+            }
+        }
+
         foreach (var (damageType, damageValue) in args.Args.Damage.DamageDict)
         {
             if (!component.Protection.TryGetValue(damageType, out var protValue))
                 continue;
 
-            if (protValue > damageValue)
+            var penValue = 0f;
+            if (penetration != null)
+                penetration.Penetration.TryGetValue(damageType, out penValue);
+
+            var effectiveProt = Math.Max(0, protValue - penValue);
+
+            if (effectiveProt > damageValue)
             {
-                args.Args.Damage.DamageDict[damageType] = damageValue * (damageValue / protValue);
+                args.Args.Damage.DamageDict[damageType] = damageValue * (damageValue / effectiveProt);
             }
         }
     }

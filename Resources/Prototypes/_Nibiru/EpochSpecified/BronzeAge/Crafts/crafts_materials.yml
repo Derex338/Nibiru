@@ -57,15 +57,6 @@
   objectType: Item
 
 - type: construction
-  id: PapyrusGrass
-  name: Папирус
-  graph: PapyrusGrass
-  startNode: start
-  targetNode: fin
-  category: construction-category-weapons
-  objectType: Item
-
-- type: construction
   id: BronzeXiphosBladePiece
   name: Лезвие ксифоса
   graph: BronzeXiphosBladePiece

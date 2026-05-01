@@ -30,6 +30,8 @@
     entries:
     - temperatureRange: 400, 500
       transformTo: CEFoodBread
+  - type: Tag
+    tags: [ Food ]
   - type: CEFoodTag
     tags:
     - CEDough
@@ -114,6 +116,8 @@
     entries:
     - temperatureRange: 400, 500
       transformTo: CEFoodBreadBun
+  - type: Tag
+    tags: [ Food ]
   - type: CEFoodTag
     tags:
     - CEDough

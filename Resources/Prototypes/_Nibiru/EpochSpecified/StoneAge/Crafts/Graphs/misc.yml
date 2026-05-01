@@ -11,7 +11,7 @@
         - to: raw
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEDirt
               amount: 1
@@ -34,7 +34,7 @@
         - to: raw
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEDirt
               amount: 2
@@ -57,7 +57,7 @@
         - to: raw
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEDirt
               amount: 1
@@ -80,7 +80,7 @@
         - to: raw
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEDirt
               amount: 1
@@ -107,7 +107,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 5
@@ -127,7 +127,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
@@ -146,7 +146,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
@@ -163,7 +163,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 5
@@ -181,7 +181,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: WoodStick
               amount: 2
@@ -200,21 +200,16 @@
   graph:
     - node: start
       edges:
-        - to: dug
+        - to: fin
           completed:
             - !type:SpawnPrototype
               prototype: CEDirtBlock1
               amount: 2
+            - !type:PointsFromCraft
+              points: 5
           steps:
             - tool: Digging
               doAfter: 8
-    - node: dug
-      edges:
-        - to: fin
-          completed:
-            - !type:PointsFromCraft
-              points: 15
-          steps:
             - material: WoodStick
               amount: 2
               doAfter: 5
@@ -227,21 +222,16 @@
   graph:
     - node: start
       edges:
-        - to: dug
+        - to: fin
           completed:
             - !type:SpawnPrototype
               prototype: CEDirtBlock1
               amount: 2
-          steps:
-            - tool: Digging
-              doAfter: 8
-    - node: dug
-      edges:
-        - to: fin
-          completed:
             - !type:PointsFromCraft
               points: 25
           steps:
+            - tool: Digging
+              doAfter: 8
             - material: StoneBlock
               amount: 1
               doAfter: 10
@@ -261,7 +251,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEWood
               amount: 1
@@ -281,7 +271,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEWood
               amount: 1
@@ -301,7 +291,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
             - material: CEWood
               amount: 2
@@ -319,7 +309,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: CEWood
               amount: 3
@@ -344,7 +334,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - material: CEWood
               amount: 3
@@ -366,7 +356,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: CEWood
               amount: 1
@@ -384,7 +374,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
             - material: CEWood
               amount: 1
@@ -406,7 +396,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: Leather
               amount: 2
@@ -429,7 +419,7 @@
             - !type:PointsFromCraft
               points: 5
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 1
             - tool: Slicing
               doAfter: 5
@@ -447,7 +437,7 @@
             - !type:PointsFromCraft
               points: 5
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 1
             - tool: Slicing
               doAfter: 5
@@ -466,9 +456,9 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 3
             - tool: Slicing
               doAfter: 3
@@ -487,9 +477,9 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
-            - material: WoodPlank
+            - material: CEWood
               amount: 4
             - tool: Slicing
               doAfter: 4
@@ -536,3 +526,50 @@
               doAfter: 1
     - node: fin
       entity: CELighter
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Medicine (Медицина)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: constructionGraph
+  id: BandageCloth
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Cloth
+              amount: 1
+              doAfter: 3
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: Herb
+              amount: 5
+              doAfter: 5
+    - node: fin
+      entity: Gauze1
+
+- type: constructionGraph
+  id: AloeCream
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: CEFoodAloe
+              amount: 2
+              doAfter: 8
+    - node: fin
+      entity: AloeCream1
+

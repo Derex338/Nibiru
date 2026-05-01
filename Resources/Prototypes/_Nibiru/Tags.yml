@@ -11,3 +11,9 @@
   id: Coin # Storage whitelist: CoinPurse
 - type: Tag
   id: BiomeMob
+
+- type: Tag
+  id: Food
+
+- type: Tag
+  id: Plant

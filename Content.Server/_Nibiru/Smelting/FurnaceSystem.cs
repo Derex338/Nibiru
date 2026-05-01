@@ -337,6 +337,15 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("smelting-furnace-examine-empty"));
         }
+
+        if (_solution.TryGetSolution(uid, comp.Solution, out var solutionEnt, out var solution))
+        {
+            args.PushMarkup(Loc.GetString(
+                "smelting-furnace-examine-volume",
+                ("amount", solution.Volume),
+                ("capacity", solution.MaxVolume)
+            ));
+        }
     }
 
     /// <summary>
@@ -387,7 +396,11 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
         if (!_solution.TryGetFitsInDispenser(targetContainer, out var targetSoln, out var targetSolutionData))
             return;
 
-        var transferAmount = FixedPoint2.Min(furnaceSolutionData.Volume, targetSolutionData.AvailableVolume);
+        // Re-fetch furnace solution to ensure up-to-date data
+        if (!_solution.TryGetSolution(furnaceUid, comp.Solution, out var currentFurnaceSoln, out var currentFurnaceSolutionData))
+            return;
+
+        var transferAmount = FixedPoint2.Min(currentFurnaceSolutionData.Volume, targetSolutionData.AvailableVolume);
 
         if (transferAmount <= 0)
         {
@@ -395,8 +408,13 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
             return;
         }
 
-        var split = _solution.SplitSolution(furnaceSoln, transferAmount);
-        _solution.TryAddSolution(targetSoln.Value, split);
+        var split = _solution.SplitSolution(currentFurnaceSoln.Value, transferAmount);
+        if (!_solution.TryAddSolution(targetSoln.Value, split))
+        {
+            // If failed to add, return to furnace
+            _solution.TryAddSolution(currentFurnaceSoln.Value, split);
+            return;
+        }
 
         if (comp.MeltCompleteSound != null)
             _audio.PlayPvs(comp.MeltCompleteSound, furnaceUid);

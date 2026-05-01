@@ -25,6 +25,8 @@
   - type: SliceableFood
     count: 5
     slice: CEFoodCheesePart
+  - type: Tag
+    tags: [ Food ]
   - type: CEFoodTag
     tags:
     - CECheese
@@ -61,6 +63,8 @@
   - type: SliceableFood
     count: 3
     slice: CEFoodCheeseSlice
+  - type: Tag
+    tags: [ Food ]
   - type: CEFoodTag
     tags:
     - CECheese
@@ -95,6 +99,8 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 2.4
+  - type: Tag
+    tags: [ Food ]
   - type: CEFoodTag
     tags:
     - CECheese

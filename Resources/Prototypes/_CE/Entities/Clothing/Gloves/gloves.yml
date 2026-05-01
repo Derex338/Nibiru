@@ -39,3 +39,8 @@
   - type: Construction
     graph: BlacksmithGloves
     node: fin
+  - type: Insulated
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 50

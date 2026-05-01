@@ -960,10 +960,12 @@ public sealed class FactionSystem : EntitySystem
                     return;
                 }
 
-                var query = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
-                while (query.MoveNext(out var mapEntity, out var reg, out _))
+                var oldName = factionComponent.FactionName;
+
+                var regQuery = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
+                while (regQuery.MoveNext(out var mapEntity, out var reg, out _))
                 {
-                    if (reg.Factions.Remove(factionComponent.FactionName, out var oldData))
+                    if (reg.Factions.Remove(oldName, out var oldData))
                     {
                         oldData.Name = name;
                         reg.Factions[name] = oldData;
@@ -973,17 +975,23 @@ public sealed class FactionSystem : EntitySystem
 
                 factionComponent.FactionName = name;
 
-                foreach (var member in factionComponent.Members)
+                // Обновляем имя фракции у всех сущностей мира, а не только у тех кто в списке Members
+                var allFactionQuery = EntityQueryEnumerator<FactionComponent>();
+                while (allFactionQuery.MoveNext(out var entityUid, out var entityFaction))
                 {
-                    if (TryComp<FactionComponent>(member, out var memberComp))
-                    {
-                        memberComp.FactionName = name;
-                        Dirty(member, memberComp);
+                    if (entityFaction.FactionName != oldName || entityUid == player.Value)
+                        continue;
 
+                    entityFaction.FactionName = name;
+                    Dirty(entityUid, entityFaction);
+
+                    // Уведомляем только игроков-людей (у кого есть MindComponent или похожее)
+                    if (factionComponent.Members.Contains(entityUid))
+                    {
                         _popup.PopupEntity(
                             Loc.GetString("faction-name-changed", ("factionName", name)),
-                            member,
-                            member);
+                            entityUid,
+                            entityUid);
                     }
                 }
 

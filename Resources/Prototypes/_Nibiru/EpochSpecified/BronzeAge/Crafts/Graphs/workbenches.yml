@@ -21,7 +21,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 100
+              points: 50
           steps:
             - tool: Hammering
               doAfter: 5
@@ -46,3 +46,4 @@
           steps:
             - tool: Prying
               doAfter: 10
+

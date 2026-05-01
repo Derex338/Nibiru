@@ -22,11 +22,11 @@
               amount: 2
             - !type:DeleteEntity {}
           steps:
-            - tool: Prying
+            - tool: Hammering
               doAfter: 2
         - to: CEZLevelLadderStoneCorner
           steps:
-            - tool: Prying
+            - tool: Hammering
               doAfter: 2
 
     - node: CEZLevelLadderStoneCorner
@@ -34,7 +34,7 @@
       edges:
         - to: CEZLevelLadderStoneCornerInner
           steps:
-            - tool: Prying
+            - tool: Hammering
               doAfter: 2
 
     - node: CEZLevelLadderStoneCornerInner
@@ -42,6 +42,6 @@
       edges:
         - to: CEZLevelLadderStone
           steps:
-            - tool: Prying
+            - tool: Hammering
               doAfter: 2
 

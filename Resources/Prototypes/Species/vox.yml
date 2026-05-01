@@ -1,18 +1,18 @@
-- type: species
-  id: Vox
-  name: species-name-vox
-  roundStart: true
-  prototype: MobVox
-  sprites: MobVoxSprites
-  markingLimits: MobVoxMarkingLimits
-  dollPrototype: MobVoxDummy
-  skinColoration: VoxFeathers
-  defaultSkinTone: "#6c741d"
-  maleFirstNames: NamesVox
-  femaleFirstNames: NamesVox
-  naming: First
-  sexes:
-  - Unsexed
+# - type: species
+#   id: Vox
+#   name: species-name-vox
+#   roundStart: true
+#   prototype: MobVox
+#   sprites: MobVoxSprites
+#   markingLimits: MobVoxMarkingLimits
+#   dollPrototype: MobVoxDummy
+#   skinColoration: VoxFeathers
+#   defaultSkinTone: "#6c741d"
+#   maleFirstNames: NamesVox
+#   femaleFirstNames: NamesVox
+#   naming: First
+#   sexes:
+#   - Unsexed
 
 - type: speciesBaseSprites
   id: MobVoxSprites

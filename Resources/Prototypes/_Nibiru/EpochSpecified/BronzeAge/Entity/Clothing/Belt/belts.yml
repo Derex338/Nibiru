@@ -6,10 +6,10 @@
   description: Простые кожаные ножны с бронзовыми вставками, предназначенные для хранения мечей.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/sheath.rsi
-    state: sheath
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Belt/Nozni.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Belt/sheath.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Belt/Nozni.rsi
   - type: Item
     size: Large
     shape:

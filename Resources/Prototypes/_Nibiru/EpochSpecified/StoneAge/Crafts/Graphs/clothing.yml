@@ -17,7 +17,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: Herb
               amount: 3
@@ -40,7 +40,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: Cloth
               amount: 3
@@ -65,7 +65,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: Herb
               amount: 3
@@ -88,7 +88,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
             - material: Herb
               amount: 4
@@ -111,7 +111,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
             - material: Herb
               amount: 5
@@ -134,7 +134,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: SmallHide
               amount: 1
@@ -158,7 +158,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: Herb
               amount: 5
@@ -189,7 +189,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - tool: Sewing
               doAfter: 5
@@ -219,7 +219,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 30
+              points: 5
           steps:
             - tool: Sewing
               doAfter: 6
@@ -249,7 +249,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 50
+              points: 5
           steps:
             - tool: Sewing
               doAfter: 7
@@ -268,7 +268,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 20
+              points: 5
           steps:
             - material: BigHide
               amount: 1
@@ -328,7 +328,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 15
+              points: 5
           steps:
             - material: Cloth
               amount: 4
@@ -391,3 +391,4 @@
               doAfter: 5
     - node: fin
       entity: CEClothingHeadStrawHat
+

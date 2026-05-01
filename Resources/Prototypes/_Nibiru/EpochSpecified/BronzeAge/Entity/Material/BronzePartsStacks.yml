@@ -39,7 +39,7 @@
   name: бронзовая вставка
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi, state: icon }
   spawn: BronzeInlay
-  maxCount: 1
+  maxCount: 2
 
 - type: stack
   id: BronzeArrowTip
@@ -163,14 +163,14 @@
 - type: stack
   id: BronzeHelmetPiece
   name: бронзовая основа шлема
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi, state: piece }
   spawn: BronzeHelmetPiece
   maxCount: 1
 
 - type: stack
   id: BronzeChestplatePiece
   name: бронзовая деталь нагрудника
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi, state: piece }
   spawn: BronzeChestplatePiece
   maxCount: 1
 
@@ -210,18 +210,25 @@
   maxCount: 1
 
 - type: stack
+  id: BronzeXiphosBladePiece
+  name: бронзовое лезвие ксифоса
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi, state: blade }
+  spawn: BronzeXiphosBladePiece
+  maxCount: 1
+
+- type: stack
   id: WheelBlank
   name: заготовка колеса
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Materials/Materials.rsi, state: stone }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: frame }
   spawn: WheelBlank
   maxCount: 1
 
 - type: stack
   id: WoodenWheel
   name: деревянное колесо
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Materials/Materials.rsi, state: stone }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: icon }
   spawn: WoodenWheel
-  maxCount: 1
+  maxCount: 2
 
 - type: stack
   id: CoinBronze
@@ -451,7 +458,7 @@
   stackEntity: BronzeHelmetPiece
   name: основа шлема
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi, state: piece }
   color: "#CD7F32"
   price: 1
 
@@ -460,7 +467,7 @@
   stackEntity: BronzeChestplatePiece
   name: деталь нагрудника
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi, state: piece }
   color: "#CD7F32"
   price: 1
 
@@ -506,6 +513,15 @@
   name: лезвие хопеша
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  color: "#CD7F32"
+  price: 1
+
+- type: material
+  id: BronzeXiphosBladePiece
+  stackEntity: BronzeXiphosBladePiece
+  name: лезвие ксифоса
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi, state: blade }
   color: "#CD7F32"
   price: 1
 

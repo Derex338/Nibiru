@@ -27,6 +27,8 @@
   - type: CEFoodTag
     tags:
     - CEMeat
+  - type: Tag
+    tags: [ Food, Meat ]
 
 - type: entity
   id: CEFoodMeatSliceBase

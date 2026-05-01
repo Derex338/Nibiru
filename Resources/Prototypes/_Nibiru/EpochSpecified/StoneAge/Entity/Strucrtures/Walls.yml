@@ -283,6 +283,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
+  - type: NibiruLeashAnchor
 
 - type: entity
   parent: BaseFenceStockadeSharp

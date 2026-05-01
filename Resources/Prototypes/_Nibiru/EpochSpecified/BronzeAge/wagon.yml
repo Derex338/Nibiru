@@ -1,9 +1,27 @@
 - type: entity
+  name: каркас повозки
+  id: WagonFrame
+  parent: BaseStructure
+  description: Незавершенный каркас деревянной повозки.
+  components:
+    - type: Transform
+      anchored: false
+    - type: Sprite
+      sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/Wagon.rsi
+      state: wagon
+    - type: InteractionOutline
+    - type: Construction
+      graph: Wagon
+      node: frame
+
+- type: entity
   name: повозка
   id: Wagon
   parent: [BaseStructureDynamic, StructureWheeled]
   description: Деревянная повозка для перевозки грузов.
   components:
+    - type: Transform
+      anchored: false
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/Wagon.rsi
       state: wagon

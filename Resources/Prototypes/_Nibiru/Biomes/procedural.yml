@@ -1,19 +1,3 @@
-# =============================================================
-# NIBIRU PROCEDURAL BIOME GENERATION
-# =============================================================
-# Структура:
-#   Листовые биомы (конкретное содержимое)
-#     -> Пак биомов (≤3 штуки через BiomeMetaLayer)
-#     -> Мега-пак (combinator of packs)
-#
-# Реки / озёра используют единый сид (seed: 99, frequency: 0.003)
-# во всех биомах чтобы продолжались через границы.
-# =============================================================
-
-# =============================================================
-# МЕГА-БИОМ — собирает паки по 2-3 штуки
-# =============================================================
-
 - type: biomeTemplate
   id: NibiruContinental
   layers:
@@ -202,7 +186,7 @@
         noiseType: OpenSimplex2
         frequency: 1
       divisions: 1
-      threshold: 0.55
+      threshold: 0.65
       decals:
         - CEFloraGrass1
         - CEFloraGrass2
@@ -237,12 +221,12 @@
         - CEStoneBlock1
     # --- Высокие кусты (редкие) ---
     - !type:BiomeEntityLayer
-      threshold: 0.7
+      threshold: 0.4
       noise:
         seed: 2
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 1
+        frequency: 2.5
       allowedTiles:
         - CEGrass
         - CEGrassLight
@@ -276,48 +260,48 @@
         - CEPlantAppleTreeGrown
     # --- Культуры полей (кучками) ---
     - !type:BiomeEntityLayer
-      threshold: 0.85
+      threshold: 0.88
       noise:
         seed: 1011
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.150
+        frequency: 0.3
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantWheatGrown
     - !type:BiomeEntityLayer
-      threshold: 0.86
+      threshold: 0.85
       noise:
         seed: 1012
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.145
+        frequency: 0.35
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantPotatoGrown
     - !type:BiomeEntityLayer
-      threshold: 0.87
+      threshold: 0.84
       noise:
         seed: 1013
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.155
+        frequency: 0.32
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantCabbageGrown
     - !type:BiomeEntityLayer
-      threshold: 0.85
+      threshold: 0.84
       noise:
         seed: 1014
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.148
+        frequency: 0.35
       allowedTiles:
         - CEGrass
         - CEGrassLight
@@ -329,106 +313,106 @@
         seed: 1015
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.152
+        frequency: 0.3
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantCucumberGrown
     - !type:BiomeEntityLayer
-      threshold: 0.84
+      threshold: 0.85
       noise:
         seed: 1016
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.150
+        frequency: 0.32
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantOnionGrown
     - !type:BiomeEntityLayer
-      threshold: 0.90
+      threshold: 0.88
       noise:
         seed: 1017
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.149
+        frequency: 0.3
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantCornGrown
     - !type:BiomeEntityLayer
-      threshold: 0.87
+      threshold: 0.84
       noise:
         seed: 1018
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.153
+        frequency: 0.35
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantCottonGrown
     - !type:BiomeEntityLayer
-      threshold: 0.83
+      threshold: 0.82
       noise:
         seed: 1019
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.157
+        frequency: 0.38
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantTomatoesGrown
     - !type:BiomeEntityLayer
-      threshold: 0.86
+      threshold: 0.85
       noise:
         seed: 1020
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.154
+        frequency: 0.33
       allowedTiles:
         - CEGrass
         - CEGrassLight
       entities:
         - CEPlantPepperGrown
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2000
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassLight
-      entities:
-        - NibiruMobCow
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2001
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassLight
-      entities:
-        - NibiruMobPig
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2002
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassLight
-      entities:
-        - NibiruMobChicken
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2000
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassLight
+    #  entities:
+    #    - NibiruMobCow
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2001
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassLight
+    #  entities:
+    #    - NibiruMobPig
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2002
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassLight
+    #  entities:
+    #    - NibiruMobChicken
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -504,7 +488,7 @@
         - CEGrass
         - CEGrassLight
       divisions: 2
-      threshold: 0.2
+      threshold: 0.45
       noise:
         seed: 6
         noiseType: Cellular
@@ -644,61 +628,61 @@
       entities:
         - CEPlantPepperGrown
     - !type:BiomeEntityLayer
-      threshold: 0.88
+      threshold: 0.72
       noise:
         seed: 1025
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.152
+        frequency: 0.3
       allowedTiles:
         - CEGrass
       entities:
         - CEPlantGarlicGrown
     - !type:BiomeEntityLayer
-      threshold: 0.84
+      threshold: 0.75
       noise:
         seed: 1026
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.150
+        frequency: 0.25
       allowedTiles:
         - CEGrass
       entities:
         - CEPlantSunflowerGrown
     - !type:BiomeEntityLayer
-      threshold: 0.84
+      threshold: 0.7
       noise:
         seed: 1027
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.150
+        frequency: 0.35
       allowedTiles:
         - CEGrass
       entities:
         - CEPlantPoppyGrown
     - !type:BiomeEntityLayer
-      threshold: 0.84
+      threshold: 0.72
       noise:
         seed: 1028
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 0.150
+        frequency: 0.3
       allowedTiles:
         - CEGrass
       entities:
         - CEPlantAloeGrown
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.995
-      noise:
-        seed: 2003
-        noiseType: OpenSimplex2
-        frequency: 1
-      allowedTiles:
-        - CEGrass
-      entities:
-        - NibiruMobButterfly
-        - MobHorseRideable
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2003
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CEGrass
+    #  entities:
+    #    - NibiruMobButterfly
+    #    - MobHorseRideable
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -753,7 +737,7 @@
         - CEGrass
         - CEGrassTall
       divisions: 1
-      threshold: -0.55
+      threshold: -0.3
       noise:
         seed: 11
         noiseType: Cellular
@@ -1008,39 +992,39 @@
       entities:
         - CEPlantAppleTreeGrown
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2004
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassTall
-      entities:
-        - NibiruMobReindeerBuck
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2005
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassTall
-      entities:
-        - NibiruMobFox
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2006
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassTall
-      entities:
-        - NibiruMobDuckMallard
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2004
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassTall
+    #  entities:
+    #    - NibiruMobReindeerBuck
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2005
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassTall
+    #  entities:
+    #    - NibiruMobFox
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2006
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassTall
+    #  entities:
+    #    - NibiruMobDuckMallard
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -1181,28 +1165,28 @@
       entities:
         - CEPlantAppleTreeGrown
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2004
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassLight
-      entities:
-        - NibiruMobReindeerBuck
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2005
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEGrassLight
-      entities:
-        - NibiruMobFox
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2004
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassLight
+    #  entities:
+    #    - NibiruMobReindeerBuck
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2005
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEGrassLight
+    #  entities:
+    #    - NibiruMobFox
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -1377,39 +1361,39 @@
       entities:
         - CEPlantPumpkinGrown
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2004
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEDirt
-      entities:
-        - NibiruMobReindeerBuck
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2005
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEDirt
-      entities:
-        - NibiruMobFox
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2006
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-        - CEDirt
-      entities:
-        - NibiruMobDuckMallard
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2004
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEDirt
+    #  entities:
+    #    - NibiruMobReindeerBuck
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2005
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEDirt
+    #  entities:
+    #    - NibiruMobFox
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.998
+    #  noise:
+    #    seed: 2006
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.5
+    #  allowedTiles:
+    #    - CEGrass
+    #    - CEDirt
+    #  entities:
+    #    - NibiruMobDuckMallard
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -1510,12 +1494,12 @@
         - CEStoneBlock1
     # --- Кусты (редко) ---
     - !type:BiomeEntityLayer
-      threshold: 0.78
+      threshold: 0.45
       noise:
-        seed: 34
+        seed: 10
         noiseType: OpenSimplex2
         fractalType: FBm
-        frequency: 1.5
+        frequency: 2.5
       allowedTiles:
         - CEGrass
       entities:
@@ -1561,26 +1545,26 @@
       entities:
         - CEPlantPumpkinGrown
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2004
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-      entities:
-        - NibiruMobReindeerBuck
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2005
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CEGrass
-      entities:
-        - NibiruMobFox
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2004
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CEGrass
+    #  entities:
+    #    - NibiruMobReindeerBuck
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2005
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CEGrass
+    #  entities:
+    #    - NibiruMobFox
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -1688,28 +1672,28 @@
         - CEFloraTreeDead
         - CEFloraTreeDeadSmall
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2007
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CESnow
-        - CESnowDeep
-      entities:
-        - NibiruMobGoat
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2005
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CESnow
-        - CESnowDeep
-      entities:
-        - NibiruMobFox
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2007
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CESnow
+    #    - CESnowDeep
+    #  entities:
+    #    - NibiruMobGoat
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2005
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CESnow
+    #    - CESnowDeep
+    #  entities:
+    #    - NibiruMobFox
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -1795,26 +1779,26 @@
         - CEFloraTreeSnow
         - CEFloraTreeDead
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2007
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CESnow
-      entities:
-        - NibiruMobGoat
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2005
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CESnow
-      entities:
-        - NibiruMobFox
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2007
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CESnow
+    #  entities:
+    #    - NibiruMobGoat
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2005
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CESnow
+    #  entities:
+    #    - NibiruMobFox
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -1923,16 +1907,16 @@
         - Skull_goat
         - Skull_human
     # --- Животные ---
-    - !type:BiomeEntityLayer
-      threshold: 0.998
-      noise:
-        seed: 2008
-        noiseType: OpenSimplex2
-        frequency: 0.5
-      allowedTiles:
-        - CESand
-      entities:
-        - NibiruMobLizard
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.985
+    #  noise:
+    #    seed: 2008
+    #    noiseType: OpenSimplex2
+    #    frequency: 1.5
+    #  allowedTiles:
+    #    - CESand
+    #  entities:
+    #    - NibiruMobLizard
     # --- Тайлы ---
     - !type:BiomeTileLayer
       threshold: -1.0

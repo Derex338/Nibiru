@@ -8,7 +8,7 @@
     equipDelay: 1
     unequipDelay: 1
     slots:
-    - cloak
+    - outerClothing
   - type: Sprite
     state: icon
 

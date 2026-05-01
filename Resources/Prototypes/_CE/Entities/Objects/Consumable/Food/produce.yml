@@ -1,6 +1,14 @@
 - type: entity
-  id: CEWheat
+  abstract: true
+  id: BaseCEProduce
   parent: FoodInjectableBase
+  components:
+  - type: Tag
+    tags: [ Food, Vegetable, Plant ]
+
+- type: entity
+  id: CEWheat
+  parent: BaseCEProduce
   name: wheat bushel
   description: You have the choice of either planting the grains again or grinding them into flour.
   categories: [ ForkFiltered ]
@@ -36,7 +44,7 @@
 
 - type: entity
   id: CECotton
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   name: cotton
   description: A plant raw fiber used to make cotton fabric.
   categories: [ ForkFiltered ]
@@ -77,7 +85,7 @@
 
 - type: entity
   id: CEFoodCabbage
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: cabbage
   description: Green edible ball.
@@ -120,7 +128,7 @@
 
 - type: entity
   id: CEFoodCabbageSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: cabbage leaf
   description: Time to make green salads.
@@ -157,7 +165,7 @@
 
 - type: entity
   id: CEFoodPumpkin
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: pumpkin
   description: Big, cool pumpkin.
@@ -200,7 +208,7 @@
 
 - type: entity
   id: CEFoodPumpkinSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: pumpkin slice
   description: Sliced pumpkin, ready to be cooked or eaten raw.
@@ -236,7 +244,7 @@
 
 - type: entity
   id: CEFoodPotato
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: potato
   description: Cute potato.
@@ -283,7 +291,7 @@
 
 - type: entity
   id: CEFoodCucumber
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: cucumber
   description: An oblong green vegetable. Refreshing!
@@ -329,7 +337,7 @@
 
 - type: entity
   id: CEFoodCucumberSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: cucumber slice
   description: An evenly cut cucumber, still as green and watery.
@@ -360,7 +368,7 @@
 
 - type: entity
   id: CEFoodTomatoes
-  parent: [FoodInjectableBase, ItemHeftyBase]
+  parent: [BaseCEProduce, ItemHeftyBase]
   categories: [ ForkFiltered ]
   name: tomatoes
   description: A red, juicy tomato. You just want to throw it in someone's face!
@@ -429,7 +437,7 @@
 
 - type: entity
   id: CEFoodTomatoesSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: tomato slice
   description: Thin red tomato slice. It's no longer as nice to throw at people as whole tomatoes.
@@ -461,7 +469,7 @@
 
 - type: entity
   id: CEFoodApple
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: apple
   description: A fruit for lovers of a quick snack.
@@ -499,6 +507,8 @@
     count: 4
     sliceTime: 1.5
     slice: CEFoodAppleSlice
+  - type: Tag
+    tags: [ Food, Fruit, Plant ]
   - type: CEFoodTag
     tags:
     - CEFruits
@@ -514,7 +524,7 @@
 
 - type: entity
   id: CEFoodAppleSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: apple slice
   description: Small slices to eat at one time.
@@ -541,6 +551,8 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 1.4
+  - type: Tag
+    tags: [ Food, Fruit, Plant ]
   - type: CEFoodTag
     tags:
     - CEFruits
@@ -548,7 +560,7 @@
 
 - type: entity
   id: CEFoodPepper
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: pepper
   description: Red and sweetish.
@@ -590,7 +602,7 @@
 
 - type: entity
   id: CEFoodGarlic
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: garlic
   description: A bulb of garlic, full of flavor and pungency.
@@ -631,7 +643,7 @@
 
 - type: entity
   id: CEFoodGarlicClove
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: garlic clove
   description: A single clove of garlic, potent and aromatic.
@@ -663,7 +675,7 @@
 
 - type: entity
   id: CEFoodCorn
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: ear of corn
   description: Needs some butter! And some cooking...
@@ -705,7 +717,7 @@
 
 - type: entity
   id: CEFoodCornKernel
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: corn kernel
   description: A single kernel of corn.
@@ -733,7 +745,7 @@
 
 - type: entity
   id: CEFoodCarrot
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: carrot
   description: A bright orange carrot, crunchy and sweet.
@@ -775,7 +787,7 @@
 
 - type: entity
   id: CEFoodCarrotSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: carrot slice
   description: A neatly sliced piece of carrot.
@@ -803,7 +815,7 @@
 
 - type: entity
   id: CEFoodPepperSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: pepper slice
   description: Still as red and sweetish.
@@ -831,7 +843,7 @@
 
 - type: entity
   id: CEFoodOnion
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: onion
   description: If you eat too much, you can cry tears of joy.
@@ -873,7 +885,7 @@
 
 - type: entity
   id: CEFoodOnionSlice
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: onion ring
   description: A more tolerable and easy to eat onion ring.
@@ -902,7 +914,7 @@
 
 - type: entity
   id: CEFoodChanterelle
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: chanterelle
   description: A delicious mushroom.
@@ -931,6 +943,8 @@
           Quantity: 3.47
   - type: CESeed
     plantProto: CEPlantChanterelle
+  - type: Tag
+    tags: [ Food, Mushroom, Plant ]
   - type: Temperature
     currentTemperature: 290
   - type: InternalTemperature
@@ -939,7 +953,7 @@
 
 - type: entity
   id: CEFoodSunflowerHead
-  parent: FoodInjectableBase
+  parent: BaseCEProduce
   categories: [ ForkFiltered ]
   name: sunflower head
   description: A cut flower from a cheerful, sun-loving plant. Inside are lots of delicious seeds.

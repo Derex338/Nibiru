@@ -1,0 +1,23 @@
+- type: entity
+  id: NibiruFoodMeatTest
+  name: тестовое мясо
+  description: Сочное мясо для проверки приручения.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/meat.rsi
+    state: pig_meat1
+  - type: Tag
+    tags: [ Food, Meat ]
+
+- type: entity
+  id: NibiruFoodVegetableTest
+  name: тестовый овощ
+  description: Свежий овощ для проверки приручения.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/carrot.rsi
+    state: base1
+  - type: Tag
+    tags: [ Food, Vegetable, Plant ]

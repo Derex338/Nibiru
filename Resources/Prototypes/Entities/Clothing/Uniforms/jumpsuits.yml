@@ -1236,6 +1236,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+  - type: Construction
+    graph: GladiatorUniform
+    node: fin
 
 - type: entity
   parent: ClothingUniformBase

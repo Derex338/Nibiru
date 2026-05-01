@@ -37,6 +37,7 @@
         - MidImpassable
   - type: Climbable
     delay: 1.5
+  - type: NibiruLeashAnchor
 
 - type: entity
   parent:

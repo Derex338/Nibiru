@@ -9,6 +9,8 @@
     slots:
     - HEAD
     quickEquip: false
+  - type: Tag
+    tags: [ Food, Plant ]
   - type: Item
     size: Tiny
   - type: FlavorProfile
@@ -44,6 +46,8 @@
   name: aloe
   description: A fragrant plant with soothing properties.
   components:
+  - type: Tag
+    tags: [ Food, Plant ]
   - type: Item
     size: Tiny
   - type: FlavorProfile
@@ -58,6 +62,9 @@
     available:
       - random:
           produce: ""
+  - type: Material
+  - type: Stack
+    stackType: CEFoodAloe
   - type: SolutionContainerManager
     solutions:
       food:
@@ -71,3 +78,19 @@
     count: 2
     sliceTime: 1.5
     slice: CESeedAloe
+
+- type: stack
+  id: CEFoodAloe
+  name: aloe
+  icon: { sprite: _Nibiru/Flora/Plants/aloe.rsi, state: produce }
+  spawn: CEFoodAloe
+  maxCount: 30
+
+- type: material
+  id: CEFoodAloe
+  stackEntity: CEFoodAloe
+  name: aloe
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/Flora/Plants/aloe.rsi, state: produce }
+  color: "#80ffff"
+  price: 2

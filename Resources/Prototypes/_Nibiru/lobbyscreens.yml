@@ -1,0 +1,31 @@
+- type: lobbyBackground
+  id: NibiruCoast
+  background: /Textures/_Nibiru/LobbyScreens/coast.webp
+
+- type: lobbyBackground
+  id: NibiruForest
+  background: /Textures/_Nibiru/LobbyScreens/forest.webp
+
+- type: lobbyBackground
+  id: NibiruMountain
+  background: /Textures/_Nibiru/LobbyScreens/mountain.webp
+
+- type: lobbyBackground
+  id: NibiruNorth
+  background: /Textures/_Nibiru/LobbyScreens/north.webp
+
+- type: lobbyBackground
+  id: NibiruPlain
+  background: /Textures/_Nibiru/LobbyScreens/plain.webp
+
+- type: lobbyBackground
+  id: NibiruPlainTree
+  background: /Textures/_Nibiru/LobbyScreens/plain_tree.webp
+
+- type: lobbyBackground
+  id: NibiruRocks
+  background: /Textures/_Nibiru/LobbyScreens/rocks.webp
+
+- type: lobbyBackground
+  id: NibiruTree
+  background: /Textures/_Nibiru/LobbyScreens/tree.webp

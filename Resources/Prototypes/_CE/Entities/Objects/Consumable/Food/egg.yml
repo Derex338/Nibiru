@@ -63,6 +63,9 @@
     conductivity: 0.456
   - type: Tag
     tags:
+    - Food
+    - Meat
+    - Egg
     - CEFitInFryingPan
   - type: CEFoodTag
     tags:

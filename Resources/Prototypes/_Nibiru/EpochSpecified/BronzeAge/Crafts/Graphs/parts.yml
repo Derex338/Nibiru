@@ -11,7 +11,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -29,7 +29,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -47,7 +47,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -65,7 +65,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -83,7 +83,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -101,7 +101,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 3
@@ -119,7 +119,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -137,7 +137,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 3
@@ -155,7 +155,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -173,7 +173,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 3
@@ -191,7 +191,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 4
@@ -209,7 +209,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -227,7 +227,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -245,7 +245,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -263,7 +263,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 3
@@ -281,7 +281,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -299,7 +299,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -317,7 +317,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 5
@@ -335,7 +335,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 10
@@ -353,7 +353,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 25
@@ -371,7 +371,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -389,7 +389,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -407,7 +407,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
@@ -425,7 +425,7 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 2
@@ -443,10 +443,11 @@
         - to: fin
           completed:
             - !type:PointsFromCraft
-              points: 10
+              points: 5
           steps:
             - material: IngotBronze
               amount: 1
               doAfter: 20
     - node: fin
       entity: BronzeXiphosBladePiece
+

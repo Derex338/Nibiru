@@ -1119,6 +1119,9 @@
     sprite: Clothing/Head/Hats/hetman_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hetman_hat.rsi
+  - type: Construction
+    graph: HetmanHat
+    node: fin
 
 - type: entity
   parent: ClothingHeadBase
@@ -1213,6 +1216,9 @@
     sprite: Clothing/Head/Hats/gladiator.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/gladiator.rsi
+  - type: Construction
+    graph: GladiatorHelmet
+    node: fin
   - type: HideLayerClothing
     layers:
       Hair: HEAD

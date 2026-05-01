@@ -1,0 +1,54 @@
+- type: entity
+  id: ActionNibiruAnimalFollow
+  parent: BaseAction
+  name: Следуй за мной
+  description: Приказывает всем вашим животным следовать за вами.
+  components:
+  - type: InstantAction
+    icon: { sprite: Mobs/Pets/corgi.rsi, state: corgi }
+    event: !type:NibiruAnimalFollowActionEvent
+      speech: Следуй за мной!
+
+- type: entity
+  id: ActionNibiruAnimalStay
+  parent: BaseAction
+  name: Стоять
+  description: Приказывает всем вашим животным оставаться на месте.
+  components:
+  - type: InstantAction
+    icon: { sprite: Markers/cross.rsi, state: cross }
+    event: !type:NibiruAnimalStayActionEvent
+      speech: Стоять!
+
+- type: entity
+  id: ActionNibiruAnimalAttack
+  parent: BaseAction
+  name: Взять!
+  description: Укажите цель для атаки вашими животными.
+  components:
+  - type: EntityTargetAction
+    icon: { sprite: Objects/Weapons/Melee/sword.rsi, state: icon }
+    event: !type:NibiruAnimalAttackActionEvent
+      speech: Взять его!
+
+- type: entity
+  id: ActionNibiruAnimalSearch
+  parent: BaseAction
+  name: Ищи!
+  description: Дать питомцу понюхать предмет, чтобы найти его владельца по ДНК или отпечаткам.
+  components:
+  - type: EntityTargetAction
+    icon: { sprite: Mobs/Pets/corgi.rsi, state: corgi }
+    event: !type:NibiruAnimalSearchActionEvent
+      speech: Ищи!
+
+- type: entity
+  id: ActionNibiruAnimalDeliver
+  parent: BaseAction
+  name: Доставка
+  description: Отправить птицу в известное почтовое отделение.
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Misc/box.rsi, state: box_6 }
+    event: !type:NibiruAnimalDeliverActionEvent
+      speech: Лети!

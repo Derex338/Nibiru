@@ -22,6 +22,22 @@
     - WoodBat
     - FlintAndSteel
 
+- type: technology
+  id: PrimitiveMedicine
+  name: Примитивная медицина
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: gauze
+  discipline: StoneAge
+  tier: 1
+  cost: 50
+  technologyPrerequisites:
+    - PrimitiveProcessing
+  position: 1, 0
+  craftUnlocks:
+    - BandageCloth
+    - AloeCream
+
 # ══════════════════════════════════════
 # ВЕТКА 1: ОРУЖИЕ (слева, position: -2, y)
 # ══════════════════════════════════════
@@ -304,6 +320,7 @@
     - WoodenSignRight
     - CEZLevelLadderDirt
     - CEZLevelLadderDirtCorner
+    - MultiLevelRope
 
 - type: technology
   id: WoodWorking

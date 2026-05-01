@@ -161,6 +161,9 @@
     sprite: Clothing/Shoes/Specific/wizard.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/wizard.rsi
+  - type: Construction
+    graph: WizardShoes
+    node: fin
 
 - type: entity
   parent: [ClothingShoesBase, BaseChameleon]

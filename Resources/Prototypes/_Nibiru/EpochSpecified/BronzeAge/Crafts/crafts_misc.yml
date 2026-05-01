@@ -13,7 +13,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerCargo
@@ -26,7 +25,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner_cargo
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerEngineering
@@ -39,7 +37,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner_engineering
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerMedical
@@ -52,7 +49,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner_medical
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerRevolution
@@ -65,7 +61,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner_revolution
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerSyndicate
@@ -78,7 +73,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner_syndicate
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerScience
@@ -91,7 +85,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner_science
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerBlue
@@ -104,7 +97,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner-blue
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerRed
@@ -117,7 +109,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner-red
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerYellow
@@ -130,7 +121,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner-yellow
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BannerGreen
@@ -143,7 +133,6 @@
     sprite: Structures/Decoration/banner.rsi
     state: banner-green
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: BronzeBell
@@ -152,11 +141,7 @@
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Specific/church-bell.rsi
-    state: church-bell
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: Harp
@@ -192,7 +177,6 @@
   targetNode: fin
   category: Decorations
   objectType: Structure
-  placementMode: SnapToGrid
 
 - type: construction
   id: Bell
@@ -392,3 +376,13 @@
     - LoomWorkbench
 
 
+- type: construction
+  id: StoneCrucible
+  name: Каменный тигель
+  graph: StoneCrucible
+  startNode: start
+  targetNode: fin
+  category: construction-category-utilities
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench
