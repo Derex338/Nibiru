@@ -45,7 +45,6 @@ namespace Content.Server.Database
                 try
                 {
                     await ctx.Database.MigrateAsync();
-                    await EnsureFactionColumnsAsync(ctx);
                 }
                 finally
                 {
@@ -58,14 +57,7 @@ namespace Content.Server.Database
             InitNotificationListener(connectionString);
         }
 
-        private async Task EnsureFactionColumnsAsync(PostgresServerDbContext db)
-        {
-            try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS faction_name TEXT DEFAULT '';"); } catch { }
-            try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS faction_description TEXT DEFAULT '';"); } catch { }
-            try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS faction_color TEXT DEFAULT '';"); } catch { }
-            try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS faction_icon TEXT DEFAULT '';"); } catch { }
-            try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE profile ADD COLUMN IF NOT EXISTS faction_recruiting BOOLEAN DEFAULT TRUE;"); } catch { }
-        }
+
 
         #region Ban
         public override async Task<ServerBanDef?> GetServerBanAsync(int id)

@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -802,6 +802,30 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_name");
 
+                    b.Property<string>("FactionColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_color");
+
+                    b.Property<string>("FactionDescription")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_description");
+
+                    b.Property<string>("FactionIcon")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_icon");
+
+                    b.Property<string>("FactionName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_name");
+
+                    b.Property<bool>("FactionRecruiting")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("faction_recruiting");
+
                     b.Property<string>("FlavorText")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -857,12 +881,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("species");
 
-                    // Corvax-TTS-Start
                     b.Property<string>("Voice")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("voice");
-                    // Corvax-TTS-End
 
                     b.HasKey("Id")
                         .HasName("PK_profile");
