@@ -860,8 +860,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         _tiles.Clear();
 
         // Now do entities
-        var loadedEntities = new Dictionary<EntityUid, Vector2i>();
-        component.LoadedEntities.Add(chunk, loadedEntities);
+        if (!component.LoadedEntities.TryGetValue(chunk, out var loadedEntities))
+        {
+            loadedEntities = new Dictionary<EntityUid, Vector2i>();
+            component.LoadedEntities.Add(chunk, loadedEntities);
+        }
 
         for (var x = 0; x < ChunkSize; x++)
         {
@@ -999,66 +1002,62 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var metaQuery = GetEntityQuery<MetaDataComponent>();
 
-        foreach (var (ent, tile) in component.LoadedEntities[chunk])
+        if (component.LoadedEntities.TryGetValue(chunk, out var loaded))
         {
-            if (Deleted(ent) || !xformQuery.TryGetComponent(ent, out var xform) || !metaQuery.TryGetComponent(ent, out var metadata))
+            foreach (var (ent, tile) in loaded)
             {
+                if (Deleted(ent) || !xformQuery.TryGetComponent(ent, out var xform) || !metaQuery.TryGetComponent(ent, out var metadata))
+                {
                 modified.Add(tile);
-                continue;
-            }
+                    continue;
+                }
 
-            // It's moved to another tile
-            if (_mapSystem.LocalToTile(gridUid, grid, xform.Coordinates) != tile)
-            {
+                // It's moved to another tile
+                if (_mapSystem.LocalToTile(gridUid, grid, xform.Coordinates) != tile)
+                {
                 modified.Add(tile);
-                continue;
-            }
+                    continue;
+                }
 
-            // Is it picked up or in a container?
-            if (xform.ParentUid != gridUid)
-            {
+                // Is it picked up or in a container?
+                if (xform.ParentUid != gridUid)
+                {
                 modified.Add(tile);
-                continue;
-            }
+                    continue;
+                }
 
-            // Has it been renamed/modified by player?
-            if (metadata.EntityPrototype != null &&
-                (metadata.EntityName != metadata.EntityPrototype.Name ||
-                 metadata.EntityDescription != metadata.EntityPrototype.Description))
-            {
+                // Has it been renamed/modified by player?
+                if (metadata.EntityPrototype != null &&
+                    (metadata.EntityName != metadata.EntityPrototype.Name ||
+                     metadata.EntityDescription != metadata.EntityPrototype.Description))
+                {
                 modified.Add(tile);
-                continue;
-            }
+                    continue;
+                }
 
-            // If it's an item, did it move from its exact spawn position?
-            if (HasComp<ItemComponent>(ent))
-            {
-                var spawnCoords = _mapSystem.GridTileToLocal(gridUid, grid, tile);
-                if (!xform.Coordinates.Position.EqualsApprox(spawnCoords.Position, 0.01f))
+                // If it's an item, did it move from its exact spawn position?
+                if (HasComp<ItemComponent>(ent))
+                {
+                    var spawnCoords = _mapSystem.GridTileToLocal(gridUid, grid, tile);
+                    if (!xform.Coordinates.Position.EqualsApprox(spawnCoords.Position, 0.01f))
+                    {
+                        modified.Add(tile);
+                        continue;
+                    }
+                }
+
+                // 1. Проверяем, должен ли этот ентити здесь находиться (мягкая проверка имени прототипа и маркеров)
+                if (!IsExpectedByGenerator(ent, tile, metadata.EntityPrototype?.ID, component, gridUid, grid))
                 {
                     modified.Add(tile);
                     continue;
                 }
+
+                Del(ent);
             }
 
-            // 1. Проверяем, должен ли этот ентити здесь находиться (мягкая проверка имени прототипа и маркеров)
-            if (!IsExpectedByGenerator(ent, tile, metadata.EntityPrototype?.ID, component, gridUid, grid))
-            {
-                modified.Add(tile);
-                continue;
-            }
-/*
-            // 2. Если сущность "родная", проверяем, не изменил ли её игрок (игнорируя системные компоненты).
-            if (!IsBiomeDefault(ent, _ignoredBiomeComps))
-            {
-                modified.Add(tile);
-                continue;
-            }*/
-
-            Del(ent);
+            component.LoadedEntities.Remove(chunk);
         }
-
-        component.LoadedEntities.Remove(chunk);
 
         // Unset tiles (if the data is custom)
 
@@ -1093,7 +1092,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         break;
                     }
 
-                    // 1. Проверяем, ожидается ли этот прототип в данном месте
                     if (!IsExpectedByGenerator(ent, indices, metadata.EntityPrototype?.ID, component, gridUid, grid))
                     {
                         modified.Add(indices);
@@ -1125,8 +1123,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
 
                 // If it's default data unload the tile.
-                if (!TryGetVariantizedBiomeTile(indices, component.Layers, seed, null, out var biomeTile) ||
-                    _mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && tileRef.Tile != biomeTile)
+                if (!TryGetVariantizedBiomeTile(indices, component.Layers, seed, null, out var biomeTile))
+                {
+                    modified.Add(indices);
+                    continue;
+                }
+
+                if (_mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && tileRef.Tile != biomeTile)
                 {
                     modified.Add(indices);
                     continue;
@@ -1256,7 +1259,12 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private bool IsExpectedByGenerator(EntityUid ent, Vector2i tile, string? currentProto, BiomeComponent biome, EntityUid gridUid, MapGridComponent grid)
     {
-        if (currentProto == null) return false;
+        // Если у сущности нет прототипа (игроки, системные объекты), мы не считаем это модификацией биома.
+        if (currentProto == null) return true;
+
+        // Биомные мобы могут свободно перемещаться, их наличие на "неродном" тайле не является модификацией.
+        if (_tags.HasTag(ent, BiomeMobTag))
+            return true;
 
         // Если сущность получила урон или была сильно изменена игроком, она больше не должна считаться "ожидаемой"
         // Это заменяет медленную проверку IsBiomeDefault для разрушаемых объектов.

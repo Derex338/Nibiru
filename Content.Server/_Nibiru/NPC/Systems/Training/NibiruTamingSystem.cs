@@ -17,7 +17,6 @@ using Content.Shared.Tag;
 using Content.Shared.DoAfter;
 using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Server._Nibiru.NPC.Systems.Behavior;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using Content.Shared.Popups;
 
@@ -53,28 +52,23 @@ public sealed class NibiruTamingSystem : EntitySystem
     /// </summary>
     private void OnInteractUsing(EntityUid uid, NibiruTamableComponent component, InteractUsingEvent args)
     {
-        Log.Debug($"Taming: Interaction with {ToPrettyString(uid)} by {ToPrettyString(args.User)} using {ToPrettyString(args.Used)}");
 
         if (args.Handled)
         {
-            Log.Debug("Taming: Event already handled.");
             return;
         }
 
         if (!TryComp<MobStateComponent>(uid, out var mobState) || mobState.CurrentState != MobState.Alive)
         {
-            Log.Debug("Taming: Animal is not alive.");
             return;
         }
 
         // Проверяем, является ли предмет подходящей едой
         if (!IsAcceptableFood(args.Used, component))
         {
-            Log.Debug($"Taming: Item {ToPrettyString(args.Used)} is NOT acceptable food.");
             return;
         }
 
-        Log.Debug("Taming: Item is acceptable, marking handled and starting DoAfter.");
         args.Handled = true;
 
         // Запускаем DoAfter для кормления
@@ -93,7 +87,6 @@ public sealed class NibiruTamingSystem : EntitySystem
     {
         if (args.Cancelled)
         {
-            Log.Debug($"Taming: Feeding DoAfter cancelled for {ToPrettyString(uid)}");
             return;
         }
 
@@ -103,12 +96,9 @@ public sealed class NibiruTamingSystem : EntitySystem
         // Повторная проверка еды в конце действия
         if (!IsAcceptableFood(args.Used.Value, component))
         {
-            Log.Debug($"Taming: Feeding DoAfter finished but food no longer acceptable for {ToPrettyString(uid)}");
             return;
         }
 
-        Log.Debug($"Taming: Feeding DoAfter success for {ToPrettyString(uid)}. Increasing trust.");
-        
         var trustGain = component.TrustPerFeeding;
         
         // Удвоенное доверие за любимую еду

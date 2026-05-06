@@ -100,23 +100,18 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
     private void OnTrainCommand(EntityUid uid, NibiruTamableComponent component, NibiruAnimalTrainCommandMessage args)
     {
         var user = args.Actor;
-        Log.Debug($"Training: Requesting command {args.Command} for {ToPrettyString(uid)} by {ToPrettyString(user)}");
-
         if (component.OwnerUid != user || !component.Trainable)
         {
-            Log.Debug($"Training: Request denied. Owner: {component.OwnerUid == user}, Trainable: {component.Trainable}");
             return;
         }
 
         if (!component.PossibleCommands.Contains(args.Command))
         {
-            Log.Debug($"Training: Animal {ToPrettyString(uid)} cannot learn command {args.Command}.");
             return;
         }
 
         if (component.LearnedCommands.Contains(args.Command))
         {
-            Log.Debug($"Training: Command {args.Command} already learned.");
             return;
         }
 
@@ -132,14 +127,12 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
 
         if (component.TrustLevel < requiredTrust)
         {
-            Log.Debug($"Training: Not enough trust ({component.TrustLevel}/{requiredTrust}).");
             _popup.PopupEntity(Loc.GetString("nibiru-animal-training-trust-low"), uid, user);
             return;
         }
 
         component.LearnedCommands.Add(args.Command);
         component.TrustLevel -= 30f; // Обучение командам "тратит" доверие
-        Log.Debug($"Training: Command {args.Command} learned successfully. Remaining trust: {component.TrustLevel}");
         
         RaiseLocalEvent(uid, new NibiruAnimalCommandLearnedEvent(uid, args.Command));
         
@@ -150,11 +143,8 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
     private void OnTrainStress(EntityUid uid, NibiruTamableComponent component, NibiruAnimalTrainStressMessage args)
     {
         var user = args.Actor;
-        Log.Debug($"Stress Training: Requesting stress reduction for {ToPrettyString(uid)} by {ToPrettyString(user)}");
-
         if (component.OwnerUid != user)
         {
-            Log.Debug($"Stress Training: Request denied. Owner mismatch.");
             return;
         }
 
@@ -163,20 +153,17 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
 
         if (mountFear.StressTraining >= mountFear.MaxStressTraining)
         {
-            Log.Debug($"Stress Training: Stress already at max.");
             return;
         }
 
         if (component.TrustLevel < 30f)
         {
-            Log.Debug($"Stress Training: Not enough trust ({component.TrustLevel}/30).");
             _popup.PopupEntity(Loc.GetString("nibiru-animal-training-trust-low"), uid, user);
             return;
         }
 
         component.TrustLevel -= 15f;
         mountFear.StressTraining = MathF.Min(mountFear.StressTraining + 10f, mountFear.MaxStressTraining);
-        Log.Debug($"Stress Training: Success. Current stress: {mountFear.StressTraining}, Remaining trust: {component.TrustLevel}");
         
         _popup.PopupEntity(Loc.GetString("nibiru-animal-training-stress-success"), uid, user);
         

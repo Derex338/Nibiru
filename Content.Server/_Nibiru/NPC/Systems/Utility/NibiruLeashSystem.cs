@@ -16,7 +16,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 
@@ -139,7 +138,7 @@ public sealed class NibiruLeashSystem : EntitySystem
                 if (xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var dist))
                 {
                     var isAnchor = HasComp<NibiruLeashAnchorComponent>(leash.LeashedTo.Value);
-                    
+
                     // Физическое ограничение: если животное слишком далеко от колышка, принудительно возвращаем его
                     if (isAnchor && dist > leash.LeashLength)
                     {
@@ -172,7 +171,7 @@ public sealed class NibiruLeashSystem : EntitySystem
                 if (leash.BreakFreeAccumulator >= leash.BreakFreeInterval)
                 {
                     leash.BreakFreeAccumulator = 0f;
-                    
+
                     // У столбика вырваться в 2 раза сложнее
                     var chance = leash.BreakFreeChance;
                     if (HasComp<NibiruLeashAnchorComponent>(leash.LeashedTo.Value))
@@ -191,14 +190,12 @@ public sealed class NibiruLeashSystem : EntitySystem
 
     private void LeashTo(EntityUid animal, EntityUid target, NibiruLeashableComponent component, EntityUid? usedItem = null)
     {
-        Log.Debug($"Leash: Attaching {ToPrettyString(animal)} to {ToPrettyString(target)}");
-
         // Расходуем верёвку, если она используется
         if (usedItem != null && TryComp<MetaDataComponent>(usedItem.Value, out var meta))
         {
             if (!_stack.TryUse(usedItem.Value, 1))
                 return;
-            
+
             component.RopePrototype = meta.EntityPrototype?.ID;
         }
 
@@ -252,15 +249,13 @@ public sealed class NibiruLeashSystem : EntitySystem
         // Визуал привязи на животном
         _appearance.SetData(animal, LivestockVisuals.IsLeashed, true);
         Dirty(animal, component);
-        
+
         if (component.LeashSound != null)
             _audio.PlayPvs(component.LeashSound, animal);
     }
 
     private void Unleash(EntityUid animal, NibiruLeashableComponent component, bool broken = false)
     {
-        Log.Debug($"Leash: Detaching {ToPrettyString(animal)}");
-        
         var holderUid = component.LeashedTo;
 
         if (holderUid != null && TryComp<NibiruLeashHolderComponent>(holderUid.Value, out var holder))
@@ -276,7 +271,7 @@ public sealed class NibiruLeashSystem : EntitySystem
             var animalPos = _xform.GetMapCoordinates(animal);
             var holderPos = _xform.GetMapCoordinates(holderUid.Value);
             var spawnPos = (animalPos.Position + holderPos.Position) / 2;
-            
+
             var spawnMapPos = new MapCoordinates(spawnPos, animalPos.MapId);
             var spawned = Spawn(component.RopePrototype, spawnMapPos);
         }
