@@ -31,7 +31,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly FactionSystem _factionSystem = default!;
 
-    private ISawmill _sawmill = default!;
+
 
     /// <summary>
     /// Хранилище выбранных фракций игроками
@@ -60,7 +60,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         // Сохраняем выбор (null означает одиночный спавн)
         PlayerFactionChoices[session.UserId] = FactionName;
 
-        _sawmill?.Info($"Player {session.Name} chose faction: {FactionName ?? "solo"}");
+
     }
 
     protected override void Added(EntityUid uid, NibiruSurvivalRuleComponent comp, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -83,14 +83,16 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
 
             // Затем проверяем, выбрал ли он фракцию
             string? factionName = null;
+            bool choiceMade = false;
             if (ev.Player.UserId is { } userId && PlayerFactionChoices.TryGetValue(userId, out var choice))
             {
                 factionName = choice;
                 PlayerFactionChoices.Remove(userId);
+                choiceMade = true;
             }
             
             // Если через сетку выбора не выбрано, пробуем взять из профиля
-            if (string.IsNullOrEmpty(factionName) && ev.Profile is HumanoidCharacterProfile profile)
+            if (!choiceMade && string.IsNullOrEmpty(factionName) && ev.Profile is HumanoidCharacterProfile profile)
             {
                 if (!string.IsNullOrWhiteSpace(profile.FactionName))
                 {

@@ -173,18 +173,21 @@ namespace Content.Server.GameTicking
         {
             var character = GetPlayerProfile(player);
 
-            // Nibiru: Check if faction name is set
-            var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
-            while (query.MoveNext(out var uid, out _, out var rule))
+            // Nibiru: Check if faction name is set (only for non-late joins)
+            if (!lateJoin)
             {
-                if (IsGameRuleActive(uid, rule))
+                var query = EntityQueryEnumerator<NibiruSurvivalRuleComponent, GameRuleComponent>();
+                while (query.MoveNext(out var uid, out _, out var rule))
                 {
-                    if (string.IsNullOrWhiteSpace(character.FactionName))
+                    if (IsGameRuleActive(uid, rule))
                     {
-                        _chatManager.DispatchServerMessage(player, Loc.GetString("nibiru-faction-required-to-ready"));
-                        return;
+                        if (string.IsNullOrWhiteSpace(character.FactionName))
+                        {
+                            _chatManager.DispatchServerMessage(player, Loc.GetString("nibiru-faction-required-to-ready"));
+                            return;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
 
