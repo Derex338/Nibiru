@@ -34,6 +34,7 @@ cant-change-rank = Вы не можете изменить ранг этого �
 rank-changed = Ваш ранг изменён на: {$rank}
 
 faction-rank-no-rank = Без ранга
+faction-rank-label = { $rank }
 faction-button-change-rank-tooltip = Изменить ранг
 faction-button-kick-tooltip = Исключить из фракции
 faction-rank-change-title = Изменить ранг

@@ -26,6 +26,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Maths;
 using Robust.Client.UserInterface;
 using System.Numerics;
+using Content.Shared.StatusIcon;
 
 namespace Content.Client.UserInterface.Systems.Faction;
 
@@ -208,7 +209,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         }
         else
         {
-            _factionWindow.Open();
+            _factionWindow.OpenCentered();
             FactionButton!.Pressed = true;
         }
     }
@@ -322,8 +323,27 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             _factionWindow.FactionLeaderWindow.Visible = false;
             _factionWindow.FactionMemberWindow.Visible = !_factionWindow.FactionCreate.Visible;
 
-            _factionWindow.FactionLeader.Text = Loc.GetString("faction-leader", ("leaderName", Identity.Name(factionComponent.Leader, _entityManager)));
+            _factionWindow.FactionLeader.Text = Identity.Name(factionComponent.Leader, _entityManager);
             _factionWindow.FactionNameMember.SetMessage(Loc.GetString("faction-name-label", ("name", factionComponent.FactionName)), defaultColor: factionComponent.FactionColor);
+            
+            var rank = string.IsNullOrEmpty(factionComponent.Rank) ? Loc.GetString("faction-rank-no-rank") : factionComponent.Rank;
+            _factionWindow.FactionRank.Text = Loc.GetString("faction-rank-label", ("rank", rank));
+
+            if (!string.IsNullOrEmpty(factionComponent.IconPath))
+            {
+                var spriteSystem = _entityManager.System<SpriteSystem>();
+                var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+                if (protoManager.TryIndex<StatusIconPrototype>(factionComponent.IconPath, out var iconProto))
+                {
+                    _factionWindow.FactionIconMember.Texture = spriteSystem.Frame0(iconProto.Icon);
+                }
+                else
+                {
+                    var resPath = new ResPath(factionComponent.IconPath);
+                    _factionWindow.FactionIconMember.Texture = spriteSystem.Frame0(new SpriteSpecifier.Texture(resPath));
+                }
+            }
         }
         else if (factionComponent.IsCreator)
         {

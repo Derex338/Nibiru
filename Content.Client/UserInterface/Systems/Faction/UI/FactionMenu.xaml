@@ -111,14 +111,46 @@
         </TabContainer>
     </BoxContainer>
 
-    <BoxContainer Name="FactionMemberWindow" Orientation="Vertical" SeparationOverride="10" MinWidth="250" Access="Public" Visible="True">
-        <RichTextLabel Name="FactionNameMember" Access="Public" Text="{Loc 'Название фракции'}" />
-        <Label Name="FactionLeader" Access="Public" Text="{Loc 'Leader'}" />
-        <Label Name="FactionRank" Access="Public" Text="{Loc 'Ваш ранг: '}" />
-        <BoxContainer Orientation="Vertical" SeparationOverride="50">
-            <Button Name="LeaveButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
-                    MinSize="60 50"
-                    Text="{Loc 'Выйти из фракции'}"/>
+    <BoxContainer Name="FactionMemberWindow" Orientation="Vertical" SeparationOverride="12" MinWidth="320" Access="Public" Visible="True" Margin="12">
+        <!-- Заголовок с названием и иконкой -->
+        <PanelContainer Name="FactionHeaderPanel" MinSize="0 70">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#202023" BorderColor="#353538" BorderThickness="1"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Horizontal" Margin="12" SeparationOverride="16">
+                <TextureRect Name="FactionIconMember" Access="Public" MinSize="48 48" Stretch="KeepAspectCentered" />
+                <BoxContainer Orientation="Vertical" VerticalAlignment="Center">
+                     <RichTextLabel Name="FactionNameMember" Access="Public" />
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Информационный блок -->
+        <PanelContainer VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1a1a1c" BorderColor="#252528" BorderThickness="1"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" SeparationOverride="8" Margin="12">
+                <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                    <Label Text="Лидер:" FontColorOverride="#a0a0a0" MinSize="80 0" />
+                    <Label Name="FactionLeader" Access="Public" FontColorOverride="#e0e0e0" />
+                </BoxContainer>
+                
+                <customControls:HSeparator StyleClasses="LowDivider" />
+
+                <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                    <Label Text="Ваш ранг:" FontColorOverride="#a0a0a0" MinSize="80 0" />
+                    <Label Name="FactionRank" Access="Public" FontColorOverride="#5fa3e0" />
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Кнопки действий -->
+        <BoxContainer Orientation="Vertical" SeparationOverride="10" Margin="0 4 0 0">
+             <Button Name="LeaveButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
+                    MinSize="140 40"
+                    Text="{Loc 'Выйти из фракции'}"
+                    HorizontalAlignment="Center"/>
         </BoxContainer>
     </BoxContainer>
 </ui1:FactionMenu>
