@@ -5,6 +5,7 @@ using Content.Client.UserInterface.Systems.Faction.UI;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
+using Robust.Client.UserInterface.CustomControls;
 using Content.Shared._Nibiru.Factions;
 using Content.Client.Nibiru.Faction;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -19,6 +20,12 @@ using Content.Client.Nibiru.Faction.UI;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
+using Robust.Shared.Maths;
+using Robust.Client.UserInterface;
+using System.Numerics;
 
 namespace Content.Client.UserInterface.Systems.Faction;
 
@@ -145,6 +152,11 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         _factionWindow.FactionDescriptionChangeButton.OnPressed += _ => { OnChangeDescription(); };
         _factionWindow.FactionIconChangeButton.OnPressed += _ => { OnChangeIcon(); };
         _factionWindow.RecruitingToggle.OnPressed += _ => { OnToggleRecruiting(); };
+
+        _factionWindow.FilterSpeciesButton.OnPressed += _ => OnChangeFilterSpecies();
+        _factionWindow.FilterGenderButton.OnPressed += _ => OnChangeFilterGender();
+        _factionWindow.FilterSkinColorButton.OnPressed += _ => OnChangeFilterSkinColor();
+        _factionWindow.FilterNameButton.OnPressed += _ => OnChangeFilterName();
 
         DeactivateStateButton();
 
@@ -327,6 +339,11 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             _factionWindow.FactionIconChange.Text = factionComponent.IconPath;
             _factionWindow.RecruitingToggle.Pressed = factionComponent.IsRecruiting;
 
+            _factionWindow.FilterSpeciesLabel.Text = factionComponent.WhiteListSpecies.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListSpecies);
+            _factionWindow.FilterGenderLabel.Text = factionComponent.WhiteListGender.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListGender);
+            _factionWindow.FilterSkinColor.Text = string.Join(", ", factionComponent.WhiteListSkinColor.Select(c => c.ToHex()));
+            _factionWindow.FilterName.Text = string.Join(", ", factionComponent.WhiteListNames);
+
             _factionWindow.MemberContainer.RemoveAllChildren();
             foreach (var memberData in factionComponent.MemberData)
             {
@@ -436,6 +453,71 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         UpdateState();
     }
 
+    private void OnChangeFilterSpecies()
+    {
+        if (_factionWindow == null || _player.LocalSession is not { } session) return;
+        if (!_entityManager.TryGetComponent<FactionComponent>(session.AttachedEntity, out var fc)) return;
+
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+        var species = protoManager.EnumeratePrototypes<SpeciesPrototype>()
+            .Where(s => s.RoundStart)
+            .Select(s => s.ID)
+            .ToList();
+
+        var prompt = new FilterSelectorPrompt("Выбор рас", species, fc.WhiteListSpecies, selected =>
+        {
+            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListSpecies = selected });
+            UpdateState();
+        });
+        prompt.OpenCentered();
+    }
+
+    private void OnChangeFilterGender()
+    {
+        if (_factionWindow == null || _player.LocalSession is not { } session) return;
+        if (!_entityManager.TryGetComponent<FactionComponent>(session.AttachedEntity, out var fc)) return;
+
+        var genders = Enum.GetValues<Sex>().Select(s => s.ToString()).ToList();
+        var current = fc.WhiteListGender.Select(s => s.ToString()).ToList();
+
+        var prompt = new FilterSelectorPrompt("Выбор пола", genders, current, selected =>
+        {
+            var sexList = new List<Sex>();
+            foreach (var s in selected)
+            {
+                if (Enum.TryParse<Sex>(s, out var sex))
+                    sexList.Add(sex);
+            }
+            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListGender = sexList });
+            UpdateState();
+        });
+        prompt.OpenCentered();
+    }
+
+    private void OnChangeFilterSkinColor()
+    {
+        if (_factionWindow == null) return;
+        var text = _factionWindow.FilterSkinColor.Text;
+        var parts = text.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var colors = new List<Color>();
+        foreach (var p in parts)
+        {
+            if (Color.TryFromHex(p) is { } c)
+                colors.Add(c);
+            else if (Color.TryFromName(p, out var nc))
+                colors.Add(nc);
+        }
+        _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListSkinColor = colors });
+    }
+
+    private void OnChangeFilterName()
+    {
+        if (_factionWindow == null) return;
+        var text = _factionWindow.FilterName.Text;
+        var names = text.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+        _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListNames = names });
+    }
+
     /// <summary>
     /// Подсветка членов фракции при выборе наследника или передаче титула
     /// </summary>
@@ -471,6 +553,80 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                 sprite.RenderOrder = 0;
             }
         }
+    }
+}
+
+public sealed class FilterSelectorPrompt : DefaultWindow
+{
+    private readonly Action<List<string>> _onSave;
+    private readonly List<string> _selected;
+    private readonly BoxContainer _container;
+
+    public FilterSelectorPrompt(string title, List<string> options, List<string> current, Action<List<string>> onSave)
+    {
+        Title = title;
+        _onSave = onSave;
+        _selected = new List<string>(current);
+
+        MinSize = new Vector2(300, 400);
+
+        var root = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Margin = new Thickness(10)
+        };
+
+        var scroll = new ScrollContainer
+        {
+            VerticalExpand = true,
+            HorizontalExpand = true
+        };
+
+        _container = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            SeparationOverride = 5
+        };
+
+        foreach (var option in options)
+        {
+            var cb = new CheckBox
+            {
+                Text = option,
+                Pressed = _selected.Contains(option)
+            };
+            cb.OnToggled += args =>
+            {
+                if (args.Pressed)
+                {
+                    if (!_selected.Contains(option))
+                        _selected.Add(option);
+                }
+                else
+                {
+                    _selected.Remove(option);
+                }
+            };
+            _container.AddChild(cb);
+        }
+
+        scroll.AddChild(_container);
+        root.AddChild(scroll);
+
+        var saveBtn = new Button
+        {
+            Text = "Сохранить",
+            HorizontalAlignment = HAlignment.Center,
+            Margin = new Thickness(0, 10, 0, 0)
+        };
+        saveBtn.OnPressed += _ =>
+        {
+            _onSave(_selected);
+            Close();
+        };
+        root.AddChild(saveBtn);
+
+        Contents.AddChild(root);
     }
 }
 

@@ -2,6 +2,7 @@ using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared._Nibiru.Factions;
 
@@ -81,6 +82,35 @@ public sealed partial class FactionComponent : Component
     [AutoNetworkedField]
     [DataField("recruiting")]
     public bool IsRecruiting { get; set; } = false;
+
+    /// <summary>
+    /// Фильтр по расам (SpeciesPrototype)
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("whiteListSpecies")]
+    public List<string> WhiteListSpecies { get; set; } = new();
+
+    /// <summary>
+    /// Фильтр по полу (Sex)
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("whiteListGender")]
+    public List<Sex> WhiteListGender { get; set; } = new();
+
+    /// <summary>
+    /// Фильтр по цвету кожи
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("whiteListSkinColor")]
+    public List<Color> WhiteListSkinColor { get; set; } = new();
+
+    /// <summary>
+    /// Фильтр по словам в имени (через запятую)
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("whiteListNames")]
+    public List<string> WhiteListNames { get; set; } = new();
+
     /// <summary>
     /// Роли/Ранги фракции
     /// </summary>
@@ -203,6 +233,21 @@ public partial struct FactionRegistryData
     public TimeSpan Created;
 
     /// <summary>
+    /// Фильтры для вступления
+    /// </summary>
+    [DataField("whiteListSpecies")]
+    public List<string> WhiteListSpecies;
+
+    [DataField("whiteListGender")]
+    public List<Sex> WhiteListGender;
+
+    [DataField("whiteListSkinColor")]
+    public List<Color> WhiteListSkinColor;
+
+    [DataField("whiteListNames")]
+    public List<string> WhiteListNames;
+
+    /// <summary>
     /// Список ролей фракции
     /// </summary>
     [DataField("roles")]
@@ -233,6 +278,10 @@ public sealed class FactionInfo
     public string IconPath { get; set; } = string.Empty;
     public FactionStatus Status { get; set; } = FactionStatus.Active;
     public bool IsRecruiting { get; set; } = false;
+    public List<string> WhiteListSpecies { get; set; } = new();
+    public List<Sex> WhiteListGender { get; set; } = new();
+    public List<Color> WhiteListSkinColor { get; set; } = new();
+    public List<string> WhiteListNames { get; set; } = new();
     public NetEntity Leader { get; set; }
     public List<FactionRole> Roles { get; set; } = new();
 }

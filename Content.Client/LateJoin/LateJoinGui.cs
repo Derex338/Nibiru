@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.GameTicking.Managers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._Nibiru.Factions;
+using Content.Shared.Humanoid;
 using Content.Shared.StatusIcon;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -272,9 +273,46 @@ namespace Content.Client.LateJoin
                 return;
             }
 
+            var profile = _prefsManager.Preferences?.SelectedCharacter as HumanoidCharacterProfile;
+
             // Сортируем фракции по количеству членов (сначала самые большие)
             var sortedFactions = availableFactions
                 .Where(f => f.IsRecruiting) // Показываем только фракции с открытым набором
+                .Where(f =>
+                {
+                    if (profile == null)
+                        return true;
+
+                    // Фильтр по расе
+                    if (f.WhiteListSpecies.Count > 0 && !f.WhiteListSpecies.Contains(profile.Species.Id))
+                        return false;
+
+                    // Фильтр по полу
+                    if (f.WhiteListGender.Count > 0 && !f.WhiteListGender.Contains(profile.Sex))
+                        return false;
+
+                    // Фильтр по цвету кожи
+                    if (f.WhiteListSkinColor.Count > 0 && !f.WhiteListSkinColor.Contains(profile.Appearance.SkinColor))
+                        return false;
+
+                    // Фильтр по имени
+                    if (f.WhiteListNames.Count > 0)
+                    {
+                        var passed = false;
+                        foreach (var keyword in f.WhiteListNames)
+                        {
+                            if (profile.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                            {
+                                passed = true;
+                                break;
+                            }
+                        }
+                        if (!passed)
+                            return false;
+                    }
+
+                    return true;
+                })
                 .OrderByDescending(f => f.MemberCount)
                 .ToList();
 

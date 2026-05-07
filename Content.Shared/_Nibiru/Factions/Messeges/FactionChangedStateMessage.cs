@@ -1,6 +1,7 @@
 using System;
 using Robust.Shared.Serialization;
 using Content.Shared._Nibiru.Factions;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared._Nibiru.Factions;
 
@@ -13,6 +14,10 @@ public sealed class FactionChangeStateMessage : EntityEventArgs
     public string? IconPath = null;
     public FactionStatus? Status = null;
     public bool? IsRecruiting = null;
+    public List<string>? WhiteListSpecies = null;
+    public List<Sex>? WhiteListGender = null;
+    public List<Color>? WhiteListSkinColor = null;
+    public List<string>? WhiteListNames = null;
 }
 
 /// <summary>

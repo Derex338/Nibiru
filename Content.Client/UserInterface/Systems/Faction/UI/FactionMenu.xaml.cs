@@ -44,7 +44,8 @@ namespace Content.Client.UserInterface.Systems.Faction.UI
         public void InitializeTabs()
         {
             LeaderTabs.SetTabTitle(0, Loc.GetString("Настройки"));
-            LeaderTabs.SetTabTitle(1, Loc.GetString("Члены фракции"));
+            LeaderTabs.SetTabTitle(1, Loc.GetString("Фильтры"));
+            LeaderTabs.SetTabTitle(2, Loc.GetString("Члены фракции"));
         }
 
         public void SetCurrentLabel(string label)

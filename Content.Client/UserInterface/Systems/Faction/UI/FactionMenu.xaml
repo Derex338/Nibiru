@@ -53,6 +53,36 @@
                 <Button Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Расформировать фракцию'}" Margin="0 10 0 0"/>
             </BoxContainer>
 
+            <BoxContainer Name="FiltersTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
+                <Label Text="Фильтры вступления:" Margin="0 10 0 0" StyleClasses="LabelBig"/>
+                
+                <BoxContainer Orientation="Horizontal" Margin="5">
+                    <Label Text="Расы:" MinSize="80 0"/>
+                    <Button Name="FilterSpeciesButton" Access="Public" Text="Выбрать..." HorizontalExpand="True"/>
+                </BoxContainer>
+                <Label Name="FilterSpeciesLabel" Access="Public" Text="Все" FontColorOverride="Gray" Margin="85 0 0 0"/>
+
+                <BoxContainer Orientation="Horizontal" Margin="5">
+                    <Label Text="Пол:" MinSize="80 0"/>
+                    <Button Name="FilterGenderButton" Access="Public" Text="Выбрать..." HorizontalExpand="True"/>
+                </BoxContainer>
+                <Label Name="FilterGenderLabel" Access="Public" Text="Все" FontColorOverride="Gray" Margin="85 0 0 0"/>
+
+                <BoxContainer Orientation="Horizontal" Margin="5">
+                    <Label Text="Цвет кожи:" MinSize="80 0"/>
+                    <LineEdit Name="FilterSkinColor" Access="Public" MinSize="200 20" PlaceHolder="#hex, #hex..." HorizontalExpand="True"/>
+                    <Button Name="FilterSkinColorButton" Access="Public" Text="Ок"/>
+                </BoxContainer>
+
+                <BoxContainer Orientation="Vertical" Margin="5">
+                    <Label Text="Слова в имени (через запятую):"/>
+                    <BoxContainer Orientation="Horizontal">
+                        <LineEdit Name="FilterName" Access="Public" MinSize="200 20" PlaceHolder="Иван, Петро..." HorizontalExpand="True"/>
+                        <Button Name="FilterNameButton" Access="Public" Text="Ок"/>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+
             <BoxContainer Name="MembersTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
                 <!-- Управление ролями -->
                 <Button Name="CreateRoleButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Управление ролями'}"/>

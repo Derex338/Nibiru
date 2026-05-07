@@ -80,3 +80,8 @@ faction-description-too-long = Описание фракции слишком д
 faction-button-move-up-tooltip = Переместить выше
 faction-button-move-down-tooltip = Переместить ниже
 
+faction-join-fail-species = Вы не подходите по расе для этой фракции.
+faction-join-fail-gender = Вы не подходите по полу для этой фракции.
+faction-join-fail-skin-color = Вы не подходите по цвету кожи для этой фракции.
+faction-join-fail-name = Ваше имя должно содержать слово: { $word }
+
