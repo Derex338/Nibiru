@@ -4,7 +4,7 @@
   - CEPlantTreeBase
   - CEPlantBaseSolarEnergy
   - CEPlantBaseFloralWildType
-  - CEPlantBaseGrowing2Day
+  - CEPlantBaseGrowing1Day
   - CEPlantBaseMetabolizer1Day
   - CEPlantBaseMetabolizerWater
   name: oak tree
@@ -16,7 +16,9 @@
   - type: CEPlantAdditionalProduceOnDestruct
     produce:
       CEWoodLog: 3
-      CESeedOakTree: 2
+      CESeedOakTree: 1
+  - type: CEPlant
+    updateFrequency: 1
   - type: Sprite
     sprite: _CE/Structures/Nature/Farm/apple_tree.rsi
     layers:

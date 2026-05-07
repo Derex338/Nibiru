@@ -65,6 +65,7 @@
   - type: Material
   - type: Stack
     stackType: CEFoodAloe
+    count: 1
   - type: SolutionContainerManager
     solutions:
       food:

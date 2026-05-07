@@ -68,10 +68,10 @@
         spawn:
           CEWoodLog:
             min: 1
-            max: 3
-          CESeedOakTree:
-            min: 1
             max: 2
+          CESeedOakTree:
+            min: 0
+            max: 1
   #- type: Material
 
 - type: entity
@@ -112,11 +112,11 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           CEWoodLog:
-            min: 3
-            max: 6
+            min: 1
+            max: 3
           CESeedOakTree:
-            min: 2
-            max: 4
+            min: 0
+            max: 1
 
 - type: entity
   parent: CEBaseTree

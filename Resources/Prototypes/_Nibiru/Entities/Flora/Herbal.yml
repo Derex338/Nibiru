@@ -126,6 +126,10 @@
   - type: Stack
     stackType: Herb
     baseLayer: base
+  - type: SliceableFood
+    count: 1
+    sliceTime: 1.0
+    slice: CESeedHighBush
 
 - type: entity
   parent: BunchHerb

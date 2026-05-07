@@ -67,9 +67,6 @@
                 BunchHerb1:
                   min: 0
                   max: 2
-                CESeedHighBush:
-                  min: 1
-                  max: 2
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
