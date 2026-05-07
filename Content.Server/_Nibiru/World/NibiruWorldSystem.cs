@@ -57,6 +57,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     public override void Initialize()
     {
@@ -99,12 +100,14 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         // 1. Создаем подземный мир (шахта) - Уровень -1
         var caveMap = _map.CreateMap();
+        _metadata.SetEntityName(caveMap, "level -1");
         _biome.EnsurePlanet(caveMap, _prototype.Index(rule.CaveBiome), seed);
         EnsureComp<CEZLevelMapRoofComponent>(caveMap);
         EnsureComp<SunLightRayComponent>(caveMap);
 
         // 2. Создаем основной мир (планета) - Уровень 0
         var worldMap = _map.CreateMap();
+        _metadata.SetEntityName(worldMap, "level 0");
         _biome.EnsurePlanet(worldMap, _prototype.Index(rule.Biome), seed);
         EnsureComp<CEDayCycleComponent>(worldMap);
         EnsureComp<CEZLevelMapRoofComponent>(worldMap);
@@ -112,10 +115,12 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         // Уровень 1
         var sky1Map = _map.CreateMap();
+        _metadata.SetEntityName(sky1Map, "level 1");
         SetupUpperLayer(sky1Map);
 
         // Уровень 2
         var sky2Map = _map.CreateMap();
+        _metadata.SetEntityName(sky2Map, "level 2");
         SetupUpperLayer(sky2Map);
 
         // Добавляем все карты в сеть

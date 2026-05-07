@@ -584,7 +584,7 @@
         - CEPlantAppleTreeGrown
     # --- Культуры цветочных полей (кучками) ---
     - !type:BiomeEntityLayer
-      threshold: 0.91
+      threshold: 0.88
       noise:
         seed: 1021
         noiseType: OpenSimplex2
@@ -595,7 +595,7 @@
       entities:
         - CEPlantCornGrown
     - !type:BiomeEntityLayer
-      threshold: 0.91
+      threshold: 0.90
       noise:
         seed: 1022
         noiseType: OpenSimplex2
