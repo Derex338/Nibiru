@@ -112,11 +112,11 @@ public sealed partial class FactionComponent : Component
     public List<Sex> WhiteListGender { get; set; } = new();
 
     /// <summary>
-    /// Фильтр по цвету кожи
+    /// Фильтр по цвету кожи для разных рас
     /// </summary>
     [AutoNetworkedField]
-    [DataField("whiteListSkinColor")]
-    public List<Color> WhiteListSkinColor { get; set; } = new();
+    [DataField("whiteListSkinColors")]
+    public Dictionary<string, FactionSkinColorFilter> WhiteListSkinColors { get; set; } = new();
 
     /// <summary>
     /// Фильтр по словам в имени (через запятую)
@@ -150,6 +150,19 @@ public partial struct FactionRole
 
     [DataField("canInherit")]
     public bool CanInherit;
+}
+
+/// <summary>
+/// Фильтр цвета кожи
+/// </summary>
+[Serializable, NetSerializable, DataDefinition]
+public partial struct FactionSkinColorFilter
+{
+    [DataField("color")]
+    public Color Color;
+
+    [DataField("passHigher")]
+    public bool PassHigher;
 }
 
 /// <summary>
@@ -267,8 +280,8 @@ public partial struct FactionRegistryData
     [DataField("whiteListGender")]
     public List<Sex> WhiteListGender;
 
-    [DataField("whiteListSkinColor")]
-    public List<Color> WhiteListSkinColor;
+    [DataField("whiteListSkinColors")]
+    public Dictionary<string, FactionSkinColorFilter> WhiteListSkinColors;
 
     [DataField("whiteListNames")]
     public List<string> WhiteListNames;
@@ -308,7 +321,7 @@ public sealed class FactionInfo
     public bool IsRecruiting { get; set; } = false;
     public List<string> WhiteListSpecies { get; set; } = new();
     public List<Sex> WhiteListGender { get; set; } = new();
-    public List<Color> WhiteListSkinColor { get; set; } = new();
+    public Dictionary<string, FactionSkinColorFilter> WhiteListSkinColors { get; set; } = new();
     public List<string> WhiteListNames { get; set; } = new();
     public NetEntity Leader { get; set; }
     public List<FactionRole> Roles { get; set; } = new();

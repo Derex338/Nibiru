@@ -71,7 +71,7 @@ public sealed partial class FactionSystem
                     IsRecruiting = data.IsRecruiting,
                     WhiteListSpecies = data.WhiteListSpecies,
                     WhiteListGender = data.WhiteListGender,
-                    WhiteListSkinColor = data.WhiteListSkinColor,
+                    WhiteListSkinColors = data.WhiteListSkinColors,
                     WhiteListNames = data.WhiteListNames,
                     Leader = data.Leader,
                     Roles = data.Roles
@@ -121,7 +121,7 @@ public sealed partial class FactionSystem
                 IsRecruiting = faction.IsRecruiting,
                 WhiteListSpecies = faction.WhiteListSpecies,
                 WhiteListGender = faction.WhiteListGender,
-                WhiteListSkinColor = faction.WhiteListSkinColor,
+                WhiteListSkinColors = faction.WhiteListSkinColors,
                 WhiteListNames = faction.WhiteListNames,
                 Created = _timing.CurTime,
                 Roles = faction.Roles.Count > 0 ? faction.Roles : GetDefaultRoles()
@@ -171,7 +171,7 @@ public sealed partial class FactionSystem
                 IsRecruiting = pref.IsRecruiting,
                 WhiteListSpecies = new(),
                 WhiteListGender = new(),
-                WhiteListSkinColor = new(),
+                WhiteListSkinColors = new(),
                 WhiteListNames = new(),
                 Roles = GetDefaultRoles()
             };
@@ -209,7 +209,7 @@ public sealed partial class FactionSystem
             data.IsRecruiting = faction.IsRecruiting;
             data.WhiteListSpecies = faction.WhiteListSpecies;
             data.WhiteListGender = faction.WhiteListGender;
-            data.WhiteListSkinColor = faction.WhiteListSkinColor;
+            data.WhiteListSkinColors = faction.WhiteListSkinColors;
             data.WhiteListNames = faction.WhiteListNames;
             data.Leader = leaderNet;
             data.Members = membersNet;

@@ -183,14 +183,14 @@ public sealed partial class FactionSystem
             needUpdate = true;
         }
 
-        if (msg.WhiteListSkinColor != null)
+        if (msg.WhiteListSkinColors != null)
         {
-            factionComponent.WhiteListSkinColor = msg.WhiteListSkinColor;
+            factionComponent.WhiteListSkinColors = msg.WhiteListSkinColors;
             foreach (var member in factionComponent.Members)
             {
                 if (TryComp<FactionComponent>(member, out var memberComp))
                 {
-                    memberComp.WhiteListSkinColor = msg.WhiteListSkinColor;
+                    memberComp.WhiteListSkinColors = msg.WhiteListSkinColors;
                     Dirty(member, memberComp);
                 }
             }

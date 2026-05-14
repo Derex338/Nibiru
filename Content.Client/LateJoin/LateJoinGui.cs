@@ -4,6 +4,7 @@ using Content.Client.GameTicking.Managers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.StatusIcon;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -293,8 +294,31 @@ namespace Content.Client.LateJoin
                         return false;
 
                     // Фильтр по цвету кожи
-                    if (f.WhiteListSkinColor.Count > 0 && !f.WhiteListSkinColor.Contains(profile.Appearance.SkinColor))
-                        return false;
+                    if (f.WhiteListSkinColors.Count > 0)
+                    {
+                        if (f.WhiteListSkinColors.TryGetValue(profile.Species.Id, out var skinFilter))
+                        {
+                            var speciesProto = _prototypeManager.Index<SpeciesPrototype>(profile.Species.Id);
+                            var colorationProto = _prototypeManager.Index<SkinColorationPrototype>(speciesProto.SkinColoration);
+
+                            if (colorationProto.Strategy.InputType == SkinColorationStrategyInput.Unary)
+                            {
+                                var playerTone = colorationProto.Strategy.ToUnary(profile.Appearance.SkinColor);
+                                var filterTone = colorationProto.Strategy.ToUnary(skinFilter.Color);
+                                
+                                if (skinFilter.PassHigher && playerTone < filterTone) return false;
+                                if (!skinFilter.PassHigher && playerTone > filterTone) return false;
+                            }
+                            else
+                            {
+                                var playerHsl = Color.ToHsl(profile.Appearance.SkinColor);
+                                var filterHsl = Color.ToHsl(skinFilter.Color);
+
+                                if (skinFilter.PassHigher && playerHsl.Z < filterHsl.Z) return false;
+                                if (!skinFilter.PassHigher && playerHsl.Z > filterHsl.Z) return false;
+                            }
+                        }
+                    }
 
                     // Фильтр по имени
                     if (f.WhiteListNames.Count > 0)

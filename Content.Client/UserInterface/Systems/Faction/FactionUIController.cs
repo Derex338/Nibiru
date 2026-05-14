@@ -149,7 +149,6 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
         _factionWindow.FilterSpeciesButton.OnPressed += _ => OnChangeFilterSpecies();
         _factionWindow.FilterGenderButton.OnPressed += _ => OnChangeFilterGender();
-        _factionWindow.FilterSkinColorButton.OnPressed += _ => OnChangeFilterSkinColor();
         _factionWindow.FilterNameButton.OnPressed += _ => OnChangeFilterName();
 
         _factionWindow.EditLogoButton.OnPressed += _ => OnEditLogo();
@@ -358,7 +357,9 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
             _factionWindow.FilterSpeciesLabel.Text = factionComponent.WhiteListSpecies.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListSpecies);
             _factionWindow.FilterGenderLabel.Text = factionComponent.WhiteListGender.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListGender);
-            _factionWindow.FilterSkinColor.Text = string.Join(", ", factionComponent.WhiteListSkinColor.Select(c => c.ToHex()));
+            
+            UpdateSkinColorFiltersUI(factionComponent);
+            
             _factionWindow.FilterName.Text = string.Join(", ", factionComponent.WhiteListNames);
 
             _factionWindow.MemberContainer.RemoveAllChildren();
@@ -513,22 +514,6 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         prompt.OpenCentered();
     }
 
-    private void OnChangeFilterSkinColor()
-    {
-        if (_factionWindow == null) return;
-        var text = _factionWindow.FilterSkinColor.Text;
-        var parts = text.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        var colors = new List<Color>();
-        foreach (var p in parts)
-        {
-            if (Color.TryFromHex(p) is { } c)
-                colors.Add(c);
-            else if (Color.TryFromName(p, out var nc))
-                colors.Add(nc);
-        }
-        _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListSkinColor = colors });
-    }
-
     private void OnChangeFilterName()
     {
         if (_factionWindow == null) return;
@@ -591,6 +576,137 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                 sprite.PostShader = null;
                 sprite.RenderOrder = 0;
             }
+        }
+    }
+
+    private void UpdateSkinColorFiltersUI(FactionComponent factionComponent)
+    {
+        var container = _factionWindow!.SkinColorFiltersContainer;
+        if (container == null) return;
+        
+        container.RemoveAllChildren();
+
+        if (factionComponent.WhiteListSpecies.Count == 0)
+        {
+            container.AddChild(new Label { Text = "Выберите расы в фильтре выше", FontColorOverride = Color.Gray });
+            return;
+        }
+
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+        foreach (var speciesId in factionComponent.WhiteListSpecies)
+        {
+            if (!protoManager.TryIndex<SpeciesPrototype>(speciesId, out var speciesProto))
+                continue;
+
+            var colorationProto = protoManager.Index<SkinColorationPrototype>(speciesProto.SkinColoration);
+
+            var speciesBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(0, 0, 0, 10) };
+            
+            bool isEnabled = factionComponent.WhiteListSkinColors.TryGetValue(speciesId, out var currentFilter);
+
+            var topRow = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+            var cb = new CheckBox { Text = Loc.GetString(speciesProto.Name), Pressed = isEnabled };
+            topRow.AddChild(cb);
+            speciesBox.AddChild(topRow);
+
+            var settingsBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Visible = isEnabled, Margin = new Thickness(10, 5, 0, 0) };
+            speciesBox.AddChild(settingsBox);
+
+            if (colorationProto.Strategy.InputType == SkinColorationStrategyInput.Unary)
+            {
+                var slider = new Slider
+                {
+                    MinValue = 0,
+                    MaxValue = 100,
+                    HorizontalExpand = true,
+                    BackgroundStyleBoxOverride = new ColorSelectorStyleBox(ColorSelectorStyleBox.ColorSliderPreset.Value)
+                };
+                var styleBox = (ColorSelectorStyleBox) slider.BackgroundStyleBoxOverride;
+
+                if (isEnabled)
+                    slider.Value = colorationProto.Strategy.ToUnary(currentFilter.Color);
+                else
+                    slider.Value = speciesProto.DefaultHumanSkinTone;
+
+                Action updatePreview = () =>
+                {
+                    var color = colorationProto.Strategy.FromUnary(slider.Value);
+                    styleBox.SetBaseColor(color);
+                };
+
+                updatePreview();
+
+                var modeBtn = new Button { Text = isEnabled && currentFilter.PassHigher ? "Пропускать темнее или равно" : "Пропускать светлее или равно" };
+
+                Action save = () =>
+                {
+                    var dict = new Dictionary<string, FactionSkinColorFilter>(factionComponent.WhiteListSkinColors);
+                    if (cb.Pressed)
+                    {
+                        var color = colorationProto.Strategy.FromUnary(slider.Value);
+                        dict[speciesId] = new FactionSkinColorFilter { Color = color, PassHigher = modeBtn.Text == "Пропускать темнее или равно" };
+                    }
+                    else
+                    {
+                        dict.Remove(speciesId);
+                    }
+                    _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListSkinColors = dict });
+                };
+
+                slider.OnValueChanged += _ =>
+                {
+                    updatePreview();
+                    save();
+                };
+                modeBtn.OnPressed += _ =>
+                {
+                    modeBtn.Text = modeBtn.Text == "Пропускать светлее или равно" ? "Пропускать темнее или равно" : "Пропускать светлее или равно";
+                    save();
+                };
+                cb.OnToggled += _ => save();
+
+                settingsBox.AddChild(new Label { Text = "Тон кожи (левее - светлее):" });
+                settingsBox.AddChild(slider);
+                settingsBox.AddChild(modeBtn);
+            }
+            else
+            {
+                var colorSelector = new ColorSelectorSliders { HorizontalExpand = true };
+                if (isEnabled)
+                    colorSelector.Color = currentFilter.Color;
+                else
+                    colorSelector.Color = speciesProto.DefaultSkinTone;
+
+                var modeBtn = new Button { Text = isEnabled && currentFilter.PassHigher ? "Пропускать светлее (по HSV)" : "Пропускать темнее (по HSV)" };
+
+                Action save = () =>
+                {
+                    var dict = new Dictionary<string, FactionSkinColorFilter>(factionComponent.WhiteListSkinColors);
+                    if (cb.Pressed)
+                    {
+                        dict[speciesId] = new FactionSkinColorFilter { Color = colorSelector.Color, PassHigher = modeBtn.Text == "Пропускать светлее (по HSV)" };
+                    }
+                    else
+                    {
+                        dict.Remove(speciesId);
+                    }
+                    _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListSkinColors = dict });
+                };
+
+                colorSelector.OnColorChanged += _ => save();
+                modeBtn.OnPressed += _ =>
+                {
+                    modeBtn.Text = modeBtn.Text == "Пропускать светлее (по HSV)" ? "Пропускать темнее (по HSV)" : "Пропускать светлее (по HSV)";
+                    save();
+                };
+                cb.OnToggled += _ => save();
+
+                settingsBox.AddChild(colorSelector);
+                settingsBox.AddChild(modeBtn);
+            }
+
+            container.AddChild(speciesBox);
         }
     }
 }

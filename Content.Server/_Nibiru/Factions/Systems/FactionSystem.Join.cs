@@ -172,7 +172,7 @@ public sealed partial class FactionSystem
             playerFaction.Roles = factionData.Roles;
             playerFaction.WhiteListSpecies = factionData.WhiteListSpecies;
             playerFaction.WhiteListGender = factionData.WhiteListGender;
-            playerFaction.WhiteListSkinColor = factionData.WhiteListSkinColor;
+            playerFaction.WhiteListSkinColors = factionData.WhiteListSkinColors;
             playerFaction.WhiteListNames = factionData.WhiteListNames;
 
             if (leaderUid == playerEntity)
@@ -235,13 +235,49 @@ public sealed partial class FactionSystem
         }
 
         // Проверка по цвету кожи
-        if (data.WhiteListSkinColor.Count > 0)
+        if (data.WhiteListSkinColors.Count > 0)
         {
-            if (!TryComp<HumanoidAppearanceComponent>(player, out var appearance) ||
-                !data.WhiteListSkinColor.Contains(appearance.SkinColor))
+            if (TryComp<HumanoidAppearanceComponent>(player, out var appearance))
             {
-                error = Loc.GetString("faction-join-fail-skin-color");
-                return false;
+                if (data.WhiteListSkinColors.TryGetValue(appearance.Species.Id, out var skinFilter))
+                {
+                    var prototypeManager = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.Prototypes.IPrototypeManager>();
+                    var speciesProto = prototypeManager.Index<Content.Shared.Humanoid.Prototypes.SpeciesPrototype>(appearance.Species.Id);
+                    var colorationProto = prototypeManager.Index<Content.Shared.Humanoid.SkinColorationPrototype>(speciesProto.SkinColoration);
+
+                    if (colorationProto.Strategy.InputType == Content.Shared.Humanoid.SkinColorationStrategyInput.Unary)
+                    {
+                        var playerTone = colorationProto.Strategy.ToUnary(appearance.SkinColor);
+                        var filterTone = colorationProto.Strategy.ToUnary(skinFilter.Color);
+                        
+                        if (skinFilter.PassHigher && playerTone < filterTone)
+                        {
+                            error = Loc.GetString("faction-join-fail-skin-color");
+                            return false;
+                        }
+                        if (!skinFilter.PassHigher && playerTone > filterTone)
+                        {
+                            error = Loc.GetString("faction-join-fail-skin-color");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        var playerHsl = Color.ToHsl(appearance.SkinColor);
+                        var filterHsl = Color.ToHsl(skinFilter.Color);
+
+                        if (skinFilter.PassHigher && playerHsl.Z < filterHsl.Z)
+                        {
+                            error = Loc.GetString("faction-join-fail-skin-color");
+                            return false;
+                        }
+                        if (!skinFilter.PassHigher && playerHsl.Z > filterHsl.Z)
+                        {
+                            error = Loc.GetString("faction-join-fail-skin-color");
+                            return false;
+                        }
+                    }
+                }
             }
         }
 

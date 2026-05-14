@@ -16,7 +16,7 @@ public sealed class FactionChangeStateMessage : EntityEventArgs
     public bool? IsRecruiting = null;
     public List<string>? WhiteListSpecies = null;
     public List<Sex>? WhiteListGender = null;
-    public List<Color>? WhiteListSkinColor = null;
+    public Dictionary<string, FactionSkinColorFilter>? WhiteListSkinColors = null;
     public List<string>? WhiteListNames = null;
 }
 
