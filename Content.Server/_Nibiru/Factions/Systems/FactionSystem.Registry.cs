@@ -65,6 +65,8 @@ public sealed partial class FactionSystem
                     Color = data.Color,
                     Description = data.Description,
                     IconPath = data.IconPath,
+                    LogoBackground = data.LogoBackground,
+                    LogoPixels = data.LogoPixels,
                     Status = data.Status,
                     IsRecruiting = data.IsRecruiting,
                     WhiteListSpecies = data.WhiteListSpecies,
@@ -113,6 +115,8 @@ public sealed partial class FactionSystem
                 Color = faction.FactionColor,
                 Description = faction.Description,
                 IconPath = faction.IconPath,
+                LogoBackground = faction.LogoBackground,
+                LogoPixels = faction.LogoPixels,
                 Status = faction.Status,
                 IsRecruiting = faction.IsRecruiting,
                 WhiteListSpecies = faction.WhiteListSpecies,
@@ -161,6 +165,8 @@ public sealed partial class FactionSystem
                 Color = pref.Color,
                 Description = pref.Description,
                 IconPath = pref.IconPath,
+                LogoBackground = Color.Transparent,
+                LogoPixels = new(),
                 Status = FactionStatus.Active,
                 IsRecruiting = pref.IsRecruiting,
                 WhiteListSpecies = new(),
@@ -197,6 +203,8 @@ public sealed partial class FactionSystem
             data.Color = faction.FactionColor;
             data.Description = faction.Description;
             data.IconPath = faction.IconPath;
+            data.LogoBackground = faction.LogoBackground;
+            data.LogoPixels = faction.LogoPixels;
             data.Status = faction.Status;
             data.IsRecruiting = faction.IsRecruiting;
             data.WhiteListSpecies = faction.WhiteListSpecies;

@@ -13,6 +13,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Client.Lobby;
+using Content.Client.UserInterface.Systems.Faction.UI;
 using Content.Shared.Preferences;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -418,6 +419,15 @@ namespace Content.Client.LateJoin
                 iconContainer.AddChild(icon);
                 contentBox.AddChild(iconContainer);
             }
+
+            var logo = new FactionLogoControl
+            {
+                MinSize = new Vector2(48, 48),
+                VerticalAlignment = VAlignment.Center,
+                Margin = new Thickness(0, 0, 15, 0)
+            };
+            logo.UpdateLogo(faction.LogoBackground, faction.LogoPixels);
+            contentBox.AddChild(logo);
 
             // Информация о фракции
             var infoBox = new BoxContainer

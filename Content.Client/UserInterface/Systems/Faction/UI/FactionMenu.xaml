@@ -17,7 +17,10 @@
     </BoxContainer>
 
     <BoxContainer Name="FactionLeaderWindow" Orientation="Vertical" SeparationOverride="10" MinWidth="400" Access="Public" Visible="False">
-        <RichTextLabel Name="FactionName" Text="{Loc 'Название фракции: '}" Access="Public" />
+        <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+            <ui1:FactionLogoControl Name="FactionLogoLeader" Access="Public" MinSize="48 48" />
+            <RichTextLabel Name="FactionName" Text="{Loc 'Название фракции: '}" Access="Public" VerticalAlignment="Center" />
+        </BoxContainer>
 
         <TabContainer Name="LeaderTabs" Access="Public" VerticalExpand="True">
             <BoxContainer Name="SettingsTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
@@ -44,6 +47,9 @@
                     <LineEdit Name="FactionIconChange" Access="Public" MinSize="200 20" PlaceHolder="JobIconCaptain" HorizontalExpand="True"/>
                     <Button Name="FactionIconChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="30 20" Text="{Loc 'Сменить иконку'}"/>
                 </BoxContainer>
+
+                <!-- Логотип фракции -->
+                <Button Name="EditLogoButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Редактировать логотип'}" Margin="5"/>
 
                 <!-- Переключатель набора -->
                 <BoxContainer Name="RecruitingContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
@@ -119,6 +125,7 @@
             </PanelContainer.PanelOverride>
             <BoxContainer Orientation="Horizontal" Margin="12" SeparationOverride="16">
                 <TextureRect Name="FactionIconMember" Access="Public" MinSize="48 48" Stretch="KeepAspectCentered" />
+                <ui1:FactionLogoControl Name="FactionLogoMember" Access="Public" MinSize="48 48" />
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Center">
                      <RichTextLabel Name="FactionNameMember" Access="Public" />
                 </BoxContainer>

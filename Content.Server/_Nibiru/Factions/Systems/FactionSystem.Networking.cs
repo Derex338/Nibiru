@@ -1,4 +1,5 @@
 using Content.Shared._Nibiru.Factions;
+using Content.Shared._Nibiru.Factions.Messeges;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server._Nibiru.Factions;
@@ -22,5 +23,7 @@ public sealed partial class FactionSystem
         SubscribeNetworkEvent<FactionMoveMemberMessage>(OnMoveMember);
         SubscribeNetworkEvent<FactionCreateRoleMessage>(OnCreateRole);
         SubscribeNetworkEvent<FactionDeleteRoleMessage>(OnDeleteRole);
+        
+        SubscribeNetworkEvent<NibiruFactionLogoSaveMessage>(OnLogoSave);
     }
 }

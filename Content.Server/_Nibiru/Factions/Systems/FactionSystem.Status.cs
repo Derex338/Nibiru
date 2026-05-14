@@ -1,4 +1,5 @@
 using Content.Shared._Nibiru.Factions;
+using Content.Shared._Nibiru.Factions.Messeges;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Linq;
@@ -215,5 +216,39 @@ public sealed partial class FactionSystem
             Dirty(player.Value, factionComponent);
             UpdateFactionRegistry(factionComponent);
         }
+    }
+
+    private void OnLogoSave(NibiruFactionLogoSaveMessage msg, EntitySessionEventArgs args)
+    {
+        var player = args.SenderSession.AttachedEntity;
+
+        if (!player.HasValue)
+            return;
+
+        if (!TryComp<FactionComponent>(player.Value, out var factionComponent)
+            || !factionComponent.IsCreator)
+        {
+            _popup.PopupEntity(
+                Loc.GetString("not-leader"),
+                player.Value,
+                player.Value);
+            return;
+        }
+
+        factionComponent.LogoBackground = msg.BackgroundColor;
+        factionComponent.LogoPixels = msg.Pixels;
+
+        foreach (var member in factionComponent.Members)
+        {
+            if (TryComp<FactionComponent>(member, out var memberComp))
+            {
+                memberComp.LogoBackground = msg.BackgroundColor;
+                memberComp.LogoPixels = msg.Pixels;
+                Dirty(member, memberComp);
+            }
+        }
+
+        Dirty(player.Value, factionComponent);
+        UpdateFactionRegistry(factionComponent);
     }
 }

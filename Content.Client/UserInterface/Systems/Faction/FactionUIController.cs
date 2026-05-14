@@ -7,7 +7,9 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using Robust.Client.UserInterface.CustomControls;
 using Content.Shared._Nibiru.Factions;
+using Content.Shared._Nibiru.Factions.Messeges;
 using Content.Client.Nibiru.Faction;
+using Content.Client._Nibiru.Factions;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using Robust.Client.Player;
 using Robust.Client.Input;
@@ -42,15 +44,6 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
     private MenuButton? FactionButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.FactionButton;
 
     public string _factionName = string.Empty;
-
-    //public override void Initialize()
-    //{
-    //    base.Initialize();
-    //
-    //    CommandBinds.Builder
-    //            .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, true, true))
-    //            .Register<FactionUIController>();
-    //}
 
     public void UnloadButton()
     {
@@ -158,6 +151,8 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         _factionWindow.FilterGenderButton.OnPressed += _ => OnChangeFilterGender();
         _factionWindow.FilterSkinColorButton.OnPressed += _ => OnChangeFilterSkinColor();
         _factionWindow.FilterNameButton.OnPressed += _ => OnChangeFilterName();
+
+        _factionWindow.EditLogoButton.OnPressed += _ => OnEditLogo();
 
         DeactivateStateButton();
 
@@ -325,7 +320,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
             _factionWindow.FactionLeader.Text = Identity.Name(factionComponent.Leader, _entityManager);
             _factionWindow.FactionNameMember.SetMessage(Loc.GetString("faction-name-label", ("name", factionComponent.FactionName)), defaultColor: factionComponent.FactionColor);
-            
+
             var rank = string.IsNullOrEmpty(factionComponent.Rank) ? Loc.GetString("faction-rank-no-rank") : factionComponent.Rank;
             _factionWindow.FactionRank.Text = Loc.GetString("faction-rank-label", ("rank", rank));
 
@@ -344,6 +339,8 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                     _factionWindow.FactionIconMember.Texture = spriteSystem.Frame0(new SpriteSpecifier.Texture(resPath));
                 }
             }
+
+            _factionWindow.FactionLogoMember.UpdateLogo(factionComponent.LogoBackground, factionComponent.LogoPixels);
         }
         else if (factionComponent.IsCreator)
         {
@@ -369,6 +366,8 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             {
                 _factionWindow.MemberContainer.AddChild(new MiniMemberCardControl(memberData, playerEntity, factionComponent.Roles, _entityManager));
             }
+
+            _factionWindow.FactionLogoLeader.UpdateLogo(factionComponent.LogoBackground, factionComponent.LogoPixels);
         }
     }
 
@@ -536,6 +535,26 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         var text = _factionWindow.FilterName.Text;
         var names = text.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
         _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListNames = names });
+    }
+
+    private void OnEditLogo()
+    {
+        if (_factionWindow == null || _player.LocalSession is not { } session) return;
+        if (!_entityManager.TryGetComponent<FactionComponent>(session.AttachedEntity, out var fc)) return;
+
+        var editor = new FactionLogoEditorWindow();
+        editor.LoadLogo(fc.LogoBackground, fc.LogoPixels);
+        editor.OnSaveLogo += (bg, pixels) =>
+        {
+            _entityManager.RaisePredictiveEvent(new NibiruFactionLogoSaveMessage
+            {
+                BackgroundColor = bg,
+                Pixels = pixels
+            });
+
+            _entityManager.System<NibiruFactionLogoSystem>().UpdateFactionLogo(fc.FactionName, bg, pixels);
+        };
+        editor.OpenCentered();
     }
 
     /// <summary>

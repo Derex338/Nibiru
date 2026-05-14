@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Управляет стайным поведением NPC (волки, собаки и т.п.).
+/// Управляет стайным поведением NPC
 /// Синхронизирует цели между членами стаи, обрабатывает иерархию
 /// и панику при потере лидера.
 /// </summary>

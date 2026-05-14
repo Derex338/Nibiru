@@ -64,6 +64,20 @@ public sealed partial class FactionComponent : Component
     public string IconPath { get; set; } = string.Empty;
 
     /// <summary>
+    /// Цвет фона логотипа фракции
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("logoBackground")]
+    public Color LogoBackground { get; set; } = Color.Transparent;
+
+    /// <summary>
+    /// Данные рисунка логотипа 32x32
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("logoPixels")]
+    public List<Color> LogoPixels { get; set; } = new();
+
+    /// <summary>
     /// Ранг/должность члена фракции
     /// </summary>
     [AutoNetworkedField]
@@ -215,6 +229,18 @@ public partial struct FactionRegistryData
     public string IconPath;
 
     /// <summary>
+    /// Цвет фона логотипа фракции
+    /// </summary>
+    [DataField("logoBackground")]
+    public Color LogoBackground;
+
+    /// <summary>
+    /// Данные рисунка логотипа 32x32
+    /// </summary>
+    [DataField("logoPixels")]
+    public List<Color> LogoPixels;
+
+    /// <summary>
     /// Статус фракции
     /// </summary>
     [DataField("status")]
@@ -276,6 +302,8 @@ public sealed class FactionInfo
     public Color Color { get; set; } = Color.White;
     public string Description { get; set; } = string.Empty;
     public string IconPath { get; set; } = string.Empty;
+    public Color LogoBackground { get; set; } = Color.Transparent;
+    public List<Color> LogoPixels { get; set; } = new();
     public FactionStatus Status { get; set; } = FactionStatus.Active;
     public bool IsRecruiting { get; set; } = false;
     public List<string> WhiteListSpecies { get; set; } = new();

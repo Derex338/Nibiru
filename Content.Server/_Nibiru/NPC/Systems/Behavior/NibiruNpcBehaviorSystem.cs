@@ -25,6 +25,7 @@ using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
@@ -51,9 +52,11 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly Robust.Shared.Map.IMapManager _mapManager = default!;
     [Dependency] private readonly Robust.Shared.Map.ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly NibiruNpcCombatSystem _combatSystem = default!;
     [Dependency] private readonly Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    private const float ThreatCheckInterval = 0.5f;
+    private const float ThreatCheckInterval = 0.1f;
     private float _threatCheckAccumulator;
 
     public override void Initialize()
@@ -68,7 +71,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
 
     private void OnRefreshSpeed(EntityUid uid, NibiruNpcBehaviorComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (component.IsCombatActionActive && component.CombatStyle == NibiruCombatStyle.Charge)
+        if (component.CurrentState == NibiruNpcState.Charging && component.CombatTimer < 0)
         {
             args.ModifySpeed(2.5f, 2.5f); // Increase speed during charge
         }
@@ -160,14 +163,16 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                 case NibiruNpcState.Patrolling:
                     ProcessPatrolling(uid, behavior, perception, xform, frameTime, doThreatCheck);
                     break;
+                case NibiruNpcState.Hungry:
+                    ProcessHungry(uid, behavior, perception, xform, frameTime);
+                    break;
                 case NibiruNpcState.Chasing:
                     ProcessChasing(uid, behavior, perception, xform);
                     break;
+                case NibiruNpcState.Charging:
                 case NibiruNpcState.Attacking:
-                    ProcessAttacking(uid, behavior, xform);
-                    break;
                 case NibiruNpcState.Fleeing:
-                    ProcessFleeing(uid, behavior, perception, xform);
+                    _combatSystem.ProcessCombat(uid, behavior, xform, frameTime);
                     break;
                 case NibiruNpcState.Following:
                     ProcessFollowing(uid, behavior, xform);
@@ -210,20 +215,12 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                 return;
             }
 
-            // Если голоден — ищем еду
+            // Проверка на голод
             if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger) &&
                 hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Peckish)
             {
-                if (TryEatTile(uid, hunger, xform))
-                    return;
-
-                var food = FindFood(uid, perception);
-                if (food != null)
-                {
-                    behavior.CurrentTarget = food;
-                    behavior.CurrentState = NibiruNpcState.Chasing;
-                    return;
-                }
+                behavior.CurrentState = NibiruNpcState.Hungry;
+                return;
             }
         }
 
@@ -247,20 +244,12 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                 return;
             }
 
-            // Если голоден — ищем еду
+            // Проверка на голод
             if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger) &&
                 hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Peckish)
             {
-                if (TryEatTile(uid, hunger, xform))
-                    return;
-
-                var food = FindFood(uid, perception);
-                if (food != null)
-                {
-                    behavior.CurrentTarget = food;
-                    behavior.CurrentState = NibiruNpcState.Chasing;
-                    return;
-                }
+                behavior.CurrentState = NibiruNpcState.Hungry;
+                return;
             }
         }
 
@@ -324,34 +313,20 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
             return;
         }
 
-        // Логика разбега (Charge)
-        if (behavior.CombatStyle == NibiruCombatStyle.Charge && !behavior.IsCombatActionActive && behavior.CombatTimer <= 0)
+        // Логика перехода в разбег (Charge)
+        if (behavior.CombatStyle == NibiruCombatStyle.Charge && behavior.CombatTimer <= 0)
         {
             if (distance >= 4f && distance <= 8f)
             {
-                behavior.IsCombatActionActive = true;
-                _movementSpeed.RefreshMovementSpeedModifiers(uid);
-                _popup.PopupEntity(Loc.GetString("nibiru-animal-combat-charge"), uid);
+                behavior.CurrentState = NibiruNpcState.Charging;
+                behavior.IsCombatActionActive = false; // Сбросим для фазы тряски
+                _steering.Unregister(uid);
+                return;
             }
         }
 
         if (distance <= 1.5f)
         {
-            if (behavior.IsCombatActionActive && behavior.CombatStyle == NibiruCombatStyle.Charge)
-            {
-                behavior.IsCombatActionActive = false;
-                behavior.CombatTimer = 5f;
-                _movementSpeed.RefreshMovementSpeedModifiers(uid);
-            }
-            // Если цель — еда, съедаем её
-            if (_tag.HasTag(target, "Food"))
-            {
-                ConsumeFood(uid, target);
-                behavior.CurrentState = NibiruNpcState.Idle;
-                behavior.CurrentTarget = null;
-                return;
-            }
-
             behavior.CurrentState = NibiruNpcState.Attacking;
             return;
         }
@@ -359,28 +334,85 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         _steering.Register(uid, new EntityCoordinates(target, Vector2.Zero));
     }
 
+    private void ProcessHungry(EntityUid uid, NibiruNpcBehaviorComponent behavior,
+        NibiruNpcPerceptionComponent perception, TransformComponent xform, float frameTime)
+    {
+        if (!TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger) ||
+            hunger.CurrentThreshold > Content.Shared.Nutrition.Components.HungerThreshold.Peckish)
+        {
+            behavior.CurrentState = NibiruNpcState.Idle;
+            return;
+        }
+
+        // 1. Пытаемся съесть тайл
+        if (TryEatTile(uid, behavior, hunger, xform))
+        {
+            behavior.CurrentState = NibiruNpcState.Idle;
+            return;
+        }
+
+        // 2. Ищем еду
+        var food = FindFood(uid, perception);
+        if (food != null)
+        {
+            behavior.CurrentTarget = food;
+
+            if (!TryComp<TransformComponent>(food.Value, out var foodXform))
+            {
+                behavior.CurrentTarget = null;
+                return;
+            }
+
+            if (xform.Coordinates.TryDistance(EntityManager, foodXform.Coordinates, out var dist) && dist <= 1.5f)
+            {
+                ConsumeFood(uid, food.Value);
+                behavior.CurrentState = NibiruNpcState.Idle;
+                behavior.CurrentTarget = null;
+                _steering.Unregister(uid);
+                return;
+            }
+
+            _steering.Register(uid, new EntityCoordinates(food.Value, Vector2.Zero));
+            return;
+        }
+
+        // Если ничего не нашли - просто патрулируем в поисках
+        behavior.CurrentState = NibiruNpcState.Patrolling;
+    }
+
     private void ConsumeFood(EntityUid uid, EntityUid food)
     {
-        if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger))
+        if (!TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger))
+            return;
+
+        float nutritionAmount = 100f; // Значение по умолчанию
+
+        // Пытаемся рассчитать питательность из EdibleComponent и Solution
+        if (TryComp<Content.Shared.Nutrition.Components.EdibleComponent>(food, out var edible))
         {
-            // Упрощенное поедание: восстанавливаем 100 ед. и удаляем еду
-            _hunger.ModifyHunger(uid, 100f, hunger);
-            _sounds.PlayFeedingSound(uid);
-            QueueDel(food);
+            if (_solutionContainer.TryGetSolution(food, edible.Solution, out _, out var solution))
+            {
+                // Примерный расчет: 10 единиц сытости за 1 единицу объема раствора
+                nutritionAmount = (float) solution.Volume * 10f;
+            }
         }
+
+        _hunger.ModifyHunger(uid, nutritionAmount, hunger);
+        _sounds.PlayFeedingSound(uid);
+        QueueDel(food);
     }
 
     private EntityUid? FindFood(EntityUid uid, NibiruNpcPerceptionComponent perception)
     {
         foreach (var detected in perception.DetectedEntities)
         {
-            if (_tag.HasTag(detected, "Food"))
+            if (_tag.HasTag(detected, "Food") || HasComp<Content.Shared.Nutrition.Components.EdibleComponent>(detected))
                 return detected;
         }
         return null;
     }
 
-    private bool TryEatTile(EntityUid uid, Content.Shared.Nutrition.Components.HungerComponent hunger, TransformComponent xform)
+    private bool TryEatTile(EntityUid uid, NibiruNpcBehaviorComponent behavior, Content.Shared.Nutrition.Components.HungerComponent hunger, TransformComponent xform)
     {
         // Проверяем, является ли животное травоядным
         if (!TryComp<NibiruTamableComponent>(uid, out var tamable) || tamable.Diet != NibiruAnimalDiet.Herbivore)
@@ -395,7 +427,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         var centerTileRef = grid.GetTileRef(xform.Coordinates);
         var centerIndices = centerTileRef.GridIndices;
 
-        // Ищем траву в области 3х3
+        // Ищем еду в области 3х3
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -404,7 +436,18 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                 var tileRef = grid.GetTileRef(checkIndices);
                 var tileDef = (Content.Shared.Maps.ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
 
-                if (tileDef.Name.ToLower().Contains("grass") || tileDef.ID.ToLower().Contains("grass") || tileDef.ID.ToLower().Contains("jungle"))
+                bool isEdible = false;
+                foreach (var edibleType in behavior.EdibleTiles)
+                {
+                    if (tileDef.Name.Contains(edibleType, StringComparison.OrdinalIgnoreCase) ||
+                        tileDef.ID.Contains(edibleType, StringComparison.OrdinalIgnoreCase))
+                    {
+                        isEdible = true;
+                        break;
+                    }
+                }
+
+                if (isEdible)
                 {
                     if (!string.IsNullOrEmpty(tileDef.BaseTurf))
                     {
@@ -420,148 +463,6 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         }
 
         return false;
-    }
-
-    private void ProcessAttacking(EntityUid uid, NibiruNpcBehaviorComponent behavior, TransformComponent xform)
-    {
-        if (behavior.CurrentTarget == null || !EntityManager.EntityExists(behavior.CurrentTarget.Value))
-        {
-            behavior.CurrentState = NibiruNpcState.Returning;
-            behavior.CurrentTarget = null;
-            return;
-        }
-
-        var target = behavior.CurrentTarget.Value;
-        if (_mobState.IsIncapacitated(target))
-        {
-            behavior.CurrentState = NibiruNpcState.Returning;
-            behavior.CurrentTarget = null;
-            return;
-        }
-
-        if (!TryComp<TransformComponent>(target, out var targetXform))
-        {
-            behavior.CurrentState = NibiruNpcState.Returning;
-            behavior.CurrentTarget = null;
-            return;
-        }
-
-        if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance))
-        {
-            behavior.CurrentState = NibiruNpcState.Returning;
-            behavior.CurrentTarget = null;
-            return;
-        }
-
-        if (distance > 2f)
-        {
-            behavior.CurrentState = NibiruNpcState.Chasing;
-            return;
-        }
-
-        if (TryComp<CombatModeComponent>(uid, out var combatMode) && !combatMode.IsInCombatMode)
-            _combat.SetInCombatMode(uid, true, combatMode);
-
-        if (_melee.TryGetWeapon(uid, out var weaponUid, out var weapon))
-        {
-            if (_timing.CurTime >= weapon.NextAttack)
-            {
-                if (_melee.AttemptLightAttack(uid, weaponUid, weapon, target))
-                {
-                    // Логика Hit and Run
-                    if (behavior.CombatStyle == NibiruCombatStyle.HitAndRun)
-                    {
-                        behavior.IsCombatActionActive = true;
-                        behavior.CombatTimer = 1.2f;
-                        behavior.CurrentState = NibiruNpcState.Fleeing;
-                        return;
-                    }
-                }
-            }
-        }
-
-        _steering.Register(uid, new EntityCoordinates(target, Vector2.Zero));
-    }
-
-    private void ProcessFleeing(EntityUid uid, NibiruNpcBehaviorComponent behavior,
-        NibiruNpcPerceptionComponent perception, TransformComponent xform)
-    {
-        if (TryComp<CombatModeComponent>(uid, out var combatMode) && combatMode.IsInCombatMode)
-            _combat.SetInCombatMode(uid, false, combatMode);
-
-        // Если это тактический отскок
-        if (behavior.IsCombatActionActive && behavior.CombatStyle == NibiruCombatStyle.HitAndRun)
-        {
-            if (behavior.CombatTimer <= 0)
-            {
-                behavior.IsCombatActionActive = false;
-                behavior.CurrentState = NibiruNpcState.Chasing;
-                return;
-            }
-        }
-
-        if (behavior.CurrentTarget == null || !EntityManager.EntityExists(behavior.CurrentTarget.Value))
-        {
-            var myPos = _xform.GetWorldPosition(xform);
-            var randomOffset = _random.NextVector2(behavior.FleeDistance);
-            var fleeTarget = myPos + randomOffset;
-
-            var fleeCoords = new EntityCoordinates(
-                xform.ParentUid,
-                Vector2.Transform(fleeTarget, _xform.GetInvWorldMatrix(xform.ParentUid)));
-
-            _steering.Register(uid, fleeCoords);
-
-            behavior.PatrolAccumulator += 1f;
-            if (behavior.PatrolAccumulator > 5f)
-            {
-                behavior.PatrolAccumulator = 0f;
-                behavior.CurrentState = NibiruNpcState.Returning;
-                behavior.CurrentTarget = null;
-            }
-            return;
-        }
-
-        var target = behavior.CurrentTarget.Value;
-
-        if (!TryComp<TransformComponent>(target, out var targetXform))
-        {
-            behavior.CurrentState = NibiruNpcState.Idle;
-            behavior.CurrentTarget = null;
-            return;
-        }
-
-        if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance))
-        {
-            behavior.CurrentState = NibiruNpcState.Idle;
-            behavior.CurrentTarget = null;
-            return;
-        }
-
-        if (distance > behavior.FleeDistance)
-        {
-            behavior.CurrentState = NibiruNpcState.Idle;
-            behavior.CurrentTarget = null;
-            _steering.Unregister(uid);
-            return;
-        }
-
-        var currentPos = _xform.GetWorldPosition(xform);
-        var threatPos = _xform.GetWorldPosition(targetXform);
-        var fleeDir = currentPos - threatPos;
-
-        if (fleeDir.LengthSquared() > 0.01f)
-        {
-            // Убегаем в противоположную сторону от угрозы
-            fleeDir = Vector2.Normalize(fleeDir) * behavior.FleeDistance;
-            var fleeTarget = currentPos + fleeDir;
-
-            var fleeCoords = new EntityCoordinates(
-                xform.ParentUid,
-                Vector2.Transform(fleeTarget, _xform.GetInvWorldMatrix(xform.ParentUid)));
-
-            _steering.Register(uid, fleeCoords);
-        }
     }
 
     private void ProcessFollowing(EntityUid uid, NibiruNpcBehaviorComponent behavior, TransformComponent xform)

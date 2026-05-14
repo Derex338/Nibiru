@@ -1,0 +1,48 @@
+<ui1:FactionLogoEditorWindow
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
+    Title="{Loc 'Редактор Логотипа Фракции'}"
+    MinSize="400 500"
+    Resizable="False">
+    
+    <BoxContainer Orientation="Horizontal" SeparationOverride="10" Margin="10">
+        <!-- Левая панель: Сетка и инструменты -->
+        <BoxContainer Orientation="Vertical" SeparationOverride="10">
+            <PanelContainer HorizontalAlignment="Center" VerticalAlignment="Center">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#101010" />
+                </PanelContainer.PanelOverride>
+                
+                <GridContainer Name="PixelGrid" Access="Public" Columns="32" HSeparationOverride="0" VSeparationOverride="0" />
+            </PanelContainer>
+            
+            <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                <Button Name="EraserButton" Access="Public" Text="Ластик" ToggleMode="True" MinSize="100 30" />
+                <Button Name="ClearButton" Access="Public" Text="Очистить всё" MinSize="100 30" />
+            </BoxContainer>
+            
+            <!--
+            <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                <Button Name="ToggleGridButton" Access="Public" Text="Сетка: Вкл" MinSize="100 30" />
+                <Button Name="InvertGridButton" Access="Public" Text="Цвет сетки" MinSize="100 30" />
+            </BoxContainer>
+            -->
+        </BoxContainer>
+        
+        <!-- Правая панель: Выбор цвета -->
+        <BoxContainer Orientation="Vertical" SeparationOverride="10">
+            <Label Text="Выбор цвета:" />
+            <ColorSelectorSliders Name="ColorSelector" Access="Public" Margin="0 5 0 10"/>
+            
+            <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                <Button Name="BgColorButton" Access="Public" Text="Установить как фон" />
+                <Button Name="BrushColorButton" Access="Public" Text="Установить как кисть" />
+            </BoxContainer>
+            
+            <Control VerticalExpand="True" />
+            
+            <Button Name="SaveButton" Access="Public" Text="Сохранить логотип" HorizontalAlignment="Center" MinSize="150 30" />
+        </BoxContainer>
+    </BoxContainer>
+</ui1:FactionLogoEditorWindow>

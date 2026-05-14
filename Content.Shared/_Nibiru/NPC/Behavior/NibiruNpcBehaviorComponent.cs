@@ -1,3 +1,6 @@
+using Content.Shared.Audio;
+using Content.Shared.Damage;
+using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -159,6 +162,56 @@ public sealed partial class NibiruNpcBehaviorComponent : Component
     /// </summary>
     [ViewVariables]
     public bool IsCombatActionActive;
+
+    #region Charge Attack
+
+    /// <summary>
+    /// Время, в течение которого NPC трясется перед разбегом.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float ChargeShakeDuration = 1.0f;
+
+    /// <summary>
+    /// Скорость во время разбега.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float ChargeSpeed = 15f;
+
+    /// <summary>
+    /// Максимальное время разбега.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float ChargeMaxDuration = 1.5f;
+
+    /// <summary>
+    /// Урон, наносимый при столкновении во время разбега.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier? ChargeDamage;
+
+    /// <summary>
+    /// Сила отбрасывания при столкновении.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float ChargeKnockbackForce = 5f;
+
+    /// <summary>
+    /// Направление разбега.
+    /// </summary>
+    [ViewVariables]
+    public Vector2 ChargeDirection;
+
+    #endregion
+
+    #region Eating
+
+    /// <summary>
+    /// Типы тайлов, которые может поедать животное.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public List<string> EdibleTiles = new() { "Grass", "Jungle" };
+
+    #endregion
 }
 
 /// <summary>
@@ -200,7 +253,17 @@ public enum NibiruNpcState : byte
     /// <summary>
     /// Возвращается к домашней точке.
     /// </summary>
-    Returning
+    Returning,
+
+    /// <summary>
+    /// Голоден и ищет еду.
+    /// </summary>
+    Hungry,
+
+    /// <summary>
+    /// Выполняет атаку с разбега (зарядка или само движение).
+    /// </summary>
+    Charging
 }
 
 /// <summary>
