@@ -5,6 +5,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using Robust.Shared.GameStates;
 using Robust.Shared.GameObjects;
+using Content.Shared._Nibiru.Factions.Messeges;
 
 namespace Content.Client._Nibiru.Factions;
 
@@ -30,7 +31,7 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
 
     public void UpdateFactionLogo(string factionName, Robust.Shared.Maths.Color bgColor, List<Robust.Shared.Maths.Color> pixels)
     {
-        if (string.IsNullOrEmpty(factionName) || pixels == null || pixels.Count != 32 * 32)
+        if (string.IsNullOrEmpty(factionName) || pixels == null || pixels.Count != 16 * 16)
             return;
 
         // Если все пиксели прозрачные и фон прозрачный, то логотипа нет
@@ -54,12 +55,12 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
             return;
         }
 
-        var image = new Image<Rgba32>(32, 32);
-        for (int y = 0; y < 32; y++)
+        var image = new Image<Rgba32>(16, 16);
+        for (int y = 0; y < 16; y++)
         {
-            for (int x = 0; x < 32; x++)
+            for (int x = 0; x < 16; x++)
             {
-                var col = pixels[y * 32 + x];
+                var col = pixels[y * 16 + x];
                 if (col == Robust.Shared.Maths.Color.Transparent)
                     col = bgColor;
 
@@ -73,6 +74,8 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
         }
 
         _logoCache[factionName] = _clyde.LoadTextureFromImage(image, "FactionLogo_" + factionName);
+        
+        RaiseLocalEvent(new FactionLogoUpdatedEvent(factionName));
     }
 
     /// <summary>

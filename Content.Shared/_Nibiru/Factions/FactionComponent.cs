@@ -78,6 +78,13 @@ public sealed partial class FactionComponent : Component
     public List<Color> LogoPixels { get; set; } = new();
 
     /// <summary>
+    /// Данные иконки фракции 8x8
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("logoPixels8x8")]
+    public List<Color> LogoPixels8x8 { get; set; } = new();
+
+    /// <summary>
     /// Ранг/должность члена фракции
     /// </summary>
     [AutoNetworkedField]

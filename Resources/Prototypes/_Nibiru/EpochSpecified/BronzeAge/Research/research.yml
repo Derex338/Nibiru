@@ -455,6 +455,8 @@
     - BannerRed
     - BannerYellow
     - BannerGreen
+    - FactionBanner
+    - FactionFlag
 
 - type: technology
   id: BronzeTransportation

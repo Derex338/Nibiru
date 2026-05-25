@@ -22,17 +22,17 @@ public sealed class FactionLogoControl : Control
         var rect = PixelSizeBox;
         handle.DrawRect(rect, _bg);
 
-        if (_pixels == null || _pixels.Count != 32 * 32)
+        if (_pixels == null || _pixels.Count != 16 * 16)
             return;
 
-        var pixelW = rect.Width / 32f;
-        var pixelH = rect.Height / 32f;
+        var pixelW = rect.Width / 16f;
+        var pixelH = rect.Height / 16f;
 
-        for (int y = 0; y < 32; y++)
+        for (int y = 0; y < 16; y++)
         {
-            for (int x = 0; x < 32; x++)
+            for (int x = 0; x < 16; x++)
             {
-                var c = _pixels[y * 32 + x];
+                var c = _pixels[y * 16 + x];
                 if (c == Color.Transparent)
                     continue;
 

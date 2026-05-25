@@ -144,7 +144,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         };
 
         _factionWindow.FactionDescriptionChangeButton.OnPressed += _ => { OnChangeDescription(); };
-        _factionWindow.FactionIconChangeButton.OnPressed += _ => { OnChangeIcon(); };
+        //_factionWindow.FactionIconChangeButton.OnPressed += _ => { OnChangeIcon(); };
         _factionWindow.RecruitingToggle.OnPressed += _ => { OnToggleRecruiting(); };
 
         _factionWindow.FilterSpeciesButton.OnPressed += _ => OnChangeFilterSpecies();
@@ -352,14 +352,14 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             _factionWindow.FactionNameChange.Text = factionComponent.FactionName;
             _factionWindow.FactionDescriptionChange.Text = factionComponent.Description;
             _factionWindow.FactionColorChange.Text = factionComponent.FactionColor.ToHex();
-            _factionWindow.FactionIconChange.Text = factionComponent.IconPath;
+            //_factionWindow.FactionIconChange.Text = factionComponent.IconPath;
             _factionWindow.RecruitingToggle.Pressed = factionComponent.IsRecruiting;
 
             _factionWindow.FilterSpeciesLabel.Text = factionComponent.WhiteListSpecies.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListSpecies);
             _factionWindow.FilterGenderLabel.Text = factionComponent.WhiteListGender.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListGender);
-            
+
             UpdateSkinColorFiltersUI(factionComponent);
-            
+
             _factionWindow.FilterName.Text = string.Join(", ", factionComponent.WhiteListNames);
 
             _factionWindow.MemberContainer.RemoveAllChildren();
@@ -439,7 +439,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         }
     }
 
-    private void OnChangeIcon()
+    /*private void OnChangeIcon()
     {
         if (_factionWindow == null)
             return;
@@ -453,7 +453,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             });
             UpdateState();
         }
-    }
+    }*/
 
     private void OnToggleRecruiting()
     {
@@ -528,13 +528,14 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         if (!_entityManager.TryGetComponent<FactionComponent>(session.AttachedEntity, out var fc)) return;
 
         var editor = new FactionLogoEditorWindow();
-        editor.LoadLogo(fc.LogoBackground, fc.LogoPixels);
-        editor.OnSaveLogo += (bg, pixels) =>
+        editor.LoadLogo(fc.LogoBackground, fc.LogoPixels, fc.LogoPixels8x8);
+        editor.OnSaveLogo += (bg, pixels, pixels8) =>
         {
             _entityManager.RaisePredictiveEvent(new NibiruFactionLogoSaveMessage
             {
                 BackgroundColor = bg,
-                Pixels = pixels
+                Pixels = pixels,
+                Pixels8x8 = pixels8
             });
 
             _entityManager.System<NibiruFactionLogoSystem>().UpdateFactionLogo(fc.FactionName, bg, pixels);
@@ -583,7 +584,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
     {
         var container = _factionWindow!.SkinColorFiltersContainer;
         if (container == null) return;
-        
+
         container.RemoveAllChildren();
 
         if (factionComponent.WhiteListSpecies.Count == 0)
@@ -602,7 +603,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             var colorationProto = protoManager.Index<SkinColorationPrototype>(speciesProto.SkinColoration);
 
             var speciesBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(0, 0, 0, 10) };
-            
+
             bool isEnabled = factionComponent.WhiteListSkinColors.TryGetValue(speciesId, out var currentFilter);
 
             var topRow = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };

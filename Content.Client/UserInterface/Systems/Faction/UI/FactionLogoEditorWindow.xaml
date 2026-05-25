@@ -3,46 +3,95 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
     Title="{Loc 'Редактор Логотипа Фракции'}"
-    MinSize="400 500"
+    MinSize="900 450"
     Resizable="False">
     
-    <BoxContainer Orientation="Horizontal" SeparationOverride="10" Margin="10">
-        <!-- Левая панель: Сетка и инструменты -->
-        <BoxContainer Orientation="Vertical" SeparationOverride="10">
-            <PanelContainer HorizontalAlignment="Center" VerticalAlignment="Center">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#101010" />
-                </PanelContainer.PanelOverride>
-                
-                <GridContainer Name="PixelGrid" Access="Public" Columns="32" HSeparationOverride="0" VSeparationOverride="0" />
-            </PanelContainer>
-            
-            <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                <Button Name="EraserButton" Access="Public" Text="Ластик" ToggleMode="True" MinSize="100 30" />
-                <Button Name="ClearButton" Access="Public" Text="Очистить всё" MinSize="100 30" />
-            </BoxContainer>
-            
-            <!--
-            <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                <Button Name="ToggleGridButton" Access="Public" Text="Сетка: Вкл" MinSize="100 30" />
-                <Button Name="InvertGridButton" Access="Public" Text="Цвет сетки" MinSize="100 30" />
-            </BoxContainer>
-            -->
-        </BoxContainer>
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#111112" />
+        </PanelContainer.PanelOverride>
         
-        <!-- Правая панель: Выбор цвета -->
-        <BoxContainer Orientation="Vertical" SeparationOverride="10">
-            <Label Text="Выбор цвета:" />
-            <ColorSelectorSliders Name="ColorSelector" Access="Public" Margin="0 5 0 10"/>
-            
-            <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                <Button Name="BgColorButton" Access="Public" Text="Установить как фон" />
-                <Button Name="BrushColorButton" Access="Public" Text="Установить как кисть" />
+        <BoxContainer Orientation="Horizontal" SeparationOverride="15" Margin="15">
+            <!-- Сетка 16x16 -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                <Label Text="Логотип (16x16)" HorizontalAlignment="Center" />
+                <PanelContainer>
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
+                    </PanelContainer.PanelOverride>
+                    <GridContainer Name="PixelGrid" Access="Public" Columns="16" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
+                </PanelContainer>
+                
+                <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                    <Button Name="EraserButton" Access="Public" Text="Ластик" ToggleMode="True" MinWidth="80" />
+                    <Button Name="ClearButton" Access="Public" Text="Очистить" MinWidth="100" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Сетка 8x8 и инструменты -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="15" MinWidth="180">
+                <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                    <Label Text="Иконка (8x8)" HorizontalAlignment="Center" />
+                    <PanelContainer HorizontalAlignment="Center">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <GridContainer Name="PixelGrid8x8" Access="Public" Columns="8" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
+                    </PanelContainer>
+                    <Button Name="Clear8x8Button" Access="Public" Text="Очистить 8x8" HorizontalAlignment="Center" MinWidth="100" />
+                </BoxContainer>
+
+                <Control VerticalExpand="True" />
+                
+                <Button Name="SaveButton" Access="Public" Text="Сохранить всё" MinHeight="40" StyleClasses="ButtonSquare" />
             </BoxContainer>
             
-            <Control VerticalExpand="True" />
-            
-            <Button Name="SaveButton" Access="Public" Text="Сохранить логотип" HorizontalAlignment="Center" MinSize="150 30" />
+            <!-- Инструменты цвета -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="10" HorizontalExpand="True">
+                <Label Text="Палитра" HorizontalAlignment="Center" />
+                
+                <BoxContainer Orientation="Horizontal" SeparationOverride="15" HorizontalAlignment="Center">
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                        <PanelContainer Name="BrushPreview" MinSize="24 24" VerticalAlignment="Center">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="White" BorderColor="#3a3a3c" BorderThickness="1" />
+                            </PanelContainer.PanelOverride>
+                        </PanelContainer>
+                        <Label Text="Кисть" VerticalAlignment="Center" />
+                    </BoxContainer>
+                    
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                        <PanelContainer Name="BgPreview" MinSize="24 24" VerticalAlignment="Center">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="Transparent" BorderColor="#3a3a3c" BorderThickness="1" />
+                            </PanelContainer.PanelOverride>
+                        </PanelContainer>
+                        <Label Text="Фон" VerticalAlignment="Center" />
+                    </BoxContainer>
+                </BoxContainer>
+
+                <ColorSelectorSliders Name="ColorSelector" Access="Public" VerticalExpand="True" Margin="0 5 0 5"/>
+                
+                <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                    <Button Name="BgColorButton" Access="Public" Text="Цвет фона" MinWidth="100" />
+                    <Button Name="BrushColorButton" Access="Public" Text="Цвет кисти" MinWidth="100" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Шаблоны -->
+            <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="160">
+                <Label Text="Шаблоны" HorizontalAlignment="Center" />
+                <PanelContainer VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
+                    </PanelContainer.PanelOverride>
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="8">
+                        <GridContainer Name="PresetGrid" Access="Public" Columns="2" HSeparationOverride="8" VSeparationOverride="8" HorizontalAlignment="Center" />
+                    </ScrollContainer>
+                </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
-    </BoxContainer>
+    </PanelContainer>
 </ui1:FactionLogoEditorWindow>
+
+

@@ -237,6 +237,7 @@ public sealed partial class FactionSystem
 
         factionComponent.LogoBackground = msg.BackgroundColor;
         factionComponent.LogoPixels = msg.Pixels;
+        factionComponent.LogoPixels8x8 = msg.Pixels8x8;
 
         foreach (var member in factionComponent.Members)
         {
@@ -244,6 +245,7 @@ public sealed partial class FactionSystem
             {
                 memberComp.LogoBackground = msg.BackgroundColor;
                 memberComp.LogoPixels = msg.Pixels;
+                memberComp.LogoPixels8x8 = msg.Pixels8x8;
                 Dirty(member, memberComp);
             }
         }

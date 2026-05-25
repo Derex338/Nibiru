@@ -1,0 +1,37 @@
+- type: entity
+  id: FactionBanner
+  parent: BannerBase
+  name: фракционный баннер
+  description: Баннер с логотипом и цветами вашей фракции.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/banner.rsi
+    layers:
+    - state: banner_down
+    - state: banner_bg
+      map: [ "enum.FactionVisualLayers.Background" ]
+    - state: banner_icon
+      map: [ "enum.FactionVisualLayers.Logo" ]
+  - type: FactionVisuals
+  - type: Construction
+    graph: FactionVisuals
+    node: banner
+
+- type: entity
+  id: FactionFlag
+  parent: BaseFlag
+  name: фракционный флаг
+  description: Флаг с логотипом и цветами вашей фракции.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/banner.rsi
+    layers:
+    - state: blank_flag
+      sprite: Structures/Wallmounts/flags.rsi
+      map: [ "enum.FactionVisualLayers.Background" ]
+    - state: banner_icon
+      map: [ "enum.FactionVisualLayers.Logo" ]
+  - type: FactionVisuals
+  - type: Construction
+    graph: FactionVisuals
+    node: flag

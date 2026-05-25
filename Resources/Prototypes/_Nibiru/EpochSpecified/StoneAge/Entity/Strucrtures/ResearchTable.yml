@@ -26,3 +26,12 @@
     graph: ResearchTable
     node: fin
   - type: ResearchServer
+
+- type: entity
+  id: ResearchTableDebug
+  parent: ResearchTable
+  name: исследовательский стол
+  suffix: Дебаг
+  description: Тут происходит магия прогресса.
+  components:
+  - type: DebugUnlockAllTechnologies

@@ -4,10 +4,9 @@
             xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
             xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
             Title="{Loc 'Окно фракции'}"
-            Resizable="False"
             MinWidth="450"
             MinHeight="550"
-            SetSize="450 550">
+            Resizable="True">
 
     <BoxContainer Name="FactionCreate" Orientation="Vertical" SeparationOverride="10" MinWidth="250" Access="Public" Visible="True">
         <Label Name="CurrentTextLabel" Text="{Loc 'Название фракции'}" />
@@ -28,29 +27,29 @@
         <TabContainer Name="LeaderTabs" Access="Public" VerticalExpand="True">
             <BoxContainer Name="SettingsTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
                 <!-- Название фракции -->
-                <BoxContainer Name="FactionNameChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
+                <BoxContainer Name="FactionNameChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionNameChange" Access="Public" MinSize="200 20" PlaceHolder="Название фракции" HorizontalExpand="True"/>
-                    <Button Name="FactionNameChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="30 20" Text="{Loc 'Сменить'}"/>
+                    <Button Name="FactionNameChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
                 </BoxContainer>
 
                 <!-- Описание фракции -->
-                <BoxContainer Name="FactionDescriptionChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
+                <BoxContainer Name="FactionDescriptionChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionDescriptionChange" Access="Public" MinSize="200 20" PlaceHolder="Описание фракции" HorizontalExpand="True"/>
-                    <Button Name="FactionDescriptionChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="30 20" Text="{Loc 'Сменить'}"/>
+                    <Button Name="FactionDescriptionChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
                 </BoxContainer>
 
                 <!-- Цвет фракции -->
-                <BoxContainer Name="FactionColorChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
+                <BoxContainer Name="FactionColorChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionColorChange" Access="Public" MinSize="200 20" PlaceHolder="#000000 or blue" HorizontalExpand="True"/>
-                    <Button Name="FactionColorChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="30 20" Text="{Loc 'Сменить цвет'}"/>
+                    <Button Name="FactionColorChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
                 </BoxContainer>
 
-                <!-- Иконка фракции -->
-                <BoxContainer Name="FactionIconChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
+                <!-- Иконка фракции
+                <BoxContainer Name="FactionIconChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionIconChange" Access="Public" MinSize="200 20" PlaceHolder="JobIconCaptain" HorizontalExpand="True"/>
-                    <Button Name="FactionIconChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="30 20" Text="{Loc 'Сменить иконку'}"/>
+                    <Button Name="FactionIconChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
                 </BoxContainer>
-
+                -->
                 <!-- Логотип фракции -->
                 <Button Name="EditLogoButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Редактировать логотип'}" Margin="5"/>
 
@@ -65,7 +64,7 @@
             <ScrollContainer Name="FiltersTab" VerticalExpand="True" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
                     <Label Text="Фильтры вступления:" Margin="0 10 0 0" StyleClasses="LabelBig"/>
-                    
+
                     <BoxContainer Orientation="Horizontal" Margin="5">
                         <Label Text="Расы:" MinSize="80 0"/>
                         <Button Name="FilterSpeciesButton" Access="Public" Text="Выбрать..." HorizontalExpand="True"/>
@@ -146,7 +145,7 @@
                     <Label Text="Лидер:" FontColorOverride="#a0a0a0" MinSize="80 0" />
                     <Label Name="FactionLeader" Access="Public" FontColorOverride="#e0e0e0" />
                 </BoxContainer>
-                
+
                 <customControls:HSeparator StyleClasses="LowDivider" />
 
                 <BoxContainer Orientation="Horizontal" SeparationOverride="8">

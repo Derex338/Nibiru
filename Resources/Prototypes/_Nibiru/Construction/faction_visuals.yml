@@ -1,0 +1,52 @@
+- type: constructionGraph
+  id: FactionVisuals
+  start: start
+  graph:
+    - node: banner
+      entity: FactionBanner
+    - node: flag
+      entity: FactionFlag
+    - node: start
+      edges:
+        - to: banner
+          completed:
+            - !type:SetFactionVisuals 
+              rsiPath: _Nibiru/Entities/banner.rsi
+              maskState: banner_bg
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 3
+        - to: flag
+          completed:
+            - !type:SetFactionVisuals 
+              rsiPath: Structures/Wallmounts/flags.rsi
+              maskState: blank_flag
+          steps:
+            - material: WoodStick
+              amount: 1
+            - material: Cloth
+              amount: 1
+              doAfter: 2
+
+- type: construction
+  id: FactionBanner
+  name: фракционный баннер
+  graph: FactionVisuals
+  startNode: start
+  targetNode: banner
+  category: construction-category-decor
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: FactionFlag
+  name: фракционный флаг
+  graph: FactionVisuals
+  startNode: start
+  targetNode: flag
+  category: construction-category-decor
+  objectType: Structure
+  placementMode: SnapgridCenter

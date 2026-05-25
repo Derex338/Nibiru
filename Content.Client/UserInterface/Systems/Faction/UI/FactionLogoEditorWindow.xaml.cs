@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared._Nibiru.Factions.Messeges;
@@ -9,6 +11,12 @@ using Robust.Shared.Maths;
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Shared.Input;
+using Robust.Shared.Prototypes;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Utility;
+using Robust.Shared.Log;
+using Color = Robust.Shared.Maths.Color;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.Systems.Faction.UI;
 
@@ -17,182 +25,286 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 {
     private Color _brushColor = Color.White;
     private Color _bgColor = Color.Transparent;
-    private Color[] _pixels = new Color[32 * 32];
-    private PanelContainer[] _pixelPanels = new PanelContainer[32 * 32];
+    
+    private Color[] _pixels = new Color[16 * 16];
+    private PanelContainer[] _pixelPanels = new PanelContainer[16 * 16];
+    
+    private Color[] _pixels8x8 = new Color[8 * 8];
+    private PanelContainer[] _pixelPanels8x8 = new PanelContainer[8 * 8];
+
     private bool _isDrawing = false;
     private bool _isRightDrawing = false;
-    private bool _showGrid = false;
-    private bool _invertGrid = false;
 
-    public event Action<Color, List<Color>>? OnSaveLogo;
+    public event Action<Color, List<Color>, List<Color>>? OnSaveLogo;
 
     public FactionLogoEditorWindow()
     {
         RobustXamlLoader.Load(this);
 
-        for (int i = 0; i < 32 * 32; i++)
+        // Инициализация 16x16
+        for (int i = 0; i < 16 * 16; i++)
         {
             _pixels[i] = Color.Transparent;
-            var panel = new PanelContainer
-            {
-                MinSize = new Vector2(10, 10),
-                MaxSize = new Vector2(10, 10),
-                MouseFilter = MouseFilterMode.Pass // We handle input in a background panel, or handle it per panel. Let's use Stop.
-            };
-            panel.MouseFilter = MouseFilterMode.Stop;
-
-            var idx = i;
-            panel.OnKeyBindDown += args =>
-            {
-                if (args.Function == EngineKeyFunctions.UIClick)
-                {
-                    _isDrawing = true;
-                    SetPixel(idx, EraserButton.Pressed ? Color.Transparent : _brushColor);
-                }
-                else if (args.Function == EngineKeyFunctions.UIRightClick)
-                {
-                    _isRightDrawing = true;
-                    SetPixel(idx, Color.Transparent);
-                }
-            };
-            
-            panel.OnKeyBindUp += args =>
-            {
-                if (args.Function == EngineKeyFunctions.UIClick)
-                    _isDrawing = false;
-                else if (args.Function == EngineKeyFunctions.UIRightClick)
-                    _isRightDrawing = false;
-            };
-
-            panel.OnMouseEntered += args =>
-            {
-                if (_isDrawing)
-                {
-                    SetPixel(idx, EraserButton.Pressed ? Color.Transparent : _brushColor);
-                }
-                else if (_isRightDrawing)
-                {
-                    SetPixel(idx, Color.Transparent);
-                }
-            };
-
-            // Добавляем границы для визуальной сетки
-            panel.PanelOverride = new StyleBoxFlat 
-            { 
-                BackgroundColor = Color.Transparent, 
-                BorderColor = new Color(50, 50, 50, 100), 
-                BorderThickness = new Thickness(1) 
-            };
-
+            var panel = CreatePixelPanel(i, 16);
             _pixelPanels[i] = panel;
             PixelGrid.AddChild(panel);
-            UpdatePixelVisual(idx);
+            UpdatePixelVisual(i, 16);
         }
 
-        // Выход мыши за пределы всей сетки должен сбрасывать рисование, чтобы не залипало
-        PixelGrid.OnMouseExited += args =>
+        // Инициализация 8x8
+        for (int i = 0; i < 8 * 8; i++)
         {
-            // Не сбрасываем, если мышь просто перешла на другой пиксель, 
-            // но в SS14 OnMouseExited срабатывает когда покидает GridContainer
-        };
-        
-        // Но надежнее сбрасывать при отпускании мыши глобально, если получится. 
-        // Если кнопка отпущена за пределами контрола, OnKeyBindUp вызывается на том контроле, где был Down.
-
-        /*
-        ToggleGridButton.OnPressed += _ =>
-        {
-            _showGrid = !_showGrid;
-            ToggleGridButton.Text = _showGrid ? "Сетка: Вкл" : "Сетка: Выкл";
-            for (int i = 0; i < 32 * 32; i++)
-                UpdatePixelVisual(i);
-        };
-
-        InvertGridButton.OnPressed += _ =>
-        {
-            _invertGrid = !_invertGrid;
-            for (int i = 0; i < 32 * 32; i++)
-                UpdatePixelVisual(i);
-        };
-        */
+            _pixels8x8[i] = Color.Transparent;
+            var panel = CreatePixelPanel(i, 8);
+            _pixelPanels8x8[i] = panel;
+            PixelGrid8x8.AddChild(panel);
+            UpdatePixelVisual(i, 8);
+        }
 
         BgColorButton.OnPressed += _ =>
         {
             _bgColor = ColorSelector.Color;
-            for (int i = 0; i < 32 * 32; i++)
-                UpdatePixelVisual(i);
+            UpdatePreviews();
+            RefreshAllVisuals();
         };
 
         BrushColorButton.OnPressed += _ =>
         {
             _brushColor = ColorSelector.Color;
             EraserButton.Pressed = false;
+            UpdatePreviews();
         };
 
         ClearButton.OnPressed += _ =>
         {
-            for (int i = 0; i < 32 * 32; i++)
-            {
-                SetPixel(i, Color.Transparent);
-            }
+            for (int i = 0; i < 16 * 16; i++) SetPixel(i, Color.Transparent, 16);
+        };
+
+        Clear8x8Button.OnPressed += _ =>
+        {
+            for (int i = 0; i < 8 * 8; i++) SetPixel(i, Color.Transparent, 8);
         };
 
         SaveButton.OnPressed += _ =>
         {
-            OnSaveLogo?.Invoke(_bgColor, _pixels.ToList());
+            OnSaveLogo?.Invoke(_bgColor, _pixels.ToList(), _pixels8x8.ToList());
             Close();
         };
+
+        UpdatePreviews();
+        PopulatePresets();
     }
 
-    public void LoadLogo(Color bg, List<Color> pixels)
+    private PanelContainer CreatePixelPanel(int index, int size)
+    {
+        float pSize = size == 16 ? 20f : 15f;
+        var panel = new PanelContainer
+        {
+            MinSize = new Vector2(pSize, pSize),
+            MaxSize = new Vector2(pSize, pSize),
+            MouseFilter = MouseFilterMode.Stop
+        };
+
+        panel.OnKeyBindDown += args =>
+        {
+            if (args.Function == EngineKeyFunctions.UIClick)
+            {
+                _isDrawing = true;
+                SetPixel(index, EraserButton.Pressed ? Color.Transparent : _brushColor, size);
+            }
+            else if (args.Function == EngineKeyFunctions.UIRightClick)
+            {
+                _isRightDrawing = true;
+                SetPixel(index, Color.Transparent, size);
+            }
+        };
+
+        panel.OnKeyBindUp += args =>
+        {
+            if (args.Function == EngineKeyFunctions.UIClick) _isDrawing = false;
+            else if (args.Function == EngineKeyFunctions.UIRightClick) _isRightDrawing = false;
+        };
+
+        panel.OnMouseEntered += _ =>
+        {
+            if (_isDrawing) SetPixel(index, EraserButton.Pressed ? Color.Transparent : _brushColor, size);
+            else if (_isRightDrawing) SetPixel(index, Color.Transparent, size);
+        };
+
+        return panel;
+    }
+
+    private void UpdatePreviews()
+    {
+        if (BrushPreview.PanelOverride is StyleBoxFlat brushStyle) brushStyle.BackgroundColor = _brushColor;
+        if (BgPreview.PanelOverride is StyleBoxFlat bgStyle) bgStyle.BackgroundColor = _bgColor;
+    }
+
+    private void RefreshAllVisuals()
+    {
+        for (int i = 0; i < 16 * 16; i++) UpdatePixelVisual(i, 16);
+        for (int i = 0; i < 8 * 8; i++) UpdatePixelVisual(i, 8);
+    }
+
+    public void LoadLogo(Color bg, List<Color> pixels16, List<Color> pixels8)
     {
         _bgColor = bg;
-        if (pixels != null && pixels.Count == 32 * 32)
+        LoadPixels(pixels16, _pixels, 16);
+        LoadPixels(pixels8, _pixels8x8, 8);
+        UpdatePreviews();
+        RefreshAllVisuals();
+    }
+
+    private void LoadPixels(List<Color> source, Color[] target, int size)
+    {
+        int count = size * size;
+        if (source != null && source.Count == count)
         {
-            for (int i = 0; i < 32 * 32; i++)
-            {
-                _pixels[i] = pixels[i];
-                UpdatePixelVisual(i);
-            }
+            for (int i = 0; i < count; i++) target[i] = source[i];
         }
         else
         {
-            for (int i = 0; i < 32 * 32; i++)
-            {
-                _pixels[i] = Color.Transparent;
-                UpdatePixelVisual(i);
-            }
+            for (int i = 0; i < count; i++) target[i] = Color.Transparent;
         }
     }
 
-    private void SetPixel(int index, Color color)
+    private void SetPixel(int index, Color color, int size)
     {
-        _pixels[index] = color;
-        UpdatePixelVisual(index);
+        if (size == 16) _pixels[index] = color;
+        else _pixels8x8[index] = color;
+        UpdatePixelVisual(index, size);
     }
 
-    private void UpdatePixelVisual(int index)
+    private void UpdatePixelVisual(int index, int size)
     {
-        var color = _pixels[index] == Color.Transparent ? _bgColor : _pixels[index];
-        // Если фон и пиксель прозрачные, показываем сетку шахматную или темно-серый
+        var pixels = size == 16 ? _pixels : _pixels8x8;
+        var panels = size == 16 ? _pixelPanels : _pixelPanels8x8;
+        
+        var color = pixels[index] == Color.Transparent ? _bgColor : pixels[index];
         if (color == Color.Transparent)
         {
-            // Шахматный узор для прозрачности
-            bool isDark = ((index % 32) + (index / 32)) % 2 == 0;
-            color = isDark ? new Color(40, 40, 40) : new Color(30, 30, 30);
+            bool isDark = ((index % size) + (index / size)) % 2 == 0;
+            color = isDark ? new Color(35, 35, 35) : new Color(25, 25, 25);
         }
 
-        Color borderColor = Color.Transparent;
-        if (_showGrid)
-        {
-            borderColor = _invertGrid ? new Color(255, 255, 255, 100) : new Color(0, 0, 0, 100);
-        }
-
-        _pixelPanels[index].PanelOverride = new StyleBoxFlat 
+        panels[index].PanelOverride = new StyleBoxFlat 
         { 
             BackgroundColor = color,
-            BorderColor = borderColor, 
+            BorderColor = new Color(50, 50, 50, 40), 
             BorderThickness = new Thickness(1) 
         };
     }
+
+    private void PopulatePresets()
+    {
+        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        var resourceManager = IoCManager.Resolve<IResourceManager>();
+        var resourceCache = IoCManager.Resolve<IResourceCache>();
+
+        foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
+        {
+            var folderName = preset.SpriteFolder.Filename;
+
+            ResPath? file16 = null;
+            var path16 = preset.SpriteFolder / $"{folderName}.png";
+            var path16Alt = preset.SpriteFolder / $"{folderName}_16.png";
+
+            if (resourceManager.ContentFileExists(path16))
+                file16 = path16;
+            else if (resourceManager.ContentFileExists(path16Alt))
+                file16 = path16Alt;
+
+            ResPath? file8 = null;
+            var path8 = preset.SpriteFolder / $"{folderName}_8x8.png";
+            var path8Alt = preset.SpriteFolder / $"{folderName}_8.png";
+
+            if (resourceManager.ContentFileExists(path8))
+                file8 = path8;
+            else if (resourceManager.ContentFileExists(path8Alt))
+                file8 = path8Alt;
+
+            if (file16 == null || file8 == null)
+                continue;
+
+            var pixels16 = LoadPixelsFromTexture(resourceCache, file16.Value, 16);
+            var pixels8 = LoadPixelsFromTexture(resourceCache, file8.Value, 8);
+
+            AddPresetButton(Loc.GetString(preset.Name), pixels16, pixels8);
+        }
+    }
+
+    private List<Color> LoadPixelsFromTexture(IResourceCache cache, ResPath path, int expectedSize)
+    {
+        var result = new List<Color>(expectedSize * expectedSize);
+        var texture = cache.GetResource<TextureResource>(path).Texture;
+
+        int width = Math.Min(texture.Width, expectedSize);
+        int height = Math.Min(texture.Height, expectedSize);
+
+        for (int y = 0; y < expectedSize; y++)
+        {
+            for (int x = 0; x < expectedSize; x++)
+            {
+                if (x < width && y < height)
+                {
+                    var p = texture.GetPixel(x, y);
+                    if (p.A == 0)
+                    {
+                        result.Add(Color.Transparent);
+                    }
+                    else
+                    {
+                        result.Add(Color.White);
+                    }
+                }
+                else
+                {
+                    result.Add(Color.Transparent);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private void AddPresetButton(string name, List<Color> pixels16, List<Color> pixels8)
+    {
+        var button = new Button
+        {
+            MinSize = new Vector2(54, 54),
+            ToolTip = name,
+        };
+
+        var logoControl = new FactionLogoControl
+        {
+            MinSize = new Vector2(40, 40),
+            MaxSize = new Vector2(40, 40),
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+            MouseFilter = MouseFilterMode.Ignore
+        };
+        logoControl.UpdateLogo(Color.Transparent, pixels16);
+
+        button.AddChild(logoControl);
+        button.OnPressed += _ => ApplyPreset(pixels16, pixels8);
+
+        PresetGrid.AddChild(button);
+    }
+
+    private void ApplyPreset(List<Color> pixels16, List<Color> pixels8)
+    {
+        // Очищаем передний план холста перед наложением шаблона
+        for (int i = 0; i < 16 * 16; i++)
+        {
+            _pixels[i] = pixels16[i] != Color.Transparent ? _brushColor : Color.Transparent;
+        }
+
+        for (int i = 0; i < 8 * 8; i++)
+        {
+            _pixels8x8[i] = pixels8[i] != Color.Transparent ? _brushColor : Color.Transparent;
+        }
+
+        RefreshAllVisuals();
+    }
 }
+
