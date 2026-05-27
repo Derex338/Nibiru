@@ -17,17 +17,17 @@
   - type: Inventory
     templateId: BaseHorse
   - type: Puller
-    needsHands: false # Тоже обязательно, иначе тащить не будет
+    needsHands: false # Тоже обязательно отключить, иначе тащить не будет
   - type: RequireProjectileTarget
   - type: Sprite
     drawdepth: Mobs
     offset: 0,-0.3
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: horse
       sprite: _Nibiru/Entities/Mobs/Horse.rsi
   - type: MovementSpeedModifier
-    baseWalkSpeed : 10
+    baseWalkSpeed: 10
   - type: InputMover
   - type: MobMover
   - type: Physics
