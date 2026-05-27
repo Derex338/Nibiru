@@ -20,16 +20,17 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
-    /// <summary>
-    /// GUI для выбора фракции при позднем присоединении
-    /// </summary>
-    public sealed class LateJoinGui : DefaultWindow
+    public sealed partial class LateJoinGui : DefaultWindow
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private IEntitySystemManager _entitySystem = default!;
+        [Dependency] private JobRequirementsManager _jobRequirements = default!;
+        [Dependency] private IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private ILogManager _logManager = default!;
+
+        public event Action<(NetEntity, string)> SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
@@ -305,7 +306,7 @@ namespace Content.Client.LateJoin
                             {
                                 var playerTone = colorationProto.Strategy.ToUnary(profile.Appearance.SkinColor);
                                 var filterTone = colorationProto.Strategy.ToUnary(skinFilter.Color);
-                                
+
                                 if (skinFilter.PassHigher && playerTone < filterTone) return false;
                                 if (!skinFilter.PassHigher && playerTone > filterTone) return false;
                             }

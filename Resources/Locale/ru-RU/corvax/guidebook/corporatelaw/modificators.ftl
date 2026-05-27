@@ -5,11 +5,11 @@ guidebook-corporatelaw-mod-guilt-intentional-desc =
     - желало их наступления;
     - не желало, но сознательно допускало эти последствия либо относилось к ним безразлично.
 
-guidebook-corporatelaw-mod-guilt-negligence-effect = минус 5 минут к наказанию
+guidebook-corporatelaw-mod-guilt-negligence-effect = -5 минут к наказанию
 guidebook-corporatelaw-mod-guilt-negligence-desc =
-    Лицо предвидело возможность наступление общественно опасных последствий своего деяния, но без достаточных к тому оснований самонадеянно рассчитывало на предотвращение этих последствий;
+    Лицо предвидело возможность наступления общественно опасных последствий своего деяния, но без достаточных к тому оснований самонадеянно рассчитывало на предотвращение этих последствий;
 
-    Лицо не предвидело возможность наступления общественно опасный последствий своего деяния, хотя при необходимой внимательности и предусмотрительности должно было и могло предвидеть эти последствия.
+    Лицо не предвидело возможность наступления общественно опасных последствий своего деяния, хотя при необходимой внимательности и предусмотрительности должно было и могло предвидеть эти последствия.
 
     Модификатор не влияет на срок для статей «Халатность» и «Грубая халатность».
 
@@ -21,20 +21,20 @@ guidebook-corporatelaw-mod-unfinished-finished-effect = Полное наказ�
 guidebook-corporatelaw-mod-unfinished-finished-desc = Преступление считается оконченным, если по факту действий лица возможно применить статью корпоративного закона.
 
 guidebook-corporatelaw-mod-unfinished-attempt-effect = Полное наказание
-guidebook-corporatelaw-mod-unfinished-attempt-desc = Умышленные действия, направленные на совершение преступление, если преступление не было доведено до конца по не зависящим от этого лица обстоятельствам.
+guidebook-corporatelaw-mod-unfinished-attempt-desc = Умышленные действия, направленные на совершение преступления, если преступление не было доведено до конца по не зависящим от этого лица обстоятельствам.
 
 guidebook-corporatelaw-mod-unfinished-preparation-effect =
     - Полное наказание для XX3, XX4, XX5, XX6
     - Снятие обвинения для иных статей
-guidebook-corporatelaw-mod-unfinished-preparation-desc = Умышленное создание условий для совершения преступления, если преступление не было доведено до конца по не зависящим от этого лица обстоятельствам
+guidebook-corporatelaw-mod-unfinished-preparation-desc = Умышленное создание условий для совершения преступления, если преступление не было доведено до конца по не зависящим от этого лица обстоятельствам.
 
-guidebook-corporatelaw-mod-unfinished-failed-refusal-effect = минус 5 минут к наказанию
+guidebook-corporatelaw-mod-unfinished-failed-refusal-effect = -5 минут к наказанию
 guidebook-corporatelaw-mod-unfinished-failed-refusal-desc = Действия организатора, направленные на прекращение доведения преступления, не смогли предотвратить совершение преступления исполнителем.
 
 guidebook-corporatelaw-mod-unfinished-successful-refusal-effect = Снятие обвинений
 guidebook-corporatelaw-mod-unfinished-successful-refusal-desc =
     - Прекращение лицом приготовления к преступлению или прекращение деяний, направленных на совершение преступления, если лицо осознавало возможность доведения преступления до конца.
-    - Организатор прекратил доведения преступления до конца.
+    - Организатор прекратил доведение преступления до конца.
     - Пособник предпринял все зависящие от него меры, чтобы предотвратить совершение преступления
 
 # Соучастие в преступлении
@@ -67,28 +67,28 @@ guidebook-corporatelaw-mod-optional-necessity-desc =
     Модификатор применяется на усмотрение допрашивающего лица.
 
 guidebook-corporatelaw-mod-optional-self-defense-effect = Снятие обвинений
-guidebook-corporatelaw-mod-optional-self-defense-desc = Действия, направленные на самооборону и не нарушающее допустимое применение силы.
+guidebook-corporatelaw-mod-optional-self-defense-desc = Действия, направленные на самооборону и не нарушающие допустимое применение силы.
 
 guidebook-corporatelaw-mod-optional-synth-effect = Полное наказание
 guidebook-corporatelaw-mod-optional-synth-desc = Манипулирование законами синтетиков, что привело к нарушению корпоративного закона лицом или синтетиком.
 
-guidebook-corporatelaw-mod-optional-official-crime-effect = плюс 10 минут к наказанию
+guidebook-corporatelaw-mod-optional-official-crime-effect = +10 минут к наказанию
 guidebook-corporatelaw-mod-optional-official-crime-desc = Нарушение корпоративного закона должностным лицом.
 
-guidebook-corporatelaw-mod-optional-crime-against-official-effect = плюс 10 минут к наказанию
+guidebook-corporatelaw-mod-optional-crime-against-official-effect = +10 минут к наказанию
 guidebook-corporatelaw-mod-optional-crime-against-official-desc =
     Нарушение статей второго раздела корпоративного закона, направленные против должностного лица.
 
     Модификатор не применяется, если невозможно однозначно определить принадлежность пострадавшего к должностным лицам. (Отсутствие соответствующей формы и ID карты)
 
-guidebook-corporatelaw-mod-optional-racism-effect = плюс 10 минут к наказанию
+guidebook-corporatelaw-mod-optional-racism-effect = +10 минут к наказанию
 guidebook-corporatelaw-mod-optional-racism-desc = Преступление, совершенное по мотивам расовой дискриминации.
 
 guidebook-corporatelaw-mod-optional-confession-effect = минус 5 минут к наказанию
 guidebook-corporatelaw-mod-optional-confession-desc = Чистосердечное признание в совершении преступления. Наказания по статье и модификатор выдаются независимо от того, была ли информация истинной.
 
 guidebook-corporatelaw-mod-optional-plea-deal-effect = Зависит от условий сделки
-guidebook-corporatelaw-mod-optional-plea-deal-desc = Предоставление интересующей службу безопасности информации, касающейся совершенного преступления. Смотритель или глава СБ могут снизить срок приговора на любое разумное число
+guidebook-corporatelaw-mod-optional-plea-deal-desc = Предоставление интересующей службу безопасности информации, касающейся совершённого преступления. Смотритель или глава СБ могут снизить срок приговора на любое разумное число.
 
-guidebook-corporatelaw-mod-optional-recidivism-effect = плюс 5 минут к наказанию за каждый случай рецидива
+guidebook-corporatelaw-mod-optional-recidivism-effect = +5 минут к наказанию за каждый случай рецидива
 guidebook-corporatelaw-mod-optional-recidivism-desc = Повторное нарушение статьи.
