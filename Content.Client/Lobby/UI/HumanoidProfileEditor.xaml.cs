@@ -39,6 +39,10 @@ using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 using static Content.Client.Corvax.SponsorOnlyHelpers; // Corvax-Sponsors
 using Content.Client.Corvax.TTS; // Corvax-TTS
+using Content.Shared._Nibiru.Factions;
+using Content.Client.UserInterface.Systems.Faction.UI;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.Input;
 
 namespace Content.Client.Lobby.UI
 {
@@ -109,6 +113,16 @@ namespace Content.Client.Lobby.UI
         private ColorSelectorSliders _rgbSkinColorSelector;
 
         private bool _isDirty;
+
+        private Color _factionBrushColor = Color.White;
+        private Color _factionBgColor = Color.Transparent;
+        private Color[] _factionPixels = new Color[16 * 16];
+        private PanelContainer[] _factionPixelPanels = new PanelContainer[16 * 16];
+        private Color[] _factionPixels8x8 = new Color[8 * 8];
+        private PanelContainer[] _factionPixelPanels8x8 = new PanelContainer[8 * 8];
+        private bool _factionIsDrawing = false;
+        private bool _factionIsRightDrawing = false;
+        private string? _selectedFactionRoleName = null;
 
         private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
@@ -439,11 +453,20 @@ namespace Content.Client.Lobby.UI
             #region Factions
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-faction-tab"));
 
+            FactionSubTabs.SetTabTitle(0, "Основное");
+            FactionSubTabs.SetTabTitle(1, "Логотип");
+            FactionSubTabs.SetTabTitle(2, "Роли");
+            FactionSubTabs.SetTabTitle(3, "Фильтры");
+
             FactionNameEdit.OnTextChanged += args => { Profile = Profile?.WithFactionName(args.Text); IsDirty = true; };
             FactionDescEdit.OnTextChanged += args => { Profile = Profile?.WithFactionDescription(args.Text); IsDirty = true; };
             FactionColorEdit.OnTextChanged += args => { Profile = Profile?.WithFactionColor(args.Text); IsDirty = true; };
             FactionIconEdit.OnTextChanged += args => { Profile = Profile?.WithFactionIcon(args.Text); IsDirty = true; };
             FactionRecruitingCheck.OnToggled += args => { Profile = Profile?.WithFactionRecruiting(args.Pressed); IsDirty = true; };
+
+            InitializeFactionLogoEditor();
+            InitializeFactionRolesEditor();
+            InitializeFactionFiltersEditor();
             #endregion Factions
 
             RefreshFlavorText();
@@ -1349,6 +1372,38 @@ namespace Content.Client.Lobby.UI
             FactionColorEdit.Text = Profile.FactionColor;
             FactionIconEdit.Text = Profile.FactionIcon;
             FactionRecruitingCheck.Pressed = Profile.FactionRecruiting;
+
+            // Load Logo editor drawing state
+            _factionBgColor = Profile.FactionLogoBackground;
+            if (Profile.FactionLogo16 != null && Profile.FactionLogo16.Count == 16 * 16)
+                Profile.FactionLogo16.CopyTo(_factionPixels);
+            else
+                Array.Clear(_factionPixels, 0, _factionPixels.Length);
+
+            if (Profile.FactionLogo8 != null && Profile.FactionLogo8.Count == 8 * 8)
+                Profile.FactionLogo8.CopyTo(_factionPixels8x8);
+            else
+                Array.Clear(_factionPixels8x8, 0, _factionPixels8x8.Length);
+
+            UpdateFactionLogoPreviews();
+            RefreshAllFactionLogoVisuals();
+
+            // Load Filter controls
+            int genderIdx = Profile.FactionFilterGender switch
+            {
+                "Male" => 1,
+                "Female" => 2,
+                "Unsexed" => 3,
+                _ => 0
+            };
+            FactionFilterGenderOption.SelectId(genderIdx);
+            FactionFilterNameEdit.Text = Profile.FactionFilterName;
+
+            UpdateFactionFilterSpeciesUI();
+
+            // Load Roles UI
+            _selectedFactionRoleName = null;
+            UpdateFactionRolesUI();
         }
 
         /// <summary>
@@ -1704,5 +1759,429 @@ namespace Content.Client.Lobby.UI
             ImportButton.Disabled = false;
             ExportButton.Disabled = false;
         }
+
+        #region Faction Nested Editor Helpers
+        private void InitializeFactionLogoEditor()
+        {
+            FactionLogoPixelGrid.DisposeAllChildren();
+            for (int i = 0; i < 16 * 16; i++)
+            {
+                _factionPixels[i] = Color.Transparent;
+                var panel = CreateFactionPixelPanel(i, 16);
+                _factionPixelPanels[i] = panel;
+                FactionLogoPixelGrid.AddChild(panel);
+                UpdateFactionPixelVisual(i, 16);
+            }
+
+            FactionLogoPixelGrid8x8.DisposeAllChildren();
+            for (int i = 0; i < 8 * 8; i++)
+            {
+                _factionPixels8x8[i] = Color.Transparent;
+                var panel = CreateFactionPixelPanel(i, 8);
+                _factionPixelPanels8x8[i] = panel;
+                FactionLogoPixelGrid8x8.AddChild(panel);
+                UpdateFactionPixelVisual(i, 8);
+            }
+
+            FactionLogoBgColorButton.OnPressed += _ =>
+            {
+                _factionBgColor = FactionLogoColorSelector.Color;
+                UpdateFactionLogoPreviews();
+                RefreshAllFactionLogoVisuals();
+                UpdateFactionLogoProfile();
+            };
+
+            FactionLogoBrushColorButton.OnPressed += _ =>
+            {
+                _factionBrushColor = FactionLogoColorSelector.Color;
+                FactionLogoEraserButton.Pressed = false;
+                UpdateFactionLogoPreviews();
+            };
+
+            FactionLogoClearButton.OnPressed += _ =>
+            {
+                for (int i = 0; i < 16 * 16; i++) SetFactionPixel(i, Color.Transparent, 16);
+                UpdateFactionLogoProfile();
+            };
+
+            FactionLogoClear8x8Button.OnPressed += _ =>
+            {
+                for (int i = 0; i < 8 * 8; i++) SetFactionPixel(i, Color.Transparent, 8);
+                UpdateFactionLogoProfile();
+            };
+
+            UpdateFactionLogoPreviews();
+            PopulateFactionLogoPresets();
+        }
+
+        private PanelContainer CreateFactionPixelPanel(int index, int size)
+        {
+            float pSize = size == 16 ? 16f : 12f;
+            var panel = new PanelContainer
+            {
+                MinSize = new Vector2(pSize, pSize),
+                MaxSize = new Vector2(pSize, pSize),
+                MouseFilter = MouseFilterMode.Stop
+            };
+
+            panel.OnKeyBindDown += args =>
+            {
+                if (args.Function == EngineKeyFunctions.UIClick)
+                {
+                    _factionIsDrawing = true;
+                    SetFactionPixel(index, FactionLogoEraserButton.Pressed ? Color.Transparent : _factionBrushColor, size);
+                    UpdateFactionLogoProfile();
+                }
+                else if (args.Function == EngineKeyFunctions.UIRightClick)
+                {
+                    _factionIsRightDrawing = true;
+                    SetFactionPixel(index, Color.Transparent, size);
+                    UpdateFactionLogoProfile();
+                }
+            };
+
+            panel.OnKeyBindUp += args =>
+            {
+                if (args.Function == EngineKeyFunctions.UIClick) _factionIsDrawing = false;
+                else if (args.Function == EngineKeyFunctions.UIRightClick) _factionIsRightDrawing = false;
+            };
+
+            panel.OnMouseEntered += _ =>
+            {
+                if (_factionIsDrawing)
+                {
+                    SetFactionPixel(index, FactionLogoEraserButton.Pressed ? Color.Transparent : _factionBrushColor, size);
+                    UpdateFactionLogoProfile();
+                }
+                else if (_factionIsRightDrawing)
+                {
+                    SetFactionPixel(index, Color.Transparent, size);
+                    UpdateFactionLogoProfile();
+                }
+            };
+
+            return panel;
+        }
+
+        private void UpdateFactionLogoPreviews()
+        {
+            if (FactionLogoBrushPreview.PanelOverride is StyleBoxFlat brushStyle) brushStyle.BackgroundColor = _factionBrushColor;
+            if (FactionLogoBgPreview.PanelOverride is StyleBoxFlat bgStyle) bgStyle.BackgroundColor = _factionBgColor;
+        }
+
+        private void RefreshAllFactionLogoVisuals()
+        {
+            for (int i = 0; i < 16 * 16; i++) UpdateFactionPixelVisual(i, 16);
+            for (int i = 0; i < 8 * 8; i++) UpdateFactionPixelVisual(i, 8);
+        }
+
+        private void SetFactionPixel(int index, Color color, int size)
+        {
+            if (size == 16) _factionPixels[index] = color;
+            else _factionPixels8x8[index] = color;
+            UpdateFactionPixelVisual(index, size);
+        }
+
+        private void UpdateFactionPixelVisual(int index, int size)
+        {
+            var pixels = size == 16 ? _factionPixels : _factionPixels8x8;
+            var panels = size == 16 ? _factionPixelPanels : _factionPixelPanels8x8;
+            
+            var color = pixels[index] == Color.Transparent ? _factionBgColor : pixels[index];
+            if (color == Color.Transparent)
+            {
+                bool isDark = ((index % size) + (index / size)) % 2 == 0;
+                color = isDark ? new Color(35, 35, 35) : new Color(25, 25, 25);
+            }
+
+            panels[index].PanelOverride = new StyleBoxFlat 
+            { 
+                BackgroundColor = color,
+                BorderColor = new Color(50, 50, 50, 40), 
+                BorderThickness = new Thickness(1) 
+            };
+        }
+
+        private void PopulateFactionLogoPresets()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var resourceManager = IoCManager.Resolve<IResourceManager>();
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+
+            FactionLogoPresetGrid.DisposeAllChildren();
+
+            foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
+            {
+                var folderName = preset.SpriteFolder.Filename;
+
+                ResPath? file16 = null;
+                var path16 = preset.SpriteFolder / $"{folderName}.png";
+                var path16Alt = preset.SpriteFolder / $"{folderName}_16.png";
+
+                if (resourceManager.ContentFileExists(path16))
+                    file16 = path16;
+                else if (resourceManager.ContentFileExists(path16Alt))
+                    file16 = path16Alt;
+
+                ResPath? file8 = null;
+                var path8 = preset.SpriteFolder / $"{folderName}_8x8.png";
+                var path8Alt = preset.SpriteFolder / $"{folderName}_8.png";
+
+                if (resourceManager.ContentFileExists(path8))
+                    file8 = path8;
+                else if (resourceManager.ContentFileExists(path8Alt))
+                    file8 = path8Alt;
+
+                if (file16 == null || file8 == null)
+                    continue;
+
+                var pixels16 = LoadFactionPixelsFromTexture(resourceCache, file16.Value, 16);
+                var pixels8 = LoadFactionPixelsFromTexture(resourceCache, file8.Value, 8);
+
+                AddFactionPresetButton(Loc.GetString(preset.Name), pixels16, pixels8);
+            }
+        }
+
+        private List<Color> LoadFactionPixelsFromTexture(IResourceCache cache, ResPath path, int expectedSize)
+        {
+            var result = new List<Color>(expectedSize * expectedSize);
+            var texture = cache.GetResource<TextureResource>(path).Texture;
+
+            int width = Math.Min(texture.Width, expectedSize);
+            int height = Math.Min(texture.Height, expectedSize);
+
+            for (int y = 0; y < expectedSize; y++)
+            {
+                for (int x = 0; x < expectedSize; x++)
+                {
+                    if (x < width && y < height)
+                    {
+                        var p = texture.GetPixel(x, y);
+                        if (p.A == 0)
+                        {
+                            result.Add(Color.Transparent);
+                        }
+                        else
+                        {
+                            result.Add(Color.White);
+                        }
+                    }
+                    else
+                    {
+                        result.Add(Color.Transparent);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private void AddFactionPresetButton(string name, List<Color> pixels16, List<Color> pixels8)
+        {
+            var button = new Button
+            {
+                MinSize = new Vector2(36, 36),
+                ToolTip = name,
+            };
+
+            var logoControl = new FactionLogoControl
+            {
+                MinSize = new Vector2(24, 24),
+                MaxSize = new Vector2(24, 24),
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center,
+                MouseFilter = MouseFilterMode.Ignore
+            };
+            logoControl.UpdateLogo(Color.Transparent, pixels16);
+
+            button.AddChild(logoControl);
+            button.OnPressed += _ => 
+            {
+                ApplyFactionPreset(pixels16, pixels8);
+                UpdateFactionLogoProfile();
+            };
+
+            FactionLogoPresetGrid.AddChild(button);
+        }
+
+        private void ApplyFactionPreset(List<Color> pixels16, List<Color> pixels8)
+        {
+            for (int i = 0; i < 16 * 16; i++)
+            {
+                _factionPixels[i] = pixels16[i] != Color.Transparent ? _factionBrushColor : Color.Transparent;
+            }
+
+            for (int i = 0; i < 8 * 8; i++)
+            {
+                _factionPixels8x8[i] = pixels8[i] != Color.Transparent ? _factionBrushColor : Color.Transparent;
+            }
+
+            RefreshAllFactionLogoVisuals();
+        }
+
+        private void UpdateFactionLogoProfile()
+        {
+            Profile = Profile?.WithFactionLogo16(_factionPixels.ToList())
+                              .WithFactionLogo8(_factionPixels8x8.ToList())
+                              .WithFactionLogoBackground(_factionBgColor);
+            IsDirty = true;
+        }
+
+        private void InitializeFactionRolesEditor()
+        {
+            FactionRoleAddButton.OnPressed += _ =>
+            {
+                var roleName = FactionRoleNameEdit.Text.Trim();
+                if (string.IsNullOrWhiteSpace(roleName))
+                    return;
+
+                if (Profile == null)
+                    return;
+
+                if (Profile.FactionRoles.Any(r => string.Equals(r.Name, roleName, StringComparison.OrdinalIgnoreCase)))
+                    return;
+
+                var newRole = new FactionRole
+                {
+                    Name = roleName,
+                    CanInvite = FactionRoleInviteCheck.Pressed,
+                    CanResearch = FactionRoleResearchCheck.Pressed,
+                    CanManageRoles = FactionRoleManageCheck.Pressed,
+                    CanInherit = FactionRoleInheritCheck.Pressed
+                };
+
+                var newList = new List<FactionRole>(Profile.FactionRoles) { newRole };
+                Profile = Profile.WithFactionRoles(newList);
+                IsDirty = true;
+
+                FactionRoleNameEdit.Text = string.Empty;
+                UpdateFactionRolesUI();
+            };
+
+            FactionRoleRemoveButton.OnPressed += _ =>
+            {
+                if (Profile == null || string.IsNullOrEmpty(_selectedFactionRoleName))
+                    return;
+
+                var newList = Profile.FactionRoles.Where(r => r.Name != _selectedFactionRoleName).ToList();
+                Profile = Profile.WithFactionRoles(newList);
+                IsDirty = true;
+                _selectedFactionRoleName = null;
+
+                UpdateFactionRolesUI();
+            };
+        }
+
+        private void UpdateFactionRolesUI()
+        {
+            FactionRolesListContainer.DisposeAllChildren();
+            if (Profile == null)
+                return;
+
+            foreach (var role in Profile.FactionRoles)
+            {
+                var roleButton = new Button
+                {
+                    Text = role.Name,
+                    ToggleMode = true,
+                    Pressed = role.Name == _selectedFactionRoleName,
+                    HorizontalExpand = true
+                };
+
+                var captureRoleName = role.Name;
+                roleButton.OnPressed += _ =>
+                {
+                    _selectedFactionRoleName = captureRoleName;
+                    foreach (var child in FactionRolesListContainer.Children)
+                    {
+                        if (child is Button btn && btn.Text != captureRoleName)
+                            btn.Pressed = false;
+                    }
+
+                    var r = Profile.FactionRoles.FirstOrDefault(x => x.Name == captureRoleName);
+                    if (r.Name != null)
+                    {
+                        FactionRoleNameEdit.Text = r.Name;
+                        FactionRoleInviteCheck.Pressed = r.CanInvite;
+                        FactionRoleResearchCheck.Pressed = r.CanResearch;
+                        FactionRoleManageCheck.Pressed = r.CanManageRoles;
+                        FactionRoleInheritCheck.Pressed = r.CanInherit;
+                    }
+                };
+
+                FactionRolesListContainer.AddChild(roleButton);
+            }
+        }
+
+        private void InitializeFactionFiltersEditor()
+        {
+            FactionFilterGenderOption.Clear();
+            FactionFilterGenderOption.AddItem("Все", 0);
+            FactionFilterGenderOption.AddItem("Мужской", 1);
+            FactionFilterGenderOption.AddItem("Женский", 2);
+            FactionFilterGenderOption.AddItem("Безполый", 3);
+
+            FactionFilterGenderOption.OnItemSelected += args =>
+            {
+                FactionFilterGenderOption.SelectId(args.Id);
+                string genderVal = args.Id switch
+                {
+                    1 => "Male",
+                    2 => "Female",
+                    3 => "Unsexed",
+                    _ => "All"
+                };
+                Profile = Profile?.WithFactionFilterGender(genderVal);
+                IsDirty = true;
+            };
+
+            FactionFilterNameEdit.OnTextChanged += args =>
+            {
+                Profile = Profile?.WithFactionFilterName(args.Text);
+                IsDirty = true;
+            };
+
+            UpdateFactionFilterSpeciesUI();
+        }
+
+        private void UpdateFactionFilterSpeciesUI()
+        {
+            FactionFilterSpeciesList.DisposeAllChildren();
+            if (Profile == null)
+                return;
+
+            foreach (var species in _prototypeManager.EnumeratePrototypes<SpeciesPrototype>())
+            {
+                var speciesId = species.ID;
+                var checkBox = new CheckBox
+                {
+                    Text = Loc.GetString(species.Name),
+                    Pressed = Profile.FactionFilterSpecies.Contains(speciesId)
+                };
+
+                checkBox.OnToggled += args =>
+                {
+                    if (Profile == null)
+                        return;
+
+                    var currentList = new List<string>(Profile.FactionFilterSpecies);
+                    if (args.Pressed)
+                    {
+                        if (!currentList.Contains(speciesId))
+                            currentList.Add(speciesId);
+                    }
+                    else
+                    {
+                        currentList.Remove(speciesId);
+                    }
+
+                    Profile = Profile.WithFactionFilterSpecies(currentList);
+                    IsDirty = true;
+                };
+
+                FactionFilterSpeciesList.AddChild(checkBox);
+            }
+        }
+        #endregion
     }
 }

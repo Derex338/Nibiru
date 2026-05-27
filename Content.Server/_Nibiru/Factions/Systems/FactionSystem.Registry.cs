@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Content.Shared.Humanoid;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -67,6 +70,7 @@ public sealed partial class FactionSystem
                     IconPath = data.IconPath,
                     LogoBackground = data.LogoBackground,
                     LogoPixels = data.LogoPixels,
+                    LogoPixels8x8 = data.LogoPixels8x8,
                     Status = data.Status,
                     IsRecruiting = data.IsRecruiting,
                     WhiteListSpecies = data.WhiteListSpecies,
@@ -117,6 +121,7 @@ public sealed partial class FactionSystem
                 IconPath = faction.IconPath,
                 LogoBackground = faction.LogoBackground,
                 LogoPixels = faction.LogoPixels,
+                LogoPixels8x8 = faction.LogoPixels8x8,
                 Status = faction.Status,
                 IsRecruiting = faction.IsRecruiting,
                 WhiteListSpecies = faction.WhiteListSpecies,
@@ -165,15 +170,24 @@ public sealed partial class FactionSystem
                 Color = pref.Color,
                 Description = pref.Description,
                 IconPath = pref.IconPath,
-                LogoBackground = Color.Transparent,
-                LogoPixels = new(),
+                LogoBackground = pref.LogoBackground,
+                LogoPixels = new(pref.Logo16),
+                LogoPixels8x8 = new(pref.Logo8),
                 Status = FactionStatus.Active,
                 IsRecruiting = pref.IsRecruiting,
-                WhiteListSpecies = new(),
-                WhiteListGender = new(),
+                WhiteListSpecies = new(pref.FilterSpecies),
+                WhiteListGender = pref.FilterGender == "Male"
+                    ? new List<Sex> { Sex.Male }
+                    : pref.FilterGender == "Female"
+                    ? new List<Sex> { Sex.Female }
+                    : pref.FilterGender == "Unsexed"
+                    ? new List<Sex> { Sex.Unsexed }
+                    : new List<Sex>(),
                 WhiteListSkinColors = new(),
-                WhiteListNames = new(),
-                Roles = GetDefaultRoles()
+                WhiteListNames = !string.IsNullOrWhiteSpace(pref.FilterName)
+                    ? pref.FilterName.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList()
+                    : new List<string>(),
+                Roles = pref.Roles.Count > 0 ? new(pref.Roles) : GetDefaultRoles()
             };
             Dirty(mapUid, registry);
         }
@@ -205,6 +219,7 @@ public sealed partial class FactionSystem
             data.IconPath = faction.IconPath;
             data.LogoBackground = faction.LogoBackground;
             data.LogoPixels = faction.LogoPixels;
+            data.LogoPixels8x8 = faction.LogoPixels8x8;
             data.Status = faction.Status;
             data.IsRecruiting = faction.IsRecruiting;
             data.WhiteListSpecies = faction.WhiteListSpecies;

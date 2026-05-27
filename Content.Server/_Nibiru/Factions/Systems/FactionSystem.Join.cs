@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Robust.Shared.Maths;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -175,6 +177,12 @@ public sealed partial class FactionSystem
             playerFaction.WhiteListSkinColors = factionData.WhiteListSkinColors;
             playerFaction.WhiteListNames = factionData.WhiteListNames;
 
+            playerFaction.LogoBackground = factionData.LogoBackground;
+            if (factionData.LogoPixels != null)
+                playerFaction.LogoPixels = new List<Color>(factionData.LogoPixels);
+            if (factionData.LogoPixels8x8 != null)
+                playerFaction.LogoPixels8x8 = new List<Color>(factionData.LogoPixels8x8);
+
             if (leaderUid == playerEntity)
             {
                 playerFaction.Rank = Loc.GetString("faction-rank-leader");
@@ -249,7 +257,7 @@ public sealed partial class FactionSystem
                     {
                         var playerTone = colorationProto.Strategy.ToUnary(appearance.SkinColor);
                         var filterTone = colorationProto.Strategy.ToUnary(skinFilter.Color);
-                        
+
                         if (skinFilter.PassHigher && playerTone < filterTone)
                         {
                             error = Loc.GetString("faction-join-fail-skin-color");

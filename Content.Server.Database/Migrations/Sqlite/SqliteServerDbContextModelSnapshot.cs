@@ -812,10 +812,41 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("faction_description");
 
+                    b.Property<string>("FactionFilterGender")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_filter_gender");
+
+                    b.Property<string>("FactionFilterName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_filter_name");
+
+                    b.Property<byte[]>("FactionFilterSkinColors")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("faction_filter_skincolors");
+
+                    b.Property<byte[]>("FactionFilterSpecies")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("faction_filter_species");
+
                     b.Property<string>("FactionIcon")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("faction_icon");
+
+                    b.Property<byte[]>("FactionLogo16")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("faction_logo16");
+
+                    b.Property<byte[]>("FactionLogo8")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("faction_logo8");
+
+                    b.Property<string>("FactionLogoBackground")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("faction_logo_background");
 
                     b.Property<string>("FactionName")
                         .IsRequired()
@@ -825,6 +856,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<bool>("FactionRecruiting")
                         .HasColumnType("INTEGER")
                         .HasColumnName("faction_recruiting");
+
+                    b.Property<byte[]>("FactionRoles")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("faction_roles");
 
                     b.Property<string>("FlavorText")
                         .IsRequired()

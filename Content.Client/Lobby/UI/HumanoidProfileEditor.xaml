@@ -1,5 +1,6 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
@@ -137,40 +138,158 @@
                     </ScrollContainer>
                 </BoxContainer>
                 <BoxContainer Name="FactionTab" Orientation="Vertical" Margin="10">
-                    <!-- Faction -->
-                    <ScrollContainer VerticalExpand="True">
-                        <BoxContainer Orientation="Vertical" SeparationOverride="10">
-                            <!-- Faction Name -->
-                            <BoxContainer Orientation="Vertical">
-                                <Label Text="{Loc 'humanoid-profile-editor-faction-name-label'}" />
-                                <LineEdit Name="FactionNameEdit" MinWidth="200" PlaceHolder="{Loc 'humanoid-profile-editor-faction-name-placeholder'}" />
+                    <TabContainer Name="FactionSubTabs" VerticalExpand="True">
+                        <!-- General settings -->
+                        <BoxContainer Name="FactionGeneralSubTab" Orientation="Vertical" Margin="10">
+                            <ScrollContainer VerticalExpand="True">
+                                <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                                    <BoxContainer Orientation="Vertical">
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-name-label'}" />
+                                        <LineEdit Name="FactionNameEdit" MinWidth="200" PlaceHolder="{Loc 'humanoid-profile-editor-faction-name-placeholder'}" />
+                                    </BoxContainer>
+
+                                    <BoxContainer Orientation="Vertical">
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-description-label'}" />
+                                        <LineEdit Name="FactionDescEdit" MinWidth="200" PlaceHolder="{Loc 'humanoid-profile-editor-faction-description-placeholder'}" />
+                                    </BoxContainer>
+
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-color-label'}" MinWidth="80" />
+                                        <LineEdit Name="FactionColorEdit" MinWidth="100" Text="#FFFFFF" />
+                                    </BoxContainer>
+
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-icon-label'}" MinWidth="80" />
+                                        <LineEdit Name="FactionIconEdit" MinWidth="200" Text="/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png" />
+                                    </BoxContainer>
+
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-recruiting-label'}" MinWidth="80" />
+                                        <CheckBox Name="FactionRecruitingCheck" Pressed="True" />
+                                    </BoxContainer>
+                                </BoxContainer>
+                            </ScrollContainer>
+                        </BoxContainer>
+
+                        <!-- Logo subtab -->
+                        <BoxContainer Name="FactionLogoSubTab" Orientation="Horizontal" SeparationOverride="15" Margin="10">
+                            <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                                <Label Text="Логотип (16x16)" HorizontalAlignment="Center" />
+                                <PanelContainer>
+                                    <PanelContainer.PanelOverride>
+                                        <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
+                                    </PanelContainer.PanelOverride>
+                                    <GridContainer Name="FactionLogoPixelGrid" Columns="16" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
+                                </PanelContainer>
+                                <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                                    <Button Name="FactionLogoEraserButton" Text="Ластик" ToggleMode="True" MinWidth="80" />
+                                    <Button Name="FactionLogoClearButton" Text="Очистить" MinWidth="100" />
+                                </BoxContainer>
                             </BoxContainer>
 
-                            <!-- Description -->
-                            <BoxContainer Orientation="Vertical">
-                                <Label Text="{Loc 'humanoid-profile-editor-faction-description-label'}" />
-                                <LineEdit Name="FactionDescEdit" MinWidth="200" PlaceHolder="{Loc 'humanoid-profile-editor-faction-description-placeholder'}" />
+                            <BoxContainer Orientation="Vertical" SeparationOverride="15" MinWidth="150">
+                                <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                                    <Label Text="Иконка (8x8)" HorizontalAlignment="Center" />
+                                    <PanelContainer HorizontalAlignment="Center">
+                                        <PanelContainer.PanelOverride>
+                                            <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
+                                        </PanelContainer.PanelOverride>
+                                        <GridContainer Name="FactionLogoPixelGrid8x8" Columns="8" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
+                                    </PanelContainer>
+                                    <Button Name="FactionLogoClear8x8Button" Text="Очистить 8x8" HorizontalAlignment="Center" MinWidth="100" />
+                                </BoxContainer>
                             </BoxContainer>
 
-                            <!-- Color -->
-                            <BoxContainer Orientation="Horizontal">
-                                <Label Text="{Loc 'humanoid-profile-editor-faction-color-label'}" MinWidth="80" />
-                                <LineEdit Name="FactionColorEdit" MinWidth="100" Text="#FFFFFF" />
+                            <BoxContainer Orientation="Vertical" SeparationOverride="10" HorizontalExpand="True">
+                                <Label Text="Палитра" HorizontalAlignment="Center" />
+                                <BoxContainer Orientation="Horizontal" SeparationOverride="15" HorizontalAlignment="Center">
+                                    <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                                        <PanelContainer Name="FactionLogoBrushPreview" MinSize="24 24" VerticalAlignment="Center">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="White" BorderColor="#3a3a3c" BorderThickness="1" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <Label Text="Кисть" VerticalAlignment="Center" />
+                                    </BoxContainer>
+                                    <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                                        <PanelContainer Name="FactionLogoBgPreview" MinSize="24 24" VerticalAlignment="Center">
+                                            <PanelContainer.PanelOverride>
+                                                <gfx:StyleBoxFlat BackgroundColor="Transparent" BorderColor="#3a3a3c" BorderThickness="1" />
+                                            </PanelContainer.PanelOverride>
+                                        </PanelContainer>
+                                        <Label Text="Фон" VerticalAlignment="Center" />
+                                    </BoxContainer>
+                                </BoxContainer>
+                                <ColorSelectorSliders Name="FactionLogoColorSelector" VerticalExpand="True" Margin="0 5 0 5"/>
+                                <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
+                                    <Button Name="FactionLogoBgColorButton" Text="Цвет фона" MinWidth="100" />
+                                    <Button Name="FactionLogoBrushColorButton" Text="Цвет кисти" MinWidth="100" />
+                                </BoxContainer>
                             </BoxContainer>
 
-                            <!-- Icon (Text for now) -->
-                            <BoxContainer Orientation="Horizontal">
-                                <Label Text="{Loc 'humanoid-profile-editor-faction-icon-label'}" MinWidth="80" />
-                                <LineEdit Name="FactionIconEdit" MinWidth="200" Text="/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png" />
-                            </BoxContainer>
-
-                            <!-- Recruiting -->
-                            <BoxContainer Orientation="Horizontal">
-                                <Label Text="{Loc 'humanoid-profile-editor-faction-recruiting-label'}" MinWidth="80" />
-                                <CheckBox Name="FactionRecruitingCheck" Pressed="True" />
+                            <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="140">
+                                <Label Text="Шаблоны" HorizontalAlignment="Center" />
+                                <PanelContainer VerticalExpand="True">
+                                    <PanelContainer.PanelOverride>
+                                        <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
+                                    </PanelContainer.PanelOverride>
+                                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="8">
+                                        <GridContainer Name="FactionLogoPresetGrid" Columns="2" HSeparationOverride="8" VSeparationOverride="8" HorizontalAlignment="Center" />
+                                    </ScrollContainer>
+                                </PanelContainer>
                             </BoxContainer>
                         </BoxContainer>
-                    </ScrollContainer>
+
+                        <!-- Roles subtab -->
+                        <BoxContainer Name="FactionRolesSubTab" Orientation="Horizontal" SeparationOverride="10" Margin="10">
+                            <!-- Roles list -->
+                            <BoxContainer Orientation="Vertical" MinWidth="160" VerticalExpand="True">
+                                <Label Text="Роли фракции:" />
+                                <ScrollContainer VerticalExpand="True">
+                                    <BoxContainer Name="FactionRolesListContainer" Orientation="Vertical" SeparationOverride="5" />
+                                </ScrollContainer>
+                            </BoxContainer>
+                            <!-- Role configuration -->
+                            <BoxContainer Orientation="Vertical" SeparationOverride="10" HorizontalExpand="True">
+                                <Label Text="Добавить/Изменить роль:" StyleClasses="LabelBig" />
+                                <BoxContainer Orientation="Horizontal">
+                                    <LineEdit Name="FactionRoleNameEdit" MinWidth="180" PlaceHolder="Название роли" />
+                                    <Button Name="FactionRoleAddButton" Text="Добавить" Margin="5 0 0 0" />
+                                </BoxContainer>
+                                <BoxContainer Orientation="Vertical" SeparationOverride="5" Margin="0 10 0 0">
+                                    <CheckBox Name="FactionRoleInviteCheck" Text="Может приглашать" />
+                                    <CheckBox Name="FactionRoleResearchCheck" Text="Может исследовать" />
+                                    <CheckBox Name="FactionRoleManageCheck" Text="Может управлять ролями" />
+                                    <CheckBox Name="FactionRoleInheritCheck" Text="Может наследовать" />
+                                </BoxContainer>
+                                <Button Name="FactionRoleRemoveButton" Text="Удалить роль" StyleClasses="ButtonSquare" Margin="0 10 0 0" />
+                            </BoxContainer>
+                        </BoxContainer>
+
+                        <!-- Filters subtab -->
+                        <BoxContainer Name="FactionFiltersSubTab" Orientation="Vertical" SeparationOverride="10" Margin="10">
+                            <ScrollContainer VerticalExpand="True">
+                                <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                                    <Label Text="Фильтры вступления:" StyleClasses="LabelBig" />
+                                    <!-- Species filter -->
+                                    <BoxContainer Orientation="Vertical">
+                                        <Label Text="Расы (разрешенные):" />
+                                        <BoxContainer Name="FactionFilterSpeciesList" Orientation="Vertical" Margin="10 5 0 0" SeparationOverride="5" />
+                                    </BoxContainer>
+                                    <!-- Gender filter -->
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="Пол:" MinWidth="80" VerticalAlignment="Center" />
+                                        <OptionButton Name="FactionFilterGenderOption" MinWidth="120" />
+                                    </BoxContainer>
+                                    <!-- Name filter -->
+                                    <BoxContainer Orientation="Vertical">
+                                        <Label Text="Слова в имени (через запятую):" />
+                                        <LineEdit Name="FactionFilterNameEdit" MinWidth="200" PlaceHolder="Иван, Petro..." />
+                                    </BoxContainer>
+                                </BoxContainer>
+                            </ScrollContainer>
+                        </BoxContainer>
+                    </TabContainer>
                 </BoxContainer>
             </TabContainer>
         </BoxContainer>

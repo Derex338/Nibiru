@@ -1,12 +1,13 @@
 using Content.Server.GameTicking;
 using Content.Shared._Nibiru.Factions;
-using Robust.Shared.Random;
-using Robust.Shared.Network;
-using System.Linq;
+using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.GameTicking;
-using Content.Server.GameTicking.Events;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Events;
+using Robust.Shared.Network;
+using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -52,32 +53,100 @@ public sealed class NibiruFactionLeaderSystem : EntitySystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
+        var mob = ev.Mob;
         var userId = ev.Player.UserId;
-        if (!_pendingLeaders.TryGetValue(userId, out var prefs))
+
+        // Лидер фракции из лотереи
+        if (_pendingLeaders.TryGetValue(userId, out var prefs))
         {
+            var factionComp = EnsureComp<FactionComponent>(mob);
+            factionComp.FactionName = prefs.FactionName;
+            factionComp.Description = prefs.Description;
+            factionComp.FactionColor = prefs.Color;
+            factionComp.IconPath = prefs.IconPath;
+            factionComp.IsRecruiting = prefs.IsRecruiting;
+            factionComp.IsCreator = true;
+            factionComp.Rank = "Лидер";
+            factionComp.Leader = mob;
+
+            if (prefs.Logo16 != null)
+                factionComp.LogoPixels = new List<Color>(prefs.Logo16);
+            if (prefs.Logo8 != null)
+                factionComp.LogoPixels8x8 = new List<Color>(prefs.Logo8);
+            factionComp.LogoBackground = prefs.LogoBackground;
+
+            if (prefs.FilterSpecies != null)
+                factionComp.WhiteListSpecies = new List<string>(prefs.FilterSpecies);
+
+            if (prefs.FilterGender == "Male")
+                factionComp.WhiteListGender = new List<Sex> { Sex.Male };
+            else if (prefs.FilterGender == "Female")
+                factionComp.WhiteListGender = new List<Sex> { Sex.Female };
+            else if (prefs.FilterGender == "Unsexed")
+                factionComp.WhiteListGender = new List<Sex> { Sex.Unsexed };
+            else
+                factionComp.WhiteListGender = new List<Sex>();
+
+            if (!string.IsNullOrWhiteSpace(prefs.FilterName))
+                factionComp.WhiteListNames = prefs.FilterName
+                    .Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    .ToList();
+
+            if (prefs.Roles != null && prefs.Roles.Count > 0)
+                factionComp.Roles = new List<FactionRole>(prefs.Roles);
+
+            Dirty(mob, factionComp);
+            _factionSystem.RegisterFaction(factionComp);
+            _pendingLeaders.Remove(userId);
             return;
         }
 
-        // Игрок заспавнился и он победитель лотереи
-        var mob = ev.Mob;
-        
-        // Добавляем компонент фракции
-        var factionComp = EnsureComp<FactionComponent>(mob);
-        factionComp.FactionName = prefs.FactionName;
-        factionComp.Description = prefs.Description;
-        factionComp.FactionColor = prefs.Color;
-        factionComp.IconPath = prefs.IconPath;
-        factionComp.IsRecruiting = prefs.IsRecruiting;
-        factionComp.IsCreator = true;
-        factionComp.Rank = "Лидер";
-        factionComp.Leader = mob;
-        
-        // Добавляем Dirty для синхронизации компонента с клиентом
-        Dirty(mob, factionComp);
+        // Обычный игрок с заполненными данными о фракции в лобби
+        if (ev.Profile is not HumanoidCharacterProfile profile
+            || string.IsNullOrWhiteSpace(profile.FactionName))
+            return;
 
-        // Регистрируем фракцию в реестре
-        _factionSystem.RegisterFaction(factionComp);
-        
-        _pendingLeaders.Remove(userId);
+        var comp = EnsureComp<FactionComponent>(mob);
+        comp.FactionName = profile.FactionName;
+        comp.Description = profile.FactionDescription;
+
+        var color = Color.TryFromHex(profile.FactionColor.AsSpan());
+        if (color != null)
+            comp.FactionColor = color.Value;
+
+        comp.IconPath = profile.FactionIcon;
+        comp.IsRecruiting = profile.FactionRecruiting;
+        comp.IsCreator = true;
+        comp.Rank = "Лидер";
+        comp.Leader = mob;
+
+        if (profile.FactionLogo16 != null)
+            comp.LogoPixels = new List<Color>(profile.FactionLogo16);
+        if (profile.FactionLogo8 != null)
+            comp.LogoPixels8x8 = new List<Color>(profile.FactionLogo8);
+        comp.LogoBackground = profile.FactionLogoBackground;
+
+        if (profile.FactionFilterSpecies != null)
+            comp.WhiteListSpecies = new List<string>(profile.FactionFilterSpecies);
+
+        if (profile.FactionFilterGender == "Male")
+            comp.WhiteListGender = new List<Sex> { Sex.Male };
+        else if (profile.FactionFilterGender == "Female")
+            comp.WhiteListGender = new List<Sex> { Sex.Female };
+        else if (profile.FactionFilterGender == "Unsexed")
+            comp.WhiteListGender = new List<Sex> { Sex.Unsexed };
+        else
+            comp.WhiteListGender = new List<Sex>();
+
+        if (!string.IsNullOrWhiteSpace(profile.FactionFilterName))
+            comp.WhiteListNames = profile.FactionFilterName
+                .Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+        if (profile.FactionRoles != null && profile.FactionRoles.Count > 0)
+            comp.Roles = new List<FactionRole>(profile.FactionRoles);
+
+        Dirty(mob, comp);
+        _factionSystem.RegisterFaction(comp);
     }
 }

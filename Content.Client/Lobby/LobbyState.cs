@@ -148,7 +148,14 @@ namespace Content.Client.Lobby
                         Description = profile.FactionDescription,
                         Color = Color.TryFromHex(profile.FactionColor) ?? Color.White,
                         IconPath = profile.FactionIcon,
-                        IsRecruiting = profile.FactionRecruiting
+                        IsRecruiting = profile.FactionRecruiting,
+                        Logo16 = new(profile.FactionLogo16),
+                        Logo8 = new(profile.FactionLogo8),
+                        LogoBackground = profile.FactionLogoBackground,
+                        FilterSpecies = new(profile.FactionFilterSpecies),
+                        FilterGender = profile.FactionFilterGender,
+                        FilterName = profile.FactionFilterName,
+                        Roles = new(profile.FactionRoles)
                     };
                     _entityManager.System<Content.Client.GameTicking.Managers.ClientGameTicker>().SendFactionLeaderPrefs(msg);
                 }

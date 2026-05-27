@@ -144,19 +144,19 @@ public sealed partial class FactionComponent : Component
 public partial struct FactionRole
 {
     [DataField("name")]
-    public string Name;
+    public string Name { get; set; }
 
     [DataField("canInvite")]
-    public bool CanInvite;
+    public bool CanInvite { get; set; }
 
     [DataField("canResearch")]
-    public bool CanResearch;
+    public bool CanResearch { get; set; }
 
     [DataField("canManageRoles")]
-    public bool CanManageRoles;
+    public bool CanManageRoles { get; set; }
 
     [DataField("canInherit")]
-    public bool CanInherit;
+    public bool CanInherit { get; set; }
 }
 
 /// <summary>
@@ -261,6 +261,12 @@ public partial struct FactionRegistryData
     public List<Color> LogoPixels;
 
     /// <summary>
+    /// Данные рисунка логотипа 8x8
+    /// </summary>
+    [DataField("logoPixels8x8")]
+    public List<Color> LogoPixels8x8;
+
+    /// <summary>
     /// Статус фракции
     /// </summary>
     [DataField("status")]
@@ -324,6 +330,7 @@ public sealed class FactionInfo
     public string IconPath { get; set; } = string.Empty;
     public Color LogoBackground { get; set; } = Color.Transparent;
     public List<Color> LogoPixels { get; set; } = new();
+    public List<Color> LogoPixels8x8 { get; set; } = new();
     public FactionStatus Status { get; set; } = FactionStatus.Active;
     public bool IsRecruiting { get; set; } = false;
     public List<string> WhiteListSpecies { get; set; } = new();

@@ -427,6 +427,14 @@ namespace Content.Server.Database
         [Column("faction_color")] public string FactionColor { get; set; } = string.Empty;
         [Column("faction_icon")] public string FactionIcon { get; set; } = string.Empty;
         [Column("faction_recruiting")] public bool FactionRecruiting { get; set; } = true;
+        [Column("faction_logo16", TypeName = "jsonb")] public JsonDocument? FactionLogo16 { get; set; } = null!;
+        [Column("faction_logo8", TypeName = "jsonb")] public JsonDocument? FactionLogo8 { get; set; } = null!;
+        [Column("faction_logo_background")] public string FactionLogoBackground { get; set; } = string.Empty;
+        [Column("faction_filter_species", TypeName = "jsonb")] public JsonDocument? FactionFilterSpecies { get; set; } = null!;
+        [Column("faction_filter_gender")] public string FactionFilterGender { get; set; } = "All";
+        [Column("faction_filter_skincolors", TypeName = "jsonb")] public JsonDocument? FactionFilterSkinColors { get; set; } = null!;
+        [Column("faction_filter_name")] public string FactionFilterName { get; set; } = string.Empty;
+        [Column("faction_roles", TypeName = "jsonb")] public JsonDocument? FactionRoles { get; set; } = null!;
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;

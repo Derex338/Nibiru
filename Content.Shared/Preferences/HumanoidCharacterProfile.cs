@@ -16,6 +16,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared._Nibiru.Factions;
 
 namespace Content.Shared.Preferences
 {
@@ -119,6 +120,30 @@ namespace Content.Shared.Preferences
         [DataField]
         public bool FactionRecruiting { get; set; } = true;
 
+        [DataField]
+        public List<Color> FactionLogo16 { get; set; } = new();
+
+        [DataField]
+        public List<Color> FactionLogo8 { get; set; } = new();
+
+        [DataField]
+        public Color FactionLogoBackground { get; set; } = Color.Transparent;
+
+        [DataField]
+        public List<string> FactionFilterSpecies { get; set; } = new();
+
+        [DataField]
+        public string FactionFilterGender { get; set; } = "All";
+
+        [DataField]
+        public List<Color> FactionFilterSkinColors { get; set; } = new();
+
+        [DataField]
+        public string FactionFilterName { get; set; } = string.Empty;
+        
+        [DataField]
+        public List<FactionRole> FactionRoles { get; set; } = new();
+
         /// <summary>
         /// <see cref="_jobPriorities"/>
         /// </summary>
@@ -160,7 +185,15 @@ namespace Content.Shared.Preferences
             string factionDescription = "",
             string factionColor = "#FFFFFF",
             string factionIcon = "/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png",
-            bool factionRecruiting = true)
+            bool factionRecruiting = true,
+            List<Color>? factionLogo16 = null,
+            List<Color>? factionLogo8 = null,
+            Color? factionLogoBackground = null,
+            List<string>? factionFilterSpecies = null,
+            string factionFilterGender = "All",
+            List<Color>? factionFilterSkinColors = null,
+            string factionFilterName = "",
+            List<FactionRole>? factionRoles = null)
         {
             Name = name;
             FlavorText = flavortext;
@@ -181,6 +214,14 @@ namespace Content.Shared.Preferences
             FactionColor = factionColor;
             FactionIcon = factionIcon;
             FactionRecruiting = factionRecruiting;
+            FactionLogo16 = factionLogo16 ?? new();
+            FactionLogo8 = factionLogo8 ?? new();
+            FactionLogoBackground = factionLogoBackground ?? Color.Transparent;
+            FactionFilterSpecies = factionFilterSpecies ?? new();
+            FactionFilterGender = factionFilterGender;
+            FactionFilterSkinColors = factionFilterSkinColors ?? new();
+            FactionFilterName = factionFilterName;
+            FactionRoles = factionRoles ?? new();
 
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
@@ -217,7 +258,15 @@ namespace Content.Shared.Preferences
                 other.FactionDescription,
                 other.FactionColor,
                 other.FactionIcon,
-                other.FactionRecruiting)
+                other.FactionRecruiting,
+                new List<Color>(other.FactionLogo16),
+                new List<Color>(other.FactionLogo8),
+                other.FactionLogoBackground,
+                new List<string>(other.FactionFilterSpecies),
+                other.FactionFilterGender,
+                new List<Color>(other.FactionFilterSkinColors),
+                other.FactionFilterName,
+                new List<FactionRole>(other.FactionRoles))
         {
         }
 
@@ -524,6 +573,46 @@ namespace Content.Shared.Preferences
             return new(this) { FactionRecruiting = recruiting };
         }
 
+        public HumanoidCharacterProfile WithFactionLogo16(List<Color> logo16)
+        {
+            return new(this) { FactionLogo16 = new List<Color>(logo16) };
+        }
+
+        public HumanoidCharacterProfile WithFactionLogo8(List<Color> logo8)
+        {
+            return new(this) { FactionLogo8 = new List<Color>(logo8) };
+        }
+
+        public HumanoidCharacterProfile WithFactionLogoBackground(Color bg)
+        {
+            return new(this) { FactionLogoBackground = bg };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterSpecies(List<string> species)
+        {
+            return new(this) { FactionFilterSpecies = new List<string>(species) };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterGender(string gender)
+        {
+            return new(this) { FactionFilterGender = gender };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterSkinColors(List<Color> skinColors)
+        {
+            return new(this) { FactionFilterSkinColors = new List<Color>(skinColors) };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterName(string filterName)
+        {
+            return new(this) { FactionFilterName = filterName };
+        }
+
+        public HumanoidCharacterProfile WithFactionRoles(List<FactionRole> roles)
+        {
+            return new(this) { FactionRoles = new List<FactionRole>(roles) };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -552,6 +641,13 @@ namespace Content.Shared.Preferences
             if (FactionColor != other.FactionColor) return false;
             if (FactionIcon != other.FactionIcon) return false;
             if (FactionRecruiting != other.FactionRecruiting) return false;
+            if (!FactionLogo16.SequenceEqual(other.FactionLogo16)) return false;
+            if (!FactionLogo8.SequenceEqual(other.FactionLogo8)) return false;
+            if (FactionLogoBackground != other.FactionLogoBackground) return false;
+            if (!FactionFilterSpecies.SequenceEqual(other.FactionFilterSpecies)) return false;
+            if (FactionFilterGender != other.FactionFilterGender) return false;
+            if (!FactionFilterSkinColors.SequenceEqual(other.FactionFilterSkinColors)) return false;
+            if (FactionFilterName != other.FactionFilterName) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -699,6 +795,12 @@ namespace Content.Shared.Preferences
             FactionColor = FactionColor ?? string.Empty;
             FactionIcon = FactionIcon ?? string.Empty;
             FactionRecruiting = FactionRecruiting;
+            FactionLogo16 = FactionLogo16 ?? new();
+            FactionLogo8 = FactionLogo8 ?? new();
+            FactionFilterSpecies = FactionFilterSpecies ?? new();
+            FactionFilterGender = FactionFilterGender ?? "All";
+            FactionFilterSkinColors = FactionFilterSkinColors ?? new();
+            FactionFilterName = FactionFilterName ?? string.Empty;
 
             _jobPriorities.Clear();
 

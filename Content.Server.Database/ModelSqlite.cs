@@ -86,6 +86,26 @@ namespace Content.Server.Database
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);
 
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.FactionLogo16)
+                .HasConversion(jsonByteArrayConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.FactionLogo8)
+                .HasConversion(jsonByteArrayConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.FactionFilterSpecies)
+                .HasConversion(jsonByteArrayConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.FactionFilterSkinColors)
+                .HasConversion(jsonByteArrayConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(p => p.FactionRoles)
+                .HasConversion(jsonByteArrayConverter);
+
             // EF core can make this automatically unique on sqlite but not psql.
             modelBuilder.Entity<IPIntelCache>()
                 .HasIndex(p => p.Address)

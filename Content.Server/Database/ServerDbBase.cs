@@ -17,6 +17,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Content.Shared._Nibiru.Factions;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -292,7 +293,15 @@ namespace Content.Server.Database
                 profile.FactionDescription,
                 profile.FactionColor,
                 profile.FactionIcon,
-                profile.FactionRecruiting
+                profile.FactionRecruiting,
+                (profile.FactionLogo16?.Deserialize<List<string>>() ?? new List<string>()).Select(s => Color.FromHex(s)).ToList(),
+                (profile.FactionLogo8?.Deserialize<List<string>>() ?? new List<string>()).Select(s => Color.FromHex(s)).ToList(),
+                string.IsNullOrEmpty(profile.FactionLogoBackground) ? Color.Transparent : Color.FromHex(profile.FactionLogoBackground),
+                profile.FactionFilterSpecies?.Deserialize<List<string>>() ?? new List<string>(),
+                profile.FactionFilterGender ?? "All",
+                (profile.FactionFilterSkinColors?.Deserialize<List<string>>() ?? new List<string>()).Select(s => Color.FromHex(s)).ToList(),
+                profile.FactionFilterName ?? string.Empty,
+                profile.FactionRoles?.Deserialize<List<FactionRole>>() ?? new List<FactionRole>()
             );
         }
 
@@ -329,6 +338,14 @@ namespace Content.Server.Database
             profile.FactionColor = humanoid.FactionColor;
             profile.FactionIcon = humanoid.FactionIcon;
             profile.FactionRecruiting = humanoid.FactionRecruiting;
+            profile.FactionLogoBackground = humanoid.FactionLogoBackground.ToHex();
+            profile.FactionLogo16 = JsonSerializer.SerializeToDocument(humanoid.FactionLogo16.Select(c => c.ToHex()).ToList());
+            profile.FactionLogo8 = JsonSerializer.SerializeToDocument(humanoid.FactionLogo8.Select(c => c.ToHex()).ToList());
+            profile.FactionFilterSpecies = JsonSerializer.SerializeToDocument(humanoid.FactionFilterSpecies);
+            profile.FactionFilterGender = humanoid.FactionFilterGender ?? "All";
+            profile.FactionFilterSkinColors = JsonSerializer.SerializeToDocument(humanoid.FactionFilterSkinColors.Select(c => c.ToHex()).ToList());
+            profile.FactionFilterName = humanoid.FactionFilterName ?? string.Empty;
+            profile.FactionRoles = JsonSerializer.SerializeToDocument(humanoid.FactionRoles);
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(
