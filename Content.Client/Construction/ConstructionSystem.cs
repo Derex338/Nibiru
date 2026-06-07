@@ -337,12 +337,13 @@ namespace Content.Client.Construction
                     ghostLayerIndex++;
                 _sprite.CopySprite((dummy, targetSprite), (ghost.Value, sprite));
 
-                for (var i = 0; i < sprite.AllLayers.Count(); i++)
+                for (var j = 0; j < sprite.AllLayers.Count(); j++)
                 {
-                    sprite.LayerSetShader(i, "unshaded");
+                    sprite.LayerSetShader(j, "unshaded");
                 }
 
                 Del(dummy);
+                }
             }
             else
                 return false;

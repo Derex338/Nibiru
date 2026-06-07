@@ -44,7 +44,7 @@ public sealed partial class CEWeatherAffect : RulesRule
         var coordinates = transform.GetMapCoordinates(uid);
         var tileRef = mapSystem.GetTileRef(gridUid.Value, grid, coordinates);
 
-        var weatherAffect = weather.CanWeatherAffect(gridUid.Value, grid, tileRef);
+        var weatherAffect = weather.CanWeatherAffect((gridUid.Value, grid, null), tileRef);
 
         return Inverted ? !weatherAffect : weatherAffect;
     }

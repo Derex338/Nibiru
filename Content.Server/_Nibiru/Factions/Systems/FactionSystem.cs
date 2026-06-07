@@ -12,6 +12,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Content.Shared.GameTicking;
 
+using Content.Shared.Body;
 using Content.Shared.Mobs;
 
 namespace Content.Server._Nibiru.Factions;
@@ -30,6 +31,7 @@ public sealed partial class FactionSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
 
     /// <summary>
     /// Кэш доступных фракций для отправки клиентам

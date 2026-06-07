@@ -15,6 +15,8 @@ using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server._Nibiru.Heating;
 
@@ -292,7 +294,7 @@ public sealed class HeatingSurfaceSystem : EntitySystem
         //);
 
         DamageSpecifier burnDamage = new();
-        burnDamage.DamageDict = new Dictionary<string, FixedPoint2>
+        burnDamage.DamageDict = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>
         {
             { "Heat", temp / 100 * dt }
         };

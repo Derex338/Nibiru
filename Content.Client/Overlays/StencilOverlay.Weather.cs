@@ -19,10 +19,9 @@ public sealed partial class StencilOverlay
     {
         var worldHandle = args.WorldHandle;
         var mapId = args.MapId;
-        var worldAABB = args.WorldAABB.Enlarged(1f); //CrystallEdge: Enlarged(1), because ignoreEmpty disabled, and that cause borderscreen weather flickering
+        var worldAABB = args.WorldAABB;
         var worldBounds = args.WorldBounds;
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
-        var eye = args.Viewport.Eye; //CrystallEdge: we need Eye for calculation of isometric wall offset direction
 
         // Cut out the irrelevant bits via stencil
         // This is why we don't just use parallax; we might want specific tiles to get drawn over
@@ -54,18 +53,6 @@ public sealed partial class StencilOverlay
 
                         worldHandle.DrawRect(gridTile, Color.White);
                     }
-
-                    //CrystallEdge offset - required for isometric walls
-                    if (eye is not null)
-                    {
-                        Angle rotation = eye.Rotation * -1f;
-                        var offset = rotation.ToWorldVec() * -0.5f;
-                        var gridTile = new Box2(
-                            tile.GridIndices * grid.Comp.TileSize + offset,
-                            (tile.GridIndices + Vector2i.One) * grid.Comp.TileSize + offset);
-                        worldHandle.DrawRect(gridTile, Color.White);
-                    }
-                    //CrystallEdge offset end
                 }
             },
             Color.Transparent);

@@ -20,7 +20,7 @@ public abstract partial class CESharedCookingSystem
     {
         SubscribeLocalEvent<CEFoodHolderComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<CEFoodHolderComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<CEFoodHolderComponent, SolutionContainerChangedEvent>(OnHolderSolutionChanged);
+        SubscribeLocalEvent<CEFoodHolderComponent, SolutionChangedEvent>(OnHolderSolutionChanged);
         SubscribeLocalEvent<CEFoodHolderComponent, IngestedEvent>(OnEat);
 
         SubscribeLocalEvent<CEFoodCookerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
@@ -56,14 +56,14 @@ public abstract partial class CESharedCookingSystem
         TryTransferFood(ent, (args.Target.Value, target));
     }
 
-    private void OnHolderSolutionChanged(Entity<CEFoodHolderComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnHolderSolutionChanged(Entity<CEFoodHolderComponent> ent, ref SolutionChangedEvent args)
     {
         // Check if this is the solution we care about
-        if (ent.Comp.SolutionId == null || ent.Comp.SolutionId != args.SolutionId)
+        if (ent.Comp.SolutionId == null || ent.Comp.SolutionId != args.Solution.Comp.Id)
             return;
 
         // Clear food data when solution is empty
-        if (args.Solution.Volume == 0)
+        if (args.Solution.Comp.Solution.Volume == 0)
         {
             SetFoodData(ent, null);
             UpdateFoodDataVisuals(ent);

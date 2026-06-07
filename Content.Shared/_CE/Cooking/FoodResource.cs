@@ -34,7 +34,7 @@ public sealed partial class FoodResource : CEWorkbenchCraftRequirement
             if (foodHolder.FoodData?.CurrentRecipe != Recipe)
                 continue;
 
-            if (!solutionSys.TryGetSolution(ent, foodHolder.SolutionId, out _, out var solution))
+            if (foodHolder.SolutionId == null || !solutionSys.TryGetSolution(ent, foodHolder.SolutionId, out _, out var solution))
                 continue;
 
             if (solution.Volume < Count)
@@ -63,7 +63,7 @@ public sealed partial class FoodResource : CEWorkbenchCraftRequirement
             if (foodHolder.FoodData?.CurrentRecipe != Recipe)
                 continue;
 
-            if (!solutionSys.TryGetSolution(ent, foodHolder.SolutionId, out _, out var solution))
+            if (foodHolder.SolutionId == null || !solutionSys.TryGetSolution(ent, foodHolder.SolutionId, out _, out var solution))
                 continue;
 
             if (solution.Volume < Count)

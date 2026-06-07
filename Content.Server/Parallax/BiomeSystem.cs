@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
@@ -13,6 +14,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Content.Shared.Parallax.Biomes;
@@ -63,6 +65,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     [Dependency] private EntityQuery<BiomeComponent> _biomeQuery = default!;
     [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
@@ -1260,7 +1263,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         // Если сущность получила урон или была сильно изменена игроком, она больше не должна считаться "ожидаемой"
         // Это заменяет медленную проверку IsBiomeDefault для разрушаемых объектов.
-        if (TryComp<DamageableComponent>(ent, out var damage) && damage.TotalDamage > FixedPoint2.Zero)
+        if (TryComp<DamageableComponent>(ent, out var damage) && _damageable.GetTotalDamage((ent, damage)) > FixedPoint2.Zero)
             return false;
 
         // 1. Проверяем базовый слой
@@ -1276,7 +1279,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         foreach (var markerId in biome.MarkerLayers)
         {
             var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(markerId);
-            if (layerProto.Prototype == currentProto || layerProto.EntityMask.Values.Contains(currentProto))
+            if (layerProto.Prototype == currentProto || layerProto.EntityMask.Values.Any(v => v.Id == currentProto))
             {
                 return true;
             }

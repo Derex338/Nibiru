@@ -62,28 +62,28 @@ public sealed class RideableSystem : EntitySystem
 
     private void OnUnequipped(EntityUid uid, SaddleComponent comp, GotUnequippedEvent args)
     {
-        if (TryComp<StrapComponent>(args.Equipee, out var strap))
+        if (TryComp<StrapComponent>(args.EquipTarget, out var strap))
         {
             foreach (var rider in strap.BuckledEntities)
             {
-                RemoveRider(args.Equipee, rider, strap);
+                RemoveRider(args.EquipTarget, rider, strap);
             }
         }
 
-        _actionBlocker.UpdateCanMove(args.Equipee);
+        _actionBlocker.UpdateCanMove(args.EquipTarget);
     }
 
     private void OnEquipped(EntityUid uid, SaddleComponent comp, GotEquippedEvent args)
     {
-        if (TryComp<StrapComponent>(args.Equipee, out var strap) && TryComp<RideableComponent>(args.Equipee, out var ride))
+        if (TryComp<StrapComponent>(args.EquipTarget, out var strap) && TryComp<RideableComponent>(args.EquipTarget, out var ride))
         {
             foreach (var rider in strap.BuckledEntities)
             {
-                SetupRider(args.Equipee, rider, ride);
+                SetupRider(args.EquipTarget, rider, ride);
             }
         }
 
-        _actionBlocker.UpdateCanMove(args.Equipee);
+        _actionBlocker.UpdateCanMove(args.EquipTarget);
     }
 
     private void OnRideableStartup(EntityUid uid, RideableComponent component, ComponentStartup args)

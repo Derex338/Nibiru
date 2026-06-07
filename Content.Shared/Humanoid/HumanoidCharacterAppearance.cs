@@ -134,7 +134,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             skinColor = strategy.EnsureVerified(skinColor);
 
             // Corvax-Sponsors-Start
-            foreach (var (organ, layerMarkings) in validatedMarkings)
+            /*foreach (var (organ, layerMarkings) in validatedMarkings)
             {
                 foreach (var (_, markings) in layerMarkings)
                 {
@@ -148,7 +148,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                         }
                     }
                 }
-            }
+            }*/
             // Corvax-Sponsors-End
 
             foreach (var (organ, markings) in appearance.Markings)

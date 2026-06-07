@@ -85,7 +85,7 @@ public abstract partial class CESharedCookingSystem : EntitySystem
         if (ent.Comp.FoodData?.Name is null)
             return;
 
-        if (!Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out _, out var solution))
+        if (ent.Comp.SolutionId == null || !Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out _, out var solution))
             return;
 
         if (solution.Volume == 0)
@@ -116,7 +116,7 @@ public abstract partial class CESharedCookingSystem : EntitySystem
         if (!TryComp<EdibleComponent>(target, out var holderFoodComp))
             return false;
 
-        if (!Solution.TryGetSolution(source.Owner, source.Comp.SolutionId, out var sourceSoln, out var sourceSolution))
+        if (source.Comp.SolutionId == null || !Solution.TryGetSolution(source.Owner, source.Comp.SolutionId, out var sourceSoln, out var sourceSolution))
             return false;
 
         //Solutions
@@ -204,7 +204,8 @@ public abstract partial class CESharedCookingSystem : EntitySystem
         if (!Container.TryGetContainer(ent, ent.Comp.ContainerId, out var container))
             return null;
 
-        Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out _, out var solution);
+        if (ent.Comp.SolutionId == null || !Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out _, out var solution))
+            return null;
 
         //Get all food tags from placed ingredients
         var allFoodTags = new List<ProtoId<CEFoodTagPrototype>>();
@@ -265,7 +266,7 @@ public abstract partial class CESharedCookingSystem : EntitySystem
         if (!TryComp<CEFoodHolderComponent>(ent.Owner, out var holder))
             return;
 
-        if (!Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var soln, out var solution))
+        if (ent.Comp.SolutionId == null || !Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var soln, out var solution))
             return;
 
         if (!Container.TryGetContainer(ent, ent.Comp.ContainerId, out var container))
@@ -318,7 +319,7 @@ public abstract partial class CESharedCookingSystem : EntitySystem
         if (!TryComp<CEFoodHolderComponent>(ent, out var holder) || holder.FoodData is null)
             return;
 
-        if (!Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var soln, out var solution))
+        if (ent.Comp.SolutionId == null || !Solution.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var soln, out var solution))
             return;
 
         var replacedVolume = solution.Volume / 2;

@@ -399,14 +399,16 @@ namespace Content.Server.GameTicking
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
-
-            DebugTools.AssertNotNull(data);
+            if (data == null) // На рандоме решило доебатся что оно может быть нулл
+                throw new InvalidOperationException($"Player {player?.Name ?? "unknown"} has no ContentData."); 
 
             jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
 
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
-            DebugTools.AssertNotNull(mobMaybe);
-            mob = mobMaybe!.Value;
+            if (mobMaybe == null)
+                throw new InvalidOperationException($"Failed to spawn player character for {player.Name}.");
+
+            mob = mobMaybe.Value;
 
             var newMind = _mind.CreateMind(data.UserId, Name(mob));
             _mind.SetUserId(newMind, data.UserId);
@@ -472,19 +474,25 @@ namespace Content.Server.GameTicking
                 return;
 
             var makeObserver = false;
-            Entity<MindComponent?>? mind = player.GetMind();
-            if (mind == null)
+            var maybeMind = player.GetMind();
+            Entity<MindComponent?> mindEnt;
+
+            if (maybeMind == null)
             {
                 var name = GetPlayerProfile(player).Name;
                 var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
-                mind = (mindId, mindComp);
-                _mind.SetUserId(mind.Value, player.UserId);
+                mindEnt = (mindId, mindComp);
+                _mind.SetUserId(mindEnt, player.UserId);
                 makeObserver = true;
             }
+            else
+            {
+                mindEnt = maybeMind.Value;
+            }
 
-            var ghost = _ghost.SpawnGhost(mind.Value);
+            var ghost = _ghost.SpawnGhost(mindEnt);
             if (makeObserver)
-                _roles.MindAddRole(mind.Value, "MindRoleObserver");
+                _roles.MindAddRole(mindEnt, "MindRoleObserver");
 
             _adminLogger.Add(LogType.LateJoin,
                 LogImpact.Low,

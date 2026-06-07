@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Robust.Shared.Maths;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared.Mobs;
@@ -7,6 +8,7 @@ using Content.Shared.Database;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Content.Shared.Humanoid;
+using Content.Shared.Body;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -223,7 +225,7 @@ public sealed partial class FactionSystem
         // Проверка по расе
         if (data.WhiteListSpecies.Count > 0)
         {
-            if (!TryComp<HumanoidAppearanceComponent>(player, out var appearance) ||
+            if (!TryComp<HumanoidProfileComponent>(player, out var appearance) ||
                 !data.WhiteListSpecies.Contains(appearance.Species.Id))
             {
                 error = Loc.GetString("faction-join-fail-species");
@@ -234,7 +236,7 @@ public sealed partial class FactionSystem
         // Проверка по полу
         if (data.WhiteListGender.Count > 0)
         {
-            if (!TryComp<HumanoidAppearanceComponent>(player, out var appearance) ||
+            if (!TryComp<HumanoidProfileComponent>(player, out var appearance) ||
                 !data.WhiteListGender.Contains(appearance.Sex))
             {
                 error = Loc.GetString("faction-join-fail-gender");
@@ -245,44 +247,51 @@ public sealed partial class FactionSystem
         // Проверка по цвету кожи
         if (data.WhiteListSkinColors.Count > 0)
         {
-            if (TryComp<HumanoidAppearanceComponent>(player, out var appearance))
+            if (TryComp<HumanoidProfileComponent>(player, out var profileComp))
             {
-                if (data.WhiteListSkinColors.TryGetValue(appearance.Species.Id, out var skinFilter))
+                if (data.WhiteListSkinColors.TryGetValue(profileComp.Species.Id, out var skinFilter))
                 {
-                    var prototypeManager = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.Prototypes.IPrototypeManager>();
-                    var speciesProto = prototypeManager.Index<Content.Shared.Humanoid.Prototypes.SpeciesPrototype>(appearance.Species.Id);
-                    var colorationProto = prototypeManager.Index<Content.Shared.Humanoid.SkinColorationPrototype>(speciesProto.SkinColoration);
-
-                    if (colorationProto.Strategy.InputType == Content.Shared.Humanoid.SkinColorationStrategyInput.Unary)
+                    if (_visualBody.TryGatherMarkingsData(player, null, out var profiles, out _, out _) &&
+                        profiles.Count > 0)
                     {
-                        var playerTone = colorationProto.Strategy.ToUnary(appearance.SkinColor);
-                        var filterTone = colorationProto.Strategy.ToUnary(skinFilter.Color);
+                        var organProfile = profiles.Values.First();
+                        var skinColor = organProfile.SkinColor;
 
-                        if (skinFilter.PassHigher && playerTone < filterTone)
-                        {
-                            error = Loc.GetString("faction-join-fail-skin-color");
-                            return false;
-                        }
-                        if (!skinFilter.PassHigher && playerTone > filterTone)
-                        {
-                            error = Loc.GetString("faction-join-fail-skin-color");
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        var playerHsl = Color.ToHsl(appearance.SkinColor);
-                        var filterHsl = Color.ToHsl(skinFilter.Color);
+                        var prototypeManager = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.Prototypes.IPrototypeManager>();
+                        var speciesProto = prototypeManager.Index<Content.Shared.Humanoid.Prototypes.SpeciesPrototype>(profileComp.Species.Id);
+                        var colorationProto = prototypeManager.Index<Content.Shared.Humanoid.SkinColorationPrototype>(speciesProto.SkinColoration);
 
-                        if (skinFilter.PassHigher && playerHsl.Z < filterHsl.Z)
+                        if (colorationProto.Strategy.InputType == Content.Shared.Humanoid.SkinColorationStrategyInput.Unary)
                         {
-                            error = Loc.GetString("faction-join-fail-skin-color");
-                            return false;
+                            var playerTone = colorationProto.Strategy.ToUnary(skinColor);
+                            var filterTone = colorationProto.Strategy.ToUnary(skinFilter.Color);
+
+                            if (skinFilter.PassHigher && playerTone < filterTone)
+                            {
+                                error = Loc.GetString("faction-join-fail-skin-color");
+                                return false;
+                            }
+                            if (!skinFilter.PassHigher && playerTone > filterTone)
+                            {
+                                error = Loc.GetString("faction-join-fail-skin-color");
+                                return false;
+                            }
                         }
-                        if (!skinFilter.PassHigher && playerHsl.Z > filterHsl.Z)
+                        else
                         {
-                            error = Loc.GetString("faction-join-fail-skin-color");
-                            return false;
+                            var playerHsl = Color.ToHsl(skinColor);
+                            var filterHsl = Color.ToHsl(skinFilter.Color);
+
+                            if (skinFilter.PassHigher && playerHsl.Z < filterHsl.Z)
+                            {
+                                error = Loc.GetString("faction-join-fail-skin-color");
+                                return false;
+                            }
+                            if (!skinFilter.PassHigher && playerHsl.Z > filterHsl.Z)
+                            {
+                                error = Loc.GetString("faction-join-fail-skin-color");
+                                return false;
+                            }
                         }
                     }
                 }

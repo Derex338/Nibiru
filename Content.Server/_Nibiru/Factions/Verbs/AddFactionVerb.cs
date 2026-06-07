@@ -17,8 +17,9 @@ using Content.Server.Mind;
 using Content.Server.EUI;
 using Content.Shared.IdentityManagement;
 using Content.Server._Nibiru.Factions.UI;
+using Content.Shared.Mind.Components;
 
-//Часть кода взята с Reserv
+//Часть кода взята с ReservStation
 namespace Content.Server._Nibiru.Factions
 {
     public sealed class AddFactionVerb : EntitySystem
@@ -33,10 +34,10 @@ namespace Content.Server._Nibiru.Factions
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HumanoidAppearanceComponent, GetVerbsEvent<AlternativeVerb>>(AddToFactionVerb);
+            SubscribeLocalEvent<MindContainerComponent, GetVerbsEvent<AlternativeVerb>>(AddToFactionVerb);
         }
 
-        private void AddToFactionVerb(EntityUid uid, HumanoidAppearanceComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddToFactionVerb(EntityUid uid, MindContainerComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
                 return;

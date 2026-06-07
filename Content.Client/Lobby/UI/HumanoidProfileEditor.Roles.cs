@@ -112,6 +112,7 @@ public sealed partial class HumanoidProfileEditor
     /// </summary>
     public void RefreshJobs()
     {
+        /*
         JobList.RemoveAllChildren();
         _jobCategories.Clear();
         _jobPriorities.Clear();
@@ -292,10 +293,12 @@ public sealed partial class HumanoidProfileEditor
         }
 
         UpdateJobPriorities();
+        */
     }
 
     public void RefreshAntags()
     {
+        /*
         AntagList.RemoveAllChildren();
         var items = new[]
         {
@@ -356,5 +359,6 @@ public sealed partial class HumanoidProfileEditor
 
             AntagList.AddChild(antagContainer);
         }
+        */
     }
 }

@@ -16,6 +16,8 @@ using Robust.Shared.Utility;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Systems.Faction.UI;
 using Content.Shared.Preferences;
+using Content.Client.Players.PlayTimeTracking;
+using Robust.Shared.Configuration;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
@@ -30,7 +32,7 @@ namespace Content.Client.LateJoin
         [Dependency] private IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private ILogManager _logManager = default!;
 
-        public event Action<(NetEntity, string)> SelectedId;
+        public event Action<(NetEntity, string)>? SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
@@ -43,7 +45,6 @@ namespace Content.Client.LateJoin
         private readonly ScrollContainer _characterScroll;
         private readonly Button _soloButton;
         private readonly Robust.Client.UserInterface.Controls.RichTextLabel _nibiruDescription;
-        [Dependency] private readonly IClientPreferencesManager _prefsManager = default!;
 
         public LateJoinGui()
         {
@@ -147,7 +148,7 @@ namespace Content.Client.LateJoin
             // Подписываемся на обновления
             _gameTicker.AvailableFactionsUpdated += UpdateAvailableFactions;
             _gameTicker.SavedCharactersAvailableUpdated += _ => RebuildUI();
-            _prefsManager.OnPreferencesChanged += RebuildUI;
+            _preferencesManager.OnPreferencesChanged += RebuildUI;
 
             // Обновляем UI при создании
             RebuildUI();
@@ -197,7 +198,7 @@ namespace Content.Client.LateJoin
                 }
 
                 // Кнопка "Начать нового персонажа"
-                var selectedCharacterName = _prefsManager.Preferences?.SelectedCharacter?.Name;
+                var selectedCharacterName = _preferencesManager.Preferences?.SelectedCharacter?.Name;
                 bool profileInSave = selectedCharacterName != null && savedCharacters.Contains(selectedCharacterName);
 
                 var newBtn = new Button
@@ -276,7 +277,7 @@ namespace Content.Client.LateJoin
                 return;
             }
 
-            var profile = _prefsManager.Preferences?.SelectedCharacter as HumanoidCharacterProfile;
+            var profile = _preferencesManager.Preferences?.SelectedCharacter as HumanoidCharacterProfile;
 
             // Сортируем фракции по количеству членов (сначала самые большие)
             var sortedFactions = availableFactions
@@ -538,7 +539,7 @@ namespace Content.Client.LateJoin
             if (disposing)
             {
                 _gameTicker.AvailableFactionsUpdated -= UpdateAvailableFactions;
-                _prefsManager.OnPreferencesChanged -= RebuildUI;
+                _preferencesManager.OnPreferencesChanged -= RebuildUI;
                 _factionButtons.Clear();
             }
         }
