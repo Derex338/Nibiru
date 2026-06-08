@@ -538,7 +538,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                 Pixels8x8 = pixels8
             });
 
-            _entityManager.System<NibiruFactionLogoSystem>().UpdateFactionLogo(fc.FactionName, bg, pixels);
+            _entityManager.System<NibiruFactionLogoSystem>().UpdateFactionLogo(fc.FactionName, bg, pixels, pixels8);
         };
         editor.OpenCentered();
     }

@@ -2,6 +2,7 @@
             xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+            xmlns:uiControls="clr-namespace:Content.Client.UserInterface.Controls"
             xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
             Title="{Loc 'Окно фракции'}"
             MinWidth="450"
@@ -58,7 +59,7 @@
                     <CheckBox Name="RecruitingToggle" Access="Public" Text="{Loc 'faction-ui-recruiting-toggle'}"/>
                 </BoxContainer>
 
-                <Button Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Расформировать фракцию'}" Margin="0 10 0 0"/>
+                <uiControls:ConfirmButton Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Расформировать фракцию'}" ConfirmationText="Точно распустить?" Margin="0 10 0 0"/>
             </BoxContainer>
 
             <ScrollContainer Name="FiltersTab" VerticalExpand="True" HorizontalExpand="True">

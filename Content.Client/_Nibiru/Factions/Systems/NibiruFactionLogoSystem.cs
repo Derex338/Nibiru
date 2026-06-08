@@ -14,7 +14,9 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
     [Dependency] private readonly IClyde _clyde = default!;
 
     // Кэш текстур логотипов фракций по названию фракции
+    // Кэш текстур логотипов фракций по названию фракции
     private readonly Dictionary<string, OwnedTexture> _logoCache = new();
+    private readonly Dictionary<string, OwnedTexture> _logo8x8Cache = new();
 
     public override void Initialize()
     {
@@ -26,10 +28,10 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
     private void OnHandleState(EntityUid uid, FactionComponent component, ref AfterAutoHandleStateEvent args)
     {
         // Обновляем текстуру при изменении стейта
-        UpdateFactionLogo(component.FactionName, component.LogoBackground, component.LogoPixels);
+        UpdateFactionLogo(component.FactionName, component.LogoBackground, component.LogoPixels, component.LogoPixels8x8);
     }
 
-    public void UpdateFactionLogo(string factionName, Robust.Shared.Maths.Color bgColor, List<Robust.Shared.Maths.Color> pixels)
+    public void UpdateFactionLogo(string factionName, Robust.Shared.Maths.Color bgColor, List<Robust.Shared.Maths.Color> pixels, List<Robust.Shared.Maths.Color>? pixels8x8 = null)
     {
         if (string.IsNullOrEmpty(factionName) || pixels == null || pixels.Count != 16 * 16)
             return;
@@ -51,6 +53,11 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
             {
                 oldTex.Dispose();
                 _logoCache.Remove(factionName);
+            }
+            if (_logo8x8Cache.TryGetValue(factionName, out var oldTex8))
+            {
+                oldTex8.Dispose();
+                _logo8x8Cache.Remove(factionName);
             }
             return;
         }
@@ -74,6 +81,29 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
         }
 
         _logoCache[factionName] = _clyde.LoadTextureFromImage(image, "FactionLogo_" + factionName);
+
+        if (pixels8x8 != null && pixels8x8.Count == 8 * 8)
+        {
+            var image8 = new Image<Rgba32>(8, 8);
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    var col = pixels8x8[y * 8 + x];
+                    if (col == Robust.Shared.Maths.Color.Transparent)
+                        col = bgColor;
+
+                    image8[x, y] = new Rgba32(col.RByte, col.GByte, col.BByte, col.AByte);
+                }
+            }
+
+            if (_logo8x8Cache.TryGetValue(factionName, out var tex8))
+            {
+                tex8.Dispose();
+            }
+
+            _logo8x8Cache[factionName] = _clyde.LoadTextureFromImage(image8, "FactionLogo8x8_" + factionName);
+        }
         
         RaiseLocalEvent(new FactionLogoUpdatedEvent(factionName));
     }
@@ -84,6 +114,17 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
     public Texture? GetFactionLogoTexture(string factionName)
     {
         if (_logoCache.TryGetValue(factionName, out var tex))
+            return tex;
+
+        return null;
+    }
+
+    /// <summary>
+    /// Возвращает сгенерированную 8x8 текстуру логотипа фракции
+    /// </summary>
+    public Texture? GetFactionLogo8x8Texture(string factionName)
+    {
+        if (_logo8x8Cache.TryGetValue(factionName, out var tex))
             return tex;
 
         return null;

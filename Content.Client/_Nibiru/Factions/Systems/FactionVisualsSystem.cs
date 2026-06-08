@@ -4,12 +4,18 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Client.Graphics;
+using Robust.Client.Player;
 
 namespace Content.Client._Nibiru.Factions.Systems;
 
 public sealed class FactionVisualsSystem : EntitySystem
 {
     [Dependency] private readonly TextureGenerationSystem _texGen = default!;
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    
+    private FactionIconOverlay? _overlay;
 
     public override void Initialize()
     {
@@ -17,6 +23,23 @@ public sealed class FactionVisualsSystem : EntitySystem
 
         SubscribeLocalEvent<FactionVisualsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<FactionVisualsComponent, AfterAutoHandleStateEvent>(OnHandleState);
+
+        var logoSystem = EntityManager.System<NibiruFactionLogoSystem>();
+        var transformSystem = EntityManager.System<TransformSystem>();
+        var spriteSystem = EntityManager.System<SpriteSystem>();
+
+        _overlay = new FactionIconOverlay(EntityManager, _playerManager, logoSystem, transformSystem, spriteSystem);
+        _overlayManager.AddOverlay(_overlay);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        if (_overlay != null)
+        {
+            _overlayManager.RemoveOverlay(_overlay);
+            _overlay = null;
+        }
     }
 
     private void OnStartup(EntityUid uid, FactionVisualsComponent component, ComponentStartup args)
