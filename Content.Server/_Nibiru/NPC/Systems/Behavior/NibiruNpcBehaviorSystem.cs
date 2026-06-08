@@ -55,6 +55,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
     [Dependency] private readonly NibiruNpcCombatSystem _combatSystem = default!;
     [Dependency] private readonly Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private const float ThreatCheckInterval = 0.1f;
     private float _threatCheckAccumulator;
@@ -424,7 +425,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         if (!TryComp<Robust.Shared.Map.Components.MapGridComponent>(xform.GridUid, out var grid))
             return false;
 
-        var centerTileRef = grid.GetTileRef(xform.Coordinates);
+        var centerTileRef = _mapSystem.GetTileRef((xform.GridUid.Value, grid), xform.Coordinates);
         var centerIndices = centerTileRef.GridIndices;
 
         // Ищем еду в области 3х3
@@ -433,7 +434,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
             for (int y = -1; y <= 1; y++)
             {
                 var checkIndices = new Vector2i(centerIndices.X + x, centerIndices.Y + y);
-                var tileRef = grid.GetTileRef(checkIndices);
+                var tileRef = _mapSystem.GetTileRef((xform.GridUid.Value, grid), checkIndices);
                 var tileDef = (Content.Shared.Maps.ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
 
                 bool isEdible = false;
@@ -452,7 +453,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                     if (!string.IsNullOrEmpty(tileDef.BaseTurf))
                     {
                         var baseTileDef = _tileDefManager[tileDef.BaseTurf];
-                        grid.SetTile(checkIndices, new Robust.Shared.Map.Tile(baseTileDef.TileId));
+                        _mapSystem.SetTile((xform.GridUid.Value, grid), checkIndices, new Robust.Shared.Map.Tile(baseTileDef.TileId));
 
                         _hunger.ModifyHunger(uid, 50f, hunger);
                         _sounds.PlayFeedingSound(uid);

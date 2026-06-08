@@ -131,7 +131,6 @@
     state: skin-notready
   - type: Item
     size: Tiny
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - Skin_processed
@@ -227,7 +226,6 @@
     state: vein
   - type: Item
     size: Tiny
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - Vein_processed

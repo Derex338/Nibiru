@@ -399,15 +399,13 @@ namespace Content.Server.GameTicking
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
-            if (data == null) // На рандоме решило доебатся что оно может быть нулл
-                throw new InvalidOperationException($"Player {player?.Name ?? "unknown"} has no ContentData."); 
+
+            DebugTools.AssertNotNull(data);
 
             jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
 
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
-            if (mobMaybe == null)
-                throw new InvalidOperationException($"Failed to spawn player character for {player.Name}.");
-
+            DebugTools.AssertNotNull(mobMaybe);
             mob = mobMaybe.Value;
 
             var newMind = _mind.CreateMind(data.UserId, Name(mob));

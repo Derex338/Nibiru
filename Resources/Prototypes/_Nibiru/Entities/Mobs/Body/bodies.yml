@@ -1,19 +1,19 @@
-- type: body
-  id: NibiruAnimal
-  name: "animal"
-  root: torso
-  slots:
-    torso:
-      part: TorsoAnimal
-      connections:
-      - legs
-      organs:
-        lungs: OrganAnimalLungs
-        stomach: OrganAnimalStomach
-        heart: OrganAnimalHeart
-    legs:
-      part: LegsAnimal
-      connections:
-      - feet
-    feet:
-      part: FeetAnimal
+# - type: body
+#   id: NibiruAnimal
+#   name: "animal"
+#   root: torso
+#   slots:
+#     torso:
+#       part: TorsoAnimal
+#       connections:
+#       - legs
+#       organs:
+#         lungs: OrganAnimalLungs
+#         stomach: OrganAnimalStomach
+#         heart: OrganAnimalHeart
+#     legs:
+#       part: LegsAnimal
+#       connections:
+#       - feet
+#     feet:
+#       part: FeetAnimal

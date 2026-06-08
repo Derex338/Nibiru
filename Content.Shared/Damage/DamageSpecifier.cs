@@ -7,8 +7,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using JetBrains.Annotations;
 
 namespace Content.Shared.Damage
 {
@@ -22,28 +20,6 @@ namespace Content.Shared.Damage
     [DataDefinition, Serializable, NetSerializable]
     public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>, IRobustCloneable<DamageSpecifier>
     {
-        // For the record I regret so many of the decisions i made when rewriting damageable
-        // Why is it just shitting out dictionaries left and right
-        // One day Arrays, stackalloc spans, and SIMD will save the day.
-        // TODO DAMAGEABLE REFACTOR
-
-        // These exist solely so the wiki works. Please do not touch them or use them.
-        [JsonPropertyName("types")]
-        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
-        [UsedImplicitly]
-        private Dictionary<string, FixedPoint2>? _damageTypeDictionary;
-
-        [JsonPropertyName("groups")]
-        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
-        [UsedImplicitly]
-        private Dictionary<string, FixedPoint2>? _damageGroupDictionary;
-
-        //Nibiru
-        //[JsonPropertyName("penetration")]
-        //[DataField("penetration")]
-        //[UsedImplicitly]
-        //private FixedPoint2? _penetrationDictionary;
-
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>

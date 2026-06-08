@@ -13,17 +13,17 @@
       min:  0
       max:  2
   - type: RandomSpawnRule
-    prototype: WeatherRain
-      
+    prototype: NibiruWeatherRain
+
 - type: entity
-  id: WeatherRain
+  id: NibiruWeatherRain
   suffix: Rain
   parent: AdminInstantEffectBase
   components:
-  - type: WeatherOnTrigger 
+  - type: WeatherOnTrigger
     weather: Rain
     duration: 60
-    
+
 - type: entity
   id: BasicNibiruRoundstartVariation
   parent: BaseGameRule
