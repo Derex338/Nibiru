@@ -2,6 +2,7 @@ using Content.Shared._Nibiru.Factions;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Random;
+using Content.Shared.Database;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -69,6 +70,8 @@ public sealed partial class FactionSystem
             newLeaderComp.Roles = component.Roles;
             newLeaderComp.Rank = Loc.GetString("faction-rank-leader");
             component.IsCreator = false;
+            
+            _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(uid):player} умер. Новым лидером фракции {component.FactionName} стал {ToPrettyString(newLeader):player}");
         }
         else if (component.Members.Count > 0)
         {
@@ -92,6 +95,8 @@ public sealed partial class FactionSystem
                 }
 
                 Dirty(randomMember, memberComp);
+
+                _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(uid):player} умер. Новым лидером фракции {component.FactionName} стал случайный участник {ToPrettyString(randomMember):player}");
 
                 UpdateFactionRegistry(memberComp);
             }
@@ -120,6 +125,8 @@ public sealed partial class FactionSystem
 
         factionComponent.Heir = heir;
         Dirty(player.Value, factionComponent);
+
+        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} назначил {ToPrettyString(heir):player} наследником во фракции {factionComponent.FactionName}");
 
         UpdateFactionRegistry(factionComponent);
     }
@@ -168,6 +175,8 @@ public sealed partial class FactionSystem
         Dirty(player.Value, factionComponent);
         Dirty(entity, entityComponent);
 
+        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} передал лидерство {ToPrettyString(entity):player} во фракции {factionComponent.FactionName}");
+
         UpdateFactionRegistry(entityComponent);
     }
 
@@ -200,6 +209,8 @@ public sealed partial class FactionSystem
                 RemComp<FactionComponent>(member);
             }
         }
+
+        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} распустил фракцию {factionComponent.FactionName}");
 
         UnregisterFaction(factionComponent.FactionName);
 

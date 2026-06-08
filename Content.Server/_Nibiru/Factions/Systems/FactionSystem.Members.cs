@@ -1,6 +1,8 @@
 using Content.Shared._Nibiru.Factions;
 using Robust.Shared.Map;
+using Robust.Shared.Map;
 using System.Linq;
+using Content.Shared.Database;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -59,6 +61,8 @@ public sealed partial class FactionSystem
 
         UpdateFactionRegistry(factionComponent);
 
+        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} кикнул {ToPrettyString(member):player} из фракции {factionComponent.FactionName}");
+
         _popup.PopupEntity(
             Loc.GetString("faction-kicked", ("factionName", factionComponent.FactionName)),
             member,
@@ -94,6 +98,8 @@ public sealed partial class FactionSystem
         {
              UpdateMemberDataUI(factionComponent.Leader, leaderComp);
         }
+
+        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(player.Value):player} изменил ранг {ToPrettyString(member):player} на {msg.NewRank} во фракции {factionComponent.FactionName}");
 
         _popup.PopupEntity(
             Loc.GetString("rank-changed", ("rank", msg.NewRank)),

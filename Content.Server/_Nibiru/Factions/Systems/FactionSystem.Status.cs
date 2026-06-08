@@ -3,6 +3,7 @@ using Content.Shared._Nibiru.Factions.Messeges;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Linq;
+using Content.Shared.Database;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -73,6 +74,8 @@ public sealed partial class FactionSystem
                     }
                 }
 
+                _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} изменил название фракции с {oldName} на {name}");
+
                 needUpdate = true;
             }
         }
@@ -94,6 +97,7 @@ public sealed partial class FactionSystem
                         Dirty(member, memberComp);
                     }
                 }
+                _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player.Value):player} изменил описание фракции {factionComponent.FactionName}");
                 needUpdate = true;
             }
         }
@@ -123,6 +127,7 @@ public sealed partial class FactionSystem
                     Dirty(member, memberComp);
                 }
             }
+            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player.Value):player} изменил цвет фракции {factionComponent.FactionName}");
             needUpdate = true;
         }
 
@@ -249,6 +254,8 @@ public sealed partial class FactionSystem
                 Dirty(member, memberComp);
             }
         }
+
+        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player.Value):player} изменил логотип фракции {factionComponent.FactionName}");
 
         Dirty(player.Value, factionComponent);
         UpdateFactionRegistry(factionComponent);

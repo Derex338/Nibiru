@@ -1,4 +1,5 @@
 using Content.Shared._Nibiru.Factions;
+using Content.Shared.Database;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -35,6 +36,8 @@ public sealed partial class FactionSystem
                         }
                     }
                 }
+                
+                _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(player.Value):player} переименовал роль {msg.OldName} на {msg.Role.Name} во фракции {factionComponent.FactionName}");
             }
         }
         else
@@ -44,10 +47,12 @@ public sealed partial class FactionSystem
             if (existingIndex >= 0)
             {
                 factionComponent.Roles[existingIndex] = msg.Role;
+                _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(player.Value):player} изменил права роли {msg.Role.Name} во фракции {factionComponent.FactionName}");
             }
             else
             {
                 factionComponent.Roles.Add(msg.Role);
+                _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(player.Value):player} создал роль {msg.Role.Name} во фракции {factionComponent.FactionName}");
             }
         }
 
@@ -82,6 +87,8 @@ public sealed partial class FactionSystem
                 Dirty(memberUid, memberComp);
             }
         }
+
+        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(player.Value):player} удалил роль {msg.RoleName} во фракции {factionComponent.FactionName}");
 
         Dirty(player.Value, factionComponent);
         UpdateFactionRegistry(factionComponent);
