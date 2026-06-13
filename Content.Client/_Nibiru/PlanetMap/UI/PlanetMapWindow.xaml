@@ -1,0 +1,26 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client._Nibiru.PlanetMap.UI"
+                      Title="{Loc 'planet-map-window-title'}"
+                      Resizable="False"
+                      SetSize="800 600"
+                      MinSize="800 600">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+
+        <!-- Toolbar -->
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 5">
+            <BoxContainer Orientation="Horizontal" Margin="5" HorizontalExpand="True">
+                <Button Name="CenterButton" Text="{Loc 'planet-map-center-btn'}" Margin="0 0 10 0" />
+                <Button Name="ScanButton" Text="{Loc 'planet-map-scan-btn'}" StyleClasses="Caution" />
+                <Control HorizontalExpand="True" />
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- The Map -->
+        <!-- We use a dark backing, but the map control draws the paper -->
+        <PanelContainer HorizontalExpand="True" VerticalExpand="True" StyleClasses="PanelDark">
+            <ui:PlanetMapControl Name="MapControl" Margin="2" />
+        </PanelContainer>
+
+    </BoxContainer>
+</controls:FancyWindow>

@@ -1,0 +1,22 @@
+- type: entity
+  name: planet map
+  description: A paper map used to chart the planetary surface. Use a pen to update it.
+  id: PlanetMap
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+      - state: paper
+      - state: icon_planet
+  - type: Item
+    size: Small
+  - type: UserInterface
+    interfaces:
+      enum.PlanetMapUiKey.Key:
+        type: PlanetMapBoundUserInterface
+  - type: PlanetMap
+    scanRadius: 24
+    requireVisibility: true
+  - type: ActivatableUI
+    key: enum.PlanetMapUiKey.Key

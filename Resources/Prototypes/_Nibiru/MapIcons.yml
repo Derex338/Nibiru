@@ -1,0 +1,20 @@
+- type: planetMapIcon
+  id: Water
+  entities:
+    - FloorWaterEntity
+  color: blue
+  scale: 1.9
+
+- type: planetMapIcon
+  id: Stone
+  entities:
+    - CERockSmall
+    - CERockBigMoss
+  color: DarkGray
+  shape: Circle
+
+- type: planetMapIcon
+  id: WallBase
+  idPattern: Wall
+  shape: Rectangle
+  scale: 1.9

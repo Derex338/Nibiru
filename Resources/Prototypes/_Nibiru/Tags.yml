@@ -17,3 +17,6 @@
 
 - type: Tag
   id: Plant
+
+- type: Tag
+  id: PlanetMapEntity

@@ -65,3 +65,4 @@
   - type: Tag
     tags:
       - CEAmbientWater
+      - PlanetMapEntity
