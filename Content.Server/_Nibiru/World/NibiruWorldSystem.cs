@@ -1,44 +1,45 @@
-using System.Linq;
-using System.Numerics;
+using Content.Server._CE.ZLevels.Core;
+using Content.Server._Nibiru.SaveLoad;
 using Content.Server.Administration.Managers;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Parallax;
 using Content.Server.Preferences.Managers;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server._CE.ZLevels.Core;
+using Content.Shared._CE.DayCycle;
+using Content.Shared._CE.ZLevels.Core.Components;
+using Content.Shared._CE.ZLevels.Light.Components;
+using Content.Shared._CE.ZLevels.Roof;
 using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
-using Content.Server._Nibiru.SaveLoad;
 using Content.Shared.Administration;
+using Content.Shared.Atmos;
+using Content.Shared.GameTicking;
+using Content.Shared.GameTicking.Components;
+using Content.Shared.Gravity;
+using Content.Shared.Light.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Content.Shared.GameTicking;
-using Content.Server.GameTicking;
-using Content.Shared.GameTicking.Components;
-using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Pinpointer;
+using Content.Shared.Players;
 using Content.Shared.Preferences;
 using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Atmos;
-using Content.Shared.Gravity;
-using Content.Shared._CE.DayCycle;
-using Robust.Shared.Maths;
-using Content.Shared._CE.ZLevels.Roof;
-using Content.Shared._CE.ZLevels.Light.Components;
-using Robust.Shared.Enums;
 using Robust.Shared.Timing;
-using Content.Shared.Players;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server._Nibiru.World;
 
@@ -264,6 +265,12 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         var mob = _stationSpawn.SpawnPlayerMob(coords, null, ev.Profile, null, null);
         _mind.TransferTo(newMind, mob);
+
+        if (TryComp<CEActiveZPhysicsComponent>(mob, out var physicsComp))
+        {
+            RemComp<CEActiveZPhysicsComponent>(mob);
+            Timer.Spawn(1000, () => AddComp<CEActiveZPhysicsComponent>(mob, physicsComp));
+        }
 
         return mob;
     }
