@@ -36,6 +36,10 @@ public sealed class NibiruLivestockSystem : EntitySystem
     private void UpdateAppearance(EntityUid uid, NibiruLivestockComponent component)
     {
         _appearance.SetData(uid, LivestockVisuals.Sex, component.Sex);
+        if (!HasComp<NibiruLivestockBabyComponent>(uid))
+        {
+            _appearance.SetData(uid, LivestockVisuals.BabyStage, -1);
+        }
     }
 
     public override void Update(float frameTime)
@@ -53,6 +57,7 @@ public sealed class NibiruLivestockSystem : EntitySystem
         {
             UpdateResourceGrowth(uid, livestock, frameTime);
             UpdateBreeding(uid, livestock, frameTime);
+            UpdateGrowthStage(uid, frameTime, livestock);
         }
     }
 
@@ -61,6 +66,9 @@ public sealed class NibiruLivestockSystem : EntitySystem
     /// </summary>
     private void UpdateResourceGrowth(EntityUid uid, NibiruLivestockComponent livestock, float frameTime)
     {
+        if (HasComp<NibiruLivestockBabyComponent>(uid))
+            return;
+
         if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger))
         {
             if (hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Starving)
@@ -89,6 +97,9 @@ public sealed class NibiruLivestockSystem : EntitySystem
     /// </summary>
     private void UpdateBreeding(EntityUid uid, NibiruLivestockComponent livestock, float frameTime)
     {
+        if (HasComp<NibiruLivestockBabyComponent>(uid))
+            return;
+
         if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger))
         {
             if (hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Starving)
@@ -215,5 +226,41 @@ public sealed class NibiruLivestockSystem : EntitySystem
 
         resource.GrowthAccumulator = 0f;
         return true;
+    }
+
+    private void UpdateGrowthStage(EntityUid animal, float frameTime, NibiruLivestockComponent? livestock = null, NibiruLivestockBabyComponent? baby = null)
+    {
+        if (!Resolve(animal, ref livestock))
+            return;
+
+        if (!Resolve(animal, ref baby, false))
+            return;
+
+        float growthModifier = 1.0f;
+        if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(animal, out var hunger))
+        {
+            if (hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Starving)
+                growthModifier = 0.0f; // Не растёт при сильном голоде
+
+            // Расход сытости на рост (уменьшенный по сравнению со взрослыми: например 0.5 ед/сек)
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<Content.Shared.Nutrition.EntitySystems.HungerSystem>().ModifyHunger(animal, -0.5f * frameTime, hunger);
+        }
+
+        baby.GrowthAccumulator += frameTime * growthModifier;
+
+        if (baby.GrowthAccumulator >= baby.StageGrowthTime)
+        {
+            baby.GrowthAccumulator = 0f;
+            baby.GrowthStage++;
+            Dirty(animal, baby);
+
+            _appearance.SetData(animal, LivestockVisuals.BabyStage, baby.GrowthStage);
+        }
+
+        if (baby.GrowthStage >= baby.Stages.Count)
+        {
+            RemComp<NibiruLivestockBabyComponent>(animal);
+            UpdateAppearance(animal, livestock);
+        }
     }
 }

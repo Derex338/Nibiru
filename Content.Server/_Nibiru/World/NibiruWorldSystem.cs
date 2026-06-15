@@ -266,10 +266,10 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         var mob = _stationSpawn.SpawnPlayerMob(coords, null, ev.Profile, null, null);
         _mind.TransferTo(newMind, mob);
 
-        if (TryComp<CEActiveZPhysicsComponent>(mob, out var physicsComp))
+        if (HasComp<CEActiveZPhysicsComponent>(mob))
         {
             RemComp<CEActiveZPhysicsComponent>(mob);
-            Timer.Spawn(1000, () => AddComp<CEActiveZPhysicsComponent>(mob, physicsComp));
+            Timer.Spawn(1000, () => EnsureComp<CEActiveZPhysicsComponent>(mob));
         }
 
         return mob;

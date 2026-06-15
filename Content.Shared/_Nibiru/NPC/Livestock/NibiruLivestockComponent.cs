@@ -172,5 +172,6 @@ public enum LivestockSex : byte
 public enum LivestockVisuals : byte
 {
     Sex,
-    IsLeashed
+    IsLeashed,
+    BabyStage
 }
