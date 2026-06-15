@@ -245,6 +245,8 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                 var mapId = (int)xform.MapID;
                 var parentComp = EnsureComp<NibiruSaveParentComponent>(uid);
                 parentComp.MapId = mapId;
+                parentComp.Position = _xform.GetWorldPosition(xform);
+                parentComp.Rotation = _xform.GetWorldRotation(xform);
 
                 if (TryComp<MindContainerComponent>(uid, out var mindComp) && mindComp.HasMind)
                 {
@@ -460,6 +462,13 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
                         if (oldToNewMapMapping.TryGetValue(parentComp.MapId, out var targetMap))
                         {
                             _xform.SetParent(uid, targetMap);
+                            _xform.SetLocalPositionRotation(uid, parentComp.Position, parentComp.Rotation);
+
+                            if (TryComp<MapComponent>(targetMap, out var mapComp)
+                                && _map.TryFindGridAt(mapComp.MapId, parentComp.Position, out var gridUid, out _))
+                            {
+                                _xform.SetParent(uid, gridUid);
+                            }
                         }
                         RemComp<NibiruSaveParentComponent>(uid);
                     }

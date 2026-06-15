@@ -1,4 +1,7 @@
+using System.Numerics;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 
 namespace Content.Server._Nibiru.SaveLoad;
 
@@ -10,4 +13,10 @@ public sealed partial class NibiruSaveParentComponent : Component
 {
     [DataField("mapId")]
     public int MapId;
+
+    [DataField("position")]
+    public Vector2 Position;
+
+    [DataField("rotation")]
+    public Angle Rotation;
 }
