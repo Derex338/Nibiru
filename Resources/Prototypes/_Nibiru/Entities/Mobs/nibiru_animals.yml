@@ -242,7 +242,7 @@
     maxTrust: 150
     favoriteFoods: [ FoodMeatSteak, NibiruFoodMeatTest ]
     trainable: true
-    possibleCommands: [ Follow, Stay, Attack, Guard, Search ]
+    possibleCommands: [ Follow, Stay, Attack, Grab, Guard, Search ]
   - type: NibiruSleepCycle
     isNocturnal: true
   - type: NibiruFireFear
@@ -556,7 +556,7 @@
     trustThreshold: 40
     maxTrust: 120
     favoriteFoods: [ NibiruFoodMeatTest ]
-    possibleCommands: [ Follow, Stay, Attack, Guard, Search ]
+    possibleCommands: [ Follow, Stay, Attack, Grab, Guard, Search ]
   - type: NibiruLivestock
     canBreed: true
     femaleSprite:

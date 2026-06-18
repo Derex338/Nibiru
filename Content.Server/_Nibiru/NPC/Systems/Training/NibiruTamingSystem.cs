@@ -1,24 +1,25 @@
+using Content.Server._Nibiru.NPC.Systems.Behavior;
+using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Server.NPC.Systems;
 // Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior;
-using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared._Nibiru.NPC.Commands;
 using Content.Shared._Nibiru.NPC.Livestock;
+using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared._Nibiru.NPC.Utility;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
-using Content.Shared.Tag;
-using Content.Shared.DoAfter;
-using Content.Server._Nibiru.NPC.Systems.Utility;
-using Content.Server._Nibiru.NPC.Systems.Behavior;
-using Robust.Shared.Timing;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Nibiru.NPC.Systems.Training;
 
@@ -281,24 +282,33 @@ public sealed class NibiruTamingSystem : EntitySystem
         {
             case NibiruAnimalCommand.Follow:
                 behavior.CurrentTarget = commander;
+                behavior.CurrentCommand = command;
                 behavior.CurrentState = NibiruNpcState.Following;
                 return true;
 
             case NibiruAnimalCommand.Stay:
                 behavior.CurrentTarget = null;
+                behavior.CurrentCommand = command;
                 behavior.CurrentState = NibiruNpcState.Idle;
                 behavior.HomePosition = Transform(animal).Coordinates;
                 return true;
 
             case NibiruAnimalCommand.Attack:
+            case NibiruAnimalCommand.Grab:
                 if (target == null)
+                    return false;
+
+                if (!TryComp<TransformComponent>(target.Value, out _))
+                    return false;
+
+                if (command == NibiruAnimalCommand.Grab && !TryComp<PullableComponent>(target.Value, out _))
                     return false;
 
                 // Check faction. If target is friendly, check mood.
                 if (_faction.IsEntityFriendly(animal, target.Value))
                 {
                     // If tamer commanded it, we might still attack if trust is high enough
-                    // or if it's just a general command. 
+                    // or if it's just a general command.
                     // Let's make it ALWAYS work if commanded by owner, unless very unhappy.
                     if (TryComp<NibiruAnimalMoodComponent>(animal, out var moodComp) && moodComp.MoodState == AnimalMoodState.Sad)
                     {
@@ -308,6 +318,7 @@ public sealed class NibiruTamingSystem : EntitySystem
                 }
 
                 behavior.CurrentTarget = target;
+                behavior.CurrentCommand = command;
                 behavior.CurrentState = NibiruNpcState.Chasing;
                 return true;
 

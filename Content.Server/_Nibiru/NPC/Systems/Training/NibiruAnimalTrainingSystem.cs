@@ -121,7 +121,9 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
             NibiruAnimalCommand.Follow => 50f,
             NibiruAnimalCommand.Stay => 75f,
             NibiruAnimalCommand.Attack => 100f,
+            NibiruAnimalCommand.Grab => 110f,
             NibiruAnimalCommand.Guard => 120f,
+            NibiruAnimalCommand.Search => 90f,
             _ => 50f
         };
 

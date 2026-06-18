@@ -88,3 +88,21 @@ nibiru-animal-training-req-trust = Требуется {$trust} доверия
 nibiru-animal-command-follow-all = Вы подзываете всех своих животных.
 nibiru-animal-command-stay-all = Вы приказываете всем своим животным стоять.
 nibiru-animal-command-attack-target = Вы натравливаете своих животных на цель!
+nibiru-animal-command-follow-start = {$animal} начинает следовать за вами.
+nibiru-animal-command-follow-single = Вы приказываете животному следовать.
+nibiru-animal-command-stay-single = Вы приказываете животному стоять на месте.
+nibiru-animal-command-attack-single = Вы отправляете животное атаковать!
+nibiru-animal-command-grab-single = Вы приказываете животному схватить цель!
+nibiru-animal-command-attack-mode = Режим атаки активирован. Укажите на цель.
+nibiru-animal-command-grab-mode = Режим захвата активирован. Укажите на цель.
+nibiru-animal-command-mode-cancel = Режим команды отменён.
+nibiru-animal-command-search-success = Вы отправляете животное искать!
+nibiru-animal-command-search-fail = На этом предмете нет следов!
+nibiru-animal-command-deliver-start = Вы отправляете животное на доставку.
+nibiru-animal-command-too-far-to-hear = Животное слишком далеко, чтобы услышать вас!
+nibiru-animal-commander-too-far = Животное слишком далеко и больше не слушается.
+
+## Захват животным
+
+nibiru-animal-grab-detaching = Вы пытаетесь оторвать {$animal} от себя...
+nibiru-animal-grab-detached = Вы оторвали {$animal} от себя!

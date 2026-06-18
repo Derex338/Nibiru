@@ -91,6 +91,12 @@ public sealed partial class NibiruNpcBehaviorComponent : Component
     public EntityUid? CurrentTarget;
 
     /// <summary>
+    /// Последняя полученная команда.
+    /// </summary>
+    [ViewVariables]
+    public Content.Shared._Nibiru.NPC.Training.NibiruAnimalCommand? CurrentCommand;
+
+    /// <summary>
     /// Дальность, на которой агрессивный NPC начнёт преследование.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -200,6 +206,46 @@ public sealed partial class NibiruNpcBehaviorComponent : Component
     /// </summary>
     [ViewVariables]
     public Vector2 ChargeDirection;
+
+    #endregion
+
+    #region HitAndRun Attack
+
+    /// <summary>
+    /// Текущая фаза атаки HitAndRun: 0=нет, 1=укусить, 2=отпрыгнуть, 3=ждать.
+    /// </summary>
+    [ViewVariables]
+    public int HitAndRunPhase;
+
+    /// <summary>
+    /// Вектор отпрыгивания (назад от цели).
+    /// </summary>
+    [ViewVariables]
+    public Vector2 LeapDirection;
+
+    /// <summary>
+    /// Таймер фазы HitAndRun.
+    /// </summary>
+    [ViewVariables]
+    public float HitAndRunTimer;
+
+    /// <summary>
+    /// Скорость отпрыгивания (тайлы/с).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float LeapSpeed = 8f;
+
+    /// <summary>
+    /// Расстояние отпрыгивания (тайлы).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float LeapDistance = 3f;
+
+    /// <summary>
+    /// Время ожидания после приземления перед следующей атакой (с).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float HitAndRunWaitDuration = 1f;
 
     #endregion
 

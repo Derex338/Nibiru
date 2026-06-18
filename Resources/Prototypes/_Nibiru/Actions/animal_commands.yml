@@ -24,12 +24,27 @@
   id: ActionNibiruAnimalAttack
   parent: BaseAction
   name: Взять!
-  description: Укажите цель для атаки вашими животными.
+  description: Включает режим атаки. Укажите на цель, чтобы отправить животное атаковать.
   components:
-  - type: EntityTargetAction
+  - type: InstantAction
     icon: { sprite: Objects/Weapons/Melee/sword.rsi, state: icon }
     event: !type:NibiruAnimalAttackActionEvent
       speech: Взять его!
+    useDelay: 1
+    checkCanInteract: false
+
+- type: entity
+  id: ActionNibiruAnimalGrab
+  parent: BaseAction
+  name: Схвати!
+  description: Включает режим захвата. Укажите на цель, чтобы животное схватило и тащило её.
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Weapons/Melee/baton.rsi, state: icon }
+    event: !type:NibiruAnimalGrabActionEvent
+      speech: Схвати его!
+    useDelay: 1
+    checkCanInteract: false
 
 - type: entity
   id: ActionNibiruAnimalSearch

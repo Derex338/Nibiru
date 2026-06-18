@@ -156,6 +156,11 @@ public enum NibiruAnimalCommand : byte
     Attack,
 
     /// <summary>
+    /// Схватить указанную цель и тащить ее.
+    /// </summary>
+    Grab,
+
+    /// <summary>
     /// Рычать/предупреждать при приближении чужаков.
     /// </summary>
     Guard,

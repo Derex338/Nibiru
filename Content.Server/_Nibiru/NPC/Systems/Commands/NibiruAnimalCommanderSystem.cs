@@ -34,10 +34,12 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, NibiruAnimalFollowActionEvent>(OnFollowAction);
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, NibiruAnimalStayActionEvent>(OnStayAction);
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, NibiruAnimalAttackActionEvent>(OnAttackAction);
+        SubscribeLocalEvent<NibiruAnimalCommanderComponent, NibiruAnimalGrabActionEvent>(OnGrabAction);
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, NibiruAnimalSearchActionEvent>(OnSearchAction);
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, NibiruAnimalDeliverActionEvent>(OnDeliverAction);
         SubscribeLocalEvent<NibiruAnimalCommandLearnedEvent>(OnCommandLearned);
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, Content.Shared.Damage.Systems.DamageChangedEvent>(OnOwnerDamaged);
+        SubscribeLocalEvent<NibiruAnimalCommanderComponent, Content.Shared.Pointing.AfterPointedAtEvent>(OnPointedAt);
     }
 
     private void OnCommandLearned(NibiruAnimalCommandLearnedEvent args)
@@ -67,11 +69,21 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
                 _actions.AddAction(owner, ref comp.StayActionEntity, comp.StayActionId);
             if (tamable.LearnedCommands.Contains(NibiruAnimalCommand.Attack))
                 _actions.AddAction(owner, ref comp.AttackActionEntity, comp.AttackActionId);
+            if (tamable.LearnedCommands.Contains(NibiruAnimalCommand.Grab))
+                _actions.AddAction(owner, ref comp.GrabActionEntity, comp.GrabActionId);
             if (tamable.LearnedCommands.Contains(NibiruAnimalCommand.Search))
                 _actions.AddAction(owner, ref comp.SearchActionEntity, comp.SearchActionId);
             if (tamable.LearnedCommands.Contains(NibiruAnimalCommand.Deliver))
                 _actions.AddAction(owner, ref comp.DeliverActionEntity, comp.DeliverActionId);
         }
+
+        UpdateActionToggles(owner, comp);
+    }
+
+    private void UpdateActionToggles(EntityUid owner, NibiruAnimalCommanderComponent comp)
+    {
+        _actions.SetToggled(comp.AttackActionEntity, comp.CurrentMode == NibiruAnimalCommand.Attack);
+        _actions.SetToggled(comp.GrabActionEntity, comp.CurrentMode == NibiruAnimalCommand.Grab);
     }
 
     public void AssignAnimal(EntityUid owner, EntityUid animal)
@@ -94,11 +106,13 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
         _actions.RemoveAction(uid, component.FollowActionEntity);
         _actions.RemoveAction(uid, component.StayActionEntity);
         _actions.RemoveAction(uid, component.AttackActionEntity);
+        _actions.RemoveAction(uid, component.GrabActionEntity);
         _actions.RemoveAction(uid, component.SearchActionEntity);
         _actions.RemoveAction(uid, component.DeliverActionEntity);
         component.FollowActionEntity = null;
         component.StayActionEntity = null;
         component.AttackActionEntity = null;
+        component.GrabActionEntity = null;
         component.SearchActionEntity = null;
         component.DeliverActionEntity = null;
         component.CurrentAnimal = null;
@@ -165,10 +179,51 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
     private void OnAttackAction(EntityUid uid, NibiruAnimalCommanderComponent component, NibiruAnimalAttackActionEvent args)
     {
         if (args.Handled || component.CurrentAnimal == null) return;
-        args.Handled = true;
 
-        if (HandleCommand(uid, component, NibiruAnimalCommand.Attack, args.Speech, args.Target))
-            _popup.PopupEntity(Loc.GetString("nibiru-animal-command-attack-single"), uid, uid);
+        if (component.CurrentMode == NibiruAnimalCommand.Attack)
+        {
+            // Отключаем режим
+            component.CurrentMode = null;
+            UpdateActionToggles(uid, component);
+            _popup.PopupEntity(Loc.GetString("nibiru-animal-command-mode-cancel"), uid, uid);
+        }
+        else
+        {
+            // Включаем режим атаки
+            component.CurrentMode = NibiruAnimalCommand.Attack;
+            UpdateActionToggles(uid, component);
+            _popup.PopupEntity(Loc.GetString("nibiru-animal-command-attack-mode"), uid, uid);
+
+            if (!string.IsNullOrEmpty(args.Speech))
+                _chat.TrySendInGameICMessage(uid, args.Speech, InGameICChatType.Speak, false);
+        }
+
+        args.Handled = true;
+    }
+
+    private void OnGrabAction(EntityUid uid, NibiruAnimalCommanderComponent component, NibiruAnimalGrabActionEvent args)
+    {
+        if (args.Handled || component.CurrentAnimal == null) return;
+
+        if (component.CurrentMode == NibiruAnimalCommand.Grab)
+        {
+            // Отключаем режим
+            component.CurrentMode = null;
+            UpdateActionToggles(uid, component);
+            _popup.PopupEntity(Loc.GetString("nibiru-animal-command-mode-cancel"), uid, uid);
+        }
+        else
+        {
+            // Включаем режим захвата
+            component.CurrentMode = NibiruAnimalCommand.Grab;
+            UpdateActionToggles(uid, component);
+            _popup.PopupEntity(Loc.GetString("nibiru-animal-command-grab-mode"), uid, uid);
+
+            if (!string.IsNullOrEmpty(args.Speech))
+                _chat.TrySendInGameICMessage(uid, args.Speech, InGameICChatType.Speak, false);
+        }
+
+        args.Handled = true;
     }
 
     private void OnSearchAction(EntityUid uid, NibiruAnimalCommanderComponent component, NibiruAnimalSearchActionEvent args)
@@ -284,5 +339,35 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
 
         // Отправляем команду атаки без произнесения вслух
         _taming.GiveCommand(animal, uid, NibiruAnimalCommand.Attack, args.Origin);
+    }
+
+    private void OnPointedAt(EntityUid uid, NibiruAnimalCommanderComponent component, ref Content.Shared.Pointing.AfterPointedAtEvent args)
+    {
+        if (component.CurrentMode == null || component.CurrentAnimal == null)
+            return;
+
+        var target = args.Pointed;
+        var command = component.CurrentMode.Value;
+
+        // Проверяем дистанцию до животного
+        if (!TryComp<TransformComponent>(component.CurrentAnimal.Value, out var animalXform) ||
+            !TryComp<TransformComponent>(uid, out var ownerXform))
+            return;
+
+        if (!ownerXform.Coordinates.TryDistance(EntityManager, animalXform.Coordinates, out var dist) || dist > 10f)
+        {
+            _popup.PopupEntity(Loc.GetString("nibiru-animal-command-too-far-to-hear"), uid, uid);
+            return;
+        }
+
+        // Выполняем команду
+        if (_taming.GiveCommand(component.CurrentAnimal.Value, uid, command, target))
+        {
+            _popup.PopupEntity(Loc.GetString($"nibiru-animal-command-{command.ToString().ToLower()}-single"), uid, uid);
+
+            // Сбрасываем режим после выполнения команды
+            component.CurrentMode = null;
+            UpdateActionToggles(uid, component);
+        }
     }
 }

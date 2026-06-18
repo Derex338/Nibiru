@@ -14,6 +14,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
@@ -22,6 +23,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server._Nibiru.NPC.Systems.Utility;
+using Content.Server._Nibiru.NPC.Systems.Commands;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -53,9 +55,11 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
     [Dependency] private readonly Robust.Shared.Map.IMapManager _mapManager = default!;
     [Dependency] private readonly Robust.Shared.Map.ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly NibiruNpcCombatSystem _combatSystem = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly NibiruAnimalGrabSystem _grabSystem = default!;
 
     private const float ThreatCheckInterval = 0.1f;
     private float _threatCheckAccumulator;
@@ -321,6 +325,26 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
             {
                 behavior.CurrentState = NibiruNpcState.Charging;
                 behavior.IsCombatActionActive = false; // Сбросим для фазы тряски
+                _steering.Unregister(uid);
+                return;
+            }
+        }
+
+        // Grab: при достижении цели — вцепляемся и инвертируем тягу
+        if (behavior.CurrentCommand == NibiruAnimalCommand.Grab && distance <= 1.5f)
+        {
+            // Получаем урон укуса
+            DamageSpecifier? biteDamage = null;
+            if (TryComp<MeleeWeaponComponent>(uid, out var melee) && melee.Damage != null)
+            {
+                biteDamage = melee.Damage;
+            }
+
+            if (_grabSystem.TryGrabTarget(uid, target, biteDamage))
+            {
+                // Успешно вцепились - переходим в Following (цель тащит нас)
+                behavior.CurrentState = NibiruNpcState.Following;
+                behavior.CurrentTarget = target;
                 _steering.Unregister(uid);
                 return;
             }
