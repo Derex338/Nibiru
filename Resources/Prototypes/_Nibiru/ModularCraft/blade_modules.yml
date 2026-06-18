@@ -1,0 +1,124 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Модули лезвия (Blade)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: modularModule
+  id: BladeLong
+  name: Длинное лезвие
+  description: >
+    Классическое длинное лезвие с широкой режущей кромкой.
+    Обеспечивает хороший урон и дальность, но требует больше материала.
+  partType: Blade
+  sprite:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
+    state: blade
+  compatiblemodularItemTypes:
+    - Sword
+  materialCost: 3
+  damageBonus: 4.0
+  reachBonus: 0.4
+  attackSpeedMultiplier: 0.95
+  penetrationBonus: 0.5
+  weight: 0.9
+
+- type: modularModule
+  id: BladeShort
+  name: Короткое лезвие
+  description: >
+    Компактное лезвие — быстрое и лёгкое, идеальное для ближнего боя.
+    Меньший урон компенсируется скоростью.
+  partType: Blade
+  sprite:
+    sprite: Objects/Weapons/Melee/sword.rsi
+    state: blade_short
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+  materialCost: 2
+  damageBonus: 1.5
+  reachBonus: 0.0
+  attackSpeedMultiplier: 1.15
+  penetrationBonus: 0.2
+  weight: 0.4
+
+- type: modularModule
+  id: BladeSerrated
+  name: Зазубренное лезвие
+  description: >
+    Лезвие с зазубринами причиняет рваные раны и замедляет регенерацию.
+    Сложнее в изготовлении, требует точного материала.
+  partType: Blade
+  sprite:
+    sprite: Objects/Weapons/Melee/sword.rsi
+    state: blade_serrated
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+  materialCost: 3
+  damageBonus: 3.0
+  reachBonus: 0.1
+  attackSpeedMultiplier: 0.9
+  penetrationBonus: 1.5
+  weight: 0.7
+
+- type: modularModule
+  id: BladeWide
+  name: Широкое лезвие
+  description: >
+    Широкое лезвие с большой площадью поражения.
+    Удар наносит больше тупого урона вдобавок к режущему.
+  partType: Blade
+  sprite:
+    sprite: Objects/Weapons/Melee/sword.rsi
+    state: blade_wide
+  compatiblemodularItemTypes:
+    - Sword
+  materialCost: 4
+  damageBonus: 5.5
+  reachBonus: 0.2
+  attackSpeedMultiplier: 0.85
+  penetrationBonus: 0.0
+  blockBonus: 0.1
+  weight: 1.2
+
+- type: modularModule
+  id: BladeFine
+  name: Изящное лезвие
+  description: >
+    Тонкое колющее лезвие — почти рапира.
+    Высокое пробитие брони, минимальный вес, но хрупкое.
+  partType: Blade
+  sprite:
+    sprite: Objects/Weapons/Melee/sword.rsi
+    state: blade_fine
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+  materialCost: 2
+  damageBonus: 2.0
+  reachBonus: 0.3
+  attackSpeedMultiplier: 1.2
+  penetrationBonus: 2.5
+  weight: 0.3
+
+# Нож-модули лезвия
+- type: modularModule
+  id: KnifeBladeCurved
+  name: Изогнутое лезвие
+  description: >
+    Изогнутое лезвие ножа — характерное для охотничьих орудий.
+    Хорошо подходит для снятия шкур и нанесения глубоких ран.
+  partType: Blade
+  sprite:
+    sprite: Objects/Weapons/Melee/knife.rsi
+    state: blade_curved
+  compatiblemodularItemTypes:
+    - Knife
+  materialCost: 2
+  damageBonus: 2.5
+  reachBonus: 0.0
+  attackSpeedMultiplier: 1.05
+  penetrationBonus: 0.8
+  weight: 0.35
+
+

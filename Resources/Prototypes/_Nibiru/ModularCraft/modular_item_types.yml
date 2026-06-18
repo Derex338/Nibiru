@@ -1,0 +1,58 @@
+- type: modularPart
+  id: Pommel
+  name: Навершие
+
+- type: modularPart
+  id: Handle
+  name: Рукоять
+
+- type: modularPart
+  id: Guard
+  name: Гарда
+
+- type: modularPart
+  id: Blade
+  name: Лезвие
+
+- type: modularPart
+  id: Head
+  name: Голова
+
+- type: modularPart
+  id: Shaft
+  name: Древко
+
+- type: modularItem
+  id: Sword
+  name: Меч
+  baseEntity: ModularSword
+  requiredParts:
+    - Pommel
+    - Handle
+    - Guard
+    - Blade
+
+- type: modularItem
+  id: Knife
+  name: Нож
+  baseEntity: ModularKnife
+  requiredParts:
+    - Handle
+    - Blade
+
+- type: modularItem
+  id: Axe
+  name: Топор
+  baseEntity: ModularAxe
+  requiredParts:
+    - Pommel
+    - Handle
+    - Head
+
+- type: modularItem
+  id: Spear
+  name: Копьё
+  baseEntity: ModularSpear
+  requiredParts:
+    - Shaft
+    - Head

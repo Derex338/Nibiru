@@ -1,0 +1,184 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Материалы для кузни
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Металлы ───────────────────────────────────────────────────────────────────
+
+- type: modularMaterial
+  id: MatCopper
+  name: Медь
+  description: >
+    Мягкий и доступный металл. Не самый прочный материал, зато его легко найти
+    и обработать даже без профессионального оборудования.
+  category: Metal
+  quality: 1
+  damageMultiplier: 0.75
+  durabilityMultiplier: 0.7
+  weightMultiplier: 1.1
+  penetrationMultiplier: 0.6
+  previewColor: "#B87333"
+  texture:
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
+  stackPrototype: CopperBar1
+
+- type: modularMaterial
+  id: MatBronze
+  name: Бронза
+  description: >
+    Сплав меди и олова — первый настоящий оружейный металл.
+    Хорошо держит заточку, прочнее меди.
+  category: Metal
+  quality: 2
+  damageMultiplier: 0.90
+  durabilityMultiplier: 0.9
+  weightMultiplier: 1.05
+  penetrationMultiplier: 0.8
+  previewColor: "#CD7F32"
+  texture:
+    sprite: _Nibiru/Textures/Materials/bronze.rsi
+    state: base
+  stackPrototype: BronzeBar1
+
+- type: modularMaterial
+  id: MatIron
+  name: Железо
+  description: >
+    Надёжный рабочий материал. Тяжелее бронзы, но прочнее и доступен повсеместно.
+    Основа для большинства рядового вооружения.
+  category: Metal
+  quality: 2
+  damageMultiplier: 1.0
+  durabilityMultiplier: 1.0
+  weightMultiplier: 1.0
+  penetrationMultiplier: 1.0
+  previewColor: "#8C8C9A"
+  texture:
+    sprite: _Nibiru/Textures/Materials/iron.rsi
+    state: base
+  stackPrototype: IronBar1
+
+- type: modularMaterial
+  id: MatSteel
+  name: Сталь
+  description: >
+    Закалённая сталь — предпочтительный материал опытных кузнецов.
+    Баланс прочности, остроты и относительной лёгкости.
+  category: Metal
+  quality: 3
+  damageMultiplier: 1.3
+  durabilityMultiplier: 1.4
+  weightMultiplier: 0.95
+  penetrationMultiplier: 1.2
+  previewColor: "#B0B0C0"
+  texture:
+    sprite: _Nibiru/Textures/Materials/steel.rsi
+    state: base
+  stackPrototype: SteelBar1
+
+- type: modularMaterial
+  id: MatMithril
+  name: Митрил
+  description: >
+    Лёгкий и невероятно прочный металл из глубин земли.
+    Его обработка требует мастерства, но результат того стоит.
+  category: Metal
+  quality: 4
+  damageMultiplier: 1.6
+  durabilityMultiplier: 2.0
+  weightMultiplier: 0.55
+  penetrationMultiplier: 1.5
+  previewColor: "#6699CC"
+  texture:
+    sprite: _Nibiru/Textures/Materials/mithril.rsi
+    state: base
+  stackPrototype: MithrilBar1
+
+- type: modularMaterial
+  id: MatDarksteel
+  name: Тёмная сталь
+  description: >
+    Загадочный сплав с обломками древних кристаллов. Поглощает удары,
+    наносит дополнительный урон тьмой. Используется редко.
+  category: Metal
+  quality: 5
+  damageMultiplier: 1.9
+  durabilityMultiplier: 1.7
+  weightMultiplier: 1.15
+  penetrationMultiplier: 2.0
+  previewColor: "#3A2A4A"
+  texture:
+    sprite: _Nibiru/Textures/Materials/darksteel.rsi
+    state: base
+  stackPrototype: DarksteelBar1
+
+# ── Природные материалы ────────────────────────────────────────────────────────
+
+- type: modularMaterial
+  id: MatBone
+  name: Кость
+  description: >
+    Кость крупного животного — примитивно, но практично в условиях дикой природы.
+    Лёгкое, но ломкое оружие.
+  category: Bone
+  quality: 1
+  damageMultiplier: 0.65
+  durabilityMultiplier: 0.5
+  weightMultiplier: 0.6
+  penetrationMultiplier: 0.4
+  previewColor: "#E8DEC0"
+  texture:
+    sprite: _Nibiru/Textures/Materials/bone.rsi
+    state: base
+
+- type: modularMaterial
+  id: MatHardwood
+  name: Твёрдое дерево
+  description: >
+    Дерево твёрдых пород — дуб, ясень. Подходит для рукоятей и древков.
+    Не металл, но достаточно прочно для лезвий духовного оружия.
+  category: Wood
+  quality: 1
+  damageMultiplier: 0.6
+  durabilityMultiplier: 0.6
+  weightMultiplier: 0.5
+  penetrationMultiplier: 0.3
+  previewColor: "#8B5E3C"
+  texture:
+    sprite: _Nibiru/Textures/Materials/wood.rsi
+    state: base
+
+- type: modularMaterial
+  id: MatObsidian
+  name: Обсидиан
+  description: >
+    Вулканическое стекло с острейшей природной кромкой.
+    Режет лучше стали, но очень хрупкий — трескается от сильных ударов.
+  category: Stone
+  quality: 3
+  damageMultiplier: 1.4
+  durabilityMultiplier: 0.6
+  weightMultiplier: 0.9
+  penetrationMultiplier: 1.8
+  previewColor: "#2A1A2A"
+  texture:
+    sprite: _Nibiru/Textures/Materials/obsidian.rsi
+    state: base
+
+- type: modularMaterial
+  id: MatCrystal
+  name: Магический кристалл
+  description: >
+    Кристаллы с концентрацией магической энергии. Оружие из них светится
+    и наносит дополнительный магический урон. Крайне редкий материал.
+  category: Crystal
+  quality: 5
+  damageMultiplier: 2.0
+  durabilityMultiplier: 1.3
+  weightMultiplier: 0.7
+  penetrationMultiplier: 1.6
+  previewColor: "#AA44FF"
+  texture:
+    sprite: _Nibiru/Textures/Materials/crystal.rsi
+    state: base
+

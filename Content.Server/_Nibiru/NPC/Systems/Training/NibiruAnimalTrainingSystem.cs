@@ -63,7 +63,6 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
                 var commanderSys = EntityManager.System<NibiruAnimalCommanderSystem>();
                 commanderSys.AssignAnimal(args.User, uid);
             },
-            Icon = new Robust.Shared.Utility.SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/follow.svg.192dpi.png"))
         });
     }
 

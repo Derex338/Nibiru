@@ -320,3 +320,5 @@ Resources/MapImages
 
 # C# Dev Kit cache file
 *.lscache
+
+.claude

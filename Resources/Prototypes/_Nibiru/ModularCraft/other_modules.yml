@@ -1,0 +1,252 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Модули рукояти (Handle)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: modularModule
+  id: HandleStandard
+  name: Стандартная рукоять
+  description: >
+    Простая рукоять для одной руки. Баланс между контролем и скоростью.
+    Подходит как начинающим, так и опытным бойцам.
+  partType: Handle
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+    - Axe
+  materialCost: 1
+  attackSpeedMultiplier: 1.0
+  weight: 0.25
+  blockBonus: 0.05
+
+- type: modularModule
+  id: HandleLong
+  name: Длинная рукоять (полутора)
+  description: >
+    Рукоять полуторного меча позволяет использовать хват одной или двух рук.
+    Повышает урон двуручным хватом и улучшает баланс.
+  partType: Handle
+  compatiblemodularItemTypes:
+    - Sword
+  materialCost: 2
+  damageBonus: 1.5
+  attackSpeedMultiplier: 0.92
+  weight: 0.4
+  blockBonus: 0.1
+
+- type: modularModule
+  id: HandleWrapped
+  name: Рукоять с обмоткой
+  description: >
+    Рукоять обёрнута кожаными полосами — улучшенный хват в любых условиях.
+    Немного быстрее стандартной благодаря лучшему контролю.
+  partType: Handle
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+    - Axe
+  materialCost: 1
+  attackSpeedMultiplier: 1.08
+  weight: 0.22
+
+- type: modularModule
+  id: HandleBone
+  name: Костяная рукоять
+  description: >
+    Рукоять из кости — лёгкая и удобная в примитивном вооружении.
+    Символ охотника или воина из диких земель.
+  partType: Handle
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+    - Axe
+  materialCost: 1
+  attackSpeedMultiplier: 1.05
+  weight: 0.18
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Модули гарды (Guard)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: modularModule
+  id: GuardCross
+  name: Крестовая гарда
+  description: >
+    Классическая крестообразная гарда защищает руку от соскальзывания
+    вражеского клинка. Небольшой бонус к блокированию.
+  partType: Guard
+  compatiblemodularItemTypes:
+    - Sword
+  materialCost: 1
+  blockBonus: 0.15
+  weight: 0.3
+
+- type: modularModule
+  id: GuardBasket
+  name: Корзинчатая гарда
+  description: >
+    Ажурная корзинчатая гарда полностью прикрывает руку.
+    Значительный бонус к защите, но добавляет вес.
+  partType: Guard
+  compatiblemodularItemTypes:
+    - Sword
+  materialCost: 2
+  blockBonus: 0.3
+  weight: 0.6
+  attackSpeedMultiplier: 0.95
+
+- type: modularModule
+  id: GuardNone
+  name: Без гарды
+  description: >
+    Полное отсутствие гарды — максимальная скорость и минимальный вес.
+    Рискованный выбор для опытных фехтовальщиков.
+  partType: Guard
+  compatiblemodularItemTypes:
+    - Sword
+    - Knife
+  materialCost: 0
+  blockBonus: 0.0
+  attackSpeedMultiplier: 1.1
+  weight: 0.0
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Модули навершия (Pommel)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: modularModule
+  id: PommelRound
+  name: Круглое навершие
+  description: >
+    Стандартное круглое навершие. Балансирует меч и может использоваться
+    для удара в ближнем бою.
+  partType: Pommel
+  compatiblemodularItemTypes:
+    - Sword
+    - Axe
+  materialCost: 1
+  damageBonus: 0.5
+  weight: 0.35
+
+- type: modularModule
+  id: PommelSpiked
+  name: Шипованное навершие
+  description: >
+    Навершие со стальным шипом — смертельно при ударе в упор.
+    Значительный бонус к урону тычком.
+  partType: Pommel
+  compatiblemodularItemTypes:
+    - Sword
+  materialCost: 1
+  damageBonus: 1.5
+  penetrationBonus: 0.5
+  weight: 0.4
+
+- type: modularModule
+  id: PommelDisc
+  name: Дисковое навершие
+  description: >
+    Плоское дисковое навершие улучшает баланс меча — удары быстрее,
+    хотя урон немного ниже.
+  partType: Pommel
+  compatiblemodularItemTypes:
+    - Sword
+    - Axe
+  materialCost: 1
+  attackSpeedMultiplier: 1.07
+  weight: 0.25
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Модули головы топора / копья (Head)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: modularModule
+  id: AxeHeadBroad
+  name: Широкий топорный клин
+  description: >
+    Большое широкое полотно топора — максимальная рубящая поверхность.
+    Медленный, но страшный удар.
+  partType: Head
+  compatiblemodularItemTypes:
+    - Axe
+  materialCost: 3
+  damageBonus: 7.0
+  attackSpeedMultiplier: 0.80
+  penetrationBonus: 1.0
+  weight: 1.5
+
+- type: modularModule
+  id: AxeHeadNarrow
+  name: Узкий топорный клин
+  description: >
+    Узкое полотно отличается высокой концентрацией силы удара.
+    Хорошее пробитие при умеренном размере.
+  partType: Head
+  compatiblemodularItemTypes:
+    - Axe
+  materialCost: 2
+  damageBonus: 4.5
+  attackSpeedMultiplier: 0.95
+  penetrationBonus: 2.0
+  weight: 1.0
+
+- type: modularModule
+  id: SpearHeadLeaf
+  name: Листовидный наконечник
+  description: >
+    Широкий листовидный наконечник копья — большая площадь раны.
+    Балансирует между уроном и пробитием.
+  partType: Head
+  compatiblemodularItemTypes:
+    - Spear
+  materialCost: 2
+  damageBonus: 3.5
+  reachBonus: 0.0
+  penetrationBonus: 1.5
+  weight: 0.6
+
+- type: modularModule
+  id: SpearHeadNeedle
+  name: Игольчатый наконечник
+  description: >
+    Тонкий длинный наконечник пробивает броню словно игла.
+    Минимальный урон, зато максимальное бронепробитие.
+  partType: Head
+  compatiblemodularItemTypes:
+    - Spear
+  materialCost: 2
+  damageBonus: 1.5
+  penetrationBonus: 4.0
+  weight: 0.4
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Модули древка (Shaft) — для копья
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: modularModule
+  id: ShaftWood
+  name: Деревянное древко
+  description: >
+    Классическое древко из твёрдого дерева. Лёгкое и достаточно прочное.
+  partType: Shaft
+  compatiblemodularItemTypes:
+    - Spear
+  materialCost: 2
+  reachBonus: 0.8
+  attackSpeedMultiplier: 1.0
+  weight: 0.7
+
+- type: modularModule
+  id: ShaftLong
+  name: Длинное древко
+  description: >
+    Удлинённое древко даёт значительное преимущество в дальности,
+    но существенно замедляет смену позиции.
+  partType: Shaft
+  compatiblemodularItemTypes:
+    - Spear
+  materialCost: 3
+  reachBonus: 1.4
+  attackSpeedMultiplier: 0.85
+  weight: 1.1
+
+

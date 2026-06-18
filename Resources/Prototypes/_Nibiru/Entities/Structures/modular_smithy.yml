@@ -1,0 +1,96 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Модульное оружие — базовые прототипы для крафта
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Базовая сущность модульного оружия (абстрактная, не появляется в игре напрямую)
+- type: entity
+  id: ModularWeaponBase
+  abstract: true
+  name: модульное оружие
+  description: Оружие, выкованное вручную из отдельных компонентов.
+  components:
+    - type: Item
+      size: Normal
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 8
+    - type: ModularCraft
+
+# Модульный меч
+- type: entity
+  id: ModularSword
+  parent: ModularWeaponBase
+  name: кованый меч
+  description: Меч, собранный из отдельных кузнечных модулей.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/sword.rsi
+      state: icon
+    - type: Item
+      size: Normal
+
+# Модульный нож
+- type: entity
+  id: ModularKnife
+  parent: ModularWeaponBase
+  name: кованый нож
+  description: Нож ручной работы из выбранных модулей.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/knife.rsi
+      state: icon
+    - type: Item
+      size: Small
+
+# Модульный топор
+- type: entity
+  id: ModularAxe
+  parent: ModularWeaponBase
+  name: кованый топор
+  description: Топор, собранный по частям в кузне.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/hatchet.rsi
+      state: icon
+    - type: Item
+      size: Normal
+
+# Модульное копьё
+- type: entity
+  id: ModularSpear
+  parent: ModularWeaponBase
+  name: кованое копьё
+  description: Копьё с наконечником и древком на выбор.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/spear.rsi
+      state: icon
+    - type: Item
+      size: Large
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Верстак-кузня (структура)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- type: entity
+  id: NibiruModularCraft
+  parent: BaseStructure
+  name: кузнечный верстак
+  description: Верстак для ручного создания модульного оружия. Взаимодействуй для открытия меню кузни.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/lathe.rsi
+      layers:
+        - state: idle
+    - type: InteractionOutline
+    - type: ModularCraft
+      currentmodularItemType: Sword
+      baseWeaponPrototype: ModularSword
+    - type: UserInterface
+      interfaces:
+        enum.ModularCraftUiKey.Key:
+          type: ModularCraftBoundUserInterface
+    - type: ActivatableUI
+      key: enum.ModularCraftUiKey.Key
+

@@ -1,0 +1,199 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:smithy="clr-namespace:Content.Client._Nibiru.ModularCraft.UI;assembly=Content.Client"
+    Title="{Loc 'weapon-smithy-title'}"
+    MinSize="950 650"
+    SetSize="1000 700">
+
+    <!-- Корневой контейнер: два столбца -->
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="0">
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             ЛЕВАЯ ЧАСТЬ — предпросмотр оружия
+             ═══════════════════════════════════════════════════════════════ -->
+        <BoxContainer Orientation="Vertical" MinWidth="200" VerticalExpand="True">
+
+            <!-- Заголовок панели -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1A1A22" />
+                </PanelContainer.PanelOverride>
+                <Label Margin="8 6 8 6"
+                       Text="{Loc 'weapon-smithy-preview-title'}"
+                       HorizontalAlignment="Center"
+                       StyleClasses="LabelSubText" />
+            </PanelContainer>
+
+            <!-- Область предпросмотра -->
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#131318" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="12 16 12 16">
+                    <!-- Выбор типа оружия -->
+                    <smithy:SlidingSelector Name="WeaponTypeSelector" Margin="0 0 0 10" />
+                    <!-- Сам предпросмотр (кастомный контрол) -->
+                    <smithy:ModularPreviewControl Name="WeaponPreview" />
+                    <!-- Подсказка -->
+                    <Label Margin="0 10 0 0"
+                           Text="{Loc 'weapon-smithy-hint-click'}"
+                           HorizontalAlignment="Center"
+                           StyleClasses="LabelSubText"
+                           FontColorOverride="#666677" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <!-- Итоговые статы (внизу левой панели) -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1A1A22" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical" Margin="10 8 10 8">
+                    <Label Name="StatDamageLabel"    />
+                    <Label Name="StatReachLabel"     />
+                    <Label Name="StatWeightLabel"    />
+                    <Label Name="StatPenLabel"       />
+                </BoxContainer>
+            </PanelContainer>
+
+        </BoxContainer>
+
+        <!-- Разделитель -->
+        <PanelContainer MinWidth="2">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#2A2A35" />
+            </PanelContainer.PanelOverride>
+        </PanelContainer>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             ПРАВАЯ ЧАСТЬ — настройка модулей
+             ═══════════════════════════════════════════════════════════════ -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+
+            <!-- Активный слот — заголовок -->
+            <PanelContainer Name="SlotHeaderPanel">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1E1E2A" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Horizontal" Margin="12 8 12 8">
+                    <Label Name="ActiveSlotLabel"
+                           Text="{Loc 'weapon-smithy-no-slot'}"
+                           HorizontalExpand="True"
+                           StyleClasses="LabelKeyText" />
+                    <Label Name="SlotCostLabel" StyleClasses="LabelSubText" FontColorOverride="#AAAACC" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <!-- Тело правой панели (прокручиваемое) -->
+            <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                <BoxContainer Name="RightBody"
+                              Orientation="Vertical"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Margin="14 14 14 14"
+                              SeparationOverride="14">
+
+                    <!-- PLACEHOLDER когда нет выбранного слота -->
+                    <BoxContainer Name="NoSelectionPanel"
+                                  Orientation="Vertical"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Margin="0 60 0 0">
+                        <Label Text="⚒" FontColorOverride="#333345" HorizontalAlignment="Center" />
+                        <Label Text="{Loc 'weapon-smithy-select-hint'}"
+                               HorizontalAlignment="Center"
+                               FontColorOverride="#555566"
+                               StyleClasses="LabelSubText" />
+                    </BoxContainer>
+
+                    <!-- ПАНЕЛЬ НАСТРОЙКИ СЛОТА (видна когда выбран слот) -->
+                    <BoxContainer Name="SlotConfigPanel"
+                                  Orientation="Vertical"
+                                  Visible="False"
+                                  SeparationOverride="12">
+
+                        <!-- Форма -->
+                        <BoxContainer Orientation="Vertical" SeparationOverride="4">
+                            <Label Text="{Loc 'weapon-smithy-shape-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
+                            <smithy:SlidingSelector Name="ShapeSelector" />
+                        </BoxContainer>
+
+                        <!-- Горизонтальный разделитель -->
+                        <PanelContainer MinHeight="1">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#2A2A3A" />
+                            </PanelContainer.PanelOverride>
+                        </PanelContainer>
+
+                        <!-- Материал -->
+                        <BoxContainer Orientation="Vertical" SeparationOverride="4">
+                            <Label Text="{Loc 'weapon-smithy-material-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
+                            <smithy:SlidingSelector Name="MaterialSelector" />
+                        </BoxContainer>
+
+                        <!-- Горизонтальный разделитель -->
+                        <PanelContainer MinHeight="1">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#2A2A3A" />
+                            </PanelContainer.PanelOverride>
+                        </PanelContainer>
+
+                        <!-- Описание формы -->
+                        <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
+                            <Label Text="{Loc 'weapon-smithy-module-desc-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
+                            <RichTextLabel Name="ModuleDescLabel"
+                                   HorizontalExpand="True" />
+                        </BoxContainer>
+
+                        <!-- Описание материала -->
+                        <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
+                            <Label Text="{Loc 'weapon-smithy-material-desc-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
+                            <RichTextLabel Name="MaterialDescLabel"
+                                   HorizontalExpand="True" />
+                        </BoxContainer>
+
+                        <!-- Мини-статы выбранной комбинации -->
+                        <PanelContainer>
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#1A1A28" />
+                            </PanelContainer.PanelOverride>
+                            <BoxContainer Orientation="Vertical" Margin="10 8 10 8" SeparationOverride="3">
+                                <Label Text="{Loc 'weapon-smithy-combo-stats'}" StyleClasses="LabelSubText" FontColorOverride="#7777AA" />
+                                <Label Name="ComboStatDamage"  />
+                                <Label Name="ComboStatPen"     />
+                                <Label Name="ComboStatSpeed"   />
+                                <Label Name="ComboStatWeight"  />
+                            </BoxContainer>
+                        </PanelContainer>
+
+                    </BoxContainer>
+                </BoxContainer>
+            </ScrollContainer>
+
+            <!-- Кнопка крафта -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#141420" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Horizontal" Margin="14 10 14 10" SeparationOverride="10">
+                    <Label Name="CraftStatusLabel"
+                           HorizontalExpand="True"
+                           StyleClasses="LabelSubText"
+                           FontColorOverride="#777788" />
+                    <Button Name="CraftButton"
+                            Text="{Loc 'weapon-smithy-craft-btn'}"
+                            Disabled="True"
+                            MinWidth="140" />
+                </BoxContainer>
+            </PanelContainer>
+
+        </BoxContainer>
+    </BoxContainer>
+
+</controls:FancyWindow>
