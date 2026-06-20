@@ -18,6 +18,10 @@
         Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: NibiruWeaponAttack
+    availableAttacks:
+    - Swing
+    - Thrust
   - type: Item
     size: Large
     shape:
@@ -77,6 +81,10 @@
         Slash: 10
     soundHit:
       collection: MetalThud
+  - type: NibiruWeaponAttack
+    availableAttacks:
+    - Swing
+    - Thrust
   - type: Wieldable
   - type: MeleeRequiresWield
   - type: IncreaseDamageOnWield

@@ -133,5 +133,10 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction MappingRemoveDecal = "MappingRemoveDecal";
         public static readonly BoundKeyFunction MappingCancelEraseDecal = "MappingCancelEraseDecal";
         public static readonly BoundKeyFunction MappingOpenContextMenu = "MappingOpenContextMenu";
+
+        /// <summary>
+        /// Nibiru: cycle weapon attack type forward.
+        /// </summary>
+        public static readonly BoundKeyFunction CycleAttackType = "CycleAttackType";
     }
 }

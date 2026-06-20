@@ -1,0 +1,14 @@
+- type: attackType
+  id: Swing
+  name: "Размах"
+  isHeavyAttack: true
+  animation: WeaponArcSlash
+
+- type: attackType
+  id: Thrust
+  name: "Тычок"
+  isHeavyAttack: false
+  animation: WeaponArcThrust
+  damageOverride:
+    types:
+      Piercing: 10

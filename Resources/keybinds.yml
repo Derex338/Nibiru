@@ -651,3 +651,6 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+- function: CycleAttackType
+  type: State
+  key: MouseMiddle
