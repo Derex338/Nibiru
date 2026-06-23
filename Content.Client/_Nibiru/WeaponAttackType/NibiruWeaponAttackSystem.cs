@@ -1,10 +1,12 @@
 using Content.Client.Gameplay;
-using Content.Client.Nibiru.WeaponAttackType.UI;
+using Content.Client._Nibiru.WeaponAttackType.UI;
 using Content.Shared._Nibiru.WeaponAttackType;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -12,7 +14,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Nibiru.WeaponAttackType;
+namespace Content.Client._Nibiru.WeaponAttackType;
 
 public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
 {
@@ -21,6 +23,7 @@ public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
 
     private AttackTypeGrid? _grid;
     private bool _keyWasDown;
@@ -90,23 +93,28 @@ public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
         }
     }
 
-    // Меняем анимацию прямо на MeleeWeaponComponent — синкается само
+    // Меняем анимацию на MeleeWeaponComponent + Lobbed на GunComponent
     private void ApplyAnimPredict(EntityUid uid, NibiruWeaponAttackComponent component)
     {
-        if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
-            return;
-
         if (!TryGetCurrentAttackType(component, out var proto))
             return;
 
-        if (!string.IsNullOrEmpty(proto.Animation))
+        if (TryComp<MeleeWeaponComponent>(uid, out var melee))
         {
-            melee.Animation = proto.Animation;
-            melee.WideAnimation = proto.Animation;
+            if (!string.IsNullOrEmpty(proto.Animation))
+            {
+                melee.Animation = proto.Animation;
+                melee.WideAnimation = proto.Animation;
+            }
+
+            if (proto.AngleOverride.HasValue)
+                melee.Angle = proto.AngleOverride.Value;
         }
 
-        if (proto.AngleOverride.HasValue)
-            melee.Angle = proto.AngleOverride.Value;
+        if (TryComp<GunComponent>(uid, out var gun))
+        {
+            _gun.SetLobbed(gun, proto.Lobbed);
+        }
     }
 
     private void EnsureGrid()

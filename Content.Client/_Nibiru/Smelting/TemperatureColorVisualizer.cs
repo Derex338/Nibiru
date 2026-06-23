@@ -1,10 +1,10 @@
-using Content.Client.Nibiru.Fuel;
+using Content.Client._Nibiru.Fuel;
 using Content.Shared._Nibiru.Smelting;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using System.Linq;
 
-namespace Content.Client.Nibiru.Smelting;
+namespace Content.Client._Nibiru.Smelting;
 
 /// <summary>
 /// Альтернативный визуализатор с более сложной логикой

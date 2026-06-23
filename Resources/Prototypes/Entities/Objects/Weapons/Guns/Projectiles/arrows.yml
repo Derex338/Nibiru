@@ -7,6 +7,11 @@
     size: Small
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Fixtures
     fixtures:
       fix1:
@@ -51,6 +56,12 @@
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NibiruLobbedArrowVisuals.Grounded:
+        enum.NibiruLobbedArrowVisuals.Grounded:
+          True: { visible: true }
+          False: { visible: false }
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: solution
@@ -72,6 +83,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:
@@ -95,6 +110,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:
@@ -121,6 +140,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:
@@ -147,6 +170,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:
@@ -174,6 +201,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:
@@ -200,6 +231,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:

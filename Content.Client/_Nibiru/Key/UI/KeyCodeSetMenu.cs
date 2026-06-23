@@ -8,7 +8,7 @@ using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 
-namespace Content.Client.Nibiru.Key.UI;
+namespace Content.Client._Nibiru.Key.UI;
 
 [UsedImplicitly]
 public sealed class KeyCodeSetEui : BaseEui

@@ -1,0 +1,15 @@
+- type: entity
+  id: LobbedIndicator
+  name: lobbed indicator
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Overlays
+    sprite: _Nibiru/Effects/lobbed_indicator.rsi
+    state: icon
+  - type: LobbedIndicator
+  - type: TimedDespawn
+    lifetime: 2.0
+  - type: Tag
+    tags:
+    - HideContextMenu

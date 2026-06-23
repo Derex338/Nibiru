@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 using System.Numerics;
 using Robust.Client.UserInterface.CustomControls;
 
-namespace Content.Client.Nibiru.Faction.UI;
+namespace Content.Client._Nibiru.Faction.UI;
 
 public sealed partial class MiniMemberCardControl : Control
 {

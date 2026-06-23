@@ -160,6 +160,7 @@ public sealed partial class GunSystem : SharedGunSystem
         RaiseLocalEvent(gun, new AmmoShotEvent()
         {
             FiredProjectiles = shotProjectiles,
+            Lobbed = gun.Comp.Lobbed,
         });
 
         void CreateAndFireProjectiles(EntityUid ammoEnt, AmmoComponent ammoComp)

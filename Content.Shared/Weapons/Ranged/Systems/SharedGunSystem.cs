@@ -279,6 +279,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (prevention.Cancelled)
             return false;
 
+        // Pipe lobbed flag from event to component
+        gun.Comp.Lobbed = prevention.Lobbed;
+
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
         if (gun.Comp.NextFire > curTime)
@@ -673,6 +676,11 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         UpdateBattery(frameTime);
         UpdateBallistic(frameTime);
+    }
+
+    public void SetLobbed(GunComponent comp, bool lobbed)
+    {
+        comp.Lobbed = lobbed;
     }
 }
 

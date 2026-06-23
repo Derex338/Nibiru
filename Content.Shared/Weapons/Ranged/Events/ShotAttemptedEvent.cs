@@ -21,6 +21,12 @@ public record struct ShotAttemptedEvent
 
     public bool Cancelled { get; private set; }
 
+    /// <summary>
+    /// If true, projectile should use lobbed/indirect-fire trajectory.
+    /// Set by attack type system before weapon processes the shot.
+    /// </summary>
+    public bool Lobbed;
+
     /// </summary>
     /// Prevent the gun from shooting
     /// </summary>

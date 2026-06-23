@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -21,6 +23,9 @@ public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
         SubscribeLocalEvent<NibiruWeaponAttackComponent, GetMeleeAttackRateEvent>(OnGetAttackRate);
         SubscribeLocalEvent<NibiruWeaponAttackComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<NibiruWeaponAttackComponent, AttemptMeleeEvent>(OnAttemptMelee);
+
+        // Integrate with ranged weapon system
+        SubscribeLocalEvent<NibiruWeaponAttackComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
     private void OnComponentInit(EntityUid uid, NibiruWeaponAttackComponent component, ComponentInit args)
@@ -94,6 +99,33 @@ public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
             melee.Angle = proto.AngleOverride.Value;
 
         Dirty(uid, melee);
+    }
+
+    /// <summary>
+    /// Apply lobbed flag to ShotAttemptedEvent when firing with a lobbed attack type.
+    /// Also blocks lobbed shots if there's a roof overhead.
+    /// </summary>
+    private void OnShotAttempted(EntityUid uid, NibiruWeaponAttackComponent component, ref ShotAttemptedEvent args)
+    {
+        if (!TryGetCurrentAttackType(component, out var proto))
+            return;
+
+        args.Lobbed = proto.Lobbed;
+
+        // Block lobbed shot if under roof (server-side check)
+        if (proto.Lobbed && IsUnderRoof(uid, args.User))
+        {
+            args.Cancel();
+        }
+    }
+
+    /// <summary>
+    /// Optional roof check for lobbed shots. Override on server for actual check.
+    /// Shared returns false (no roof blocking).
+    /// </summary>
+    protected virtual bool IsUnderRoof(EntityUid weapon, EntityUid user)
+    {
+        return false;
     }
 
     /// <summary>

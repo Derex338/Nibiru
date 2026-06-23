@@ -1,7 +1,7 @@
 using Robust.Shared.Timing;
 using Robust.Client.Player;
 
-namespace Content.Client.Nibiru.Faction;
+namespace Content.Client._Nibiru.Faction;
 
 public sealed class FactionSystem : EntitySystem
 {

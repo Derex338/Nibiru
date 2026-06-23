@@ -15,7 +15,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed.TypeParsers;
 
-namespace Content.Client.Nibiru.Workbench.UI;
+namespace Content.Client._Nibiru.Workbench.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class WorkbenchWindow : DefaultWindow

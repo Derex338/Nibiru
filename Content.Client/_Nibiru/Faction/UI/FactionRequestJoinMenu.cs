@@ -6,7 +6,7 @@ using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 
-namespace Content.Client.Nibiru.Faction.UI;
+namespace Content.Client._Nibiru.Faction.UI;
 
 // Код взят с Reserv'а и изменён под фракции
 [UsedImplicitly]

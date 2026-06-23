@@ -12,3 +12,14 @@
   damageOverride:
     types:
       Piercing: 10
+
+- type: attackType
+  id: DirectFire
+  name: "Прямая наводка"
+  lobbed: false
+
+- type: attackType
+  id: LobbedShot
+  name: "Навес"
+  lobbed: true
+  damageMultiplier: 0.8

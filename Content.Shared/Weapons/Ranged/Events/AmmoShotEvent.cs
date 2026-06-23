@@ -6,4 +6,9 @@ namespace Content.Shared.Weapons.Ranged.Events;
 public sealed class AmmoShotEvent : EntityEventArgs
 {
     public List<EntityUid> FiredProjectiles = default!;
+
+    /// <summary>
+    /// Set by fire mode system. True if this was a lobbed/indirect-fire shot.
+    /// </summary>
+    public bool Lobbed;
 }

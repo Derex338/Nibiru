@@ -1,5 +1,5 @@
 <ui:AttackTypeGrid xmlns="https://spacestation14.io"
-                      xmlns:ui="clr-namespace:Content.Client.Nibiru.WeaponAttackType.UI"
+                      xmlns:ui="clr-namespace:Content.Client._Nibiru.WeaponAttackType.UI"
                       Name="AttackTypeBar"
                       Visible="False"
                       HorizontalAlignment="Right"

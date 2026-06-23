@@ -24,12 +24,17 @@
     minAngle: 0
     maxAngle: 5
     fireRate: 1
+    maxRange: 20
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
     soundGunshot:
       collection: BulletMiss
     soundEmpty: null
+  - type: NibiruWeaponAttack
+    availableAttacks:
+    - DirectFire
+    - LobbedShot
   - type: ItemSlots
     slots:
       projectiles:

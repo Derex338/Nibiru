@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Nibiru.WeaponAttackType.UI;
+namespace Content.Client._Nibiru.WeaponAttackType.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class AttackTypeGrid : UIWidget

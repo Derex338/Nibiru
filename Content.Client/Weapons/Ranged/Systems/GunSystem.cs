@@ -200,6 +200,20 @@ public sealed partial class GunSystem : SharedGunSystem
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
         var coordinates = TransformSystem.ToCoordinates(entity, mousePos);
 
+        // Clamp to MaxRange if set
+        if (gun.Comp.MaxRange > 0f)
+        {
+            var origin = TransformSystem.ToMapCoordinates(Transform(entity).Coordinates);
+            var targetMap = TransformSystem.ToMapCoordinates(coordinates);
+            var delta = targetMap.Position - origin.Position;
+            var distance = delta.Length();
+            if (distance > gun.Comp.MaxRange)
+            {
+                var clamped = origin.Position + delta.Normalized() * gun.Comp.MaxRange;
+                coordinates = TransformSystem.ToCoordinates(entity, new MapCoordinates(clamped, targetMap.MapId));
+            }
+        }
+
         NetEntity? target = null;
         if (_state.CurrentState is GameplayStateBase screen)
             target = GetNetEntity(screen.GetClickedEntity(mousePos));

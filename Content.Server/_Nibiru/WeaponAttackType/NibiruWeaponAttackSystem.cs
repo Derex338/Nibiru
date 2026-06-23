@@ -1,6 +1,10 @@
 using Content.Shared._Nibiru.WeaponAttackType;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Server._Nibiru.WeaponAttackType;
@@ -8,6 +12,9 @@ namespace Content.Server._Nibiru.WeaponAttackType;
 public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedRoofSystem _roof = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IMapManager _map = default!;
 
     public override void Initialize()
     {
@@ -49,5 +56,22 @@ public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Server-side roof check. Blocks lobbed shots if shooter or target tile is under roof.
+    /// </summary>
+    protected override bool IsUnderRoof(EntityUid weapon, EntityUid user)
+    {
+        var userPos = _transform.GetMapCoordinates(user);
+        if (!_map.TryFindGridAt(userPos, out var gridUid, out var grid))
+            return false;
+
+        if (!TryComp<RoofComponent>(gridUid, out var roof))
+            return false;
+
+        // Convert world position to tile indices
+        var tileIndices = _transform.GetGridOrMapTilePosition(user);
+        return _roof.IsRooved((gridUid, grid, roof), tileIndices);
     }
 }

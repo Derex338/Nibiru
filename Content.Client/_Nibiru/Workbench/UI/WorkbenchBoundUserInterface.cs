@@ -2,7 +2,7 @@ using Content.Shared._Nibiru.Workbench;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Nibiru.Workbench.UI;
+namespace Content.Client._Nibiru.Workbench.UI;
 
 public sealed class WorkbenchBoundUserInterface : BoundUserInterface
 {

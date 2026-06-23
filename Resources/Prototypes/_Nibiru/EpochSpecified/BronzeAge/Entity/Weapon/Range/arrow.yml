@@ -23,6 +23,10 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+    - sprite: _Nibiru/Effects/lobbed_indicator.rsi
+      state: ground
+      visible: false
+      map: ["enum.NibiruLobbedArrowVisuals.Grounded"]
   - type: Projectile
     damage:
       types:

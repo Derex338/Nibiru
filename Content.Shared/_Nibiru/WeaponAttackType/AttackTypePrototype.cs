@@ -83,4 +83,10 @@ public sealed partial class AttackTypePrototype : IPrototype
     /// </summary>
     [DataField]
     public float AttackRateMultiplier = 1f;
+
+    /// <summary>
+    /// If true, enables lobbed/indirect-fire mode on GunComponent.
+    /// </summary>
+    [DataField]
+    public bool Lobbed;
 }

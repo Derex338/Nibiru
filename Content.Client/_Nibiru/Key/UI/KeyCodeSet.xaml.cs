@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using System.Numerics;
 
-namespace Content.Client.Nibiru.Key.UI;
+namespace Content.Client._Nibiru.Key.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class KeyCodeSet : FancyWindow
@@ -17,6 +17,9 @@ public sealed partial class KeyCodeSet : FancyWindow
 
     public KeyCodeSet()
     {
+        IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
+
         Title = Loc.GetString("lock-code-window-title");
         MinSize = new Vector2(300, 150);
         Margin = new Thickness(5);

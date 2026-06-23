@@ -215,6 +215,20 @@ public sealed partial class GunComponent : Component
     public float ProjectileSpeed = SharedGunSystem.ProjectileSpeed;
 
     /// <summary>
+    /// Maximum range for direct fire. 0 = unlimited.
+    /// Client will clamp shoot coordinates to this distance.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float MaxRange;
+
+    /// <summary>
+    /// If true, fires in lobbed/indirect-fire mode (parabolic trajectory).
+    /// Toggle via attack type switching.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Lobbed;
+
+    /// <summary>
     /// How fast the projectile moves.
     /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
