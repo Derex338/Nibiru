@@ -33,6 +33,40 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
         SubscribeLocalEvent<NibiruLivestockComponent, LivestockHarvestDoAfterEvent>(OnHarvestDoAfter);
         SubscribeLocalEvent<NibiruLivestockComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
         SubscribeLocalEvent<NibiruLivestockComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<NibiruAnimalProductsComponent, InteractUsingEvent>(OnProductsInteractUsing);
+        SubscribeLocalEvent<NibiruAnimalProductsComponent, InteractHandEvent>(OnProductsInteractHand);
+        SubscribeLocalEvent<NibiruAnimalProductsComponent, LivestockHarvestDoAfterEvent>(OnProductsHarvestDoAfter);
+        SubscribeLocalEvent<NibiruAnimalProductsComponent, GetVerbsEvent<ExamineVerb>>(OnProductsGetExamineVerbs);
+        SubscribeLocalEvent<NibiruAnimalProductsComponent, ExaminedEvent>(OnProductsExamined);
+    }
+
+    private void OnProductsInteractUsing(EntityUid uid, NibiruAnimalProductsComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (TryStartHarvest(uid, args.User, args.Used))
+            args.Handled = true;
+    }
+
+    private void OnProductsInteractHand(EntityUid uid, NibiruAnimalProductsComponent component, InteractHandEvent args)
+    {
+        TryHandleBareHandHarvest(uid, args);
+    }
+
+    private void OnProductsHarvestDoAfter(EntityUid uid, NibiruAnimalProductsComponent component, LivestockHarvestDoAfterEvent args)
+    {
+        FinishHarvest(uid, args);
+    }
+
+    private void OnProductsGetExamineVerbs(EntityUid uid, NibiruAnimalProductsComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        AddExamineVerb(args);
+    }
+
+    private void OnProductsExamined(EntityUid uid, NibiruAnimalProductsComponent component, ExaminedEvent args)
+    {
+        PushExamineInfo(uid, args);
     }
 
     /// <summary>
@@ -43,7 +77,7 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (TryStartHarvest(uid, args.User, component, args.Used))
+        if (TryStartHarvest(uid, args.User, args.Used))
             args.Handled = true;
     }
 
@@ -52,12 +86,21 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
     /// </summary>
     private void OnInteractHand(EntityUid uid, NibiruLivestockComponent component, InteractHandEvent args)
     {
+        TryHandleBareHandHarvest(uid, args);
+    }
+
+    private void TryHandleBareHandHarvest(EntityUid uid, InteractHandEvent args)
+    {
         if (args.Handled)
             return;
 
-        for (var i = 0; i < component.HarvestableResources.Count; i++)
+        var resources = _livestock.GetResources(uid);
+        if (resources == null)
+            return;
+
+        for (var i = 0; i < resources.Count; i++)
         {
-            var resource = component.HarvestableResources[i];
+            var resource = resources[i];
             if (!resource.ReadyToHarvest || !string.IsNullOrEmpty(resource.RequiredTool))
                 continue;
 
@@ -70,16 +113,20 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
     /// <summary>
     /// Пытается начать сбор ресурса, проверяя наличие нужного инструмента.
     /// </summary>
-    private bool TryStartHarvest(EntityUid animal, EntityUid user, NibiruLivestockComponent livestock, EntityUid tool)
+    private bool TryStartHarvest(EntityUid animal, EntityUid user, EntityUid tool)
     {
         if (!TryComp<MetaDataComponent>(tool, out var toolMeta) || toolMeta.EntityPrototype == null)
             return false;
 
         var toolProtoId = toolMeta.EntityPrototype.ID;
 
-        for (var i = 0; i < livestock.HarvestableResources.Count; i++)
+        var resources = _livestock.GetResources(animal);
+        if (resources == null)
+            return false;
+
+        for (var i = 0; i < resources.Count; i++)
         {
-            var resource = livestock.HarvestableResources[i];
+            var resource = resources[i];
             if (!resource.ReadyToHarvest)
                 continue;
 
@@ -115,12 +162,21 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
+        FinishHarvest(uid, args);
+    }
+
+    private void FinishHarvest(EntityUid uid, LivestockHarvestDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
         if (_livestock.TryHarvestResource(uid, args.User, args.ResourceIndex))
         {
             // Проигрываем звук сбора в зависимости от типа ресурса
-            if (args.ResourceIndex < component.HarvestableResources.Count)
+            var resources = _livestock.GetResources(uid);
+            if (resources != null && args.ResourceIndex < resources.Count)
             {
-                var resource = component.HarvestableResources[args.ResourceIndex];
+                var resource = resources[args.ResourceIndex];
                 if (resource.ItemPrototype.Contains("Wool") || resource.ItemPrototype.Contains("Fur"))
                     _sounds.PlayShearingSound(uid);
                 else if (resource.ItemPrototype.Contains("Milk"))
@@ -135,6 +191,11 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
     /// Добавляет Verb для просмотра информации о животном.
     /// </summary>
     private void OnGetExamineVerbs(EntityUid uid, NibiruLivestockComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        AddExamineVerb(args);
+    }
+
+    private void AddExamineVerb(GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
@@ -154,30 +215,51 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, NibiruLivestockComponent component, ExaminedEvent args)
     {
+        PushExamineInfo(uid, args);
+    }
+
+    private void PushExamineInfo(EntityUid uid, ExaminedEvent args)
+    {
         if (!args.IsInDetailsRange)
             return;
 
         // Показываем информацию о ресурсах
-        for (var i = 0; i < component.HarvestableResources.Count; i++)
+        var resources = _livestock.GetResources(uid);
+        if (resources != null)
         {
-            var resource = component.HarvestableResources[i];
-            var growthPercent = MathF.Min(100f, resource.GrowthAccumulator / resource.GrowthTime * 100f);
+            for (var i = 0; i < resources.Count; i++)
+            {
+                var resource = resources[i];
+                var growthPercent = MathF.Min(100f, resource.GrowthAccumulator / resource.GrowthTime * 100f);
 
-            if (resource.ReadyToHarvest)
-            {
-                args.PushMarkup(Loc.GetString("nibiru-livestock-resource-ready",
-                    ("resource", resource.ItemPrototype),
-                    ("yield", resource.Yield)));
-            }
-            else
-            {
-                args.PushMarkup(Loc.GetString("nibiru-livestock-resource-growing",
-                    ("resource", resource.ItemPrototype),
-                    ("percent", growthPercent.ToString("F0"))));
+                if (resource.ReadyToHarvest)
+                {
+                    args.PushMarkup(Loc.GetString("nibiru-livestock-resource-ready",
+                        ("resource", resource.ItemPrototype),
+                        ("yield", resource.Yield)));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("nibiru-livestock-resource-growing",
+                        ("resource", resource.ItemPrototype),
+                        ("percent", growthPercent.ToString("F0"))));
+                }
             }
         }
 
-        if (component.CanBreed)
+        if (TryComp<NibiruAnimalPregnancyComponent>(uid, out var pregnancy))
+        {
+            var gestationPercent = pregnancy.GestationAccumulator / pregnancy.GestationTime * 100f;
+            args.PushMarkup(Loc.GetString("nibiru-livestock-pregnant",
+                ("percent", gestationPercent.ToString("F0"))));
+        }
+
+        if (TryComp<NibiruAnimalBreederComponent>(uid, out var breeder) && breeder.Enabled)
+        {
+            args.PushMarkup(Loc.GetString("nibiru-livestock-sex",
+                ("sex", _livestock.GetSex(uid).ToString())));
+        }
+        else if (TryComp<NibiruLivestockComponent>(uid, out var component) && component.CanBreed)
         {
             if (component.IsPregnant)
             {

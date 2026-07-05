@@ -322,3 +322,4 @@ Resources/MapImages
 *.lscache
 
 .claude
+.agents

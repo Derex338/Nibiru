@@ -14,12 +14,44 @@
   - type: NibiruLivestock
     canBreed: true
     offspringPrototype: MobNibiruPiglet
+  - type: NibiruAnimalSex
+  - type: NibiruAnimalBreeder
+    speciesId: pig
+    offspringPrototype: MobNibiruPiglet
+    gestationTime: 300
+    breedingCooldown: 600
+    minOffspringCount: 2
+    maxOffspringCount: 4
+    growth:
+      growTime: 900
+      startScale: 0.5
+      adultScale: 1
+      adultPrototype: MobNibiruPig
+      modifierSteps:
+      - progress: 0.3
+        modifier: 0.2
+      - progress: 0.5
+        modifier: 0.5
+      - progress: 0.7
+        modifier: 0.8
   - type: Butcherable
     spawned:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
       amount: 1
+
+- type: entity
+  id: MobNibiruPiglet
+  parent: MobNibiruPig
+  name: Поросёнок
+  description: Мини хрю-хрю.
+  components:
+  - type: NibiruAnimalGrowth
+    growTime: 900
+    startScale: 0.5
+    adultScale: 1
+    adultPrototype: MobNibiruPig
 
 - type: entity
   id: MobNibiruGoat
@@ -36,6 +68,22 @@
     trainable: true
   - type: NibiruLivestock
     canBreed: true
+  - type: NibiruAnimalSex
+  - type: NibiruAnimalBreeder
+    speciesId: goat
+    gestationTime: 360
+    breedingCooldown: 720
+    minOffspringCount: 1
+    maxOffspringCount: 2
+    growth:
+      growTime: 1200
+      startScale: 0.5
+      adultScale: 1
+  - type: NibiruAnimalProducts
+    harvestableResources:
+    - itemPrototype: DrinkMilkCarton
+      growthTime: 180
+      yield: 1
   - type: Butcherable
     spawned:
     - id: HideMedium
