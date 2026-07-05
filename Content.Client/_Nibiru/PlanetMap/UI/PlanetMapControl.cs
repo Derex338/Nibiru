@@ -20,23 +20,6 @@ namespace Content.Client._Nibiru.PlanetMap.UI;
 
 /// <summary>
 /// Scrollable/zoomable control that renders the explored planet map.
-///
-/// Performance optimisations vs the original:
-/// 1. Chunk-level culling — only chunks whose coordinate range intersects the
-///    viewport are iterated. For 1000 chunks, only ~20–50 are typically visible.
-/// 2. Inner tile loop avoids per-tile dictionary lookups by holding the chunk
-///    data array directly (O(1) array indexing inside the hot loop).
-/// 3. ITileDefinitionManager is resolved once in the constructor and cached.
-/// 4. IResourceManager is resolved once in the constructor and cached.
-/// 5. Icon prototype lookups are cached per entity prototype ID in
-///    _resolvedIconCache (eliminates repeated O(n) pattern matching).
-/// 6. Pattern icon list is pre-built at startup (no per-draw allocations).
-///
-/// Visual improvements:
-/// • Animated pulsing player marker.
-/// • Compass rose (top-right corner) that rotates with camera.
-/// • HUD overlay showing zoom level and loaded chunk count.
-/// • Subtle per-tile colour variation via position hash (adds map texture).
 /// </summary>
 public sealed class PlanetMapControl : Control
 {

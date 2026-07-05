@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Nibiru.PlanetMap;
@@ -10,6 +11,13 @@ namespace Content.Shared._Nibiru.PlanetMap;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PlanetMapComponent : Component
 {
+    /// <summary>
+    /// MapId of the level where this map was initially activated.
+    /// Player icon is only shown if current map matches this.
+    /// </summary>
+    [ViewVariables]
+    public MapId? InitialMapId;
+
     /// <summary>
     /// How many tiles make up one chunk side.
     /// Must match <see cref="SharedPlanetMapSystem.ChunkSize"/>.

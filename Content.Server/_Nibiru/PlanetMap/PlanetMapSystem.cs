@@ -193,6 +193,15 @@ public sealed class PlanetMapSystem : EntitySystem
         if (mapId == MapId.Nullspace)
             return;
 
+        if (mapComp.InitialMapId != null && mapComp.InitialMapId != mapId)
+            return;
+
+        if (mapComp.InitialMapId == null)
+        {
+            mapComp.InitialMapId = mapId;
+            Dirty(mapEnt.Value, mapComp);
+        }
+
         if (!_mapManager.TryFindGridAt(mapId, playerPos, out var gridUid, out var grid))
             return;
 

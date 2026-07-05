@@ -9,12 +9,6 @@ namespace Content.Client._Nibiru.PlanetMap;
 
 /// <summary>
 /// Client-side system handling planet map UI and progressive chunk loading.
-///
-/// Key optimisations vs the original:
-/// • Received chunk batches are queued and applied progressively in Update()
-///   (ClientBatchSize chunks per frame) to avoid freezing the client.
-/// • PlanetMapOpenMessage is now a signal-only packet; actual data arrives
-///   as one or more PlanetMapChunkBatchMessage packets.
 /// </summary>
 public sealed class PlanetMapSystem : EntitySystem
 {
@@ -78,27 +72,34 @@ public sealed class PlanetMapSystem : EntitySystem
     {
         _activeMap = GetNetEntity(uid);
 
-        if (_window == null)
+        var player = _playerManager.LocalEntity;
+        if (player != null && TryGetEntity(_activeMap, out var mapEnt) && TryComp<PlanetMapComponent>(mapEnt, out var comp))
         {
-            _window = new PlanetMapWindow();
-            _window.OnClose += () =>
-            {
-                _activeMap = null;
-                _window    = null;
-                _pendingBatches.Clear();
-            };
-            _window.OnScanPressed += () =>
-            {
-                if (_activeMap != null && _scanRequestCooldown <= 0)
-                {
-                    RaiseNetworkEvent(new PlanetMapScanRequestMessage(_activeMap.Value));
-                    _scanRequestCooldown = 3.0f;
-                }
-            };
-            _window.OnCenterPressed += () => _window.CenterOnPlayer();
-        }
+            var xform = Transform(player.Value);
+            var isCorrectMap = comp.InitialMapId == null || xform.MapID == comp.InitialMapId;
 
-        _window.OpenCentered();
+            if (_window == null)
+            {
+                _window = new PlanetMapWindow();
+                _window.OnClose += () =>
+                {
+                    _activeMap = null;
+                    _window = null;
+                    _pendingBatches.Clear();
+                };
+                _window.OnScanPressed += () =>
+                {
+                    if (_activeMap != null && _scanRequestCooldown <= 0 && isCorrectMap)
+                    {
+                        RaiseNetworkEvent(new PlanetMapScanRequestMessage(_activeMap.Value));
+                        _scanRequestCooldown = 3.0f;
+                    }
+                };
+                _window.OnCenterPressed += () => _window.CenterOnPlayer();
+            }
+
+            _window.OpenCentered();
+        }
     }
 
     private void OnBuiClosed(EntityUid uid, PlanetMapComponent component, BoundUIClosedEvent args)
@@ -132,9 +133,13 @@ public sealed class PlanetMapSystem : EntitySystem
 
         // Sync player tile position every frame
         var player = _playerManager.LocalEntity;
-        if (player != null)
+        if (player != null && TryGetEntity(_activeMap, out var mapEnt) && TryComp<PlanetMapComponent>(mapEnt, out var comp))
         {
             var xform = Transform(player.Value);
+            var isCorrectMap = comp.InitialMapId != null && xform.MapID == comp.InitialMapId;
+
+            //_window.SetPlayerVisible(isCorrectMap);
+
             if (xform.MapID != MapId.Nullspace && TryComp<MapGridComponent>(xform.GridUid, out var grid))
             {
                 var playerTile = _mapSys.LocalToTile(xform.GridUid!.Value, grid, xform.Coordinates);
