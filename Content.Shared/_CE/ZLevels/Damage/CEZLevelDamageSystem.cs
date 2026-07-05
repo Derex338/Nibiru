@@ -29,6 +29,7 @@ public sealed class CEZLevelDamageSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly Content.Shared.Blocking.BlockingSystem _blocking = default!;
 
     public float BaseFallingDamage { get; private set; }
     public float BaseFallingOtherDamage { get; private set; }
@@ -77,7 +78,24 @@ public sealed class CEZLevelDamageSystem : EntitySystem
 
         foreach (var victim in entitiesAround)
         {
-            // Calculate damage modifiers from entities being fallen upon
+            // Check if falling object is small enough to be blocked by shield
+            var canBeBlocked = false;
+            if (TryComp<Content.Shared.Item.ItemComponent>(ent, out var itemComp))
+            {
+                if (_proto.TryIndex<Content.Shared.Item.ItemSizePrototype>(itemComp.Size, out var sizeProto))
+                {
+                    canBeBlocked = sizeProto.Weight <= 4;
+                }
+            }
+
+            // Overhead shield blocks only small objects
+            if (canBeBlocked && _blocking.IsBlockingOverhead(victim, out var blocking))
+            {
+                var audio = EntityManager.System<Robust.Shared.Audio.Systems.SharedAudioSystem>();
+                audio.PlayPvs(blocking.BlockSound, victim);
+                continue;
+            }
+
             var editDamageToSelfEv = new CEZFallingDamageCalculateEvent(ent, args.ImpactPower);
             RaiseLocalEvent(victim, editDamageToSelfEv);
             damageModifier *= editDamageToSelfEv.DamageMultiplier;
@@ -149,7 +167,7 @@ public sealed class CEZImFallOnEvent(HashSet<EntityUid> targets, float speed) : 
 /// <summary>
 /// Event raised on an entity that is being fallen on to inform it about the falling entity and the impact speed.
 /// </summary>
-public sealed class CEZFellOnMeEvent(EntityUid fallen, float speed) : EntityEventArgs
+public sealed class CEZFellOnMeEvent(EntityUid fallen, float speed) : CancellableEntityEventArgs
 {
     public EntityUid Fallen = fallen;
     public float Speed = speed;

@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared._Nibiru.WeaponAttackType;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -76,4 +77,32 @@ public sealed partial class BlockingComponent : Component
     /// </summary>
     [DataField]
     public float ActiveBlockFraction = 1.0f;
+
+    /// <summary>
+    /// New Nibiru shield stances opt into chance-based passive hand blocking.
+    /// Shields without attack modes keep the legacy passive behavior.
+    /// </summary>
+    [DataField]
+    public bool UseAttackTypeModes;
+
+    [DataField]
+    public float PassiveHandBlockChance = 0.7f;
+
+    [DataField]
+    public TimeSpan PassiveHandBlockCooldown = TimeSpan.FromSeconds(1.5);
+
+    [DataField]
+    public DamageModifierSet? PassiveHandBlockModifier;
+
+    [DataField]
+    public float PassiveHandBlockFraction = 0.7f;
+
+    [DataField]
+    public DamageModifierSet? BackBlockModifier;
+
+    [DataField]
+    public float BackBlockFraction = 0.35f;
+
+    [DataField]
+    public ShieldAttackMode CurrentMode = ShieldAttackMode.None;
 }

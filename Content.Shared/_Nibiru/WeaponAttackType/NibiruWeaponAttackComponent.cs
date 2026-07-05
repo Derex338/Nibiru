@@ -29,4 +29,19 @@ public sealed partial class NibiruWeaponAttackComponent : Component
     [DataField]
     [AutoNetworkedField]
     public bool Cycleable = true;
+
+    /// <summary>
+    /// The held prefix the item had before attack types started changing shield stance visuals.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public string? DefaultHeldPrefix;
+
+    /// <summary>
+    /// Original sprite state before attack type changed it.
+    /// Used to restore sprite when switching back to modes without SpriteState override.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public string? OriginalSpriteState;
 }

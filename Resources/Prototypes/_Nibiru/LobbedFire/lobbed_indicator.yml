@@ -1,6 +1,5 @@
 - type: entity
   id: LobbedIndicator
-  name: lobbed indicator
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

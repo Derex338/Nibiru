@@ -89,4 +89,32 @@ public sealed partial class AttackTypePrototype : IPrototype
     /// </summary>
     [DataField]
     public bool Lobbed;
+
+    /// <summary>
+    /// Optional shield stance selected by this attack type.
+    /// </summary>
+    [DataField]
+    public ShieldAttackMode ShieldMode = ShieldAttackMode.None;
+
+    /// <summary>
+    /// Optional held-prefix override while this shield mode is selected.
+    /// </summary>
+    [DataField]
+    public string? ShieldHeldPrefix;
+
+    /// <summary>
+    /// Optional sprite state override when this attack type is selected.
+    /// If specified, weapon sprite changes to this state when mode is active.
+    /// Original state is restored when switching to another mode or None.
+    /// </summary>
+    [DataField]
+    public string? SpriteState;
+}
+
+public enum ShieldAttackMode : byte
+{
+    None,
+    Normal,
+    Guard,
+    Overhead,
 }

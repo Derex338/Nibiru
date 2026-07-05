@@ -23,3 +23,18 @@
   name: "Навес"
   lobbed: true
   damageMultiplier: 0.8
+
+- type: attackType
+  id: ShieldNormal
+  name: "В руке"
+  shieldMode: Normal
+
+- type: attackType
+  id: ShieldGuard
+  name: "Стойка"
+  shieldMode: Guard
+
+- type: attackType
+  id: ShieldOverhead
+  name: "Над головой"
+  shieldMode: Overhead

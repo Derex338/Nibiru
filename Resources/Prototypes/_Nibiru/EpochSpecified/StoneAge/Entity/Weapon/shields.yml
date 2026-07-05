@@ -13,12 +13,37 @@
     size: Large
     shape:
     - 0,0,1,1
+  - type: Clothing
+    slots: [BACK]
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
+  - type: NibiruWeaponAttack
+    availableAttacks:
+    - ShieldNormal
+    - ShieldGuard
+    - ShieldOverhead
   - type: Blocking
+    useAttackTypeModes: true
+    passiveHandBlockChance: 0.65
+    passiveHandBlockCooldown: 1.5
+    passiveHandBlockFraction: 0.65
+    backBlockFraction: 0.25
     passiveBlockModifier:
       coefficients:
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+    passiveHandBlockModifier:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.90
+      flatReductions:
+        Blunt: 0.5
+    backBlockModifier:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.98
     activeBlockModifier:
       coefficients:
         Blunt: 0.85
@@ -61,11 +86,34 @@
     size: Large
     shape:
     - 0,0,1,1
+  - type: Clothing
+    slots: [BACK]
+    sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/HerbShield.rsi
+  - type: NibiruWeaponAttack
+    availableAttacks:
+    - ShieldNormal
+    - ShieldGuard
+    - ShieldOverhead
   - type: Blocking
+    useAttackTypeModes: true
+    passiveHandBlockChance: 0.70
+    passiveHandBlockCooldown: 1.35
+    passiveHandBlockFraction: 0.60
+    backBlockFraction: 0.20
     passiveBlockModifier:
       coefficients:
         Blunt: 1.05
         Slash: 1.05
+        Piercing: 0.95
+    passiveHandBlockModifier:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.80
+    backBlockModifier:
+      coefficients:
+        Blunt: 1.0
+        Slash: 1.0
         Piercing: 0.95
     activeBlockModifier:
       coefficients:

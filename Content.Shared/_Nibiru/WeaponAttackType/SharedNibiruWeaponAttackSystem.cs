@@ -1,4 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Blocking;
+using Content.Shared.Hands;
+using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
@@ -11,12 +14,16 @@ namespace Content.Shared._Nibiru.WeaponAttackType;
 public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly BlockingSystem _blocking = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NibiruWeaponAttackComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<NibiruWeaponAttackComponent, GotEquippedHandEvent>(OnEquippedHand);
+        SubscribeLocalEvent<NibiruWeaponAttackComponent, GotUnequippedHandEvent>(OnUnequippedHand);
 
         // Integrate with melee weapon system via events
         SubscribeLocalEvent<NibiruWeaponAttackComponent, GetMeleeDamageEvent>(OnGetDamage);
@@ -32,6 +39,24 @@ public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
     {
         if (component.CurrentAttackIndex >= component.AvailableAttacks.Count)
             component.CurrentAttackIndex = 0;
+
+        if (component.DefaultHeldPrefix == null && TryComp<ItemComponent>(uid, out var item))
+            component.DefaultHeldPrefix = item.HeldPrefix;
+
+        ApplyShieldMode(uid, component);
+    }
+
+    private void OnEquippedHand(EntityUid uid, NibiruWeaponAttackComponent component, GotEquippedHandEvent args)
+    {
+        ApplyShieldMode(uid, component, args.User);
+    }
+
+    private void OnUnequippedHand(EntityUid uid, NibiruWeaponAttackComponent component, GotUnequippedHandEvent args)
+    {
+        if (TryComp<BlockingComponent>(uid, out var blocking) && blocking.IsBlocking)
+            _blocking.StopBlocking(uid, blocking, args.User);
+
+        ApplyShieldHeldPrefix(uid, component, null);
     }
 
     /// <summary>
@@ -167,7 +192,42 @@ public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
         component.CurrentAttackIndex = (component.CurrentAttackIndex + 1) % component.AvailableAttacks.Count;
         Dirty(uid, component);
 
-        // Notify client of the change
+        ApplyShieldMode(uid, component);
+    }
+
+    private void ApplyShieldMode(EntityUid uid, NibiruWeaponAttackComponent component, EntityUid? user = null)
+    {
+        if (!TryComp<BlockingComponent>(uid, out var blocking))
+            return;
+
+        if (!TryGetCurrentAttackType(component, out var proto))
+            return;
+
+        if (proto.ShieldMode == ShieldAttackMode.None)
+            return;
+
+        blocking.UseAttackTypeModes = true;
+        blocking.CurrentMode = proto.ShieldMode;
+        Dirty(uid, blocking);
+
+        ApplyShieldHeldPrefix(uid, component, proto.ShieldHeldPrefix);
+
+        user ??= blocking.User;
+        if (user == null)
+            return;
+
+        if (proto.ShieldMode == ShieldAttackMode.Guard)
+            _blocking.StartBlocking(uid, blocking, user.Value);
+        else if (blocking.IsBlocking)
+            _blocking.StopBlocking(uid, blocking, user.Value);
+    }
+
+    private void ApplyShieldHeldPrefix(EntityUid uid, NibiruWeaponAttackComponent component, string? heldPrefix)
+    {
+        if (!TryComp<ItemComponent>(uid, out var item))
+            return;
+
+        _item.SetHeldPrefix(uid, heldPrefix ?? component.DefaultHeldPrefix, component: item);
     }
 }
 

@@ -30,7 +30,9 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly Content.Shared.Blocking.BlockingSystem _blocking = default!;
+    [Dependency] private readonly Content.Shared._CE.ZLevels.Core.EntitySystems.CESharedZLevelsSystem _zLevels = default!;
 
     private readonly List<PendingLobbedShot> _pending = new();
     private readonly List<FallingProjectile> _falling = new();
@@ -39,7 +41,7 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
     private const float LandingIndicatorLeadTime = 0.55f;
     private const float FallDuration = 0.28f;
     private const float LandingHeight = 1.65f;
-    private const float LandingHitRadius = 0.38f;
+    private const float LandingHitRadius = 0.65f; // Увеличен для более надежного попадания между уровнями
 
     public override void Initialize()
     {
@@ -61,7 +63,9 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
 
             if (!pending.IndicatorSpawned && pending.TimeAlive >= pending.IndicatorDelay)
             {
-                var indicator = Spawn("LobbedIndicator", new MapCoordinates(pending.TargetPosition, pending.MapId));
+                EnsureRoofCheck(ref pending);
+
+                var indicator = Spawn("LobbedIndicator", new MapCoordinates(pending.TargetPosition, pending.ActualTargetMapId!.Value));
                 if (TryComp<LobbedIndicatorComponent>(indicator, out var indicatorComp))
                 {
                     indicatorComp.FlightDuration = MathF.Max(0.1f, pending.FlightDuration - pending.IndicatorDelay + FallDuration);
@@ -73,7 +77,11 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
 
             if (pending.TimeAlive >= pending.FlightDuration)
             {
-                var spawnPos = new MapCoordinates(pending.TargetPosition + new Vector2(0, LandingHeight), pending.MapId);
+                EnsureRoofCheck(ref pending);
+
+                // Спавн снаряда на правильном уровне (с учетом крыши)
+                var targetMapId = pending.ActualTargetMapId!.Value;
+                var spawnPos = new MapCoordinates(pending.TargetPosition + new Vector2(0, LandingHeight), targetMapId);
                 var projectile = Spawn(pending.ProtoId, spawnPos);
 
                 if (pending.Shooter != null && TryComp<ProjectileComponent>(projectile, out var projComp))
@@ -93,8 +101,9 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
                 {
                     ProjectileUid = projectile,
                     TargetPosition = pending.TargetPosition,
-                    MapId = pending.MapId,
+                    MapId = targetMapId,
                     Shooter = pending.Shooter,
+                    HitRoof = targetMapId != pending.MapId,
                 });
 
                 _pending.RemoveAt(i);
@@ -112,27 +121,33 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
 
             if (falling.TimeAlive >= FallDuration)
             {
-                if (TryComp<PhysicsComponent>(falling.ProjectileUid, out var phys))
-                {
-                    _physics.SetCanCollide(falling.ProjectileUid, true, body: phys);
-                    _physics.SetLinearVelocity(falling.ProjectileUid, Vector2.Zero, body: phys);
-                }
-
                 var targetMap = new MapCoordinates(falling.TargetPosition, falling.MapId);
                 _transform.SetMapCoordinates(falling.ProjectileUid, targetMap);
 
                 var xform = Transform(falling.ProjectileUid);
-                var target = GetLandingTarget(falling, xform);
+                var target = GetLandingTarget(falling, xform, falling.HitRoof);
 
+                bool embedded = false;
                 if (target != EntityUid.Invalid &&
-                    TryComp<ProjectileComponent>(falling.ProjectileUid, out var projectile) &&
-                    TryComp<EmbeddableProjectileComponent>(falling.ProjectileUid, out _))
+                    TryComp<ProjectileComponent>(falling.ProjectileUid, out var projectileRef) &&
+                    HasComp<EmbeddableProjectileComponent>(falling.ProjectileUid))
                 {
-                    DoLandingImpact(falling.ProjectileUid, projectile, target, targetMap);
+                    embedded = DoLandingImpact(falling.ProjectileUid, projectileRef, target, targetMap);
                 }
-                else if (phys != null)
+
+                if (TryComp<PhysicsComponent>(falling.ProjectileUid, out var phys))
                 {
-                    _physics.SetBodyType(falling.ProjectileUid, BodyType.Static, body: phys);
+                    if (embedded)
+                    {
+                        // Не включаем collision для embedded снарядов - они уже static и встроены
+                        // SetCanCollide(true) вызвал бы повторное срабатывание collision events
+                        _physics.SetBodyType(falling.ProjectileUid, BodyType.Static, body: phys);
+                    }
+                    else
+                    {
+                        _physics.SetCanCollide(falling.ProjectileUid, true, body: phys);
+                        _physics.SetLinearVelocity(falling.ProjectileUid, Vector2.Zero, body: phys);
+                    }
                 }
 
                 _falling.RemoveAt(i);
@@ -216,18 +231,90 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
     private bool HasRoofOver(EntityUid uid)
     {
         var coordinates = _transform.GetMapCoordinates(uid);
+        return IsTargetRooved(coordinates);
+    }
+
+    private bool IsTargetRooved(MapCoordinates coordinates)
+    {
         if (!_mapManager.TryFindGridAt(coordinates, out var gridUid, out var grid))
             return false;
 
         if (!TryComp<RoofComponent>(gridUid, out var roof))
             return false;
 
-        var tile = _transform.GetGridOrMapTilePosition(uid);
+        var tile = _map.TileIndicesFor(gridUid, grid, coordinates);
         return _roof.IsRooved((gridUid, grid, roof), tile);
     }
 
-    private EntityUid GetLandingTarget(FallingProjectile falling, TransformComponent projectileXform)
+    /// <summary>
+    /// Определяет правильный MapId для приземления снаряда с учётом крыши сверху и пустоты снизу.
+    /// Проверяет только один раз, результат кэшируется в pending.ActualTargetMapId.
+    /// </summary>
+    private void EnsureRoofCheck(ref PendingLobbedShot pending)
     {
+        if (pending.ActualTargetMapId.HasValue)
+            return;
+
+        var checkMap = new MapCoordinates(pending.TargetPosition, pending.MapId);
+        var actualMapId = pending.MapId;
+
+        if (!_mapManager.TryFindGridAt(checkMap, out var gridUid, out var grid) ||
+            !TryComp<Content.Shared._CE.ZLevels.Core.Components.CEZLevelMapComponent>(gridUid, out var zMapComp))
+        {
+            pending.ActualTargetMapId = actualMapId;
+            return;
+        }
+
+        var tile = _map.TileIndicesFor(gridUid, grid, checkMap);
+
+        // Проверка крыши сверху — если есть тайл выше, снаряд приземляется на уровень выше
+        if (_zLevels.HasTileAbove(tile, (gridUid, zMapComp)) &&
+            _zLevels.TryMapUp((gridUid, zMapComp), out var mapAbove))
+        {
+            actualMapId = Transform(mapAbove.Value.Owner).MapID;
+            pending.ActualTargetMapId = actualMapId;
+            return;
+        }
+
+        // Проверка пустоты снизу — если под целью нет тайла, снаряд падает на уровень ниже
+        if (_map.TryGetTileRef(gridUid, grid, tile, out var tileRef) && tileRef.Tile.IsEmpty)
+        {
+            // Пустота — ищем первый уровень ниже с тайлом
+            var currentGrid = (gridUid, zMapComp);
+            while (_zLevels.TryMapDown(currentGrid, out var mapBelow))
+            {
+                var mapIdBelow = Transform(mapBelow.Value.Owner).MapID;
+                var checkBelow = new MapCoordinates(pending.TargetPosition, mapIdBelow);
+
+                if (_mapManager.TryFindGridAt(checkBelow, out var gridBelow, out var gridDataBelow) &&
+                    TryComp<Content.Shared._CE.ZLevels.Core.Components.CEZLevelMapComponent>(gridBelow, out var zMapCompBelow))
+                {
+                    var tileBelow = _map.TileIndicesFor(gridBelow, gridDataBelow, checkBelow);
+                    if (_map.TryGetTileRef(gridBelow, gridDataBelow, tileBelow, out var tileRefBelow) && !tileRefBelow.Tile.IsEmpty)
+                    {
+                        actualMapId = mapIdBelow;
+                        break;
+                    }
+                    currentGrid = (gridBelow, zMapCompBelow);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        pending.ActualTargetMapId = actualMapId;
+    }
+
+    private EntityUid GetLandingTarget(FallingProjectile falling, TransformComponent projectileXform, bool hitRoof = false)
+    {
+        // Если попали в тайл выше, стрела должна попасть в пол, а не искать живые цели
+        if (hitRoof)
+        {
+            return projectileXform.GridUid ?? projectileXform.MapUid ?? EntityUid.Invalid;
+        }
+
         _hitCandidates.Clear();
         _lookup.GetEntitiesInRange(falling.MapId, falling.TargetPosition, LandingHitRadius, _hitCandidates, LookupFlags.Dynamic | LookupFlags.Sundries);
 
@@ -259,14 +346,35 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
         return projectileXform.GridUid ?? projectileXform.MapUid ?? EntityUid.Invalid;
     }
 
-    private void DoLandingImpact(EntityUid uid, ProjectileComponent projectile, EntityUid target, MapCoordinates impactCoordinates)
+    private bool DoLandingImpact(EntityUid uid, ProjectileComponent projectile, EntityUid target, MapCoordinates impactCoordinates)
     {
-        var hitEvent = new ProjectileHitEvent(projectile.Damage * _damageable.UniversalProjectileDamageModifier, target, projectile.Shooter);
-        RaiseLocalEvent(uid, ref hitEvent);
+        // Проверяем что цель - это не grid/map, а живая entity
+        // Снаряды должны встраиваться только в damageable entities, не в землю
+        var isLivingTarget = TryComp<DamageableComponent>(target, out var damageable);
 
-        if (TryComp<DamageableComponent>(target, out var damageable))
+        // Overhead shield block check
+        if (isLivingTarget && _blocking.IsBlockingOverhead(target, out var blocking))
         {
-            _damageable.TryChangeDamage((target, damageable), hitEvent.Damage, out _, projectile.IgnoreResistances, origin: projectile.Shooter);
+            _audio.PlayPvs(blocking.BlockSound, target);
+
+            // Still play impact effect for visuals
+            if (projectile.ImpactEffect != null)
+            {
+                var entityCoordinates = _transform.ToCoordinates(_map.GetMap(impactCoordinates.MapId), impactCoordinates);
+                RaiseNetworkEvent(new ImpactEffectEvent(projectile.ImpactEffect, GetNetCoordinates(entityCoordinates)), Filter.Pvs(entityCoordinates, entityMan: EntityManager));
+            }
+
+            return false;
+        }
+
+        // Поднимаем событие попадания только для живых целей
+        // Это предотвращает встраивание стрел в землю
+        if (isLivingTarget)
+        {
+            var hitEvent = new ProjectileHitEvent(projectile.Damage * _damageable.UniversalProjectileDamageModifier, target, projectile.Shooter);
+            RaiseLocalEvent(uid, ref hitEvent);
+
+            _damageable.TryChangeDamage((target, damageable!), hitEvent.Damage, out _, projectile.IgnoreResistances, origin: projectile.Shooter);
         }
 
         var impactEntityCoordinates = _transform.ToCoordinates(_map.GetMap(impactCoordinates.MapId), impactCoordinates);
@@ -276,6 +384,9 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
 
         if (projectile.ImpactEffect != null)
             RaiseNetworkEvent(new ImpactEffectEvent(projectile.ImpactEffect, GetNetCoordinates(impactEntityCoordinates)), Filter.Pvs(impactEntityCoordinates, entityMan: EntityManager));
+
+        // Возвращаем true только если снаряд встроился в живую цель
+        return isLivingTarget;
     }
 
     private void OnProjectileEmbed(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileEmbedEvent args)
@@ -296,6 +407,7 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
         public string ProtoId;
         public Vector2 TargetPosition;
         public MapId MapId;
+        public MapId? ActualTargetMapId; // Реальный MapId после проверки крыши (null = еще не проверено)
         public float FlightDuration;
         public float IndicatorDelay;
         public float TimeAlive;
@@ -311,5 +423,6 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
         public MapId MapId;
         public float TimeAlive;
         public EntityUid? Shooter;
+        public bool HitRoof;
     }
 }

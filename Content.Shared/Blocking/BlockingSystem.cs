@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -6,6 +6,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Components;
@@ -32,6 +33,7 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     [Dependency] private EntityQuery<BlockingComponent> _blockQuery = default!;
     [Dependency] private EntityQuery<HandsComponent> _handQuery = default!;
@@ -88,6 +90,9 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
+        if (component.UseAttackTypeModes)
+            return;
+
         args.AddAction(ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
     }
 
@@ -329,5 +334,20 @@ public sealed partial class BlockingSystem : EntitySystem
                 ("value", flat.Value)
             ));
         }
+    }
+
+    /// <summary>
+    /// Checks if the user is currently holding a shield in Overhead block mode.
+    /// </summary>
+    public bool IsBlockingOverhead(EntityUid user, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out BlockingComponent? blocking)
+    {
+        blocking = null;
+        if (!_userQuery.TryGetComponent(user, out var userComp) || userComp.BlockingItem == null)
+            return false;
+
+        if (!_blockQuery.TryGetComponent(userComp.BlockingItem.Value, out blocking))
+            return false;
+
+        return blocking.CurrentMode == Content.Shared._Nibiru.WeaponAttackType.ShieldAttackMode.Overhead;
     }
 }

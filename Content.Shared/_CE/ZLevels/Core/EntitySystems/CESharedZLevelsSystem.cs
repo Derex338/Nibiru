@@ -24,6 +24,8 @@ public abstract partial class CESharedZLevelsSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly Blocking.BlockingSystem _blocking = default!;
+    [Dependency] private readonly Robust.Shared.Prototypes.IPrototypeManager _proto = default!;
 
     private EntityQuery<MapComponent> _mapQuery;
     private EntityQuery<CEZLevelMapComponent> _zMapQuery;
