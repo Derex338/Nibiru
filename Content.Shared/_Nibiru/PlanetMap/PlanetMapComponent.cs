@@ -17,7 +17,7 @@ public sealed partial class PlanetMapComponent : Component
     public const int ChunkSize = 8;
 
     /// <summary>
-    /// Persistent map data: chunk origin → flat array of packed uint (Type + RGB).
+    /// Persistent map data: chunk origin → flat array of packed uint (tile TypeId).
     /// Saved as a DataField so it persists across saves.
     /// </summary>
     [DataField("savedChunks")]
@@ -25,7 +25,7 @@ public sealed partial class PlanetMapComponent : Component
 
     /// <summary>
     /// Persistent map data for objects (walls, trees, etc.) on top of the tiles.
-    /// Values are indices into <see cref="ObjectPrototypes"/>.
+    /// Values are indices into <see cref="ObjectPrototypes"/> (1-based; 0 = empty).
     /// </summary>
     [DataField("savedObjects")]
     public Dictionary<Vector2i, uint[]> SavedObjects = new();
@@ -47,10 +47,26 @@ public sealed partial class PlanetMapComponent : Component
     /// </summary>
     [DataField]
     public bool RequireVisibility = true;
+
+    /// <summary>
+    /// Number of tiles to classify (via ClassifyTile) per server tick during an active scan job.
+    /// Higher = faster scan completion, higher server frametime spike per tick.
+    /// At 60 UPS, 512 tiles/tick → ~3 ticks for ScanRadius=24 (~1800 tiles).
+    /// </summary>
+    [DataField]
+    public int StreamingBatchSize = 512;
+
+    /// <summary>
+    /// Number of chunks to send to the client per server tick when streaming saved map data
+    /// after the player opens the map UI.
+    /// Lower = smoother, but takes more ticks to fully deliver 1000+ chunks.
+    /// </summary>
+    [DataField]
+    public int OpenBatchSize = 30;
 }
 
 /// <summary>
-/// Shared constant/utilities for planet map chunk math.
+/// Shared constants/utilities for planet map chunk math.
 /// </summary>
 public static class SharedPlanetMapSystem
 {

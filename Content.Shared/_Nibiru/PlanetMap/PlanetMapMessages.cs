@@ -3,16 +3,11 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.PlanetMap;
 
 /// <summary>
-/// Sent by client when the player presses the "pen" button on their map.
-/// Server responds by scanning loaded chunks around the player and sending
-/// data back.
+/// Sent client → server: player presses the "pen" (scan) button.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PlanetMapScanRequestMessage : EntityEventArgs
 {
-    /// <summary>
-    /// The map item entity that the player is using.
-    /// </summary>
     public NetEntity MapEntity;
 
     public PlanetMapScanRequestMessage(NetEntity mapEntity)
@@ -22,49 +17,56 @@ public sealed class PlanetMapScanRequestMessage : EntityEventArgs
 }
 
 /// <summary>
-/// Sent server → client: a batch of newly scanned chunk data to merge into the
-/// client-side persistent map.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class PlanetMapChunkDataMessage : EntityEventArgs
-{
-    /// <summary>
-    /// The map item entity that owns this data (used to route to the right BUI).
-    /// </summary>
-    public NetEntity MapEntity;
-
-    /// <summary>
-    /// Chunk origin → flat array of <see cref="PlanetMapTileType"/> (ChunkSize×ChunkSize).
-    /// </summary>
-    public Dictionary<Vector2i, uint[]> Chunks;
-    public Dictionary<Vector2i, uint[]> Objects;
-    public List<string> ObjectPrototypes;
-
-    public PlanetMapChunkDataMessage(NetEntity mapEntity, Dictionary<Vector2i, uint[]> chunks, Dictionary<Vector2i, uint[]> objects, List<string> objectPrototypes)
-    {
-        MapEntity = mapEntity;
-        Chunks    = chunks;
-        Objects   = objects;
-        ObjectPrototypes = objectPrototypes;
-    }
-}
-
-/// <summary>
-/// Sent server → client: full saved-map data when a player opens their map item.
+/// Sent server → client: signals that the map is being opened.
+/// The client MUST clear its local chunk data upon receiving this.
+/// Actual chunk data follows as one or more <see cref="PlanetMapChunkBatchMessage"/> packets.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PlanetMapOpenMessage : EntityEventArgs
 {
     public NetEntity MapEntity;
-    public Dictionary<Vector2i, uint[]> SavedChunks;
-    public Dictionary<Vector2i, uint[]> SavedObjects;
+
+    public PlanetMapOpenMessage(NetEntity mapEntity)
+    {
+        MapEntity = mapEntity;
+    }
+}
+
+/// <summary>
+/// Sent server → client: a streaming batch of chunk data.
+/// Used for both initial map-open data (following PlanetMapOpenMessage)
+/// and incremental scan results (following PlanetMapScanRequestMessage).
+/// The client merges each batch into its local saved chunk store.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PlanetMapChunkBatchMessage : EntityEventArgs
+{
+    /// <summary>The map item entity this data belongs to.</summary>
+    public NetEntity MapEntity;
+
+    /// <summary>Chunk origin → flat tile-ID array (ChunkSize × ChunkSize).</summary>
+    public Dictionary<Vector2i, uint[]> Chunks;
+
+    /// <summary>Chunk origin → flat object-index array (ChunkSize × ChunkSize).</summary>
+    public Dictionary<Vector2i, uint[]> Objects;
+
+    /// <summary>Registry of entity prototype IDs referenced in <see cref="Objects"/>.</summary>
     public List<string> ObjectPrototypes;
 
-    public PlanetMapOpenMessage(NetEntity mapEntity, Dictionary<Vector2i, uint[]> savedChunks, Dictionary<Vector2i, uint[]> savedObjects, List<string> objectPrototypes)
+    /// <summary>True when this is the final batch in the current streaming sequence.</summary>
+    public bool IsLast;
+
+    public PlanetMapChunkBatchMessage(
+        NetEntity mapEntity,
+        Dictionary<Vector2i, uint[]> chunks,
+        Dictionary<Vector2i, uint[]> objects,
+        List<string> objectPrototypes,
+        bool isLast)
     {
-        MapEntity    = mapEntity;
-        SavedChunks  = savedChunks;
-        SavedObjects = savedObjects;
+        MapEntity        = mapEntity;
+        Chunks           = chunks;
+        Objects          = objects;
         ObjectPrototypes = objectPrototypes;
+        IsLast           = isLast;
     }
 }

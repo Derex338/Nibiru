@@ -1,47 +1,85 @@
 using Content.Shared._Nibiru.PlanetMap;
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
-using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using Content.Shared.Interaction.Events;
 using System.Numerics;
 using Robust.Shared.Player;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Server._Nibiru.PlanetMap;
 
 /// <summary>
-/// Server-side system that handles planet-map scan requests.
-/// When a player presses the "pen" button it:
-/// 1. Finds all chunks loaded within the scan radius.
-/// 2. For each tile, determines its visual category.
-/// 3. Optionally masks off tiles not visible from the player (LOS).
-/// 4. Saves data to PlanetMapComponent on the map item.
-/// 5. Sends the new chunk data to the requesting client.
+/// Server-side system that handles planet-map scan requests and data streaming.
+///
+/// Key optimisations vs the original:
+/// • Scan tiles are queued and processed in batches across multiple ticks (no single-tick freeze).
+/// • Saved map data is streamed to the client in chunks per tick on BUI open (no giant packet).
+/// • Entity validity is checked before each Update pass so stale jobs are cleaned up.
 /// </summary>
 public sealed class PlanetMapSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem  _xform      = default!;
-    [Dependency] private readonly SharedPhysicsSystem    _physics    = default!;
-    [Dependency] private readonly SharedBiomeSystem      _biome      = default!;
-    [Dependency] private readonly TagSystem              _tag        = default!;
-    [Dependency] private readonly IMapManager            _mapManager = default!;
-    [Dependency] private readonly UserInterfaceSystem    _ui         = default!;
-    [Dependency] private readonly SharedMapSystem        _mapSys     = default!;
-    [Dependency] private readonly IPrototypeManager      _proto      = default!;
+    [Dependency] private readonly SharedTransformSystem _xform      = default!;
+    [Dependency] private readonly SharedPhysicsSystem   _physics    = default!;
+    [Dependency] private readonly SharedBiomeSystem     _biome      = default!;
+    [Dependency] private readonly TagSystem             _tag        = default!;
+    [Dependency] private readonly IMapManager           _mapManager = default!;
+    [Dependency] private readonly UserInterfaceSystem   _ui         = default!;
+    [Dependency] private readonly SharedMapSystem       _mapSys     = default!;
+    [Dependency] private readonly IPrototypeManager     _proto      = default!;
+
+    // -----------------------------------------------------------------------
+    // Job types (runtime-only, not serialised)
+    // -----------------------------------------------------------------------
+
+    /// <summary>
+    /// Represents an in-progress scan job for one player session.
+    /// Tiles are queued during OnScanRequest and classified in batches in Update().
+    /// </summary>
+    private sealed class ScanJob
+    {
+        public EntityUid     MapEnt;
+        public NetEntity     MapNetEnt;
+        public EntityUid     GridUid;
+        public MapGridComponent Grid = default!;
+        public BiomeComponent?  Biome;
+        public MapId         MapId;
+        public Queue<Vector2i>           RemainingTiles = new();
+        public Dictionary<Vector2i, uint[]> ResultChunks  = new();
+        public Dictionary<Vector2i, uint[]> ResultObjects = new();
+        public ICommonSession Session   = default!;
+        public int            BatchSize;
+    }
+
+    /// <summary>
+    /// Represents an in-progress open-streaming job.
+    /// Chunk keys are queued in OnBuiOpened and sent in batches in Update().
+    /// </summary>
+    private sealed class OpenJob
+    {
+        public EntityUid  MapEnt;
+        public NetEntity  MapNetEnt;
+        public Queue<Vector2i> RemainingChunks = new();
+        public ICommonSession  Session  = default!;
+        public int             BatchSize;
+    }
+
+    // Active jobs are tracked at system level to avoid serialisation issues.
+    private readonly List<ScanJob> _activeScanJobs = new();
+    private readonly List<OpenJob> _activeOpenJobs = new();
+
+    // -----------------------------------------------------------------------
+    // Lifecycle
+    // -----------------------------------------------------------------------
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeNetworkEvent<PlanetMapScanRequestMessage>(OnScanRequest);
-        SubscribeNetworkEvent<PlanetMapOpenMessage>(OnMapOpened);
-        //SubscribeLocalEvent<PlanetMapComponent, UseInHandEvent>(OnUseInHand);
 
         Subs.BuiEvents<PlanetMapComponent>(
             PlanetMapUiKey.Key,
@@ -49,42 +87,94 @@ public sealed class PlanetMapSystem : EntitySystem
         );
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        ProcessOpenJobs();
+        ProcessScanJobs();
+    }
+
+    // -----------------------------------------------------------------------
+    // BUI Open: stream saved chunks to client
+    // -----------------------------------------------------------------------
+
     private void OnBuiOpened(EntityUid uid, PlanetMapComponent component, BoundUIOpenedEvent args)
     {
-        //if (args.Handled) return;
-
-        //if (_ui.TryOpenUi(uid, PlanetMapUiKey.Key, args.User))
-        //{
-            // Send open message containing all saved chunks directly via event
-            if (TryComp<ActorComponent>(args.Actor, out var actor))
-            {
-                var msg = new PlanetMapOpenMessage(GetNetEntity(uid),
-                    new Dictionary<Vector2i, uint[]>(component.SavedChunks),
-                    new Dictionary<Vector2i, uint[]>(component.SavedObjects),
-                    new List<string>(component.ObjectPrototypes));
-                RaiseNetworkEvent(msg, actor.PlayerSession);
-            }
-            //args.Handled = true;
-        //}
-    }
-
-    // -----------------------------------------------------------------------
-    // Event handlers
-    // -----------------------------------------------------------------------
-
-    private void OnMapOpened(PlanetMapOpenMessage msg, EntitySessionEventArgs args)
-    {
-        // Client just opened the map — send them all saved data
-        if (!TryGetEntity(msg.MapEntity, out var mapEnt) ||
-            !TryComp<PlanetMapComponent>(mapEnt, out var mapComp))
+        if (!TryComp<ActorComponent>(args.Actor, out var actor))
             return;
 
-        var reply = new PlanetMapOpenMessage(msg.MapEntity,
-            new Dictionary<Vector2i, uint[]>(mapComp.SavedChunks),
-            new Dictionary<Vector2i, uint[]>(mapComp.SavedObjects),
-            new List<string>(mapComp.ObjectPrototypes));
-        RaiseNetworkEvent(reply, args.SenderSession);
+        var session = actor.PlayerSession;
+        var netEnt  = GetNetEntity(uid);
+
+        // Tell client: clear your local data, incoming stream coming.
+        RaiseNetworkEvent(new PlanetMapOpenMessage(netEnt), session);
+
+        if (component.SavedChunks.Count == 0)
+            return; // Nothing to stream
+
+        // Cancel any prior open job for this session (e.g. re-opened quickly)
+        _activeOpenJobs.RemoveAll(j => j.Session == session);
+
+        var job = new OpenJob
+        {
+            MapEnt    = uid,
+            MapNetEnt = netEnt,
+            Session   = session,
+            BatchSize = component.OpenBatchSize,
+        };
+        foreach (var key in component.SavedChunks.Keys)
+            job.RemainingChunks.Enqueue(key);
+
+        _activeOpenJobs.Add(job);
     }
+
+    private void ProcessOpenJobs()
+    {
+        for (var i = _activeOpenJobs.Count - 1; i >= 0; i--)
+        {
+            var job = _activeOpenJobs[i];
+
+            if (!TryComp<PlanetMapComponent>(job.MapEnt, out var mapComp))
+            {
+                _activeOpenJobs.RemoveAt(i);
+                continue;
+            }
+
+            var batchChunks  = new Dictionary<Vector2i, uint[]>();
+            var batchObjects = new Dictionary<Vector2i, uint[]>();
+            var sent = 0;
+
+            while (job.RemainingChunks.Count > 0 && sent < job.BatchSize)
+            {
+                var key = job.RemainingChunks.Dequeue();
+                if (mapComp.SavedChunks.TryGetValue(key, out var chunkArr))
+                    batchChunks[key] = chunkArr;
+                if (mapComp.SavedObjects.TryGetValue(key, out var objArr))
+                    batchObjects[key] = objArr;
+                sent++;
+            }
+
+            var isLast = job.RemainingChunks.Count == 0;
+
+            if (batchChunks.Count > 0 || batchObjects.Count > 0)
+            {
+                var msg = new PlanetMapChunkBatchMessage(
+                    job.MapNetEnt,
+                    batchChunks,
+                    batchObjects,
+                    new List<string>(mapComp.ObjectPrototypes),
+                    isLast);
+                RaiseNetworkEvent(msg, job.Session);
+            }
+
+            if (isLast)
+                _activeOpenJobs.RemoveAt(i);
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // Scan request: queue tiles, classify in batches across ticks
+    // -----------------------------------------------------------------------
 
     private void OnScanRequest(PlanetMapScanRequestMessage msg, EntitySessionEventArgs args)
     {
@@ -96,76 +186,121 @@ public sealed class PlanetMapSystem : EntitySystem
             !TryComp<PlanetMapComponent>(mapEnt, out var mapComp))
             return;
 
-        var xform    = Transform(player.Value);
-        var mapId    = xform.MapID;
+        var xform     = Transform(player.Value);
+        var mapId     = xform.MapID;
         var playerPos = _xform.GetWorldPosition(player.Value);
 
         if (mapId == MapId.Nullspace)
             return;
 
-        // Find the grid the player is standing on
         if (!_mapManager.TryFindGridAt(mapId, playerPos, out var gridUid, out var grid))
             return;
 
         var playerTile = _mapSys.LocalToTile(gridUid, grid, xform.Coordinates);
-
-        // Biome component is needed to resolve virtual tiles
         TryComp<BiomeComponent>(gridUid, out var biome);
 
         var scanRadius = mapComp.ScanRadius;
-        var newChunks  = new Dictionary<Vector2i, uint[]>();
-        var newObjects = new Dictionary<Vector2i, uint[]>();
 
-        // Iterate over the square scan area
+        // Cancel any prior scan job for this session (player hit scan twice quickly)
+        _activeScanJobs.RemoveAll(j => j.Session == args.SenderSession);
+
+        var job = new ScanJob
+        {
+            MapEnt    = mapEnt.Value,
+            MapNetEnt = msg.MapEntity,
+            GridUid   = gridUid,
+            Grid      = grid,
+            Biome     = biome,
+            MapId     = mapId,
+            Session   = args.SenderSession,
+            BatchSize = mapComp.StreamingBatchSize,
+        };
+
+        // Pre-filter tiles: LOS check uses only integer Bresenham — fast enough to run sync.
+        // The expensive ClassifyTile (GetAnchoredEntities + biome sampling) is deferred to Update().
         for (var dx = -scanRadius; dx <= scanRadius; dx++)
         {
             for (var dy = -scanRadius; dy <= scanRadius; dy++)
             {
-                // Circular mask
-                if (dx * dx + dy * dy > scanRadius * scanRadius)
+                if (dx * dx + dy * dy > scanRadius * scanRadius) continue;
+                var tile = playerTile + new Vector2i(dx, dy);
+                if (mapComp.RequireVisibility && !HasLineOfSight(gridUid, playerPos, mapId, tile, grid))
                     continue;
+                job.RemainingTiles.Enqueue(tile);
+            }
+        }
 
-                var tile        = playerTile + new Vector2i(dx, dy);
+        _activeScanJobs.Add(job);
+    }
+
+    private void ProcessScanJobs()
+    {
+        for (var i = _activeScanJobs.Count - 1; i >= 0; i--)
+        {
+            var job = _activeScanJobs[i];
+
+            // Safety: entity might have been deleted
+            if (!TryComp<PlanetMapComponent>(job.MapEnt, out var mapComp) || !Exists(job.GridUid))
+            {
+                _activeScanJobs.RemoveAt(i);
+                continue;
+            }
+
+            var processed = 0;
+            while (job.RemainingTiles.Count > 0 && processed < job.BatchSize)
+            {
+                var tile        = job.RemainingTiles.Dequeue();
                 var chunkOrigin = SharedPlanetMapSystem.GetChunkOrigin(tile);
                 var relative    = SharedPlanetMapSystem.GetRelativeTile(tile, chunkOrigin);
                 var index       = SharedPlanetMapSystem.GetTileIndex(relative);
 
-                // Check LOS if required
-                if (mapComp.RequireVisibility && !HasLineOfSight(gridUid, playerPos, mapId, tile, grid))
-                    continue;
+                var (packedTile, packedObj) = ClassifyTile(mapComp, job.GridUid, job.Grid, tile, job.Biome, job.MapId);
 
-                // Determine the tile type and object and pack them
-                var (packedTile, packedObj) = ClassifyTile(mapComp, gridUid, grid, tile, biome, mapId);
-
-                // Get or create chunk buffer
-                if (!newChunks.TryGetValue(chunkOrigin, out var chunkData))
+                if (!job.ResultChunks.TryGetValue(chunkOrigin, out var chunkData))
                 {
                     chunkData = new uint[SharedPlanetMapSystem.ArraySize];
-                    newChunks[chunkOrigin] = chunkData;
+                    job.ResultChunks[chunkOrigin] = chunkData;
                 }
-                if (!newObjects.TryGetValue(chunkOrigin, out var objData))
+                if (!job.ResultObjects.TryGetValue(chunkOrigin, out var objData))
                 {
                     objData = new uint[SharedPlanetMapSystem.ArraySize];
-                    newObjects[chunkOrigin] = objData;
+                    job.ResultObjects[chunkOrigin] = objData;
                 }
 
                 chunkData[index] = packedTile;
-                objData[index] = packedObj;
+                objData[index]   = packedObj;
+                processed++;
+            }
+
+            var isDone = job.RemainingTiles.Count == 0;
+
+            if (isDone)
+            {
+                // Merge into persistent storage once the whole scan is complete
+                MergeChunks(mapComp.SavedChunks,  job.ResultChunks);
+                MergeChunks(mapComp.SavedObjects, job.ResultObjects);
+                Dirty(job.MapEnt, mapComp);
+
+                // Send the completed scan result to the client in one batch
+                // (scan area is typically small: r=24 → ~1800 tiles → manageable packet)
+                var response = new PlanetMapChunkBatchMessage(
+                    job.MapNetEnt,
+                    job.ResultChunks,
+                    job.ResultObjects,
+                    new List<string>(mapComp.ObjectPrototypes),
+                    isLast: true);
+                RaiseNetworkEvent(response, job.Session);
+
+                _activeScanJobs.RemoveAt(i);
             }
         }
-
-        // Merge into persistent storage (higher-priority types win)
-        MergeChunks(mapComp.SavedChunks, newChunks);
-        MergeChunks(mapComp.SavedObjects, newObjects);
-
-        Dirty(mapEnt.Value, mapComp);
-
-        // Send newly scanned data to the client
-        var response = new PlanetMapChunkDataMessage(msg.MapEntity, newChunks, newObjects, new List<string>(mapComp.ObjectPrototypes));
-        RaiseNetworkEvent(response, args.SenderSession);
     }
 
-    private void MergeChunks(Dictionary<Vector2i, uint[]> savedMap, Dictionary<Vector2i, uint[]> newMap)
+    // -----------------------------------------------------------------------
+    // Merge helper
+    // -----------------------------------------------------------------------
+
+    private static void MergeChunks(Dictionary<Vector2i, uint[]> savedMap, Dictionary<Vector2i, uint[]> newMap)
     {
         foreach (var (origin, data) in newMap)
         {
@@ -174,65 +309,65 @@ public sealed class PlanetMapSystem : EntitySystem
                 saved = new uint[SharedPlanetMapSystem.ArraySize];
                 savedMap[origin] = saved;
             }
-
             for (var i = 0; i < SharedPlanetMapSystem.ArraySize; i++)
             {
-                if (data[i] != 0)
-                    saved[i] = data[i];
+                if (data[i] != 0) saved[i] = data[i];
             }
         }
     }
 
     // -----------------------------------------------------------------------
-    // Helpers
+    // Tile classification
     // -----------------------------------------------------------------------
 
     /// <summary>
-    /// Determines the visual type of a tile at the given grid indices.
-    /// Priority: anchored entities (walls/trees/flowers) > actual tile type > biome virtual tile.
+    /// Determines the visual content of a tile (floor + object).
+    /// Priority: anchored entities with hard physics or PlanetMapEntity tag > actual tile > biome virtual tile.
     /// </summary>
-    private (uint tile, uint obj) ClassifyTile(PlanetMapComponent mapComp, EntityUid gridUid,
-        MapGridComponent grid,
-        Vector2i tile,
-        BiomeComponent? biome,
-        MapId mapId)
+    private (uint tile, uint obj) ClassifyTile(
+        PlanetMapComponent mapComp,
+        EntityUid          gridUid,
+        MapGridComponent   grid,
+        Vector2i           tile,
+        BiomeComponent?    biome,
+        MapId              mapId)
     {
-        uint objData = 0;
+        uint objData  = 0;
         uint tileData = 0;
 
-        // 1. Check anchored entities on this tile
+        // 1. Check anchored entities
         var anchored = _mapSys.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
         while (anchored.MoveNext(out var ent))
         {
             var meta = MetaData(ent.Value);
-            if (meta.EntityPrototype != null)
-            {
-                // Display if: has hard physics OR has PlanetMapEntity tag
-                var hasHardPhysics = TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard;
-                var hasPlanetMapTag = _tag.HasTag(ent.Value, "PlanetMapEntity");
+            if (meta.EntityPrototype == null) continue;
 
-                if (hasHardPhysics || hasPlanetMapTag)
+            var hasHardPhysics  = TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard;
+            var hasPlanetMapTag = _tag.HasTag(ent.Value, "PlanetMapEntity");
+
+            if (hasHardPhysics || hasPlanetMapTag)
+            {
+                var id       = meta.EntityPrototype.ID;
+                var objIndex = mapComp.ObjectPrototypes.IndexOf(id);
+                if (objIndex < 0)
                 {
-                    var id = meta.EntityPrototype.ID;
-                    var objIndex = mapComp.ObjectPrototypes.IndexOf(id);
-                    if (objIndex < 0)
-                    {
-                        objIndex = mapComp.ObjectPrototypes.Count;
-                        mapComp.ObjectPrototypes.Add(id);
-                    }
-                    objData = (uint)(objIndex + 1); // 0 is empty
-                    break;
+                    objIndex = mapComp.ObjectPrototypes.Count;
+                    mapComp.ObjectPrototypes.Add(id);
                 }
+                objData = (uint)(objIndex + 1); // 0 = empty
+                break;
             }
         }
 
-        // 2. Check the actual grid tile
+        // 2. Actual tile
         if (_mapSys.TryGetTileRef(gridUid, grid, tile, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
             tileData = (uint)tileRef.Tile.TypeId;
         }
-        // 3. Fall back to biome virtual tile
-        else if (biome != null && _biome.TryGetBiomeTile(gridUid, grid, tile, out var biomeTile) && biomeTile != null)
+        // 3. Biome virtual tile fallback
+        else if (biome != null &&
+                 _biome.TryGetBiomeTile(gridUid, grid, tile, out var biomeTile) &&
+                 biomeTile != null)
         {
             tileData = (uint)biomeTile.Value.TypeId;
         }
@@ -240,27 +375,26 @@ public sealed class PlanetMapSystem : EntitySystem
         return (tileData, objData);
     }
 
-
+    // -----------------------------------------------------------------------
+    // Line-of-sight (Bresenham integer walk)
+    // -----------------------------------------------------------------------
 
     /// <summary>
-    /// Simple tile-based line-of-sight check using a Bresenham line walk.
-    /// Returns false if any wall entity blocks the line between player and target tile.
+    /// Returns false if any hard-physics entity blocks the straight line between player and target tile.
+    /// Uses integer-only Bresenham — safe to call synchronously for every tile in the scan area.
     /// </summary>
-    private bool HasLineOfSight(EntityUid gridUid,
-        Vector2 playerWorldPos,
-        MapId mapId,
-        Vector2i targetTile,
+    private bool HasLineOfSight(
+        EntityUid        gridUid,
+        Vector2          playerWorldPos,
+        MapId            mapId,
+        Vector2i         targetTile,
         MapGridComponent grid)
     {
-        // Convert target tile to world center
-        var targetWorld = _mapSys.GridTileToWorld(gridUid, grid, targetTile);
-
-        // Bresenham walk on tile coordinates
-        var playerTile = _mapSys.LocalToTile(gridUid, grid, new EntityCoordinates(gridUid, playerWorldPos)); // close enough approximation for LOS
-
+        var playerTile = _mapSys.LocalToTile(gridUid, grid,
+            new EntityCoordinates(gridUid, playerWorldPos));
 
         int x0 = playerTile.X, y0 = playerTile.Y;
-        int x1 = targetTile.X, y1 = targetTile.Y;
+        int x1 = targetTile.X,  y1 = targetTile.Y;
 
         int dx = Math.Abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
         int dy = -Math.Abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
@@ -268,10 +402,8 @@ public sealed class PlanetMapSystem : EntitySystem
 
         while (true)
         {
-            if (x0 == x1 && y0 == y1)
-                break;
+            if (x0 == x1 && y0 == y1) break;
 
-            // Check if this intermediate tile is blocked
             var cur = new Vector2i(x0, y0);
             if (cur != playerTile && IsTileBlocking(gridUid, grid, cur))
                 return false;
@@ -289,11 +421,7 @@ public sealed class PlanetMapSystem : EntitySystem
         var anchored = _mapSys.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
         while (anchored.MoveNext(out var ent))
         {
-            // Block line of sight if it's a hard physics object
-            var hasHardPhysics = TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard;
-            //var hasPlanetMapTag = _tag.HasTag(ent.Value, "PlanetMapEntity");
-
-            if (hasHardPhysics)
+            if (TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard)
                 return true;
         }
         return false;

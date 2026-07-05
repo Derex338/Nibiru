@@ -15,7 +15,7 @@ public sealed partial class PlanetMapWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        ScanButton.OnPressed += _ => OnScanPressed?.Invoke();
+        ScanButton.OnPressed   += _ => OnScanPressed?.Invoke();
         CenterButton.OnPressed += _ => OnCenterPressed?.Invoke();
     }
 
@@ -29,12 +29,22 @@ public sealed partial class PlanetMapWindow : FancyWindow
         MapControl.CenterOnPlayer();
     }
 
-    public void MergeChunks(Dictionary<Vector2i, uint[]> newChunks, Dictionary<Vector2i, uint[]> newObjects, List<string> objectPrototypes)
+    /// <summary>Clears all local chunk data (called on map-open signal before streaming starts).</summary>
+    public void ClearChunks()
+    {
+        MapControl.ClearChunks();
+    }
+
+    public void MergeChunks(Dictionary<Vector2i, uint[]> newChunks,
+                            Dictionary<Vector2i, uint[]> newObjects,
+                            List<string>                 objectPrototypes)
     {
         MapControl.MergeChunks(newChunks, newObjects, objectPrototypes);
     }
 
-    public void LoadSavedChunks(Dictionary<Vector2i, uint[]> chunks, Dictionary<Vector2i, uint[]> objects, List<string> objectPrototypes)
+    public void LoadSavedChunks(Dictionary<Vector2i, uint[]> chunks,
+                                Dictionary<Vector2i, uint[]> objects,
+                                List<string>                 objectPrototypes)
     {
         MapControl.LoadSavedChunks(chunks, objects, objectPrototypes);
     }
