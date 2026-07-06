@@ -62,10 +62,34 @@
   - type: Sprite
     sprite: Mobs/Animals/goat.rsi
     state: goat
+  - type: NibiruNpcStateMachine
+  - type: NibiruNpcCombat
+    combatStyle: Charge
+  - type: NibiruNpcChargeAttack
+    shakeDuration: 0.8
+    speed: 12
+    maxDuration: 1.25
+    cooldownDuration: 5
+    minChargeDistance: 3
+    maxChargeDistance: 9
+    damage:
+      types:
+        Blunt: 18
+    knockbackForce: 6
+    stopOnWallCollision: true
+  - type: NibiruNpcAudio
+    aggroSound:
+      path: /Audio/Animals/goat_bah.ogg
+    fleeSound:
+      path: /Audio/Animals/goat_bah.ogg
   - type: NibiruTamable
     diet: Herbivore
     trustThreshold: 40
     trainable: true
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
   - type: NibiruLivestock
     canBreed: true
   - type: NibiruAnimalSex
@@ -156,7 +180,7 @@
   - type: NibiruTamable
     diet: Omnivore
     trustThreshold: 10
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Passive
   - type: Butcherable
     spawned:
@@ -178,7 +202,7 @@
   - type: Sprite
     sprite: Mobs/Animals/bat.rsi
     state: bat
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Passive
 
 - type: entity
@@ -191,7 +215,7 @@
   - type: Sprite
     sprite: Mobs/Animals/butterfly.rsi
     state: butterfly
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Passive
 
 - type: entity
@@ -225,7 +249,7 @@
   - type: Sprite
     sprite: Mobs/Animals/lizard.rsi
     state: lizard
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Passive
   - type: Butcherable
     spawned:
@@ -243,10 +267,21 @@
   components:
   - type: ActiveNPC
   - type: NPCSteering
-  - type: NibiruNpcBehavior
-    memoryDuration: 60
-    patrolRadius: 10
+  - type: NibiruNpcStateMachine
+    behaviorType: Neutral
+  - type: NibiruNpcCombat
     combatStyle: Default
+  - type: NibiruNpcAggro
+    aggroRange: 8
+    deaggroRange: 15
+    fleeRange: 6
+    fleeDistance: 12
+  - type: NibiruNpcMemory
+    memoryDuration: 60
+  - type: NibiruNpcPatrol
+    patrolRadius: 10
+    patrolInterval: 5
+  - type: NibiruNpcAudio
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.0
     baseSprintSpeed: 3.0
@@ -269,7 +304,6 @@
       enum.NibiruBirdDeliveryUiKey.Key:
         type: NibiruBirdDeliveryBoundUserInterface
 
-# Волк (Агрессивный, стайный)
 - type: entity
   id: MobNibiruWolf
   parent: NibiruAnimalBase
@@ -279,8 +313,21 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Wolf.rsi
     state: Wolf
-  - type: NibiruNpcBehavior
-    combatStyle: Default
+  - type: NibiruNpcStateMachine
+  - type: NibiruNpcCombat
+    combatStyle: HitAndRun
+  - type: NibiruNpcAudio
+    aggroSound:
+      collection: IanBark
+    fleeSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: NibiruNpcHitAndRunAttack
+    leapDistance: 3
+    leapSpeed: 9
+    waitDuration: 1.2
+    attackRange: 1.5
+  - type: NibiruNpcPack
+    packCommunicationRange: 18
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.0
     baseSprintSpeed: 3.0
@@ -291,6 +338,7 @@
     favoriteFoods: [ FoodMeatSteak, NibiruFoodMeatTest ]
     trainable: true
     possibleCommands: [ Follow, Stay, Attack, Grab, Guard, Search ]
+    learnedCommands: [ Follow, Stay, Attack, Grab, Search ]
   - type: NibiruSleepCycle
     isNocturnal: true
   - type: NibiruFireFear
@@ -320,11 +368,11 @@
   - type: Sprite
     sprite: Mobs/Animals/goat.rsi
     state: goat
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Passive
+  - type: NibiruNpcAggro
     fleeRange: 7
     fleeDistance: 15
-    combatStyle: Default
   - type: NibiruTamable
     diet: Herbivore
     trustThreshold: 40
@@ -384,8 +432,6 @@
   - type: Sprite
     sprite: Mobs/Animals/cow.rsi
     state: cow
-  - type: NibiruNpcBehavior
-    combatStyle: Default
   - type: NibiruTamable
     diet: Herbivore
     trustThreshold: 60
@@ -452,9 +498,8 @@
       amount: 1
     - id: BigBodyButcherFirst
       amount: 1
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Aggressive
-    combatStyle: Default
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.0
     baseSprintSpeed: 3.0
@@ -476,13 +521,14 @@
   - type: Sprite
     sprite: Mobs/Animals/butterfly.rsi
     state: butterfly
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Passive
   - type: NibiruTamable
     diet: Herbivore
     trustThreshold: 20
     trainable: true
     possibleCommands: [ Follow, Stay, Deliver ]
+    learnedCommands: [ Follow, Stay, Deliver ]
   - type: NibiruBird
   - type: Item
   - type: MovementSpeedModifier
@@ -529,11 +575,21 @@
   - type: Sprite
     sprite: Mobs/Animals/reindeer_doe.rsi
     state: reindeer_doe
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Shy
+  - type: NibiruNpcCombat
+    combatStyle: Charge
+  - type: NibiruNpcChargeAttack
+    shakeDuration: 0.9
+    speed: 13
+    maxDuration: 1.4
+    damage:
+      types:
+        Blunt: 22
+    knockbackForce: 7
+  - type: NibiruNpcAggro
     fleeRange: 8
     fleeDistance: 15
-    combatStyle: Default
   - type: NibiruLivestock
     canBreed: true
     femaleSprite:
@@ -595,9 +651,19 @@
   - type: Sprite
     sprite: Mobs/Pets/walter.rsi
     state: walter
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcStateMachine
     behaviorType: Neutral
-    combatStyle: Default
+  - type: NibiruNpcCombat
+    combatStyle: HitAndRun
+  - type: NibiruNpcAudio
+    aggroSound:
+      collection: IanBark
+    fleeSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: NibiruNpcHitAndRunAttack
+    leapDistance: 2.5
+    leapSpeed: 8
+    waitDuration: 1.0
   - type: NibiruTamable
     diet: Carnivore
     trainable: true
@@ -605,6 +671,7 @@
     maxTrust: 120
     favoriteFoods: [ NibiruFoodMeatTest ]
     possibleCommands: [ Follow, Stay, Attack, Grab, Guard, Search ]
+    learnedCommands: [ Follow, Stay, Attack, Grab, Search ]
   - type: NibiruLivestock
     canBreed: true
     femaleSprite:
@@ -618,6 +685,10 @@
     guardRadius: 8
     searchRadius: 20
   - type: NibiruLeashable
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 8
   - type: Butcherable
     spawned:
     - id: HideMedium

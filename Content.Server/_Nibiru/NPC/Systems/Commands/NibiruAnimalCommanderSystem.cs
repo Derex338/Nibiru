@@ -1,11 +1,12 @@
 // Obsolete root using removed
-using Content.Shared._Nibiru.NPC.Behavior;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Commands;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared._Nibiru.NPC.Utility;
 using Content.Server._Nibiru.NPC.Systems.Training;
 using Content.Server._Nibiru.NPC.Systems.Behavior;
+using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Shared.Actions;
 using Content.Shared.Popups;
 using Content.Shared._Nibiru.NPC.Training;
@@ -13,17 +14,21 @@ using Content.Shared.Chat;
 using Content.Server.Chat.Systems;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Timing;
+using Content.Shared._Nibiru.NPC.Behavior;
 
 namespace Content.Server._Nibiru.NPC.Systems.Commands;
 
 public sealed class NibiruAnimalCommanderSystem : EntitySystem
 {
+    private const float SearchTargetRange = 60f;
+
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly NibiruTamingSystem _taming = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
 
     public override void Initialize()
     {
@@ -232,16 +237,17 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
         args.Handled = true;
 
         EntityUid? foundTarget = null;
+        var foundTooFar = false;
 
         // Ищем ДНК или отпечатки на предмете
         if (TryComp<Content.Server.Forensics.ForensicsComponent>(args.Target, out var forensics))
         {
             // Берем первый попавшийся отпечаток или ДНК
             string? targetBio = null;
-            foreach (var dna in forensics.DNAs) { targetBio = dna; break; }
+            foreach (var dna in forensics.DNAs) { targetBio = dna; }
             if (targetBio == null)
             {
-                foreach (var fp in forensics.Fingerprints) { targetBio = fp; break; }
+                foreach (var fp in forensics.Fingerprints) { targetBio = fp; }
             }
 
             if (targetBio != null)
@@ -254,11 +260,12 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
                     if (dnaComp.DNA == targetBio && targetXform.MapID == animalPos.MapId)
                     {
                         var dist = (targetXform.WorldPosition - animalPos.Position).Length();
-                        if (dist <= 30f)
+                        if (dist <= SearchTargetRange)
                         {
                             foundTarget = targetUid;
                             break;
                         }
+                        foundTooFar = true;
                     }
                 }
 
@@ -271,11 +278,12 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
                         if (fpComp.Fingerprint == targetBio && targetXform.MapID == animalPos.MapId)
                         {
                             var dist = (targetXform.WorldPosition - animalPos.Position).Length();
-                            if (dist <= 30f)
+                            if (dist <= SearchTargetRange)
                             {
                                 foundTarget = targetUid;
                                 break;
                             }
+                            foundTooFar = true;
                         }
                     }
                 }
@@ -285,10 +293,18 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
         if (foundTarget != null)
         {
             if (HandleCommand(uid, component, NibiruAnimalCommand.Search, args.Speech, foundTarget))
+            {
+                if (TryComp<NibiruNpcAudioComponent>(component.CurrentAnimal.Value, out var state))
+                    _sounds.PlayAggroSound(component.CurrentAnimal.Value, state);
+
                 _popup.PopupEntity(Loc.GetString("nibiru-animal-command-search-success"), uid, uid);
+            }
         }
         else
         {
+            if (foundTooFar && TryComp<NibiruNpcAudioComponent>(component.CurrentAnimal.Value, out var behavior))
+                _sounds.PlayFleeSound(component.CurrentAnimal.Value, behavior);
+
             _popup.PopupEntity(Loc.GetString("nibiru-animal-command-search-fail"), uid, uid);
         }
     }
@@ -334,7 +350,7 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
         var animal = component.CurrentAnimal.Value;
 
         // Животное должно быть в режиме следования, чтобы защищать
-        if (!TryComp<NibiruNpcBehaviorComponent>(animal, out var behavior) || behavior.CurrentState != NibiruNpcState.Following)
+        if (!TryComp<NibiruNpcStateMachineComponent>(animal, out var state) || state.CurrentState != NibiruNpcState.Following)
             return;
 
         // Отправляем команду атаки без произнесения вслух

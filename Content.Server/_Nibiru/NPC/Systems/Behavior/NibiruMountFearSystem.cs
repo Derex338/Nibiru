@@ -1,5 +1,5 @@
 // Obsolete root using removed
-using Content.Shared._Nibiru.NPC.Behavior;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Buckle;
@@ -10,6 +10,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Content.Shared._Nibiru.NPC.Behavior;
 
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
@@ -173,10 +174,10 @@ public sealed class NibiruMountFearSystem : EntitySystem
         }
 
         // Переводим в состояние бегства
-        if (TryComp<NibiruNpcBehaviorComponent>(uid, out var behavior))
+        if (TryComp<NibiruNpcStateMachineComponent>(uid, out var state))
         {
-            behavior.CurrentState = NibiruNpcState.Fleeing;
-            behavior.CurrentTarget = null;
+            state.CurrentState = NibiruNpcState.Fleeing;
+            state.CurrentTarget = null;
         }
 
         // Звук паники

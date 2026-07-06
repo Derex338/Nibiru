@@ -1,7 +1,9 @@
 using System.Numerics;
 using Content.Server.NPC.Systems;
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior;
+
+// Obsolete root using removed
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Components;
@@ -60,7 +62,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
 
     private void UpdateTerritoriality()
     {
-        var query = EntityQueryEnumerator<NibiruTerritorialComponent, NibiruNpcBehaviorComponent, NibiruNpcPerceptionComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<NibiruTerritorialComponent, NibiruNpcStateMachineComponent, NibiruNpcPerceptionComponent, TransformComponent >();
         while (query.MoveNext(out var uid, out var territorial, out var behavior, out var perception, out var xform))
         {
             if (!HasComp<ActiveNPCComponent>(uid))
@@ -79,7 +81,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
                 if (_faction.IsEntityFriendly(uid, detected))
                     continue;
 
-                if (!TryComp<TransformComponent>(detected, out var detectedXform))
+                if (!TryComp<TransformComponent>(detected, out var detectedXform) || !TryComp< NibiruNpcAggroComponent>(uid, out var agro))
                     continue;
 
                 if (!behavior.HomePosition.Value.TryDistance(EntityManager, detectedXform.Coordinates, out var distToHome))
@@ -93,7 +95,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
 
                     behavior.CurrentTarget = detected;
                     behavior.CurrentState = NibiruNpcState.Chasing;
-                    behavior.AggroRange *= multiplier;
+                    agro.AggroRange *= multiplier;
 
                     if (territorial.WarningSound != null)
                         _audio.PlayPvs(territorial.WarningSound, uid);
@@ -134,7 +136,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
 
     private void UpdateSleepCycles(float frameTime)
     {
-        var query = EntityQueryEnumerator<NibiruSleepCycleComponent, NibiruNpcBehaviorComponent, NibiruNpcPerceptionComponent>();
+        var query = EntityQueryEnumerator<NibiruSleepCycleComponent, NibiruNpcStateMachineComponent, NibiruNpcPerceptionComponent>();
         while (query.MoveNext(out var uid, out var sleep, out var behavior, out var perception))
         {
             sleep.CycleAccumulator += frameTime;
@@ -143,15 +145,15 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
             {
                 if (sleep.CycleAccumulator >= sleep.SleepDuration)
                 {
-                    WakeUp(uid, sleep, behavior, perception);
+                    WakeUp(uid, sleep, perception);
                 }
                 else
                 {
                     if (behavior.CurrentState != NibiruNpcState.Idle)
                     {
-                        if (behavior.HostileMemory.Count > 0)
+                        if (TryComp< NibiruNpcMemoryComponent>(uid, out var memoryComponent) && memoryComponent.HostileMemory.Count > 0)
                         {
-                            WakeUp(uid, sleep, behavior, perception);
+                            WakeUp(uid, sleep, perception);
                         }
                         else
                         {
@@ -172,7 +174,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
     }
 
     private void FallAsleep(EntityUid uid, NibiruSleepCycleComponent sleep,
-        NibiruNpcBehaviorComponent behavior, NibiruNpcPerceptionComponent perception)
+        NibiruNpcStateMachineComponent behavior, NibiruNpcPerceptionComponent perception)
     {
         sleep.IsSleeping = true;
         sleep.CycleAccumulator = 0f;
@@ -188,8 +190,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
             _audio.PlayPvs(sleep.SleepSound, uid);
     }
 
-    private void WakeUp(EntityUid uid, NibiruSleepCycleComponent sleep,
-        NibiruNpcBehaviorComponent behavior, NibiruNpcPerceptionComponent perception)
+    private void WakeUp(EntityUid uid, NibiruSleepCycleComponent sleep, NibiruNpcPerceptionComponent perception)
     {
         if (sleep.IsSleeping)
         {
@@ -210,7 +211,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
 
     private void UpdateFireFear()
     {
-        var query = EntityQueryEnumerator<NibiruFireFearComponent, NibiruNpcBehaviorComponent, ActiveNPCComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<NibiruFireFearComponent, NibiruNpcStateMachineComponent, ActiveNPCComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var fireFear, out var behavior, out _, out var xform))
         {
             var nearbyEntities = new HashSet<EntityUid>();

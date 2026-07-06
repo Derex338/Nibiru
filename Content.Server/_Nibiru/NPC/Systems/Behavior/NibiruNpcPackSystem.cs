@@ -1,5 +1,6 @@
 // Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC;
@@ -51,38 +52,29 @@ public sealed class NibiruNpcPackSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<NibiruNpcPackComponent, NibiruNpcBehaviorComponent, ActiveNPCComponent>();
-        while (query.MoveNext(out var uid, out var pack, out var behavior, out _))
+        var query = EntityQueryEnumerator<NibiruNpcPackComponent, NibiruNpcStateMachineComponent, ActiveNPCComponent>();
+        while (query.MoveNext(out var uid, out var pack, out var state, out _))
         {
-            // Обработка паники
             if (pack.PanicTimer > 0)
             {
                 pack.PanicTimer -= frameTime;
-
-                // Во время паники все разбегаются
-                if (behavior.CurrentState != NibiruNpcState.Fleeing)
-                    behavior.CurrentState = NibiruNpcState.Fleeing;
-
+                if (state.CurrentState != NibiruNpcState.Fleeing)
+                    state.CurrentState = NibiruNpcState.Fleeing;
                 continue;
             }
-
-            // Синхронизация целей от членов стаи
-            SyncPackTargets(uid, pack, behavior);
+            SyncPackTargets(uid, pack, state);
         }
     }
 
-    /// <summary>
-    /// Когда один член стаи обнаруживает врага, передает цель всей стае.
-    /// </summary>
-    private void SyncPackTargets(EntityUid uid, NibiruNpcPackComponent pack, NibiruNpcBehaviorComponent behavior)
+    private void SyncPackTargets(EntityUid uid, NibiruNpcPackComponent pack, NibiruNpcStateMachineComponent state)
     {
-        if (behavior.CurrentTarget == null)
+        if (state.CurrentTarget == null)
             return;
 
         var myXform = Transform(uid);
-        var packQuery = EntityQueryEnumerator<NibiruNpcPackComponent, NibiruNpcBehaviorComponent>();
+        var packQuery = EntityQueryEnumerator<NibiruNpcPackComponent, NibiruNpcStateMachineComponent>();
 
-        while (packQuery.MoveNext(out var otherUid, out var otherPack, out var otherBehavior))
+        while (packQuery.MoveNext(out var otherUid, out var otherPack, out var otherState))
         {
             if (otherUid == uid)
                 continue;
@@ -90,7 +82,6 @@ public sealed class NibiruNpcPackSystem : EntitySystem
             if (otherPack.PackId != pack.PackId)
                 continue;
 
-            // Проверяем дистанцию связи
             var otherXform = Transform(otherUid);
             if (!myXform.Coordinates.TryDistance(EntityManager, otherXform.Coordinates, out var dist))
                 continue;
@@ -98,29 +89,25 @@ public sealed class NibiruNpcPackSystem : EntitySystem
             if (dist > pack.PackCommunicationRange)
                 continue;
 
-            // Передаём цель, если у сородича нет своей
-            if (otherBehavior.CurrentTarget == null && otherBehavior.CurrentState == NibiruNpcState.Idle)
+            if (otherState.CurrentTarget == null && otherState.CurrentState == NibiruNpcState.Idle)
             {
-                otherBehavior.CurrentTarget = behavior.CurrentTarget;
-                otherBehavior.CurrentState = NibiruNpcState.Chasing;
+                otherState.CurrentTarget = state.CurrentTarget;
+                otherState.CurrentState = NibiruNpcState.Chasing;
             }
         }
     }
 
-    /// <summary>
-    /// Уведомляет стаю о смерти лидера, вызывая панику.
-    /// </summary>
     private void NotifyPackLeaderDead(EntityUid leaderUid, NibiruNpcPackComponent leaderPack)
     {
-        var query = EntityQueryEnumerator<NibiruNpcPackComponent, NibiruNpcBehaviorComponent>();
-        while (query.MoveNext(out var uid, out var pack, out var behavior))
+        var query = EntityQueryEnumerator<NibiruNpcPackComponent, NibiruNpcStateMachineComponent>();
+        while (query.MoveNext(out var uid, out var pack, out var state))
         {
             if (uid == leaderUid || pack.PackId != leaderPack.PackId)
                 continue;
 
             pack.PanicTimer = pack.PanicDuration;
             pack.LeaderUid = null;
-            behavior.CurrentTarget = null;
+            state.CurrentTarget = null;
         }
     }
 

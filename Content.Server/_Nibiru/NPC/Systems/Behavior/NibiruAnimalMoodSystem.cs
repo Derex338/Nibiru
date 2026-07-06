@@ -1,10 +1,11 @@
 // Obsolete root using removed
-using Content.Shared._Nibiru.NPC.Behavior;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Server._Nibiru.NPC.Systems.Utility;
+using Content.Shared._Nibiru.NPC.Behavior;
 
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
@@ -82,10 +83,10 @@ public sealed class NibiruAnimalMoodSystem : EntitySystem
                 tamable.OwnerUid = null;
                 tamable.TrustLevel = 0;
 
-                if (TryComp<NibiruNpcBehaviorComponent>(uid, out var behavior))
+                if (TryComp<NibiruNpcStateMachineComponent>(uid, out var state))
                 {
-                    behavior.CurrentTarget = null;
-                    behavior.CurrentState = NibiruNpcState.Idle;
+                    state.CurrentTarget = null;
+                    state.CurrentState = NibiruNpcState.Idle;
                 }
             }
         }

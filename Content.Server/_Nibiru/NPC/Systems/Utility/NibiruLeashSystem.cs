@@ -2,7 +2,7 @@ using System.Numerics;
 using Content.Server.NPC.Systems;
 using Content.Server.Stack;
 // Obsolete root using removed
-using Content.Shared._Nibiru.NPC.Behavior;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Utility;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared._Nibiru.NPC.Livestock;
@@ -18,6 +18,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
+using Content.Shared._Nibiru.NPC.Behavior;
 
 namespace Content.Server._Nibiru.NPC.Systems.Utility;
 
@@ -222,20 +223,20 @@ public sealed class NibiruLeashSystem : EntitySystem
             _alerts.ShowAlert(target, "Pulling");
 
             // Переопределяем поведение — следуем за держателем
-            if (TryComp<NibiruNpcBehaviorComponent>(animal, out var behavior))
+            if (TryComp<NibiruNpcStateMachineComponent>(animal, out var state))
             {
-                behavior.CurrentTarget = target;
-                behavior.CurrentState = NibiruNpcState.Following;
+                state.CurrentTarget = target;
+                state.CurrentState = NibiruNpcState.Following;
             }
         }
         else
         {
             // Если привязываем к столбику, животное остается около столбика (Idle)
-            if (TryComp<NibiruNpcBehaviorComponent>(animal, out var behavior))
+            if (TryComp<NibiruNpcStateMachineComponent>(animal, out var state))
             {
-                behavior.CurrentTarget = null;
-                behavior.CurrentState = NibiruNpcState.Idle;
-                behavior.HomePosition = Transform(target).Coordinates;
+                state.CurrentTarget = null;
+                state.CurrentState = NibiruNpcState.Idle;
+                state.HomePosition = Transform(target).Coordinates;
                 _steering.Unregister(animal);
             }
         }
@@ -284,10 +285,10 @@ public sealed class NibiruLeashSystem : EntitySystem
         component.BreakFreeAccumulator = 0f;
 
         // Возвращаемся к обычному поведению
-        if (TryComp<NibiruNpcBehaviorComponent>(animal, out var behavior))
+        if (TryComp<NibiruNpcStateMachineComponent>(animal, out var state))
         {
-            behavior.CurrentTarget = null;
-            behavior.CurrentState = NibiruNpcState.Idle;
+            state.CurrentTarget = null;
+            state.CurrentState = NibiruNpcState.Idle;
         }
 
         // Визуал привязи на животном

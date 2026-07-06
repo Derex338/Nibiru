@@ -1,8 +1,10 @@
 using Content.Server._Nibiru.NPC.Systems.Behavior;
 using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Server.NPC.Systems;
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior;
+
+// Obsolete root using removed
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Commands;
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared._Nibiru.NPC.Training;
@@ -179,15 +181,11 @@ public sealed class NibiruTamingSystem : EntitySystem
         _sounds.PlayTamedSound(uid);
 
         // Добавляем базовые команды
-        component.LearnedCommands.Add(NibiruAnimalCommand.Follow);
-        component.LearnedCommands.Add(NibiruAnimalCommand.Stay);
-
-        var ev = new NibiruAnimalCommandLearnedEvent(uid, NibiruAnimalCommand.Follow);
-        RaiseLocalEvent(uid, ev);
-        RaiseLocalEvent(uid, new NibiruAnimalCommandLearnedEvent(uid, NibiruAnimalCommand.Stay));
+        LearnCommand(uid, component, NibiruAnimalCommand.Follow);
+        LearnCommand(uid, component, NibiruAnimalCommand.Stay);
 
         // Переводим в режим следования
-        if (TryComp<NibiruNpcBehaviorComponent>(uid, out var behavior))
+        if (TryComp<NibiruNpcStateMachineComponent>(uid, out var behavior))
         {
             behavior.CurrentTarget = owner;
             behavior.CurrentState = NibiruNpcState.Following;
@@ -206,11 +204,19 @@ public sealed class NibiruTamingSystem : EntitySystem
         if (prevOwner != null)
             _faction.DeAggroEntity(uid, prevOwner.Value);
 
-        if (TryComp<NibiruNpcBehaviorComponent>(uid, out var behavior))
+        if (TryComp<NibiruNpcStateMachineComponent>(uid, out var behavior))
         {
             behavior.CurrentTarget = null;
             behavior.CurrentState = NibiruNpcState.Idle;
         }
+    }
+
+    private void LearnCommand(EntityUid uid, NibiruTamableComponent component, NibiruAnimalCommand command)
+    {
+        if (!component.PossibleCommands.Contains(command) || !component.LearnedCommands.Add(command))
+            return;
+
+        RaiseLocalEvent(uid, new NibiruAnimalCommandLearnedEvent(uid, command));
     }
 
     private bool IsFavoriteFood(EntityUid item, NibiruTamableComponent component)
@@ -273,7 +279,7 @@ public sealed class NibiruTamingSystem : EntitySystem
         if (!tamable.LearnedCommands.Contains(command))
             return false;
 
-        if (!TryComp<NibiruNpcBehaviorComponent>(animal, out var behavior))
+        if (!TryComp<NibiruNpcStateMachineComponent>(animal, out var behavior))
             return false;
 
         _steering.Unregister(animal);
@@ -326,6 +332,7 @@ public sealed class NibiruTamingSystem : EntitySystem
                 if (target == null)
                     return false;
                 behavior.CurrentTarget = target;
+                behavior.CurrentCommand = command;
                 behavior.CurrentState = NibiruNpcState.Following; // Just following, not attacking
                 return true;
 

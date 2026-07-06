@@ -1,4 +1,5 @@
 using Content.Shared._Nibiru.NPC.Behavior;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -183,11 +184,10 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
         RemComp<NibiruAnimalGrabbedComponent>(uid);
 
         // Животное возвращается в режим Idle
-        if (TryComp<NibiruNpcBehaviorComponent>(uid, out var behavior))
+        if (TryComp<NibiruNpcStateMachineComponent>(uid, out var state))
         {
-            behavior.CurrentState = NibiruNpcState.Idle;
-            behavior.CurrentTarget = null;
-            behavior.CurrentCommand = null;
+            state.CurrentState = NibiruNpcState.Idle;
+            state.CurrentTarget = null;
         }
 
         _popup.PopupEntity(Loc.GetString("nibiru-animal-grab-detached"), uid, args.User);

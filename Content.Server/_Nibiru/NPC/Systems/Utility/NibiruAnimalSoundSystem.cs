@@ -1,5 +1,5 @@
-using Content.Shared._Nibiru.NPC.Behavior;
-using Content.Shared._Nibiru.NPC.Commands;
+using Content.Shared._Nibiru.NPC.Behavior.Events;
+using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared._Nibiru.NPC.Utility;
@@ -9,6 +9,8 @@ using Content.Shared.Mobs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Content.Server._Nibiru.NPC.Systems.Behavior;
+using Content.Shared._Nibiru.NPC.Commands;
+using Content.Shared._Nibiru.NPC.Behavior;
 
 namespace Content.Server._Nibiru.NPC.Systems.Utility;
 
@@ -27,13 +29,25 @@ public sealed class NibiruAnimalSoundSystem : EntitySystem
         SubscribeLocalEvent<NibiruAnimalAbilityComponent, AnimalGrowlEvent>(OnGrowl);
     }
 
-    public void PlayHurtSound(EntityUid uid, NibiruNpcBehaviorComponent component)
+    public void PlayHurtSound(EntityUid uid, NibiruNpcAudioComponent component)
     {
         if (component.HurtSound != null)
             _audio.PlayPvs(component.HurtSound, uid);
     }
 
-    public void PlayDeathSound(EntityUid uid, NibiruNpcBehaviorComponent component)
+    public void PlayAggroSound(EntityUid uid, NibiruNpcAudioComponent component)
+    {
+        if (component.AggroSound != null)
+            _audio.PlayPvs(component.AggroSound, uid);
+    }
+
+    public void PlayFleeSound(EntityUid uid, NibiruNpcAudioComponent component)
+    {
+        if (component.FleeSound != null)
+            _audio.PlayPvs(component.FleeSound, uid);
+    }
+
+    public void PlayDeathSound(EntityUid uid, NibiruNpcAudioComponent component)
     {
         if (component.DeathSound != null)
             _audio.PlayPvs(component.DeathSound, uid);
@@ -51,37 +65,34 @@ public sealed class NibiruAnimalSoundSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // Фоновые и позиционные звуки
-        var query = EntityQueryEnumerator<NibiruNpcBehaviorComponent>();
-        while (query.MoveNext(out var uid, out var behavior))
+        // Обновленный цикл с использованием новых компонентов
+        var query = EntityQueryEnumerator<NibiruNpcStateMachineComponent, NibiruNpcAudioComponent>();
+        while (query.MoveNext(out var uid, out var state, out var audio))
         {
-            // Фоновые звуки только в спокойном состоянии
-            if (behavior.CurrentState == NibiruNpcState.Idle ||
-                behavior.CurrentState == NibiruNpcState.Patrolling ||
-                behavior.CurrentState == NibiruNpcState.Following)
-            {
-                if (behavior.AmbientSound != null)
-                {
-                    behavior.AmbientSoundAccumulator += frameTime;
-                    if (behavior.AmbientSoundAccumulator >= behavior.AmbientSoundInterval)
-                    {
-                        behavior.AmbientSoundAccumulator = 0f;
-                        if (_random.Prob(0.3f))
-                            _audio.PlayPvs(behavior.AmbientSound, uid);
-                    }
-                }
-            }
-
             // Звуки состояний (рычание при погоне, визг при бегстве)
-            switch (behavior.CurrentState)
+            switch (state.CurrentState)
             {
                 case NibiruNpcState.Chasing:
-                    if (behavior.AggroSound != null && _random.Prob(0.005f)) // Реже в Update
-                        _audio.PlayPvs(behavior.AggroSound, uid);
+                    if (audio.AggroSound != null && _random.Prob(0.005f))
+                        _audio.PlayPvs(audio.AggroSound, uid);
                     break;
                 case NibiruNpcState.Fleeing:
-                    if (behavior.FleeSound != null && _random.Prob(0.005f))
-                        _audio.PlayPvs(behavior.FleeSound, uid);
+                    if (audio.FleeSound != null && _random.Prob(0.005f))
+                        _audio.PlayPvs(audio.FleeSound, uid);
+                    break;
+                case NibiruNpcState.Idle:
+                case NibiruNpcState.Patrolling:
+                case NibiruNpcState.Following:
+                    if (audio.AmbientSound != null)
+                    {
+                        audio.AmbientSoundAccumulator += frameTime;
+                        if (audio.AmbientSoundAccumulator >= audio.AmbientSoundInterval)
+                        {
+                            audio.AmbientSoundAccumulator = 0f;
+                            if (_random.Prob(0.3f))
+                                _audio.PlayPvs(audio.AmbientSound, uid);
+                        }
+                    }
                     break;
             }
         }

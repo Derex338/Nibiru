@@ -46,6 +46,15 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
         if (!TryComp<NibiruBirdComponent>(birdUid, out var bird))
             return;
 
+        if (bird.KnownPosts.Count == 0)
+        {
+            var postQuery = EntityQueryEnumerator<NibiruPigeonPostComponent>();
+            while (postQuery.MoveNext(out var postUid, out _))
+            {
+                bird.KnownPosts.Add(postUid);
+            }
+        }
+
         var posts = new Dictionary<NetEntity, string>();
         foreach (var postUid in bird.KnownPosts)
         {
