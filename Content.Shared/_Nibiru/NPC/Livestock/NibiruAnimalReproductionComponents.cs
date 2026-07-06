@@ -52,6 +52,15 @@ public sealed partial class NibiruAnimalBreederComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public NibiruAnimalGrowthSettings Growth = new();
+
+    [ViewVariables, AutoNetworkedField]
+    public bool IsMating = false;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float MatingReserveDuration = 30f;
+
+    [ViewVariables, AutoNetworkedField]
+    public float MatingReserveTimer = 0f;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -151,3 +160,4 @@ public enum NibiruAnimalReproductionVisuals : byte
     GrowthProgress,
     IsPregnant,
 }
+

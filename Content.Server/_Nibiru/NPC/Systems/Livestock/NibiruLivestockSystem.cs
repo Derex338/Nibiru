@@ -1,13 +1,21 @@
+using Content.Server.NPC.Components;
+using Content.Server.NPC.Systems;
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared.Damage;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Sprite;
 using Content.Shared.Weapons.Melee;
-using Content.Shared.Movement.Systems;
+using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.DoAfter;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs;
+using Robust.Shared.Timing;
 using System.Numerics;
 
 namespace Content.Server._Nibiru.NPC.Systems.Livestock;
@@ -20,6 +28,11 @@ public sealed class NibiruLivestockSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedScaleVisualsSystem _scale = default!;
+    [Dependency] private readonly NPCSteeringSystem _steering = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    private readonly Dictionary<DoAfterId, (EntityUid Female, EntityUid Male)> _matingHearts = new();
+    private readonly Dictionary<EntityUid, EntityUid> _reservedPartners = new();
 
     public override void Initialize()
     {
@@ -29,6 +42,7 @@ public sealed class NibiruLivestockSystem : EntitySystem
         SubscribeLocalEvent<NibiruAnimalSexComponent, MapInitEvent>(OnSexMapInit);
         SubscribeLocalEvent<NibiruAnimalGrowthComponent, MapInitEvent>(OnGrowthMapInit);
         SubscribeLocalEvent<NibiruAnimalGrowthComponent, RefreshMovementSpeedModifiersEvent>(OnGrowthRefreshSpeed);
+        SubscribeLocalEvent<NibiruAnimalBreederComponent, NibiruAnimalMatingDoAfterEvent>(OnMatingDoAfter);
     }
 
     private void OnLegacyLivestockMapInit(EntityUid uid, NibiruLivestockComponent component, MapInitEvent args)
@@ -51,6 +65,100 @@ public sealed class NibiruLivestockSystem : EntitySystem
         }
 
         UpdateSexAppearance(uid, component.Sex);
+    }
+
+    private void OnMatingDoAfter(EntityUid uid, NibiruAnimalBreederComponent component, NibiruAnimalMatingDoAfterEvent args)
+    {
+        // cleanup any hearts spawn associated with this DoAfter and clear reservations
+        var id = args.DoAfter.Id;
+        if (_matingHearts.TryGetValue(id, out var entry))
+        {
+            // clear breeder reservation flags and timers
+            if (TryComp<NibiruAnimalBreederComponent>(entry.Female, out var femaleBreeder))
+            {
+                femaleBreeder.IsMating = false;
+                femaleBreeder.MatingReserveTimer = 0f;
+                Dirty(entry.Female, femaleBreeder);
+            }
+
+            if (TryComp<NibiruAnimalBreederComponent>(entry.Male, out var maleBreeder))
+            {
+                maleBreeder.IsMating = false;
+                maleBreeder.MatingReserveTimer = 0f;
+                Dirty(entry.Male, maleBreeder);
+            }
+
+            // also clear any reserved partner mapping
+            _reservedPartners.Remove(entry.Female);
+            _reservedPartners.Remove(entry.Male);
+
+            _matingHearts.Remove(id);
+        }
+        else
+        {
+            // Fallback: clear by args if mapping missing
+            var t = args.DoAfter.Args.Target;
+            if (t != null)
+            {
+                if (TryComp<NibiruAnimalBreederComponent>(uid, out var fb))
+                {
+                    fb.IsMating = false;
+                    fb.MatingReserveTimer = 0f;
+                    Dirty(uid, fb);
+                }
+
+                if (TryComp<NibiruAnimalBreederComponent>(t.Value, out var mb))
+                {
+                    mb.IsMating = false;
+                    mb.MatingReserveTimer = 0f;
+                    Dirty(t.Value, mb);
+                }
+
+                _reservedPartners.Remove(uid);
+                _reservedPartners.Remove(t.Value);
+            }
+        }
+
+        if (args.Cancelled)
+            return;
+
+        // final checks: target exists and alive
+        var target = args.DoAfter.Args.Target;
+        if (target == null || !ArgsAreValid(uid, target.Value))
+            return;
+
+        // Create pregnancy on the female (uid)
+        var pregnancy = EnsureComp<NibiruAnimalPregnancyComponent>(uid);
+        pregnancy.OffspringPrototype = component.OffspringPrototype;
+        pregnancy.GestationTime = component.GestationTime;
+        pregnancy.GestationAccumulator = 0f;
+        pregnancy.MinOffspringCount = component.MinOffspringCount;
+        pregnancy.MaxOffspringCount = Math.Max(component.MinOffspringCount, component.MaxOffspringCount);
+        pregnancy.Growth = component.Growth;
+        Dirty(uid, pregnancy);
+        UpdatePregnancyAppearance(uid, true);
+
+        // remove steering so they can disperse
+        RemCompDeferred<NPCSteeringComponent>(uid);
+        RemCompDeferred<NPCSteeringComponent>(target.Value);
+
+        // mating succeeded
+    }
+
+    private bool ArgsAreValid(EntityUid user, EntityUid target)
+    {
+        if (!Exists(target) || !Exists(user))
+            return false;
+
+        if (!TryComp<MobStateComponent>(target, out var mob) || mob.CurrentState != MobState.Alive)
+            return false;
+
+        var aPos = _xform.GetWorldPosition(Transform(user));
+        var bPos = _xform.GetWorldPosition(Transform(target));
+        if ((aPos - bPos).Length() > 1.2f)
+            return false;
+
+        return true;
     }
 
     private void OnGrowthMapInit(EntityUid uid, NibiruAnimalGrowthComponent component, MapInitEvent args)
@@ -120,6 +228,49 @@ public sealed class NibiruLivestockSystem : EntitySystem
             if (!breeder.Enabled || HasComp<NibiruAnimalGrowthComponent>(uid) || HasComp<NibiruAnimalPregnancyComponent>(uid) || IsStarving(uid))
                 continue;
 
+            // Handle mating reservation timeout
+            if (breeder.IsMating)
+            {
+                breeder.MatingReserveTimer = MathF.Max(0f, breeder.MatingReserveTimer - frameTime);
+                if (breeder.MatingReserveTimer <= 0f)
+                {
+                    breeder.IsMating = false;
+                    Dirty(uid, breeder);
+
+                    if (_reservedPartners.TryGetValue(uid, out var partner))
+                    {
+                        _reservedPartners.Remove(uid);
+                        _reservedPartners.Remove(partner);
+                        if (TryComp<NibiruAnimalBreederComponent>(partner, out var pb))
+                        {
+                            pb.IsMating = false;
+                            pb.MatingReserveTimer = 0f;
+                            Dirty(partner, pb);
+                        }
+                    }
+                }
+                else
+                {
+                    // If this is a reserved female, check if partner is close enough to start DoAfter
+                    if (GetSex(uid) == LivestockSex.Female && _reservedPartners.TryGetValue(uid, out var reservedPartner))
+                    {
+                        if (Exists(reservedPartner) && TryComp<NibiruAnimalBreederComponent>(reservedPartner, out var partnerComp))
+                        {
+                            // compute distance
+                            var aPos = _xform.GetWorldPosition(Transform(uid));
+                            var bPos = _xform.GetWorldPosition(Transform(reservedPartner));
+                            var dist = (aPos - bPos).Length();
+                            const float matingDistance = 1.0f;
+                            if (dist <= matingDistance)
+                            {
+                                // Start the DoAfter mating process
+                                StartMatingDoAfter(uid, reservedPartner);
+                            }
+                        }
+                    }
+                }
+            }
+
             if (breeder.BreedingCooldownAccumulator > 0f)
             {
                 breeder.BreedingCooldownAccumulator = MathF.Max(0f, breeder.BreedingCooldownAccumulator - frameTime);
@@ -128,17 +279,19 @@ public sealed class NibiruLivestockSystem : EntitySystem
             }
 
             if (GetSex(uid) == LivestockSex.Female)
+            {
                 TryFindMate(uid, breeder);
+            }
         }
 
-        var legacyQuery = EntityQueryEnumerator<NibiruLivestockComponent>();
+        /*var legacyQuery = EntityQueryEnumerator<NibiruLivestockComponent>();
         while (legacyQuery.MoveNext(out var uid, out var livestock))
         {
             if (HasComp<NibiruAnimalBreederComponent>(uid) || !livestock.CanBreed || HasComp<NibiruAnimalGrowthComponent>(uid) || IsStarving(uid))
                 continue;
 
             UpdateLegacyBreeding(uid, livestock, frameTime);
-        }
+        }*/
     }
 
     private void UpdateLegacyBreeding(EntityUid uid, NibiruLivestockComponent livestock, float frameTime)
@@ -181,16 +334,102 @@ public sealed class NibiruLivestockSystem : EntitySystem
             if (!IsCompatibleMate(female, nearby, breeder, mate))
                 continue;
 
-            var pregnancy = EnsureComp<NibiruAnimalPregnancyComponent>(female);
-            pregnancy.OffspringPrototype = breeder.OffspringPrototype;
-            pregnancy.GestationTime = breeder.GestationTime;
-            pregnancy.GestationAccumulator = 0f;
-            pregnancy.MinOffspringCount = breeder.MinOffspringCount;
-            pregnancy.MaxOffspringCount = Math.Max(breeder.MinOffspringCount, breeder.MaxOffspringCount);
-            pregnancy.Growth = breeder.Growth;
-            Dirty(female, pregnancy);
-            UpdatePregnancyAppearance(female, true);
+            // ensure partner alive
+            if (!TryComp<MobStateComponent>(nearby, out var mobState) || mobState.CurrentState != MobState.Alive)
+                continue;
+
+            // If female already pregnant, skip.
+            if (HasComp<NibiruAnimalPregnancyComponent>(female))
+                continue;
+
+            // Reserve both breeder components so others won't pick them and remember partner
+            breeder.IsMating = true;
+            breeder.MatingReserveTimer = breeder.MatingReserveDuration;
+            Dirty(female, breeder);
+
+            mate.IsMating = true;
+            mate.MatingReserveTimer = mate.MatingReserveDuration;
+            Dirty(nearby, mate);
+
+            _reservedPartners[female] = nearby;
+            _reservedPartners[nearby] = female;
+
+            // If close enough, start mating immediately, otherwise steering will bring them together
+            StartMatingDoAfter(female, nearby);
             return;
+        }
+    }
+
+    private void StartMatingDoAfter(EntityUid uid, EntityUid mate)
+    {
+        // Compute world distance
+        var aPos = _xform.GetWorldPosition(Transform(uid));
+        var bPos = _xform.GetWorldPosition(Transform(mate));
+        var dist = (aPos - bPos).Length();
+
+        const float matingDistance = 1.0f;
+
+        if (dist > matingDistance)
+        {
+            // Make them approach each other.
+            _steering.Register(uid, new EntityCoordinates(mate, Vector2.Zero));
+            _steering.Register(mate, new EntityCoordinates(uid, Vector2.Zero));
+            return;
+        }
+
+        var doAfterEvent = new NibiruAnimalMatingDoAfterEvent();
+        var doAfterArgs = new DoAfterArgs(EntityManager, uid, 5f, doAfterEvent, uid, target: mate)
+        {
+            BreakOnMove = false,
+            BreakOnDamage = true,
+            DistanceThreshold = matingDistance,
+            CancelDuplicate = false,
+            BlockDuplicate = true,
+        };
+
+        // Ensure breeder flags set (in case TryFindMate didn't)
+        if (TryComp<NibiruAnimalBreederComponent>(uid, out var femaleBreeder))
+        {
+            if (!femaleBreeder.IsMating)
+            {
+                femaleBreeder.IsMating = true;
+                Dirty(uid, femaleBreeder);
+            }
+        }
+
+        if (TryComp<NibiruAnimalBreederComponent>(mate, out var maleBreeder))
+        {
+            if (!maleBreeder.IsMating)
+            {
+                maleBreeder.IsMating = true;
+                Dirty(mate, maleBreeder);
+            }
+        }
+
+        if (_doAfter.TryStartDoAfter(doAfterArgs, out var id))
+        {
+            var heartA = Spawn("EffectHearts", Transform(uid).Coordinates);
+            var heartB = Spawn("EffectHearts", Transform(mate).Coordinates);
+            _matingHearts[id.Value] = (uid, mate);
+
+            // remove reservation mapping now that DoAfter is running
+            _reservedPartners.Remove(uid);
+            _reservedPartners.Remove(mate);
+        }
+        else
+        {
+            // failed to start - clear reservation
+            if (femaleBreeder != null)
+            {
+                femaleBreeder.IsMating = false;
+                Dirty(uid, femaleBreeder);
+            }
+
+            if (maleBreeder != null)
+            {
+                maleBreeder.IsMating = false;
+                Dirty(mate, maleBreeder);
+            }
         }
     }
 
