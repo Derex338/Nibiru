@@ -1,11 +1,10 @@
-using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Content.Shared._CE.Cooking;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -13,7 +12,7 @@ namespace Content.Shared.Nutrition.Components;
 /// This is used on an entity with a solution container to flag a specific solution as being able to have its
 /// reagents consumed directly.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(IngestionSystem), typeof(CESharedCookingSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(IngestionSystem))]
 public sealed partial class EdibleComponent : Component
 {
     /// <summary>

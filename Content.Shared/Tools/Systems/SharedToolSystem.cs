@@ -14,8 +14,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared._CE.ZLevels.Core.EntitySystems;
-using Content.Shared.Tag;
 
 namespace Content.Shared.Tools.Systems;
 
@@ -36,9 +34,6 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TileSystem _tiles = default!;
     [Dependency] private   readonly TurfSystem _turfs = default!;
-    [Dependency] private   readonly CESharedZLevelsSystem _zLevels = default!;
-    [Dependency] private   readonly TagSystem _tag = default!;
-    [Dependency] private   readonly EntityLookupSystem _lookup = default!;
 
     public const string CutQuality = "Cutting";
     public const string PulseQuality = "Pulsing";

@@ -397,7 +397,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        StunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
+        StunSystem.TryUpdateParalyzeDuration(uid, component.StunTime, true);
+
 
         //CrystallEdge
         var ev = new CEEnterStaminaCritEvent();

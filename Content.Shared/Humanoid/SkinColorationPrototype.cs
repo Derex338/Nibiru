@@ -1,6 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -23,7 +22,7 @@ public sealed partial class SkinColorationPrototype : IPrototype
 }
 
 /// <summary>
-/// The type of input taken by a <see cref="ISkinColorationStrategy" />
+/// The type of input taken by a <see cref="SkinColorationStrategy" />
 /// </summary>
 [Serializable, NetSerializable]
 public enum SkinColorationStrategyInput
@@ -51,9 +50,8 @@ public interface ISkinColorationStrategy
 
     /// <summary>
     /// Returns whether or not the provided <see cref="Color" /> is within bounds of this strategy
-    /// Outs a reason if the verification fails.
     /// </summary>
-    bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason);
+    bool VerifySkinColor(Color color);
 
     /// <summary>
     /// Returns the closest skin color that this strategy would provide to the given <see cref="Color" />
@@ -65,7 +63,7 @@ public interface ISkinColorationStrategy
     /// </summary>
     Color EnsureVerified(Color color)
     {
-        if (VerifySkinColor(color, out _))
+        if (VerifySkinColor(color))
         {
             return color;
         }
@@ -102,10 +100,8 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Unary;
 
-    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
+    public bool VerifySkinColor(Color color)
     {
-        reason = null;
-
         var colorValues = Color.ToHsv(color);
 
         var hue = Math.Round(colorValues.X * 360f);
@@ -115,7 +111,6 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
         // is 25 <= hue <= 45
         if (hue < 25f || hue > 45f)
         {
-            reason = $"Hue {hue} is outside of expected ranges 25 and 45.";
             return false;
         }
 
@@ -124,7 +119,6 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
         // where saturation increases to 100 and value decreases to 20
         if (sat < 20f || val < 20f)
         {
-            reason = "Saturation or value are below expected number of 20.";
             return false;
         }
 
@@ -157,12 +151,10 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
 
         if (rangeOffset <= 0)
         {
-            // First 20 values adjust hue.
             hue += Math.Abs(rangeOffset);
         }
         else
         {
-            // Remaining 80 values adjust saturation and value.
             sat += rangeOffset;
             val -= rangeOffset;
         }
@@ -190,15 +182,14 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
 }
 
 /// <summary>
-/// Coloration strategy that clamps the color within the HSV colorspace.
+/// Unary coloration strategy that clamps the color within the HSV colorspace
 /// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
 {
     /// <summary>
-    /// Defines the valid (min, max) range for the hue channel (0.0 to 1.0).
-    /// If min > max, the range wraps around 1.0 (e.g., for reds).
+    /// The (min, max) of the hue channel.
     /// </summary>
     [DataField]
     public (float, float)? Hue;
@@ -217,29 +208,18 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
-    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
+    public bool VerifySkinColor(Color color)
     {
-        reason = null;
-
         var hsv = Color.ToHsv(color);
 
-        if (Hue is (var minHue, var maxHue) && !SkinColorationUtils.IsHueInRange(hsv.X, minHue, maxHue))
-        {
-            reason = $"Hue {Hue} is outside of range of min {minHue} max {maxHue}";
+        if (Hue is (var minHue, var maxHue) && (hsv.X < minHue || hsv.X > maxHue))
             return false;
-        }
 
-        if (Saturation is (var minSat, var maxSat) && (hsv.Y < minSat - SkinColorationUtils.Epsilon || hsv.Y > maxSat + SkinColorationUtils.Epsilon))
-        {
-            reason = $"Saturation {Saturation} is outside of range of min {minSat} max {maxSat}";
+        if (Saturation is (var minSaturation, var maxSaturation) && (hsv.Y < minSaturation || hsv.Y > maxSaturation))
             return false;
-        }
 
-        if (Value is (var minVal, var maxVal) && (hsv.Z < minVal - SkinColorationUtils.Epsilon || hsv.Z > maxVal + SkinColorationUtils.Epsilon))
-        {
-            reason = $"Value {Value} is outside of range of min {minVal} max {maxVal}";
+        if (Value is (var minValue, var maxValue) && (hsv.Z < minValue || hsv.Z > maxValue))
             return false;
-        }
 
         return true;
     }
@@ -249,26 +229,27 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
         var hsv = Color.ToHsv(color);
 
         if (Hue is (var minHue, var maxHue))
-            hsv.X = SkinColorationUtils.ClampHue(hsv.X, minHue, maxHue);
-        if (Saturation is (var minSat, var maxSat))
-            hsv.Y = Math.Clamp(hsv.Y, minSat, maxSat);
-        if (Value is (var minVal, var maxVal))
-            hsv.Z = Math.Clamp(hsv.Z, minVal, maxVal);
+            hsv.X = Math.Clamp(hsv.X, minHue, maxHue);
+
+        if (Saturation is (var minSaturation, var maxSaturation))
+            hsv.Y = Math.Clamp(hsv.Y, minSaturation, maxSaturation);
+
+        if (Value is (var minValue, var maxValue))
+            hsv.Z = Math.Clamp(hsv.Z, minValue, maxValue);
 
         return Color.FromHsv(hsv);
     }
 }
 
 /// <summary>
-/// Coloration strategy that clamps the color within the HSL colorspace.
+/// Unary coloration strategy that clamps the color within the HSL colorspace
 /// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 {
     /// <summary>
-    /// Defines the valid (min, max) range for the hue channel (0.0 to 1.0).
-    /// If min > max, the range wraps around 1.0 (e.g., for reds).
+    /// The (min, max) of the hue channel.
     /// </summary>
     [DataField]
     public (float, float)? Hue;
@@ -287,29 +268,18 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
-    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
+    public bool VerifySkinColor(Color color)
     {
-        reason = null;
-
         var hsl = Color.ToHsl(color);
 
-        if (Hue is (var minHue, var maxHue) && !SkinColorationUtils.IsHueInRange(hsl.X, minHue, maxHue))
-        {
-            reason = $"Hue {Hue} is outside of range of min {minHue} max {maxHue}";
+        if (Hue is (var minHue, var maxHue) && (hsl.X < minHue || hsl.X > maxHue))
             return false;
-        }
 
-        if (Saturation is (var minSat, var maxSat) && (hsl.Y < minSat - SkinColorationUtils.Epsilon || hsl.Y > maxSat + SkinColorationUtils.Epsilon))
-        {
-            reason = $"Saturation {Saturation} is outside of range of min {minSat} max {maxSat}";
+        if (Saturation is (var minSaturation, var maxSaturation) && (hsl.Y < minSaturation || hsl.Y > maxSaturation))
             return false;
-        }
 
-        if (Lightness is (var minLight, var maxLight) && (hsl.Z < minLight - SkinColorationUtils.Epsilon || hsl.Z > maxLight + SkinColorationUtils.Epsilon))
-        {
-            reason = $"Lightness {Lightness} is outside of range of min {minLight} max {maxLight}";
+        if (Lightness is (var minValue, var maxValue) && (hsl.Z < minValue || hsl.Z > maxValue))
             return false;
-        }
 
         return true;
     }
@@ -319,15 +289,18 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
         var hsl = Color.ToHsl(color);
 
         if (Hue is (var minHue, var maxHue))
-            hsl.X = SkinColorationUtils.ClampHue(hsl.X, minHue, maxHue);
-        if (Saturation is (var minSat, var maxSat))
-            hsl.Y = Math.Clamp(hsl.Y, minSat, maxSat);
-        if (Lightness is (var minLight, var maxLight))
-            hsl.Z = Math.Clamp(hsl.Z, minLight, maxLight);
+            hsl.X = Math.Clamp(hsl.X, minHue, maxHue);
+
+        if (Saturation is (var minSaturation, var maxSaturation))
+            hsl.Y = Math.Clamp(hsl.Y, minSaturation, maxSaturation);
+
+        if (Lightness is (var minValue, var maxValue))
+            hsl.Z = Math.Clamp(hsl.Z, minValue, maxValue);
 
         return Color.FromHsl(hsl);
     }
 }
+<<<<<<< Updated upstream
 
 /// <summary>
 /// Coloration strategy that clamps the color between nodes within the HSV colorspace.
@@ -342,6 +315,18 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 [Serializable, NetSerializable]
 public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrategy
 {
+    // TODO: this is awful - why is it so large?
+    /// <summary>
+    /// The maximum amount of change to the saturation that we can expect between generating an HSV value
+    /// at a threshold, converting it to RGB, then resaving it.
+    /// Found experimentally by running HumanoidProfileTests.EnsureValidRandomSpecies("Vulpkanin") many times.
+    /// </summary>
+    /// <remarks>
+    /// Due to RGB colors being clamped to 8 bits, precision is lost during transformation to HSL or HSV.
+    /// The precision of the result _should be_ approximately 1/180.
+    /// </remarks>
+    public const float HSVTolerance = 0.019f;
+
     /// <summary>
     /// List of valid nodes in this coloration.
     /// </summary>
@@ -369,14 +354,14 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         }
 
         // If a range is found, check if the saturation is within the provided ranges.
-        if (hsv.Y < range.Saturation.Min - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Max + SkinColorationUtils.Epsilon)
+        if (hsv.Y < range.Saturation.Min - HSVTolerance || hsv.Y > range.Saturation.Max + HSVTolerance)
         {
             reason = $"Saturation {hsv.Y} is outside of range of min {range.Saturation.Item1} max {range.Saturation.Item2}";
             return false;
         }
 
         // Check if the value is within provided ranges.
-        if (hsv.Z < range.Value.Min - SkinColorationUtils.Epsilon || hsv.Z > range.Value.Max + SkinColorationUtils.Epsilon)
+        if (hsv.Z < range.Value.Min - HSVTolerance || hsv.Z > range.Value.Max + HSVTolerance)
         {
             reason = $"Value {hsv.Z} is outside of range of min {range.Value.Min} max {range.Value.Max}";
             return false;
@@ -512,10 +497,10 @@ internal static class SkinColorationUtils
     public const float EpsilonHue = 0.00277f;
 
     /// <summary>
-    /// Due to RGB colors being clamped to 8 bits, precision is lost during transformation to HSL or HSV.
-    /// The precision of the result is approximately 1/180.
+    /// A value derived by dividing 1 by 256.
+    /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
     /// </summary>
-    public const float Epsilon = 0.0056f;
+    public const float Epsilon = 0.00390625f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).
@@ -556,3 +541,5 @@ internal static class SkinColorationUtils
         return Math.Clamp(hue, minHue, maxHue);
     }
 }
+=======
+>>>>>>> Stashed changes

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by borkroman",
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "base_1",
+      "directions": 4
+    },
+    {
+      "name": "base_spike",
+      "directions": 4
+    },
+    {
+      "name": "king",
+      "directions": 4
+    },
+    {
+      "name": "king_1",
+      "directions": 4
+    },
+    {
+      "name": "king_spike",
+      "directions": 4
+    },
+    {
+      "name": "wide",
+      "directions": 4
+    },
+    {
+      "name": "wide_1",
+      "directions": 4
+    },
+    {
+      "name": "Imperial",
+      "directions": 4
+    },
+    {
+      "name": "Imperial_1",
+      "directions": 4
+    },
+    {
+      "name": "Imperial_spike",
+      "directions": 4
+    }
+  ]
+}

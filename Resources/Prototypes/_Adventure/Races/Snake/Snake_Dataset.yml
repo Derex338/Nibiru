@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesZerah
+  values:
+    prefix: names-zerah-dataset-
+    count: 30

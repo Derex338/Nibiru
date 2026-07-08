@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public sealed partial class MessyDrinkerSystem : EntitySystem
+public sealed class MessyDrinkerSystem : EntitySystem
 {
-    [Dependency] private IngestionSystem _ingestion = default!;
-    [Dependency] private SharedPuddleSystem _puddle = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -37,7 +37,10 @@ public sealed partial class MessyDrinkerSystem : EntitySystem
         if (proto == null || !ent.Comp.SpillableTypes.Contains(proto.Value))
             return;
 
-        if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.SpillChance, GetNetEntity(ent)))
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var rand = new System.Random(seed);
+        if (!rand.Prob(ent.Comp.SpillChance))
             return;
 
         if (ent.Comp.SpillMessagePopup != null)

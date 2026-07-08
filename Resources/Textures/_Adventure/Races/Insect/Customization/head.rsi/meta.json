@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by borkroman",
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "NObase",
+      "directions": 4
+    },
+    {
+      "name": "forward",
+      "directions": 4
+    },
+    {
+      "name": "straight",
+      "directions": 4
+    },
+    {
+      "name": "big",
+      "directions": 4
+    },
+    {
+      "name": "big_head",
+      "directions": 4
+    },
+    {
+      "name": "stretch",
+      "directions": 4
+    },
+    {
+      "name": "crown",
+      "directions": 4
+    },
+    {
+      "name": "forehead",
+      "directions": 4
+    }
+  ]
+}

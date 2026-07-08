@@ -1,5 +1,4 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Database;
@@ -17,19 +16,19 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed partial class ChangelingClonerSystem : EntitySystem
+public sealed class ChangelingClonerSystem : EntitySystem
 {
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedCloningSystem _cloning = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
-    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedCloningSystem _cloning = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -133,7 +132,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (ent.Comp.State != ChangelingClonerState.Empty)
             return false;
 
-        if (!HasComp<HumanoidProfileComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return false; // cloning only works for humanoids at the moment
 
         var args = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new ClonerDrawDoAfterEvent(), ent, target: target, used: ent)
@@ -169,7 +168,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (ent.Comp.State != ChangelingClonerState.Filled)
             return false;
 
-        if (!HasComp<HumanoidProfileComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return false; // cloning only works for humanoids at the moment
 
         var args = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new ClonerInjectDoAfterEvent(), ent, target: target, used: ent)
@@ -206,17 +205,17 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (ent.Comp.State != ChangelingClonerState.Empty)
             return;
 
-        if (!HasComp<HumanoidProfileComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return; // cloning only works for humanoids at the moment
+
+        if (!_prototype.Resolve(ent.Comp.Settings, out var settings))
+            return;
 
         _adminLogger.Add(LogType.Identity,
             $"{user} is using {ent.Owner} to draw DNA from {target}.");
 
         // Make a copy of the target on a paused map, so that we can apply their components later.
-        ent.Comp.ClonedBackup = _changelingIdentity.CloneToPausedMap(ent.Comp.Settings, target);
-        if (ent.Comp.ClonedBackup == null)
-            return;
-
+        ent.Comp.ClonedBackup = _changelingIdentity.CloneToPausedMap(settings, target);
         ent.Comp.State = ChangelingClonerState.Filled;
         _appearance.SetData(ent.Owner, ChangelingClonerVisuals.State, ChangelingClonerState.Filled);
         Dirty(ent);
@@ -236,7 +235,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (ent.Comp.State != ChangelingClonerState.Filled)
             return;
 
-        if (!HasComp<HumanoidProfileComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return; // cloning only works for humanoids at the moment
 
         if (!_prototype.Resolve(ent.Comp.Settings, out var settings))
@@ -259,7 +258,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
             $"{user} is using {ent.Owner} to inject DNA into {target} changing their identity to {ent.Comp.ClonedBackup.Value}.");
 
         // Do the actual transformation.
-        _visualBody.CopyAppearanceFrom(ent.Comp.ClonedBackup.Value, target);
+        _humanoidAppearance.CloneAppearance(ent.Comp.ClonedBackup.Value, target);
         _cloning.CloneComponents(ent.Comp.ClonedBackup.Value, target, settings);
         _metaData.SetEntityName(target, Name(ent.Comp.ClonedBackup.Value), raiseEvents: ent.Comp.RaiseNameChangeEvents);
 

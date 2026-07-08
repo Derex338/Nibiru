@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by borkroman",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "Snake_tail_big",
+      "directions": 4
+    },
+    {
+      "name": "Snake_tail_twisty",
+      "directions": 4
+    },
+    {
+      "name": "Snake_tail_bulge",
+      "directions": 4
+    },
+    {
+      "name": "bulge",
+      "directions": 4
+    },
+    {
+      "name": "Snake_tail_giant",
+      "directions": 4
+    },
+    {
+      "name": "giant",
+      "directions": 4
+    }
+  ]
+}
