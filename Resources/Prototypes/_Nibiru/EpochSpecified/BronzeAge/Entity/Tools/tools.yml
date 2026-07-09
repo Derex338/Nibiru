@@ -140,7 +140,9 @@
   suffix: Nibiru, BronzeAge
   description: Красивая, длинная, с неровной рукоятью бронзовая коса.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
     state: icon
@@ -188,7 +190,9 @@
   - type: Tag
     tags:
     - BotanyHatchet
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
     state: icon

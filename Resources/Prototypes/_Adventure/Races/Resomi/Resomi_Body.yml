@@ -44,7 +44,7 @@
 #Части Резоми
 - type: entity
   id: PartResomi
-  parent: [BaseItem, BasePart]
+  parent: [BaseItem, OrganBaseOrganic]
   name: "Часть тела резоми"
   abstract: true
   components:
@@ -59,7 +59,7 @@
 - type: entity
   id: TorsoResomi
   name: "Туловище резоми"
-  parent: [PartResomi, BaseTorso]
+  parent: [PartResomi, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -73,7 +73,7 @@
 - type: entity
   id: HeadResomi
   name: "Голова резоми"
-  parent: [PartResomi, BaseHead]
+  parent: [PartResomi, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -87,7 +87,7 @@
 - type: entity
   id: LeftArmResomi
   name: "Левая рука резоми"
-  parent: [PartResomi, BaseLeftArm]
+  parent: [PartResomi, OrganBaseArmLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -96,7 +96,7 @@
 - type: entity
   id: RightArmResomi
   name: "Правая рука резоми"
-  parent: [PartResomi, BaseRightArm]
+  parent: [PartResomi, OrganBaseArmRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -105,7 +105,7 @@
 - type: entity
   id: LeftHandResomi
   name: "Левая рука резоми"
-  parent: [PartResomi, BaseLeftHand]
+  parent: [PartResomi, OrganBaseHandLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -114,7 +114,7 @@
 - type: entity
   id: RightHandResomi
   name: "Правая рука резоми"
-  parent: [PartResomi, BaseRightHand]
+  parent: [PartResomi, OrganBaseHandRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -123,7 +123,7 @@
 - type: entity
   id: LeftLegResomi
   name: "Левая нога резоми"
-  parent: [PartResomi, BaseLeftLeg]
+  parent: [PartResomi, OrganBaseLegLeft]
   components:
   - type: Sprite
     state: "l_leg"
@@ -134,7 +134,7 @@
 - type: entity
   id: RightLegResomi
   name: "Правая нога резоми"
-  parent: [PartResomi, BaseRightLeg]
+  parent: [PartResomi, OrganBaseLegRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -146,7 +146,7 @@
 - type: entity
   id: LeftFootResomi
   name: "Левая нога резоми"
-  parent: [PartResomi, BaseLeftFoot]
+  parent: [PartResomi, OrganBaseFootLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -155,7 +155,7 @@
 - type: entity
   id: RightFootResomi
   name: "Правая нога резоми"
-  parent: [PartResomi, BaseRightFoot]
+  parent: [PartResomi, OrganBaseFootRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi

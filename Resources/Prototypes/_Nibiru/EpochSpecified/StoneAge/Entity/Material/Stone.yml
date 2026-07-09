@@ -117,7 +117,6 @@
   - type: ArmorPenetration
     penetration:
       Slash: 3
-  - type: Sharp
   - type: Tool
     qualities:
       - Slicing

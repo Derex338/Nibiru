@@ -100,11 +100,6 @@
     spawned:
     - id: FoodMeatLizard
       amount: 5
-  - type: HumanoidAppearance
-    species: Skrell
-    hideLayersOnEquip:
-    - HeadTop
-    - Snout
   - type: Inventory
     speciesId: skrell
     femaleDisplacements:
@@ -119,8 +114,6 @@
   id: MobSkrellDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
-    species: Skrell
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

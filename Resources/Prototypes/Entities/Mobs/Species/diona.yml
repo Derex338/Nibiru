@@ -5,8 +5,6 @@
   id: BaseMobDiona
   abstract: true
   components:
-  - type: HumanoidAppearance
-    species: Diona
   - type: Hunger
     baseDecayRate: 0.0083
   - type: Thirst
@@ -121,8 +119,6 @@
   id: MobDionaDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
-    species: Diona
   - type: Inventory
     templateId: diona
     femaleDisplacements:

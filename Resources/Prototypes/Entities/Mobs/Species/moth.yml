@@ -5,10 +5,6 @@
   id: BaseMobMoth
   abstract: true
   components:
-  - type: HumanoidAppearance
-    species: Moth
-    hideLayersOnEquip:
-    - HeadTop
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -24,7 +20,7 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
-    allowedEmotes: ['Chitter', 'Squeak'] 
+    allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth
   - type: Butcherable
@@ -186,8 +182,6 @@
   id: MobMothDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
-    species: Moth
   - type: Inventory
     speciesId: moth
     femaleDisplacements:

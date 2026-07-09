@@ -86,8 +86,6 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
-  - type: HumanoidAppearance
-    species: Human
   - type: TypingIndicator
   - type: SlowOnDamage
     speedModifierThresholds:
@@ -364,8 +362,6 @@
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
   - type: Appearance
-  - type: HumanoidAppearance
-    species: Human
   - type: Body
     prototype: Human
     requiredLegs: 2

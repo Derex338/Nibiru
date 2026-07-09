@@ -21,9 +21,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Tools.Systems;
 
-public sealed class ToolRefinablSystem : EntitySystem
+public sealed partial class ToolRefinablSystem : EntitySystem
 {
-<<<<<<< Updated upstream
     [Dependency] private SharedToolSystem _toolSystem = default!;
     [Dependency] private GibbingSystem _gib = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -33,11 +32,6 @@ public sealed class ToolRefinablSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
-=======
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
->>>>>>> Stashed changes
 
     public override void Initialize()
     {

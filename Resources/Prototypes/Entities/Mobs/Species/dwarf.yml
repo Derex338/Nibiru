@@ -51,8 +51,6 @@
     speechSounds: Bass
     allowedEmotes: ['Bruh'] # Adventure
   - type: DwarfAccent # Adventure-Accent
-  - type: HumanoidAppearance
-    species: Dwarf
     hideLayersOnEquip:
     - Hair
     - Snout

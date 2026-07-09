@@ -135,10 +135,6 @@
     spawned:
     - id: FoodMeatLizard
       amount: 5
-  - type: HumanoidAppearance
-    species: Drask
-    hideLayersOnEquip:
-    - HeadSide
   - type: Inventory
     speciesId: drask
     templateId: Drask
@@ -197,8 +193,6 @@
   id: MobDraskDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
-    species: Drask
   - type: Inventory
     templateId: Drask
   - type: ScaleVisuals

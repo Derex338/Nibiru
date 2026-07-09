@@ -22,9 +22,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 36 # 5 parts * 3 slices
-  - type: SliceableFood
-    count: 5
-    slice: CEFoodCheesePart
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodCheesePart
+      amount: 5
   - type: Tag
     tags: [ Food ]
   - type: CEFoodTag
@@ -60,9 +63,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 7.2 # 3 slices
-  - type: SliceableFood
-    count: 3
-    slice: CEFoodCheeseSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodCheeseSlice
+      amount: 3
   - type: Tag
     tags: [ Food ]
   - type: CEFoodTag
@@ -126,9 +132,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 52.5 # 15 * 1.5 (50% more)
-  - type: SliceableFood
-    count: 5
-    slice: CEFoodBlueCheesePart
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodBlueCheesePart
+      amount: 5
   - type: StaticPrice
     price: 20
   - type: CEFoodTag
@@ -162,9 +171,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 10.5 # 52.5/5
-  - type: SliceableFood
-    count: 3
-    slice: CEFoodBlueCheeseSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodBlueCheeseSlice
+      amount: 3
   - type: StaticPrice
     price: 4
   - type: CEFoodTag
@@ -225,9 +237,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 75 # (100% more)
-  - type: SliceableFood
-    count: 5
-    slice: CEFoodAgedCheesePart
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodAgedCheesePart
+      amount: 5
   - type: StaticPrice
     price: 35
   - type: CEFoodTag
@@ -261,9 +276,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 15 # 75/5
-  - type: SliceableFood
-    count: 3
-    slice: CEFoodAgedCheeseSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodAgedCheeseSlice
+      amount: 3
   - type: StaticPrice
     price: 7
   - type: CEFoodTag

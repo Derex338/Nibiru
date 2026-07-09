@@ -5,8 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Store;
 using Content.Shared.VoiceMask;
-//using Content.Shared.Corvax.TTS;
-using Content.Shared._Adventure.TTS;
+using Content.Shared.Corvax.TTS;
 
 namespace Content.Shared.Implants;
 

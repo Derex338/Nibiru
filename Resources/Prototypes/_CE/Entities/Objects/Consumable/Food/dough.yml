@@ -23,9 +23,12 @@
           Quantity: 20
         - ReagentId: UncookedAnimalProteins
           Quantity: 2
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodDoughMedium
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodDoughMedium
+      amount: 4
   - type: CETemperatureTransformation
     entries:
     - temperatureRange: 400, 500
@@ -52,9 +55,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 22
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodBreadSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodBreadSlice
+      amount: 4
   - type: CETemperatureTransformation
     autoTransformOnCooked: false
     entries:

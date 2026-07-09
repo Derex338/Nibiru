@@ -136,7 +136,9 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Prying
     pryPowered: false
     force: true
@@ -232,10 +234,6 @@
     spawned:
     - id: FoodMeatSpider
       amount: 5
-  - type: HumanoidAppearance
-    species: InsectSerpentide
-    hideLayersOnEquip:
-    - HeadSide
   - type: Inventory
     templateId: InsectSerpentide
     femaleDisplacements:
@@ -286,8 +284,6 @@
   id: MobInsectDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
-    species: InsectSerpentide
   - type: Inventory
     templateId: InsectSerpentide
     femaleDisplacements:

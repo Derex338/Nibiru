@@ -34,10 +34,12 @@
           Quantity: 1
         - ReagentId: Bicaridine
           Quantity: 10
-  - type: SliceableFood
-    count: 2
-    sliceTime: 1.5
-    slice: CESeedPoppy
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.5
+    refineResult:
+    - id: CESeedPoppy
+      amount: 2
 
 - type: entity
   id: CEFoodAloe
@@ -75,10 +77,12 @@
           Quantity: 5
         - ReagentId: Dermaline
           Quantity: 5
-  - type: SliceableFood
-    count: 2
-    sliceTime: 1.5
-    slice: CESeedAloe
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.5
+    refineResult:
+    - id: CESeedAloe
+      amount: 2
 
 - type: stack
   id: CEFoodAloe

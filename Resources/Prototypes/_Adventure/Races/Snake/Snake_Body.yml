@@ -133,7 +133,7 @@
 
 - type: entity
   id: PartSnake
-  parent: [BaseItem, BasePart]
+  parent: [BaseItem, OrganBaseOrganic]
   name: "Часть тела зераха"
   abstract: true
   components:
@@ -148,7 +148,7 @@
 - type: entity
   id: TorsoSnake
   name: "Туловище зераха"
-  parent: [PartSnake, BaseTorso]
+  parent: [PartSnake, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/Species/parts.rsi
@@ -162,7 +162,7 @@
 - type: entity
   id: HeadSnake
   name: "Голова зераха"
-  parent: [PartSnake, BaseHead]
+  parent: [PartSnake, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/Species/parts.rsi
@@ -176,7 +176,7 @@
 - type: entity
   id: LeftArmSnake
   name: "Левая рука зераха"
-  parent: [PartSnake, BaseLeftArm]
+  parent: [PartSnake, OrganBaseArmLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/Species/parts.rsi
@@ -185,7 +185,7 @@
 - type: entity
   id: RightArmSnake
   name: "Правая рука зераха"
-  parent: [PartSnake, BaseRightArm]
+  parent: [PartSnake, OrganBaseArmRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/Species/parts.rsi
@@ -194,7 +194,7 @@
 - type: entity
   id: LeftHandSnake
   name: "Левая рука зераха"
-  parent: [PartSnake, BaseLeftHand]
+  parent: [PartSnake, OrganBaseHandLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/Species/parts.rsi
@@ -203,7 +203,7 @@
 - type: entity
   id: RightHandSnake
   name: "Правая рука зераха"
-  parent: [PartSnake, BaseRightHand]
+  parent: [PartSnake, OrganBaseHandRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/Species/parts.rsi

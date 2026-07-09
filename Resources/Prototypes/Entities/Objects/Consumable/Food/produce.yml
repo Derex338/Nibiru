@@ -203,7 +203,12 @@
         Blunt: 10
   - type: Produce
     seedId: towercap
-  - type: Log
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineResult:
+    - id: CEWoodenPlanks1
+      amount: 2
+      maxAmount: 4
   - type: Material #Nibiru
   - type: Stack
     stackType: Log

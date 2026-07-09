@@ -71,7 +71,6 @@
   id: CEBaseWeaponSharp
   categories: [ HideSpawnMenu, ForkFiltered ]
   components:
-  - type: Sharp
   - type: UseDelay
   - type: Tool
     qualities:

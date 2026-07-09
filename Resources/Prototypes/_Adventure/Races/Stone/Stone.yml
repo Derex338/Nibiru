@@ -155,8 +155,6 @@
       types:
         Blunt: 15
         Structural: 10
-  - type: HumanoidAppearance
-    species: Stone
   - type: Icon
     sprite: _Adventure/Races/Stone/Species/parts.rsi
     state: full
@@ -240,8 +238,6 @@
   id: MobStoneDummy
   noSpawn: true
   components:
-    - type: HumanoidAppearance
-      species: Stone
     - type: Inventory
       templateId: Stone
 

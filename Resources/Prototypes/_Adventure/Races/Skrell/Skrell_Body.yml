@@ -54,7 +54,7 @@
 
 - type: entity
   id: PartSkrell
-  parent: [BaseItem, BasePart]
+  parent: [BaseItem, OrganBaseOrganic]
   name: "Часть тела скрелла"
   abstract: true
   components:
@@ -69,7 +69,7 @@
 - type: entity
   id: TorsoSkrell
   name: "Туловище скрелла"
-  parent: [PartSkrell, BaseTorso]
+  parent: [PartSkrell, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -83,7 +83,7 @@
 - type: entity
   id: HeadSkrell
   name: "Голова скрелла"
-  parent: [PartSkrell, BaseHead]
+  parent: [PartSkrell, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -97,7 +97,7 @@
 - type: entity
   id: LeftArmSkrell
   name: "Левая рука скрелла"
-  parent: [PartSkrell, BaseLeftArm]
+  parent: [PartSkrell, OrganBaseArmLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -106,7 +106,7 @@
 - type: entity
   id: RightArmSkrell
   name: "Правая рука скрелла"
-  parent: [PartSkrell, BaseRightArm]
+  parent: [PartSkrell, OrganBaseArmRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -115,7 +115,7 @@
 - type: entity
   id: LeftHandSkrell
   name: "Левая рука скрелла"
-  parent: [PartSkrell, BaseLeftHand]
+  parent: [PartSkrell, OrganBaseHandLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -124,7 +124,7 @@
 - type: entity
   id: RightHandSkrell
   name: "Правая рука скрелла"
-  parent: [PartSkrell, BaseRightHand]
+  parent: [PartSkrell, OrganBaseHandRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -133,7 +133,7 @@
 - type: entity
   id: LeftLegSkrell
   name: "Левая нога скрелла"
-  parent: [PartSkrell, BaseLeftLeg]
+  parent: [PartSkrell, OrganBaseLegLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -142,7 +142,7 @@
 - type: entity
   id: RightLegSkrell
   name: "Правая нога скрелла"
-  parent: [PartSkrell, BaseRightLeg]
+  parent: [PartSkrell, OrganBaseLegRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -151,7 +151,7 @@
 - type: entity
   id: LeftFootSkrell
   name: "Левая нога скрелла"
-  parent: [PartSkrell, BaseLeftFoot]
+  parent: [PartSkrell, OrganBaseFootLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -160,7 +160,7 @@
 - type: entity
   id: RightFootSkrell
   name: "Правая нога скрелла"
-  parent: [PartSkrell, BaseRightFoot]
+  parent: [PartSkrell, OrganBaseFootRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi

@@ -141,17 +141,17 @@ public abstract partial class CESharedCookingSystem : EntitySystem
         //If we have a lot of trash, we put 1 random trash in each plate. If it's a last plate (out of solution in cooker), we put all the remaining trash in it.
         if (source.Comp.FoodData?.Trash.Count > 0)
         {
-            if (sourceSolution.Volume <= 0)
-                holderFoodComp.Trash.AddRange(source.Comp.FoodData.Trash);
-            else
-            {
+            //if (sourceSolution.Volume <= 0)
+                //holderFoodComp.Trash.AddRange(source.Comp.FoodData.Trash);
+            //else
+            //{
                 if (_net.IsServer)
                 {
                     var newTrash = _random.Pick(source.Comp.FoodData.Trash);
                     source.Comp.FoodData.Trash.Remove(newTrash);
-                    holderFoodComp.Trash.Add(newTrash);
+                    //holderFoodComp.Trash.Add(newTrash);
                 }
-            }
+            //}
         }
 
         if (source.Comp.FoodData is not null)

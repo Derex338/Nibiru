@@ -3,21 +3,23 @@
   parent: BaseItem
   name: wooden log
   description: A piece of unprocessed wood. Good material for building, or starting a fire.
-  categories: [ ForkFiltered ]
+  categories:
+  - ForkFiltered
   components:
   - type: Item
     size: Normal
   - type: Sprite
     sprite: _CE/Objects/Materials/wood.rsi
     layers:
-      - state: log
-        map: ["random"]
+    - state: log
+      map:
+      - "random"
   - type: RandomSprite
     available:
-      - random:
-          log: ""
-          log_2: ""
-          log_3: ""
+    - random:
+        log: ""
+        log_2: ""
+        log_3: ""
   #- type: Tag
   #  tags:
   #  - CEFireplaceFuel
@@ -31,24 +33,21 @@
     damage:
       types:
         Heat: 1
-  - type: Log
-    spawnedPrototype: CEWoodenPlanks1
-    spawnCount: 3
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - "Destruction"
   - type: Material
   - type: Stack
     stackType: Log
@@ -58,13 +57,19 @@
       CEWood: 30
   - type: Fuel
     value: 270
+  - type: ToolRefinable
+    refineResult:
+    - id: CEWoodenPlanks1
+      amount: 3
+    qualityNeeded: Slicing
 
 - type: entity
   id: CEWoodenPlanks1
   parent: BaseItem
   name: wooden planks
   description: Treated and ready-to-use wood.
-  categories: [ ForkFiltered ]
+  categories:
+  - ForkFiltered
   suffix: 1
   components:
   - type: Item
@@ -72,8 +77,9 @@
   - type: Sprite
     sprite: _CE/Objects/Materials/wood.rsi
     layers:
-      - state: planks
-        map: ["base"]
+    - state: planks
+      map:
+      - "base"
   #- type: Tag
   #  tags:
   #  - CEFireplaceFuel
@@ -107,15 +113,15 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts:
+        - "Destruction"
   - type: FloorTile
     placeTileSound:
       path: /Audio/Items/genhit.ogg
@@ -123,10 +129,12 @@
         variation: 0.03
         volume: 2
     outputs:
-      - CEPlanks
-  - type: Log
-    spawnedPrototype: WoodStick1
-    spawnCount: 4
+    - CEPlanks
+  - type: ToolRefinable
+    refineResult:
+    - id: WoodStick1
+      amount: 4
+    qualityNeeded: Slicing
 
 - type: entity
   id: CEWoodenPlanks10

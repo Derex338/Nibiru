@@ -126,10 +126,12 @@
   - type: Stack
     stackType: Herb
     baseLayer: base
-  - type: SliceableFood
-    count: 1
-    sliceTime: 1.0
-    slice: CESeedHighBush
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CESeedHighBush
+      amount: 1
 
 - type: entity
   parent: BunchHerb

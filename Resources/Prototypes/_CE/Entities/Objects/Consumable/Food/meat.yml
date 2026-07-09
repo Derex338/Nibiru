@@ -62,9 +62,12 @@
   - type: Sprite
     sprite: _CE/Objects/Consumable/Food/meat.rsi
     state: sheepmeat
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatLambSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatLambSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -93,9 +96,12 @@
   components:
   - type: Sprite
     state: sheepmeat_cooked
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatLambCookedSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatLambCookedSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -541,9 +547,12 @@
         map: [ "random" ]
   - type: Item
     size: Small
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatPigSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatPigSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -576,9 +585,12 @@
     layers:
       - state: pig_meat1_cooked
         map: [ "random" ]
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatPigCookedSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatPigCookedSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -669,9 +681,12 @@
         map: [ "random" ]
   - type: Item
     size: Small
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatPigSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatBoarSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -705,9 +720,12 @@
     layers:
       - state: pig_meat2_cooked
         map: [ "random" ]
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatPigCookedSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatBoarCookedSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -801,9 +819,12 @@
         map: [ "random" ]
   - type: Item
     size: Small
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatMonsterSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatMonsterSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -839,9 +860,12 @@
       - state: mole_meat1 # We need fried sprites
         map: [ "random" ]
         color: "#c98367"
-  - type: SliceableFood
-    count: 4
-    slice: CEFoodMeatMonsterCookedSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatMonsterCookedSlice
+      amount: 4
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1051,9 +1075,12 @@
   - type: Sprite
     sprite: _CE/Objects/Consumable/Food/meat.rsi
     state: flem_torso
-  - type: SliceableFood
-    count: 3
-    slice: CEFoodMeatFlemTorsoCut
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatFlemTorsoCut
+      amount: 3
   - type: Item
     size: Normal
     shape:
@@ -1083,9 +1110,12 @@
   components:
   - type: Sprite
     state: flem_torso_cooked
-  - type: SliceableFood
-    count: 3
-    slice: CEFoodMeatFlemTorsoCookedCut
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 1.0
+    refineResult:
+    - id: CEFoodMeatFlemTorsoCookedCut
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:

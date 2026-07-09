@@ -35,8 +35,6 @@
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
-  - type: HumanoidAppearance
-    species: SlimePerson
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
@@ -131,8 +129,6 @@
   id: MobSlimePersonDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
-    species: SlimePerson
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

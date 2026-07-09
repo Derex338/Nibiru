@@ -166,7 +166,6 @@ namespace Content.Client.Construction.UI
             _constructionView.ResetPlacement();
         }
 
-        private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         private void OnViewRecipeSelected(object? sender, ConstructionMenu.ConstructionMenuListData? item)
         {
             if (item is null)
@@ -176,7 +175,7 @@ namespace Content.Client.Construction.UI
                 return;
             }
 
-            _selected = item.Prototype;
+            _selected = item.ConstructionProto;
 
             if (_placementManager is { IsActive: true, Eraser: false })
                 UpdateGhostPlacement();
@@ -291,6 +290,18 @@ namespace Content.Client.Construction.UI
                 (a, b) => string.Compare(a.ConstructionProto.Name, b.ConstructionProto.Name, StringComparison.InvariantCulture));
 
             return recipes;
+        }
+
+        public void OnConstructionCrafts(List<ProtoId<ConstructionPrototype>> crafts, object? sender)
+        {
+            foreach (var craft in crafts)
+            {
+                if (!ConsRecipes.Contains(craft))
+                    ConsRecipes.Add(craft);
+            }
+
+            PopulateCategories(_selectedCategory);
+            OnViewPopulateRecipes(_constructionView, (string.Empty, _selectedCategory));
         }
 
         private void PopulateInfo(ConstructionPrototype? prototype)
@@ -724,7 +735,7 @@ namespace Content.Client.Construction.UI
 
             foreach (var id in favorites)
             {
-                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe, logError: false))
+                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe))
                     _favoritedRecipes.Add(recipe);
             }
 

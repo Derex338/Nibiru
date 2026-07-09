@@ -94,7 +94,7 @@
 
 - type: entity
   id: PartPigMan
-  parent: [BaseItem, BasePart]
+  parent: [BaseItem, OrganBaseOrganic]
   name: "часть тела троттина"
   abstract: true
   components:
@@ -111,7 +111,7 @@
 - type: entity
   id: TorsoPigMan
   name: "Туловище троттина"
-  parent: [PartPigMan, BaseTorso]
+  parent: [PartPigMan, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -127,7 +127,7 @@
 - type: entity
   id: HeadPigMan
   name: "Голова троттина"
-  parent: [PartPigMan, BaseHead]
+  parent: [PartPigMan, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -143,7 +143,7 @@
 - type: entity
   id: LeftArmPigMan
   name: "Левая рука троттина"
-  parent: [PartPigMan, BaseLeftArm]
+  parent: [PartPigMan, OrganBaseArmLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -152,7 +152,7 @@
 - type: entity
   id: RightArmPigMan
   name: "Правая рука троттина"
-  parent: [PartPigMan, BaseRightArm]
+  parent: [PartPigMan, OrganBaseArmRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -161,7 +161,7 @@
 - type: entity
   id: LeftHandPigMan
   name: "Левая рука троттина"
-  parent: [PartPigMan, BaseLeftHand]
+  parent: [PartPigMan, OrganBaseHandLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -170,7 +170,7 @@
 - type: entity
   id: RightHandPigMan
   name: "Правая рука троттина"
-  parent: [PartPigMan, BaseRightHand]
+  parent: [PartPigMan, OrganBaseHandRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -179,7 +179,7 @@
 - type: entity
   id: LeftLegPigMan
   name: "Левая нога троттина"
-  parent: [PartPigMan, BaseLeftLeg]
+  parent: [PartPigMan, OrganBaseLegLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -191,7 +191,7 @@
 - type: entity
   id: RightLegPigMan
   name: "Правая нога троттина"
-  parent: [PartPigMan, BaseRightLeg]
+  parent: [PartPigMan, OrganBaseLegRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -203,7 +203,7 @@
 - type: entity
   id: LeftFootPigMan
   name: "Левая нога троттина"
-  parent: [PartPigMan, BaseLeftFoot]
+  parent: [PartPigMan, OrganBaseFootLeft]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
@@ -212,7 +212,7 @@
 - type: entity
   id: RightFootPigMan
   name: "Правая нога троттина"
-  parent: [PartPigMan, BaseRightFoot]
+  parent: [PartPigMan, OrganBaseFootRight]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi

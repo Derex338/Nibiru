@@ -1,13 +1,15 @@
-using Content.Shared._Adventure.TTS;
-using System.Linq;
-using System.Text.RegularExpressions;
+using Content.Corvax.Interfaces.Shared; // Corvax-Sponsors
+using Content.Shared._Nibiru.Factions;
 using Content.Shared.CCVar;
+using Content.Shared.Corvax.TTS;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Robust.Shared;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -15,7 +17,13 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Utility;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Preferences
 {
@@ -24,15 +32,11 @@ namespace Content.Shared.Preferences
     /// </summary>
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed partial class HumanoidCharacterProfile : ICharacterProfile
+    public sealed partial class HumanoidCharacterProfile
     {
-        private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-zА-Яа-яёЁ0-9 '\-,.]"); // c4llv07e: Allow cyrillic names
+        public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
+        private static readonly Regex RestrictedNameRegex = new("[^А-Яа-яёЁ0-9' -]"); // Corvax-Localization
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
-
-        // Adventure tts begin
-        [DataField]
-        public string Voice { get; set; } = TTSConfig.DefaultVoice;
-        // Adventure tts end
 
         /// <summary>
         /// Job preferences for initial spawn.
@@ -78,7 +82,10 @@ namespace Content.Shared.Preferences
         /// Associated <see cref="SpeciesPrototype"/> for this profile.
         /// </summary>
         [DataField]
-        public ProtoId<SpeciesPrototype> Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
+        public ProtoId<SpeciesPrototype> Species { get; set; } = DefaultSpecies;
+
+        [DataField] //Corvax-TTS
+        public string Voice { get; set; } = HumanoidProfileSystem.DefaultVoice;
 
         [DataField]
         public int Age { get; set; } = 18;
@@ -88,11 +95,6 @@ namespace Content.Shared.Preferences
 
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
-
-        /// <summary>
-        /// <see cref="Appearance"/>
-        /// </summary>
-        public ICharacterAppearance CharacterAppearance => Appearance;
 
         /// <summary>
         /// Stores markings, eye colors, etc for the profile.
@@ -105,6 +107,45 @@ namespace Content.Shared.Preferences
         /// </summary>
         [DataField]
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
+
+        [DataField]
+        public string FactionName { get; set; } = string.Empty;
+
+        [DataField]
+        public string FactionDescription { get; set; } = string.Empty;
+
+        [DataField]
+        public string FactionColor { get; set; } = "#FFFFFF";
+
+        [DataField]
+        public string FactionIcon { get; set; } = "/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png";
+
+        [DataField]
+        public bool FactionRecruiting { get; set; } = true;
+
+        [DataField]
+        public List<Color> FactionLogo16 { get; set; } = new();
+
+        [DataField]
+        public List<Color> FactionLogo8 { get; set; } = new();
+
+        [DataField]
+        public Color FactionLogoBackground { get; set; } = Color.Transparent;
+
+        [DataField]
+        public List<string> FactionFilterSpecies { get; set; } = new();
+
+        [DataField]
+        public string FactionFilterGender { get; set; } = "All";
+
+        [DataField]
+        public List<Color> FactionFilterSkinColors { get; set; } = new();
+
+        [DataField]
+        public string FactionFilterName { get; set; } = string.Empty;
+
+        [DataField]
+        public List<FactionRole> FactionRoles { get; set; } = new();
 
         /// <summary>
         /// <see cref="_jobPriorities"/>
@@ -132,6 +173,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            string voice, // Corvax-TTS
             int age,
             Sex sex,
             Gender gender,
@@ -142,11 +184,24 @@ namespace Content.Shared.Preferences
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
             Dictionary<string, RoleLoadout> loadouts,
-            string voice) // c4llv07e tts
+            string factionName = "",
+            string factionDescription = "",
+            string factionColor = "#FFFFFF",
+            string factionIcon = "/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png",
+            bool factionRecruiting = true,
+            List<Color>? factionLogo16 = null,
+            List<Color>? factionLogo8 = null,
+            Color? factionLogoBackground = null,
+            List<string>? factionFilterSpecies = null,
+            string factionFilterGender = "All",
+            List<Color>? factionFilterSkinColors = null,
+            string factionFilterName = "",
+            List<FactionRole>? factionRoles = null)
         {
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Voice = voice; // Corvax-TTS
             Age = age;
             Sex = sex;
             Gender = gender;
@@ -157,10 +212,19 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
-
-            // c4llv07e tts begin
-            Voice = voice;
-            // c4llv07e tts end
+            FactionName = factionName;
+            FactionDescription = factionDescription;
+            FactionColor = factionColor;
+            FactionIcon = factionIcon;
+            FactionRecruiting = factionRecruiting;
+            FactionLogo16 = factionLogo16 ?? new ();
+            FactionLogo8 = factionLogo8 ?? new ();
+            FactionLogoBackground = factionLogoBackground ?? Color.Transparent;
+            FactionFilterSpecies = factionFilterSpecies ?? new ();
+            FactionFilterGender = factionFilterGender;
+            FactionFilterSkinColors = factionFilterSkinColors ?? new ();
+            FactionFilterName = factionFilterName;
+            FactionRoles = factionRoles ?? new ();
 
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
@@ -182,6 +246,7 @@ namespace Content.Shared.Preferences
             : this(other.Name,
                 other.FlavorText,
                 other.Species,
+                other.Voice,
                 other.Age,
                 other.Sex,
                 other.Gender,
@@ -192,13 +257,25 @@ namespace Content.Shared.Preferences
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts),
-                other.Voice) // c4llv07e tts
+                other.FactionName,
+                other.FactionDescription,
+                other.FactionColor,
+                other.FactionIcon,
+                other.FactionRecruiting,
+                new List<Color>(other.FactionLogo16),
+                new List<Color>(other.FactionLogo8),
+                other.FactionLogoBackground,
+                new List<string>(other.FactionFilterSpecies),
+                other.FactionFilterGender,
+                new List<Color>(other.FactionFilterSkinColors),
+                other.FactionFilterName,
+                new List<FactionRole>(other.FactionRoles))
         {
         }
 
         /// <summary>
         ///     Get the default humanoid character profile, using internal constant values.
-        ///     Defaults to <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/> for the species.
+        ///     Defaults to <see cref="DefaultSpecies"/> for the species.
         /// </summary>
         /// <returns></returns>
         public HumanoidCharacterProfile()
@@ -208,16 +285,19 @@ namespace Content.Shared.Preferences
         /// <summary>
         ///     Return a default character profile, based on species.
         /// </summary>
-        /// <param name="species">The species to use in this default profile. The default species is <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/>.</param>
+        /// <param name="species">The species to use in this default profile. The default species is <see cref="DefaultSpecies"/>.</param>
+        /// <param name="sex">Self explanatory.</param>
         /// <returns>Humanoid character profile with default settings.</returns>
-        public static HumanoidCharacterProfile DefaultWithSpecies(string? species = null)
+        public static HumanoidCharacterProfile DefaultWithSpecies(ProtoId<SpeciesPrototype>? species = null, Sex? sex = null)
         {
-            species ??= SharedHumanoidAppearanceSystem.DefaultSpecies;
+            species ??= HumanoidCharacterProfile.DefaultSpecies;
+            sex ??= Sex.Male;
 
             return new()
             {
-                Species = species,
-                Appearance = HumanoidCharacterAppearance.DefaultWithSpecies(species),
+                Species = species.Value,
+                Sex = sex.Value,
+                Appearance = HumanoidCharacterAppearance.DefaultWithSpecies(species.Value, sex.Value),
             };
         }
 
@@ -238,7 +318,7 @@ namespace Content.Shared.Preferences
 
         public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
         {
-            species ??= SharedHumanoidAppearanceSystem.DefaultSpecies;
+            species ??= HumanoidCharacterProfile.DefaultSpecies;
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
@@ -251,14 +331,12 @@ namespace Content.Shared.Preferences
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
             }
 
-            // c4llv07e tts begin
-            var voices = prototypeManager.EnumeratePrototypes<TTSVoicePrototype>().ToArray();
-            string voiceId = string.Empty;
-            if (voices.Count() != 0)
-            {
-                voiceId = random.Pick(voices).ID;
-            }
-            // c4llv07e tts end
+            // Corvax-TTS-Start
+            var voiceId = random.Pick(prototypeManager
+                .EnumeratePrototypes<TTSVoicePrototype>()
+                .Where(o => CanHaveVoice(o, sex)).ToArray()
+            ).ID;
+            // Corvax-TTS-End
 
             var gender = Gender.Epicene;
 
@@ -281,8 +359,8 @@ namespace Content.Shared.Preferences
                 Age = age,
                 Gender = gender,
                 Species = species,
+                Voice = voiceId, // Corvax-TTS
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
-                Voice = voiceId, // c4llv07e tts
             };
         }
 
@@ -316,12 +394,12 @@ namespace Content.Shared.Preferences
             return new(this) { Species = species };
         }
 
-        // c4llv07e tts begin
+        // Corvax-TTS-Start
         public HumanoidCharacterProfile WithVoice(string voice)
         {
             return new(this) { Voice = voice };
         }
-        // c4llv07e tts end
+        // Corvax-TTS-End
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
@@ -476,6 +554,71 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile WithFactionName(string name)
+        {
+            return new(this) { FactionName = name };
+        }
+
+        public HumanoidCharacterProfile WithFactionDescription(string desc)
+        {
+            return new(this) { FactionDescription = desc };
+        }
+
+        public HumanoidCharacterProfile WithFactionColor(string color)
+        {
+            return new(this) { FactionColor = color };
+        }
+
+        public HumanoidCharacterProfile WithFactionIcon(string icon)
+        {
+            return new(this) { FactionIcon = icon };
+        }
+
+        public HumanoidCharacterProfile WithFactionRecruiting(bool recruiting)
+        {
+            return new(this) { FactionRecruiting = recruiting };
+        }
+
+        public HumanoidCharacterProfile WithFactionLogo16(List<Color> logo16)
+        {
+            return new(this) { FactionLogo16 = new List<Color>(logo16) };
+        }
+
+        public HumanoidCharacterProfile WithFactionLogo8(List<Color> logo8)
+        {
+            return new(this) { FactionLogo8 = new List<Color>(logo8) };
+        }
+
+        public HumanoidCharacterProfile WithFactionLogoBackground(Color bg)
+        {
+            return new(this) { FactionLogoBackground = bg };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterSpecies(List<string> species)
+        {
+            return new(this) { FactionFilterSpecies = new List<string>(species) };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterGender(string gender)
+        {
+            return new(this) { FactionFilterGender = gender };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterSkinColors(List<Color> skinColors)
+        {
+            return new(this) { FactionFilterSkinColors = new List<Color>(skinColors) };
+        }
+
+        public HumanoidCharacterProfile WithFactionFilterName(string filterName)
+        {
+            return new(this) { FactionFilterName = filterName };
+        }
+
+        public HumanoidCharacterProfile WithFactionRoles(List<FactionRole> roles)
+        {
+            return new(this) { FactionRoles = new List<FactionRole>(roles) };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -484,9 +627,8 @@ namespace Content.Shared.Preferences
                 ("age", Age)
             );
 
-        public bool MemberwiseEquals(ICharacterProfile maybeOther)
+        public bool MemberwiseEquals(HumanoidCharacterProfile other)
         {
-            if (maybeOther is not HumanoidCharacterProfile other) return false;
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
@@ -499,19 +641,39 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
-            return Appearance.MemberwiseEquals(other.Appearance);
+            if (FactionName != other.FactionName) return false;
+            if (FactionDescription != other.FactionDescription) return false;
+            if (FactionColor != other.FactionColor) return false;
+            if (FactionIcon != other.FactionIcon) return false;
+            if (FactionRecruiting != other.FactionRecruiting) return false;
+            if (!FactionLogo16.SequenceEqual(other.FactionLogo16)) return false;
+            if (!FactionLogo8.SequenceEqual(other.FactionLogo8)) return false;
+            if (FactionLogoBackground != other.FactionLogoBackground) return false;
+            if (!FactionFilterSpecies.SequenceEqual(other.FactionFilterSpecies)) return false;
+            if (FactionFilterGender != other.FactionFilterGender) return false;
+            if (!FactionFilterSkinColors.SequenceEqual(other.FactionFilterSkinColors)) return false;
+            if (FactionFilterName != other.FactionFilterName) return false;
+            return Appearance.Equals(other.Appearance);
         }
 
-        public void EnsureValid(ICommonSession session, IDependencyCollection collection)
+        public void EnsureValid(ICommonSession session, IDependencyCollection collection, string[] sponsorPrototypes)
         {
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
-                Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
+                Species = HumanoidCharacterProfile.DefaultSpecies;
                 speciesPrototype = prototypeManager.Index(Species);
             }
+
+            // Corvax-Sponsors-Start: Reset to human if player not sponsor
+            if (speciesPrototype.SponsorOnly && !sponsorPrototypes.Contains(Species.Id))
+            {
+                Species = HumanoidCharacterProfile.DefaultSpecies;
+                speciesPrototype = prototypeManager.Index(Species);
+            }
+            // Corvax-Sponsors-End
 
             var sex = Sex switch
             {
@@ -580,7 +742,7 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
             }
 
-            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex, sponsorPrototypes);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
             {
@@ -633,6 +795,17 @@ namespace Content.Shared.Preferences
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
+            FactionName = string.IsNullOrEmpty(FactionName) ? string.Empty : FactionName;
+            FactionDescription = FactionDescription ?? string.Empty;
+            FactionColor = FactionColor ?? string.Empty;
+            FactionIcon = FactionIcon ?? string.Empty;
+            FactionRecruiting = FactionRecruiting;
+            FactionLogo16 = FactionLogo16 ?? new();
+            FactionLogo8 = FactionLogo8 ?? new();
+            FactionFilterSpecies = FactionFilterSpecies ?? new();
+            FactionFilterGender = FactionFilterGender ?? "All";
+            FactionFilterSkinColors = FactionFilterSkinColors ?? new();
+            FactionFilterName = FactionFilterName ?? string.Empty;
 
             _jobPriorities.Clear();
 
@@ -649,11 +822,11 @@ namespace Content.Shared.Preferences
             _traitPreferences.Clear();
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
-            // c4llv07e tts begin
+            // Corvax-TTS-Start
             prototypeManager.TryIndex<TTSVoicePrototype>(Voice, out var voice);
-            if (voice is null)
-                Voice = TTSConfig.DefaultSexVoice[sex];
-            // c4llv07e tts end
+            if (voice is null || !CanHaveVoice(voice, Sex))
+                Voice = HumanoidProfileSystem.DefaultSexVoice[sex];
+            // Corvax-TTS-End
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -717,10 +890,18 @@ namespace Content.Shared.Preferences
             return result;
         }
 
-        public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
+        // Corvax-TTS-Start
+        // SHOULD BE NOT PUBLIC, BUT....
+        public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
+        {
+            return voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
+        }
+        // Corvax-TTS-End
+
+        public HumanoidCharacterProfile Validated(ICommonSession session, IDependencyCollection collection, string[] sponsorPrototypes)// Corvax-Sponsors
         {
             var profile = new HumanoidCharacterProfile(this);
-            profile.EnsureValid(session, collection);
+            profile.EnsureValid(session, collection, sponsorPrototypes);
             return profile;
         }
 
@@ -802,6 +983,65 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile Clone()
         {
             return new HumanoidCharacterProfile(this);
+        }
+
+        public DataNode ToDataNode(ISerializationManager? serialization = null, IConfigurationManager? configuration = null)
+        {
+            IoCManager.Resolve(ref serialization);
+            IoCManager.Resolve(ref configuration);
+
+            var export = new HumanoidProfileExportV2()
+            {
+                ForkId = configuration.GetCVar(CVars.BuildForkId),
+                Profile = this,
+            };
+
+            var dataNode = serialization.WriteValue(export, alwaysWrite: true, notNullableOverride: true);
+            return dataNode;
+        }
+
+        public static HumanoidCharacterProfile FromStream(Stream stream, ICommonSession session, ISerializationManager? serialization = null, IConfigurationManager? configuration = null)
+        {
+            IoCManager.Resolve(ref serialization);
+            IoCManager.Resolve(ref configuration);
+
+            using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
+            var yamlStream = new YamlStream();
+            yamlStream.Load(reader);
+
+            var root = yamlStream.Documents[0].RootNode;
+            HumanoidCharacterProfile profile;
+            if (root["version"].Equals(new YamlScalarNode("1")))
+            {
+                var export = serialization.Read<HumanoidProfileExportV1>(root.ToDataNode(), notNullableOverride: true);
+                profile = export.ToV2().Profile;
+            }
+            else if (root["version"].Equals(new YamlScalarNode("2")))
+            {
+                var export = serialization.Read<HumanoidProfileExportV2>(root.ToDataNode(), notNullableOverride: true);
+                profile = export.Profile;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unknown version {root["version"]}");
+            }
+
+            var collection = IoCManager.Instance;
+            // Corvax-Sponsors-Start
+            string[] sponsorPrototypes;
+            try
+            {
+                var sponsorsManager = IoCManager.Resolve<ISharedSponsorsManager>();
+                sponsorPrototypes = sponsorsManager.TryGetServerPrototypes(session.UserId, out var prototypes)
+                    ? prototypes.ToArray() : Array.Empty<string>();
+            }
+            catch (Exception)
+            {
+                sponsorPrototypes = Array.Empty<string>();
+            }
+            profile.EnsureValid(session, collection!, sponsorPrototypes);
+            // Corvax-Sponsors-End
+            return profile;
         }
     }
 }

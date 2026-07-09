@@ -165,8 +165,6 @@
     damage:
       types:
         Blunt: 10
-  - type: HumanoidAppearance
-    species: Synth
   - type: Icon
     sprite: _Adventure/Races/IPC/Species/parts.rsi
     state: full
@@ -279,8 +277,6 @@
   id: MobSynthDummy
   noSpawn: true
   components:
-    - type: HumanoidAppearance
-      species: Synth
     - type: Inventory
       templateId: Synth
       displacements:

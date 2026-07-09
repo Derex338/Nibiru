@@ -51,10 +51,12 @@
         reagents:
         - ReagentId: CENutriment
           Quantity: 12
-  - type: SliceableFood
-    count: 5
-    sliceTime: 2
-    slice: CEFoodPumpkinSlice
+  - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineTime: 2.0
+    refineResult:
+    - id: CEFoodPumpkinSlice
+      amount: 5
   - type: CEFoodTag
     tags:
     - CEVegetable

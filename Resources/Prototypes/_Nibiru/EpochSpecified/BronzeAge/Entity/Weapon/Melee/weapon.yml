@@ -66,7 +66,6 @@
   - type: Tag
     tags:
     - FireAxe
-  - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
@@ -105,6 +104,7 @@
   - type: Tool
     qualities:
       - Prying
+      - Slicing
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
@@ -364,7 +364,9 @@
   - type: Tag
     tags:
     - FireAxe
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
     state: icon

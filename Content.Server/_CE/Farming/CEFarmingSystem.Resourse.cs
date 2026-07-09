@@ -1,4 +1,5 @@
 using Content.Shared._CE.Farming.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Map.Components;
 
@@ -6,6 +7,7 @@ namespace Content.Server._CE.Farming;
 
 public sealed partial class CEFarmingSystem
 {
+    [Dependency] protected EntityQuery<SolutionComponent> SolutionQuery = default!;
     private void InitializeResources()
     {
         SubscribeLocalEvent<CEPlantEnergyFromLightComponent, CEPlantUpdateEvent>(OnTakeEnergyFromLight);
@@ -56,7 +58,7 @@ public sealed partial class CEFarmingSystem
 
     private void OnPlantMetabolizing(Entity<CEPlantMetabolizerComponent> ent, ref CEPlantUpdateEvent args)
     {
-        if (!SolutionQuery.TryComp(args.Plant, out var solmanager))
+        if (!TryComp<SolutionManagerComponent>(args.Plant, out var solmanager))
             return;
 
         var solEntity = new Entity<SolutionManagerComponent?>(args.Plant, solmanager);
