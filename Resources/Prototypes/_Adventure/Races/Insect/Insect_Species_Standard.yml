@@ -1,0 +1,101 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Insect
+  limits:
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceInsect
+  categories: [ HideSpawnMenu ]
+  name: insect appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Adventure/Races/Insect/displacement.rsi
+            state: Uniforms
+  - type: InitialBody
+    organs:
+      Torso: TorsoInsect
+      Head: HeadInsect
+      ArmLeft: LeftArmInsect
+      ArmRight: RightArmInsect
+      HandRight: RightHandInsect
+      HandLeft: LeftHandInsect
+      LegLeft: LeftLegInsect
+      LegRight: RightLegInsect
+      FootLeft: LeftFootInsect
+      FootRight: RightFootInsect
+      Brain: OrganInsectBrain
+      Eyes: OrganInsectEyes
+      Lungs: OrganInsectLungs
+      Stomach: OrganInsectStomach
+  - type: HumanoidProfile
+    species: InsectSerpentide
+
+- type: entity
+  parent: OrganBaseOrganic
+  id: OrganInsect
+  abstract: true
+  suffix: insect
+
+- type: entity
+  id: OrganInsectMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Insect ]
+
+- type: entity
+  parent: OrganInsect
+  id: OrganInsectInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Insect/Species/organs.rsi
+
+- type: entity
+  parent: OrganInsect
+  id: OrganInsectExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Insect/Species/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Insect/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Insect

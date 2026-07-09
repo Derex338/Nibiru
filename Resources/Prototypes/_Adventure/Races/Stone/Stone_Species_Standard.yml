@@ -1,0 +1,73 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Stone
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 3
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.Back:
+      limit: 1
+      required: true
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceStone
+  categories: [ HideSpawnMenu ]
+  name: stone appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: TorsoHuman
+      Head: HeadHuman
+      ArmLeft: LeftArmHuman
+      ArmRight: RightArmHuman
+      HandRight: RightHandHuman
+      HandLeft: LeftHandHuman
+      LegLeft: LeftLegHuman
+      LegRight: RightLegHuman
+      FootLeft: LeftFootHuman
+      FootRight: RightFootHuman
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: Stone
+
+- type: entity
+  parent: OrganHuman
+  id: OrganStoneExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Stone/Species/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Stone/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Stone

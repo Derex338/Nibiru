@@ -1,0 +1,76 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: PigMan
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: true
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: true
+    enum.HumanoidVisualLayers.Head:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 4
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 4
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearancePigMan
+  categories: [ HideSpawnMenu ]
+  name: pigman appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: TorsoPigMan
+      Head: HeadPigMan
+      ArmLeft: LeftArmPigMan
+      ArmRight: RightArmPigMan
+      HandRight: RightHandPigMan
+      HandLeft: LeftHandPigMan
+      LegLeft: LeftLegPigMan
+      LegRight: RightLegPigMan
+      FootLeft: LeftFootPigMan
+      FootRight: RightFootPigMan
+      Brain: OrganHumanBrain
+      Eyes: OrganHumanEyes
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+  - type: HumanoidProfile
+    species: PigMan
+
+- type: entity
+  parent: OrganHuman
+  id: OrganPigManExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/PigMan/Species/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/PigMan/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: PigMan

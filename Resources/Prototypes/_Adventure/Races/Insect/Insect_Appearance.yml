@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceInsect
+  categories: [ HideSpawnMenu ]
+  name: insect appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: TorsoInsect
+      Head: HeadInsect
+      ArmLeft: LeftArmInsect
+      ArmRight: RightArmInsect
+      HandRight: RightHandInsect
+      HandLeft: LeftHandInsect
+  - type: HumanoidProfile
+    species: InsectSerpentide

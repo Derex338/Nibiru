@@ -45,15 +45,15 @@
       Male: UnisexDwarf
       Female: FemaleDwarf
       Unsexed: UnisexDwarf
-  - type: ReplacementAccent
-    accent: dwarf
+  # - type: ReplacementAccent
+  #   accent: dwarf
   - type: Speech
     speechSounds: Bass
     allowedEmotes: ['Bruh'] # Adventure
-  - type: DwarfAccent # Adventure-Accent
-    hideLayersOnEquip:
-    - Hair
-    - Snout
+  # - type: DwarfAccent # Adventure-Accent
+    # hideLayersOnEquip:
+    # - Hair
+    # - Snout
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
@@ -61,13 +61,6 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-#Adventure-Slots-start
-      brass:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
-#Adventure-Slots-end
 
 - type: entity
   parent: BaseSpeciesDummy
@@ -83,10 +76,3 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-#Adventure-Slots-start
-      brass:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
-#Adventure-Slots-end

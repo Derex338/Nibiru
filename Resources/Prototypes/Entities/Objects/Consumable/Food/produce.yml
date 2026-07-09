@@ -204,7 +204,7 @@
   - type: Produce
     seedId: towercap
   - type: ToolRefinable
-    qualityNeeded: Slicing
+    qualityNeeded: Sawing
     refineResult:
     - id: CEWoodenPlanks1
       amount: 2
@@ -213,11 +213,6 @@
   - type: Stack
     stackType: Log
     baseLayer: base
-  - type: ToolRefinable
-    qualityNeeded: Sawing
-    refineResult:
-    - id: MaterialWoodPlank1
-      amount: 2
 
 - type: entity
   parent: [ProduceBase, BaseSlicingRefinable]

@@ -111,10 +111,6 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-#Adventure-slots-start
-    - map: ["brass"]
-    - map: ["pants"]
-#Adventure-slots-end
     - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
     - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
     - map: [ "jumpsuit" ]
@@ -205,16 +201,6 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: outerClothing
-      brass:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vox/displacement.rsi
-            state: jumpsuit
-      pants:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vox/displacement.rsi
-            state: jumpsuit
 #Adventure-end
   - type: Hands
     leftHandDisplacement:
@@ -289,16 +275,6 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: outerClothing
-      brass:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vox/displacement.rsi
-            state: jumpsuit
-      pants:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vox/displacement.rsi
-            state: jumpsuit
 #Adventure-end
   - type: Hands
     leftHandDisplacement:
