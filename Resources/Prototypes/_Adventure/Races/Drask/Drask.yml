@@ -1,3 +1,102 @@
+- type: species
+  id: Drask
+  name: Драск
+  roundStart: true
+  prototype: MobDrask
+  dollPrototype: AppearanceDrask
+  skinColoration: Hues
+  defaultSkinTone: "#2888a8"
+  minAge: 30
+  youngAge: 10000
+  oldAge: 50000
+  maxAge: 100000
+  sexes:
+    - Unsexed
+  maleFirstNames: NamesDrask
+  femaleFirstNames: NamesDrask
+
+- type: markingsGroup
+  parent: Undergarments
+  id: Drask
+  limits:
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1 # Corvax-Sponsors
+      required: false
+    enum.HumanoidVisualLayers.Special:
+      limit: 0
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceDrask
+  categories: [ HideSpawnMenu ]
+  name: drask appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganDraskTorso
+      Head: OrganDraskHead
+      ArmLeft: OrganDraskArmLeft
+      ArmRight: OrganDraskArmRight
+      HandRight: OrganDraskHandRight
+      HandLeft: OrganDraskHandLeft
+      LegLeft: OrganDraskLegLeft
+      LegRight: OrganDraskLegRight
+      FootLeft: OrganDraskFootLeft
+      FootRight: OrganDraskFootRight
+      Brain: OrganDraskBrain
+      Eyes: OrganDraskEyes
+      Lungs: OrganDraskLungs
+      Stomach: OrganDraskStomach
+      Liver: OrganDraskLiver
+      Kidneys: OrganDraskKidneys
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+  - type: HumanoidProfile
+    species: Drask
+  - type: Inventory
+    templateId: Drask
+    speciesId: Drask
 - type: damageModifierSet
   id: DraskCryo
   coefficients:
@@ -150,3 +249,563 @@
     templateId: Drask
   - type: ScaleVisuals
     scale: 1, 1.1
+﻿#Тело Драска
+- type: body
+  name: "Драск"
+  id: Drask
+  root: torso
+  slots:
+    head:
+      part: HeadDrask
+      connections:
+      - torso
+      organs:
+        brain: OrganDraskBrain
+        eyes: OrganDraskEyes
+        heart: OrganDraskHeart # сердце в голове
+    torso:
+      part: TorsoDrask
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        lungs: OrganDraskLungs
+        stomach: OrganDraskStomach
+        liver: OrganDraskLiver
+        kidneys: OrganDraskKidneys
+    right arm:
+      part: RightArmDrask
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmDrask
+      connections:
+      - left hand
+    right hand:
+      part: RightHandDrask
+    left hand:
+      part: LeftHandDrask
+    right leg:
+      part: RightLegDrask
+    left leg:
+      part: LeftLegDrask
+
+#Части Драска
+- type: entity
+  id: PartDrask
+  parent: [BaseItem, OrganBaseOrganic]
+  name: "Часть тела драска"
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 10
+
+- type: entity
+  id: TorsoDrask
+  name: "Туловище драска"
+  parent: [PartDrask, OrganBaseTorso]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 20
+
+- type: entity
+  id: HeadDrask
+  name: "Голова драска"
+  parent: [PartDrask, OrganBaseHead]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 10
+
+- type: entity
+  id: LeftArmDrask
+  name: "Левая рука драска"
+  parent: [PartDrask, OrganBaseArmLeft]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmDrask
+  name: "Правая рука драска"
+  parent: [PartDrask, OrganBaseArmRight]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandDrask
+  name: "Левая рука драска"
+  parent: [PartDrask, OrganBaseHandLeft]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandDrask
+  name: "Правая рука драска"
+  parent: [PartDrask, OrganBaseHandRight]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegDrask
+  name: "Левая нога драска"
+  parent: [PartDrask, OrganBaseLegLeft]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegDrask
+  name: "Правая нога драска"
+  parent: [PartDrask, OrganBaseLegRight]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootDrask
+  name: "Левая нога драска"
+  parent: [PartDrask, OrganBaseFootLeft]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootDrask
+  name: "Правая нога драска"
+  parent: [PartDrask, OrganBaseFootRight]
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: "r_foot"
+﻿- type: metabolizerType
+  id: Drask
+  name: Драск
+
+- type: entity
+  id: OrganDraskBrain
+  parent: OrganHumanBrain
+  name: мозг драска
+  description: Источник невероятного, бесконечного интеллекта.
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    state: brain
+
+- type: entity
+  id: OrganDraskEyes
+  parent: OrganHumanEyes
+  name: глаза драска
+  description: Я тебя вижу
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+      - state: eyeball-rl
+
+- type: entity
+  id: OrganDraskHeart
+  parent: BaseAnimalOrgan
+  name: сердце драска
+  description: тук тук
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    state: heart-off
+  - type: Organ
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Drask ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganDraskLungs
+  parent: OrganHumanLungs
+  name: лёгкие драска
+  description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+
+- type: entity
+  id: OrganDraskStomach
+  parent: OrganHumanStomach
+  name: желудок драска
+  description: Отвратительно и пахнет мылом.
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    state: stomach
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [Drask]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: OrganDraskLiver
+  parent: OrganHumanLiver
+  name: Печень драска
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    state: liver
+  - type: Metabolizer
+    metabolizerTypes: [Drask]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.8
+
+- type: entity
+  id: OrganDraskKidneys
+  parent: OrganHumanKidneys
+  name: почки драска
+  description: Выводит токсины из кровотока.
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+
+- type: entity
+  parent: [OrganBaseTorso, OrganDraskExternal]
+  id: OrganDraskTorso
+  name: тушка драска
+  description: Тело для драска
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: torso_f
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Chest
+    data:
+      state: torso_f
+
+- type: entity
+  parent: [ OrganBaseHead, OrganDraskExternal ]
+  id: OrganDraskHead
+  name: голова драска
+  description: Голова драска
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: head_f
+  - type: VisualOrgan
+    layer: enum.HumanoidVisualLayers.Head
+    data:
+      state: head_f
+
+- type: entity
+  parent: OrganDrask
+  id: OrganDraskExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/Species/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Drask/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Drask
+
+- type: entity
+  parent: OrganDrask
+  id: OrganDraskInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Adventure/Races/Drask/organs.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Drask/organs.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Drask
+
+- type: entity
+  parent: OrganBaseOrganic
+  id: OrganDrask
+  abstract: true
+  suffix: Drask
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganDraskExternal ]
+  id: OrganDraskArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganDraskExternal ]
+  id: OrganDraskArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganDraskExternal ]
+  id: OrganDraskHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganDraskExternal ]
+  id: OrganDraskHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganDraskExternal ]
+  id: OrganDraskLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganDraskExternal ]
+  id: OrganDraskLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganDraskExternal ]
+  id: OrganDraskFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganDraskExternal ]
+  id: OrganDraskFootRight
+﻿- type: soundCollection
+  id: DraskScreamCollection
+  files:
+  - /Audio/_Adventure/Voice/Drask/octoScream1.ogg
+  - /Audio/_Adventure/Voice/Drask/octoScream2.ogg
+  - /Audio/_Adventure/Voice/Drask/octoScream3.ogg
+
+- type: soundCollection
+  id: DraskLaughCollection
+  files:
+  - /Audio/_Adventure/Voice/Drask/octoHaha1.ogg
+  - /Audio/_Adventure/Voice/Drask/octoHaha2.ogg
+  - /Audio/_Adventure/Voice/Drask/octoHaha3.ogg
+  - /Audio/_Adventure/Voice/Drask/octoHaha4.ogg
+
+- type: soundCollection
+  id: DraskDeadCollection
+  files:
+  - /Audio/_Adventure/Voice/Drask/octoDead1.ogg
+  - /Audio/_Adventure/Voice/Drask/octoDead2.ogg
+
+- type: soundCollection
+  id: DraskCryCollection
+  files:
+  - /Audio/_Adventure/Voice/Drask/octoCry1.ogg
+  - /Audio/_Adventure/Voice/Drask/octoCry2.ogg
+
+- type: speechSounds
+  id: DraskSpeach
+  saySound:
+    path: /Audio/_Adventure/Voice/Drask/octoSpeak1.ogg
+  askSound:
+    path: /Audio/_Adventure/Voice/Drask/octoSpeak2.ogg
+  exclaimSound:
+    path: /Audio/_Adventure/Voice/Drask/octoSpeak3.ogg
+
+- type: emoteSounds
+  id: DraskEmote
+  params:
+    variation: 0.125
+  sounds:
+    Yawn:
+      collection: MaleYawn
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Sigh:
+      collection: MaleSigh
+    Snore:
+      collection: Snores
+    Scream:
+      collection: DraskScreamCollection
+    Laugh:
+      collection: DraskLaughCollection
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Crying:
+      collection: DraskCryCollection
+    Weh:
+      collection: Weh
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: DraskDeadCollection
+
+- type: speechVerb
+  id: Octo
+  name: chat-speech-verb-name-electricity
+  speechVerbStrings:
+  - хлюпает
+  - чавкает
+  - булькает
+- type: localizedDataset
+  id: NamesDrask
+  values:
+    prefix: names-drask-dataset-
+    count: 20
+﻿- type: inventoryTemplate
+  id: Drask
+  slots:
+    - name: shoes
+      slotTexture: shoes
+      slotFlags: FEET
+      stripTime: 3
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,3
+      displayName: Shoes
+    - name: jumpsuit
+      slotTexture: uniform
+      slotFlags: INNERCLOTHING
+      stripTime: 6
+      uiWindowPos: 0,1
+      strippingWindowPos: 0,2
+      displayName: Jumpsuit
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      stripTime: 6
+      uiWindowPos: 1,1
+      strippingWindowPos: 1,2
+      displayName: Suit
+    - name: gloves
+      slotTexture: gloves
+      slotFlags: GLOVES
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,2
+      displayName: Gloves
+    - name: neck
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 0,2
+      strippingWindowPos: 0,1
+      displayName: Neck
+    - name: eyes
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,0
+      displayName: Eyes
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,1
+      displayName: Ears
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,2
+      strippingWindowPos: 1,1
+      displayName: Head
+    - name: pocket1
+      slotTexture: pocket
+      fullTextureName: template_small
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,4
+      dependsOn: jumpsuit
+      displayName: Pocket 1
+      stripHidden: true
+    - name: pocket2
+      slotTexture: pocket
+      fullTextureName: template_small
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,3
+      strippingWindowPos: 1,4
+      dependsOn: jumpsuit
+      displayName: Pocket 2
+      stripHidden: true
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags:   SUITSTORAGE
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      dependsOnComponents:
+      - type: AllowSuitStorage
+      displayName: Suit Storage
+    - name: id
+      slotTexture: id
+      fullTextureName: template_small
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
+    - name: belt
+      slotTexture: belt
+      fullTextureName: template_small
+      slotFlags: BELT
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,1
+      strippingWindowPos: 1,5
+      displayName: Belt
+    - name: back
+      slotTexture: back
+      fullTextureName: template_small
+      slotFlags: BACK
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,0
+      strippingWindowPos: 0,5
+      displayName: Back
+    #- name: brass
+    #  slotTexture: brass
+    #  slotFlags: BRASS
+    #  stripTime: 3
+    #  uiWindowPos: 3,2
+    #  strippingWindowPos: 3,1
+    #  displayName: Brass
+    #- name: pants
+    #  slotTexture: pants
+    #  slotFlags: PANTS
+    #  stripTime: 6
+    #  uiWindowPos: 3,1
+    #  strippingWindowPos: 3,2
+    #  displayName: Pants
