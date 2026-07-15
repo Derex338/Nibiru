@@ -1,12 +1,15 @@
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Localizations
 {
     public sealed partial class ContentLocalizationManager
     {
+        [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
@@ -29,9 +32,9 @@ namespace Content.Shared.Localizations
             var culture = new CultureInfo(Culture);
             var fallbackCulture = new CultureInfo(FallbackCulture); // Corvax-Localization
 
-            _loc.LoadCulture(culture);
-            _loc.LoadCulture(fallbackCulture); // Corvax-Localization
-            _loc.SetFallbackCluture(fallbackCulture); // Corvax-Localization
+            //_loc.LoadCulture(culture);
+            //_loc.LoadCulture(fallbackCulture); // Corvax-Localization
+            //_loc.SetFallbackCluture(fallbackCulture); // Corvax-Localization
             _loc.AddFunction(culture, "MANY", FormatMany); // Corvax-Localization: To prevent problems in auto-generated locale files
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);

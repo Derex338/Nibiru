@@ -1,0 +1,35 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              Title="Select Language / Выбор языка"
+              MinSize="420 300"
+              SetSize="420 300">
+    <BoxContainer Orientation="Vertical" Margin="16 16 16 16">
+        <!-- Header -->
+        <Label Name="Title"
+               Text="Select Language / Выбор языка"
+               HorizontalAlignment="Center"
+               StyleClasses="LabelKeyText"
+               Margin="0 0 0 8"/>
+
+        <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 12">
+            <Label Name="HintLabel"
+                   Text="Please select your preferred language.&#xA;Пожалуйста, выберите предпочитаемый язык."
+                   HorizontalAlignment="Center"
+                   Margin="8 8 8 8"
+                   ClipText="False"/>
+        </PanelContainer>
+
+        <!-- Language buttons container -->
+        <BoxContainer Name="LanguageButtonsContainer"
+                      Orientation="Vertical"
+                      SeparationOverride="8"
+                      VerticalExpand="True"/>
+
+        <!-- Footer note -->
+        <Label Name="FooterLabel"
+               Text="You can change language later in Settings.&#xA;Язык можно сменить позже в Настройках."
+               HorizontalAlignment="Center"
+               FontColorOverride="#AAAAAA"
+               Margin="0 12 0 0"/>
+    </BoxContainer>
+</DefaultWindow>

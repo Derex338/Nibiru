@@ -1,4 +1,6 @@
-﻿using System.Linq;
+using System.Globalization;
+using System.Linq;
+using Content.Client._Nibiru.LanguageSelect;
 using Content.Client.UserInterface.Screens;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;
@@ -7,6 +9,8 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
+using Robust.Shared.Configuration;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Options.UI.Tabs;
@@ -16,11 +20,45 @@ public sealed partial class MiscTab : Control
 {
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     public MiscTab()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        // --- _Nibiru: Language selection ---
+        // Map of culture name -> native display name (hardcoded to supported languages)
+        var knownLanguages = new Dictionary<string, string>
+        {
+            { "en-US", "🇬🇧  English" },
+            { "ru-RU", "🇷🇺  Русский" },
+        };
+
+        var availableCultures = _loc.GetFoundCultures();
+        var languageEntries = new List<(string, string)>();
+        foreach (var culture in availableCultures)
+        {
+            if (knownLanguages.TryGetValue(culture.Name, out var nativeName))
+                languageEntries.Add((culture.Name, nativeName));
+        }
+
+        if (languageEntries.Count > 0)
+        {
+            Control.AddOption(new OptionLanguageCVar(
+                Control,
+                _cfg,
+                _loc,
+                CVars.LocCultureName,
+                DropDownLanguage,
+                languageEntries));
+        }
+        else
+        {
+            DropDownLanguage.Visible = false;
+        }
+        // --- end _Nibiru ---
 
         var themes = _prototypeManager.EnumeratePrototypes<HudThemePrototype>().ToList();
         themes.Sort();

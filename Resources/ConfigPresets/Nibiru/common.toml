@@ -28,7 +28,7 @@ time = 40.0
 
 [hub]
 advertise = false
-tags = "lang:ru,rp:low,rp:med,region:eu_e"
+tags = "lang:en,rp:low,rp:med,region:eu_e"
 hub_urls = "https://hub.spacestation14.com/"
 
 [infolinks]
