@@ -66,4 +66,26 @@ public sealed partial class OptionsUIController : UIController
             OpenWindow();
         }
     }
+
+    /// <summary>
+    /// Disposes and recreates the options window to refresh localized text.
+    /// Preserves the currently open tab if the window was visible.
+    /// </summary>
+    public void ReloadWindow()
+    {
+        if (_optionsWindow is not { Disposed: false })
+            return;
+
+        var wasOpen = _optionsWindow.IsOpen;
+        var currentTab = _optionsWindow.Tabs.CurrentTab;
+
+        _optionsWindow.Dispose();
+        _optionsWindow = default!;
+
+        if (wasOpen)
+        {
+            OpenWindow();
+            _optionsWindow.Tabs.CurrentTab = currentTab;
+        }
+    }
 }

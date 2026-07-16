@@ -153,11 +153,25 @@ namespace Content.Client.Examine
             if (ev.Id != 0 && ev.Id != _idCounter)
                 return;
 
+            var entity = GetEntity(ev.EntityUid);
+
+            // [Nibiru] Если тултип уже открыт для этой же сущности — не затираем
+            // локализованный текст ответом от сервера (который на en-US).
+            // Только добавляем серверные кнопки (verbs).
+            if (_examineTooltipOpen != null && _examinedEntity == entity)
+            {
+                if (ev.Verbs != null)
+                {
+                    _verbList.Clear();
+                    _verbList.AddRange(ev.Verbs);
+                    AddVerbsToTooltip(_verbList);
+                }
+                return;
+            }
+
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
-            var entity = GetEntity(ev.EntityUid);
-
             OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
             UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs, getVerbs: false);
         }

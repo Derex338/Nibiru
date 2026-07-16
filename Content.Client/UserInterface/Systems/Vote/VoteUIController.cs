@@ -1,3 +1,4 @@
+using Content.Client.Localization;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Voting;
@@ -7,13 +8,14 @@ using Robust.Client.UserInterface.Controllers;
 namespace Content.Client.UserInterface.Systems.Vote;
 
 [UsedImplicitly]
-public sealed partial class VoteUIController : UIController
+public sealed partial class VoteUIController : UIController, ILanguageRefreshable
 {
     [Dependency] private IVoteManager _votes = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        LanguageRefreshManager.Register(this);
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
@@ -35,5 +37,10 @@ public sealed partial class VoteUIController : UIController
     private void OnScreenUnload()
     {
         _votes.ClearPopupContainer();
+    }
+
+    public void OnLanguageChanged()
+    {
+        // No-op: vote content comes from server, no localized UI to refresh.
     }
 }

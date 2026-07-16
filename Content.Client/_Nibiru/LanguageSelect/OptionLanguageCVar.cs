@@ -53,20 +53,7 @@ public sealed class OptionLanguageCVar : BaseOptionCVar<string>
         };
     }
 
-    /// <summary>
-    /// Saves the culture name to the CVar and immediately applies it
-    /// by calling <see cref="ILocalizationManager.SetCulture"/> and
-    /// <see cref="ILocalizationManager.ReloadLocalizations"/>.
-    /// </summary>
-    public override void SaveValue()
-    {
-        base.SaveValue();
 
-        var cultureName = Value;
-        var culture = CultureInfo.GetCultureInfo(cultureName, predefinedOnly: false);
-        _loc.SetCulture(culture);
-        _loc.ReloadLocalizations();
-    }
 
     private int FindValueId(string value)
     {

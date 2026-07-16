@@ -50,7 +50,7 @@ public sealed partial class MiscTab : Control
                 Control,
                 _cfg,
                 _loc,
-                CVars.LocCultureName,
+                CCVars.ClientLanguage,
                 DropDownLanguage,
                 languageEntries));
         }

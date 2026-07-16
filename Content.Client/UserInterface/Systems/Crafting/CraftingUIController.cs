@@ -1,6 +1,7 @@
 using Content.Client._Nibiru.Construction;
 using Content.Client.Construction.UI;
 using Content.Client.Gameplay;
+using Content.Client.Localization;
 using Content.Client.UserInterface.Controls;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -12,7 +13,7 @@ using static Content.Client._Nibiru.Construction.ConstructionRecipeCheck;
 namespace Content.Client.UserInterface.Systems.Crafting;
 
 [UsedImplicitly]
-public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<ConstructionRecipeCheck>
+public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<ConstructionRecipeCheck>, ILanguageRefreshable
 {
     private ConstructionMenuPresenter? _presenter;
     private MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
@@ -22,17 +23,28 @@ public sealed class CraftingUIController : UIController, IOnStateChanged<Gamepla
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_presenter == null);
+        LanguageRefreshManager.Register(this);
         _presenter = new ConstructionMenuPresenter();
         _recipeCheck.RequestRecipeInfo();
     }
 
     public void OnStateExited(GameplayState state)
     {
+        LanguageRefreshManager.Unregister(this);
         if (_presenter == null)
             return;
         UnloadButton(_presenter);
         _presenter.Dispose();
         _presenter = null;
+    }
+
+    public void OnLanguageChanged()
+    {
+        if (_presenter == null || !_presenter.WindowOpen)
+            return;
+
+        _presenter.WindowOpen = false;
+        _presenter.WindowOpen = true;
     }
 
     internal void UnloadButton(ConstructionMenuPresenter? presenter = null)

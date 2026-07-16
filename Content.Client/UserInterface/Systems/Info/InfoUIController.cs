@@ -1,5 +1,6 @@
 using Content.Client.Gameplay;
 using Content.Client.Info;
+using Content.Client.Localization;
 using Content.Shared.Guidebook;
 using Content.Shared.Info;
 using Robust.Client.Console;
@@ -10,7 +11,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
-public sealed partial class InfoUIController : UIController, IOnStateExited<GameplayState>
+public sealed partial class InfoUIController : UIController, IOnStateExited<GameplayState>, ILanguageRefreshable
 {
     [Dependency] private IClientConsoleHost _consoleHost = default!;
     [Dependency] private INetManager _netManager = default!;
@@ -39,6 +40,8 @@ public sealed partial class InfoUIController : UIController, IOnStateExited<Game
         {
             OnAcceptPressed(true);
         });
+
+        LanguageRefreshManager.Register(this);
     }
 
     private void OnRulesInformationMessage(SendRulesInformationMessage message)
@@ -51,11 +54,25 @@ public sealed partial class InfoUIController : UIController, IOnStateExited<Game
 
     public void OnStateExited(GameplayState state)
     {
+        LanguageRefreshManager.Unregister(this);
+
         if (_infoWindow == null)
             return;
 
         _infoWindow.Dispose();
         _infoWindow = null;
+    }
+
+    public void OnLanguageChanged()
+    {
+        if (_infoWindow == null || _infoWindow.Disposed)
+            return;
+
+        var wasOpen = _infoWindow.IsOpen;
+        _infoWindow.Dispose();
+        _infoWindow = null;
+        if (wasOpen)
+            OpenWindow();
     }
 
     private void ShowRules(float time)

@@ -29,35 +29,51 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = new CultureInfo(Culture);
-            var fallbackCulture = new CultureInfo(FallbackCulture); // Corvax-Localization
+            var cultures = _loc.GetFoundCultures();
+            foreach (var culture in cultures)
+            {
+                if (!_loc.HasCulture(culture))
+                    _loc.LoadCulture(culture);
 
-            //_loc.LoadCulture(culture);
-            //_loc.LoadCulture(fallbackCulture); // Corvax-Localization
-            //_loc.SetFallbackCluture(fallbackCulture); // Corvax-Localization
-            _loc.AddFunction(culture, "MANY", FormatMany); // Corvax-Localization: To prevent problems in auto-generated locale files
-            _loc.AddFunction(culture, "PRESSURE", FormatPressure);
-            _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
-            _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
-            // NOTE: ENERGYWATTHOURS() still takes a value in joules, but formats as watt-hours.
-            _loc.AddFunction(culture, "ENERGYWATTHOURS", FormatEnergyWattHours);
-            _loc.AddFunction(culture, "UNITS", FormatUnits);
-            _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
-            _loc.AddFunction(culture, "LOC", FormatLoc);
-            _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
-            _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
-            _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
+                _loc.AddFunction(culture, "PRESSURE", FormatPressure);
+                _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
+                _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
+                _loc.AddFunction(culture, "ENERGYWATTHOURS", FormatEnergyWattHours);
+                _loc.AddFunction(culture, "UNITS", FormatUnits);
+                _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
+                _loc.AddFunction(culture, "LOC", FormatLoc);
+                _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
+                _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
+                _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
 
+                if (culture.Name.StartsWith("ru", StringComparison.OrdinalIgnoreCase))
+                {
+                    _loc.AddFunction(culture, "MANY", FormatMany);
+                }
+                else
+                {
+                    _loc.AddFunction(culture, "MAKEPLURAL", FormatMakePlural);
+                    _loc.AddFunction(culture, "MANY", FormatMany);
+                }
+            }
 
-            /*
-             * The following language functions are specific to the english localization. When working on your own
-             * localization you should NOT modify these, instead add new functions specific to your language/culture.
-             * This ensures the english translations continue to work as expected when fallbacks are needed.
-             */
-            var cultureEn = new CultureInfo("en-US");
+            var activeCultureCode = "en-US";
+            if (_cfg.IsCVarRegistered(CCVars.ClientLanguage.Name))
+            {
+                activeCultureCode = _cfg.GetCVar(CCVars.ClientLanguage);
+            }
+            var activeCulture = cultures.FirstOrDefault(c => c.Name.Equals(activeCultureCode, StringComparison.OrdinalIgnoreCase))
+                                ?? cultures.FirstOrDefault(c => c.Name.StartsWith("ru", StringComparison.OrdinalIgnoreCase))
+                                ?? cultures.FirstOrDefault(c => c.Name.StartsWith("en", StringComparison.OrdinalIgnoreCase))
+                                ?? new CultureInfo("en-US");
 
-            _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
-            _loc.AddFunction(cultureEn, "MANY", FormatMany);
+            _loc.SetCulture(activeCulture);
+
+            var fallback = new CultureInfo("en-US");
+            if (_loc.HasCulture(fallback) && !activeCulture.Equals(fallback))
+            {
+                _loc.SetFallbackCluture(fallback);
+            }
         }
 
         private ILocValue FormatMany(LocArgs args)
@@ -78,7 +94,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value * 100;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(_loc.DefaultCulture ?? CultureInfo.InvariantCulture).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
         }
@@ -87,7 +103,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(_loc.DefaultCulture ?? CultureInfo.InvariantCulture).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
         }

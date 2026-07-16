@@ -6,6 +6,7 @@ using Content.Client.Administration.UI.Tabs.PanicBunkerTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
+using Content.Client.Localization;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Administration.Events;
@@ -26,7 +27,8 @@ namespace Content.Client.UserInterface.Systems.Admin;
 public sealed partial class AdminUIController : UIController,
     IOnStateEntered<GameplayState>,
     IOnStateEntered<LobbyState>,
-    IOnSystemChanged<AdminSystem>
+    IOnSystemChanged<AdminSystem>,
+    ILanguageRefreshable
 {
     [Dependency] private IClientAdminManager _admin = default!;
     [Dependency] private IClientConGroupController _conGroups = default!;
@@ -42,6 +44,7 @@ public sealed partial class AdminUIController : UIController,
     {
         base.Initialize();
         SubscribeNetworkEvent<PanicBunkerChangedEvent>(OnPanicBunkerUpdated);
+        LanguageRefreshManager.Register(this);
     }
 
     private void OnPanicBunkerUpdated(PanicBunkerChangedEvent msg, EntitySessionEventArgs args)
@@ -79,6 +82,8 @@ public sealed partial class AdminUIController : UIController,
 
     public void OnSystemUnloaded(AdminSystem system)
     {
+        LanguageRefreshManager.Unregister(this);
+
         if (_window != null)
             _window.Dispose();
 
@@ -163,6 +168,23 @@ public sealed partial class AdminUIController : UIController,
     private void AdminButtonPressed(ButtonEventArgs args)
     {
         Toggle();
+    }
+
+    public void OnLanguageChanged()
+    {
+        if (_window == null || _window.Disposed)
+            return;
+
+        var wasOpen = _window.IsOpen;
+        _window.Close();
+        _window.Dispose();
+        OnWindowDisposed();
+        _window = null;
+        if (wasOpen && _conGroups.CanAdminMenu())
+        {
+            EnsureWindow();
+            _window?.Open();
+        }
     }
 
     private void Toggle()

@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
+using Content.Client.Localization;
 using Content.Client.Mapping;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
@@ -25,7 +26,8 @@ namespace Content.Client.Verbs.UI
     /// </remarks>
     public sealed partial class VerbMenuUIController : UIController,
         IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,
-        IOnStateEntered<MappingState>, IOnStateExited<MappingState>
+        IOnStateEntered<MappingState>, IOnStateExited<MappingState>,
+        ILanguageRefreshable
     {
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private ContextMenuUIController _context = default!;
@@ -45,6 +47,7 @@ namespace Content.Client.Verbs.UI
 
         public void OnStateEntered(GameplayState state)
         {
+            LanguageRefreshManager.Register(this);
             _context.OnContextKeyEvent += OnKeyBindDown;
             _context.OnContextClosed += Close;
             _verbSystem.OnVerbsResponse += HandleVerbsResponse;
@@ -52,6 +55,7 @@ namespace Content.Client.Verbs.UI
 
         public void OnStateExited(GameplayState state)
         {
+            LanguageRefreshManager.Unregister(this);
             _context.OnContextKeyEvent -= OnKeyBindDown;
             _context.OnContextClosed -= Close;
             if (_verbSystem != null)
@@ -61,6 +65,7 @@ namespace Content.Client.Verbs.UI
 
         public void OnStateEntered(MappingState state)
         {
+            LanguageRefreshManager.Register(this);
             _context.OnContextKeyEvent += OnKeyBindDown;
             _context.OnContextClosed += Close;
             _verbSystem.OnVerbsResponse += HandleVerbsResponse;
@@ -68,10 +73,16 @@ namespace Content.Client.Verbs.UI
 
         public void OnStateExited(MappingState state)
         {
+            LanguageRefreshManager.Unregister(this);
             _context.OnContextKeyEvent -= OnKeyBindDown;
             _context.OnContextClosed -= Close;
             if (_verbSystem != null)
                 _verbSystem.OnVerbsResponse -= HandleVerbsResponse;
+            Close();
+        }
+
+        public void OnLanguageChanged()
+        {
             Close();
         }
 

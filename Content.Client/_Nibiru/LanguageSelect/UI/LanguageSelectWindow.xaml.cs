@@ -67,16 +67,10 @@ public sealed partial class LanguageSelectWindow : DefaultWindow
 
     private void SelectLanguage(CultureInfo culture)
     {
-        // Apply localization immediately
-        _loc.SetCulture(culture);
-        
-
-        // Save to CVars
-        //_cfg.SetCVar(CVars.LocCultureName, culture.Name);
-        _cfg.SetCVar(CVars.ClientLanguage, culture.Name);
+        // Save to CVars (this triggers LocaleSwitchSystem through OnLanguageChanged)
+        _cfg.SetCVar(CCVars.ClientLanguage, culture.Name);
+        _cfg.SetCVar(CCVars.NibiruLanguageSelected, true);
         _cfg.SaveToFile();
-
-        _loc.ReloadLocalizations();
 
         OnLanguageSelected?.Invoke(culture);
         Close();
@@ -84,12 +78,11 @@ public sealed partial class LanguageSelectWindow : DefaultWindow
 
     private void OnWindowClose()
     {
-        // If window is closed without selecting (e.g. Alt+F4 scenario shouldn't happen
-        // since we override CanClose, but just in case), default to en-US and mark as selected
-        //if (!_cfg.GetCVar(CCVars.NibiruLanguageSelected))
-        //{
+        // If window is closed without selecting, default to en-US and mark as selected
+        if (!_cfg.GetCVar(CCVars.NibiruLanguageSelected))
+        {
             var enUS = CultureInfo.GetCultureInfo("en-US", predefinedOnly: false);
             SelectLanguage(enUS);
-        //}
+        }
     }
 }

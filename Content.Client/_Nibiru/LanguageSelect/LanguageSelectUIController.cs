@@ -20,8 +20,8 @@ public sealed class LanguageSelectUIController : UIController, IOnStateEntered<L
     public void OnStateEntered(LobbyState state)
     {
         // Only show the dialog if the player hasn't chosen a language before
-        //if (_cfg.GetCVar(CCVars.NibiruLanguageSelected))
-        //    return;
+        if (_cfg.GetCVar(CCVars.NibiruLanguageSelected))
+            return;
 
         if (_window is { IsOpen: true })
             return;

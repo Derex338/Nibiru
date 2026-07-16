@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
+using Content.Client.Localization;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
@@ -25,7 +26,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Character;
 
 [UsedImplicitly]
-public sealed partial class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
+public sealed partial class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>, ILanguageRefreshable
 {
     [Dependency] private IEntityManager _ent = default!;
     [Dependency] private IPlayerManager _player = default!;
@@ -39,6 +40,7 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
         base.Initialize();
 
         SubscribeNetworkEvent<MindRoleTypeChangedEvent>(OnRoleTypeChanged);
+        LanguageRefreshManager.Register(this);
     }
 
     private CharacterWindow? _window;
@@ -68,7 +70,21 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
             _window = null;
         }
 
+        LanguageRefreshManager.Unregister(this);
         CommandBinds.Unregister<CharacterUIController>();
+    }
+
+    public void OnLanguageChanged()
+    {
+        if (_window == null || _window.Disposed)
+            return;
+
+        if (_window.IsOpen)
+        {
+            CloseWindow();
+            _characterInfo.RequestCharacterInfo();
+            _window.Open();
+        }
     }
 
     public void OnSystemLoaded(CharacterInfoSystem system)

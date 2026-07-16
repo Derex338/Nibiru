@@ -1,33 +1,34 @@
 using System;
 using System.Globalization;
-using System.Reflection;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Client.State;
+using Content.Shared.CCVar;
+using Content.Shared.Localizations;
+using Content.Client.UserInterface.Systems.EscapeMenu;
+using Content.Client.Gameplay;
+using Content.Client.Lobby;
 
 namespace Content.Client.Localization
 {
     /// <summary>
-    /// Клиентская система, которая:
-    ///  1) слушает CVar ui.language;
-    ///  2) переключает культуру в ILocalizationManager;
-    ///  3) обходит текущее дерево UI и обновляет все ILocalizedControl;
-    ///  4) сразу сохраняет конфиг на диск, чтобы выбор пережил краш/kill процесса,
-    ///     а не только штатное закрытие игры.
-    ///
-    /// ВАЖНО: EntitySystem-наследники в Robust.Toolbox подхватываются автоматически
-    /// через рефлексию при старте клиента — регистрировать этот класс где-либо
-    /// дополнительно не нужно.
+    /// Клиентская система переключения языка.
+    /// Бросает <see cref="LanguageChangedEvent"/> в EventBus (EventSource.Local)
+    /// и оповещает все зарегистрированные ILanguageRefreshable компоненты.
     /// </summary>
     public sealed class LocaleSwitchSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
         [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -37,104 +38,190 @@ namespace Content.Client.Localization
 
             _sawmill = Logger.GetSawmill("locale");
 
-            // invokeImmediately: true - применяем сохранённый ранее язык сразу при загрузке клиента
-            _cfg.OnValueChanged(CVars.ClientLanguage, OnLanguageChanged, invokeImmediately: true);
+            _cfg.OnValueChanged(CCVars.ClientLanguage, OnLanguageChanged, invokeImmediately: false);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _cfg.UnsubValueChanged(CVars.ClientLanguage, OnLanguageChanged);
+            _cfg.UnsubValueChanged(CCVars.ClientLanguage, OnLanguageChanged);
         }
 
-        /// <summary>
-        /// Публичный метод, который дёргает ваше меню опций при выборе языка в списке.
-        /// Пример вызова из кода опций:
-        ///     _cfgMan.SetCVar(LocaleCVars.ClientLanguage, "ru-RU");
-        /// (не обязательно вызывать этот метод напрямую - достаточно поменять CVar,
-        /// система сама подхватит изменение через OnValueChanged)
-        /// </summary>
         public void SwitchLanguage(string cultureCode)
         {
-            _cfg.SetCVar(CVars.ClientLanguage, cultureCode);
+            _cfg.SetCVar(CCVars.ClientLanguage, cultureCode);
         }
 
         private void OnLanguageChanged(string cultureCode)
         {
+            var oldCultureCode = _loc.DefaultCulture?.Name ?? "en-US";
+
             CultureInfo culture;
             try
             {
-                culture = new CultureInfo(cultureCode);
+                culture = CultureInfo.GetCultureInfo(cultureCode, predefinedOnly: false);
             }
-            catch (CultureNotFoundException)
+            catch (Exception e)
             {
-                _sawmill.Error($"Неизвестный код культуры: {cultureCode}");
+                _sawmill.Error($"Неизвестный код культуры: {cultureCode}. Ошибка: {e}");
                 return;
             }
 
             if (!TrySetEngineCulture(culture))
             {
-                _sawmill.Error(
-                    "Не удалось переключить культуру в ILocalizationManager. " +
-                    "Проверьте актуальную сигнатуру SetCulture/LoadCulture в вашей версии движка " +
-                    "(Robust.Shared.Localization.ILocalizationManager) - см. примечание в README.");
+                _sawmill.Error("Не удалось переключить культуру в ILocalizationManager.");
                 return;
             }
 
-            // Обновляем всё, что сейчас реально показано на экране.
-            if (_ui.RootControl != null)
-                LocalizedControlTreeWalker.RefreshTree(_ui.RootControl);
+            try
+            {
+                _loc.ReloadLocalizations();
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Ошибка при перезагрузке локализаций: {e}");
+            }
 
-            // ARCHIVE-cvar-ы по умолчанию пишутся на диск при штатном закрытии клиента.
-            // Сохраняем сразу, чтобы выбор не потерялся при аварийном завершении.
+            // 1. Закрываем все открытые окна, которые не умеют обновляться
+            CloseAllOpenWindows();
+
+            // 2. Шлём событие всем EntitySystem'ам
+            var ev = new LanguageChangedEvent(oldCultureCode, cultureCode);
+            RaiseLocalEvent(ev);
+
+            // 3. Оповещаем все ILanguageRefreshable (UIController'ы)
+            LanguageRefreshManager.RefreshAll();
+
+            // 4. Перезагружаем UI текущего состояния
+            ReloadCurrentState();
+
+            // 5. Пересоздаём окна настроек и ESC-меню
+            ReloadUIControllers();
+
+            // 6. Показываем подсказку что язык сменился
+            NotifyLanguageChanged();
+
             _cfg.SaveToFile();
         }
 
-        /// <summary>
-        /// В разных версиях движка публичный API переключения культуры мог называться
-        /// по-разному (SetCulture / LoadCulture / Culture-setter). Пробуем сначала
-        /// нормальный публичный вызов, и только если сигнатуры не совпали -
-        /// падаем на рефлексию как страховку, НЕ трогая исходники движка.
-        /// </summary>
+        private void ReloadCurrentState()
+        {
+            var currentState = _stateManager.CurrentState;
+            if (currentState == null)
+                return;
+
+            if (currentState is GameplayState gameplayState)
+            {
+                gameplayState.ReloadMainScreen();
+                return;
+            }
+
+            // Для остальных состояний (LobbyState, MainScreen, LauncherConnecting)
+            // переключаемся на LanguageSwitchDummyState и обратно.
+            // RequestStateChange с тем же типом — no-op, поэтому нужен промежуточный.
+            try
+            {
+                var stateType = currentState.GetType();
+                _stateManager.RequestStateChange<LanguageSwitchDummyState>();
+                _stateManager.RequestStateChange(stateType);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Ошибка при перезапуске активного UI состояния: {e}");
+            }
+        }
+
+        private void ReloadUIControllers()
+        {
+            try
+            {
+                var optionsController = _ui.GetUIController<OptionsUIController>();
+                optionsController.ReloadWindow();
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Ошибка при перезапуске OptionsUIController: {e}");
+            }
+
+            try
+            {
+                var escapeController = _ui.GetUIController<EscapeUIController>();
+                escapeController.ReloadWindow();
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Ошибка при перезапуске EscapeUIController: {e}");
+            }
+        }
+
         private bool TrySetEngineCulture(CultureInfo culture)
         {
-            // --- Вариант 1: штатный публичный API (проверьте у себя через автокомплит IDE) ---
             try
             {
-                // Если у вас есть метод "загрузить .ftl для этой культуры, если ещё не грузили":
-                var loadMethod = typeof(ILocalizationManager).GetMethod("LoadCulture", new[] { typeof(CultureInfo) });
-                loadMethod?.Invoke(_loc, new object[] { culture });
+                _loc.SetCulture(culture);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Ошибка при вызове SetCulture: {e}");
+                return false;
+            }
+        }
 
-                var setMethod = typeof(ILocalizationManager).GetMethod("SetCulture", new[] { typeof(CultureInfo) });
-                if (setMethod != null)
+        /// <summary>
+        /// Закрывает все открытые окна (BaseWindow) кроме тех, что мы пересоздаём сами.
+        /// </summary>
+        private void CloseAllOpenWindows()
+        {
+            try
+            {
+                // WindowRoot содержит все открытые BaseWindow.
+                // Собираем в список т.к. Close() удаляет из коллекции.
+                var windows = _ui.WindowRoot.Children;
+                var toClose = new System.Collections.Generic.List<Robust.Client.UserInterface.CustomControls.BaseWindow>();
+                foreach (var child in windows)
                 {
-                    setMethod.Invoke(_loc, new object[] { culture });
-                    return true;
+                    if (child is Robust.Client.UserInterface.CustomControls.BaseWindow bw)
+                    {
+                        toClose.Add(bw);
+                    }
+                }
+
+                foreach (var bw in toClose)
+                {
+                    try
+                    {
+                        bw.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        _sawmill.Error($"Ошибка при закрытии окна {bw.GetType().Name}: {e}");
+                    }
                 }
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при вызове публичного API смены культуры: {e}");
+                _sawmill.Error($"Ошибка при обходе окон: {e}");
             }
+        }
 
-            // --- Вариант 2: страховка через reflection на случай внутреннего/скрытого API ---
+        /// <summary>
+        /// Показывает уведомление о смене языка.
+        /// </summary>
+        private void NotifyLanguageChanged()
+        {
             try
             {
-                var internalField = _loc.GetType().GetField("_currentCulture",
-                    BindingFlags.NonPublic | BindingFlags.Instance);
-
-                if (internalField != null)
-                {
-                    internalField.SetValue(_loc, culture);
-                    return true;
-                }
+                var cultureName = _loc.DefaultCulture?.NativeName ?? "unknown";
+                var msg = Loc.GetString("nibiru-locale-switched", ("language", cultureName));
+                var hint = Loc.GetString("nibiru-locale-reconnect-hint");
+                _ui.Popup(msg + "\n" + hint, Loc.GetString("nibiru-locale-switched-title"));
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Reflection fallback тоже не сработал: {e}");
+                _sawmill.Error($"Ошибка при показе уведомления: {e}");
             }
-
-            return false;
         }
     }
+
 }

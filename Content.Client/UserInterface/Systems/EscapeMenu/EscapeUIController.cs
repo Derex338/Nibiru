@@ -1,4 +1,4 @@
-﻿using Content.Client.FeedbackPopup;
+using Content.Client.FeedbackPopup;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
@@ -59,7 +59,16 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
+        CreateWindow();
 
+        CommandBinds.Builder
+            .Bind(EngineKeyFunctions.EscapeMenu,
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<EscapeUIController>();
+    }
+
+    private void CreateWindow()
+    {
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
 
         _escapeWindow.OnClose += DeactivateButton;
@@ -113,11 +122,6 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
 
         // Hide wiki button if we don't have a link for it.
         _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
-
-        CommandBinds.Builder
-            .Bind(EngineKeyFunctions.EscapeMenu,
-                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Register<EscapeUIController>();
     }
 
     public void OnStateExited(GameplayState state)
@@ -129,6 +133,27 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
         }
 
         CommandBinds.Unregister<EscapeUIController>();
+    }
+
+    /// <summary>
+    /// Disposes and recreates the escape window to refresh localized text.
+    /// </summary>
+    public void ReloadWindow()
+    {
+        if (_escapeWindow is not { Disposed: false })
+            return;
+
+        var wasOpen = _escapeWindow.IsOpen;
+
+        _escapeWindow.Dispose();
+        _escapeWindow = null;
+
+        CreateWindow();
+
+        if (wasOpen)
+        {
+            _escapeWindow!.OpenCentered();
+        }
     }
 
     private void EscapeButtonOnOnPressed(ButtonEventArgs obj)

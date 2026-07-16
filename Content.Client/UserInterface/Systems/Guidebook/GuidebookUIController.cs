@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.Gameplay;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Controls;
+using Content.Client.Localization;
 using Content.Client.Lobby;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.UserInterface.Controls;
@@ -19,7 +20,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Guidebook;
 
-public sealed partial class GuidebookUIController : UIController, IOnStateEntered<LobbyState>, IOnStateEntered<GameplayState>, IOnStateExited<LobbyState>, IOnStateExited<GameplayState>, IOnSystemChanged<GuidebookSystem>
+public sealed partial class GuidebookUIController : UIController, IOnStateEntered<LobbyState>, IOnStateEntered<GameplayState>, IOnStateExited<LobbyState>, IOnStateExited<GameplayState>, IOnSystemChanged<GuidebookSystem>, ILanguageRefreshable
 {
     [UISystemDependency] private readonly GuidebookSystem _guidebookSystem = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
@@ -45,6 +46,8 @@ public sealed partial class GuidebookUIController : UIController, IOnStateEntere
     private void HandleStateEntered(State state)
     {
         DebugTools.Assert(_guideWindow == null);
+
+        LanguageRefreshManager.Register(this);
 
         // setup window
         _guideWindow = UIManager.CreateWindow<GuidebookWindow>();
@@ -78,6 +81,8 @@ public sealed partial class GuidebookUIController : UIController, IOnStateEntere
 
     private void HandleStateExited()
     {
+        LanguageRefreshManager.Unregister(this);
+
         if (_guideWindow == null)
             return;
 
@@ -88,6 +93,21 @@ public sealed partial class GuidebookUIController : UIController, IOnStateEntere
         _guideWindow.Dispose();
         _guideWindow = null;
         CommandBinds.Unregister<GuidebookUIController>();
+    }
+
+    public void OnLanguageChanged()
+    {
+        if (_guideWindow == null || _guideWindow.Disposed)
+            return;
+
+        var wasOpen = _guideWindow.IsOpen;
+        CloseGuidebook();
+        _guideWindow.Dispose();
+        _guideWindow = UIManager.CreateWindow<GuidebookWindow>();
+        _guideWindow.OnClose += OnWindowClosed;
+        _guideWindow.OnOpen += OnWindowOpen;
+        if (wasOpen)
+            OpenGuidebook();
     }
 
     public void OnSystemLoaded(GuidebookSystem system)
