@@ -19,9 +19,7 @@
   name: Голем
   roundStart: true
   prototype: MobStone
-  sprites: MobStoneSprites
-  markingLimits: MobStoneMarkingLimits
-  dollPrototype: MobStoneDummy
+  dollPrototype: AppearanceStone
   skinColoration: Hues
   defaultSkinTone: "#868991"
   minAge: 1
@@ -34,232 +32,9 @@
   femaleFirstNames: NamesStone
   naming: First
 
-- type: markingPoints
-  id: MobStoneMarkingLimits
-  onlyWhitelisted: true
-  points:
-    Head:
-      points: 1
-      required: false
-    HeadTop:
-      points: 1
-      required: false
-    Snout:
-      points: 1
-      required: false
-    Chest:
-      points: 3
-      required: false
-    Legs:
-      points: 4
-      required: false
-    Arms:
-      points: 4
-      required: false
-    Back:
-      points: 1
-      required: true
-      defaultMarkings: [ StoneBase ]
-
-- type: speciesBaseSprites
-  id: MobStoneSprites
-  sprites:
-    Snout: MobHumanoidAnyMarking
-    HeadTop: MobHumanoidAnyMarking
-    HeadSide: MobHumanoidAnyMarking
-    Head: MobStoneHead
-    Chest: MobStoneTorso
-    LArm: MobStoneLArm
-    RArm: MobStoneRArm
-    LHand: MobStoneLHand
-    RHand: MobStoneRHand
-    LLeg: MobStoneLLeg
-    RLeg: MobStoneRLeg
-    LFoot: MobStoneLFood
-    RFoot: MobStoneRFood
-    Back: MobHumanoidAnyMarking
-
-- type: humanoidBaseSprite
-  id: MobStoneHead
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobStoneHeadMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobStoneHeadFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: head_f
-
-- type: humanoidBaseSprite
-  id: MobStoneTorso
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobStoneTorsoMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobStoneTorsoFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: torso_f
-
-- type: humanoidBaseSprite
-  id: MobStoneLLeg
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobStoneLArm
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobStoneLHand
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobStoneRLeg
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobStoneRArm
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobStoneRHand
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobStoneRFood
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobStoneLFood
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobStoneLLegMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobStoneLArmMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobStoneLHandMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobStoneRLegMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobStoneRArmMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobStoneRHandMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobStoneRFoodMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobStoneLFoodMale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobStoneLLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobStoneLArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobStoneLHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobStoneRLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobStoneRArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobStoneRHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobStoneRFoodFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobStoneLFoodFemale
-  baseSprite:
-    sprite: _Adventure/Races/Stone/Species/parts.rsi
-    state: l_foot
 - type: markingsGroup
   parent: Undergarments
+  onlyGroupWhitelisted: true
   id: Stone
   limits:
     enum.HumanoidVisualLayers.HeadTop:
@@ -286,9 +61,11 @@
     enum.HumanoidVisualLayers.RLeg:
       limit: 4
       required: false
-    enum.HumanoidVisualLayers.Back:
+    enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
+      default: [StoneBase]
+
 
 - type: entity
   parent: BaseSpeciesAppearance
@@ -298,17 +75,17 @@
   components:
   - type: InitialBody
     organs:
-      Torso: TorsoHuman
-      Head: HeadHuman
-      ArmLeft: LeftArmHuman
-      ArmRight: RightArmHuman
-      HandRight: RightHandHuman
-      HandLeft: LeftHandHuman
-      LegLeft: LeftLegHuman
-      LegRight: RightLegHuman
-      FootLeft: LeftFootHuman
-      FootRight: RightFootHuman
-      Brain: OrganHumanBrain
+      Torso: TorsoStone
+      Head: HeadStone
+      ArmLeft: LeftArmStone
+      ArmRight: RightArmStone
+      HandRight: RightHandStone
+      HandLeft: LeftHandStone
+      LegLeft: LeftLegStone
+      LegRight: RightLegStone
+      FootLeft: LeftFootStone
+      FootRight: RightFootStone
+      Brain: StoneBrain
       Eyes: OrganHumanEyes
       Lungs: OrganHumanLungs
       Heart: OrganHumanHeart
@@ -317,6 +94,9 @@
       Kidneys: OrganHumanKidneys
   - type: HumanoidProfile
     species: Stone
+  - type: Inventory
+    speciesId: Stone
+    templateId: Stone
 
 - type: entity
   parent: OrganHuman
@@ -331,7 +111,9 @@
   - type: VisualOrganMarkings
     markingData:
       group: Stone
-﻿- type: entity
+      #layers: []
+
+- type: entity
   id: SpawnOreRandomStone
   parent: MarkerBase
   components:
@@ -348,11 +130,11 @@
 - type: entity
   id: StoneBrain
   name: камень души
-  parent: BaseItem
+  parent: OrganHumanBrain
   components:
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Stone
+    damageModifierSet: AdventureStone
   - type: Destructible
     thresholds:
     - trigger:
@@ -381,49 +163,6 @@
     sprite: _Adventure/Races/Stone/organs.rsi
     layers:
     - state: brain
-  - type: Organ
-  - type: Brain
-  - type: Input
-    context: "ghost"
-  - type: InputMover
-  - type: Examiner
-  - type: BlockMovement
-
-#Тело
-- type: body
-  name: "Stone"
-  id: Stone
-  root: torso
-  slots:
-    head:
-      part: HeadStone
-      connections:
-      - torso
-    torso:
-      part: TorsoStone
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
-      organs:
-        brain: StoneBrain
-    right arm:
-      part: RightArmStone
-      connections:
-      - right hand
-    left arm:
-      part: LeftArmStone
-      connections:
-      - left hand
-    right hand:
-      part: RightHandStone
-    left hand:
-      part: LeftHandStone
-    right leg:
-      part: RightLegStone
-    left leg:
-      part: LeftLegStone
 
 #Части
 - type: entity
@@ -434,8 +173,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Stone
-  - type: BodyPart
+    damageModifierSet: AdventureStone
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -471,126 +209,70 @@
           path: /Audio/Effects/break_stone.ogg
           params:
             volume: -6
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Stone/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Stone
+      #layers: []
 
 - type: entity
   id: TorsoStone
   name: "осколок голема"
-  parent: PartStone
+  parent: [OrganBaseTorsoSexed, PartStone, OrganBaseTorso]
   components:
   - type: Sprite
-    state: "torso_m"
-  - type: BodyPart
-    partType: Torso
+    sprite: _Adventure/Races/Stone/Species/parts.rsi
 
 - type: entity
   id: HeadStone
   name: "осколок голема"
-  parent: PartStone
+  parent: [OrganBaseHeadSexed, PartStone, OrganBaseHead]
   components:
   - type: Sprite
-    state: "head_m"
-  - type: BodyPart
-    partType: Head
-    vital: true
-  - type: Input
-    context: "ghost"
-  - type: Tag
-    tags:
-      - Head
+    sprite: _Adventure/Races/Stone/Species/parts.rsi
 
 - type: entity
   id: LeftArmStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "l_arm"
-  - type: BodyPart
-    partType: Arm
-    symmetry: Left
+  parent: [PartStone, OrganBaseArmLeft]
 
 - type: entity
   id: RightArmStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "r_arm"
-  - type: BodyPart
-    partType: Arm
-    symmetry: Right
+  parent: [PartStone, OrganBaseArmRight]
 
 - type: entity
   id: LeftHandStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "l_hand"
-  - type: BodyPart
-    partType: Hand
-    symmetry: Left
+  parent: [PartStone, OrganBaseHandLeft]
 
 - type: entity
   id: RightHandStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "r_hand"
-  - type: BodyPart
-    partType: Hand
-    symmetry: Right
+  parent: [PartStone, OrganBaseHandRight]
 
 - type: entity
   id: LeftLegStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "l_leg"
-  - type: BodyPart
-    partType: Leg
-    symmetry: Left
-  - type: MovementBodyPart
-    walkSpeed : 2
-    sprintSpeed : 3
+  parent: [PartStone, OrganBaseLegLeft]
 
 - type: entity
   id: RightLegStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "r_leg"
-  - type: BodyPart
-    partType: Leg
-    symmetry: Right
-  - type: MovementBodyPart
-    walkSpeed : 2
-    sprintSpeed : 3
+  parent: [PartStone, OrganBaseLegRight]
 
 - type: entity
   id: LeftFootStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "l_foot"
-  - type: BodyPart
-    partType: Foot
-    symmetry: Left
+  parent: [PartStone, OrganBaseFootLeft]
 
 - type: entity
   id: RightFootStone
   name: "осколок голема"
-  parent: PartStone
-  components:
-  - type: Sprite
-    state: "r_foot"
-  - type: BodyPart
-    partType: Foot
-    symmetry: Right
+  parent: [PartStone, OrganBaseFootRight]
+
 - type: damageContainer
   id: Stone
   supportedGroups:
@@ -600,18 +282,21 @@
   - Cold
 
 - type: damageModifierSet
-  id: Stone
+  id: AdventureStone
   coefficients:
     Blunt: 0.70
     Slash: 0.70
     Piercing: 0.70
     Heat: 0.70
-    Cold: 0.70- type: localizedDataset
+    Cold: 0.70
+
+- type: localizedDataset
   id: NamesStone
   values:
     prefix: names-stone-dataset-
     count: 30
-﻿- type: soundCollection
+
+- type: soundCollection
   id: StoneDeadCollection
   files:
   - /Audio/_Adventure/Voice/Stone/dead1.ogg
@@ -706,7 +391,7 @@
         volume: -6
     Salute:
       collection: Salutes
-﻿- type: inventoryTemplate
+- type: inventoryTemplate
   id: Stone
   slots:
     - name: outerClothing
@@ -792,3 +477,54 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
+
+- type: entity
+  name: MobStone
+  parent:
+  - AppearanceStone
+  - BaseSpeciesMob
+  id: MobStone
+  components:
+  - type: Icon
+    sprite: _Adventure/Races/Stone/Species/parts.rsi
+    state: full
+  - type: Body
+    prototype: Stone
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Speech
+    speechSounds: StoneSpeach
+  - type: Vocal
+    sounds:
+      Male: StoneEmote
+      Female: StoneEmote
+      Unsexed: StoneEmote
+  - type: BodyEmotes
+    soundsId: StoneBodyEmotes
+  - type: Damageable
+    damageContainer: Stone
+    damageModifierSet: AdventureStone
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 8
+  - type: Inventory
+    speciesId: Stone
+    templateId: Stone
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobStoneDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: VisualBody
+  - type: HumanoidProfile
+    species: Stone
+  - type: Sprite
+    scale: 1.2, 1.2

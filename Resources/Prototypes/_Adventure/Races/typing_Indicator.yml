@@ -1,4 +1,4 @@
-﻿- type: typingIndicator
+- type: typingIndicator
   id: Ghost
   spritePath: _Adventure/Interface/TypingIndicators/Speech.rsi
   typingState: ghost0

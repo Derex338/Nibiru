@@ -3,9 +3,7 @@
   name: Резоми
   roundStart: true
   prototype: MobResomi
-  sprites: MobResomiSprites
-  markingLimits: MobResomiMarkingLimits
-  dollPrototype: MobResomiDummy
+  dollPrototype: AppearanceResomi
   skinColoration: Hues
   defaultSkinTone: "#36c9c0"
   minAge: 15
@@ -16,235 +14,9 @@
   femaleFirstNames: NamesResomiFemale
   naming: First
 
-- type: markingPoints
-  id: MobResomiMarkingLimits
-  onlyWhitelisted: true
-  points:
-    Hair:
-      points: 1
-      required: false
-    Head:
-      points: 1
-      required: true
-      defaultMarkings: [ ResomiEarsBase ]
-    Chest:
-      points: 1
-      required: false
-    Legs:
-      points: 1
-      required: false
-    Arms:
-      points: 1
-      required: false
-    Tail:
-      points: 1
-      required: true
-      defaultMarkings: [ ResomiTailBase ]
-
-- type: speciesBaseSprites
-  id: MobResomiSprites
-  sprites:
-    Hair: MobHumanoidAnyMarking
-    Tail: MobHumanoidAnyMarking
-    HeadTop: MobHumanoidAnyMarking
-    Head: MobResomiHead
-    Chest: MobResomiTorso
-    LArm: MobResomiLArm
-    RArm: MobResomiRArm
-    LHand: MobResomiLHand
-    RHand: MobResomiRHand
-    LLeg: MobResomiLLeg
-    RLeg: MobResomiRLeg
-    LFoot: MobResomiLFoot
-    RFoot: MobResomiRFoot
-    Eyes: MobResomiEyes
-
-- type: humanoidBaseSprite
-  id: MobResomiEyes
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: eyes
-
-- type: humanoidBaseSprite
-  id: MobResomiHead
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobResomiHeadMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobResomiHeadFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: head_f
-
-- type: humanoidBaseSprite
-  id: MobResomiTorso
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobResomiTorsoMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobResomiTorsoFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: torso_f
-
-- type: humanoidBaseSprite
-  id: MobResomiLLeg
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobResomiLArm
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobResomiLHand
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobResomiRLeg
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobResomiRArm
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobResomiRHand
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobResomiRFoot
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobResomiLFoot
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobResomiLLegMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobResomiLArmMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobResomiLHandMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobResomiRLegMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobResomiRArmMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobResomiRHandMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobResomiRFootMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobResomiLFootMale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobResomiLLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobResomiLArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobResomiLHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobResomiRLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobResomiRArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobResomiRHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobResomiRFootFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobResomiLFootFemale
-  baseSprite:
-    sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: l_foot- type: markingsGroup
+- type: markingsGroup
   parent: Undergarments
+  onlyGroupWhitelisted: true
   id: Resomi
   limits:
     enum.HumanoidVisualLayers.Tail:
@@ -280,16 +52,16 @@
   components:
   - type: InitialBody
     organs:
-      Torso: TorsoHuman
-      Head: HeadHuman
-      ArmLeft: LeftArmHuman
-      ArmRight: RightArmHuman
-      HandRight: RightHandHuman
-      HandLeft: LeftHandHuman
-      LegLeft: LeftLegHuman
-      LegRight: RightLegHuman
-      FootLeft: LeftFootHuman
-      FootRight: RightFootHuman
+      Torso: TorsoResomi
+      Head: HeadResomi
+      ArmLeft: LeftArmResomi
+      ArmRight: RightArmResomi
+      HandRight: RightHandResomi
+      HandLeft: LeftHandResomi
+      LegLeft: LeftLegResomi
+      LegRight: RightLegResomi
+      FootLeft: LeftFootResomi
+      FootRight: RightFootResomi
       Brain: OrganResomiBrain
       Eyes: OrganResomiEyes
       Lungs: OrganResomiLungs
@@ -299,6 +71,9 @@
       Kidneys: OrganResomiKidneys
   - type: HumanoidProfile
     species: Resomi
+  - type: Inventory
+    speciesId: Resomi
+    templateId: Resomi
 
 - type: entity
   parent: OrganHuman
@@ -313,50 +88,8 @@
   - type: VisualOrganMarkings
     markingData:
       group: Resomi
-﻿#Тело Резоми
-- type: body
-  name: "Резоми"
-  id: Resomi
-  root: torso
-  slots:
-    head:
-      part: HeadResomi
-      connections:
-      - torso
-      organs:
-        brain: OrganResomiBrain
-        eyes: OrganResomiEyes
-    torso:
-      part: TorsoResomi
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
-      organs:
-        heart: OrganResomiHeart
-        lungs: OrganResomiLungs
-        stomach: OrganResomiStomach
-        liver: OrganResomiLiver
-        kidneys: OrganResomiKidneys
-    right arm:
-      part: RightArmResomi
-      connections:
-      - right hand
-    left arm:
-      part: LeftArmResomi
-      connections:
-      - left hand
-    right hand:
-      part: RightHandResomi
-    left hand:
-      part: LeftHandResomi
-    right leg:
-      part: RightLegResomi
-    left leg:
-      part: LeftLegResomi
+      #layers: []
 
-#Части Резоми
 - type: entity
   id: PartResomi
   parent: [BaseItem, OrganBaseOrganic]
@@ -370,15 +103,21 @@
       reagents:
       - ReagentId: ResomiBlood
         Quantity: 10
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Resomi/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Resomi
+      #layers: []
 
 - type: entity
   id: TorsoResomi
   name: "Туловище резоми"
-  parent: [PartResomi, OrganBaseTorso]
+  parent: [OrganBaseTorsoSexed, PartResomi, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: "torso_m"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -388,11 +127,10 @@
 - type: entity
   id: HeadResomi
   name: "Голова резоми"
-  parent: [PartResomi, OrganBaseHead]
+  parent: [OrganBaseHeadSexed, PartResomi, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
-    state: "head_m"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -442,9 +180,6 @@
   components:
   - type: Sprite
     state: "l_leg"
-  - type: MovementBodyPart
-    walkSpeed : 2.5
-    sprintSpeed : 4.9
 
 - type: entity
   id: RightLegResomi
@@ -454,9 +189,6 @@
   - type: Sprite
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
     state: "r_leg"
-  - type: MovementBodyPart
-    walkSpeed : 2.5
-    sprintSpeed : 4.9
 
 - type: entity
   id: LeftFootResomi
@@ -484,7 +216,8 @@
   group: Biological
   flavor: metallic
   color: "#a70195"
-﻿- type: entity
+
+- type: entity
   id: OrganResomiBrain
   parent: OrganHumanBrain
   name: мозг резоми
@@ -576,7 +309,8 @@
     layers:
       - state: kidney-l
       - state: kidney-r
-﻿- type: soundCollection
+
+- type: soundCollection
   id: ResomiScreamCollection
   files:
   - /Audio/_Adventure/Voice/Resomi/ResomiScream1.ogg
@@ -673,3 +407,181 @@
   values:
     prefix: names-resomi-female-dataset-
     count: 50
+
+- type: entity
+  name: MobResomi
+  parent:
+  - AppearanceResomi
+  - BaseSpeciesMobOrganic
+  id: MobResomi
+  components:
+  - type: Sprite
+    scale: 0.6, 0.6
+  - type: Icon
+    sprite: _Adventure/Races/Resomi/Species/parts.rsi
+    state: full
+  - type: Body
+    prototype: Resomi
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Speech
+    speechSounds: ResomiSpeech
+  - type: Vocal
+    sounds:
+      Male: MaleResomi
+      Female: FemaleResomi
+      Unsexed: MaleResomi
+  - type: TypingIndicator
+    proto: bird
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: ResomiBlood
+        Quantity: 300
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 3
+  - type: Inventory
+    speciesId: Resomi
+    templateId: Resomi
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobResomiDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: VisualBody
+  - type: HumanoidProfile
+    species: Resomi
+  - type: Sprite
+    scale: 0.6, 0.6
+
+- type: inventoryTemplate
+  id: Resomi
+  slots:
+    - name: shoes
+      slotTexture: shoes
+      slotFlags: FEET
+      stripTime: 3
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,3
+      displayName: Shoes
+    - name: jumpsuit
+      slotTexture: uniform
+      slotFlags: INNERCLOTHING
+      stripTime: 6
+      uiWindowPos: 0,1
+      strippingWindowPos: 0,2
+      displayName: Jumpsuit
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      stripTime: 6
+      uiWindowPos: 1,1
+      strippingWindowPos: 1,2
+      displayName: Suit
+    - name: gloves
+      slotTexture: gloves
+      slotFlags: GLOVES
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,2
+      displayName: Gloves
+    - name: neck
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 0,2
+      strippingWindowPos: 0,1
+      displayName: Neck
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 1,2
+      strippingWindowPos: 1,1
+      displayName: Mask
+    - name: eyes
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,0
+      displayName: Eyes
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,0
+      displayName: Ears
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,3
+      strippingWindowPos: 1,0
+      displayName: Head
+    - name: pocket1
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,4
+      dependsOn: jumpsuit
+      displayName: Pocket 1
+      stripHidden: true
+    - name: pocket2
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,3
+      strippingWindowPos: 1,4
+      dependsOn: jumpsuit
+      displayName: Pocket 2
+      stripHidden: true
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags: SUITSTORAGE
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      dependsOnComponents:
+      - type: AllowSuitStorage
+      displayName: Suit Storage
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
+    - name: belt
+      slotTexture: belt
+      slotFlags: BELT
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,1
+      strippingWindowPos: 1,5
+      displayName: Belt
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,0
+      strippingWindowPos: 0,5
+      displayName: Back

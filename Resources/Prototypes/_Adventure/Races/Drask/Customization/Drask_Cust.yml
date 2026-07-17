@@ -4,7 +4,7 @@
   markingCategory: Snout
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Face.rsi
     state: tentacles_big
@@ -15,7 +15,7 @@
   markingCategory: Snout
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Face.rsi
     state: tentacles
@@ -26,7 +26,7 @@
   markingCategory: Snout
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Face.rsi
     state: tentacles_double
@@ -37,7 +37,7 @@
   markingCategory: HeadSide
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Head.rsi
     state: head_big
@@ -46,7 +46,7 @@
   id: DraskBodyTentaclesSmall
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   followSkinColor: true
   forcedColoring: true
   sprites:
@@ -57,7 +57,7 @@
   id: DraskBodyTentaclesMany
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   followSkinColor: true
   forcedColoring: true
   sprites:
@@ -70,7 +70,7 @@
   markingCategory: HeadSide
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Head.rsi
     state: squid
@@ -81,7 +81,7 @@
   markingCategory: HeadSide
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Drask]
+  groupWhitelist: [Drask]
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Head.rsi
     state: squid_tent

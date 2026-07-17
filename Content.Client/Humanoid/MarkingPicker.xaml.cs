@@ -47,6 +47,7 @@ public sealed partial class MarkingPicker : Control
         if (_markingsModel is null)
             return;
 
+        OrganTabs.CurrentTab = 0;
         OrganTabs.RemoveAllChildren();
 
         var i = 0;

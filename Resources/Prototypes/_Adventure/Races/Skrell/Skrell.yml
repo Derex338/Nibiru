@@ -1,7 +1,7 @@
 - type: marking
   id: SkrellTailsBase
   bodyPart: Tail
-  markingCategory: Tail
+  #markingCategory: Tail
   speciesRestriction: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Species/parts.rsi
@@ -12,9 +12,7 @@
   name: Скрелл
   roundStart: true
   prototype: MobSkrell
-  sprites: MobSkrellSprites
-  markingLimits: MobSkrellMarkingLimits
-  dollPrototype: MobSkrellDummy
+  dollPrototype: AppearanceSkrell
   skinColoration: Hues
   defaultSkinTone: "#4dd7ab"
   minAge: 30
@@ -25,235 +23,15 @@
   femaleFirstNames: NamesSkrell
   naming: First
 
-- type: markingPoints
-  id: MobSkrellMarkingLimits
-  onlyWhitelisted: true
-  points:
-    Head:
-      points: 1
-      required: false
-    Chest:
-      points: 1
-      required: false
-    Legs:
-      points: 4
-      required: false
-    Arms:
-      points: 4
-      required: false
-    Tail:
-      points: 1
-      required: true
-      defaultMarkings: [ SkrellTailsBase ]
-
-- type: speciesBaseSprites
-  id: MobSkrellSprites
-  sprites:
-    Tail: MobHumanoidAnyMarking
-    HeadTop: MobHumanoidAnyMarking
-    Head: MobSkrellHead
-    Chest: MobSkrellTorso
-    LArm: MobSkrellLArm
-    RArm: MobSkrellRArm
-    LHand: MobSkrellLHand
-    RHand: MobSkrellRHand
-    LLeg: MobSkrellLLeg
-    RLeg: MobSkrellRLeg
-    LFoot: MobSkrellLFoot
-    RFoot: MobSkrellRFoot
-    Eyes: MobSkrellEyes
-
-- type: humanoidBaseSprite
-  id: MobSkrellEyes
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: eyes
-
-- type: humanoidBaseSprite
-  id: MobSkrellHead
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobSkrellHeadMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobSkrellHeadFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: head_f
-
-- type: humanoidBaseSprite
-  id: MobSkrellTorso
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobSkrellTorsoMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobSkrellTorsoFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: torso_f
-
-- type: humanoidBaseSprite
-  id: MobSkrellLLeg
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobSkrellLArm
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobSkrellLHand
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobSkrellRLeg
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobSkrellRArm
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobSkrellRHand
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobSkrellRFoot
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobSkrellLFoot
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobSkrellLLegMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobSkrellLArmMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobSkrellLHandMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobSkrellRLegMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobSkrellRArmMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobSkrellRHandMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobSkrellRFootMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobSkrellLFootMale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobSkrellLLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_legF
-
-- type: humanoidBaseSprite
-  id: MobSkrellLArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_armF
-
-- type: humanoidBaseSprite
-  id: MobSkrellLHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_handF
-
-- type: humanoidBaseSprite
-  id: MobSkrellRLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_legF
-
-- type: humanoidBaseSprite
-  id: MobSkrellRArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_armF
-
-- type: humanoidBaseSprite
-  id: MobSkrellRHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_handF
-
-- type: humanoidBaseSprite
-  id: MobSkrellRFootFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: r_footF
-
-- type: humanoidBaseSprite
-  id: MobSkrellLFootFemale
-  baseSprite:
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: l_footF- type: markingsGroup
+- type: markingsGroup
   parent: Undergarments
+  onlyGroupWhitelisted: true
   id: Skrell
   limits:
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
+      default: SkrellTailsBase
     enum.HumanoidVisualLayers.HeadTop:
       limit: 1
       required: false
@@ -296,16 +74,16 @@
   components:
   - type: InitialBody
     organs:
-      Torso: TorsoHuman
-      Head: HeadHuman
-      ArmLeft: LeftArmHuman
-      ArmRight: RightArmHuman
-      HandRight: RightHandHuman
-      HandLeft: LeftHandHuman
-      LegLeft: LeftLegHuman
-      LegRight: RightLegHuman
-      FootLeft: LeftFootHuman
-      FootRight: RightFootHuman
+      Torso: TorsoSkrell
+      Head: HeadSkrell
+      ArmLeft: LeftArmSkrell
+      ArmRight: RightArmSkrell
+      HandRight: RightHandSkrell
+      HandLeft: LeftHandSkrell
+      LegLeft: LeftLegSkrell
+      LegRight: RightLegSkrell
+      FootLeft: LeftFootSkrell
+      FootRight: RightFootSkrell
       Brain: OrganSkrellBrain
       Eyes: OrganSkrellEyes
       Lungs: OrganSkrellLungs
@@ -315,64 +93,9 @@
       Kidneys: OrganSkrellKidneys
   - type: HumanoidProfile
     species: Skrell
-
-- type: entity
-  parent: OrganHuman
-  id: OrganSkrellExternal
-  abstract: true
-  components:
-  - type: Sprite
-    sprite: _Adventure/Races/Skrell/Species/parts.rsi
-  - type: VisualOrgan
-    data:
-      sprite: _Adventure/Races/Skrell/Species/parts.rsi
-  - type: VisualOrganMarkings
-    markingData:
-      group: Skrell
-﻿#Тело Скрелла
-- type: body
-  name: "Скрелл"
-  id: Skrell
-  root: torso
-  slots:
-    head:
-      part: HeadSkrell
-      connections:
-      - torso
-      organs:
-        brain: OrganSkrellBrain
-        eyes: OrganSkrellEyes
-    torso:
-      part: TorsoSkrell
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
-      organs:
-        heart: OrganSkrellHeart
-        lungs: OrganSkrellLungs
-        stomach: OrganSkrellStomach
-        liver: OrganSkrellLiver
-        kidneys: OrganSkrellKidneys
-    right arm:
-      part: RightArmSkrell
-      connections:
-      - right hand
-    left arm:
-      part: LeftArmSkrell
-      connections:
-      - left hand
-    right hand:
-      part: RightHandSkrell
-    left hand:
-      part: LeftHandSkrell
-    right leg:
-      part: RightLegSkrell
-    left leg:
-      part: LeftLegSkrell
-
-#Части Скрелла
+  - type: Inventory
+    speciesId: Skrell
+    templateId: Skrell
 
 #Кровь Скрелла
 - type: reagent
@@ -392,38 +115,37 @@
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
   - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: SkrellBlood
-        Quantity: 10
+    grindableSolutionName: blood
+  - type: SolutionContainerManager
+    solutions:
+      blood:
+        maxVol: 15
+        reagents:
+        - ReagentId: SkrellBlood
+          Quantity: 10
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Skrell/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Skrell
+      #layers: []
 
 - type: entity
   id: TorsoSkrell
   name: "Туловище скрелла"
-  parent: [PartSkrell, OrganBaseTorso]
+  parent: [OrganBaseTorsoSexed, PartSkrell, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: "torso_m"
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: SkrellBlood
-        Quantity: 20
 
 - type: entity
   id: HeadSkrell
   name: "Голова скрелла"
-  parent: [PartSkrell, OrganBaseHead]
+  parent: [OrganBaseHeadSexed, PartSkrell, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
-    state: "head_m"
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: SkrellBlood
-        Quantity: 10
 
 - type: entity
   id: LeftArmSkrell
@@ -496,7 +218,7 @@
   - type: Sprite
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
     state: "r_foot"
-﻿- type: entity
+- type: entity
   id: OrganSkrellBrain
   parent: OrganHumanBrain
   name: мозг скрелла
@@ -571,7 +293,7 @@
     layers:
       - state: kidney-l
       - state: kidney-r
-﻿- type: soundCollection
+- type: soundCollection
   id: SkrellScreamCollection
   files:
   - /Audio/_Adventure/Voice/Skrell/skrell_scream1.ogg
@@ -679,3 +401,175 @@
   values:
     prefix: names-skrell-dataset-
     count: 37
+
+- type: entity
+  name: MobSkrell
+  parent:
+  - AppearanceSkrell
+  - BaseSpeciesMobOrganic
+  id: MobSkrell
+  components:
+  - type: Icon
+    sprite: _Adventure/Races/Skrell/Species/parts.rsi
+    state: full
+  - type: Body
+    prototype: Skrell
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Speech
+    speechSounds: SkrellSpeach
+  - type: Vocal
+    sounds:
+      Male: MaleSkrell
+      Female: FemaleSkrell
+      Unsexed: MaleSkrell
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: SkrellBlood
+        Quantity: 300
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 5
+  - type: Inventory
+    speciesId: Skrell
+    templateId: Skrell
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobSkrellDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: VisualBody
+  - type: HumanoidProfile
+    species: Skrell
+
+- type: inventoryTemplate
+  id: Skrell
+  slots:
+    - name: shoes
+      slotTexture: shoes
+      slotFlags: FEET
+      stripTime: 3
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,3
+      displayName: Shoes
+    - name: jumpsuit
+      slotTexture: uniform
+      slotFlags: INNERCLOTHING
+      stripTime: 6
+      uiWindowPos: 0,1
+      strippingWindowPos: 0,2
+      displayName: Jumpsuit
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      stripTime: 6
+      uiWindowPos: 1,1
+      strippingWindowPos: 1,2
+      displayName: Suit
+    - name: gloves
+      slotTexture: gloves
+      slotFlags: GLOVES
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,2
+      displayName: Gloves
+    - name: neck
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 0,2
+      strippingWindowPos: 0,1
+      displayName: Neck
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 1,2
+      strippingWindowPos: 1,1
+      displayName: Mask
+    - name: eyes
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,0
+      displayName: Eyes
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,0
+      displayName: Ears
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,3
+      strippingWindowPos: 1,0
+      displayName: Head
+    - name: pocket1
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,4
+      dependsOn: jumpsuit
+      displayName: Pocket 1
+      stripHidden: true
+    - name: pocket2
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,3
+      strippingWindowPos: 1,4
+      dependsOn: jumpsuit
+      displayName: Pocket 2
+      stripHidden: true
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags: SUITSTORAGE
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      dependsOnComponents:
+      - type: AllowSuitStorage
+      displayName: Suit Storage
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
+    - name: belt
+      slotTexture: belt
+      slotFlags: BELT
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,1
+      strippingWindowPos: 1,5
+      displayName: Belt
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,0
+      strippingWindowPos: 0,5
+      displayName: Back

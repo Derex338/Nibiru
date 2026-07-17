@@ -2,7 +2,7 @@
   id: FelinidEars
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -25,7 +25,7 @@
   id: FelinidTail
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -43,7 +43,7 @@
   id: FelinidEarsStubby
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -66,7 +66,7 @@
   id: FelinidEarsCurled
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -89,7 +89,7 @@
   id: FelinidEarsTorn
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -112,7 +112,7 @@
   id: FelinidTailStripes
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -132,7 +132,7 @@
   id: FelinidTailBell
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -150,7 +150,7 @@
   id: FelinidEarsBell
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -173,7 +173,7 @@
   id: FelinidTailFox
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -193,7 +193,7 @@
   id: FelinidEarsFox
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid]
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:

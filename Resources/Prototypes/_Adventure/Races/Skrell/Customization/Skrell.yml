@@ -5,7 +5,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Big
@@ -16,7 +16,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Double
@@ -27,7 +27,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Dreds
@@ -38,7 +38,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Fisto
@@ -49,7 +49,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Long
@@ -60,7 +60,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Tvileck
@@ -71,7 +71,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Dreds_big
@@ -82,7 +82,7 @@
   markingCategory: Tail
   followSkinColor: true
   forcedColoring: true
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Alian

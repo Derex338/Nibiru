@@ -1,3 +1,25 @@
+- type: marking
+  id: FaceDraskBase
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: true
+  forcedColoring: true
+  groupWhitelist: [Drask]
+  sprites:
+  - sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: Face
+
+- type: marking
+  id: DraskHeadBase
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  followSkinColor: true
+  forcedColoring: true
+  groupWhitelist: [Drask]
+  sprites:
+  - sprite: _Adventure/Races/Drask/Species/parts.rsi
+    state: head
+
 - type: species
   id: Drask
   name: Драск
@@ -17,11 +39,16 @@
 
 - type: markingsGroup
   parent: Undergarments
+  onlyGroupWhitelisted: true
   id: Drask
   limits:
     enum.HumanoidVisualLayers.HeadTop:
       limit: 1
       required: false
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: true
+      default: DraskHeadBase
     enum.HumanoidVisualLayers.Hair:
       limit: 1
       required: false
@@ -34,6 +61,7 @@
     enum.HumanoidVisualLayers.Snout:
       limit: 1
       required: false
+      default: FaceDraskBase
     enum.HumanoidVisualLayers.LArm:
       limit: 1
       required: false
@@ -95,8 +123,8 @@
   - type: HumanoidProfile
     species: Drask
   - type: Inventory
-    templateId: Drask
     speciesId: Drask
+    templateId: Drask
 - type: damageModifierSet
   id: DraskCryo
   coefficients:
@@ -130,17 +158,11 @@
               Bloodloss: -1
 
 - type: entity
-  save: false
   name: Урист макТентакль
-  parent: BaseMobDrask
+  parent:
+  - AppearanceDrask
+  - BaseSpeciesMobOrganic
   id: MobDrask
-
-- type: entity
-  abstract: true
-  save: false
-  parent: [BaseMobSpeciesOrganic, AppearanceDrask]
-  id: BaseMobDrask
-  name: Урист макТентакль
   components:
   - type: TypingIndicator
     proto: Drask
@@ -151,11 +173,11 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: UrUAccent # Adventure-Accent
+  - type: UrUAccent
   - type: SolutionContainerManager
     solutions:
-      bloodstream: # тупой, но рабочий костыль, 20u слабого приоксадона находятся в качестве введёного реагента и постоянно метаболизируются, но не реенерируют до достижения телом температуры в -40с.
-        reagents: # upd: Костыль стал ещё тупее, но всё-равно работает
+      bloodstream:
+        reagents:
         - ReagentId: CryoxadoneDrask
           Quantity: 20
   - type: SolutionRegeneration
@@ -173,7 +195,7 @@
     damage:
       types:
         Blunt: 6
-        Structural: 5 #чуть структурного
+        Structural: 5
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -182,7 +204,7 @@
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
-      - ReagentId: Cryoxadone
+      - ReagentId: CryoxadoneDrask
         Quantity: 300
   - type: Vocal
     sounds:
@@ -198,7 +220,7 @@
     implicitHeatRegulation: 250
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
-    normalBodyTemperature: 291.15 # температура тела не поднимается сама по себе.
+    normalBodyTemperature: 291.15
     thermalRegulationTemperatureThreshold: 2
   - type: Temperature
     currentTemperature: 291.15
@@ -213,7 +235,7 @@
       types:
         Heat : 2.0
   - type: TemperatureSpeed
-    thresholds: # замедляются только при плюсовой температуре
+    thresholds:
       10273: 0.4
       298: 0.7
       295: 0.9
@@ -235,63 +257,24 @@
     - id: FoodMeatLizard
       amount: 5
   - type: Inventory
-    speciesId: drask
+    speciesId: Drask
     templateId: Drask
   - type: ScaleVisuals
-    scale: 1, 1.1 # рост 2 метра.
+    scale: 1, 1.1
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobDraskDummy
   categories: [ HideSpawnMenu ]
   components:
+  - type: VisualBody
   - type: Inventory
-    templateId: Drask
+    speciesId: Drask
   - type: ScaleVisuals
     scale: 1, 1.1
-﻿#Тело Драска
-- type: body
-  name: "Драск"
-  id: Drask
-  root: torso
-  slots:
-    head:
-      part: HeadDrask
-      connections:
-      - torso
-      organs:
-        brain: OrganDraskBrain
-        eyes: OrganDraskEyes
-        heart: OrganDraskHeart # сердце в голове
-    torso:
-      part: TorsoDrask
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
-      organs:
-        lungs: OrganDraskLungs
-        stomach: OrganDraskStomach
-        liver: OrganDraskLiver
-        kidneys: OrganDraskKidneys
-    right arm:
-      part: RightArmDrask
-      connections:
-      - right hand
-    left arm:
-      part: LeftArmDrask
-      connections:
-      - left hand
-    right hand:
-      part: RightHandDrask
-    left hand:
-      part: LeftHandDrask
-    right leg:
-      part: RightLegDrask
-    left leg:
-      part: LeftLegDrask
-
+  - type: HumanoidProfile
+    species: Drask
+#Тело Драска
 #Части Драска
 - type: entity
   id: PartDrask
@@ -302,38 +285,37 @@
   - type: Sprite
     sprite: _Adventure/Races/Drask/Species/parts.rsi
   - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Cryoxadone
-        Quantity: 10
+    grindableSolutionName: blood
+  - type: SolutionContainerManager
+    solutions:
+      blood:
+        maxVol: 15
+        reagents:
+        - ReagentId: CryoxadoneDrask
+          Quantity: 10
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/Drask/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Drask
+      layers: []
 
 - type: entity
   id: TorsoDrask
   name: "Туловище драска"
-  parent: [PartDrask, OrganBaseTorso]
+  parent: [OrganBaseTorsoSexed, PartDrask, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Drask/Species/parts.rsi
-    state: "torso_m"
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Cryoxadone
-        Quantity: 20
 
 - type: entity
   id: HeadDrask
   name: "Голова драска"
-  parent: [PartDrask, OrganBaseHead]
+  parent: [OrganBaseHeadSexed, PartDrask, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/Drask/Species/parts.rsi
-    state: "head_m"
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Cryoxadone
-        Quantity: 10
 
 - type: entity
   id: LeftArmDrask
@@ -406,7 +388,7 @@
   - type: Sprite
     sprite: _Adventure/Races/Drask/Species/parts.rsi
     state: "r_foot"
-﻿- type: metabolizerType
+- type: metabolizerType
   id: Drask
   name: Драск
 
@@ -435,7 +417,7 @@
 
 - type: entity
   id: OrganDraskHeart
-  parent: BaseAnimalOrgan
+  parent: OrganHumanHeart
   name: сердце драска
   description: тук тук
   components:
@@ -546,6 +528,7 @@
   - type: VisualOrganMarkings
     markingData:
       group: Drask
+      layers: []
 
 - type: entity
   parent: OrganDrask
@@ -560,6 +543,7 @@
   - type: VisualOrganMarkings
     markingData:
       group: Drask
+      layers: []
 
 - type: entity
   parent: OrganBaseOrganic
@@ -598,7 +582,7 @@
 - type: entity
   parent: [ OrganBaseFootRight, OrganDraskExternal ]
   id: OrganDraskFootRight
-﻿- type: soundCollection
+- type: soundCollection
   id: DraskScreamCollection
   files:
   - /Audio/_Adventure/Voice/Drask/octoScream1.ogg
@@ -678,7 +662,7 @@
   values:
     prefix: names-drask-dataset-
     count: 20
-﻿- type: inventoryTemplate
+- type: inventoryTemplate
   id: Drask
   slots:
     - name: shoes

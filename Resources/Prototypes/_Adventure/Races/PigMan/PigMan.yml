@@ -25,250 +25,16 @@
   name: Троттин
   roundStart: true
   prototype: MobPigMan
-  sprites: MobPigManSprites
-  markingLimits: MobPigManMarkingLimits
-  dollPrototype: MobPigManDummy
+  dollPrototype: AppearancePigMan
   skinColoration: HumanToned
   minAge: 18
   youngAge: 25
   oldAge: 42
   maxAge: 70
 
-- type: markingPoints
-  id: MobPigManMarkingLimits
-  points:
-    FacialHair:
-      points: 1
-      required: false
-    Hair:
-      points: 1
-      required: false
-    HeadSide:
-      points: 1
-      required: true
-      defaultMarkings: [ PigEarsBase ]
-    Snout:
-      points: 1
-      required: true
-      defaultMarkings: [ PigNoseBase ]
-    Head:
-      points: 1
-      required: false
-    Chest:
-      points: 1
-      required: false
-    Legs:
-      points: 4
-      required: false
-    Arms:
-      points: 4
-      required: false
-
-- type: speciesBaseSprites
-  id: MobPigManSprites
-  sprites:
-    FacialHair: MobHumanoidAnyMarking
-    HeadSide: MobHumanoidAnyMarking
-    Hair: MobHumanoidAnyMarking
-    Snout: MobHumanoidAnyMarking
-    Head: MobPigManHead
-    Chest: MobPigManTorso
-    LArm: MobPigManLArm
-    RArm: MobPigManRArm
-    LHand: MobPigManLHand
-    RHand: MobPigManRHand
-    LLeg: MobPigManLLeg
-    RLeg: MobPigManRLeg
-    LFoot: MobPigManLFoot
-    RFoot: MobPigManRFoot
-    Eyes: MobPigManEyes
-
-- type: humanoidBaseSprite
-  id: MobPigManEyes
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: eyes
-
-- type: humanoidBaseSprite
-  id: MobPigManHead
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobPigManHeadMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: head_m
-
-- type: humanoidBaseSprite
-  id: MobPigManHeadFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: head_f
-
-- type: humanoidBaseSprite
-  id: MobPigManTorso
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobPigManTorsoMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: torso_m
-
-- type: humanoidBaseSprite
-  id: MobPigManTorsoFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: torso_f
-
-- type: humanoidBaseSprite
-  id: MobPigManLLeg
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobPigManLArm
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobPigManLHand
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobPigManRLeg
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobPigManRArm
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobPigManRHand
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobPigManRFoot
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobPigManLFoot
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobPigManLLegMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobPigManLArmMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobPigManLHandMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobPigManRLegMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobPigManRArmMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobPigManRHandMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobPigManRFootMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobPigManLFootMale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_foot
-
-- type: humanoidBaseSprite
-  id: MobPigManLLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_leg
-
-- type: humanoidBaseSprite
-  id: MobPigManLArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_arm
-
-- type: humanoidBaseSprite
-  id: MobPigManLHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_hand
-
-- type: humanoidBaseSprite
-  id: MobPigManRLegFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_leg
-
-- type: humanoidBaseSprite
-  id: MobPigManRArmFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_arm
-
-- type: humanoidBaseSprite
-  id: MobPigManRHandFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_hand
-
-- type: humanoidBaseSprite
-  id: MobPigManRFootFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: r_foot
-
-- type: humanoidBaseSprite
-  id: MobPigManLFootFemale
-  baseSprite:
-    sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: l_foot- type: markingsGroup
+- type: markingsGroup
   parent: Undergarments
+  onlyGroupWhitelisted: true
   id: PigMan
   limits:
     enum.HumanoidVisualLayers.Hair:
@@ -280,9 +46,11 @@
     enum.HumanoidVisualLayers.HeadSide:
       limit: 1
       required: true
+      default: PigEarsBase
     enum.HumanoidVisualLayers.Snout:
       limit: 1
       required: true
+      default: PigNoseBase
     enum.HumanoidVisualLayers.Head:
       limit: 1
       required: false
@@ -329,6 +97,9 @@
       Kidneys: OrganHumanKidneys
   - type: HumanoidProfile
     species: PigMan
+  - type: Inventory
+    speciesId: PigMan
+    templateId: PigMan
 
 - type: entity
   parent: OrganHuman
@@ -343,7 +114,9 @@
   - type: VisualOrganMarkings
     markingData:
       group: PigMan
-﻿- type: metabolizerType
+      #layers: []
+
+- type: metabolizerType
   id: PigMan
   name: Свинолюд
 
@@ -392,49 +165,6 @@
     - id: Poison
     - id: Narcotic
 
-#Тело Троттина
-- type: body
-  name: "Троттин"
-  id: PigMan
-  root: torso
-  slots:
-    head:
-      part: HeadPigMan
-      connections:
-      - torso
-      organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
-    torso:
-      part: TorsoPigMan
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
-      organs:
-        heart: OrganPigManHeart
-        lungs: OrganHumanLungs
-        stomach: OrganPigManStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
-    right arm:
-      part: RightArmPigMan
-      connections:
-      - right hand
-    left arm:
-      part: LeftArmPigMan
-      connections:
-      - left hand
-    right hand:
-      part: RightHandPigMan
-    left hand:
-      part: LeftHandPigMan
-    right leg:
-      part: RightLegPigMan
-    left leg:
-      part: LeftLegPigMan
-
 #Части Троттина
 
 - type: entity
@@ -452,15 +182,21 @@
         Quantity: 10
       - ReagentId: Fat
         Quantity: 10
+  - type: VisualOrgan
+    data:
+      sprite: _Adventure/Races/PigMan/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: PigMan
+      #layers: []
 
 - type: entity
   id: TorsoPigMan
   name: "Туловище троттина"
-  parent: [PartPigMan, OrganBaseTorso]
+  parent: [OrganBaseTorsoSexed, PartPigMan, OrganBaseTorso]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: "torso_m"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -472,11 +208,10 @@
 - type: entity
   id: HeadPigMan
   name: "Голова троттина"
-  parent: [PartPigMan, OrganBaseHead]
+  parent: [OrganBaseHeadSexed, PartPigMan, OrganBaseHead]
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
-    state: "head_m"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -529,9 +264,6 @@
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: "l_leg"
-  - type: MovementBodyPart
-    walkSpeed : 2
-    sprintSpeed : 3.6
 
 - type: entity
   id: RightLegPigMan
@@ -541,9 +273,6 @@
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: "r_leg"
-  - type: MovementBodyPart
-    walkSpeed : 2
-    sprintSpeed : 3.6
 
 - type: entity
   id: LeftFootPigMan
@@ -562,7 +291,7 @@
   - type: Sprite
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: "r_foot"
-﻿- type: soundCollection
+- type: soundCollection
   id: PigManScreamCollection
   files:
   - /Audio/_Adventure/Voice/PigMan/PigScream1.ogg
@@ -673,3 +402,183 @@
       path: /Audio/_Adventure/Voice/PigMan/PigTalk2.ogg
     Hru:
       collection: PigManHruCollection
+
+- type: entity
+  name: MobPigMan
+  parent:
+  - AppearancePigMan
+  - BaseSpeciesMobOrganic
+  id: MobPigMan
+  components:
+  - type: Icon
+    sprite: _Adventure/Races/PigMan/Species/parts.rsi
+    state: full
+  - type: Body
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Speech
+    speechVerb: Neco
+    speechSounds: PigManSpeach
+  - type: Vocal
+    sounds:
+      Male: MalePigMan
+      Female: FemalePigMan
+      Unsexed: MalePigMan
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: PigManBlood
+        Quantity: 300
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 5
+  - type: Inventory
+    speciesId: PigMan
+    templateId: PigMan
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobPigManDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: VisualBody
+  - type: HumanoidProfile
+    species: PigMan
+
+- type: reagent
+  id: PigManBlood
+  parent: Blood
+  name: Кровь троттина
+  group: Biological
+  flavor: metallic
+  color: "#c41e3a"
+
+- type: inventoryTemplate
+  id: PigMan
+  slots:
+    - name: shoes
+      slotTexture: shoes
+      slotFlags: FEET
+      stripTime: 3
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,3
+      displayName: Shoes
+    - name: jumpsuit
+      slotTexture: uniform
+      slotFlags: INNERCLOTHING
+      stripTime: 6
+      uiWindowPos: 0,1
+      strippingWindowPos: 0,2
+      displayName: Jumpsuit
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      stripTime: 6
+      uiWindowPos: 1,1
+      strippingWindowPos: 1,2
+      displayName: Suit
+    - name: gloves
+      slotTexture: gloves
+      slotFlags: GLOVES
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,2
+      displayName: Gloves
+    - name: neck
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 0,2
+      strippingWindowPos: 0,1
+      displayName: Neck
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 1,2
+      strippingWindowPos: 1,1
+      displayName: Mask
+    - name: eyes
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,0
+      displayName: Eyes
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,0
+      displayName: Ears
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,3
+      strippingWindowPos: 1,0
+      displayName: Head
+    - name: pocket1
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,4
+      dependsOn: jumpsuit
+      displayName: Pocket 1
+      stripHidden: true
+    - name: pocket2
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,3
+      strippingWindowPos: 1,4
+      dependsOn: jumpsuit
+      displayName: Pocket 2
+      stripHidden: true
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags: SUITSTORAGE
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      dependsOnComponents:
+      - type: AllowSuitStorage
+      displayName: Suit Storage
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
+    - name: belt
+      slotTexture: belt
+      slotFlags: BELT
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,1
+      strippingWindowPos: 1,5
+      displayName: Belt
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,0
+      strippingWindowPos: 0,5
+      displayName: Back

@@ -1,4 +1,4 @@
-﻿- type: soundCollection
+- type: soundCollection
   id: VulpkaninScreamCollection
   files:
   - /Audio/_Adventure/Voice/Vulpkanin/VulpScream1.ogg

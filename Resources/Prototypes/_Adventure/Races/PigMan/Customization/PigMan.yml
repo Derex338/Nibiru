@@ -2,7 +2,7 @@
   id: PigBaki
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: baki
@@ -11,7 +11,7 @@
   id: BigPig
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: big_pig
@@ -20,7 +20,7 @@
   id: ElvisPig
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: elvis
@@ -29,7 +29,7 @@
   id: PigGoat
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: goat
@@ -38,7 +38,7 @@
   id: PigHippies
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: hipp
@@ -47,7 +47,7 @@
   id: PigLongHeir
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: long
@@ -56,7 +56,7 @@
   id: PigDwarf
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: pig_dwarf
@@ -65,7 +65,7 @@
   id: PigSkipper
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: shkeper
@@ -74,7 +74,7 @@
   id: PigDed
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: pigded
@@ -83,7 +83,7 @@
   id: PigShetina
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: shetina
@@ -92,7 +92,7 @@
   id: PigBigBeard
   bodyPart: FacialHair
   markingCategory: FacialHair
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi
       state: hrac
@@ -101,7 +101,7 @@
   id: BodyHairP
   bodyPart: Chest
   markingCategory: Overlay
-  speciesRestriction: [PigMan]
+  groupWhitelist: [PigMan]
   coloring:
     default:
       type:

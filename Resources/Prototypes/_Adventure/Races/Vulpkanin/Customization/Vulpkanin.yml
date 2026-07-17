@@ -4,7 +4,7 @@
   name: Сближенные
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
     state: close
@@ -16,7 +16,7 @@
   name: Висящие
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
     state: hanging
@@ -28,7 +28,7 @@
   name: Висящее левое ухо
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
     state: hanging_left
@@ -40,7 +40,7 @@
   name: Широкие
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
     state: wide
@@ -52,7 +52,7 @@
   name: Узкие
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
     state: wolf
@@ -65,7 +65,7 @@
   name: Купированный
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
     state: docked
@@ -75,7 +75,7 @@
   name: Собачий
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
     state: dog
@@ -87,7 +87,7 @@
   name: Кольцом
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Vulpkanin]
+  groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
     state: ring
