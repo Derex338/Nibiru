@@ -21,7 +21,10 @@
     # Underwear & clothing
     - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
     - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-    - map: ["jumpsuit"]
+    #- map: ["jumpsuit"]
+
+    - map: ["pants"]
+    - map: ["shirt"]
 
     # Extremities
     - map: ["enum.HumanoidVisualLayers.LFoot"]
@@ -36,13 +39,13 @@
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
-    - map: [ "eyes" ]
+    #- map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "id" ]
     - map: [ "outerClothing" ]
     - map: [ "back" ]
     - map: [ "neck" ]
-    - map: [ "suitstorage" ]
+    #- map: [ "suitstorage" ]
 
     # Stuff that goes in front of equipment
     - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]

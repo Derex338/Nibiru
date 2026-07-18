@@ -22,10 +22,10 @@
 
 - type: marking
   id: InsectHandBase
-  bodyPart: Back
+  bodyPart: LArm
   followSkinColor: true
   forcedColoring: true
-  markingCategory: Back
+  markingCategory: LArm
   groupWhitelist: [InsectSerpentide]
   sprites:
   - sprite: _Adventure/Races/Insect/Species/parts.rsi
@@ -58,7 +58,7 @@
     enum.HumanoidVisualLayers.LArm:
       limit: 1
       required: true
-      default: InsectHandBase
+      default: [ InsectHandBase ]
     enum.HumanoidVisualLayers.RArm:
       limit: 1
       required: false
@@ -83,11 +83,11 @@
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
-      default: InsectTailBase
+      default: [ InsectTailBase ]
     enum.HumanoidVisualLayers.HeadTop:
       limit: 1
       required: true
-      default: InsectHeadBase
+      default: [ InsectHeadBase ]
 
 - type: entity
   parent: BaseSpeciesAppearance
@@ -895,13 +895,13 @@
 - type: inventoryTemplate
   id: InsectSerpentide
   slots:
-    - name: jumpsuit
-      slotTexture: uniform
-      slotFlags: INNERCLOTHING
-      stripTime: 6
-      uiWindowPos: 0,1
-      strippingWindowPos: 0,2
-      displayName: Jumpsuit
+    - name: shoes
+      slotTexture: shoes
+      slotFlags: FEET
+      stripTime: 3
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,3
+      displayName: Shoes
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
@@ -918,7 +918,7 @@
     - name: neck
       slotTexture: neck
       slotFlags: NECK
-      uiWindowPos: 0,2
+      uiWindowPos: 0,3
       strippingWindowPos: 0,1
       displayName: Neck
     - name: mask
@@ -927,13 +927,6 @@
       uiWindowPos: 1,2
       strippingWindowPos: 1,1
       displayName: Mask
-    - name: eyes
-      slotTexture: glasses
-      slotFlags: EYES
-      stripTime: 3
-      uiWindowPos: 0,3
-      strippingWindowPos: 0,0
-      displayName: Eyes
     - name: ears
       slotTexture: ears
       slotFlags: EARS
@@ -967,17 +960,6 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
-    - name: suitstorage
-      slotTexture: suit_storage
-      slotFlags: SUITSTORAGE
-      slotGroup: MainHotbar
-      stripTime: 3
-      uiWindowPos: 2,0
-      strippingWindowPos: 2,5
-      dependsOn: outerClothing
-      dependsOnComponents:
-      - type: AllowSuitStorage
-      displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -1003,3 +985,9 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
+    - name: shirt
+      slotTexture: shirt
+      slotFlags: SHIRT
+      uiWindowPos: 0,2
+      strippingWindowPos: 0,2
+      displayName: Shirt
