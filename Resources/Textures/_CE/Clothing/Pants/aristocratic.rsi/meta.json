@@ -1,4 +1,4 @@
-{
+﻿{
     "version": 1,
     "license": "CC-BY-SA-4.0",
     "copyright": "Created by KBAS5",
@@ -11,7 +11,7 @@
             "name": "icon"
         },
         {
-            "name": "equipped-INNERCLOTHING",
+            "name": "equipped-PANTS",
             "directions": 4
         }
     ]

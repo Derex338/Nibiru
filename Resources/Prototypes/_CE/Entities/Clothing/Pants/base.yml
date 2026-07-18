@@ -9,13 +9,13 @@
     equipDelay: 1
     unequipDelay: 1
     slots:
-    - innerclothing
+    - pants
   - type: Sprite
     state: icon
   #- type: Butcherable
   #  butcheringType: Knife
   #  spawned:
-  #  - id: CECloth1
+  #  - id: CP14Cloth1
   #    amount: 1
 
 - type: entity
@@ -26,3 +26,6 @@
   components:
   - type: Clothing
     equipDelay: 1.5
+    unequipDelay: 1
+    slots:
+    - pants
