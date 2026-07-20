@@ -12,6 +12,7 @@ namespace Content.Server.Examine
     public sealed partial class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private VerbSystem _verbSystem = default!;
+        [Dependency] private readonly Robust.Shared.Localization.ILocalizationManager _loc = default!;
 
         private readonly FormattedMessage _entityNotFoundMessage = new();
         private readonly FormattedMessage _entityOutOfRangeMessage = new();
@@ -69,7 +70,20 @@ namespace Content.Server.Examine
             if (request.GetVerbs)
                 verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
+            var oldCulture = _loc.DefaultCulture;
+            try
+            {
+                _loc.DefaultCulture = new System.Globalization.CultureInfo(request.Locale);
+            }
+            catch
+            {
+                // Ignore invalid cultures
+            }
+
             var text = GetExamineText(entity, player.AttachedEntity);
+
+            _loc.DefaultCulture = oldCulture;
+
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);
         }

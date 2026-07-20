@@ -31,12 +31,12 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
         SubscribeLocalEvent<NibiruLivestockComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<NibiruLivestockComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<NibiruLivestockComponent, LivestockHarvestDoAfterEvent>(OnHarvestDoAfter);
-        SubscribeLocalEvent<NibiruLivestockComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+        //SubscribeLocalEvent<NibiruLivestockComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
         SubscribeLocalEvent<NibiruLivestockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, InteractUsingEvent>(OnProductsInteractUsing);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, InteractHandEvent>(OnProductsInteractHand);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, LivestockHarvestDoAfterEvent>(OnProductsHarvestDoAfter);
-        SubscribeLocalEvent<NibiruAnimalProductsComponent, GetVerbsEvent<ExamineVerb>>(OnProductsGetExamineVerbs);
+        //SubscribeLocalEvent<NibiruAnimalProductsComponent, GetVerbsEvent<ExamineVerb>>(OnProductsGetExamineVerbs);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, ExaminedEvent>(OnProductsExamined);
     }
 
@@ -59,10 +59,10 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
         FinishHarvest(uid, args);
     }
 
-    private void OnProductsGetExamineVerbs(EntityUid uid, NibiruAnimalProductsComponent component, GetVerbsEvent<ExamineVerb> args)
-    {
-        AddExamineVerb(args);
-    }
+    //private void OnProductsGetExamineVerbs(EntityUid uid, NibiruAnimalProductsComponent component, GetVerbsEvent<ExamineVerb> args)
+    //{
+    //    AddExamineVerb(args);
+    //}
 
     private void OnProductsExamined(EntityUid uid, NibiruAnimalProductsComponent component, ExaminedEvent args)
     {
@@ -190,12 +190,12 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
     /// <summary>
     /// Добавляет Verb для просмотра информации о животном.
     /// </summary>
-    private void OnGetExamineVerbs(EntityUid uid, NibiruLivestockComponent component, GetVerbsEvent<ExamineVerb> args)
-    {
-        AddExamineVerb(args);
-    }
+    //private void OnGetExamineVerbs(EntityUid uid, NibiruLivestockComponent component, GetVerbsEvent<ExamineVerb> args)
+    //{
+    //    AddExamineVerb(args);
+    //}
 
-    private void AddExamineVerb(GetVerbsEvent<ExamineVerb> args)
+    /*private void AddExamineVerb(GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
@@ -211,7 +211,7 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
             Category = VerbCategory.Examine
         });
-    }
+    }*/
 
     private void OnExamined(EntityUid uid, NibiruLivestockComponent component, ExaminedEvent args)
     {
@@ -223,85 +223,97 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        // Показываем информацию о ресурсах
-        var resources = _livestock.GetResources(uid);
-        if (resources != null)
-        {
-            for (var i = 0; i < resources.Count; i++)
-            {
-                var resource = resources[i];
-                var growthPercent = MathF.Min(100f, resource.GrowthAccumulator / resource.GrowthTime * 100f);
+        // Выбираем название группы для PushGroup: если есть компонент животного — используем его, иначе - продукты
+        string groupName;
+        if (TryComp<NibiruLivestockComponent>(uid, out _))
+            groupName = nameof(NibiruLivestockComponent);
+        else if (TryComp<NibiruAnimalProductsComponent>(uid, out _))
+            groupName = nameof(NibiruAnimalProductsComponent);
+        else
+            groupName = "NibiruLivestock";
 
-                if (resource.ReadyToHarvest)
+        using (args.PushGroup(groupName))
+        {
+            // Показываем информацию о ресурсах
+            var resources = _livestock.GetResources(uid);
+            if (resources != null)
+            {
+                for (var i = 0; i < resources.Count; i++)
                 {
-                    args.PushMarkup(Loc.GetString("nibiru-livestock-resource-ready",
-                        ("resource", resource.ItemPrototype),
-                        ("yield", resource.Yield)));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("nibiru-livestock-resource-growing",
-                        ("resource", resource.ItemPrototype),
-                        ("percent", growthPercent.ToString("F0"))));
+                    var resource = resources[i];
+                    var growthPercent = MathF.Min(100f, resource.GrowthAccumulator / resource.GrowthTime * 100f);
+
+                    if (resource.ReadyToHarvest)
+                    {
+                        args.PushMarkup(Loc.GetString("nibiru-livestock-resource-ready",
+                            ("resource", resource.ItemPrototype),
+                            ("yield", resource.Yield)));
+                    }
+                    else
+                    {
+                        args.PushMarkup(Loc.GetString("nibiru-livestock-resource-growing",
+                            ("resource", resource.ItemPrototype),
+                            ("percent", growthPercent.ToString("F0"))));
+                    }
                 }
             }
-        }
 
-        if (TryComp<NibiruAnimalPregnancyComponent>(uid, out var pregnancy))
-        {
-            var gestationPercent = pregnancy.GestationAccumulator / pregnancy.GestationTime * 100f;
-            args.PushMarkup(Loc.GetString("nibiru-livestock-pregnant",
-                ("percent", gestationPercent.ToString("F0"))));
-        }
-
-        if (TryComp<NibiruAnimalBreederComponent>(uid, out var breeder) && breeder.Enabled)
-        {
-            args.PushMarkup(Loc.GetString("nibiru-livestock-sex",
-                ("sex", _livestock.GetSex(uid).ToString())));
-        }
-        else if (TryComp<NibiruLivestockComponent>(uid, out var component) && component.CanBreed)
-        {
-            if (component.IsPregnant)
+            if (TryComp<NibiruAnimalPregnancyComponent>(uid, out var pregnancy))
             {
-                var gestationPercent = component.GestationAccumulator / component.GestationTime * 100f;
+                var gestationPercent = pregnancy.GestationAccumulator / pregnancy.GestationTime * 100f;
                 args.PushMarkup(Loc.GetString("nibiru-livestock-pregnant",
                     ("percent", gestationPercent.ToString("F0"))));
             }
-            
-            args.PushMarkup(Loc.GetString("nibiru-livestock-sex",
-                ("sex", component.Sex.ToString())));
-        }
 
-        // Информация о приручении, если есть
-        if (TryComp<NibiruTamableComponent>(uid, out var tamable))
-        {
-            if (tamable.IsTamed)
+            if (TryComp<NibiruAnimalBreederComponent>(uid, out var breeder) && breeder.Enabled)
             {
-                var trustPercent = tamable.TrustLevel / tamable.MaxTrust * 100f;
-                args.PushMarkup(Loc.GetString("nibiru-animal-tamed",
-                    ("trust", trustPercent.ToString("F0"))));
+                args.PushMarkup(Loc.GetString("nibiru-livestock-sex",
+                    ("sex", _livestock.GetSex(uid).ToString())));
             }
-            else
+            else if (TryComp<NibiruLivestockComponent>(uid, out var component) && component.CanBreed)
             {
-                args.PushMarkup(Loc.GetString("nibiru-animal-wild"));
+                if (component.IsPregnant)
+                {
+                    var gestationPercent = component.GestationAccumulator / component.GestationTime * 100f;
+                    args.PushMarkup(Loc.GetString("nibiru-livestock-pregnant",
+                        ("percent", gestationPercent.ToString("F0"))));
+                }
+
+                args.PushMarkup(Loc.GetString("nibiru-livestock-sex",
+                    ("sex", component.Sex.ToString())));
             }
-        }
 
-        // Информация о настроении
-        if (TryComp<NibiruAnimalMoodComponent>(uid, out var mood))
-        {
-            args.PushMarkup(Loc.GetString("nibiru-animal-mood",
-                ("mood", mood.MoodState.ToString())));
-        }
+            // Информация о приручении, если есть
+            if (TryComp<NibiruTamableComponent>(uid, out var tamable))
+            {
+                if (tamable.IsTamed)
+                {
+                    var trustPercent = tamable.TrustLevel / tamable.MaxTrust * 100f;
+                    args.PushMarkup(Loc.GetString("nibiru-animal-tamed",
+                        ("trust", trustPercent.ToString("F0"))));
+                }
+                else
+                {
+                    args.PushMarkup(Loc.GetString("nibiru-animal-wild"));
+                }
+            }
 
-        // Информация о страхе маунта
-        if (TryComp<NibiruMountFearComponent>(uid, out var fear))
-        {
-            var fearPercent = fear.FearLevel / fear.MaxFear * 100f;
-            var trainingPercent = fear.StressTraining / fear.MaxStressTraining * 100f;
-            args.PushMarkup(Loc.GetString("nibiru-mount-fear",
-                ("fear", fearPercent.ToString("F0")),
-                ("training", trainingPercent.ToString("F0"))));
+            // Информация о настроении
+            if (TryComp<NibiruAnimalMoodComponent>(uid, out var mood))
+            {
+                args.PushMarkup(Loc.GetString("nibiru-animal-mood",
+                    ("mood", mood.MoodState.ToString())));
+            }
+
+            // Информация о страхе маунта
+            if (TryComp<NibiruMountFearComponent>(uid, out var fear))
+            {
+                var fearPercent = fear.FearLevel / fear.MaxFear * 100f;
+                var trainingPercent = fear.StressTraining / fear.MaxStressTraining * 100f;
+                args.PushMarkup(Loc.GetString("nibiru-mount-fear",
+                    ("fear", fearPercent.ToString("F0")),
+                    ("training", trainingPercent.ToString("F0"))));
+            }
         }
     }
 }

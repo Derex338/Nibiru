@@ -26,6 +26,7 @@ namespace Content.Client.Examine
     [UsedImplicitly]
     public sealed partial class ExamineSystem : ExamineSystemShared
     {
+        [Dependency] private readonly Robust.Shared.Configuration.IConfigurationManager _cfg = default!;
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private IEyeManager _eyeManager = default!;
@@ -154,20 +155,6 @@ namespace Content.Client.Examine
                 return;
 
             var entity = GetEntity(ev.EntityUid);
-
-            // [Nibiru] Если тултип уже открыт для этой же сущности — не затираем
-            // локализованный текст ответом от сервера (который на en-US).
-            // Только добавляем серверные кнопки (verbs).
-            if (_examineTooltipOpen != null && _examinedEntity == entity)
-            {
-                if (ev.Verbs != null)
-                {
-                    _verbList.Clear();
-                    _verbList.AddRange(ev.Verbs);
-                    AddVerbsToTooltip(_verbList);
-                }
-                return;
-            }
 
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
@@ -433,7 +420,8 @@ namespace Content.Client.Examine
                 {
                     _idCounter += 1;
                 }
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(GetNetEntity(entity), _idCounter, true));
+                var locale = _cfg.GetCVar(Content.Shared.CCVar.CCVars.ClientLanguage);
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(GetNetEntity(entity), _idCounter, true, locale));
             }
 
             RaiseLocalEvent(entity, new ClientExaminedEvent(entity, playerEnt.Value));
