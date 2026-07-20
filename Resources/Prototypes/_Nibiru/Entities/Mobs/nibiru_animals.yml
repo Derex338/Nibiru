@@ -543,6 +543,7 @@
 # Голубятня (Для проверки доставки)
 - type: entity
   id: NibiruPigeonPost
+  parent: BaseStructure
   name: голубятня
   description: Место, куда слетаются почтовые птицы.
   components:
@@ -568,7 +569,10 @@
         - MachineMask
         layer:
         - MachineLayer
-  parent: BaseStructure
+  - type: UserInterface
+    interfaces:
+      enum.NibiruRenamePostUiKey.Key:
+        type: NibiruBirdPostRenameBoundUserInterface
 
 # Северный олень (Для примера разных спрайтов)
 - type: entity

@@ -3,12 +3,12 @@
 nibiru-livestock-verb-examine = Осмотреть животное
 nibiru-livestock-resource-ready = [color=green]✓ {$resource}[/color] — готов к сбору ({$yield} шт.)
 nibiru-livestock-resource-growing = [color=yellow]⟳ {$resource}[/color] — рост: {$percent}%
-nibiru-livestock-pregnant = [color=cyan]♀ Беременна[/color] — {$percent}%
+nibiru-livestock-pregnant = [color=cyan]Беременна[/color] — {$percent}%
 nibiru-livestock-ready-to-breed-female = [color=green]Готова к спариванию[/color]
 nibiru-livestock-ready-to-breed-male = [color=green]Готов к спариванию[/color]
 nibiru-livestock-sex = Пол: {$sex ->
-    [Male] ♂ Самец
-    [Female] ♀ Самка
+    [Male] Самец
+    [Female] Самка
     *[other] Неизвестно
 }
 
@@ -20,11 +20,11 @@ nibiru-animal-wild = [color=red]Дикое[/color]
 ## Настроение
 
 nibiru-animal-mood = Настроение: {$mood ->
-    [Happy] [color=green]Счастливое 😊[/color]
+    [Happy] [color=green]Счастливое [/color]
     [Content] [color=lightgreen]Довольное[/color]
-    [Sad] [color=yellow]Грустное 😞[/color]
-    [Angry] [color=orange]Злое 😠[/color]
-    [Wild] [color=red]Одичавшее 🐺[/color]
+    [Sad] [color=yellow]Грустное [/color]
+    [Angry] [color=orange]Злое [/color]
+    [Wild] [color=red]Одичавшее [/color]
     *[other] Неизвестно
 }
 
@@ -106,3 +106,6 @@ nibiru-animal-commander-too-far = Животное слишком далеко �
 
 nibiru-animal-grab-detaching = Вы пытаетесь оторвать {$animal} от себя...
 nibiru-animal-grab-detached = Вы оторвали {$animal} от себя!
+
+
+nibiru-pigeon-post-rename-verb = Переименовать голубятню

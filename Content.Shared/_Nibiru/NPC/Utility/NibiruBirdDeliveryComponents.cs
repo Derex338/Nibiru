@@ -53,3 +53,20 @@ public sealed class NibiruBirdSelectPostMessage : BoundUserInterfaceMessage
         Post = post;
     }
 }
+
+[Serializable, NetSerializable]
+public enum NibiruRenamePostUiKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public sealed class NibiruRenamePostMessage : BoundUserInterfaceMessage
+{
+    public readonly string Name;
+
+    public NibiruRenamePostMessage(string name)
+    {
+        Name = name;
+    }
+}

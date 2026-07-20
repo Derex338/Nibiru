@@ -3,9 +3,11 @@ using Content.Shared._Nibiru.NPC.Utility;
 using Content.Shared._Nibiru.NPC.Commands;
 using Content.Shared.Popups;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Nibiru.NPC.Systems.Utility;
 
@@ -14,6 +16,7 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -21,6 +24,8 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
 
         SubscribeLocalEvent<NibiruPigeonPostComponent, InteractHandEvent>(OnPostInteract);
         SubscribeLocalEvent<NibiruBirdComponent, NibiruBirdSelectPostMessage>(OnPostSelected);
+        SubscribeLocalEvent<NibiruPigeonPostComponent, GetVerbsEvent<Verb>>(AddRenameVerbs);
+        SubscribeLocalEvent<NibiruPigeonPostComponent, NibiruRenamePostMessage>(OnRenamePost);
     }
 
     private void OnPostInteract(EntityUid uid, NibiruPigeonPostComponent component, InteractHandEvent args)
@@ -76,9 +81,9 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
 
         // Птица улетает (исчезает и телепортируется через время)
         _popup.PopupEntity(Loc.GetString("nibiru-bird-delivery-depart"), uid);
-        
+
         var targetPos = _transform.GetMapCoordinates(postUid);
-        
+
         // Логика полета: телепортация через время (например, 1 сек на 10 метров)
         var currentPos = _transform.GetMapCoordinates(uid);
         var dist = (targetPos.Position - currentPos.Position).Length();
@@ -88,13 +93,36 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
         var containerSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<Robust.Server.Containers.ContainerSystem>();
         var container = containerSystem.EnsureContainer<Robust.Shared.Containers.Container>(postUid, "bird_delivery_cage");
         containerSystem.Insert(uid, container);
-        
+
         Timer.Spawn(TimeSpan.FromSeconds(delay), () => {
             if (EntityManager.Deleted(uid)) return;
-            
+
             containerSystem.Remove(uid, container);
             _transform.SetMapCoordinates(uid, targetPos);
             _popup.PopupEntity(Loc.GetString("nibiru-bird-delivery-arrive"), uid);
         });
+    }
+
+    private void AddRenameVerbs(EntityUid uid, NibiruPigeonPostComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        args.Verbs.Add(new Verb
+        {
+            Text = Loc.GetString("nibiru-pigeon-post-rename-verb"),
+            Act = () => _ui.OpenUi(uid, NibiruRenamePostUiKey.Key, args.User),
+            Icon = new SpriteSpecifier.Texture(new Robust.Shared.Utility.ResPath("/Textures/Interface/VerbIcons/tag.svg.192dpi.png"))
+        });
+    }
+
+    private void OnRenamePost(EntityUid uid, NibiruPigeonPostComponent component, NibiruRenamePostMessage args)
+    {
+        if (string.IsNullOrWhiteSpace(args.Name))
+            return;
+
+        component.PostName = args.Name;
+        _metaData.SetEntityName(uid, args.Name);
+        //_popup.PopupEntity(Loc.GetString("nibiru-pigeon-post-renamed", ("name", args.Name)), uid);
     }
 }

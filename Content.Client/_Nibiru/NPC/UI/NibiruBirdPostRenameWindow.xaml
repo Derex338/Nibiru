@@ -1,0 +1,10 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="{Loc 'nibiru-bird-post-rename-title'}">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <Label Text="{Loc 'nibiru-bird-post-rename-title'}" Margin="5" HorizontalAlignment="Center"/>
+        <LineEdit Name="NewNameLine" MinWidth="200" Margin="5" PlaceHolder="{Loc 'nibiru-bird-post-rename-placeholder'}"/>
+        <Button Text="{Loc 'nibiru-bird-post-rename-save'}" Name="SaveButton" Margin="5"/>
+    </BoxContainer>
+</DefaultWindow>
