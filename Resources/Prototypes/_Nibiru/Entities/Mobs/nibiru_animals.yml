@@ -1,4 +1,49 @@
 - type: entity
+  id: NibiruAnimalBase
+  parent: SimpleMobBase
+  abstract: true
+  components:
+  - type: ActiveNPC
+  - type: NPCSteering
+  - type: NibiruNpcStateMachine
+    behaviorType: Neutral
+  - type: NibiruNpcCombat
+    combatStyle: Default
+  - type: NibiruNpcAggro
+    aggroRange: 8
+    deaggroRange: 15
+    fleeRange: 6
+    fleeDistance: 12
+  - type: NibiruNpcMemory
+    memoryDuration: 60
+  - type: NibiruNpcPatrol
+    patrolRadius: 10
+    patrolInterval: 5
+  - type: NibiruNpcAudio
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.0
+    baseSprintSpeed: 3.0
+  - type: NibiruNpcPerception
+    visionRange: 15
+    hearingRange: 10
+  - type: NibiruAnimalMood
+  - type: NibiruAnimalAbility
+  - type: NibiruAnimalSleep
+  - type: Damageable
+    damageContainer: Biological
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: UserInterface
+    interfaces:
+      enum.NibiruAnimalTrainingUiKey.Key:
+        type: NibiruAnimalTrainingBoundUserInterface
+      enum.NibiruBirdDeliveryUiKey.Key:
+        type: NibiruBirdDeliveryBoundUserInterface
+
+- type: entity
   id: MobNibiruPig
   parent: NibiruAnimalBase
   name: свинья
@@ -262,52 +307,7 @@
       amount: 1
     - id: SmallBodyButcher
       amount: 1
-
-
-
-- type: entity
-  id: NibiruAnimalBase
-  parent: SimpleMobBase
-  abstract: true
-  components:
-  - type: ActiveNPC
-  - type: NPCSteering
-  - type: NibiruNpcStateMachine
-    behaviorType: Neutral
-  - type: NibiruNpcCombat
-    combatStyle: Default
-  - type: NibiruNpcAggro
-    aggroRange: 8
-    deaggroRange: 15
-    fleeRange: 6
-    fleeDistance: 12
-  - type: NibiruNpcMemory
-    memoryDuration: 60
-  - type: NibiruNpcPatrol
-    patrolRadius: 10
-    patrolInterval: 5
-  - type: NibiruNpcAudio
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2.0
-    baseSprintSpeed: 3.0
-  - type: NibiruNpcPerception
-    visionRange: 15
-    hearingRange: 10
-  - type: NibiruAnimalMood
-  - type: NibiruAnimalAbility
-  - type: Damageable
-    damageContainer: Biological
-  - type: MobState
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Dead
-  - type: UserInterface
-    interfaces:
-      enum.NibiruAnimalTrainingUiKey.Key:
-        type: NibiruAnimalTrainingBoundUserInterface
-      enum.NibiruBirdDeliveryUiKey.Key:
-        type: NibiruBirdDeliveryBoundUserInterface
+  - type: NibiruAnimalSleep
 
 - type: entity
   id: MobNibiruWolf

@@ -97,10 +97,10 @@
 
 - type: marking
   id: InsectHandSaw
-  bodyPart: Tail
+  bodyPart: LArm
   followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
+  markingCategory: LArm
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
@@ -108,10 +108,10 @@
 
 - type: marking
   id: InsectHandSmall
-  bodyPart: Tail
+  bodyPart: LArm
   followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
+  markingCategory: LArm
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
@@ -241,10 +241,10 @@
 
 - type: marking
   id: InsectHandDouble
-  bodyPart: Tail
+  bodyPart: LArm
   followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
+  markingCategory: LArm
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi

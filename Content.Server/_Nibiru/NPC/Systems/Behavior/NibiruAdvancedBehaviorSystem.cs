@@ -1,8 +1,6 @@
 using System.Numerics;
 using Content.Server.NPC.Systems;
 using Content.Shared._Nibiru.NPC.Behavior;
-
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared.NPC;
@@ -49,7 +47,7 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
             UpdateTerritoriality();
         }
 
-        UpdateSleepCycles(frameTime);
+        //UpdateSleepCycles(frameTime);
 
         if (_fireAccumulator >= FireCheckInterval)
         {

@@ -1,7 +1,7 @@
 - type: species
   id: Felinid
   name: species-name-felinid
-  roundStart: true
+  roundStart: false
   sponsorOnly: true
   prototype: MobFelinid
   dollPrototype: AppearanceFelinid
@@ -81,22 +81,25 @@
   components:
   - type: InitialBody
     organs:
-      Torso: TorsoHuman
-      Head: HeadHuman
-      ArmLeft: LeftArmHuman
-      ArmRight: RightArmHuman
-      HandRight: RightHandHuman
-      HandLeft: LeftHandHuman
-      LegLeft: LeftLegHuman
-      LegRight: RightLegHuman
-      FootLeft: LeftFootHuman
-      FootRight: RightFootHuman
+      Torso: OrganHumanTorso
+      Head: OrganHumanHead
+      ArmLeft: OrganHumanArmLeft
+      ArmRight: OrganHumanArmRight
+      HandRight: OrganHumanHandRight
+      HandLeft: OrganHumanHandLeft
+      LegLeft: OrganHumanLegLeft
+      LegRight: OrganHumanLegRight
+      FootLeft: OrganHumanFootLeft
+      FootRight: OrganHumanFootRight
       Brain: OrganHumanBrain
       Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
       Lungs: OrganHumanLungs
-      Heart: OrganFelinidHeart
-      Stomach: OrganFelinidStomach
-      Liver: OrganFelinidLiver
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
       Kidneys: OrganHumanKidneys
   - type: HumanoidProfile
     species: Felinid

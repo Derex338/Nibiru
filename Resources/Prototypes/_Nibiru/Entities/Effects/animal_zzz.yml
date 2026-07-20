@@ -1,0 +1,16 @@
+- type: entity
+  id: AnimalZzzEffect
+  name: Zzz
+  noSpawn: true
+  components:
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    sprite: _Nibiru/Effects/Zzz.rsi
+    state: icon
+  - type: SimpleVisualEffect
+    moveRate: 0, 0.5
+    scaleRate: 0.5, 0.5
+    maxScale: 1.5, 1.5
+  - type: TimedDespawn
+    lifetime: 2
