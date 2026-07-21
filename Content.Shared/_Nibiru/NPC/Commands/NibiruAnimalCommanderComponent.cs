@@ -25,7 +25,11 @@ public sealed partial class NibiruAnimalCommanderComponent : Component
     [DataField("deliverAction")]
     public string DeliverActionId = "ActionNibiruAnimalDeliver";
 
-    public EntityUid? CurrentAnimal;
+    /// <summary>
+    /// Список всех прирученных животных, слушающих команды этого персонажа.
+    /// </summary>
+    public List<EntityUid> Animals = new();
+
 
     [DataField("currentMode")]
     public NibiruAnimalCommand? CurrentMode;

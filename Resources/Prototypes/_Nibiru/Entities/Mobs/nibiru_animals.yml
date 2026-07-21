@@ -343,7 +343,7 @@
     favoriteFoods: [ FoodMeatSteak, NibiruFoodMeatTest ]
     trainable: true
     possibleCommands: [ Follow, Stay, Attack, Grab, Guard, Search ]
-    learnedCommands: [ Follow, Stay, Attack, Grab, Search ]
+    learnedCommands: [ Follow, Stay ]
   - type: NibiruSleepCycle
     isNocturnal: true
   - type: NibiruFireFear
@@ -542,7 +542,7 @@
   - type: Storage
     clickInsert: true
     grid:
-    - 0,0,1,2
+    - 1,1,1,2
     maxItemSize: Large
     storageInsertSound:
       path: /Audio/Voice/Slime/slime_squish.ogg
@@ -668,7 +668,7 @@
     maxTrust: 120
     favoriteFoods: [ NibiruFoodMeatTest ]
     possibleCommands: [ Follow, Stay, Attack, Grab, Guard, Search ]
-    learnedCommands: [ Follow, Stay, Attack, Grab, Search ]
+    learnedCommands: [ Follow, Stay ]
   - type: NibiruLivestock
     canBreed: true
     femaleSprite:

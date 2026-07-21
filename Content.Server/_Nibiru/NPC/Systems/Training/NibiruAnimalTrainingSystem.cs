@@ -135,7 +135,7 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
         component.LearnedCommands.Add(args.Command);
         component.TrustLevel -= 30f; // Обучение командам "тратит" доверие
         
-        RaiseLocalEvent(uid, new NibiruAnimalCommandLearnedEvent(uid, args.Command));
+        RaiseLocalEvent(component.OwnerUid.Value, new NibiruAnimalCommandLearnedEvent(uid, args.Command));
         
         UpdateUiState(uid, component);
         _popup.PopupEntity(Loc.GetString("nibiru-animal-training-success", ("command", args.Command.ToString())), uid, user);

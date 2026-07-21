@@ -50,12 +50,14 @@
   id: ActionNibiruAnimalSearch
   parent: BaseAction
   name: Ищи!
-  description: Дать питомцу понюхать предмет, чтобы найти его владельца по ДНК или отпечаткам.
+  description: Дать питомцу понюхать предмет, чтобы найти его владельца по запаху.
   components:
-  - type: EntityTargetAction
-    icon: { sprite: Mobs/Pets/corgi.rsi, state: corgi }
+  - type: InstantAction
+    icon: { sprite: Objects/Misc/tracker.rsi, state: tracker }
     event: !type:NibiruAnimalSearchActionEvent
       speech: Ищи!
+    checkCanInteract: false
+    useDelay: 4
 
 - type: entity
   id: ActionNibiruAnimalDeliver

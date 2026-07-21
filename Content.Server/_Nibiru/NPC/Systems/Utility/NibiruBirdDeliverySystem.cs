@@ -31,16 +31,18 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
     private void OnPostInteract(EntityUid uid, NibiruPigeonPostComponent component, InteractHandEvent args)
     {
         // Если игрок ведет птицу, привязываем её к этому отделению
-        if (TryComp<NibiruAnimalCommanderComponent>(args.User, out var commander) && commander.CurrentAnimal != null)
+        if (TryComp<NibiruAnimalCommanderComponent>(args.User, out var commander) && commander.Animals != null)
         {
-            var animal = commander.CurrentAnimal.Value;
-            if (TryComp<NibiruBirdComponent>(animal, out var bird))
+            foreach (var animal in commander.Animals)
             {
-                if (!bird.KnownPosts.Contains(uid))
+                if (TryComp<NibiruBirdComponent>(animal, out var bird))
                 {
-                    bird.KnownPosts.Add(uid);
-                    _popup.PopupEntity(Loc.GetString("nibiru-bird-post-learned", ("post", component.PostName)), animal, args.User);
-                    args.Handled = true;
+                    if (!bird.KnownPosts.Contains(uid))
+                    {
+                        bird.KnownPosts.Add(uid);
+                        _popup.PopupEntity(Loc.GetString("nibiru-bird-post-learned", ("post", component.PostName)), animal, args.User);
+                        args.Handled = true;
+                    }
                 }
             }
         }

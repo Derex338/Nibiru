@@ -33,7 +33,7 @@ public sealed partial class NibiruAnimalGrabActionEvent : InstantActionEvent
     public NibiruAnimalCommand Type = NibiruAnimalCommand.Grab;
 }
 
-public sealed partial class NibiruAnimalSearchActionEvent : EntityTargetActionEvent
+public sealed partial class NibiruAnimalSearchActionEvent : InstantActionEvent
 {
     [DataField("speech")]
     public string? Speech;

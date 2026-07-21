@@ -6,12 +6,15 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Pulling.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using System.Numerics;
 
 namespace Content.Server._Nibiru.NPC.Systems.Commands;
@@ -26,6 +29,7 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -36,13 +40,14 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
         SubscribeLocalEvent<NibiruAnimalGrabbedTargetComponent, RefreshMovementSpeedModifiersEvent>(OnTargetRefreshSpeed);
         SubscribeLocalEvent<NibiruAnimalGrabbedComponent, NibiruAnimalDetachDoAfterEvent>(OnDetachDoAfter);
 
-        // Перехватываем любую попытку взаимодействия с животным-захватчиком,
-        // чтобы не дать цели просто нажать "отпустить" как при обычном Pull.
-        SubscribeLocalEvent<NibiruAnimalGrabbedComponent, InteractHandEvent>(OnAnimalInteractHand);
+        // Перехватываем попытку отпустить pull — разрешаем только через DoAfter,
+        // НЕ через движение цели (животное крепко держит зубами).
+        //SubscribeLocalEvent<NibiruAnimalGrabbedComponent, AttemptStopPullingEvent>(OnAnimalInteractHand);
+        SubscribeLocalEvent<NibiruAnimalGrabbedComponent, PullStoppedMessage>(OnPullStop);
     }
 
     // ──────────────────────────────────────────────────────────────────────────
-    //  Update: тик-урон + тряска жертвы
+    //  Update: тик-урон + плавная тряска жертвы через физический импульс
     // ──────────────────────────────────────────────────────────────────────────
 
     public override void Update(float frameTime)
@@ -54,7 +59,6 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
         {
             if (grabbed.Target == null || !EntityManager.EntityExists(grabbed.Target.Value))
             {
-                // Цель пропала — снимаем захват
                 RemComp<NibiruAnimalGrabbedComponent>(animalUid);
                 continue;
             }
@@ -72,7 +76,8 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
                 }
             }
 
-            // ── Тряска (позиционное смещение туда-сюда) ───────────────────
+            // ── Тряска через физический импульс туда-сюда ─────────────────
+            // Используем SetLinearVelocity для цели, чтобы не ломать Pull-сустав.
             grabbed.ShakeAccumulator += frameTime;
             if (grabbed.ShakeAccumulator >= grabbed.ShakeInterval)
             {
@@ -80,7 +85,8 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
                 grabbed.ShakeDirection = -grabbed.ShakeDirection;
 
                 if (TryComp<TransformComponent>(animalUid, out var animalXform) &&
-                    TryComp<TransformComponent>(target, out var targetXform))
+                    TryComp<TransformComponent>(target, out var targetXform) &&
+                    TryComp<PhysicsComponent>(target, out var targetPhys))
                 {
                     var animalPos = _xform.GetWorldPosition(animalXform);
                     var targetPos = _xform.GetWorldPosition(targetXform);
@@ -98,13 +104,10 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
                         perp = Vector2.UnitX;
                     }
 
-                    var offset = perp * grabbed.ShakeAmplitude * grabbed.ShakeDirection;
-                    var newWorldPos = targetPos + offset;
-
-                    // Перемещаем цель в мировых координатах
-                    var newCoords = new EntityCoordinates(targetXform.ParentUid,
-                        Vector2.Transform(newWorldPos, _xform.GetInvWorldMatrix(targetXform.ParentUid)));
-                    _xform.SetCoordinates(target, newCoords);
+                    // Применяем боковой импульс — не кидаем, просто меняем скорость.
+                    // Скорость небольшая, поэтому цель лишь слегка дёргается.
+                    var shakeVelocity = perp * grabbed.ShakeAmplitude * grabbed.ShakeDirection;
+                    _physics.SetLinearVelocity(target, shakeVelocity, body: targetPhys);
                 }
             }
         }
@@ -129,6 +132,10 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
     {
         if (component.Target != null && EntityManager.EntityExists(component.Target.Value))
         {
+            // Сбрасываем скорость цели при отцеплении
+            if (TryComp<PhysicsComponent>(component.Target.Value, out var phys))
+                _physics.SetLinearVelocity(component.Target.Value, Vector2.Zero, body: phys);
+
             RemComp<NibiruAnimalGrabbedTargetComponent>(component.Target.Value);
             _movementSpeed.RefreshMovementSpeedModifiers(component.Target.Value);
         }
@@ -140,24 +147,24 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
     }
 
     // ──────────────────────────────────────────────────────────────────────────
-    //  Отцепление только через DoAfter — никакой мгновенной кнопки
+    //  Отцепление только через DoAfter (никакого мгновенного разрыва Pull)
     // ──────────────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Перехватываем взаимодействие с животным-захватчиком.
-    /// Вместо мгновенного отпускания Pull запускаем DoAfter.
+    /// Перехватываем любую попытку остановить Pull (в том числе от движения цели).
+    /// Разрешаем отцепление ТОЛЬКО через явный запрос хозяина через DoAfter.
     /// </summary>
-    private void OnAnimalInteractHand(EntityUid uid, NibiruAnimalGrabbedComponent component, InteractHandEvent args)
+    private void OnAnimalInteractHand(EntityUid uid, NibiruAnimalGrabbedComponent component, AttemptStopPullingEvent args)
     {
-        // uid — животное, args.User — тот, кто взаимодействует
-        if (component.Target != args.User)
+        // Если это не сама цель пытается освободиться — игнорируем,
+        // но в любом случае блокируем автоматический разрыв.
+        args.Cancelled = true;
+
+        // Если взаимодействие явно от цели — предлагаем DoAfter для освобождения
+        if (args.User == null || args.User != component.Target)
             return;
 
-        // Блокируем стандартное поведение (чтобы не сработал Stop Pull из PullableComponent)
-        args.Handled = true;
-
-        // Проверяем, не запущен ли уже DoAfter
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.DetachDuration,
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User.Value, component.DetachDuration,
             new NibiruAnimalDetachDoAfterEvent(), uid, uid)
         {
             BreakOnMove = true,
@@ -166,7 +173,7 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
-        _popup.PopupEntity(Loc.GetString("nibiru-animal-grab-detaching"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("nibiru-animal-grab-detaching"), uid, args.User.Value);
     }
 
     private void OnDetachDoAfter(EntityUid uid, NibiruAnimalGrabbedComponent component, NibiruAnimalDetachDoAfterEvent args)
@@ -191,6 +198,20 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
         }
 
         _popup.PopupEntity(Loc.GetString("nibiru-animal-grab-detached"), uid, args.User);
+    }
+
+    private void OnPullStop(EntityUid uid, NibiruAnimalGrabbedComponent component, PullStoppedMessage args)
+    {
+        // Если тяга была разорвана не через DoAfter — убираем компонент захвата
+        if (args.PulledUid != uid)
+            return;
+        RemComp<NibiruAnimalGrabbedComponent>(uid);
+
+        if (TryComp<NibiruNpcStateMachineComponent>(args.PullerUid, out var state))
+        {
+            state.CurrentState = NibiruNpcState.Idle;
+            state.CurrentTarget = null;
+        }
     }
 
     // ──────────────────────────────────────────────────────────────────────────

@@ -1,9 +1,8 @@
 using Content.Server._Nibiru.NPC.Systems.Behavior;
+using Content.Server._Nibiru.NPC.Systems.Commands;
 using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Server.NPC.Systems;
 using Content.Shared._Nibiru.NPC.Behavior;
-
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Commands;
 using Content.Shared._Nibiru.NPC.Livestock;
@@ -22,6 +21,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Timing;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server._Nibiru.NPC.Systems.Training;
 
@@ -48,6 +48,33 @@ public sealed class NibiruTamingSystem : EntitySystem
         SubscribeLocalEvent<NibiruTamableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<NibiruTamableComponent, NibiruAnimalFeedingDoAfterEvent>(OnFeedingDoAfter);
         SubscribeLocalEvent<NibiruTamableComponent, DamageChangedEvent>(OnDamaged);
+        // Поглаживание рукой: небольшой прирост доверия с красивыми эффектами
+        SubscribeLocalEvent<NibiruTamableComponent, InteractHandEvent>(OnInteractHand);
+    }
+
+    /// <summary>
+    /// Поглаживание животного (UseInHand / Z) — небольшой прирост доверия.
+    /// Совместимо с PettableFriendSystem: если на животном есть PettableFriendComponent,
+    /// то PettableSystem обрабатывает дружбу, мы добавляем лишь прирост доверия.
+    /// </summary>
+    private void OnInteractHand(EntityUid uid, NibiruTamableComponent component, InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<MobStateComponent>(uid, out var mobState) || mobState.CurrentState != MobState.Alive)
+            return;
+
+        // Гладить можно только прирученных или частично доверяющих животных
+        if (!component.IsTamed && component.TrustLevel < component.TrustThreshold * 0.3f)
+            return;
+
+        // Прирост доверия за поглаживание (10% от стандартной кормёжки)
+        var trustGain = component.TrustPerFeeding * 0.1f;
+        component.TrustLevel = MathF.Min(component.TrustLevel + trustGain, component.MaxTrust);
+
+        // Спавним сердечки как визуальный эффект
+        Spawn("EffectHearts", Transform(uid).Coordinates);
     }
 
     /// <summary>
@@ -103,7 +130,7 @@ public sealed class NibiruTamingSystem : EntitySystem
         }
 
         var trustGain = component.TrustPerFeeding;
-        
+
         // Удвоенное доверие за любимую еду
         if (IsFavoriteFood(args.Used.Value, component))
             trustGain *= 2f;
@@ -180,6 +207,9 @@ public sealed class NibiruTamingSystem : EntitySystem
         // Звук приручения
         _sounds.PlayTamedSound(uid);
 
+        // Визуальный эффект — сердечки при приручении!
+        Spawn("EffectHearts", Transform(uid).Coordinates);
+
         // Добавляем базовые команды
         LearnCommand(uid, component, NibiruAnimalCommand.Follow);
         LearnCommand(uid, component, NibiruAnimalCommand.Stay);
@@ -191,6 +221,8 @@ public sealed class NibiruTamingSystem : EntitySystem
             behavior.CurrentState = NibiruNpcState.Following;
         }
 
+        // Автоматически добавляем животное в группу командующего
+        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NibiruAnimalCommanderSystem>().AddAnimal(owner, uid);
     }
 
     private void UntameAnimal(EntityUid uid, NibiruTamableComponent component)
@@ -213,10 +245,10 @@ public sealed class NibiruTamingSystem : EntitySystem
 
     private void LearnCommand(EntityUid uid, NibiruTamableComponent component, NibiruAnimalCommand command)
     {
-        if (!component.PossibleCommands.Contains(command) || !component.LearnedCommands.Add(command))
+        if (!component.PossibleCommands.Contains(command) || !component.LearnedCommands.Add(command) || component.OwnerUid == null)
             return;
 
-        RaiseLocalEvent(uid, new NibiruAnimalCommandLearnedEvent(uid, command));
+        RaiseLocalEvent(component.OwnerUid.Value, new NibiruAnimalCommandLearnedEvent(uid, command));
     }
 
     private bool IsFavoriteFood(EntityUid item, NibiruTamableComponent component)
@@ -333,7 +365,9 @@ public sealed class NibiruTamingSystem : EntitySystem
                     return false;
                 behavior.CurrentTarget = target;
                 behavior.CurrentCommand = command;
-                behavior.CurrentState = NibiruNpcState.Following; // Just following, not attacking
+                // Chasing: животное активно преследует цель по запаху,
+                // но не атакует (обрабатывается в ProcessChasing через команду Search)
+                behavior.CurrentState = NibiruNpcState.Chasing;
                 return true;
 
             case NibiruAnimalCommand.Deliver:

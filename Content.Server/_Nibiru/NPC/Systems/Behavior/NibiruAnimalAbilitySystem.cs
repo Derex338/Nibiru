@@ -27,8 +27,6 @@ public sealed class NibiruAnimalAbilitySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    // ... Initialize ...
-
     private void ProcessPestControl(EntityUid uid, NibiruAnimalAbilityComponent ability, TransformComponent xform)
     {
         var myPos = _xform.GetMapCoordinates((uid, xform));
