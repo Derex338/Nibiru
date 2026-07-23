@@ -5,9 +5,11 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -15,7 +17,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Audio.Systems;
 using System.Numerics;
 
 namespace Content.Server._Nibiru.LobbedFire;
@@ -129,10 +130,9 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
 
                 bool embedded = false;
                 if (target != EntityUid.Invalid &&
-                    TryComp<ProjectileComponent>(falling.ProjectileUid, out var projectileRef) &&
                     HasComp<EmbeddableProjectileComponent>(falling.ProjectileUid))
                 {
-                    embedded = DoLandingImpact(falling.ProjectileUid, projectileRef, target, targetMap);
+                    embedded = DoLandingImpact(falling.ProjectileUid, target, targetMap, falling.Shooter);
                 }
 
                 if (TryComp<PhysicsComponent>(falling.ProjectileUid, out var phys))
@@ -202,26 +202,41 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
                 continue;
 
             var startPos = _transform.GetWorldPosition(projectile);
-            var dist = Vector2.Distance(startPos, targetMap.Value.Position);
+            var targetPos = targetMap.Value.Position;
+            var dist = Vector2.Distance(startPos, targetPos);
+
+            if (comp.MaxRange > 0f)
+            {
+                if (dist > comp.MaxRange)
+                {
+                    var dir = (targetPos - startPos);
+                    if (dir.LengthSquared() > 0.001f)
+                    {
+                        targetPos = startPos + Vector2.Normalize(dir) * comp.MaxRange;
+                        dist = comp.MaxRange;
+                    }
+                }
+            }
+
             var flightTime = Math.Clamp(dist / 22f, 0.65f, 2.6f);
 
             EntityUid? projectileShooter = null;
-            EntityUid? weapon = null;
+            EntityUid? weaponUid = null;
             if (TryComp<ProjectileComponent>(projectile, out var projComp))
             {
                 projectileShooter = projComp.Shooter;
-                weapon = projComp.Weapon;
+                weaponUid = projComp.Weapon;
             }
 
             _pending.Add(new PendingLobbedShot
             {
                 ProtoId = protoId,
-                TargetPosition = targetMap.Value.Position,
+                TargetPosition = targetPos,
                 MapId = targetMap.Value.MapId,
                 FlightDuration = flightTime,
                 IndicatorDelay = MathF.Max(0f, flightTime - LandingIndicatorLeadTime),
                 Shooter = projectileShooter,
-                Weapon = weapon,
+                Weapon = weaponUid,
             });
 
             QueueDel(projectile);
@@ -346,10 +361,10 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
         return projectileXform.GridUid ?? projectileXform.MapUid ?? EntityUid.Invalid;
     }
 
-    private bool DoLandingImpact(EntityUid uid, ProjectileComponent projectile, EntityUid target, MapCoordinates impactCoordinates)
+    private bool DoLandingImpact(EntityUid uid, EntityUid target, MapCoordinates impactCoordinates, EntityUid? shooter)
     {
         // Проверяем что цель - это не grid/map, а живая entity
-        // Снаряды должны встраиваться только в damageable entities, не в землю
+        // Снаряды/предметы должны встраиваться только в damageable entities, не в землю
         var isLivingTarget = TryComp<DamageableComponent>(target, out var damageable);
 
         // Overhead shield block check
@@ -357,35 +372,57 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
         {
             _audio.PlayPvs(blocking.BlockSound, target);
 
-            // Still play impact effect for visuals
-            if (projectile.ImpactEffect != null)
+            // Still play impact effect for visuals if available
+            if (TryComp<ProjectileComponent>(uid, out var projComp) && projComp.ImpactEffect != null)
             {
                 var entityCoordinates = _transform.ToCoordinates(_map.GetMap(impactCoordinates.MapId), impactCoordinates);
-                RaiseNetworkEvent(new ImpactEffectEvent(projectile.ImpactEffect, GetNetCoordinates(entityCoordinates)), Filter.Pvs(entityCoordinates, entityMan: EntityManager));
+                RaiseNetworkEvent(new ImpactEffectEvent(projComp.ImpactEffect, GetNetCoordinates(entityCoordinates)), Filter.Pvs(entityCoordinates, entityMan: EntityManager));
             }
 
             return false;
         }
 
-        // Поднимаем событие попадания только для живых целей
-        // Это предотвращает встраивание стрел в землю
+        // Поднимаем событие попадания и наносим урон только для живых целей
         if (isLivingTarget)
         {
-            var hitEvent = new ProjectileHitEvent(projectile.Damage * _damageable.UniversalProjectileDamageModifier, target, projectile.Shooter);
-            RaiseLocalEvent(uid, ref hitEvent);
+            DamageSpecifier? damage = null;
+            bool ignoreResistances = false;
 
-            _damageable.TryChangeDamage((target, damageable!), hitEvent.Damage, out _, projectile.IgnoreResistances, origin: projectile.Shooter);
+            if (TryComp<ProjectileComponent>(uid, out var projectile))
+            {
+                damage = projectile.Damage * _damageable.UniversalProjectileDamageModifier;
+                ignoreResistances = projectile.IgnoreResistances;
+
+                var hitEvent = new ProjectileHitEvent(damage, target, shooter ?? projectile.Shooter);
+                RaiseLocalEvent(uid, ref hitEvent);
+            }
+            else if (TryComp<MeleeWeaponComponent>(uid, out var melee))
+            {
+                damage = melee.Damage;
+            }
+            else if (TryComp<DamageOnHighSpeedImpactComponent>(uid, out var speedImpact))
+            {
+                damage = speedImpact.Damage;
+            }
+
+            if (damage != null)
+            {
+                _damageable.TryChangeDamage((target, damageable!), damage, out _, ignoreResistances, origin: shooter);
+            }
         }
 
         var impactEntityCoordinates = _transform.ToCoordinates(_map.GetMap(impactCoordinates.MapId), impactCoordinates);
 
-        if (projectile.SoundHit != null)
-            _audio.PlayPvs(projectile.SoundHit, impactEntityCoordinates);
+        if (TryComp<ProjectileComponent>(uid, out var pComp))
+        {
+            if (pComp.SoundHit != null)
+                _audio.PlayPvs(pComp.SoundHit, impactEntityCoordinates);
 
-        if (projectile.ImpactEffect != null)
-            RaiseNetworkEvent(new ImpactEffectEvent(projectile.ImpactEffect, GetNetCoordinates(impactEntityCoordinates)), Filter.Pvs(impactEntityCoordinates, entityMan: EntityManager));
+            if (pComp.ImpactEffect != null)
+                RaiseNetworkEvent(new ImpactEffectEvent(pComp.ImpactEffect, GetNetCoordinates(impactEntityCoordinates)), Filter.Pvs(impactEntityCoordinates, entityMan: EntityManager));
+        }
 
-        // Возвращаем true только если снаряд встроился в живую цель
+        // Возвращаем true только если предмет встроился в живую цель
         return isLivingTarget;
     }
 

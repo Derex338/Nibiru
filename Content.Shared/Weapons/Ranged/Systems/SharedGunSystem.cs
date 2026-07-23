@@ -263,6 +263,24 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (toCoordinates == null)
             return false;
 
+        if (gun.Comp.MaxRange > 0f)
+        {
+            var userMapPos = TransformSystem.GetMapCoordinates(user);
+            var targetMapPos = TransformSystem.ToMapCoordinates(toCoordinates.Value);
+
+            if (userMapPos.MapId == targetMapPos.MapId)
+            {
+                var delta = targetMapPos.Position - userMapPos.Position;
+                var dist = delta.Length();
+                if (dist > gun.Comp.MaxRange)
+                {
+                    var clampedPos = userMapPos.Position + (delta / dist) * gun.Comp.MaxRange;
+                    toCoordinates = TransformSystem.ToCoordinates(new Robust.Shared.Map.MapCoordinates(clampedPos, userMapPos.MapId));
+                    gun.Comp.ShootCoordinates = toCoordinates;
+                }
+            }
+        }
+
         var curTime = Timing.CurTime;
 
         // check if anything wants to prevent shooting

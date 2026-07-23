@@ -48,8 +48,7 @@ public sealed class NibiruTamingSystem : EntitySystem
         SubscribeLocalEvent<NibiruTamableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<NibiruTamableComponent, NibiruAnimalFeedingDoAfterEvent>(OnFeedingDoAfter);
         SubscribeLocalEvent<NibiruTamableComponent, DamageChangedEvent>(OnDamaged);
-        // Поглаживание рукой: небольшой прирост доверия с красивыми эффектами
-        SubscribeLocalEvent<NibiruTamableComponent, InteractHandEvent>(OnInteractHand);
+        //SubscribeLocalEvent<NibiruTamableComponent, InteractHandEvent>(OnInteractHand);
     }
 
     /// <summary>
@@ -57,6 +56,7 @@ public sealed class NibiruTamingSystem : EntitySystem
     /// Совместимо с PettableFriendSystem: если на животном есть PettableFriendComponent,
     /// то PettableSystem обрабатывает дружбу, мы добавляем лишь прирост доверия.
     /// </summary>
+    /// слишком имба
     private void OnInteractHand(EntityUid uid, NibiruTamableComponent component, InteractHandEvent args)
     {
         if (args.Handled)

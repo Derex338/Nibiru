@@ -20,8 +20,10 @@ public sealed partial class BlockingSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
 
     private const string PassiveShieldBlockDelay = "passive-shield-block";
+    private const string ShieldBlockSoundDelay = "shield-block-sound";
 
     private void InitializeUser()
     {
@@ -70,6 +72,12 @@ public sealed partial class BlockingSystem
             return;
         }
 
+        if (blocking.IsBlocking)
+        {
+            if (!IsFrontalAttack(uid, args.Origin))
+                return;
+        }
+
         // A shield should only block damage it can itself absorb. To determine that we need the Damageable component on it.
         if (!TryComp<DamageableComponent>(item, out var dmgComp))
             return;
@@ -89,7 +97,13 @@ public sealed partial class BlockingSystem
 
         if (blocking.IsBlocking && !args.Damage.Equals(args.OriginalDamage))
         {
-            _audio.PlayPvs(blocking.BlockSound, uid);
+            var blockedAmount = (args.OriginalDamage.GetTotal() - args.Damage.GetTotal());
+            if (blockedAmount > 0)
+            {
+                _stamina.TakeStaminaDamage(uid, (float) blockedAmount * 0.5f, source: args.Origin);
+            }
+
+            PlayBlockSoundRateLimited(uid, item, blocking);
         }
     }
 
@@ -101,7 +115,7 @@ public sealed partial class BlockingSystem
         if (!_handsSystem.TryGetActiveItem(user, out var activeItem) || activeItem != item)
             return;
 
-        if (!IsMeleeDamageFromFront(user, args.Origin))
+        if (!IsFrontalAttack(user, args.Origin))
             return;
 
         EnsureComp<UseDelayComponent>(item, out var useDelay);
@@ -115,8 +129,14 @@ public sealed partial class BlockingSystem
         ApplyShieldDamageSplit(user, item, blocking.PassiveHandBlockModifier ?? blocking.PassiveBlockDamageModifer,
             blocking.PassiveHandBlockFraction, args);
 
+        var blockedAmount = (args.OriginalDamage.GetTotal() - args.Damage.GetTotal());
+        if (blockedAmount > 0)
+        {
+            _stamina.TakeStaminaDamage(user, (float) blockedAmount * 0.3f, source: args.Origin);
+        }
+
         _useDelay.TryResetDelay((item, useDelay), id: PassiveShieldBlockDelay);
-        _audio.PlayPvs(blocking.BlockSound, user);
+        PlayBlockSoundRateLimited(user, item, blocking);
     }
 
     private bool TryOverheadBlock(EntityUid user, EntityUid item, BlockingComponent blocking, DamageModifyEvent args)
@@ -127,12 +147,37 @@ public sealed partial class BlockingSystem
         if (!_handsSystem.TryGetActiveItem(user, out var activeItem) || activeItem != item)
             return false;
 
-        if (IsMeleeDamage(args.Origin))
-            return false;
+        // Overhead shield only blocks indirect overhead/lobbed attacks, NOT direct melee or direct projectile fire.
+        return false;
+    }
 
-        ApplyShieldDamageSplit(user, item, blocking.ActiveBlockDamageModifier, blocking.ActiveBlockFraction, args);
+    private bool IsFrontalAttack(EntityUid user, EntityUid? origin)
+    {
+        if (origin == null || origin == user)
+            return true;
+
+        var userCoords = _transformSystem.GetMapCoordinates(user);
+        var originCoords = _transformSystem.GetMapCoordinates(origin.Value);
+        if (userCoords.MapId != originCoords.MapId)
+            return true;
+
+        var toAttacker = originCoords.Position - userCoords.Position;
+        if (toAttacker.LengthSquared() <= 0.001f)
+            return true;
+
+        var facing = _transformSystem.GetWorldRotation(user).ToWorldVec();
+        return Vector2.Dot(Vector2.Normalize(toAttacker), facing) > -0.25f;
+    }
+
+    private void PlayBlockSoundRateLimited(EntityUid user, EntityUid item, BlockingComponent blocking)
+    {
+        EnsureComp<UseDelayComponent>(item, out var useDelay);
+        _useDelay.SetLength((item, useDelay), TimeSpan.FromSeconds(0.2), ShieldBlockSoundDelay);
+        if (_useDelay.IsDelayed((item, useDelay), ShieldBlockSoundDelay))
+            return;
+
+        _useDelay.TryResetDelay((item, useDelay), id: ShieldBlockSoundDelay);
         _audio.PlayPvs(blocking.BlockSound, user);
-        return true;
     }
 
     private bool IsMeleeDamage(EntityUid? origin)
