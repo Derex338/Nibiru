@@ -73,10 +73,10 @@ public abstract partial class CESharedFarmingSystem
 
     private void OnAdditionalPlantInteract(Entity<CEPlantAdditionalProduceOnInteractComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || ent.Comp.Tool is null)
             return;
 
-        if (_whitelist.IsWhitelistFailOrNull(ent.Comp.ToolWhitelist, args.Used))
+        if (_whitelist.IsWhitelistFailOrNull(ent.Comp.ToolWhitelist, args.Used) && !_tool.HasQuality(args.Used, ent.Comp.Tool))
             return;
 
         HashSet<string> hashSet = new();

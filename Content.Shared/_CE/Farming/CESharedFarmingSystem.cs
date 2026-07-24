@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -33,6 +34,8 @@ public abstract partial class CESharedFarmingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
+
+    [Dependency] private readonly SharedToolSystem _tool = default!;
 
     protected EntityQuery<CEPlantComponent> PlantQuery;
     protected EntityQuery<CEPlantProducingComponent> PlantProducingQuery;

@@ -37,6 +37,10 @@ public sealed partial class CEPlantAdditionalProduceOnInteractComponent : Compon
     [DataField]
     public EntityWhitelist? ToolWhitelist;
 
+    // Костыль
+    [DataField]
+    public string? Tool;
+
     [DataField]
     public TimeSpan GatherDelay = TimeSpan.FromSeconds(1f);
 
