@@ -1,0 +1,12 @@
+cp14-reagent-physical-desc-ferrous = ferrous
+cp14-reagent-physical-desc-scarlet = shimmering scarlet
+cp14-reagent-physical-desc-colorless = colorless
+cp14-reagent-physical-desc-viscous = viscous
+cp14-reagent-physical-desc-cloudy = cloudy
+cp14-reagent-physical-desc-sparkling = sparkling
+cp14-reagent-physical-desc-pureed = pureed
+cp14-reagent-physical-desc-iridescent = iridescent
+cp14-reagent-physical-desc-powdery = powdery
+cp14-reagent-physical-desc-shimmering = shimmering
+cp14-reagent-physical-desc-grainy = grainy
+cp14-reagent-physical-desc-slick = slick

@@ -18,6 +18,66 @@
     - BronzeAnvilWorkbench
 
 - type: construction
+  id: BronzeChainmail
+  name: Бронзовая кольчуга
+  graph: BronzeChainmail
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Плотное плетение из бронзовых колец.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeChainmailCowl
+  name: бронзовый кольчужный наголовник
+  graph: BronzeChainmailCowl
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Головной убор из бронзовых колец.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail_Cowl.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeLeatherArmor
+  name: кожаная броня
+  graph: BronzeLeatherArmor
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Кожаная броня усиленая бронзовыми вставками.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeLeatherHelmet
+  name: кожаный шлем
+  graph: BronzeLeatherHelmet
+  startNode: start
+  targetNode: fin
+  category: Gear
+  description: Кожаный шлем усиленый бронзовыми вставками.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
+    state: icon
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench
+
+- type: construction
   id: BronzeChestplate
   name: Бронзовый нагрудник
   graph: BronzeChestplate

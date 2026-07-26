@@ -38,8 +38,8 @@ public sealed class DamageHighTemperature : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TemperatureComponent, InteractHandEvent>(OnHighTempInteract);
-        SubscribeLocalEvent<TemperatureComponent, ContainerGettingInsertedAttemptEvent>(CheckTemperature);
+        //SubscribeLocalEvent<TemperatureComponent, InteractHandEvent>(OnHighTempInteract);
+        //SubscribeLocalEvent<TemperatureComponent, ContainerGettingInsertedAttemptEvent>(CheckTemperature);
         //SubscribeLocalEvent<TemperatureComponent, ContainerIsRemovingAttemptEvent>(OnContainerRemove);
     }
 

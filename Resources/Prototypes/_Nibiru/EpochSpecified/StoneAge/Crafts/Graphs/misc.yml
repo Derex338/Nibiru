@@ -573,3 +573,30 @@
     - node: fin
       entity: AloeCream1
 
+
+- type: constructionGraph
+  id: Well
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: mid
+          steps:
+            - tool: Digging
+              doAfter: 10
+    - node: mid
+      entity: Pit
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 10
+          steps:
+            - material: CEStone
+              amount: 10
+              doAfter: 6
+            - material: CEWood
+              amount: 5
+              doAfter: 4
+    - node: fin
+      entity: Well

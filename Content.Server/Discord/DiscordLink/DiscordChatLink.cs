@@ -93,6 +93,8 @@ public sealed partial class DiscordChatLink : IPostInjectInit
         var channelId = channel switch
         {
             ChatChannel.OOC => _oocChannelId,
+            ChatChannel.OOC_Ru => _oocChannelId,
+            ChatChannel.OOC_En => _oocChannelId,
             ChatChannel.AdminChat => _adminChannelId,
             _ => throw new InvalidOperationException("Channel not linked to Discord."),
         };

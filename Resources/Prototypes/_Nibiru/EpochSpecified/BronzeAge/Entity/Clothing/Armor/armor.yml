@@ -48,9 +48,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.45
-        Slash: 0.45
-        Piercing: 0.45
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
   - type: ArmorProtection
     protection:
       Blunt: 12
@@ -62,4 +62,136 @@
     - 0,0,1,1
   - type: Construction
     graph: BronzeHelmet
+    node: fin
+
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  id: BronzeChainmail
+  suffix: Nibiru, BronzeAge
+  name: бронзовая кольчуга
+  description: Ляпота.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.35
+        Piercing: 0.1
+  - type: ArmorProtection
+    protection:
+      Blunt: 7
+      Slash: 10
+      Piercing: 7
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
+  - type: Construction
+    graph: BronzeChainmail
+    node: fin
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  id: BronzeChainmailCowl
+  suffix: Nibiru, BronzeAge
+  name: бронзовый кольчужный наголовник
+  description: Неудобно.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail_Cowl.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail_Cowl.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.3
+        Piercing: 0.1
+  - type: ArmorProtection
+    protection:
+      Blunt: 8
+      Slash: 10
+      Piercing: 7
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
+  - type: Construction
+    graph: BronzeChainmailCowl
+    node: fin
+
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
+  id: BronzeLeatherArmor
+  suffix: Nibiru, BronzeAge
+  name: кожаная броня
+  description: Кожаная броня усиленая бронзовыми вставками.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+  - type: ArmorProtection
+    protection:
+      Blunt: 12
+      Slash: 15
+      Piercing: 14
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
+  - type: Construction
+    graph: BronzeLeatherArmor
+    node: fin
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
+  id: BronzeLeatherHelmet
+  suffix: Nibiru, BronzeAge
+  name: кожаный шлем
+  description: Кожаный шлем усиленый бронзовыми вставками.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherHelmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.5
+        Piercing: 0.5
+  - type: ArmorProtection
+    protection:
+      Blunt: 12
+      Slash: 15
+      Piercing: 14
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
+  - type: Construction
+    graph: BronzeLeatherHelmet
     node: fin

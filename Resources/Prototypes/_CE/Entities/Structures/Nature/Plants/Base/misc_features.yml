@@ -5,7 +5,8 @@
   - type: CEPlantAdditionalProduceOnInteract
     toolWhitelist:
       components:
-      - Sharp
+      - Hands
+    tool: Slicing
 
 - type: entity
   abstract: true

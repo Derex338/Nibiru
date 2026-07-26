@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Chat
+namespace Content.Shared.Chat
 {
     /// <summary>
     ///     Chat channels that the player can select in the chat box.
@@ -7,7 +7,7 @@
     ///     Maps to <see cref="ChatChannel"/>, giving better names.
     /// </remarks>
     [Flags]
-    public enum ChatSelectChannel : ushort
+    public enum ChatSelectChannel : uint
     {
         None = 0,
 
@@ -35,6 +35,16 @@
         ///     Out-of-character channel
         /// </summary>
         OOC = ChatChannel.OOC,
+
+        /// <summary>
+        ///     Russian Out-of-character channel
+        /// </summary>
+        OOC_Ru = ChatChannel.OOC_Ru,
+
+        /// <summary>
+        ///     English Out-of-character channel
+        /// </summary>
+        OOC_En = ChatChannel.OOC_En,
 
         /// <summary>
         ///     Emotes

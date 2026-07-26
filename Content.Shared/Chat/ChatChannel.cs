@@ -4,7 +4,7 @@ namespace Content.Shared.Chat
     ///     Represents chat channels that the player can filter chat tabs by.
     /// </summary>
     [Flags]
-    public enum ChatChannel : ushort
+    public enum ChatChannel : uint
     {
         None = 0,
 
@@ -86,6 +86,16 @@ namespace Content.Shared.Chat
         Unspecified = 1 << 14,
 
         /// <summary>
+        ///     Russian OOC
+        /// </summary>
+        OOC_Ru = 1 << 15,
+
+        /// <summary>
+        ///     English OOC
+        /// </summary>
+        OOC_En = 1 << 16,
+
+        /// <summary>
         ///     Channels considered to be IC.
         /// </summary>
         IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual | Notifications,
@@ -107,6 +117,8 @@ namespace Content.Shared.Chat
             return channel switch
             {
                 ChatChannel.OOC => Loc.GetString("chat-channel-humanized-ooc"),
+                ChatChannel.OOC_Ru => Loc.GetString("chat-channel-humanized-ooc") + " (RU)",
+                ChatChannel.OOC_En => Loc.GetString("chat-channel-humanized-ooc") + " (ENG)",
                 ChatChannel.AdminChat => Loc.GetString("chat-channel-humanized-admin"),
                 _ => throw new ArgumentOutOfRangeException(nameof(channel), channel, null)
             };

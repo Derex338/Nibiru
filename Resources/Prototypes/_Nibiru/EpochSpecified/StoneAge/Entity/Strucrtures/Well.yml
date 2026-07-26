@@ -1,0 +1,78 @@
+- type: entity
+  parent: [SolutionTank, SolutionHuge, BaseStructure]
+  id: Well
+  name: колодец
+  description: Неглубокий колодец.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Well.rsi
+    state: icon
+  - type: Appearance
+  - type: Solution
+    id: pool
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 7680
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 100
+  - type: DrainableSolution
+    solution: pool
+  - type: SolutionManager
+    solutions:
+    - SolutionDrainNormal
+  - type: ReagentTank
+  - type: Drain
+    autoDrain: false
+  - type: DumpableSolution
+    solution: drainBuffer
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: AmbientSound
+    enabled: false
+    volume: -8
+    range: 8
+    sound:
+      path: /Audio/Ambience/Objects/drain.ogg
+  - type: Construction
+    graph: Well
+    node: fin
+  - type: ScaleVisuals
+    scale: 1.5, 1.5
+
+- type: entity
+  parent: BaseStructure
+  id: Pit
+  name: яма
+  description: Неглубокая яма.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Well.rsi
+    state: pit
+  - type: Construction
+    graph: Well
+    node: mid
+

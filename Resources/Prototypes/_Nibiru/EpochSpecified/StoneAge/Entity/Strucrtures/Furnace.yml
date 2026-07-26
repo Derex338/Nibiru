@@ -8,13 +8,15 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Structures/furnace.rsi
     layers:
-      - map: [ enum.FuelLightVisualLayers.Base ]
-        state: icon
-      - map: [ enum.FuelLightVisualLayers.Glow ]
-        state: lit
-        color: "#FFFFFF"
-        visible: false
-        #shader: unshaded
+    - map:
+      - enum.FuelLightVisualLayers.Base
+      state: icon
+    - map:
+      - enum.FuelLightVisualLayers.Glow
+      state: lit
+      color: "#FFFFFF"
+      visible: false
+      #shader: unshaded
   - type: Appearance
   - type: Transform
   - type: Physics
@@ -22,8 +24,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         density: 190
         mask:
@@ -34,13 +35,18 @@
     containerId: ore_container
     solutionContainerId: solution_container
     maxOreCapacity: 10
-    heatingRate: 80    # Быстро нагревается
-    coolingRate: 20    # Медленно остывает
+    heatingRate: 80 # Быстро нагревается
+    coolingRate: 20 # Медленно остывает
     solution: smelted_metal
-  - type: SolutionContainerManager
-    solutions:
-      smelted_metal:
-        maxVol: 100
+  #- type: SolutionContainerManager
+  #  solutions:
+  #    smelted_metal:
+  #      maxVol: 100
+  #      canReact: true
+  - type: Solution
+    id: smelted_metal
+    solution:
+      maxVol: 100
   - type: DrainableSolution
     solution: smelted_metal
   - type: PointLight
@@ -50,12 +56,12 @@
     energy: 2.0
     netsync: false
   - type: FuelConsumption
-    maxFuelAmount: 1800                   # 30 минут работы
-    targetBurnTemperature: 1400           # Высокая температура для плавки
-    minOperatingTemperature: 800          # Работает при 800°C+
-    heatingRate: 40                       # Медленно нагревается
-    coolingRate: 15                       # Очень медленно остывает
-    fuelConsumptionRate: 0.5              # Экономный расход
+    maxFuelAmount: 1800 # 30 минут работы
+    targetBurnTemperature: 1400 # Высокая температура для плавки
+    minOperatingTemperature: 800 # Работает при 800°C+
+    heatingRate: 40 # Медленно нагревается
+    coolingRate: 15 # Очень медленно остывает
+    fuelConsumptionRate: 0.5 # Экономный расход
     fadeOutDuration: 30
     turnOnBehaviourID: turn_on
     extinguisherQuality: Digging
@@ -68,34 +74,38 @@
   - type: InteractionOutline
   - type: LightBehaviour
     behaviours:
-      - !type:RandomizeBehaviour # immediately make it bright and flickery
-        id: turn_on
-        interpolate: Nearest
-        minDuration: 0.02
-        maxDuration: 0.06
-        startValue: 2.0
-        endValue: 4.0
-        property: Energy
-        isLooped: true
-      - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
-        id: turn_on
-        maxDuration: 8.0
-        startValue: 1.0
-        endValue: 2.0
-      - !type:RandomizeBehaviour # weaker flicker as it fades out
-        id: fade_out
-        interpolate: Nearest
-        minDuration: 0.02
-        maxDuration: 0.06
-        startValue: 4.0
-        endValue: 8.0
-        property: Energy
-        isLooped: true
-      - !type:FadeBehaviour # fade out radius as it burns out
-        id: fade_out
-        maxDuration: 4.0
-        startValue: 2.0
-        endValue: 1.0
+    # immediately make it bright and flickery
+    - !type:RandomizeBehaviour
+      id: turn_on
+      interpolate: Nearest
+      minDuration: 0.02
+      maxDuration: 0.06
+      startValue: 2.0
+      endValue: 4.0
+      property: Energy
+      isLooped: true
+    # have the radius start small and get larger as it starts to burn
+    - !type:FadeBehaviour
+      id: turn_on
+      maxDuration: 8.0
+      startValue: 1.0
+      endValue: 2.0
+    # weaker flicker as it fades out
+    - !type:RandomizeBehaviour
+      id: fade_out
+      interpolate: Nearest
+      minDuration: 0.02
+      maxDuration: 0.06
+      startValue: 4.0
+      endValue: 8.0
+      property: Energy
+      isLooped: true
+    # fade out radius as it burns out
+    - !type:FadeBehaviour
+      id: fade_out
+      maxDuration: 4.0
+      startValue: 2.0
+      endValue: 1.0
   - type: ItemSlots
     slots:
       solution_container:
@@ -161,10 +171,10 @@
         sprite: Objects/Tools/bucket.rsi
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionContainerManager
-    solutions:
-      smelted_metal:
-        maxVol: 100
+  #- type: SolutionContainerManager
+  #  solutions:
+  #    smelted_metal:
+  #      maxVol: 100
   - type: InjectableSolution
     solution: smelted_metal
   - type: RefillableSolution
@@ -179,6 +189,10 @@
     canChangeTransferAmount: true
   - type: SolutionItemStatus
     solution: smelted_metal
+  - type: Solution
+    id: smelted_metal
+    solution:
+      maxVol: 100
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:

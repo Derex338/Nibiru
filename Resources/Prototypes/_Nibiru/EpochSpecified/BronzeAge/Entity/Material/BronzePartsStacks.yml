@@ -251,6 +251,20 @@
   spawn: CoinGold1
   maxCount: 100
 
+- type: stack
+  id: BronzeRod
+  name: бронзовый прут
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeRod.rsi, state: rod_1 }
+  spawn: BronzeRod
+  maxCount: 30
+
+- type: stack
+  id: BronzeChainmailPiece
+  name: бронзовое звено кольчуги
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainmailPiece.rsi, state: pice_1 }
+  spawn: BronzeChainmailPiece
+  maxCount: 30
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Materials
 # ──────────────────────────────────────────────────────────────────────────────
@@ -541,4 +555,22 @@
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: icon }
   color: "#8B4513"
+  price: 1
+
+- type: material
+  id: BronzeChainmailPiece
+  stackEntity: BronzeChainmailPiece
+  name: бронзовое звено кольчуги
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainmailPiece.rsi, state: piece_1 }
+  color: "#CD7F32"
+  price: 1
+
+- type: material
+  id: BronzeRod
+  stackEntity: BronzeRod
+  name: бронзовый прут
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeRod.rsi, state: rod_1 }
+  color: "#CD7F32"
   price: 1

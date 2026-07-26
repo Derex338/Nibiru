@@ -156,10 +156,12 @@ namespace Content.Client.Examine
 
             var entity = GetEntity(ev.EntityUid);
 
-            // Tooltips coming in from the server generally prioritize
-            // opening at the old tooltip rather than the cursor/another entity,
-            // since there's probably one open already if it's coming in from the server.
-            OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
+            // Don't reopen tooltip if already open for this entity — just update message.
+            // Prevents locale flicker when server responds with same-locale text.
+            if (_examineTooltipOpen == null || _examinedEntity != entity)
+            {
+                OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
+            }
             UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs, getVerbs: false);
         }
 
@@ -267,6 +269,13 @@ namespace Content.Client.Examine
             if (vBox == null)
             {
                 return;
+            }
+
+            // Remove existing message labels before adding new one to avoid duplicates on server response.
+            var existingLabels = vBox.Children.Where(c => c is RichTextLabel && c.Name != "ExamineButtonsHBox" && !(c.Parent?.Name == "ExamineButtonsHBox")).ToArray();
+            foreach (var label in existingLabels)
+            {
+                vBox.Children.Remove(label);
             }
 
             foreach (var msg in message.Nodes)

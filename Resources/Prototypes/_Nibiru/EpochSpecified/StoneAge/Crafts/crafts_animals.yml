@@ -1,0 +1,42 @@
+- type: construction
+  id: dogCraft
+  name: dog
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a dog
+  graph: Dog
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false
+
+- type: construction
+  id: horseCraft
+  name: horse
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a horse
+  graph: Horse
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false
+
+- type: construction
+  id: pigeonCraft
+  name: pigeon
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a pigeon
+  graph: Pigeon
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false
+

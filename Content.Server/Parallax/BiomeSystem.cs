@@ -80,6 +80,38 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     public bool SaveBiomeMobs { get; set; } = false;
 
+    /// <summary>
+    /// Подготавливает BiomeComponent карты к сохранению: очищает LoadedEntities и LoadedChunks,
+    /// чтобы устаревшие ссылки на удалённые entity не вызывали ошибок сериализации.
+    /// Биом восстанавливается процедурно по сиду при следующей загрузке.
+    /// Возвращает снапшот для восстановления через <see cref="RestoreMapAfterSave"/>.
+    /// </summary>
+    public (Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> Entities, HashSet<Vector2i> Chunks)?
+        PrepareMapForSave(EntityUid mapUid)
+    {
+        if (!TryComp<BiomeComponent>(mapUid, out var biome))
+            return null;
+
+        var entitiesSnap = biome.LoadedEntities;
+        var chunksSnap = biome.LoadedChunks;
+        biome.LoadedEntities = new();
+        biome.LoadedChunks = new();
+        return (entitiesSnap, chunksSnap);
+    }
+
+    /// <summary>
+    /// Восстанавливает рантайм-состояние BiomeComponent после сохранения карты.
+    /// </summary>
+    public void RestoreMapAfterSave(EntityUid mapUid,
+        (Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> Entities, HashSet<Vector2i> Chunks) snapshot)
+    {
+        if (!TryComp<BiomeComponent>(mapUid, out var biome))
+            return;
+
+        biome.LoadedEntities = snapshot.Entities;
+        biome.LoadedChunks = snapshot.Chunks;
+    }
+
     private List<(Vector2i, Tile)> _tiles = new();
 
     private ObjectPool<HashSet<Vector2i>> _tilePool =
@@ -488,7 +520,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
 
             // Prevent generation lag spike by capping chunk loads per tick
-            if (sw.Elapsed.TotalMilliseconds > 8 && chunksLoaded > 0)
+            if (sw.Elapsed.TotalMilliseconds > 20 && chunksLoaded > 0)
                 continue;
 
             if (!component.LoadedChunks.Add(chunk))
@@ -958,8 +990,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var chunksUnloaded = 0;
         foreach (var chunk in toUnload)
         {
-            if (sw.Elapsed.TotalMilliseconds > 20 && chunksUnloaded > 0)
-                break;
+            //if (sw.Elapsed.TotalMilliseconds > 20 && chunksUnloaded > 0)
+            //    break;
 
             if (!component.LoadedChunks.Remove(chunk))
                 continue;

@@ -10,6 +10,8 @@
   name: oak tree
   description: A young oak tree growing steadily.
   components:
+  - type: Injurable
+    damageContainer: Inorganic
   - type: CEPlantVisuals
     growthSteps: 4
     readyVariations: 2

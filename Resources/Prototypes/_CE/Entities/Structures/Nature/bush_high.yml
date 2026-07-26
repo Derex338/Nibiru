@@ -66,7 +66,7 @@
               spawn:
                 BunchHerb1:
                   min: 0
-                  max: 2
+                  max: 1
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
@@ -77,6 +77,15 @@
         collection: CEGrassGathering
     - type: TriggerOnCollide
       fixtureID: fix1
+    - type: CEPlantAdditionalProduceOnInteract
+      produce:
+        BunchHerb1: 3
+      toolWhitelist:
+        components:
+        - Hands
+      tool: Slicing
+    - type: Injurable
+      damageContainer: Inorganic
 
 - type: entity
   id: CEHighBushRandom

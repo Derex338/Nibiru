@@ -42,6 +42,9 @@ public sealed partial class CEPlantAdditionalProduceOnInteractComponent : Compon
     public string? Tool;
 
     [DataField]
+    public bool UseHands = true;
+
+    [DataField]
     public TimeSpan GatherDelay = TimeSpan.FromSeconds(1f);
 
     /// <summary>

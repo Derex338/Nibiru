@@ -304,7 +304,10 @@
 - type: entity
   id: TorsoDrask
   name: "Туловище драска"
-  parent: [OrganBaseTorsoSexed, PartDrask, OrganBaseTorso]
+  parent:
+  - OrganBaseTorsoSexed
+  - PartDrask
+  - OrganBaseTorso
   components:
   - type: Sprite
     sprite: _Adventure/Races/Drask/Species/parts.rsi
@@ -423,11 +426,13 @@
   components:
   - type: Sprite
     sprite: _Adventure/Races/Drask/organs.rsi
-    state: heart-off
+    layers:
+    - state: heart-off
   - type: Organ
   - type: Metabolizer
     maxReagents: 2
-    metabolizerTypes: [ Drask ]
+    metabolizerTypes:
+    - Drask
     groups:
     - id: Medicine
     - id: Poison

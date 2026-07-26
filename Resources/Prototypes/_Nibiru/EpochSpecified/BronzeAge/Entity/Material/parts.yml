@@ -790,3 +790,48 @@
     stackType: WoodenWheel
     count: 1
   - type: Material
+
+- type: entity
+  parent: BaseItem
+  id: BronzeRod
+  suffix: Nibiru, BronzeAge
+  name: бронзовый стержень
+  description: Бронзовый стержень.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+    color: "#CD7F32"
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,0,1
+  - type: Construction
+    graph: BronzeRod
+    node: fin
+  - type: Stack
+    stackType: BronzeRod
+    count: 1
+  - type: Material
+
+- type: entity
+  parent: BaseItem
+  id: BronzeChainmailPiece
+  suffix: Nibiru, BronzeAge
+  name: бронзовое звено кольчуги
+  description: Бронзовое звено для изготовления кольчуги.
+  components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainmailPiece.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: Construction
+    graph: BronzeChainmailPiece
+    node: fin
+  - type: Stack
+    stackType: BronzeChainmailPiece
+    count: 1
+  - type: Material

@@ -54,6 +54,14 @@ internal sealed partial class ChatManager : IChatManager
                 _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(str)}\"");
                 break;
 
+            case ChatSelectChannel.OOC_Ru:
+                _consoleHost.ExecuteCommand($"ooc_ru \"{CommandParsing.Escape(str)}\"");
+                break;
+
+            case ChatSelectChannel.OOC_En:
+                _consoleHost.ExecuteCommand($"ooc_en \"{CommandParsing.Escape(str)}\"");
+                break;
+
             case ChatSelectChannel.Admin:
                 _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(str)}\"");
                 break;

@@ -40,6 +40,7 @@ public abstract partial class CESharedFarmingSystem
 
         SubscribeLocalEvent<CEPlantAdditionalProduceOnInteractComponent, InteractUsingEvent>(OnAdditionalPlantInteract);
         SubscribeLocalEvent<CEPlantAdditionalProduceOnInteractComponent, CEPlantGatherDoAfterEvent>(OnAdditionalProduceDoAfter);
+        SubscribeLocalEvent<CEPlantAdditionalProduceOnInteractComponent, InteractHandEvent>(OnAdditionalPlantInteractHand);
     }
 
     /// <summary>
@@ -93,6 +94,38 @@ public abstract partial class CESharedFarmingSystem
                 new CEPlantGatherDoAfterEvent(hashSet),
                 ent,
                 used: args.Used)
+            {
+                BreakOnDamage = true,
+                BlockDuplicate = false,
+                CancelDuplicate = false,
+                BreakOnMove = true,
+                BreakOnHandChange = true,
+            };
+
+        if (_net.IsServer) //For some reason we have sound spamming here. PlayPredicted dont work, idk why
+            _audio.PlayPvs(ent.Comp.GatherSound, Transform(ent).Coordinates);
+
+        args.Handled = _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void OnAdditionalPlantInteractHand(Entity<CEPlantAdditionalProduceOnInteractComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled || !ent.Comp.UseHands)
+            return;
+
+        HashSet<string> hashSet = new();
+
+        foreach (var (proto, value) in ent.Comp.Produce)
+        {
+            hashSet.Add(proto);
+        }
+
+        var doAfterArgs =
+            new DoAfterArgs(EntityManager,
+                args.User,
+                ent.Comp.GatherDelay,
+                new CEPlantGatherDoAfterEvent(hashSet),
+                ent)
             {
                 BreakOnDamage = true,
                 BlockDuplicate = false,

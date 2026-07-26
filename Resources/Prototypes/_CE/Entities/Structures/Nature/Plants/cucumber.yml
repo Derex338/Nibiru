@@ -33,7 +33,8 @@
     - cucumber
     toolWhitelist:
       components:
-      - Sharp
+      - Hands
+    tool: Slicing
 
 - type: entity
   id: CEPlantCucumberGrown

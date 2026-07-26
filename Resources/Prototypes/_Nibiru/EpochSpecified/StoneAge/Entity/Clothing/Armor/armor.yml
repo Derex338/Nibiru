@@ -63,6 +63,10 @@
       Blunt: 3
       Slash: 4
       Piercing: 2
+  - type: Material
+  - type: Stack
+    stackType: LeatherHelmet
+    count: 1
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothing ]
@@ -96,6 +100,10 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Material
+  - type: Stack
+    stackType: LeatherChestplate
+    count: 1
 
 - type: entity
   parent: ClothingOuterArmorBone

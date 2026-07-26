@@ -131,6 +131,7 @@
                     <!-- Markings -->
                     <humanoid:MarkingPicker Name="Markings" HorizontalExpand="True" VerticalExpand="True" />
                 </BoxContainer>
+                <!-- Faction -->
                 <BoxContainer Name="FactionTab" Orientation="Vertical" Margin="10">
                     <TabContainer Name="FactionSubTabs" VerticalExpand="True">
                         <!-- General settings -->

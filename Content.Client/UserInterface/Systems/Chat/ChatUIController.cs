@@ -95,6 +95,8 @@ public sealed partial class ChatUIController : UIController
         {ChatSelectChannel.Console, SharedChatSystem.ConsolePrefix},
         {ChatSelectChannel.LOOC, SharedChatSystem.LOOCPrefix},
         {ChatSelectChannel.OOC, SharedChatSystem.OOCPrefix},
+        {ChatSelectChannel.OOC_Ru, SharedChatSystem.OOCPrefix},
+        {ChatSelectChannel.OOC_En, SharedChatSystem.OOCPrefix},
         {ChatSelectChannel.Emotes, SharedChatSystem.EmotesPrefix},
         {ChatSelectChannel.Admin, SharedChatSystem.AdminPrefix},
         {ChatSelectChannel.Radio, SharedChatSystem.RadioCommonPrefix},
@@ -166,7 +168,7 @@ public sealed partial class ChatUIController : UIController
     public ChatSelectChannel CanSendChannels { get; private set; }
     public ChatChannel FilterableChannels { get; private set; }
     public ChatSelectChannel SelectableChannels { get; private set; }
-    private ChatSelectChannel PreferredChannel { get; set; } = ChatSelectChannel.OOC;
+    private ChatSelectChannel PreferredChannel { get; set; } = ChatSelectChannel.OOC_Ru;
 
     public event Action<ChatSelectChannel>? CanSendChannelsChanged;
     public event Action<ChatChannel>? FilterableChannelsChanged;
@@ -266,7 +268,7 @@ public sealed partial class ChatUIController : UIController
 
     private void SetChatWindowOpacity(float opacity)
     {
-        var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
+        var chatBox = FindChatBox();
 
         var panel = chatBox?.ChatWindowPanel;
         if (panel is null)
@@ -310,8 +312,7 @@ public sealed partial class ChatUIController : UIController
                 SetChatSizing(chatSizeRaw, separatedScreen, setting);
                 break;
             default:
-                // this could be better?
-                var maybeChat = UIManager.ActiveScreen.GetWidget<ChatBox>();
+                var maybeChat = FindChatBox();
 
                 chatBox = maybeChat ?? throw new Exception("Cannot get chat box in screen!");
 
@@ -520,7 +521,6 @@ public sealed partial class ChatUIController : UIController
         CanSendChannels |= ChatSelectChannel.Console;
 
         // can always send/recieve OOC
-        CanSendChannels |= ChatSelectChannel.OOC;
         CanSendChannels |= ChatSelectChannel.LOOC;
         FilterableChannels |= ChatChannel.OOC;
         FilterableChannels |= ChatChannel.LOOC;
@@ -564,12 +564,15 @@ public sealed partial class ChatUIController : UIController
             CanSendChannels |= ChatSelectChannel.Admin;
         }
 
+        // only admins can use generic OOC (others use RU/EN)
+        if (_admin.HasFlag(AdminFlags.Admin))
+            CanSendChannels |= ChatSelectChannel.OOC;
+
         SelectableChannels = CanSendChannels;
 
         // Necessary so that we always have a channel to fall back to.
-        DebugTools.Assert((CanSendChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
         DebugTools.Assert((FilterableChannels & ChatChannel.OOC) != 0, "OOC must always be available");
-        DebugTools.Assert((SelectableChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
+
 
         // let our chatbox know all the new settings
         CanSendChannelsChanged?.Invoke(CanSendChannels);
@@ -771,7 +774,7 @@ public sealed partial class ChatUIController : UIController
 
     private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
     {
-        var chatBox = UIManager.ActiveScreen?.GetWidget<ChatBox>() ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
+        var chatBox = FindChatBox();
         if (chatBox == null)
             return;
 
@@ -931,6 +934,20 @@ public sealed partial class ChatUIController : UIController
     public ChatSelectChannel GetPreferredChannel()
     {
         return MapLocalIfGhost(PreferredChannel);
+    }
+
+    private ChatBox? FindChatBox()
+    {
+        var screen = UIManager.ActiveScreen;
+        if (screen == null) return null;
+
+        var chatBox = screen.GetWidget<ChatBox>();
+        if (chatBox != null) return chatBox;
+        chatBox = screen.GetWidget<ChatBoxRu>();
+        if (chatBox != null) return chatBox;
+        chatBox = screen.GetWidget<ChatBoxEn>();
+        if (chatBox != null) return chatBox;
+        return screen.GetWidget<ResizableChatBox>();
     }
 
     public void NotifyChatTextChange()

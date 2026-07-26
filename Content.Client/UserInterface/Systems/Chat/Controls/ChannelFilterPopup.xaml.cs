@@ -22,6 +22,8 @@ public sealed partial class ChannelFilterPopup : Popup
         ChatChannel.Notifications,
         ChatChannel.LOOC,
         ChatChannel.OOC,
+        ChatChannel.OOC_Ru,
+        ChatChannel.OOC_En,
         ChatChannel.Dead,
         ChatChannel.Admin,
         ChatChannel.AdminAlert,

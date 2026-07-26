@@ -8,21 +8,21 @@
   components:
   - type: Tag
     tags:
-      - Stone
+    - Stone
   - type: Sprite
     sprite: _CE/Objects/Materials/stone.rsi
     state: stone
     layers:
     - state: stone
-      map: ["base"]
+      map:
+      - "base"
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
     shape:
     - 0,0,1,1
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -31,11 +31,13 @@
             min: 1
             max: 1
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts:
+        - "Destruction"
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
   - type: Damageable
+    damageContainer: Inorganic
     damageModifierSet: Stone
   - type: Material
   - type: MeleeWeapon
@@ -81,6 +83,15 @@
   - type: Physics
     bodyType: Dynamic
   - type: CollisionWake
+  - type: ToolRefinable
+    qualityNeeded: Hammering
+    refineTime: 2
+    refineResult:
+    - id: SharpStone
+      amount: 1
+  - type: Tool
+    qualities:
+    - Hammering
 
 - type: entity
   parent: Stone
@@ -141,5 +152,5 @@
 - type: damageModifierSet
   id: Stone
   coefficients:
-    Slash: 300
+    Slash: 10
     Blunt: 0.01

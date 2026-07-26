@@ -29,67 +29,57 @@ public sealed class MoldSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SolutionManagerComponent, MoltenPointChange>(OnCoolMetal);
+        SubscribeLocalEvent<MoldComponent, MoltenPointChange>(OnCoolMetal);
     }
 
-    private void OnCoolMetal(EntityUid uid, SolutionManagerComponent component, MoltenPointChange args)
+    private void OnCoolMetal(EntityUid uid, MoldComponent comp, MoltenPointChange args)
     {
         if (args.reagent.ScrapEntity is null || args.CurrentTemperature >= args.reagent.MeltingPoint)
             return;
 
-        if (TryComp<MoldComponent>(args.uid, out var comp))
+        if (!TryComp<SolutionComponent>(uid, out var component))
+            return;
+
+        bool success = false;
+
+        foreach (var (reagent, entity) in comp.ResultEntities)
         {
-            bool success = false;
+            var reagentAmount = component.Solution.Volume;
+            if (reagentAmount <= 0)
+                continue;
 
-            foreach (var (reagent, entity) in comp.ResultEntities)
+            if (component.Solution.Volume >= component.Solution.MaxVolume && reagentAmount >= component.Solution.MaxVolume * 0.8f)
             {
-                var reagentAmount = _solution.GetTotalPrototypeQuantity(args.uid, reagent);
-                if (reagentAmount <= 0)
-                    continue;
+                var pos = _transform.GetMapCoordinates(args.uid);
 
-                foreach (var (name, solutionEnt) in _solution.EnumerateSolutions((args.uid, component)))
-                {
-                    if (name == null)
-                        continue;
+                var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
+                var spawn = Spawn(entity, pos);
+                _container.Insert(spawn, container);
+                if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
+                    _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
 
-                    var solution = solutionEnt.Comp.Solution;
-
-                    if (solution.Volume >= solution.MaxVolume && reagentAmount >= solution.MaxVolume * 0.8f)
-                    {
-                        var pos = _transform.GetMapCoordinates(args.uid);
-
-                        var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
-                        var spawn = Spawn(entity, pos);
-                        _container.Insert(spawn, container);
-                        if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
-                            _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
-
-                        _solution.RemoveAllSolution(solutionEnt);
-                        success = true;
-                        break;
-                    }
-                }
-
-                if (success)
-                    break;
+                _solution.RemoveAllSolution((args.uid, component));
+                success = true;
+                break;
             }
 
-            if (!success)
-            {
-                ScrapSpawn((args.uid, component), args);
-            }
-            else if (comp.DeleteAfterUse)
-            {
-                QueueDel(args.uid);
-            }
+            if (success)
+                break;
         }
-        else
+
+        if (!success)
         {
             ScrapSpawn((args.uid, component), args);
         }
+        else if (comp.DeleteAfterUse)
+        {
+            QueueDel(args.uid);
+        }
+
+        //ScrapSpawn((args.uid, component), args);
     }
 
-    private void ScrapSpawn(Entity<SolutionManagerComponent> ent, MoltenPointChange args)
+    private void ScrapSpawn(Entity<SolutionComponent> ent, MoltenPointChange args)
     {
         var pos = _transform.GetMapCoordinates(args.uid);
         var uid = Spawn(args.reagent.ScrapEntity, pos);
@@ -98,12 +88,10 @@ public sealed class MoldSystem : EntitySystem
         var reagentName = args.reagent.LocalizedName;
         _metaData.SetEntityName(uid, Loc.GetString("smelting-metal-scrap-name", ("metal", reagentName)));
 
-        var reagentAmount = _solution.GetTotalPrototypeQuantity(args.uid, args.reagent.ID);
+        var reagentAmount = ent.Comp.Solution.Volume;
         comp.ResultAmount = (float)reagentAmount * 0.8f;
         comp.ResultReagent = args.reagent.ID;
 
-        var firstSol = _solution.EnumerateSolutions(ent.AsNullable()).FirstOrDefault();
-        if (firstSol.Solution.Comp != null)
-            _solution.RemoveReagent(firstSol.Solution, args.reagent.ID, reagentAmount);
+        _solution.RemoveReagent(ent, args.reagent.ID, reagentAmount);
     }
 }

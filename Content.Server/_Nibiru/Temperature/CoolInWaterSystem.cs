@@ -30,11 +30,11 @@ public sealed class CoolInWaterSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SolutionManagerComponent, InteractUsingEvent>(OnCoolInWater);
+        SubscribeLocalEvent<SolutionComponent, InteractUsingEvent>(OnCoolInWater);
         SubscribeLocalEvent<CoolInWaterComponent, CoolDoAfterEvent>(OnCoolDoAfter);
     }
 
-    private void OnCoolInWater(EntityUid uid, SolutionManagerComponent component, InteractUsingEvent args)
+    private void OnCoolInWater(EntityUid uid, SolutionComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -42,49 +42,52 @@ public sealed class CoolInWaterSystem : EntitySystem
         if (!TryComp<CoolInWaterComponent>(args.Used, out var comp))
             return;
 
-        var name = _solution.EnumerateSolutions((uid, component));
+        //var name = _solution.EnumerateSolutions((uid, component));
 
-        foreach (var (solName, _) in name)
+        //foreach (var (solName, _) in name)
+        //{
+        //if (solName == null)
+        //    return;
+
+        //if (!_solution.TryGetSolution(uid, solName, out _, out var sol) || sol is null || sol.Volume < 10)
+        //    return;
+
+        if (!TryComp<SolutionComponent>(args.Used, out var usedSolution) || component.Solution.Volume < 10)
+            return;
+
+        if (!IsWater(component.Solution))
+            return;
+
+        if (comp.Solution is not null)
         {
-            if (solName == null)
-                continue;
+            //if (!_solution.TryGetSolution(args.Used, comp.Solution, out var solution, out var soln))
+            //    return;
 
-            if (!_solution.TryGetSolution(uid, solName, out _, out var sol) || sol is null || sol.Volume < 10)
-                continue;
+            if (comp.MinTemperature >= usedSolution.Solution.Temperature)
+                return;
 
-            if (!IsWater(sol))
-                continue;
-
-            if (comp.Solution is not null)
+            _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, comp.CoolingDelay, new CoolDoAfterEvent(GetNetEntity(args.Used), usedSolution.Solution), args.Used)
             {
-                if (!_solution.TryGetSolution(args.Used, comp.Solution, out var solution, out var soln))
-                    return;
-
-                if (comp.MinTemperature >= soln.Temperature)
-                    return;
-
-                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, comp.CoolingDelay, new CoolDoAfterEvent(GetNetEntity(args.Used), sol), args.Used)
-                {
-                    BreakOnMove = true,
-                    BreakOnDropItem = true,
-                    NeedHand = true,
-                });
-            }
-            else if (TryComp<TemperatureComponent>(args.Used, out var temperatureComp))
-            {
-                if (comp.MinTemperature >= temperatureComp.CurrentTemperature)
-                    return;
-
-                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, comp.CoolingDelay, new CoolDoAfterEvent(GetNetEntity(args.Used), sol), args.Used)
-                {
-                    BreakOnMove = true,
-                    BreakOnDropItem = true,
-                    NeedHand = true,
-                });
-            }
-
-            break;
+                BreakOnMove = true,
+                BreakOnDropItem = true,
+                NeedHand = true,
+            });
         }
+        else if (TryComp<TemperatureComponent>(args.Used, out var temperatureComp))
+        {
+            if (comp.MinTemperature >= temperatureComp.CurrentTemperature)
+                return;
+
+            _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, comp.CoolingDelay, new CoolDoAfterEvent(GetNetEntity(args.Used), usedSolution.Solution), args.Used)
+            {
+                BreakOnMove = true,
+                BreakOnDropItem = true,
+                NeedHand = true,
+            });
+        }
+
+        //break;
+        //}
 
 
         args.Handled = true;
@@ -97,24 +100,24 @@ public sealed class CoolInWaterSystem : EntitySystem
 
         EntityUid target = GetEntity(args.TargetUid);
 
-        if (!Exists(target))
+        if (!Exists(target) || !TryComp<SolutionComponent>(target, out var targetSolution))
             return;
 
         if (comp.Solution is not null)
         {
-            if (!_solution.TryGetSolution(target, comp.Solution, out var solution, out _))
-                return;
+            //if (!_solution.TryGetSolution(target, comp.Solution, out var solution, out _))
+            //    return;
 
-            _solution.SetTemperature(solution.Value, comp.MinTemperature);
+            _solution.SetTemperature((target, targetSolution), comp.MinTemperature);
             Effect(target, comp, args.solution);
+            args.Handled = true;
         }
         else if (TryComp<TemperatureComponent>(target, out var temp))
         {
             _temp.ForceChangeTemperature(target, comp.MinTemperature, temp);
             Effect(target, comp, args.solution);
+            args.Handled = true;
         }
-
-        args.Handled = true;
     }
 
     // psh psh sound and steam
@@ -134,7 +137,7 @@ public sealed class CoolInWaterSystem : EntitySystem
         _atmosphereSystem.Merge(environment, merger);
     }
 
-    private bool IsWater(Shared.Chemistry.Components.Solution sol)
+    private bool IsWater(Solution sol)
     {
         foreach (var (reagent, quantity) in sol.GetReagentPrototypes(_prototype))
         {

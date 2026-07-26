@@ -552,3 +552,22 @@
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
+
+- type: construction
+  id: MoldRod
+  name: Форма для стержня
+  graph: MoldRod
+  startNode: start
+  targetNode: fin
+  category: Molds
+  description: Каменная форма для отливки стержня.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
+    layers:
+      - state: base-old
+        color: "#808080"
+      - state: round1
+        color: "#2B2B2B"
+  objectType: Item
+  entitysToShowRecipe:
+    - BasicWorkbench

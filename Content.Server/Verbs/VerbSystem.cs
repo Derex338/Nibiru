@@ -41,10 +41,6 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            // We do not verify that the user has access to the requested entity. The individual verbs should check
-            // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
-            // the entity menu or not.
-
             var force = args.AdminRequest && eventArgs.SenderSession is { } playerSession &&
                         _adminMgr.HasAdminFlag(playerSession, AdminFlags.Admin);
 
@@ -117,5 +113,6 @@ namespace Content.Server.Verbs
                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
             }
         }
+
     }
 }

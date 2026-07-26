@@ -320,3 +320,35 @@
   icon: { sprite: _CE/Objects/Consumable/Food/cotton.rsi, state: base1 }
   color: "#ffffff"
   price: 5
+
+- type: stack
+  id: LeatherChestplate
+  name: кожаная броня
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherArmor.rsi, state: icon }
+  spawn: LeatherChestplate
+  maxCount: 1
+
+- type: material
+  id: LeatherChestplate
+  stackEntity: LeatherChestplate
+  name: кожаная броня
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherArmor.rsi, state: icon }
+  color: "#80ffff"
+  price: 5
+
+- type: stack
+  id: LeatherHelmet
+  name: кожаный шлем
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherHelmet.rsi, state: icon }
+  spawn: LeatherHelmet
+  maxCount: 1
+
+- type: material
+  id: LeatherHelmet
+  stackEntity: LeatherHelmet
+  name: кожаный шлем
+  unit: materials-unit-piece
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherHelmet.rsi, state: icon }
+  color: "#80ffff"
+  price: 5

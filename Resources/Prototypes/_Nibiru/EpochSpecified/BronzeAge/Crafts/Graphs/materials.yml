@@ -133,3 +133,20 @@
     - node: fin
       entity: CoinGold
 
+- type: constructionGraph
+  id: BronzeChainmailPiece
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: BronzeRod
+              amount: 1
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: BronzeChainmailPiece

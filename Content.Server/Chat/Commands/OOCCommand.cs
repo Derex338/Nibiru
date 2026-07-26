@@ -29,4 +29,56 @@ namespace Content.Server.Chat.Commands
             _chatManager.TrySendOOCMessage(player, message, OOCChatType.OOC);
         }
     }
+
+    [AnyCommand]
+    internal sealed partial class OOCRuCommand : LocalizedCommands
+    {
+        [Dependency] private IChatManager _chatManager = default!;
+
+        public override string Command => "ooc_ru";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (shell.Player is not { } player)
+            {
+                shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
+                return;
+            }
+
+            if (args.Length < 1)
+                return;
+
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            _chatManager.TrySendOOCMessage(player, message, OOCChatType.OOC_Ru);
+        }
+    }
+
+    [AnyCommand]
+    internal sealed partial class OOCEnCommand : LocalizedCommands
+    {
+        [Dependency] private IChatManager _chatManager = default!;
+
+        public override string Command => "ooc_en";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (shell.Player is not { } player)
+            {
+                shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
+                return;
+            }
+
+            if (args.Length < 1)
+                return;
+
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            _chatManager.TrySendOOCMessage(player, message, OOCChatType.OOC_En);
+        }
+    }
 }

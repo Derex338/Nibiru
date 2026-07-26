@@ -32,6 +32,22 @@
         - CrystalGreen
         - CEFloorCrystal
         - CECrystalGrowths
+
+    # --- Вода ---
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - CEStone
+      threshold: 0.87
+      noise:
+        seed: 99
+        noiseType: OpenSimplex2
+        frequency: 0.03
+        lacunarity: 1.50
+        fractalType: FBm
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+
     # --- Основные стены камня (с проходами) ---
     # Используем инвертированный Perlin Ridged шум для создания "коридоров"
     - !type:BiomeEntityLayer

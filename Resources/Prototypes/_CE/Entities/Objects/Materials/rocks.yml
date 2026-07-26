@@ -51,7 +51,8 @@
   parent: BaseItem
   name: stone
   description: A cold stone.
-  categories: [ ForkFiltered ]
+  categories:
+  - ForkFiltered
   components:
   - type: Item
     size: Normal
@@ -61,8 +62,9 @@
     noRot: true
     sprite: _CE/Objects/Materials/stone.rsi
     layers:
-      - state: stone
-        map: ["base"]
+    - state: stone
+      map:
+      - "base"
   - type: Appearance
   - type: Stack
     stackType: CEStone
@@ -83,12 +85,11 @@
         variation: 0.03
         volume: 2
     outputs:
-      - CECobblestone
-      - CEStone
+    - CECobblestone
+    - CEStone
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -97,7 +98,8 @@
             min: 1
             max: 1
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts:
+        - "Destruction"
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -137,9 +139,11 @@
   - type: CollisionWake
   - type: Tag
     tags:
-      - Stone
+    - Stone
   - type: Damageable
     damageModifierSet: Stone
+  - type: Injurable
+    damageContainer: Stone
 
 - type: entity
   id: CEStoneBlock10

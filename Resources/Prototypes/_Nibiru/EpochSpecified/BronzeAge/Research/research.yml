@@ -326,6 +326,12 @@
     - MoldShield
     - BronzeShield
     - BronzeArmorBuckler
+    - MoldRod
+    - BronzeChainmailPiece
+    - BronzeChainmail
+    - BronzeChainmailCowl
+    - BronzeLeatherArmor
+    - BronzeLeatherHelmet
 
 - type: technology
   id: GladiatorEquip

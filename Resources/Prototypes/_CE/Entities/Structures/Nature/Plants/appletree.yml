@@ -40,7 +40,10 @@
     - apple
     toolWhitelist:
       components:
-      - Sharp
+      - Hands
+    tool: Slicing
+  - type: Injurable
+    damageContainer: Inorganic
 
 - type: entity
   id: CEPlantAppleTreeGrown

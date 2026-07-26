@@ -17,26 +17,29 @@
   name: туника
   description: Простейшая туника из ткани.
   components:
-    - type: Sprite
-      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
-      state: icon
-    - type: Clothing
-      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
-    - type: Construction
-      graph: Tunic
-      node: fin
-    - type: Item
-      size: Normal
-      shape:
-      - 0,0,1,1
-    - type: Armor
-      modifiers:
-        coefficients:
-          Slash: 0.95
-    - type: ArmorProtection
-      protection:
-        Slash: 1
-        Blunt: 0
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
+    slots:
+    - innerclothing
+    - SHIRT
+  - type: Construction
+    graph: Tunic
+    node: fin
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+  - type: ArmorProtection
+    protection:
+      Slash: 1
+      Blunt: 0
 
 - type: entity
   parent: ClothingUniformBase
@@ -45,18 +48,21 @@
   name: травяной пояс
   description: Простой пояс, сплетенный из растений.
   components:
-    - type: Sprite
-      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBelt.rsi
-      state: icon
-    - type: Clothing
-      sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBelt.rsi
-    - type: Construction
-      graph: HerbalBelt
-      node: fin
-    - type: Item
-      size: Normal
-      shape:
-      - 0,0,1,1
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBelt.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/HerbBelt.rsi
+    slots:
+    - innerclothing
+    - PANTS
+  - type: Construction
+    graph: HerbalBelt
+    node: fin
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
 
 - type: entity
   parent: ClothingShoesBase

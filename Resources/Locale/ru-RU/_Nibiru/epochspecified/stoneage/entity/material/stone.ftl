@@ -1,0 +1,12 @@
+ent-Stone = камень
+    .desc = тупо камень
+    .suffix = Нибиру, Каменный век
+ent-Stone1 = камень
+    .desc = { ent-Stone.desc }
+    .suffix = Single, Нибиру, Каменный век
+ent-SharpStone = острый камень
+    .desc = тупо острый камень
+    .suffix = Нибиру, Каменный век
+ent-SharpStone1 = острый камень
+    .desc = { ent-SharpStone.desc }
+    .suffix = Single, Нибиру, Каменный век

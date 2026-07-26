@@ -1,0 +1,12 @@
+ent-CESeedPoppy = poppy seeds
+    .desc = Poppy seeds, commonly used in medicine production.
+    .suffix = { ent-CEBaseSeed.suffix }
+ent-CESeedPoppy30 = { ent-CESeedPoppy }
+    .desc = { ent-CESeedPoppy.desc }
+    .suffix = 30
+ent-CESeedAloe = aloe seeds
+    .desc = Tiny aloe seeds.
+    .suffix = { ent-CEBaseSeed.suffix }
+ent-CESeedAloe30 = { ent-CESeedAloe }
+    .desc = { ent-CESeedAloe.desc }
+    .suffix = 30

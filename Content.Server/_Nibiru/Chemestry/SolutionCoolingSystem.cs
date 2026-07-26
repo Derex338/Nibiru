@@ -66,7 +66,7 @@ public sealed class SolutionCoolingSystem : EntitySystem
 
             _solution.AddThermalEnergy((uid, solution), heatTransfer / heatCapacityLiquid);
 
-            if (TryComp<TemperatureComponent>(transform.ParentUid, out var temp) && temp.CurrentTemperature < solution.Solution.Temperature)
+            if (TryComp<TemperatureComponent>(uid, out var temp) && temp.CurrentTemperature < solution.Solution.Temperature)
             {
                 temp.CurrentTemperature += solution.Solution.Temperature / 10 * frameTime;
             }
@@ -75,8 +75,8 @@ public sealed class SolutionCoolingSystem : EntitySystem
             {
                 if (reagent.MeltingPoint is not null && solution.Solution.Volume != 0)
                 {
-                    var ev = new MoltenPointChange(solution.Solution.Temperature, transform.ParentUid, reagent);
-                    RaiseLocalEvent(transform.ParentUid, ev);
+                    var ev = new MoltenPointChange(solution.Solution.Temperature, uid, reagent);
+                    RaiseLocalEvent(uid, ev);
                 }
             }
         }

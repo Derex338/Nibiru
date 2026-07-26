@@ -16,6 +16,7 @@ public sealed partial class ResearchSystem
     {
         SubscribeLocalEvent<ResearchServerComponent, MapInitEvent>(OnServerInit);
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleChangeEpochMessage>(OnConsoleChangeEpoch);
+        SubscribeLocalEvent<ResearchConsoleComponent, BoundUIOpenedEvent>(OnBuiOpen);
     }
 
     private void UpdateFancyConsoleInterface(EntityUid uid,
@@ -105,5 +106,10 @@ public sealed partial class ResearchSystem
                 UpdateFancyConsoleInterface(client);
             }
         }
+    }
+
+    private void OnBuiOpen(EntityUid uid, ResearchConsoleComponent component, BoundUIOpenedEvent args)
+    {
+        UpdateFancyConsoleInterface(uid);
     }
 }

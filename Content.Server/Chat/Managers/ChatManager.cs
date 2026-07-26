@@ -263,7 +263,13 @@ internal sealed partial class ChatManager : IChatManager
         switch (type)
         {
             case OOCChatType.OOC:
-                SendOOC(player, message);
+                SendOOC(player, message, ChatChannel.OOC);
+                break;
+            case OOCChatType.OOC_Ru:
+                SendOOC(player, message, ChatChannel.OOC_Ru);
+                break;
+            case OOCChatType.OOC_En:
+                SendOOC(player, message, ChatChannel.OOC_En);
                 break;
             case OOCChatType.Admin:
                 SendAdminChat(player, message);
@@ -275,7 +281,7 @@ internal sealed partial class ChatManager : IChatManager
 
     #region Private API
 
-    private void SendOOC(ICommonSession player, string message)
+    private void SendOOC(ICommonSession player, string message, ChatChannel channel)
     {
         if (_adminManager.IsAdmin(player))
         {
@@ -291,6 +297,13 @@ internal sealed partial class ChatManager : IChatManager
 
         Color? colorOverride = null;
         var wrappedMessage = Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerName",player.Name), ("message", FormattedMessage.EscapeText(message)));
+        
+        // Add channel prefix for RU/ENG if it's separated, unless we just let the client side tabs handle it. 
+        // The user said "В остальной игре будет общий ООС", so in-game everyone sees everything, but in lobby they are separated.
+        // If we use ChatChannel.OOC_Ru, the client will only show it in the RU tab if they are in the lobby.
+        // But what about the in-game chat? It's configured to show `OOC` only by default!
+        // To make it show RU/ENG as well, we need to modify the in-game chat filter. 
+        // Wait, I will just send it with the specific channel.
         if (_adminManager.HasAdminFlag(player, AdminFlags.NameColor))
         {
             var prefs = _preferencesManager.GetPreferences(player.UserId);
@@ -308,9 +321,8 @@ internal sealed partial class ChatManager : IChatManager
         }
         // Corvax-Sponsors-End
 
-        //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
-        ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, author: player.UserId);
-        _discordLink.SendMessage(message, player.Name, ChatChannel.OOC);
+        ChatMessageToAll(channel, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, author: player.UserId);
+        _discordLink.SendMessage(message, player.Name, channel);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
     }
 
@@ -495,5 +507,7 @@ internal sealed partial class ChatManager : IChatManager
 public enum OOCChatType : byte
 {
     OOC,
-    Admin
+    Admin,
+    OOC_Ru,
+    OOC_En
 }

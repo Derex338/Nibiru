@@ -306,3 +306,24 @@
   targetNode: fin
   category: construction-category-utilities
   objectType: Item
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Structures (Сооружения)
+# ──────────────────────────────────────────────────────────────────────────────
+
+- type: construction
+  id: Well
+  name: колодец
+  graph: Well
+  startNode: start
+  targetNode: fin
+  category: construction-category-structures
+  description: Неглубокий колодец.
+  icon:
+    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/well.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

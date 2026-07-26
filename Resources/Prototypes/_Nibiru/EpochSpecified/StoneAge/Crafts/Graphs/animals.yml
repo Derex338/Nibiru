@@ -1,0 +1,56 @@
+- type: constructionGraph
+  id: Dog
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: MediumHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 10
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobNibiruDog
+
+- type: constructionGraph
+  id: Horse
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: BigHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 20
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobHorseRideable
+
+- type: constructionGraph
+  id: Pigeon
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: SmallHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 10
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobNibiruPigeon
+
+
+
+
+
+

@@ -101,8 +101,12 @@
                     <BoxContainer MinHeight="10" />
                     <!-- Gold line -->
                     <controls:HLine StyleClasses="highlight" Thickness="2" Access="Public" />
-                    <controls:HSpacer Spacing="10" />
-                    <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" />
+                    <controls:HSpacer Spacing="5" />
+                    <TabContainer Name="ChatTabs" Access="Public" MinHeight="50" VerticalExpand="True"
+                                  Margin="3 1 3 3">
+                        <widgets:ChatBoxRu Name="ChatRu" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
+                        <widgets:ChatBoxEn Name="ChatEn" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
+                    </TabContainer>
                 </BoxContainer>
                 <TextureButton Name="CollapseButton"
                                 TexturePath="filled_right_arrow.svg.192dpi"

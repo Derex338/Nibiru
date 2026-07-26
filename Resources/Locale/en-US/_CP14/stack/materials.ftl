@@ -1,0 +1,37 @@
+cp14-stack-dirt-block = dirt blocks
+cp14-stack-stone-block = stone blocks
+cp14-stack-marble-block = marble rocks
+cp14-stack-wood-planks = oak planks
+cp14-stack-wood-planks-birch = birch planks
+cp14-material-spruce-planks = spruce planks
+cp14-stack-cloth = rolls of fabric
+cp14-stack-flora = tufts of grass
+cp14-stack-compost = compost piles
+
+cp14-stack-copper-bars = copper bars
+cp14-stack-iron-bars = iron bars
+cp14-stack-brass-bars = brass bars
+cp14-stack-gold-bars = gold bars
+cp14-stack-mithril-bars = mithril bars
+
+cp14-stack-coal-ore = hard coal
+cp14-stack-copper-ore = copper ore
+cp14-stack-iron-ore = iron ore
+cp14-stack-gold-ore = gold ore
+cp14-stack-mithril-ore = mithril ore
+
+cp14-stack-wallpaper = rolls of wallpaper
+
+cp14-stack-glass-sheet = glass
+
+cp14-stack-ash-pile = pile of ashes
+
+cp14-stack-bones-pile = pile of bones
+
+cp14-stack-group-wooden-planks-any = planks (any)
+
+cp14-stack-blood-essence = blood essence
+
+cp14-stack-hide-thin = thin hide
+cp14-stack-hide = coarse hide
+cp14-stack-hide-rugged = rugged hide

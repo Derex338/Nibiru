@@ -115,3 +115,18 @@
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
+
+- type: construction
+  id: BronzeChainmailPiece
+  name: Бронзовое кольцо
+  graph: BronzeChainmailPiece
+  startNode: start
+  targetNode: fin
+  category: Materials
+  description: Бронзовое кольцо для изготовления кольчуги.
+  icon:
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
+    state: Bronze_1
+  objectType: Item
+  entitysToShowRecipe:
+    - BronzeAnvilWorkbench

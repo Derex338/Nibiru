@@ -1,0 +1,9 @@
+ent-BronzeAgeBed = деревянная кровать
+    .desc = Простая кровать из досок и соломы.
+    .suffix = Nibiru, BronzeAge
+ent-BronzeAgeChest = сундук
+    .desc = Деревянный сундук для хранения вещей.
+    .suffix = Nibiru, BronzeAge
+ent-BronzeBell = бронзовый колокол
+    .desc = Большой бронзовый колокол. Его звон разносится на многие мили.
+    .suffix = Nibiru, BronzeAge

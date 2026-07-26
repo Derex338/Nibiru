@@ -320,6 +320,7 @@
     - WoodenSignRight
     - CEZLevelLadderDirt
     - CEZLevelLadderDirtCorner
+    - Well
     - MultiLevelRope
 
 - type: technology
@@ -401,6 +402,7 @@
     #- TileRoofRed
     #- TileRoofGreen
 
+
 - type: technology
   id: WoodItems
   name: Деревянные предметы
@@ -463,6 +465,7 @@
     #- FenceStockadeCorner
     #- FenceStockadeTJunction
     #- FenceStockadeGate
+
 
 - type: technology
   id: StoneMasonry
@@ -561,9 +564,22 @@
   craftUnlocks:
     - Furnace
 
-# ══════════════════════════════════════
-# ПЕРЕХОД В БРОНЗОВЫЙ ВЕК
-# ══════════════════════════════════════
+- type: technology
+  id: animals
+  name: создание животных
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: ian
+  discipline: StoneAge
+  tier: 1
+  cost: 200
+  technologyPrerequisites:
+  - PrimitiveProcessing
+  craftUnlocks:
+  - dogCraft
+  - horseCraft
+  - pigeonCraft
+  position: -1, 0
 
 - type: technology
   id: BronzeAgeTransition

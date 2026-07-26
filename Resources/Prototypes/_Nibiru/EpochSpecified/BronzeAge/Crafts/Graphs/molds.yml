@@ -518,8 +518,26 @@
               points: 5
           steps:
             - material: CEStone
-              amount: 5
-              doAfter: 15
+              amount: 3
+            - tool: Hammering
+              doAfter: 10
     - node: fin
       entity: StoneMoldXiphosBlade
 
+- type: constructionGraph
+  id: MoldRod
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          completed:
+            - !type:PointsFromCraft
+              points: 5
+          steps:
+            - material: CEStone
+              amount: 2
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: StoneMoldRod

@@ -218,17 +218,46 @@ namespace Content.Client.Verbs.UI
         /// </summary>
         public void AddServerVerbs(List<Verb>? verbs, ContextMenuPopup popup)
         {
-            popup.MenuBody.RemoveAllChildren();
-
             // Verbs may be null if the server does not think we can see the target entity. This **should** not happen.
             if (verbs == null)
             {
+                popup.MenuBody.RemoveAllChildren();
                 // remove "waiting for server..." and inform user that something went wrong.
                 _context.AddElement(popup, new ContextMenuElement(Loc.GetString("verb-system-null-server-response")));
                 return;
             }
 
-            CurrentVerbs.UnionWith(verbs);
+            // Remove server verbs that match local verbs (ignoring text/category)
+            var filteredVerbs = new List<Verb>();
+            foreach (var sv in verbs)
+            {
+                bool matchedLocal = false;
+                foreach (var cv in CurrentVerbs)
+                {
+                    if (cv.GetType() == sv.GetType() &&
+                        cv.Priority == sv.Priority &&
+                        cv.TypePriority == sv.TypePriority &&
+                        cv.Icon?.ToString() == sv.Icon?.ToString() &&
+                        cv.IconEntity == sv.IconEntity &&
+                        cv.Impact == sv.Impact)
+                    {
+                        // It's the same verb, just different localization!
+                        matchedLocal = true;
+                        break;
+                    }
+                }
+                if (!matchedLocal)
+                {
+                    filteredVerbs.Add(sv);
+                }
+            }
+
+            // Skip repopulation if no new verbs — avoids visual flicker.
+            if (filteredVerbs.Count == 0)
+                return;
+
+            CurrentVerbs.UnionWith(filteredVerbs);
+            popup.MenuBody.RemoveAllChildren();
             FillVerbPopup(popup);
         }
 

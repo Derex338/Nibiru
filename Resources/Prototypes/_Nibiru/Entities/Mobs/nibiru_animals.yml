@@ -692,6 +692,9 @@
       amount: 1
     - id: MediumBodyButcherFirst
       amount: 1
+  - type: Construction
+    graph: dogCraft
+    node: fin
 
 - type: entity
   id: ClothingHeadLionSkin

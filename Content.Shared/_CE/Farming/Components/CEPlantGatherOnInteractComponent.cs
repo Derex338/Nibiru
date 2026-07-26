@@ -22,6 +22,13 @@ public sealed partial class CEPlantGatherOnInteractComponent : Component, IPlant
     [DataField(required: true)]
     public EntityWhitelist ToolWhitelist = new();
 
+    // Костыль
+    [DataField]
+    public string? Tool;
+
+    [DataField]
+    public bool UseHands = true;
+
     [DataField]
     public TimeSpan GatherDelay = TimeSpan.FromSeconds(1f);
 

@@ -33,6 +33,70 @@
       entity: BronzeBuckler
 
 - type: constructionGraph
+  id: BronzeChainmail
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: BronzeChainmailPiece
+              amount: 30
+            - tool: Hammering
+              doAfter: 10
+    - node: fin
+      entity: BronzeChainmail
+
+- type: constructionGraph
+  id: BronzeChainmailCowl
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: BronzeChainmailPiece
+              amount: 20
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: BronzeChainmailCowl
+
+- type: constructionGraph
+  id: BronzeLeatherArmor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: LeatherArmor
+              amount: 1
+            - material: BronzeInlay
+              amount: 3
+            - tool: Hammering
+              doAfter: 5
+    - node: fin
+      entity: BronzeLeatherArmor
+
+- type: constructionGraph
+  id: BronzeLeatherHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: LeatherHelmet
+              amount: 1
+            - material: BronzeInlay
+              amount: 2
+            - tool: Hammering
+              doAfter: 3
+    - node: fin
+      entity: BronzeLeatherHelmet
+
+- type: constructionGraph
   id: BronzeChestplate
   start: start
   graph:

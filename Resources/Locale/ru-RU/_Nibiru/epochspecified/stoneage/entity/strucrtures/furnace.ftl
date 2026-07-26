@@ -1,0 +1,12 @@
+ent-SmeltingFurnace = сыродутная печь
+    .desc = Простейшая каменная печь не требующая дополнительный усилий для плавки простейших руд таких как медь и олово.
+    .suffix = Нибиру, Каменный век
+ent-Fuel = fuel
+    .desc = A chunk of copper ore.
+    .suffix = Нибиру, Каменный век
+ent-ScrapMetal = ScrapMetal
+    .desc = A chunk of fucked up ore.
+    .suffix = Нибиру, Каменный век
+ent-FurnaceBeaker = тигель
+    .desc = Каменный тигель для плавки руды в расплавленный металл.
+    .suffix = Нибиру, Каменный век

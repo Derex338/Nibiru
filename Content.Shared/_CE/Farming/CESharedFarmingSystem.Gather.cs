@@ -15,6 +15,7 @@ public abstract partial class CESharedFarmingSystem
     {
         SubscribeLocalEvent<CEPlantGatherOnInteractComponent, InteractUsingEvent>(OnGatherableInteract);
         SubscribeLocalEvent<CEPlantGatherOnInteractComponent, CEPlantGatherDoAfterEvent>(OnGatherDoAfter);
+        SubscribeLocalEvent<CEPlantGatherOnInteractComponent, InteractHandEvent>(OnGatherableInteractHand);
     }
 
     private void OnGatherableInteract(Entity<CEPlantGatherOnInteractComponent> ent, ref InteractUsingEvent args)
@@ -22,10 +23,10 @@ public abstract partial class CESharedFarmingSystem
         if (args.Handled)
             return;
 
-        if (!PlantProducingQuery.TryComp(ent, out var producing))
+        if (!PlantProducingQuery.TryComp(ent, out var producing) || ent.Comp.Tool == null)
             return;
 
-        if (_whitelist.IsWhitelistFailOrNull(ent.Comp.ToolWhitelist, args.Used))
+        if (_whitelist.IsWhitelistFailOrNull(ent.Comp.ToolWhitelist, args.Used) && !_tool.HasQuality(args.Used, ent.Comp.Tool))
             return;
 
         if (!CanHarvestPlant((ent, producing), ent.Comp.GatherKeys))
@@ -38,6 +39,40 @@ public abstract partial class CESharedFarmingSystem
                 new CEPlantGatherDoAfterEvent(ent.Comp.GatherKeys),
                 ent,
                 used: args.Used)
+            {
+                BreakOnDamage = true,
+                BlockDuplicate = false,
+                CancelDuplicate = false,
+                BreakOnMove = true,
+                BreakOnHandChange = true,
+            };
+
+        if (_net.IsServer) //For some reason we have sound spamming here. PlayPredicted dont work, idk why
+            _audio.PlayPvs(ent.Comp.GatherSound, Transform(ent).Coordinates);
+
+        args.Handled = _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void OnGatherableInteractHand(Entity<CEPlantGatherOnInteractComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!ent.Comp.UseHands)
+            return;
+
+        if (!PlantProducingQuery.TryComp(ent, out var producing))
+            return;
+
+        if (!CanHarvestPlant((ent, producing), ent.Comp.GatherKeys))
+            return;
+
+        var doAfterArgs =
+            new DoAfterArgs(EntityManager,
+                args.User,
+                ent.Comp.GatherDelay,
+                new CEPlantGatherDoAfterEvent(ent.Comp.GatherKeys),
+                ent)
             {
                 BreakOnDamage = true,
                 BlockDuplicate = false,

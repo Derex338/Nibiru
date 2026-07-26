@@ -1,0 +1,9 @@
+ent-Longbow = longbow
+    .desc = A large, powerful bow. Requires strength to draw but fires arrows with great force.
+    .suffix = Nibiru, BronzeAge
+ent-RecursiveBow = recurve bow
+    .desc = A bow with limbs that curve away from the archer when unstrung. Stores more energy and delivers a faster shot.
+    .suffix = Nibiru, BronzeAge
+ent-ThrowingDart = throwing dart
+    .desc = A small, balanced dart designed for throwing.
+    .suffix = Nibiru, BronzeAge

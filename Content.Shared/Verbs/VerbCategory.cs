@@ -1,3 +1,4 @@
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -9,7 +10,12 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public sealed class VerbCategory
     {
-        public readonly string Text;
+        public string Text;
+
+        /// <summary>
+        ///     Fluent loc string ID for re-localization.
+        /// </summary>
+        public readonly string TextLocId;
 
         public readonly SpriteSpecifier? Icon;
 
@@ -28,8 +34,17 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly bool IconsOnly;
 
+        /// <summary>
+        ///     Re-resolve category text using given localization manager.
+        /// </summary>
+        public void ReLocalize(ILocalizationManager loc)
+        {
+            Text = loc.GetString(TextLocId);
+        }
+
         public VerbCategory(string text, string? icon, bool iconsOnly = false)
         {
+            TextLocId = text;
             Text = Loc.GetString(text);
             Icon = icon == null ? null : new SpriteSpecifier.Texture(new(icon));
             IconsOnly = iconsOnly;

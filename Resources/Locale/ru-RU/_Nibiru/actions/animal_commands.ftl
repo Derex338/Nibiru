@@ -1,0 +1,12 @@
+ent-ActionNibiruAnimalFollow = Следуй за мной
+    .desc = Приказывает всем вашим животным следовать за вами.
+ent-ActionNibiruAnimalStay = Стоять
+    .desc = Приказывает всем вашим животным оставаться на месте.
+ent-ActionNibiruAnimalAttack = Взять!
+    .desc = Включает режим атаки. Укажите на цель, чтобы отправить животное атаковать.
+ent-ActionNibiruAnimalGrab = Схвати!
+    .desc = Включает режим захвата. Укажите на цель, чтобы животное схватило и тащило её.
+ent-ActionNibiruAnimalSearch = Ищи!
+    .desc = Дать питомцу понюхать предмет, чтобы найти его владельца по запаху.
+ent-ActionNibiruAnimalDeliver = Доставка
+    .desc = Отправить птицу в известное почтовое отделение.

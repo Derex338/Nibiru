@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using System.Linq;
 
 namespace Content.Shared.Verbs
 {
@@ -44,7 +45,26 @@ namespace Content.Shared.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
+            {
                 ExecuteVerb(verb, user.Value, target.Value);
+            }
+            else
+            {
+                // Fallback for localized text mismatches
+                // Try to find a verb that matches in everything except Text and Category.Text
+                var match = verbs.FirstOrDefault(v =>
+                    v.GetType() == args.RequestedVerb.GetType() &&
+                    v.Priority == args.RequestedVerb.Priority &&
+                    v.TypePriority == args.RequestedVerb.TypePriority &&
+                    v.Icon?.ToString() == args.RequestedVerb.Icon?.ToString() &&
+                    v.IconEntity == args.RequestedVerb.IconEntity &&
+                    v.Impact == args.RequestedVerb.Impact);
+
+                if (match != null)
+                {
+                    ExecuteVerb(match, user.Value, target.Value);
+                }
+            }
         }
 
         /// <summary>

@@ -14,6 +14,8 @@ public sealed class ChannelSelectorPopup : Popup
         ChatSelectChannel.Emotes,
         ChatSelectChannel.Radio,
         ChatSelectChannel.LOOC,
+        ChatSelectChannel.OOC_Ru,
+        ChatSelectChannel.OOC_En,
         ChatSelectChannel.OOC,
         ChatSelectChannel.Dead,
         ChatSelectChannel.Admin
@@ -24,6 +26,11 @@ public sealed class ChannelSelectorPopup : Popup
     private readonly BoxContainer _channelSelectorHBox;
     private readonly Dictionary<ChatSelectChannel, ChannelSelectorItemButton> _selectorStates = new();
     private readonly ChatUIController _chatUIController;
+
+    /// <summary>
+    /// If set, masks global SelectableChannels to only show these channels.
+    /// </summary>
+    public ChatSelectChannel? AllowedChannels { get; set; }
 
     public event Action<ChatSelectChannel>? Selected;
 
@@ -65,6 +72,9 @@ public sealed class ChannelSelectorPopup : Popup
 
     public void SetChannels(ChatSelectChannel channels)
     {
+        if (AllowedChannels is { } allowed)
+            channels = allowed;
+
         var wasPreferredAvailable = IsPreferredAvailable();
 
         _channelSelectorHBox.RemoveAllChildren();
@@ -98,7 +108,16 @@ public sealed class ChannelSelectorPopup : Popup
         }
         else if (wasPreferredAvailable && !isPreferredAvailable)
         {
-            Select(ChatSelectChannel.OOC);
+            // Fall back to first available channel, respecting mask
+            var fallback = AllowedChannels ?? ChatSelectChannel.OOC_Ru;
+            foreach (var ch in ChannelSelectorOrder)
+            {
+                if ((fallback & ch) != 0)
+                {
+                    Select(ch);
+                    break;
+                }
+            }
         }
     }
 
