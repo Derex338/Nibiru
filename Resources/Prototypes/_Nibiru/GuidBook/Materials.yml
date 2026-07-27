@@ -42,3 +42,48 @@
   name: Разделка животных
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Veins.xml"
   filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMaterialsGuideEN
+  name: Materials
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Welcome_EN.xml"
+  filterEnabled: True
+  children:
+  - NibiruMaterialsGuideStoneEN
+  - NibiruMaterialsGuideHerbsEN
+  - NibiruMaterialsGuideWoodEN
+  - NibiruMaterialsGuideVeinsEN
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMaterialsGuideStoneEN
+  name: Stone
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Stone_EN.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMaterialsGuideHerbsEN
+  name: Bushes
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Herbs_EN.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMaterialsGuideWoodEN
+  name: Wood
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Wood_EN.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMaterialsGuideVeinsEN
+  name: Animal Butchering
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Veins_EN.xml"
+  filterEnabled: True

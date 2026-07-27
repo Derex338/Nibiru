@@ -133,7 +133,7 @@
         doAfter: 8
 
 - type: construction
-  name: стеклянный шлюз [Тройной](airlock)
+  name: glass airlock [Triple]
   id: AirlockTriple
   graph: AirlockTriple
   startNode: start

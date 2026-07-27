@@ -2,7 +2,7 @@
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
-    Title="{Loc 'Редактор Логотипа Фракции'}"
+    Title="{Loc 'faction-logo-editor-title'}"
     MinSize="900 450"
     Resizable="False">
     
@@ -14,7 +14,7 @@
         <BoxContainer Orientation="Horizontal" SeparationOverride="15" Margin="15">
             <!-- Сетка 16x16 -->
             <BoxContainer Orientation="Vertical" SeparationOverride="10">
-                <Label Text="Логотип (16x16)" HorizontalAlignment="Center" />
+                <Label Text="{Loc 'faction-logo-16-label'}" HorizontalAlignment="Center" />
                 <PanelContainer>
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
@@ -23,32 +23,32 @@
                 </PanelContainer>
                 
                 <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                    <Button Name="EraserButton" Access="Public" Text="Ластик" ToggleMode="True" MinWidth="80" />
-                    <Button Name="ClearButton" Access="Public" Text="Очистить" MinWidth="100" />
+                    <Button Name="EraserButton" Access="Public" Text="{Loc 'faction-logo-eraser'}" ToggleMode="True" MinWidth="80" />
+                    <Button Name="ClearButton" Access="Public" Text="{Loc 'faction-logo-clear'}" MinWidth="100" />
                 </BoxContainer>
             </BoxContainer>
 
             <!-- Сетка 8x8 и инструменты -->
             <BoxContainer Orientation="Vertical" SeparationOverride="15" MinWidth="180">
                 <BoxContainer Orientation="Vertical" SeparationOverride="10">
-                    <Label Text="Иконка (8x8)" HorizontalAlignment="Center" />
+                    <Label Text="{Loc 'faction-logo-8-label'}" HorizontalAlignment="Center" />
                     <PanelContainer HorizontalAlignment="Center">
                         <PanelContainer.PanelOverride>
                             <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
                         </PanelContainer.PanelOverride>
                         <GridContainer Name="PixelGrid8x8" Access="Public" Columns="8" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
                     </PanelContainer>
-                    <Button Name="Clear8x8Button" Access="Public" Text="Очистить 8x8" HorizontalAlignment="Center" MinWidth="100" />
+                    <Button Name="Clear8x8Button" Access="Public" Text="{Loc 'faction-logo-clear-8'}" HorizontalAlignment="Center" MinWidth="100" />
                 </BoxContainer>
 
                 <Control VerticalExpand="True" />
                 
-                <Button Name="SaveButton" Access="Public" Text="Сохранить всё" MinHeight="40" StyleClasses="ButtonSquare" />
+                <Button Name="SaveButton" Access="Public" Text="{Loc 'faction-logo-save-all'}" MinHeight="40" StyleClasses="ButtonSquare" />
             </BoxContainer>
             
             <!-- Инструменты цвета -->
             <BoxContainer Orientation="Vertical" SeparationOverride="10" HorizontalExpand="True">
-                <Label Text="Палитра" HorizontalAlignment="Center" />
+                <Label Text="{Loc 'faction-logo-palette'}" HorizontalAlignment="Center" />
                 
                 <BoxContainer Orientation="Horizontal" SeparationOverride="15" HorizontalAlignment="Center">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
@@ -57,7 +57,7 @@
                                 <gfx:StyleBoxFlat BackgroundColor="White" BorderColor="#3a3a3c" BorderThickness="1" />
                             </PanelContainer.PanelOverride>
                         </PanelContainer>
-                        <Label Text="Кисть" VerticalAlignment="Center" />
+                        <Label Text="{Loc 'faction-logo-brush'}" VerticalAlignment="Center" />
                     </BoxContainer>
                     
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
@@ -66,21 +66,21 @@
                                 <gfx:StyleBoxFlat BackgroundColor="Transparent" BorderColor="#3a3a3c" BorderThickness="1" />
                             </PanelContainer.PanelOverride>
                         </PanelContainer>
-                        <Label Text="Фон" VerticalAlignment="Center" />
+                        <Label Text="{Loc 'faction-logo-bg'}" VerticalAlignment="Center" />
                     </BoxContainer>
                 </BoxContainer>
 
                 <ColorSelectorSliders Name="ColorSelector" Access="Public" VerticalExpand="True" Margin="0 5 0 5"/>
                 
                 <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                    <Button Name="BgColorButton" Access="Public" Text="Цвет фона" MinWidth="100" />
-                    <Button Name="BrushColorButton" Access="Public" Text="Цвет кисти" MinWidth="100" />
+                    <Button Name="BgColorButton" Access="Public" Text="{Loc 'faction-logo-bg-color-button'}" MinWidth="100" />
+                    <Button Name="BrushColorButton" Access="Public" Text="{Loc 'faction-logo-brush-color-button'}" MinWidth="100" />
                 </BoxContainer>
             </BoxContainer>
 
             <!-- Шаблоны -->
             <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="160">
-                <Label Text="Шаблоны" HorizontalAlignment="Center" />
+                <Label Text="{Loc 'faction-logo-presets'}" HorizontalAlignment="Center" />
                 <PanelContainer VerticalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />

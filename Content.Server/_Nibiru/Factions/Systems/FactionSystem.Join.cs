@@ -43,7 +43,7 @@ public sealed partial class FactionSystem
 
             factionComponent.FactionName = factionName;
             factionComponent.IsCreator = true;
-            factionComponent.Rank = "Лидер";
+            factionComponent.Rank = Loc.GetString("faction-default-rank-leader");
 
             _adminLog.Add(LogType.FactionCreated, LogImpact.Medium,
                 $"{ToPrettyString(player):player} создал фракцию с названием {factionName}");
@@ -192,7 +192,7 @@ public sealed partial class FactionSystem
             }
             else
             {
-                playerFaction.Rank = "Новобранец";
+                playerFaction.Rank = Loc.GetString("faction-default-rank-recruit");
                 playerFaction.IsCreator = false;
             }
 

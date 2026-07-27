@@ -22,11 +22,14 @@ namespace Content.Shared.Verbs
 
         public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(NetEntity entityUid, IEnumerable<Type> verbTypes, NetEntity? slotOwner = null, bool adminRequest = false)
+        public readonly string Locale;
+
+        public RequestServerVerbsEvent(NetEntity entityUid, IEnumerable<Type> verbTypes, NetEntity? slotOwner = null, bool adminRequest = false, string locale = "en-US")
         {
             EntityUid = entityUid;
             SlotOwner = slotOwner;
             AdminRequest = adminRequest;
+            Locale = locale;
 
             foreach (var type in verbTypes)
             {

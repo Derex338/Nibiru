@@ -33,7 +33,7 @@
 
 - type: species
   id: InsectSerpentide
-  name: Серпентид
+  name: Serpentid
   roundStart: true
   prototype: MobInsect
   dollPrototype: AppearanceInsect
@@ -160,12 +160,12 @@
       #layers: []
 - type: metabolizerType
   id: InsectSerpentide
-  name: Серпентид
+  name: Serpentid
 
 - type: entity
   id: PartInsect
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Часть тела серпентида"
+  name: "Serpentid body part"
   abstract: true
   components:
   - type: Sprite
@@ -185,7 +185,7 @@
 
 - type: entity
   id: TorsoInsect
-  name: "Туловище серпентида"
+  name: "Serpentid torso"
   parent: [OrganBaseTorsoSexed, PartInsect, OrganBaseTorso]
   components:
   - type: Sprite
@@ -198,7 +198,7 @@
 
 - type: entity
   id: HeadInsect
-  name: "Голова серпентида"
+  name: "Serpentid head"
   parent: [OrganBaseHeadSexed, PartInsect, OrganBaseHead]
   components:
   - type: Sprite
@@ -212,7 +212,7 @@
 - type: entity
   id: OrganInsectBrain
   parent: OrganHumanBrain
-  name: мозг серпентида
+  name: Serpentid brain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -222,7 +222,7 @@
 - type: entity
   id: OrganInsectEyes
   parent: OrganHumanEyes
-  name: глаза серпентида
+  name: Serpentid eyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -234,7 +234,7 @@
 - type: entity
   id: OrganInsectHeart
   parent: OrganHumanHeart
-  name: Сердце серпентида
+  name: Serpentid heart
   description: Тук тук.
   components:
   - type: Sprite
@@ -252,7 +252,7 @@
 - type: entity
   id: OrganInsectLungs
   parent: OrganHumanLungs
-  name: дыхательные трубки
+  name: breathing tubes
   description: Сеть трубок для дыхания насекомых.
   components:
   - type: Sprite
@@ -284,7 +284,7 @@
 
 - type: entity
   id: OrganInsectStomach
-  name: желудок серпентида
+  name: Serpentid stomach
   parent: OrganAnimalStomach
   description: Отвратительно! Кто там сидит?!
   components:
@@ -308,7 +308,7 @@
 
 - type: entity
   id: LeftArmInsect
-  name: "Левая рука серпентида"
+  name: "Serpentid left arm"
   parent: [PartInsect, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -317,7 +317,7 @@
 
 - type: entity
   id: RightArmInsect
-  name: "Правая рука серпентида"
+  name: "Serpentid right arm"
   parent: [PartInsect, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -326,7 +326,7 @@
 
 - type: entity
   id: LeftHandInsect
-  name: "Левая рука серпентида"
+  name: "Serpentid left hand"
   parent: [PartInsect, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -335,7 +335,7 @@
 
 - type: entity
   id: RightHandInsect
-  name: "Правая рука серпентида"
+  name: "Serpentid right hand"
   parent: [PartInsect, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -344,7 +344,7 @@
 
 - type: entity
   id: LeftLegInsect
-  name: "Левая нога серпентида"
+  name: "Serpentid left leg"
   parent: [PartInsect, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -353,7 +353,7 @@
 
 - type: entity
   id: RightLegInsect
-  name: "Правая нога серпентида"
+  name: "Serpentid right leg"
   parent: [PartInsect, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -362,7 +362,7 @@
 
 - type: entity
   id: LeftFootInsect
-  name: "Левая нога серпентида"
+  name: "Serpentid left foot"
   parent: [PartInsect, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -371,7 +371,7 @@
 
 - type: entity
   id: RightFootInsect
-  name: "Правая нога серпентида"
+  name: "Serpentid right foot"
   parent: [PartInsect, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -469,7 +469,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialWax
-  name: воск
+  name: wax
   description: мягкий воск, только что выплюнутый.
   suffix: Full
   components:
@@ -508,7 +508,7 @@
 
 - type: stack
   id: InsectWax
-  name: воск
+  name: wax
   icon: { sprite: /Textures/_Adventure/Races/Insect/Structures.rsi, state: wax }
   spawn: MaterialWax1
   maxCount: 20
@@ -516,7 +516,7 @@
 #пол
 - type: entity
   id: InsectWaxTile
-  name: напольный воск
+  name: floor wax
   placement:
     mode: SnapgridCenter
   components:
@@ -584,7 +584,7 @@
 - type: entity
   parent: BaseWall
   id: InsectWaxWall
-  name: восковая стена
+  name: wax wall
   description: Стена из твёрдого, насекомого воска.
   components:
   - type: Damageable
@@ -635,7 +635,7 @@
 #дверь
 - type: entity
   id: InsectWaxDoor
-  name: восковой проход
+  name: wax passage
   description: Липкая восковая дырка.
   placement:
     mode: SnapgridCenter
@@ -826,7 +826,7 @@
 - type: entity
   parent: BaseAction
   id: ActionSericultureInsectWax
-  name: Произвести воск
+  name: Produce wax
   description: Производите воск для строительства.
   components:
   - type: Action

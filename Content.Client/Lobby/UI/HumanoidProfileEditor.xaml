@@ -169,7 +169,7 @@
                         <!-- Logo subtab -->
                         <BoxContainer Name="FactionLogoSubTab" Orientation="Horizontal" SeparationOverride="15" Margin="10">
                             <BoxContainer Orientation="Vertical" SeparationOverride="10">
-                                <Label Text="Логотип (16x16)" HorizontalAlignment="Center" />
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-logo-label'}" HorizontalAlignment="Center" />
                                 <PanelContainer>
                                     <PanelContainer.PanelOverride>
                                         <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
@@ -177,26 +177,26 @@
                                     <GridContainer Name="FactionLogoPixelGrid" Columns="16" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
                                 </PanelContainer>
                                 <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                                    <Button Name="FactionLogoEraserButton" Text="Ластик" ToggleMode="True" MinWidth="80" />
-                                    <Button Name="FactionLogoClearButton" Text="Очистить" MinWidth="100" />
+                                    <Button Name="FactionLogoEraserButton" Text="{Loc 'humanoid-profile-editor-faction-logo-eraser-button'}" ToggleMode="True" MinWidth="80" />
+                                    <Button Name="FactionLogoClearButton" Text="{Loc 'humanoid-profile-editor-faction-logo-clear-button'}" MinWidth="100" />
                                 </BoxContainer>
                             </BoxContainer>
 
                             <BoxContainer Orientation="Vertical" SeparationOverride="15" MinWidth="150">
                                 <BoxContainer Orientation="Vertical" SeparationOverride="10">
-                                    <Label Text="Иконка (8x8)" HorizontalAlignment="Center" />
+                                    <Label Text="{Loc 'humanoid-profile-editor-faction-logo-8x8-label'}" HorizontalAlignment="Center" />
                                     <PanelContainer HorizontalAlignment="Center">
                                         <PanelContainer.PanelOverride>
                                             <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />
                                         </PanelContainer.PanelOverride>
                                         <GridContainer Name="FactionLogoPixelGrid8x8" Columns="8" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
                                     </PanelContainer>
-                                    <Button Name="FactionLogoClear8x8Button" Text="Очистить 8x8" HorizontalAlignment="Center" MinWidth="100" />
+                                    <Button Name="FactionLogoClear8x8Button" Text="{Loc 'humanoid-profile-editor-faction-logo-clear-8x8-button'}" HorizontalAlignment="Center" MinWidth="100" />
                                 </BoxContainer>
                             </BoxContainer>
 
                             <BoxContainer Orientation="Vertical" SeparationOverride="10" HorizontalExpand="True">
-                                <Label Text="Палитра" HorizontalAlignment="Center" />
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-logo-palette-label'}" HorizontalAlignment="Center" />
                                 <BoxContainer Orientation="Horizontal" SeparationOverride="15" HorizontalAlignment="Center">
                                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                                         <PanelContainer Name="FactionLogoBrushPreview" MinSize="24 24" VerticalAlignment="Center">
@@ -204,7 +204,7 @@
                                                 <gfx:StyleBoxFlat BackgroundColor="White" BorderColor="#3a3a3c" BorderThickness="1" />
                                             </PanelContainer.PanelOverride>
                                         </PanelContainer>
-                                        <Label Text="Кисть" VerticalAlignment="Center" />
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-logo-brush-label'}" VerticalAlignment="Center" />
                                     </BoxContainer>
                                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                                         <PanelContainer Name="FactionLogoBgPreview" MinSize="24 24" VerticalAlignment="Center">
@@ -212,18 +212,18 @@
                                                 <gfx:StyleBoxFlat BackgroundColor="Transparent" BorderColor="#3a3a3c" BorderThickness="1" />
                                             </PanelContainer.PanelOverride>
                                         </PanelContainer>
-                                        <Label Text="Фон" VerticalAlignment="Center" />
+                                        <Label Text="{Loc 'humanoid-profile-editor-faction-logo-bg-label'}" VerticalAlignment="Center" />
                                     </BoxContainer>
                                 </BoxContainer>
                                 <ColorSelectorSliders Name="FactionLogoColorSelector" VerticalExpand="True" Margin="0 5 0 5"/>
                                 <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
-                                    <Button Name="FactionLogoBgColorButton" Text="Цвет фона" MinWidth="100" />
-                                    <Button Name="FactionLogoBrushColorButton" Text="Цвет кисти" MinWidth="100" />
+                                    <Button Name="FactionLogoBgColorButton" Text="{Loc 'humanoid-profile-editor-faction-logo-bg-color-button'}" MinWidth="100" />
+                                    <Button Name="FactionLogoBrushColorButton" Text="{Loc 'humanoid-profile-editor-faction-logo-brush-color-button'}" MinWidth="100" />
                                 </BoxContainer>
                             </BoxContainer>
 
                             <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="140">
-                                <Label Text="Шаблоны" HorizontalAlignment="Center" />
+                                <Label Text="{Loc 'humanoid-profile-editor-faction-logo-presets-label'}" HorizontalAlignment="Center" />
                                 <PanelContainer VerticalExpand="True">
                                     <PanelContainer.PanelOverride>
                                         <gfx:StyleBoxFlat BackgroundColor="#0d0d0f" BorderColor="#222224" BorderThickness="1" />

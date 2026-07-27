@@ -18,7 +18,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CESpeciesGuideRU
-# #  name: Игровые расы
+# #  name: Playable Species
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Species.xml"
 # #  filterEnabled: True
 # #  children:
@@ -42,7 +42,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CEHumanGuideRU
-# #  name: Люди
+# #  name: Humans
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Human.xml"
 # #  filterEnabled: True
 # 
@@ -58,7 +58,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CEElfGuideRU
-# #  name: Эльфы
+# #  name: Elves
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Elf.xml"
 # #  filterEnabled: True
 # 
@@ -74,7 +74,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CECarcatGuideRU
-# #  name: Каркаты
+# #  name: Carcats
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Carcat.xml"
 # #  filterEnabled: True
 # 
@@ -90,7 +90,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CECarrinGuideRU
-# #  name: Каррины
+# #  name: Carrins
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Carrin.xml"
 # #  filterEnabled: True
 # 
@@ -106,7 +106,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CEGoblinGuideRU
-# #  name: Гоблины
+# #  name: Goblins
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Goblin.xml"
 # #  filterEnabled: True
 # 
@@ -122,7 +122,7 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CESilvaGuideRU
-# #  name: Сильвы
+# #  name: Silvas
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Silva.xml"
 # #  filterEnabled: True
 # 
@@ -138,6 +138,6 @@
 # #  hidden: false
 # #  locFilter: "ru-RU"
 # #  id: CETieflingGuideRU
-# #  name: Тифлинги
+# #  name: Tieflings
 # #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Tiefling.xml"
 # #  filterEnabled: True

@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: CEWallLeaf
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: CEWallLeaf
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Herb
+              amount: 2
+              doAfter: 2
+    - node: CEWallLeaf
+      entity: CEWallLeaf
+      edges:
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: Herb
+          amount: 1
+        - !type:DeleteEntity {}
+        steps:
+        - tool: Prying
+          doAfter: 6

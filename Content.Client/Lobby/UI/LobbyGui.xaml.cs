@@ -28,7 +28,7 @@ namespace Content.Client.Lobby.UI
             foreach (ChatChannel channel in Enum.GetValues(typeof(ChatChannel)))
             {
                 if (channel != ChatChannel.None && channel != ChatChannel.IC && channel != ChatChannel.AdminRelated && channel != ChatChannel.Unspecified)
-                    ChatRu.ChatInput.FilterButton.Popup.SetActive(channel, channel == ChatChannel.OOC_Ru || channel == ChatChannel.OOC || channel == ChatChannel.AdminChat);
+                    ChatRu.ChatInput.FilterButton.Popup.SetActive(channel, channel == ChatChannel.OOC_Ru || channel == ChatChannel.OOC || channel == ChatChannel.Server || channel == ChatChannel.Notifications || channel == ChatChannel.AdminChat || channel == ChatChannel.Admin || channel == ChatChannel.AdminAlert);
             }
 
             // Configure EN Chat Box - only EN OOC
@@ -38,7 +38,7 @@ namespace Content.Client.Lobby.UI
             foreach (ChatChannel channel in Enum.GetValues(typeof(ChatChannel)))
             {
                 if (channel != ChatChannel.None && channel != ChatChannel.IC && channel != ChatChannel.AdminRelated && channel != ChatChannel.Unspecified)
-                    ChatEn.ChatInput.FilterButton.Popup.SetActive(channel, channel == ChatChannel.OOC_En || channel == ChatChannel.OOC || channel == ChatChannel.AdminChat);
+                    ChatEn.ChatInput.FilterButton.Popup.SetActive(channel, channel == ChatChannel.OOC_En || channel == ChatChannel.OOC || channel == ChatChannel.Server || channel == ChatChannel.Notifications || channel == ChatChannel.AdminChat || channel == ChatChannel.Admin || channel == ChatChannel.AdminAlert);
             }
 
             ChatTabs.SetTabTitle(0, "RU");

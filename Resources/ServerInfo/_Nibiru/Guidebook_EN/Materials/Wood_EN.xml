@@ -1,0 +1,15 @@
+<Document>
+# Wood
+
+Wood is one of the basic materials in the game. It can be obtained by cutting down trees in the forest.
+Trees yield logs, logs can be split into planks with a sharp tool, and planks into sticks.
+
+<Box>
+  <GuideEntityEmbed Entity="CEWoodLog"/>
+  <GuideEntityEmbed Entity="CEWoodenPlanks1"/>
+  <GuideEntityEmbed Entity="WoodStick"/>
+</Box>
+
+Timber is used in many crafts or as fuel. You should have a stockpile or a source for gathering it.
+
+</Document>

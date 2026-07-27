@@ -1,0 +1,12 @@
+ent-ActionNibiruAnimalFollow = Follow Me
+    .desc = Commands all your animals to follow you.
+ent-ActionNibiruAnimalStay = Stay
+    .desc = Commands all your animals to stay in place.
+ent-ActionNibiruAnimalAttack = Attack!
+    .desc = Enables attack mode. Point at a target to send your animal to attack.
+ent-ActionNibiruAnimalGrab = Grab!
+    .desc = Enables grab mode. Point at a target for your animal to grab and drag it.
+ent-ActionNibiruAnimalSearch = Seek!
+    .desc = Let your pet sniff an item to find its owner by scent.
+ent-ActionNibiruAnimalDeliver = Deliver
+    .desc = Send a bird to a known post office.

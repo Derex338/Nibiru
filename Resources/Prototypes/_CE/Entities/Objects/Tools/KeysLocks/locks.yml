@@ -39,7 +39,7 @@
 - type: entity
   parent: CEBaseLock
   id: CELockBronze
-  name: бронзовый замок
+  name: bronze lock
   components:
   - type: Sprite
     state: lock_iron

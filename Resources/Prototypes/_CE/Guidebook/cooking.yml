@@ -30,7 +30,7 @@
   hidden: false
   locFilter: "ru-RU"
   id: CECookingRecipesRU
-  name: Питание и кулинария
+  name: Food & Cooking
   text: "/ServerInfo/_CE/Guidebook_RU/Cooking/Cooking.xml"
   children:
   - CECookingMealsRU
@@ -40,7 +40,7 @@
   hidden: false
   locFilter: "ru-RU"
   id: CECookingMealsRU
-  name: Блюда
+  name: Dishes
   text: "/ServerInfo/_CE/Guidebook_RU/Cooking/Recipes/Meals.xml"
   filterEnabled: True
 
@@ -48,6 +48,6 @@
   hidden: false
   locFilter: "ru-RU"
   id: CECookingSoupsRU
-  name: Супы
+  name: Soups
   text: "/ServerInfo/_CE/Guidebook_RU/Cooking/Recipes/Soups.xml"
   filterEnabled: True

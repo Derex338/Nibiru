@@ -66,7 +66,7 @@ public sealed class NibiruFactionLeaderSystem : EntitySystem
             factionComp.IconPath = prefs.IconPath;
             factionComp.IsRecruiting = prefs.IsRecruiting;
             factionComp.IsCreator = true;
-            factionComp.Rank = "Лидер";
+            factionComp.Rank = Loc.GetString("faction-default-rank-leader");
             factionComp.Leader = mob;
 
             if (prefs.Logo16 != null)
@@ -117,7 +117,7 @@ public sealed class NibiruFactionLeaderSystem : EntitySystem
         comp.IconPath = profile.FactionIcon;
         comp.IsRecruiting = profile.FactionRecruiting;
         comp.IsCreator = true;
-        comp.Rank = "Лидер";
+        comp.Rank = Loc.GetString("faction-default-rank-leader");
         comp.Leader = mob;
 
         if (profile.FactionLogo16 != null)

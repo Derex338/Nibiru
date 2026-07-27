@@ -2,7 +2,7 @@
   id: DoubleFirelockGlass
   parent: FirelockGlass
   description: Используйте монтировку.
-  name: большой пожарный шлюз
+  name: large firelock
   suffix: Двойной
   components:
   - type: Sprite
@@ -31,7 +31,7 @@
 - type: entity
   id: DoubleFirelockGlassFrame
   parent: BaseStructureDynamic
-  name: каркас большого пожарного шлюза
+  name: large firelock frame
   suffix: Двойной
   description: Это каркас большого пожарного шлюза.
   components:
@@ -92,7 +92,7 @@
   id: TripleFirelockGlass
   parent: FirelockGlass
   description: Используйте монтировку.
-  name: большой пожарный шлюз
+  name: large firelock
   suffix: Тройной
   components:
   - type: Sprite
@@ -121,7 +121,7 @@
 - type: entity
   id: TripleFirelockGlassFrame
   parent: BaseStructureDynamic
-  name: каркас большого пожарного шлюза
+  name: large firelock frame
   suffix: Тройной
   description: Это каркас большого пожарного шлюза.
   components:

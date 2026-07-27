@@ -78,7 +78,7 @@
 
 - type: construction
   id: Sling
-  name: Праща
+  name: Sling
   graph: Sling
   startNode: start
   targetNode: fin
@@ -90,7 +90,7 @@
 
 - type: construction
   id: SpearThrower
-  name: Копьеметалка
+  name: Spear Thrower
   graph: SpearThrower
   startNode: start
   targetNode: fin

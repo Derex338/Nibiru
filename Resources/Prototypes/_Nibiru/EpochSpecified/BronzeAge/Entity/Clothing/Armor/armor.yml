@@ -138,9 +138,12 @@
   description: Кожаная броня усиленая бронзовыми вставками.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
+    layers:
+      - state: icon
+      - state: icon-bronze-overlay
   - type: Clothing
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Leather-BronzeArmor.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -171,9 +174,12 @@
   description: Кожаный шлем усиленый бронзовыми вставками.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherHelmet.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
+    layers:
+      - state: icon
+      - state: icon-bronze-overlay
   - type: Clothing
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherHelmet.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Leather-BronzeHelmet.rsi
   - type: HideLayerClothing
     layers:
       Hair: HEAD

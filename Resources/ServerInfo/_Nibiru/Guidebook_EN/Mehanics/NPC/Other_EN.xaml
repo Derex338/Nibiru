@@ -1,0 +1,21 @@
+<Document>
+# Other Interaction Mechanics
+
+## Leads and Tethering
+To keep animals from running away, you can use a **Rope** (or any other item that works as a lead).
+Take the rope in your hand and apply it to a tamed or neutral animal to put a lead on it. After that, the animal will obediently follow you.
+
+You can also **tether** an animal to a post, fence, or other suitable structure. To do this, while holding the animal on a lead, simply click on the object you want to tie it to. The animal will only wander within a small radius around the tether point. This is extremely useful for setting up pastures or horse hitching posts.
+
+## Pigeon Post
+The world of Nibiru has an advanced system of mail delivery using birds.
+By taming a carrier pigeon, you can teach it the **Deliver** command.
+
+**How it works**:
+1. Find or build a **Pigeon Post** and give it a name.
+2. Interact with your tamed pigeon to place a small letter or item inside it (birds can only carry very small things).
+3. Use the "Deliver" action and select the target pigeon post from the list of known postal points.
+4. The bird will take off and begin its journey. Upon reaching the destination, it will leave the parcel in the pigeon post container and return to you (or stay there, depending on orders).
+
+Pigeon post is the most reliable way to send a message to a neighboring settlement!
+</Document>

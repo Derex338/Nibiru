@@ -7,3 +7,12 @@
   hidden: false
   ruleEntry: true
   text: "/ServerInfo/_Nibiru/Rules/Rules_RU.xml"
+
+- type: guideEntry
+  id: NibiruRulesetEN
+  name: Server Rules
+  priority: 0
+  locFilter: "en-US"
+  hidden: false
+  ruleEntry: true
+  text: "/ServerInfo/_Nibiru/Rules/Rules_EN.xml"

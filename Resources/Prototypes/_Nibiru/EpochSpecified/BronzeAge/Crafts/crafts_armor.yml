@@ -4,7 +4,7 @@
 
 - type: construction
   id: BronzeArmorBuckler
-  name: Бронзовый баклер
+  name: Bronze Buckler
   graph: BronzeArmorBuckler
   startNode: start
   targetNode: fin
@@ -19,7 +19,7 @@
 
 - type: construction
   id: BronzeChainmail
-  name: Бронзовая кольчуга
+  name: Bronze Chainmail
   graph: BronzeChainmail
   startNode: start
   targetNode: fin
@@ -34,7 +34,7 @@
 
 - type: construction
   id: BronzeChainmailCowl
-  name: бронзовый кольчужный наголовник
+  name: Bronze Chainmail Coif
   graph: BronzeChainmailCowl
   startNode: start
   targetNode: fin
@@ -49,7 +49,7 @@
 
 - type: construction
   id: BronzeLeatherArmor
-  name: кожаная броня
+  name: Leather Armor
   graph: BronzeLeatherArmor
   startNode: start
   targetNode: fin
@@ -64,7 +64,7 @@
 
 - type: construction
   id: BronzeLeatherHelmet
-  name: кожаный шлем
+  name: Leather Helmet
   graph: BronzeLeatherHelmet
   startNode: start
   targetNode: fin
@@ -79,7 +79,7 @@
 
 - type: construction
   id: BronzeChestplate
-  name: Бронзовый нагрудник
+  name: Bronze Chestplate
   graph: BronzeChestplate
   startNode: start
   targetNode: fin
@@ -94,7 +94,7 @@
 
 - type: construction
   id: BronzeHelmet
-  name: Бронзовый шлем
+  name: Bronze Helmet
   graph: BronzeHelmet
   startNode: start
   targetNode: fin
@@ -109,7 +109,7 @@
 
 - type: construction
   id: BronzeScabbard
-  name: Бронзовые ножны
+  name: Bronze Scabbard
   graph: BronzeScabbard
   startNode: start
   targetNode: fin
@@ -124,7 +124,7 @@
 
 - type: construction
   id: GladiatorHelmet
-  name: Гладиаторский шлем
+  name: Gladiator Helmet
   graph: GladiatorHelmet
   startNode: start
   targetNode: fin
@@ -139,7 +139,7 @@
 
 - type: construction
   id: GladiatorUniform
-  name: Гладиаторская одежда
+  name: Gladiator Uniform
   graph: GladiatorUniform
   startNode: start
   targetNode: fin
@@ -154,7 +154,7 @@
 
 - type: construction
   id: CloakBarbarian
-  name: Плащ варвара
+  name: Barbarian Cloak
   graph: CloakBarbarian
   startNode: start
   targetNode: fin
@@ -165,7 +165,7 @@
 
 - type: construction
   id: BoneMask
-  name: Костяная маска
+  name: Bone Mask
   graph: BoneMask
   startNode: start
   targetNode: fin
@@ -176,7 +176,7 @@
 
 - type: construction
   id: BoneHornedMask
-  name: Рогатая костяная маска
+  name: Horned Bone Mask
   graph: BoneHornedMask
   startNode: start
   targetNode: fin
@@ -187,7 +187,7 @@
 
 - type: construction
   id: MimeMask
-  name: Маска мима
+  name: Mime Mask
   graph: MimeMask
   startNode: start
   targetNode: fin
@@ -199,7 +199,7 @@
 
 - type: construction
   id: FurCloak
-  name: Меховой плащ
+  name: Fur Cloak
   graph: FurCloak
   startNode: start
   targetNode: fin
@@ -210,7 +210,7 @@
 
 - type: construction
   id: FurCape
-  name: Меховая накидка
+  name: Fur Cape
   graph: FurCape
   startNode: start
   targetNode: fin
@@ -221,7 +221,7 @@
 
 - type: construction
   id: FurCape2
-  name: Плотная меховая накидка
+  name: Thick Fur Cape
   graph: FurCape2
   startNode: start
   targetNode: fin
@@ -232,7 +232,7 @@
 
 - type: construction
   id: BlacksmithApron
-  name: Фартук кузнеца
+  name: Blacksmith Apron
   graph: BlacksmithApron
   startNode: start
   targetNode: fin

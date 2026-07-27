@@ -9,7 +9,7 @@
 
 - type: emote
   id: Bruh
-  name: Рыгнуть
+  name: Burp
   icon: _Adventure/Interface/Emotes/bruh.png
   category: Vocal
   available: false
@@ -38,7 +38,7 @@
 
 - type: emote
   id: Crunch
-  name: Хрустеть костями
+  name: Crack Bones
   icon: _Adventure/Interface/Emotes/crunch.png
   category: Hands
   whitelist:
@@ -69,7 +69,7 @@
 
 - type: emote
   id: Fart
-  name: пустить газы
+  name: Fart
   whitelist:
     components:
     - Respirator
@@ -91,7 +91,7 @@
 
 - type: emote
   id: Scratch
-  name: Чесаться
+  name: Scratch
   icon: _Adventure/Interface/Emotes/scratching.png
   category: Hands
   whitelist:
@@ -165,7 +165,7 @@
 
 # шипеть
 - type: emote
-  name: Шипеть
+  name: Hiss
   id: Hissing
   icon: _Adventure/Interface/Emotes/hiss.png
   category: Vocal
@@ -195,7 +195,7 @@
 
 - type: emote
   id: Kva
-  name: Квакнуть
+  name: Croak
   icon: _Adventure/Interface/Emotes/kva.png
   category: Vocal
   available: false
@@ -220,7 +220,7 @@
 
 - type: emote
   id: HeartBeat
-  name: удар сердца
+  name: Heartbeat
   whitelist:
     components:
     - Respirator

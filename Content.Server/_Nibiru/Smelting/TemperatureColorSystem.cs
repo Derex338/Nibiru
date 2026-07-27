@@ -181,20 +181,20 @@ public sealed class TemperatureColorSystem : EntitySystem
     {
         return temperature switch
         {
-            < 800f => "Тёмный",
-            < 1000f => "Тускло-красный",
-            < 1300f => "Тёмно-красный",
-            < 1500f => "Вишнёво-красный",
-            < 1800f => "Ярко-красный",
-            < 2000f => "Оранжево-красный",
-            < 2300f => "Оранжевый",
-            < 2700f => "Жёлто-оранжевый",
-            < 3200f => "Жёлтый",
-            < 4000f => "Бело-жёлтый",
-            < 5500f => "Белый",
-            < 7000f => "Голубовато-белый",
-            < 10000f => "Голубой",
-            _ => "Ярко-голубой"
+            < 800f => "dim",
+            < 1000f => "dull red",
+            < 1300f => "dark red",
+            < 1500f => "cherry red",
+            < 1800f => "bright red",
+            < 2000f => "orange red",
+            < 2300f => "orange",
+            < 2700f => "yellow orange",
+            < 3200f => "yellow",
+            < 4000f => "white yellow",
+            < 5500f => "white",
+            < 7000f => "light blue",
+            < 10000f => "blue",
+            _ => "bright blue"
         };
     }
 }

@@ -2,7 +2,7 @@
   id: DoubleGlassAirlock
   parent: AirlockGlass
   description: Он открывается, он закрывается, и он может вас раздавить.
-  name: большой стеклянный шлюз
+  name: large glass airlock
   suffix: Двойной
   components:
   - type: MeleeSound
@@ -37,7 +37,7 @@
   id: TripleGlassAirlock
   parent: AirlockGlass
   description: Он открывается, он закрывается, и он может вас раздавить.
-  name: большой стеклянный шлюз
+  name: large glass airlock
   suffix: Тройной
   components:
   - type: MeleeSound
@@ -75,7 +75,7 @@
   id: AirlockAssemblyDouble
   parent: AirlockAssembly
   suffix: Двойной
-  name: каркас большого шлюза
+  name: large airlock frame
   description: Он открывается, он закрывается, и он может вас раздавить.
   components:
   - type: Rotatable
@@ -106,7 +106,7 @@
   id: AirlockAssemblyTriple
   parent: AirlockAssembly
   suffix: Тройной
-  name: каркас большого шлюза
+  name: large airlock frame
   description: Он открывается, он закрывается, и он может вас раздавить.
   components:
   - type: Rotatable

@@ -1,6 +1,6 @@
 - type: entity
   id: CEHighBush
-  name: куст
+  name: bush
   parent:
     - CEPlantBase
     - CEPlantBaseSolarEnergy

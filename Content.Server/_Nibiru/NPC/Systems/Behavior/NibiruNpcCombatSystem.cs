@@ -29,10 +29,10 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// Животное преследует цель, атакует мелее, отходит назад через steering,
 /// выжидает кулдаун и повторяет. Используется для большинства животных.
 ///
-/// <b>HitAndLeap</b> — тактика "укусил и отпрыгнул" (для волков и схожих хищников).
-/// Животное подходит к цели, кусает, затем получает физический импульс строго
-/// назад относительно поворота своего тела — без использования навигации NPC.
-/// После приземления выдерживает паузу и снова идёт в атаку.
+/// <b>HitAndLeap</b> — "bite and leap back" tactic (for wolves and similar predators).
+/// The animal approaches the target, bites, then receives a physics impulse strictly
+/// backward relative to its body rotation — without using NPC navigation.
+/// After landing it pauses and then goes back on the attack.
 ///
 /// <b>Charge</b> — атака с разбега (для рогатых: козы, коровы).
 /// Животное входит в диапазон разбега, полностью останавливается, поворачивается
@@ -259,13 +259,13 @@ public sealed class NibiruNpcCombatSystem : EntitySystem
                 {
                     _melee.AttemptLightAttack(uid, wUid, w, target);
 
-                    // Вектор прыжка: строго назад относительно поворота тела
-                    // (т.е. обратный вектор от цели к нам, а не просто "назад по экрану")
+                    // Leap vector: strictly backward relative to body rotation
+                    // (i.e. the inverse vector from target to us, not just "backward on screen")
                     var myWorldPos = _xform.GetWorldPosition(xform);
                     var targetWorldPos = _xform.GetWorldPosition(targetXform);
                     var toTarget = targetWorldPos - myWorldPos;
 
-                    // Направление "назад от цели" = нормаль вектора (я → цель), инвертированная
+                    // Direction "backward from target" = normalized vector (me → target), inverted
                     leap.LeapDirection = toTarget.LengthSquared() > 0.01f
                         ? -Vector2.Normalize(toTarget)   // точно назад от цели
                         : -Vector2.UnitX;

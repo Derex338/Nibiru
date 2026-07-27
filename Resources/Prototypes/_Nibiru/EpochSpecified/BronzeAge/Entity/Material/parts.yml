@@ -822,8 +822,8 @@
   description: Бронзовое звено для изготовления кольчуги.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainmailPiece.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainPiece.rsi
+    state: piece_1
   - type: Item
     size: Normal
     shape:

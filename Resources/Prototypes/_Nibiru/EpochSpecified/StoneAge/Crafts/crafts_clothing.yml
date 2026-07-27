@@ -92,7 +92,7 @@
 
 - type: construction
   id: BrownFurCoat
-  name: Коричневая шуба
+  name: Brown Fur Coat
   graph: BrownFurCoat
   startNode: start
   targetNode: fin
@@ -103,7 +103,7 @@
 
 - type: construction
   id: Neckerchief
-  name: Шейный платок
+  name: Neckerchief
   graph: Neckerchief
   startNode: start
   targetNode: fin
@@ -114,7 +114,7 @@
 
 - type: construction
   id: RedNeckerchief
-  name: Красный шейный платок
+  name: Red Neckerchief
   graph: RedNeckerchief
   startNode: start
   targetNode: fin
@@ -125,7 +125,7 @@
 
 - type: construction
   id: ShirtWarriorGarb
-  name: Рубашка воина
+  name: Warrior Garb
   graph: ShirtWarriorGarb
   startNode: start
   targetNode: fin
@@ -136,7 +136,7 @@
 
 - type: construction
   id: Loincloth
-  name: Набедренная повязка
+  name: Loincloth
   graph: Loincloth
   startNode: start
   targetNode: fin
@@ -147,7 +147,7 @@
 
 - type: construction
   id: HeadWreath
-  name: Венок
+  name: Head Wreath
   graph: HeadWreath
   startNode: start
   targetNode: fin
@@ -158,7 +158,7 @@
 
 - type: construction
   id: CEStrawHat
-  name: Соломенная шляпа
+  name: Straw Hat
   graph: CEStrawHat
   startNode: start
   targetNode: fin

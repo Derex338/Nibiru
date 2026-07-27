@@ -1,12 +1,12 @@
 - type: attackType
   id: Swing
-  name: "Размах"
+  name: "Swing"
   isHeavyAttack: true
   animation: WeaponArcSlash
 
 - type: attackType
   id: Thrust
-  name: "Тычок"
+  name: "Thrust"
   isHeavyAttack: false
   animation: WeaponArcThrust
   damageOverride:
@@ -15,26 +15,26 @@
 
 - type: attackType
   id: DirectFire
-  name: "Прямая наводка"
+  name: "Direct Fire"
   lobbed: false
 
 - type: attackType
   id: LobbedShot
-  name: "Навес"
+  name: "Arced"
   lobbed: true
   damageMultiplier: 0.8
 
 - type: attackType
   id: ShieldNormal
-  name: "В руке"
+  name: "In Hand"
   shieldMode: Normal
 
 - type: attackType
   id: ShieldGuard
-  name: "Стойка"
+  name: "Stance"
   shieldMode: Guard
 
 - type: attackType
   id: ShieldOverhead
-  name: "Над головой"
+  name: "Overhead"
   shieldMode: Overhead

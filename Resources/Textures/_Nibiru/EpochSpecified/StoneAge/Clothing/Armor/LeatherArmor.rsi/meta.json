@@ -13,6 +13,14 @@
         {
             "name": "equipped-OUTERCLOTHING",
             "directions": 4
+        },
+        {
+            "name": "equipped-bronze-overlay",
+            "directions": 4
+        },
+        {
+            "name": "icon-bronze-overlay",
+            "directions": 1
         }
     ]
 }

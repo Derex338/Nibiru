@@ -14,7 +14,7 @@
 - type: entity
   id: EffectThermalVision
   categories: [ HideSpawnMenu ]
-  name: тепловое зрение
+  name: thermal vision
   components:
   - type: PointLight
     color: "#FFE4D6"

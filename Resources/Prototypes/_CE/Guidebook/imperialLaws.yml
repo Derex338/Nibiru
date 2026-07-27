@@ -2,7 +2,7 @@
 #   hidden: false
 #   id: CEImperialLawsRU
 #   locFilter: "ru-RU"
-#   name: Имперские законы
+#   name: Imperial Laws
 #   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/ImperialLaws.xml"
 #   children:
 #   - CECrimeLightRU
@@ -15,35 +15,35 @@
 #   hidden: false
 #   id: CECrimeLightRU
 #   locFilter: "ru-RU"
-#   name: Лёгкие нарушения
+#   name: Minor Violations
 #   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/CrimeSeverity/Light.xml"
 # 
 # - type: guideEntry
 #   hidden: false
 #   id: CECrimeLightMediumRU
 #   locFilter: "ru-RU"
-#   name: Лёгко-средние нарушения
+#   name: Minor-Medium Violations
 #   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/CrimeSeverity/Light-Medium.xml"
 # 
 # - type: guideEntry
 #   hidden: false
 #   id: CECrimeMediumRU
 #   locFilter: "ru-RU"
-#   name: Средние нарушения
+#   name: Medium Violations
 #   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/CrimeSeverity/Medium.xml"
 # 
 # - type: guideEntry
 #   hidden: false
 #   id: CECrimeMediumHardRU
 #   locFilter: "ru-RU"
-#   name: Средне-тяжёлые нарушения
+#   name: Medium-Severe Violations
 #   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/CrimeSeverity/Medium-Hard.xml"
 # 
 # - type: guideEntry
 #   hidden: false
 #   id: CECrimeHardRU
 #   locFilter: "ru-RU"
-#   name: Тяжёлые нарушения
+#   name: Severe Violations
 #   text: "/ServerInfo/_CE/Guidebook_RU/ImperialLaws/CrimeSeverity/Hard.xml"
 # 
 # # - type: guideEntry

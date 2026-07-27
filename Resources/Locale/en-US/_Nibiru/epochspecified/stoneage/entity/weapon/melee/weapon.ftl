@@ -1,0 +1,15 @@
+ent-BoneKnife = bone knife
+    .desc = A sharpened bone with a handle. It was made for killing and is meant to kill.
+    .suffix = Nibiru, Stone Age
+ent-WoodenStaff = wooden staff
+    .desc = Feel like a monk.
+    .suffix = Nibiru, Stone Age
+ent-WoodSpear = wooden spear
+    .desc = A sharpened stick
+    .suffix = Nibiru, Stone Age
+ent-StoneSpear = stone spear
+    .desc = A sharp stone on a stick.
+    .suffix = Nibiru, Stone Age
+ent-WoodBat = club
+    .desc = A sharp stone on a stick.
+    .suffix = Nibiru, Stone Age

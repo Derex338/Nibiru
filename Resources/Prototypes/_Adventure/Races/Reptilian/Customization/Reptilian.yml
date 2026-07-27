@@ -1,7 +1,7 @@
 #Horns
 - type: marking
   id: LizardHornsArgali2
-  name: Унатх, рожки (Толстый  Аргали)
+  name: Unathi, horns (Thick Argali)
   bodyPart: HeadTop
   markingCategory: HeadTop
   groupWhitelist: [Reptilian]

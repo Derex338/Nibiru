@@ -26,7 +26,7 @@ public sealed partial class LanguageSelectWindow : DefaultWindow
     private static readonly Dictionary<string, string> NativeNames = new()
     {
         { "en-US", "English" },
-        { "ru-RU", "Русский" },
+        { "ru-RU", Loc.GetString("language-name-russian") },
     };
 
     public LanguageSelectWindow()

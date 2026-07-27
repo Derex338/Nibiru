@@ -1,0 +1,3 @@
+construction-step-condition-multilevel-tile-available = Free space on other height levels is required.
+climbable-start-climbing = You start climbing the rope...
+climbable-finish-climbing = You finish climbing the rope.

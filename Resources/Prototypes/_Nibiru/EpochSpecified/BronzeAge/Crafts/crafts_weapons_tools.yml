@@ -4,7 +4,7 @@
 
 - type: construction
   id: BronzeShield
-  name: Бронзовый щит
+  name: Bronze Shield
   graph: BronzeShield
   startNode: start
   targetNode: fin
@@ -19,7 +19,7 @@
 
 - type: construction
   id: BronzeHammerSmall
-  name: Бронзовый молоточек
+  name: Small Bronze Hammer
   graph: BronzeHammerSmall
   startNode: start
   targetNode: fin
@@ -34,7 +34,7 @@
 
 - type: construction
   id: BronzeHammer
-  name: Бронзовый молот
+  name: Bronze War Hammer
   graph: BronzeHammer
   startNode: start
   targetNode: fin
@@ -49,7 +49,7 @@
 
 - type: construction
   id: BronzeHatchet
-  name: Бронзовый топорик
+  name: Bronze Hatchet
   graph: BronzeHatchet
   startNode: start
   targetNode: fin
@@ -64,7 +64,7 @@
 
 - type: construction
   id: BronzeAxe
-  name: Бронзовый топор
+  name: Bronze Axe
   graph: BronzeAxe
   startNode: start
   targetNode: fin
@@ -79,7 +79,7 @@
 
 - type: construction
   id: BronzeSpear
-  name: Бронзовое копье
+  name: Bronze Spear
   graph: BronzeSpear
   startNode: start
   targetNode: fin
@@ -94,7 +94,7 @@
 
 - type: construction
   id: BronzeSword
-  name: Бронзовый меч
+  name: Bronze Sword
   graph: BronzeSword
   startNode: start
   targetNode: fin
@@ -109,7 +109,7 @@
 
 - type: construction
   id: BronzeTrident
-  name: Бронзовый трезубец
+  name: Bronze Trident
   graph: BronzeTrident
   startNode: start
   targetNode: fin
@@ -124,7 +124,7 @@
 
 - type: construction
   id: BronzeHalberd
-  name: Бронзовая алебарда
+  name: Bronze Halberd
   graph: BronzeHalberd
   startNode: start
   targetNode: fin
@@ -139,7 +139,7 @@
 
 - type: construction
   id: BronzePickaxe
-  name: Бронзовая кирка
+  name: Bronze Pickaxe
   graph: BronzePickaxe
   startNode: start
   targetNode: fin
@@ -154,7 +154,7 @@
 
 - type: construction
   id: BronzeShovel
-  name: Бронзовая лопата
+  name: Bronze Shovel
   graph: BronzeShovel
   startNode: start
   targetNode: fin
@@ -169,7 +169,7 @@
 
 - type: construction
   id: BronzeScythe
-  name: Бронзовая коса
+  name: Bronze Scythe
   graph: BronzeScythe
   startNode: start
   targetNode: fin
@@ -184,7 +184,7 @@
 
 - type: construction
   id: BronzeHoe
-  name: Бронзовая мотыга
+  name: Bronze Hoe
   graph: BronzeHoe
   startNode: start
   targetNode: fin
@@ -199,7 +199,7 @@
 
 - type: construction
   id: BronzeKnife
-  name: Бронзовый нож
+  name: Bronze Knife
   graph: BronzeKnife
   startNode: start
   targetNode: fin
@@ -214,7 +214,7 @@
 
 - type: construction
   id: BronzeClippers
-  name: Бронзовый секатор
+  name: Bronze Clippers
   graph: BronzeClippers
   startNode: start
   targetNode: fin
@@ -229,7 +229,7 @@
 
 - type: construction
   id: BronzeArrow
-  name: Бронзовая стрела
+  name: Bronze Arrow
   graph: BronzeArrow
   startNode: start
   targetNode: fin
@@ -242,7 +242,7 @@
 
 - type: construction
   id: BronzeXiphos
-  name: Бронзовый ксифос
+  name: Bronze Xiphos
   graph: BronzeXiphos
   startNode: start
   targetNode: fin
@@ -256,7 +256,7 @@
 
 - type: construction
   id: BronzeDagger
-  name: Бронзовый кинжал
+  name: Bronze Dagger
   graph: BronzeDagger
   startNode: start
   targetNode: fin
@@ -270,7 +270,7 @@
 
 - type: construction
   id: BronzeKhapesh
-  name: Бронзовый хопеш
+  name: Bronze Khopesh
   graph: BronzeKhapesh
   startNode: start
   targetNode: fin
@@ -284,7 +284,7 @@
 
 - type: construction
   id: BronzeArrowAP
-  name: Бронебойная бронзовая стрела
+  name: Armor-Piercing Bronze Arrow
   graph: BronzeArrowAP
   startNode: start
   targetNode: fin
@@ -297,7 +297,7 @@
 
 - type: construction
   id: LightBronzeSpear
-  name: Метательное бронзовое копье
+  name: Throwing Bronze Spear
   graph: LightBronzeSpear
   startNode: start
   targetNode: fin
@@ -311,7 +311,7 @@
 
 - type: construction
   id: ThrowingDart
-  name: Метательный дротик
+  name: Throwing Dart
   graph: ThrowingDart
   startNode: start
   targetNode: fin
@@ -325,7 +325,7 @@
 
 - type: construction
   id: RecursiveBow
-  name: Рекурсивный лук
+  name: Recurve Bow
   graph: RecursiveBow
   startNode: start
   targetNode: fin
@@ -334,7 +334,7 @@
 
 - type: construction
   id: LongBow
-  name: Длинный лук
+  name: Longbow
   graph: LongBow
   startNode: start
   targetNode: fin

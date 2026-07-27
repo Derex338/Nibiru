@@ -9,7 +9,7 @@ namespace Content.Shared._Nibiru.Factions;
 [Serializable, NetSerializable]
 public sealed class NibiruFactionLeaderPrefsMessage : EntityEventArgs
 {
-    public string FactionName = "Новая Фракция";
+    public string FactionName = Loc.GetString("faction-default-name");
     public string Description = "";
     public Color Color = Color.White;
     public string IconPath = "/Textures/Interface/Misc/job_icons.rsi/Cargo/cargo_technician.png";

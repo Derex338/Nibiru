@@ -44,7 +44,7 @@
 - type: entity
   parent: CEBaseLockpick
   id: BronzeLockpick
-  name: бронзовая отмычка
+  name: bronze lockpick
   description: A thief's tool that, with proper skill, allows you to pick any lock.
   categories: [ ForkFiltered ]
   components:
@@ -56,7 +56,7 @@
 - type: entity
   parent: BaseItem
   id: BronzeKeyFile
-  name: бронзовый напильник
+  name: bronze rasp
   description: Напильник, идеально подходящий для формирования ключей.
   categories: [ ForkFiltered ]
   components:

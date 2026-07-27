@@ -5,6 +5,7 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
 using Content.Client.Localization;
 using Content.Client.Mapping;
+using Content.Shared.Database;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
 using Robust.Client.Player;
@@ -12,6 +13,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Collections;
 using Robust.Shared.Input;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs.UI
@@ -227,38 +229,69 @@ namespace Content.Client.Verbs.UI
                 return;
             }
 
-            // Remove server verbs that match local verbs (ignoring text/category)
-            var filteredVerbs = new List<Verb>();
+            // Group verbs by identity key — dedupe local+server verbs that differ only by locale.
+            var existingLocalVerbs = new HashSet<VerbIdentityKey>();
+            foreach (var cv in CurrentVerbs)
+                existingLocalVerbs.Add(VerbIdentityKey.FromVerb(cv));
+
+            var newVerbs = new List<Verb>();
             foreach (var sv in verbs)
             {
-                bool matchedLocal = false;
-                foreach (var cv in CurrentVerbs)
+                if (!existingLocalVerbs.Contains(VerbIdentityKey.FromVerb(sv)))
                 {
-                    if (cv.GetType() == sv.GetType() &&
-                        cv.Priority == sv.Priority &&
-                        cv.TypePriority == sv.TypePriority &&
-                        cv.Icon?.ToString() == sv.Icon?.ToString() &&
-                        cv.IconEntity == sv.IconEntity &&
-                        cv.Impact == sv.Impact)
-                    {
-                        // It's the same verb, just different localization!
-                        matchedLocal = true;
-                        break;
-                    }
-                }
-                if (!matchedLocal)
-                {
-                    filteredVerbs.Add(sv);
+                    newVerbs.Add(sv);
                 }
             }
 
-            // Skip repopulation if no new verbs — avoids visual flicker.
-            if (filteredVerbs.Count == 0)
+            if (newVerbs.Count == 0)
                 return;
 
-            CurrentVerbs.UnionWith(filteredVerbs);
+            // Relocalize Category.Text on server-returned verbs using TextLocId (no reflection).
+            foreach (var v in newVerbs)
+            {
+                v.Category?.ReLocalize(IoCManager.Resolve<ILocalizationManager>());
+                CurrentVerbs.Add(v);
+            }
+
             popup.MenuBody.RemoveAllChildren();
             FillVerbPopup(popup);
+        }
+
+        private struct VerbIdentityKey : IEquatable<VerbIdentityKey>
+        {
+            public string TypeName;
+            public int Priority;
+            public int TypePriority;
+            public int IconEntity;
+            public string? IconTexture;
+            public LogImpact Impact;
+
+            public static VerbIdentityKey FromVerb(Verb v)
+            {
+                return new VerbIdentityKey
+                {
+                    TypeName = v.GetType().Name,
+                    Priority = v.Priority,
+                    TypePriority = v.TypePriority,
+                    IconEntity = v.IconEntity.HasValue ? v.IconEntity.Value.GetHashCode() : 0,
+                    IconTexture = v.Icon?.ToString(),
+                    Impact = v.Impact,
+                };
+            }
+
+            public bool Equals(VerbIdentityKey other) =>
+                TypeName == other.TypeName &&
+                Priority == other.Priority &&
+                TypePriority == other.TypePriority &&
+                IconEntity == other.IconEntity &&
+                IconTexture == other.IconTexture &&
+                Impact == other.Impact;
+
+            public override bool Equals(object? obj) =>
+                obj is VerbIdentityKey other && Equals(other);
+
+            public override int GetHashCode() =>
+                HashCode.Combine(TypeName, Priority, TypePriority, IconEntity, IconTexture, Impact);
         }
 
         public void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args)

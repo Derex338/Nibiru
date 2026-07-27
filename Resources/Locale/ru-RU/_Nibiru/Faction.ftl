@@ -52,6 +52,10 @@ faction-popup-kick-member = Вы исключили {$member} из фракци�
 faction-request-window-title = Приглашение во фракцию
 faction-request-window-text = Вас приглашают присоединиться к фракции.
 faction-request-window-text-user = Пользователь { $user } приглашает вас присоединиться к фракции.
+faction-request-prompt = Принять приглашение во фракцию?
+faction-request-accept = Да
+faction-request-deny = Нет
+faction-examine-member = \nУчастник фракции [color={$color}]{$name}[/color]. Роль: {$rank}.
 
 faction-members = Члены фракции:
 

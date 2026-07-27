@@ -1,0 +1,12 @@
+ent-SmeltingFurnace = bloomery furnace
+    .desc = A simple stone furnace requiring no additional effort for smelting basic ores such as copper and tin.
+    .suffix = Nibiru, Stone Age
+ent-Fuel = fuel
+    .desc = A chunk of copper ore.
+    .suffix = Nibiru, Stone Age
+ent-ScrapMetal = ScrapMetal
+    .desc = A chunk of fucked up ore.
+    .suffix = Nibiru, Stone Age
+ent-FurnaceBeaker = crucible
+    .desc = A stone crucible for smelting ore into molten metal.
+    .suffix = Nibiru, Stone Age

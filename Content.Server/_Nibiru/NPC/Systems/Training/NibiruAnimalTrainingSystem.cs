@@ -50,8 +50,8 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
         if (component.OwnerUid != args.User)
             return;
 
-        // Только команда "Следовать" доступна в контекстном меню
-        // Она же активирует панель действий
+        // Only the "Follow" command is available in the context menu
+        // It also activates the action panel
         if (!component.LearnedCommands.Contains(NibiruAnimalCommand.Follow))
             return;
 
@@ -133,7 +133,7 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
         }
 
         component.LearnedCommands.Add(args.Command);
-        component.TrustLevel -= 30f; // Обучение командам "тратит" доверие
+        component.TrustLevel -= 30f; // Training commands "spends" trust
         
         RaiseLocalEvent(component.OwnerUid.Value, new NibiruAnimalCommandLearnedEvent(uid, args.Command));
         

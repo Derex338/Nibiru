@@ -1,0 +1,14 @@
+<Document>
+# Bushes
+
+Bushes are plants that grow like weeds, sprouting everywhere and spreading quickly.
+If they are in the way, you can simply cut them down with a sharp tool. But you can also beat all the junk out of them and get a useful resource — a [color=yellow]bunch of herbs[/color].
+
+<Box>
+  <GuideEntityEmbed Entity="CEHighBush"/>
+  <GuideEntityEmbed Entity="BunchHerb"/>
+</Box>
+
+It is mainly used for weaving ropes and various clothing.
+
+</Document>

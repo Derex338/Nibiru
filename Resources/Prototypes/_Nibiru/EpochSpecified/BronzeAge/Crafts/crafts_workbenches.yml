@@ -4,7 +4,7 @@
 
 - type: construction
   id: BronzeAnvilWorkbench
-  name: Бронзовая наковальня
+  name: Bronze Anvil
   graph: BronzeAnvilWorkbench
   startNode: start
   targetNode: fin

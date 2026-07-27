@@ -1,0 +1,23 @@
+ce-ambition-reason-1 = my grandmother tragically passed away
+ce-ambition-reason-2 = I have a psychological trauma from childhood
+ce-ambition-reason-3 = my relatives asked me to
+ce-ambition-reason-4 = it's obvious, strange that others don't understand it
+ce-ambition-reason-5 = I had a dream
+ce-ambition-reason-6 = I had a nightmare
+ce-ambition-reason-7 = I read a smart book
+ce-ambition-reason-8 = I was bewitched in the past
+ce-ambition-reason-9 = I was raised that way
+ce-ambition-reason-10 = voices in my head endlessly whisper to me
+
+ce-ambition-abstract-theme-1 = height
+ce-ambition-abstract-theme-2 = tight spaces
+ce-ambition-abstract-theme-3 = darkness
+ce-ambition-abstract-theme-4 = social interactions
+ce-ambition-abstract-theme-5 = nighttime
+ce-ambition-abstract-theme-6 = daytime
+ce-ambition-abstract-theme-7 = silence
+ce-ambition-abstract-theme-8 = magical energy
+ce-ambition-abstract-theme-9 = blood and violence
+ce-ambition-abstract-theme-10 = water
+ce-ambition-abstract-theme-11 = grass
+ce-ambition-abstract-theme-12 = money

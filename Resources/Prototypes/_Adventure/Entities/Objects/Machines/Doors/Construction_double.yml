@@ -135,7 +135,7 @@
 # из-за того, что механика постройки не позволяет установить нужную физику установки двойного шлюза, то его сначала нужно построить в любом месте, а потом вручную перетащить на нужное место.
 
 - type: construction
-  name: стеклянный шлюз [Двойной](airlock)
+  name: glass airlock [Double]
   id: AirlockDouble
   graph: AirlockDouble
   startNode: start

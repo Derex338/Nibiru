@@ -40,7 +40,7 @@
 
 - type: construction
   id: WoodenShield
-  name: Деревянный щит
+  name: Wooden Shield
   graph: WoodenShield
   startNode: start
   targetNode: fin
@@ -53,7 +53,7 @@
 
 - type: construction
   id: WickerShield
-  name: Плетёный щит
+  name: Wicker Shield
   graph: WickerShield
   startNode: start
   targetNode: fin
@@ -74,7 +74,7 @@
 
 - type: construction
   id: PanFlute
-  name: пан-флейта
+  name: Pan Flute
   graph: PanFlute
   startNode: start
   targetNode: fin
@@ -89,7 +89,7 @@
 
 - type: construction
   id: Ocarina
-  name: окарина
+  name: Ocarina
   graph: Ocarina
   startNode: start
   targetNode: fin
@@ -104,7 +104,7 @@
 
 - type: construction
   id: FlintAndSteel
-  name: огниво
+  name: Fire Striker
   graph: FlintAndSteel
   startNode: start
   targetNode: fin
@@ -117,7 +117,7 @@
 
 - type: construction
   id: WoodenSign
-  name: деревянная табличка (влево)
+  name: Wooden Sign (Left)
   graph: WoodenSign
   startNode: start
   targetNode: fin
@@ -134,7 +134,7 @@
 
 - type: construction
   id: WoodenSignRight
-  name: деревянная табличка (вправо)
+  name: Wooden Sign (Right)
   graph: WoodenSignRight
   startNode: start
   targetNode: fin
@@ -151,7 +151,7 @@
 
 - type: construction
   id: WoodenSupport
-  name: деревянная опора
+  name: Wooden Support
   graph: WoodenSupport
   startNode: start
   targetNode: fin
@@ -168,7 +168,7 @@
 
 - type: construction
   id: WoodenSupportBeam
-  name: деревянные балки
+  name: Wooden Beams
   graph: WoodenSupportBeam
   startNode: start
   targetNode: fin
@@ -185,7 +185,7 @@
 
 - type: construction
   id: WoodenSupportWall
-  name: деревянная крепь
+  name: Wooden Support Wall
   graph: WoodenSupportWall
   startNode: start
   targetNode: fin
@@ -206,7 +206,7 @@
 
 - type: construction
   id: Woodblock
-  name: деревянная коробочка
+  name: Woodblock
   graph: Woodblock
   startNode: start
   targetNode: fin
@@ -219,7 +219,7 @@
 
 - type: construction
   id: BirdWhistle
-  name: птичья свистулька
+  name: Bird Whistle
   graph: BirdWhistle
   startNode: start
   targetNode: fin
@@ -232,7 +232,7 @@
 
 - type: construction
   id: WoodenPlate
-  name: Деревянная тарелка
+  name: Wooden Plate
   graph: WoodenPlate
   startNode: start
   targetNode: fin
@@ -243,7 +243,7 @@
 
 - type: construction
   id: CEWoodenBowl
-  name: Деревянная миска
+  name: Wooden Bowl
   graph: CEWoodenBowl
   startNode: start
   targetNode: fin
@@ -254,7 +254,7 @@
 
 - type: construction
   id: Lyre
-  name: Лира
+  name: Lyre
   graph: Lyre
   startNode: start
   targetNode: fin
@@ -265,7 +265,7 @@
 
 - type: construction
   id: Lute
-  name: Лютня
+  name: Lute
   graph: Lute
   startNode: start
   targetNode: fin
@@ -276,7 +276,7 @@
 
 - type: construction
   id: CEFlute
-  name: Флейта из палки
+  name: Stick Flute
   graph: CEFlute
   startNode: start
   targetNode: fin
@@ -291,7 +291,7 @@
 
 - type: construction
   id: BandageCloth
-  name: Бинт
+  name: Bandage
   graph: BandageCloth
   startNode: start
   targetNode: fin
@@ -300,7 +300,7 @@
 
 - type: construction
   id: AloeCream
-  name: Крем из алоэ
+  name: Aloe Cream
   graph: AloeCream
   startNode: start
   targetNode: fin
@@ -313,7 +313,7 @@
 
 - type: construction
   id: Well
-  name: колодец
+  name: Well
   graph: Well
   startNode: start
   targetNode: fin

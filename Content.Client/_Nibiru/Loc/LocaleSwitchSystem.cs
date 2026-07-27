@@ -63,13 +63,13 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Неизвестный код культуры: {cultureCode}. Ошибка: {e}");
+                _sawmill.Error($"Unknown culture code: {cultureCode}. Error: {e}");
                 return;
             }
 
             if (!TrySetEngineCulture(culture))
             {
-                _sawmill.Error("Не удалось переключить культуру в ILocalizationManager.");
+                _sawmill.Error("Failed to switch culture in ILocalizationManager.");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при перезагрузке локализаций: {e}");
+                _sawmill.Error($"Error reloading localizations: {e}");
             }
 
             // 1. Закрываем все открытые окна, которые не умеют обновляться
@@ -127,7 +127,7 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при перезапуске активного UI состояния: {e}");
+                _sawmill.Error($"Error restarting active UI state: {e}");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при перезапуске OptionsUIController: {e}");
+                _sawmill.Error($"Error restarting OptionsUIController: {e}");
             }
 
             try
@@ -150,7 +150,7 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при перезапуске EscapeUIController: {e}");
+                _sawmill.Error($"Error restarting EscapeUIController: {e}");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при вызове SetCulture: {e}");
+                _sawmill.Error($"Error calling SetCulture: {e}");
                 return false;
             }
         }
@@ -195,13 +195,13 @@ namespace Content.Client.Localization
                     }
                     catch (Exception e)
                     {
-                        _sawmill.Error($"Ошибка при закрытии окна {bw.GetType().Name}: {e}");
+                        _sawmill.Error($"Error closing window {bw.GetType().Name}: {e}");
                     }
                 }
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при обходе окон: {e}");
+                _sawmill.Error($"Error iterating windows: {e}");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Content.Client.Localization
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Ошибка при показе уведомления: {e}");
+                _sawmill.Error($"Error showing notification: {e}");
             }
         }
     }

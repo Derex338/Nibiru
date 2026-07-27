@@ -1,0 +1,57 @@
+<Document>
+# Behavior and Combat System
+
+Animals and creatures in Nibiru live by their own complex rules. Their artificial intelligence takes into account many environmental factors.
+
+---
+
+## Advanced Behavior and Needs
+
+Creatures do not stand still — they have their own needs:
+- **Sleep-wake cycle**: Most animals sleep at night, while nocturnal predators go out to hunt. [color=yellow]Sleeping animals have much worse hearing and vision[/color], making them easy targets.
+- **Pack instinct**: Wolves and other pack predators never travel alone. If you attack one of them, its cry will attract the whole pack. Packs often have a leader that coordinates attacks.
+- **Mood**: Animals have moods. A hungry or beaten animal will be angry and slower to tame. A well-fed and happy animal [color=green]learns much faster[/color] and defends its owner more actively.
+
+---
+
+## Perception and Combat
+
+Each animal has individual vision and hearing parameters.
+> [!TIP]
+> **Stealth:** You can go unnoticed if you slowly approach an animal from behind — outside its field of view it won't notice you if you stay quiet!
+
+<Box>
+  <GuideEntityEmbed Entity="SpearWood"/>
+  <GuideEntityEmbed Entity="Torch"/>
+</Box>
+
+In combat, NPCs use various tactics:
+- [color=red]Aggressors[/color] will pursue you to the end, but if their health drops to a critical level, they will try to flee to survive.
+- [color=green]Peaceful animals[/color] will not attack back — when taking damage, they will panic and run to a safe distance.
+
+---
+
+## Fear of Fire
+
+Wild animals (especially predators like wolves) instinctively fear open fire.
+If you hold a lit [color=orange]torch[/color] or lighter, or stand next to a campfire, wolves will not dare to approach you closely! If fire gets too close, the animal will turn around in terror and run away. Use this to drive away predator packs at night.
+
+---
+
+## Fear and Panic in Mount Animals
+
+Large and mountable animals (cows, horses) have a special **Fear Level** parameter.
+
+Their fear increases when:
+- The animal receives hits and damage.
+- Dangerous predators are nearby (e.g., lions or wolves).
+- There are loud noises or fire nearby.
+
+If the animal's fear level reaches a critical point, it enters [color=red]**PANIC**[/color]. A panicking animal completely loses control, **throws off its rider** to the ground, and with wild neighing or mooing tries to run away from the source of fear.
+
+### Stress Training (Hardening)
+
+You can accustom your mount to dangers. Each time an animal experiences severe stress or is near enemies but survives, it accumulates a parameter called [color=cyan]Stress Training[/color].
+
+The more experienced and trained your animal is, the **less fear** it receives (up to a **70% reduction** in all incoming fear!). A trained warhorse can calmly stand in the thick of battle, while a regular horse would panic from the first blow.
+</Document>

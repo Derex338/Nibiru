@@ -7,7 +7,7 @@
 
 - type: technology
   id: PrimitiveProcessing
-  name: Истоки
+  name: Origins
   icon:
     sprite: Structures/Decoration/bonfire.rsi
     state: bonfire
@@ -24,7 +24,7 @@
 
 - type: technology
   id: PrimitiveMedicine
-  name: Примитивная медицина
+  name: Primitive Medicine
   icon:
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
@@ -44,7 +44,7 @@
 
 - type: technology
   id: PrimitiveTools
-  name: Примитивные инструменты
+  name: Primitive Tools
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi
     state: icon
@@ -60,7 +60,7 @@
 
 - type: technology
   id: BiggerTools
-  name: Большие инструменты
+  name: Large Tools
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Pickaxe.rsi
     state: icon
@@ -77,7 +77,7 @@
 
 - type: technology
   id: PrimitiveWeapons
-  name: Примитивное оружие
+  name: Primitive Weapons
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
     state: spear
@@ -92,7 +92,7 @@
 
 - type: technology
   id: IndividualProtection
-  name: Индивидуальная защита
+  name: Personal Protection
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
     state: icon
@@ -108,7 +108,7 @@
 
 - type: technology
   id: HuntingWeapons
-  name: Охотничье оружие
+  name: Hunting Weapons
   icon:
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
@@ -124,7 +124,7 @@
 
 - type: technology
   id: BoneWeapons
-  name: Костяное оружие
+  name: Bone Weapons
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
     state: icon
@@ -156,7 +156,7 @@
 
 - type: technology
   id: Archery
-  name: Стрелковое дело
+  name: Archery
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
     state: unwielded
@@ -179,7 +179,7 @@
 
 - type: technology
   id: SpindleWorking
-  name: Веретено и нити
+  name: Spindle & Thread
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi
     state: thread_1
@@ -196,7 +196,7 @@
 
 - type: technology
   id: Weaving
-  name: Ткачество
+  name: Weaving
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth
@@ -212,7 +212,7 @@
 
 - type: technology
   id: BasicClothing
-  name: Базовая одежда
+  name: Basic Clothing
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
     state: icon
@@ -234,7 +234,7 @@
 
 - type: technology
   id: BoneArmor
-  name: Костяная броня
+  name: Bone Armor
   icon:
     sprite: Clothing/Head/Helmets/bone_helmet.rsi
     state: icon
@@ -253,7 +253,7 @@
 
 - type: technology
   id: LeatherClothing
-  name: Кожаная одежда
+  name: Leather Clothing
   icon:
     sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
     state: icon
@@ -277,7 +277,7 @@
 
 - type: technology
   id: LeatherArmor
-  name: Кожаная броня
+  name: Leather Armor
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
     state: icon
@@ -299,7 +299,7 @@
 
 - type: technology
   id: BasicConstruction
-  name: Базовое строительство
+  name: Basic Construction
   icon:
     sprite: Decals/Flora/flora_bushes.rsi
     state: bushk1
@@ -322,10 +322,11 @@
     - CEZLevelLadderDirtCorner
     - Well
     - MultiLevelRope
+    - CEWallLeaf
 
 - type: technology
   id: WoodWorking
-  name: Деревообработка
+  name: Woodworking
   icon:
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
     state: closed
@@ -350,7 +351,7 @@
 
 - type: technology
   id: Furniture
-  name: Мебель
+  name: Furniture
   icon:
     sprite: Structures/Furniture/chairs.rsi
     state: wooden
@@ -373,7 +374,7 @@
 
 - type: technology
   id: Flooring
-  name: Напольные покрытия
+  name: Flooring
   icon:
     sprite: _CE/Objects/tile.rsi
     state: oak_woodplanks
@@ -405,7 +406,7 @@
 
 - type: technology
   id: WoodItems
-  name: Деревянные предметы
+  name: Wooden Items
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/WoodenBucket.rsi
     state: icon
@@ -430,7 +431,7 @@
 
 - type: technology
   id: WoodChestplate
-  name: Деревянная броня
+  name: Wooden Armor
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
     state: icon
@@ -446,7 +447,7 @@
 
 - type: technology
   id: Fortifications
-  name: Укрепления
+  name: Fortifications
   icon:
     sprite: _CE/Structures/Architecture/Walls/wooden_palisade.rsi
     state: full
@@ -469,7 +470,7 @@
 
 - type: technology
   id: StoneMasonry
-  name: Каменная кладка
+  name: Stone Masonry
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
     state: icon
@@ -532,7 +533,7 @@
 
 - type: technology
   id: FireMaking
-  name: Огонь и свет
+  name: Fire & Light
   icon:
     sprite: Objects/Misc/candles.rsi
     state: candle-big
@@ -550,7 +551,7 @@
 
 - type: technology
   id: Metallurgy
-  name: Основы металлургии
+  name: Fundamentals of Metallurgy
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Structures/furnace.rsi
     state: icon
@@ -566,7 +567,7 @@
 
 - type: technology
   id: animals
-  name: создание животных
+  name: Animal Husbandry
   icon:
     sprite: Mobs/Pets/corgi.rsi
     state: ian
@@ -583,7 +584,7 @@
 
 - type: technology
   id: BronzeAgeTransition
-  name: Переход в бронзовый век
+  name: Transition to Bronze Age
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
     state: Bronze_3

@@ -1,10 +1,9 @@
 using Content.Server.Administration;
-using Content.Server._Nibiru.SaveLoad;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server._Nibiru.Factions.Commands;
+namespace Content.Server._Nibiru.SaveLoad.Commands;
 
 [AnyCommand]
 public sealed class LateJoinLoadCommand : IConsoleCommand

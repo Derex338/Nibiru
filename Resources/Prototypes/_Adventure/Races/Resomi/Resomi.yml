@@ -1,6 +1,6 @@
 - type: species
   id: Resomi
-  name: Резоми
+  name: Resomi
   roundStart: true
   prototype: MobResomi
   dollPrototype: AppearanceResomi
@@ -98,7 +98,7 @@
 - type: entity
   id: PartResomi
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Часть тела резоми"
+  name: "Resomi body part"
   abstract: true
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
 
 - type: entity
   id: TorsoResomi
-  name: "Туловище резоми"
+  name: "Resomi torso"
   parent: [OrganBaseTorsoSexed, PartResomi, OrganBaseTorso]
   components:
   - type: Sprite
@@ -131,7 +131,7 @@
 
 - type: entity
   id: HeadResomi
-  name: "Голова резоми"
+  name: "Resomi head"
   parent: [OrganBaseHeadSexed, PartResomi, OrganBaseHead]
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 
 - type: entity
   id: LeftArmResomi
-  name: "Левая рука резоми"
+  name: "Resomi left arm"
   parent: [PartResomi, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -153,7 +153,7 @@
 
 - type: entity
   id: RightArmResomi
-  name: "Правая рука резоми"
+  name: "Resomi right arm"
   parent: [PartResomi, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -162,7 +162,7 @@
 
 - type: entity
   id: LeftHandResomi
-  name: "Левая рука резоми"
+  name: "Resomi left hand"
   parent: [PartResomi, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -171,7 +171,7 @@
 
 - type: entity
   id: RightHandResomi
-  name: "Правая рука резоми"
+  name: "Resomi right hand"
   parent: [PartResomi, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -180,7 +180,7 @@
 
 - type: entity
   id: LeftLegResomi
-  name: "Левая нога резоми"
+  name: "Resomi left leg"
   parent: [PartResomi, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -188,7 +188,7 @@
 
 - type: entity
   id: RightLegResomi
-  name: "Правая нога резоми"
+  name: "Resomi right leg"
   parent: [PartResomi, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -197,7 +197,7 @@
 
 - type: entity
   id: LeftFootResomi
-  name: "Левая нога резоми"
+  name: "Resomi left foot"
   parent: [PartResomi, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -206,7 +206,7 @@
 
 - type: entity
   id: RightFootResomi
-  name: "Правая нога резоми"
+  name: "Resomi right foot"
   parent: [PartResomi, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -217,7 +217,7 @@
 - type: reagent
   id: ResomiBlood
   parent: Blood
-  name: Кровь резоми
+  name: Resomi blood
   group: Biological
   flavor: metallic
   color: "#a70195"
@@ -225,7 +225,7 @@
 - type: entity
   id: OrganResomiBrain
   parent: OrganHumanBrain
-  name: мозг резоми
+  name: Resomi brain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -235,7 +235,7 @@
 - type: entity
   id: OrganResomiEyes
   parent: OrganHumanEyes
-  name: глаза резоми
+  name: Resomi eyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -247,7 +247,7 @@
 - type: entity
   id: OrganResomiHeart
   parent: OrganHumanHeart
-  name: сердце резоми
+  name: Resomi heart
   description: Мне жаль бессердечного ублюдка, который потерял это.
   components:
   - type: Sprite
@@ -257,7 +257,7 @@
 - type: entity
   id: OrganResomiLungs
   parent: OrganHumanLungs
-  name: лёгкие резоми
+  name: Resomi lungs
   description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -268,7 +268,7 @@
 
 - type: entity
   id: OrganResomiStomach
-  name: желудок резоми
+  name: Resomi stomach
   parent: OrganAnimalStomach
   description: Такой маленький и вкусный.
   components:
@@ -296,7 +296,7 @@
 - type: entity
   id: OrganResomiLiver
   parent: OrganAnimalLiver
-  name: печень резоми
+  name: Resomi liver
   description: Побереги меня.
   components:
   - type: Sprite
@@ -306,7 +306,7 @@
 - type: entity
   id: OrganResomiKidneys
   parent: OrganHumanKidneys
-  name: почки резоми
+  name: Resomi kidneys
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite

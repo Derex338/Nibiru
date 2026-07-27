@@ -1,0 +1,24 @@
+<Document>
+# Factions
+
+[color=yellow]Factions[/color] are the core mechanic of Nibiru. You can create them, be a member, or be hostile towards them.
+
+# Creating and Managing a Faction
+
+To create a faction, open the faction creation window — the button with a shield icon is located in the upper left corner of the screen.
+There you need to choose a name for your future faction and click the create button. If a faction with that name already exists, you will not be able to create it.
+
+After creation, you can invite players to your faction by right-clicking on a player without a faction and selecting [color=yellow]"Invite to faction"[/color].
+Then it all depends on whether the person you sent the invitation to accepts or not.
+
+To open the faction for players to join from the lobby, you need to check the "open for joining" option.
+In that case, if a player from the lobby selects your faction, they will appear next to a random faction member and automatically become a member of the faction.
+
+You can [color=red]expel[/color] faction members from anywhere, and they will lose all recipes learned by the faction.
+But you can only transfer the title and appoint a successor when you are in [color=yellow]direct line of sight[/color] with the person you want to pass leadership to.
+
+When transferring leadership, you obviously cease to be the leader and leadership passes to the one you transferred it to.
+When appointing a successor, they will become leader only if the previous leader dies. If no successor was appointed, a random faction member becomes leader.
+For faction members, only the faction name and their leader's name are displayed.
+
+</Document>

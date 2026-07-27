@@ -16,7 +16,7 @@
 
 - type: species
   id: Stone
-  name: Голем
+  name: Golem
   roundStart: true
   prototype: MobStone
   dollPrototype: AppearanceStone
@@ -129,7 +129,7 @@
 #Мозг
 - type: entity
   id: StoneBrain
-  name: камень души
+  name: soul stone
   parent: OrganHumanBrain
   components:
   - type: Damageable
@@ -219,7 +219,7 @@
 
 - type: entity
   id: TorsoStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [OrganBaseTorsoSexed, PartStone, OrganBaseTorso]
   components:
   - type: Sprite
@@ -227,7 +227,7 @@
 
 - type: entity
   id: HeadStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [OrganBaseHeadSexed, PartStone, OrganBaseHead]
   components:
   - type: Sprite
@@ -235,42 +235,42 @@
 
 - type: entity
   id: LeftArmStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseArmLeft]
 
 - type: entity
   id: RightArmStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseArmRight]
 
 - type: entity
   id: LeftHandStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseHandLeft]
 
 - type: entity
   id: RightHandStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseHandRight]
 
 - type: entity
   id: LeftLegStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseLegLeft]
 
 - type: entity
   id: RightLegStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseLegRight]
 
 - type: entity
   id: LeftFootStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseFootLeft]
 
 - type: entity
   id: RightFootStone
-  name: "осколок голема"
+  name: "golem shard"
   parent: [PartStone, OrganBaseFootRight]
 
 - type: damageContainer

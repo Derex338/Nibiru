@@ -184,6 +184,9 @@
     heightCurve:
     - 0
     - 0
+  - type: Construction
+    graph: CEWallLeaf
+    node: CEWallLeaf
 
 - type: entity
   id: CEWallSnow

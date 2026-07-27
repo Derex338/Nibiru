@@ -1,0 +1,10 @@
+ce-skill-req-prerequisite = Skill "{$name}" must be learned
+ce-skill-req-species = You must be of the species "{$name}"
+ce-skill-req-notspecies = You must not be of the species "{$name}"
+ce-skill-req-vampire-clan = You must belong to the vampire clan "{$name}"
+ce-skill-req-researched = Must conduct research at a research table
+ce-skill-req-impossible = Cannot be learned during the round at this time
+ce-skill-req-god-follower-percentage = Your follower count must be greater than {$count}%
+ce-skill-req-timegate = Available for learning {$minute} minutes after round start. Minutes remaining: {$left}
+ce-skill-req-timegate-disabled = Available for learning {$minute} minutes after round start, but time restrictions are disabled.
+ce-skill-req-vampire-tree-level = You must be near your clan's heart, at least level {$lvl}.

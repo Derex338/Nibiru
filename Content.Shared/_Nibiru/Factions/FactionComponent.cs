@@ -9,17 +9,17 @@ namespace Content.Shared._Nibiru.Factions;
 
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
-[InspectableComponent("Фракция")]
-public sealed partial class FactionComponent : Component, IInspectableComponent
+//[InspectableComponent("Faction")] // Это было для теста
+public sealed partial class FactionComponent : Component//, IInspectableComponent
 {
     [AutoNetworkedField]
     [DataField("factionName")]
-    [InspectableField("Название")]
+    //[InspectableField("Name")]
     public string FactionName { get; set; } = string.Empty;
 
     [AutoNetworkedField]
     [DataField("isCreator")]
-    [InspectableField("Создатель", Detail = "Персонаж является основателем фракции и обладает особыми правами администрирования.")]
+    //[InspectableField("Creator", Detail = "The character is the founder of the faction and has special admin rights.")]
     public bool IsCreator { get; set; } = false;
 
     /// <summary>
@@ -100,7 +100,7 @@ public sealed partial class FactionComponent : Component, IInspectableComponent
     /// </summary>
     [AutoNetworkedField]
     [DataField("status")]
-    [InspectableField("Статус", Detail = "Текущий статус фракции: Active — активна, Recruiting — идёт набор, AtWar — в состоянии войны.")]
+    //[InspectableField("Status", Detail = "Current faction status: Active - active, Recruiting - open recruitment, AtWar - at war.")]
     public FactionStatus Status { get; set; } = FactionStatus.Active;
 
     /// <summary>
@@ -108,7 +108,7 @@ public sealed partial class FactionComponent : Component, IInspectableComponent
     /// </summary>
     [AutoNetworkedField]
     [DataField("recruiting")]
-    [InspectableField("Набор открыт")]
+    //[InspectableField("Recruiting")]
     public bool IsRecruiting { get; set; } = false;
 
     /// <summary>
@@ -144,7 +144,7 @@ public sealed partial class FactionComponent : Component, IInspectableComponent
     /// </summary>
     // ── IInspectableComponent ──────────────────────────────────────────────
 
-    string IInspectableComponent.InspectorDisplayName => "entity-inspector-comp-faction";
+    /*string IInspectableComponent.InspectorDisplayName => "entity-inspector-comp-faction";
 
     IEnumerable<InspectableFieldData> IInspectableComponent.GetInspectableFields()
     {
@@ -160,7 +160,7 @@ public sealed partial class FactionComponent : Component, IInspectableComponent
             "entity-inspector-faction-recruiting", IsRecruiting, Order: 3);
         yield return new InspectableFieldData(
             "entity-inspector-faction-members", Members, Order: 4);
-    }
+    }*/
 
     [AutoNetworkedField]
     [DataField("roles")]

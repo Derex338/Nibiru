@@ -9,7 +9,7 @@
 
 - type: species
   id: Skrell
-  name: Скрелл
+  name: Skrell
   roundStart: true
   prototype: MobSkrell
   dollPrototype: AppearanceSkrell
@@ -101,7 +101,7 @@
 - type: reagent
   id: SkrellBlood
   parent: Blood
-  name: Синяя кровь
+  name: Blue blood
   group: Biological
   flavor: metallic
   color: "#454078"
@@ -109,7 +109,7 @@
 - type: entity
   id: PartSkrell
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Часть тела скрелла"
+  name: "Skrell body part"
   abstract: true
   components:
   - type: Sprite
@@ -133,7 +133,7 @@
 
 - type: entity
   id: TorsoSkrell
-  name: "Туловище скрелла"
+  name: "Skrell torso"
   parent: [OrganBaseTorsoSexed, PartSkrell, OrganBaseTorso]
   components:
   - type: Sprite
@@ -141,7 +141,7 @@
 
 - type: entity
   id: HeadSkrell
-  name: "Голова скрелла"
+  name: "Skrell head"
   parent: [OrganBaseHeadSexed, PartSkrell, OrganBaseHead]
   components:
   - type: Sprite
@@ -149,7 +149,7 @@
 
 - type: entity
   id: LeftArmSkrell
-  name: "Левая рука скрелла"
+  name: "Skrell left arm"
   parent: [PartSkrell, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -158,7 +158,7 @@
 
 - type: entity
   id: RightArmSkrell
-  name: "Правая рука скрелла"
+  name: "Skrell right arm"
   parent: [PartSkrell, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -167,7 +167,7 @@
 
 - type: entity
   id: LeftHandSkrell
-  name: "Левая рука скрелла"
+  name: "Skrell left hand"
   parent: [PartSkrell, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -176,7 +176,7 @@
 
 - type: entity
   id: RightHandSkrell
-  name: "Правая рука скрелла"
+  name: "Skrell right hand"
   parent: [PartSkrell, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -185,7 +185,7 @@
 
 - type: entity
   id: LeftLegSkrell
-  name: "Левая нога скрелла"
+  name: "Skrell left leg"
   parent: [PartSkrell, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -194,7 +194,7 @@
 
 - type: entity
   id: RightLegSkrell
-  name: "Правая нога скрелла"
+  name: "Skrell right leg"
   parent: [PartSkrell, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -203,7 +203,7 @@
 
 - type: entity
   id: LeftFootSkrell
-  name: "Левая нога скрелла"
+  name: "Skrell left foot"
   parent: [PartSkrell, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -212,7 +212,7 @@
 
 - type: entity
   id: RightFootSkrell
-  name: "Правая нога скрелла"
+  name: "Skrell right foot"
   parent: [PartSkrell, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -221,7 +221,7 @@
 - type: entity
   id: OrganSkrellBrain
   parent: OrganHumanBrain
-  name: мозг скрелла
+  name: Skrell brain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -231,7 +231,7 @@
 - type: entity
   id: OrganSkrellEyes
   parent: OrganHumanEyes
-  name: глаза скрелла
+  name: Skrell eyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -243,7 +243,7 @@
 - type: entity
   id: OrganSkrellHeart
   parent: OrganHumanHeart
-  name: сердце скрелла
+  name: Skrell heart
   description: Мне жаль бессердечного ублюдка, который потерял это.
   components:
   - type: Sprite
@@ -253,7 +253,7 @@
 - type: entity
   id: OrganSkrellLungs
   parent: OrganHumanLungs
-  name: лёгкие скрелла
+  name: Skrell lungs
   description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -265,7 +265,7 @@
 - type: entity
   id: OrganSkrellStomach
   parent: OrganHumanStomach
-  name: желудок скрелла
+  name: Skrell stomach
   description: Отвратительно. Это трудно переварить.
   components:
   - type: Sprite
@@ -275,7 +275,7 @@
 - type: entity
   id: OrganSkrellLiver
   parent: OrganHumanLiver
-  name: печень скрелла
+  name: Skrell liver
   description: Побереги меня.
   components:
   - type: Sprite
@@ -285,7 +285,7 @@
 - type: entity
   id: OrganSkrellKidneys
   parent: OrganHumanKidneys
-  name: почки скрелла
+  name: Skrell kidneys
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite

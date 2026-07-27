@@ -25,6 +25,8 @@ lobby-state-background-text = Menu art: [color=white]{$backgroundTitle}[/color] 
 lobby-state-background-no-background-text = No menu art loaded.
 lobby-state-background-unknown-title = [color=dimgray]Unknown title[/color]
 lobby-state-background-unknown-artist = [color=dimgray]Unknown artist[/color]
+lobby-state-become-leader-button = Become leader
+lobby-state-will-become-leader-button = Become leader
 lobby-state-playtime-comment-normal =
     You've spent {$hours} {$hours ->
     [1]hour

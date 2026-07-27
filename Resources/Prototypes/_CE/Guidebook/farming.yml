@@ -10,6 +10,6 @@
   hidden: false
   locFilter: "ru-RU"
   id: CEFarmingGuideRU
-  name: Фермерство
+  name: Farming
   text: "/ServerInfo/_CE/Guidebook_RU/Farming/Farming.xml"
   filterEnabled: True

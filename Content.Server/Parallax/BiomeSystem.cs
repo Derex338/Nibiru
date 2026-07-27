@@ -81,34 +81,44 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     public bool SaveBiomeMobs { get; set; } = false;
 
     /// <summary>
-    /// Подготавливает BiomeComponent карты к сохранению: очищает LoadedEntities и LoadedChunks,
+    /// Подготавливает BiomeComponent карты к сохранению: очищает LoadedEntities и LoadedDecals,
     /// чтобы устаревшие ссылки на удалённые entity не вызывали ошибок сериализации.
-    /// Биом восстанавливается процедурно по сиду при следующей загрузке.
+    /// LoadedChunks НЕ очищается — он хранит только Vector2i (без EntityUid-ссылок) и
+    /// предотвращает повторную генерацию биома при загрузке сохранённой карты.
     /// Возвращает снапшот для восстановления через <see cref="RestoreMapAfterSave"/>.
     /// </summary>
-    public (Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> Entities, HashSet<Vector2i> Chunks)?
+    public (Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> Entities,
+            Dictionary<Vector2i, Dictionary<uint, Vector2i>> Decals,
+            HashSet<Vector2i> Chunks)?
         PrepareMapForSave(EntityUid mapUid)
     {
         if (!TryComp<BiomeComponent>(mapUid, out var biome))
             return null;
 
         var entitiesSnap = biome.LoadedEntities;
+        var decalsSnap = biome.LoadedDecals;
+        // LoadedChunks сохраняется — в yml пойдут актуальные данные.
+        // Если очистить, то при загрузке карты из сохранения биом попытается
+        // перегенерировать все чанки → duplicate key crash в LoadedDecals.Add().
         var chunksSnap = biome.LoadedChunks;
         biome.LoadedEntities = new();
-        biome.LoadedChunks = new();
-        return (entitiesSnap, chunksSnap);
+        biome.LoadedDecals = new();
+        return (entitiesSnap, decalsSnap, chunksSnap);
     }
 
     /// <summary>
     /// Восстанавливает рантайм-состояние BiomeComponent после сохранения карты.
     /// </summary>
     public void RestoreMapAfterSave(EntityUid mapUid,
-        (Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> Entities, HashSet<Vector2i> Chunks) snapshot)
+        (Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> Entities,
+         Dictionary<Vector2i, Dictionary<uint, Vector2i>> Decals,
+         HashSet<Vector2i> Chunks) snapshot)
     {
         if (!TryComp<BiomeComponent>(mapUid, out var biome))
             return;
 
         biome.LoadedEntities = snapshot.Entities;
+        biome.LoadedDecals = snapshot.Decals;
         biome.LoadedChunks = snapshot.Chunks;
     }
 
@@ -1012,13 +1022,16 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= new HashSet<Vector2i>();
 
-        // Delete decals
-        foreach (var (dec, indices) in component.LoadedDecals[chunk])
+        // Delete decals — tracking may be empty after map reload from save
+        if (component.LoadedDecals.TryGetValue(chunk, out var decals))
         {
-            // If we couldn't remove it then flag the tile to never be touched.
-            if (!_decals.RemoveDecal(gridUid, dec))
+            foreach (var (dec, indices) in decals)
             {
-                modified.Add(indices);
+                // If we couldn't remove it then flag the tile to never be touched.
+                if (!_decals.RemoveDecal(gridUid, dec))
+                {
+                    modified.Add(indices);
+                }
             }
         }
 

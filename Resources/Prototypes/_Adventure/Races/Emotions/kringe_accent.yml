@@ -126,7 +126,7 @@
 
 - type: trait
   id: KringeAccent
-  name: Кринжовая речь
+  name: Cringe Speech
   description: Ваша речь припитана словами, вызывающими кринж у окружающих.
   category: SpeechTraits
   cost: 1

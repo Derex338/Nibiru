@@ -1,0 +1,41 @@
+<Document>
+# Animal Butchering
+
+Animals come in different sizes: large, medium, and small. Each size has its own carcass for butchering. The size of the carcass determines the number of butchering stages — small ones can be butchered in two passes, large ones in four.
+Each butchering stage yields different parts of the animal puzzle. Guts can be used for soups, sinews are good for binding or as a rope substitute, hides for clothing, and so on.
+
+<Box>
+  <GuideEntityEmbed Entity="Gut"/>
+  <GuideEntityEmbed Entity="Skull_cow"/>
+</Box>
+
+Below is more detail on processing the obtained components:
+
+# Sinews
+They are obtained from animal carcasses after butchering. In most crafts that use rope, sinews can be used instead.
+
+<Box>
+  <GuideEntityEmbed Entity="Vein"/>
+  <GuideEntityEmbed Entity="Vein_processed"/>
+</Box>
+
+After obtaining raw sinews, you need to process them with a knife and leave them to dry for a few minutes. After drying, they can be used in crafts.
+
+# Hide
+
+Initially, animal carcasses yield their hide.
+
+<Box>
+  <GuideEntityEmbed Entity="HideSmall"/>
+  <GuideEntityEmbed Entity="HideMedium"/>
+  <GuideEntityEmbed Entity="HideBig"/>
+</Box>
+
+Hides can be scraped with a knife to get raw pelt. Scrape it again with a knife and leave it to dry for some time. After that, you get proper leather that can be used for crafting.
+
+<Box>
+  <GuideEntityEmbed Entity="Skin"/>
+  <GuideEntityEmbed Entity="Skin_notready"/>
+  <GuideEntityEmbed Entity="Skin_processed"/>
+</Box>
+</Document>

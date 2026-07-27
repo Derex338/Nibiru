@@ -1,27 +1,27 @@
 - type: tool
   id: Digging
-  name: копание
+  name: digging
   toolName: лопата
   spawn: Shovel
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Shovel.rsi, state: icon }
 
 - type: tool
   id: Hammering
-  name: забивание
+  name: hammering
   toolName: молоток
   spawn: StoneHammer
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi, state: icon }
 
 - type: tool
   id: Sewing
-  name: шитьё
+  name: sewing
   toolName: игла
   spawn: BoneNeedle
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Needle.rsi, state: icon }
 
 - type: tool
   id: Rasp
-  name: прорезание
+  name: rasping
   toolName: напильник
   spawn: Rasp
   icon: { sprite: Objects/Tools/crowbar.rsi, state: icon }

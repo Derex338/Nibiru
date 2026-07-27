@@ -1,0 +1,20 @@
+<Document>
+# Stone
+
+Stone is one of the basic materials in the game.
+They are scattered everywhere on the ground, or you can get them from breaking boulders and rocks.
+
+<Box>
+  <GuideEntityEmbed Entity="CEStoneBlock1"/>
+</Box>
+
+# Sharp Stone
+
+But plain stones won't last long, so you can strike stone against stone to get a [color=yellow]sharp stone[/color]!
+
+<Box>
+  <GuideEntityEmbed Entity="SharpStone"/>
+</Box>
+
+A sharp stone can be used to mine basic resources and, if you wish, hit your tribesmen on the head. It can be used to chop wood, cut it into planks and logs, and to butcher game.
+</Document>

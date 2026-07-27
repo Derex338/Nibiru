@@ -4,7 +4,7 @@
 
 - type: construction
   id: MoldIngot
-  name: Форма для слитка
+  name: Ingot Mold
   graph: MoldIngot
   startNode: start
   targetNode: fin
@@ -23,7 +23,7 @@
 
 - type: construction
   id: MoldInlay
-  name: Форма для вставки
+  name: Inlay Mold
   graph: MoldInlay
   startNode: start
   targetNode: fin
@@ -42,7 +42,7 @@
 
 - type: construction
   id: MoldArrowTip
-  name: Форма для наконечника стрелы
+  name: Arrow Tip Mold
   graph: MoldArrowTip
   startNode: start
   targetNode: fin
@@ -61,7 +61,7 @@
 
 - type: construction
   id: MoldArrowTipArmor
-  name: Форма для бронебойного наконечника
+  name: Armor-Piercing Tip Mold
   graph: MoldArrowTipArmor
   startNode: start
   targetNode: fin
@@ -80,7 +80,7 @@
 
 - type: construction
   id: MoldTopHammer
-  name: Форма для навершия молотка
+  name: Hammer Head Mold
   graph: MoldTopHammer
   startNode: start
   targetNode: fin
@@ -99,7 +99,7 @@
 
 - type: construction
   id: MoldTopMace
-  name: Форма для навершия молота
+  name: Mace Head Mold
   graph: MoldTopMace
   startNode: start
   targetNode: fin
@@ -118,7 +118,7 @@
 
 - type: construction
   id: MoldTopAxe
-  name: Форма для навершия топора
+  name: Axe Head Mold
   graph: MoldTopAxe
   startNode: start
   targetNode: fin
@@ -137,7 +137,7 @@
 
 - type: construction
   id: MoldTopBattleAxe
-  name: Форма для навершия боевого топора
+  name: Battle Axe Head Mold
   graph: MoldTopBattleAxe
   startNode: start
   targetNode: fin
@@ -156,7 +156,7 @@
 
 - type: construction
   id: MoldTopSpear
-  name: Форма для наконечника копья
+  name: Spear Tip Mold
   graph: MoldTopSpear
   startNode: start
   targetNode: fin
@@ -175,7 +175,7 @@
 
 - type: construction
   id: MoldSwordBlade
-  name: Форма для лезвия меча
+  name: Sword Blade Mold
   graph: MoldSwordBlade
   startNode: start
   targetNode: fin
@@ -194,7 +194,7 @@
 
 - type: construction
   id: MoldDaggerBlade
-  name: Форма для лезвия кинжала
+  name: Dagger Blade Mold
   graph: MoldDaggerBlade
   startNode: start
   targetNode: fin
@@ -213,7 +213,7 @@
 
 - type: construction
   id: MoldTrident
-  name: Форма для навершия трезубца
+  name: Trident Head Mold
   graph: MoldTrident
   startNode: start
   targetNode: fin
@@ -232,7 +232,7 @@
 
 - type: construction
   id: MoldShield
-  name: Форма для обивки щита
+  name: Shield Trim Mold
   graph: MoldShield
   startNode: start
   targetNode: fin
@@ -251,7 +251,7 @@
 
 - type: construction
   id: MoldKnifeBlade
-  name: Форма для лезвия ножа
+  name: Knife Blade Mold
   graph: MoldKnifeBlade
   startNode: start
   targetNode: fin
@@ -270,7 +270,7 @@
 
 - type: construction
   id: MoldClippers
-  name: Форма для детали секатора
+  name: Clippers Part Mold
   graph: MoldClippers
   startNode: start
   targetNode: fin
@@ -289,7 +289,7 @@
 
 - type: construction
   id: MoldHoeBlade
-  name: Форма для лезвия мотыги
+  name: Hoe Blade Mold
   graph: MoldHoeBlade
   startNode: start
   targetNode: fin
@@ -308,7 +308,7 @@
 
 - type: construction
   id: MoldPickaxeBlade
-  name: Форма для наконечника кирки
+  name: Pickaxe Tip Mold
   graph: MoldPickaxeBlade
   startNode: start
   targetNode: fin
@@ -327,7 +327,7 @@
 
 - type: construction
   id: MoldScytheBlade
-  name: Форма для лезвия косы
+  name: Scythe Blade Mold
   graph: MoldScytheBlade
   startNode: start
   targetNode: fin
@@ -346,7 +346,7 @@
 
 - type: construction
   id: MoldShovel
-  name: Форма для наконечника лопаты
+  name: Shovel Tip Mold
   graph: MoldShovel
   startNode: start
   targetNode: fin
@@ -365,7 +365,7 @@
 
 - type: construction
   id: MoldHelmet
-  name: Форма для шлема
+  name: Helmet Mold
   graph: MoldHelmet
   startNode: start
   targetNode: fin
@@ -384,7 +384,7 @@
 
 - type: construction
   id: MoldChestplate
-  name: Форма для нагрудника
+  name: Chestplate Mold
   graph: MoldChestplate
   startNode: start
   targetNode: fin
@@ -403,7 +403,7 @@
 
 - type: construction
   id: MoldAnvil
-  name: Форма для наковальни
+  name: Anvil Mold
   graph: MoldAnvil
   startNode: start
   targetNode: fin
@@ -422,7 +422,7 @@
 
 - type: construction
   id: MoldLock
-  name: Форма для замка
+  name: Lock Mold
   graph: MoldLock
   startNode: start
   targetNode: fin
@@ -441,7 +441,7 @@
 
 - type: construction
   id: MoldKey
-  name: Форма для ключа
+  name: Key Mold
   graph: MoldKey
   startNode: start
   targetNode: fin
@@ -460,7 +460,7 @@
 
 - type: construction
   id: MoldLockpick
-  name: Форма для отмычки
+  name: Lockpick Mold
   graph: MoldLockpick
   startNode: start
   targetNode: fin
@@ -479,7 +479,7 @@
 
 - type: construction
   id: MoldRasp
-  name: Форма для рашпиля
+  name: Rasp Mold
   graph: MoldRasp
   startNode: start
   targetNode: fin
@@ -498,7 +498,7 @@
 
 - type: construction
   id: MoldKhapeshBlade
-  name: Форма для лезвия хопеша
+  name: Khopesh Blade Mold
   graph: MoldKhapeshBlade
   startNode: start
   targetNode: fin
@@ -517,7 +517,7 @@
 
 - type: construction
   id: MoldCrown
-  name: Форма для короны
+  name: Crown Mold
   graph: MoldCrown
   startNode: start
   targetNode: fin
@@ -536,7 +536,7 @@
 
 - type: construction
   id: MoldXiphosBlade
-  name: Форма для лезвия ксифоса
+  name: Xiphos Blade Mold
   graph: MoldXiphosBlade
   startNode: start
   targetNode: fin
@@ -555,7 +555,7 @@
 
 - type: construction
   id: MoldRod
-  name: Форма для стержня
+  name: Rod Mold
   graph: MoldRod
   startNode: start
   targetNode: fin

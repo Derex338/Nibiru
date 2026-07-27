@@ -7,9 +7,9 @@ using Robust.Shared.Localization;
 namespace Content.Client.Localization
 {
     /// <summary>
-    /// Помечает контрол как "умеющий" перечитать свой текст из ILocalizationManager
-    /// после смены языка. Это чисто контентный интерфейс, движок про него не знает
-    /// и знать не должен — LocaleSwitchSystem находит такие контролы обходом дерева.
+    /// Marks a control as capable of re-reading its text from ILocalizationManager
+    /// after a language change. This is purely a content interface, the engine knows nothing about it
+    /// and should not — LocaleSwitchSystem finds such controls by walking the tree.
     /// </summary>
     public interface ILocalizedControl
     {

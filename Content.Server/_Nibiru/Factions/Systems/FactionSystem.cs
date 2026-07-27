@@ -86,7 +86,7 @@ public sealed partial class FactionSystem : EntitySystem
         {
             new FactionRole
             {
-                Name = "Новобранец",
+                Name = Loc.GetString("faction-default-rank-recruit"),
                 CanInvite = false,
                 CanResearch = false,
                 CanManageRoles = false,

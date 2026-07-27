@@ -1,0 +1,15 @@
+marking-CEHumanFacialHair3Clock = Light Stubble
+marking-CEHumanFacialHairAbe = Heavy Stubble
+marking-CEHumanFacialHairDwarf = Dwarf
+marking-CEHumanFacialHairGoateeMush = Goatee with Mustache
+marking-CEHumanFacialHairBriefs = Briefs
+marking-CEHumanFacialHairCircle = Circle
+marking-CEHumanFacialHairEspanol = Spanish Style
+marking-CEHumanFacialHairImperial = Imperial
+marking-CEHumanFacialHairMachete = Machete
+marking-CEHumanFacialHairMutton = Mutton Chops
+marking-CEHumanFacialHairPigtail = Pigtail
+marking-CEHumanFacialHairSage = Man Chu
+marking-CEHumanFacialHairWatson = Watson
+marking-CEHumanFacialHairWhiskers = Sideburns
+marking-CEHumanFacialHairHussar = Hussar

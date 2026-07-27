@@ -5,7 +5,7 @@ using System.Numerics;
 namespace Content.Shared._Nibiru.NPC.Behavior.Components;
 
 /// <summary>
-/// Фазы атаки "укусил и отпрыгнул" для волков.
+/// Attack phases "bite and leap back" for wolves.
 /// </summary>
 [Serializable, NetSerializable]
 public enum LeapPhase : byte
@@ -32,10 +32,10 @@ public enum LeapPhase : byte
 }
 
 /// <summary>
-/// Компонент атаки "укусил и отпрыгнул" — для волков и схожих хищников.
-/// Животное подходит к цели, кусает, затем резко отпрыгивает назад
-/// относительно поворота своего тела, выжидает и повторяет.
-/// Прыжок реализован через физический импульс, а не стандартную навигацию.
+/// Hit-and-run attack component — for wolves and similar predators.
+/// The animal approaches the target, bites, then sharply leaps backward
+/// relative to its body rotation, waits, and repeats.
+/// The leap is implemented via physics impulse, not standard navigation.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruNpcHitAndRunAttackComponent : Component

@@ -23,7 +23,7 @@ public sealed partial class NibiruBirdDeliveryWindow : DefaultWindow
 
         if (state.Posts.Count == 0)
         {
-            PostsContainer.AddChild(new Label { Text = "Нет известных голубятен", HorizontalAlignment = HAlignment.Center });
+            PostsContainer.AddChild(new Label { Text = Loc.GetString("nibiru-bird-no-pigeon-lofts"), HorizontalAlignment = HAlignment.Center });
             return;
         }
 

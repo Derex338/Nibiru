@@ -316,10 +316,10 @@ namespace Content.Client.Lobby.UI
             #region Factions
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-faction-tab"));
 
-            FactionSubTabs.SetTabTitle(0, "Основное");
-            FactionSubTabs.SetTabTitle(1, "Логотип");
-            FactionSubTabs.SetTabTitle(2, "Роли");
-            FactionSubTabs.SetTabTitle(3, "Фильтры");
+            FactionSubTabs.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-faction-subtab-main"));
+            FactionSubTabs.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-faction-subtab-logo"));
+            FactionSubTabs.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-faction-subtab-roles"));
+            FactionSubTabs.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-faction-subtab-filters"));
 
             FactionNameEdit.OnTextChanged += args => { Profile = Profile?.WithFactionName(args.Text); IsDirty = true; };
             FactionDescEdit.OnTextChanged += args => { Profile = Profile?.WithFactionDescription(args.Text); IsDirty = true; };

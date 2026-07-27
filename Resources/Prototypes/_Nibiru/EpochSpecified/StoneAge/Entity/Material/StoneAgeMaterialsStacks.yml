@@ -1,13 +1,13 @@
 - type: stack
   id: Stone
-  name: камень
+  name: stone
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
   spawn: Stone
   maxCount: 10
 
 - type: stack
   id: SharpStone
-  name: острый камень
+  name: sharp stone
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
   spawn: SharpStone
   maxCount: 5
@@ -15,7 +15,7 @@
 - type: material
   id: SharpStone
   stackEntity: SharpStone
-  name: острый камень
+  name: sharp stone
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
   color: "#80ffff"
@@ -23,14 +23,14 @@
 
 - type: stack
   id: StoneBlock
-  name: каменный блок
+  name: stone block
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi, state: icon }
   spawn: StoneBlock1
   maxCount: 5
 
 - type: stack
   id: MudBlock
-  name: глиняный кирпич
+  name: mud brick
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: brick_3 }
   spawn: MudBlock1
   maxCount: 10
@@ -38,7 +38,7 @@
 - type: material
   id: Stone
   stackEntity: Stone
-  name: камень
+  name: stone
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
   color: "#80ffff"
@@ -47,7 +47,7 @@
 - type: material
   id: StoneBlock
   stackEntity: StoneBlock1
-  name: каменный блок
+  name: stone block
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi, state: icon }
   color: "#80ffff"
@@ -56,7 +56,7 @@
 - type: material
   id: MudBlock
   stackEntity: MudBlock1
-  name: глиняный кирпич
+  name: mud brick
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Bricks.rsi, state: brick_3 }
   color: "#80ffff"
@@ -65,7 +65,7 @@
 - type: stack
   parent: BaseSheetStack
   id: WoodStick
-  name: палка
+  name: stick
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_1 }
   spawn: WoodStick1
   maxCount: 20
@@ -73,7 +73,7 @@
 - type: material
   id: WoodStick
   stackEntity: WoodStick1
-  name: палка
+  name: stick
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_1 }
   color: "#80ffff"
@@ -82,7 +82,7 @@
 - type: stack
   parent: BaseSheetStack
   id: Thread
-  name: нить
+  name: thread
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi, state: thread_1 }
   spawn: MaterialThread1
   maxCount: 20
@@ -90,7 +90,7 @@
 - type: material
   id: Thread
   stackEntity: MaterialThread1
-  name: нить
+  name: thread
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi, state: thread_1 }
   color: "#80ffff"
@@ -99,7 +99,7 @@
 - type: stack
   parent: BaseSheetStack
   id: Herb
-  name: трава
+  name: herb
   icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
   spawn: BunchHerb
   maxCount: 30
@@ -107,7 +107,7 @@
 - type: material
   id: Herb
   stackEntity: BunchHerb
-  name: трава
+  name: herb
   unit: materials-unit-piece
   icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
   color: "#80ffff"
@@ -116,7 +116,7 @@
 - type: stack
   parent: BaseSheetStack
   id: HerbRope
-  name: травяная веревка
+  name: grass rope
   icon: { sprite: _CE/Objects/Tool/rope.rsi, state: icon }
   spawn: CERope
   maxCount: 10
@@ -124,7 +124,7 @@
 - type: material
   id: HerbRope
   stackEntity: CERope
-  name: травяная веревка
+  name: grass rope
   unit: materials-unit-piece
   icon: { sprite: _CE/Objects/Tool/rope.rsi, state: icon }
   color: "#80ffff"
@@ -133,7 +133,7 @@
 - type: stack
   parent: BaseSheetStack
   id: Leather
-  name: кожа
+  name: leather
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: skin-processed }
   spawn: Skin_processed
   maxCount: 10
@@ -141,7 +141,7 @@
 - type: material
   id: Leather
   stackEntity: Skin_processed
-  name: кожа
+  name: leather
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: skin-processed }
   color: "#80ffff"
@@ -150,7 +150,7 @@
 - type: stack
   parent: BaseSheetStack
   id: Fat
-  name: жир
+  name: fat
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fat1 }
   spawn: Fat
   maxCount: 20
@@ -158,7 +158,7 @@
 - type: material
   id: Fat
   stackEntity: Fat
-  name: жир
+  name: fat
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fat1 }
   color: "#80ffff"
@@ -166,7 +166,7 @@
 
 - type: stack
   id: Log
-  name: бревно
+  name: log
   icon: { sprite: _CE/Objects/Materials/wood.rsi, state: log }
   spawn: Log
   maxCount: 1
@@ -174,7 +174,7 @@
 - type: material
   id: Log
   stackEntity: Log
-  name: бревно
+  name: log
   unit: materials-unit-piece
   icon: { sprite: _CE/Objects/Materials/wood.rsi, state: log }
   color: "#80ffff"
@@ -183,12 +183,12 @@
 - type: stack
   parent: BaseTileStack
   id: FloorTileStraw
-  name: соломенное покрытие
+  name: straw flooring
   spawn: FloorTileItemStraw
 
 - type: stack
   id: SmallHide
-  name: малая шкура
+  name: small hide
   icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: small }
   spawn: HideSmall
   maxCount: 5
@@ -196,7 +196,7 @@
 - type: material
   id: SmallHide
   stackEntity: HideSmall
-  name: малая шкура
+  name: small hide
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: small }
   color: "#80ffff"
@@ -204,7 +204,7 @@
 
 - type: stack
   id: MediumHide
-  name: средняя шкура
+  name: medium hide
   icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: mid }
   spawn: HideMedium
   maxCount: 3
@@ -212,7 +212,7 @@
 - type: material
   id: MediumHide
   stackEntity: HideMedium
-  name: средняя шкура
+  name: medium hide
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: mid }
   color: "#80ffff"
@@ -220,7 +220,7 @@
 
 - type: stack
   id: BigHide
-  name: большая шкура
+  name: big hide
   icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: big }
   spawn: HideBig
   maxCount: 1
@@ -228,7 +228,7 @@
 - type: material
   id: BigHide
   stackEntity: HideBig
-  name: большая шкура
+  name: big hide
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Hide.rsi, state: big }
   color: "#80ffff"
@@ -236,7 +236,7 @@
 
 - type: stack
   id: Feather
-  name: перо
+  name: feather
   icon: { sprite: Objects/Materials/parts.rsi, state: rods }
   spawn: FeatherWhite
   maxCount: 30
@@ -244,7 +244,7 @@
 - type: material
   id: Feather
   stackEntity: FeatherWhite
-  name: перо
+  name: feather
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/parts.rsi, state: rods }
   color: "#80ffff"
@@ -252,7 +252,7 @@
 
 - type: stack
   id: Fang
-  name: клыки
+  name: fangs
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fang }
   spawn: Fang
   maxCount: 20
@@ -260,7 +260,7 @@
 - type: material
   id: Fang
   stackEntity: Fang
-  name: клыки
+  name: fangs
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: fang }
   color: "#80ffff"
@@ -268,7 +268,7 @@
 
 - type: stack
   id: Gut
-  name: потроха
+  name: guts
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: gut }
   spawn: Gut
   maxCount: 10
@@ -276,7 +276,7 @@
 - type: material
   id: Gut
   stackEntity: Gut
-  name: потроха
+  name: guts
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: gut }
   color: "#80ffff"
@@ -284,14 +284,14 @@
 
 - type: stack
   id: Vein
-  name: жилы
+  name: vein
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein }
   spawn: Vein
   maxCount: 20
 
 - type: stack
   id: Vein_processed
-  name: жилы
+  name: processed vein
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein-processed }
   spawn: Vein_processed
   maxCount: 20
@@ -299,7 +299,7 @@
 - type: material
   id: Vein_processed
   stackEntity: Vein_processed
-  name: жилы
+  name: processed veins
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/Entities/Mobs/Organs.rsi, state: vein-processed }
   color: "#80ffff"
@@ -307,7 +307,7 @@
 
 - type: stack
   id: CECotton
-  name: хлопок
+  name: cotton
   icon: { sprite: _CE/Objects/Consumable/Food/cotton.rsi, state: base1 }
   spawn: CECotton
   maxCount: 30
@@ -315,7 +315,7 @@
 - type: material
   id: CECotton
   stackEntity: CECotton
-  name: хлопок
+  name: cotton
   unit: materials-unit-piece
   icon: { sprite: _CE/Objects/Consumable/Food/cotton.rsi, state: base1 }
   color: "#ffffff"
@@ -323,7 +323,7 @@
 
 - type: stack
   id: LeatherChestplate
-  name: кожаная броня
+  name: leather armor
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherArmor.rsi, state: icon }
   spawn: LeatherChestplate
   maxCount: 1
@@ -331,7 +331,7 @@
 - type: material
   id: LeatherChestplate
   stackEntity: LeatherChestplate
-  name: кожаная броня
+  name: leather armor
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherArmor.rsi, state: icon }
   color: "#80ffff"
@@ -339,7 +339,7 @@
 
 - type: stack
   id: LeatherHelmet
-  name: кожаный шлем
+  name: leather helmet
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherHelmet.rsi, state: icon }
   spawn: LeatherHelmet
   maxCount: 1
@@ -347,7 +347,7 @@
 - type: material
   id: LeatherHelmet
   stackEntity: LeatherHelmet
-  name: кожаный шлем
+  name: leather helmet
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherHelmet.rsi, state: icon }
   color: "#80ffff"

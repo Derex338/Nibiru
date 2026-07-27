@@ -355,8 +355,8 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             //_factionWindow.FactionIconChange.Text = factionComponent.IconPath;
             _factionWindow.RecruitingToggle.Pressed = factionComponent.IsRecruiting;
 
-            _factionWindow.FilterSpeciesLabel.Text = factionComponent.WhiteListSpecies.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListSpecies);
-            _factionWindow.FilterGenderLabel.Text = factionComponent.WhiteListGender.Count == 0 ? "Все" : string.Join(", ", factionComponent.WhiteListGender);
+            _factionWindow.FilterSpeciesLabel.Text = factionComponent.WhiteListSpecies.Count == 0 ? Loc.GetString("faction-filter-all") : string.Join(", ", factionComponent.WhiteListSpecies);
+            _factionWindow.FilterGenderLabel.Text = factionComponent.WhiteListGender.Count == 0 ? Loc.GetString("faction-filter-all") : string.Join(", ", factionComponent.WhiteListGender);
 
             UpdateSkinColorFiltersUI(factionComponent);
 
@@ -484,7 +484,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
             .Select(s => s.ID)
             .ToList();
 
-        var prompt = new FilterSelectorPrompt("Выбор рас", species, fc.WhiteListSpecies, selected =>
+        var prompt = new FilterSelectorPrompt(Loc.GetString("faction-filter-species-title"), species, fc.WhiteListSpecies, selected =>
         {
             _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage { WhiteListSpecies = selected });
             UpdateState();
@@ -500,7 +500,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
         var genders = Enum.GetValues<Sex>().Select(s => s.ToString()).ToList();
         var current = fc.WhiteListGender.Select(s => s.ToString()).ToList();
 
-        var prompt = new FilterSelectorPrompt("Выбор пола", genders, current, selected =>
+        var prompt = new FilterSelectorPrompt(Loc.GetString("faction-filter-gender-title"), genders, current, selected =>
         {
             var sexList = new List<Sex>();
             foreach (var s in selected)
@@ -589,7 +589,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
         if (factionComponent.WhiteListSpecies.Count == 0)
         {
-            container.AddChild(new Label { Text = "Выберите расы в фильтре выше", FontColorOverride = Color.Gray });
+            container.AddChild(new Label { Text = Loc.GetString("faction-skin-filter-select-species"), FontColorOverride = Color.Gray });
             return;
         }
 
@@ -638,7 +638,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
                 updatePreview();
 
-                var modeBtn = new Button { Text = isEnabled && currentFilter.PassHigher ? "Пропускать темнее или равно" : "Пропускать светлее или равно" };
+                var modeBtn = new Button { Text = isEnabled && currentFilter.PassHigher ? Loc.GetString("faction-skin-filter-pass-darker") : Loc.GetString("faction-skin-filter-pass-lighter") };
 
                 Action save = () =>
                 {
@@ -646,7 +646,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                     if (cb.Pressed)
                     {
                         var color = colorationProto.Strategy.FromUnary(slider.Value);
-                        dict[speciesId] = new FactionSkinColorFilter { Color = color, PassHigher = modeBtn.Text == "Пропускать темнее или равно" };
+                        dict[speciesId] = new FactionSkinColorFilter { Color = color, PassHigher = modeBtn.Text == Loc.GetString("faction-skin-filter-pass-darker") };
                     }
                     else
                     {
@@ -662,12 +662,13 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                 };
                 modeBtn.OnPressed += _ =>
                 {
-                    modeBtn.Text = modeBtn.Text == "Пропускать светлее или равно" ? "Пропускать темнее или равно" : "Пропускать светлее или равно";
+                    var passHigher = modeBtn.Text == Loc.GetString("faction-skin-filter-pass-darker");
+                    modeBtn.Text = passHigher ? Loc.GetString("faction-skin-filter-pass-lighter") : Loc.GetString("faction-skin-filter-pass-darker");
                     save();
                 };
                 cb.OnToggled += _ => save();
 
-                settingsBox.AddChild(new Label { Text = "Тон кожи (левее - светлее):" });
+                settingsBox.AddChild(new Label { Text = Loc.GetString("faction-skin-filter-skin-tone") });
                 settingsBox.AddChild(slider);
                 settingsBox.AddChild(modeBtn);
             }
@@ -679,14 +680,14 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                 else
                     colorSelector.Color = speciesProto.DefaultSkinTone;
 
-                var modeBtn = new Button { Text = isEnabled && currentFilter.PassHigher ? "Пропускать светлее (по HSV)" : "Пропускать темнее (по HSV)" };
+                var modeBtn = new Button { Text = isEnabled && currentFilter.PassHigher ? Loc.GetString("faction-skin-filter-pass-hsv-lighter") : Loc.GetString("faction-skin-filter-pass-hsv-darker") };
 
                 Action save = () =>
                 {
                     var dict = new Dictionary<string, FactionSkinColorFilter>(factionComponent.WhiteListSkinColors);
                     if (cb.Pressed)
                     {
-                        dict[speciesId] = new FactionSkinColorFilter { Color = colorSelector.Color, PassHigher = modeBtn.Text == "Пропускать светлее (по HSV)" };
+                        dict[speciesId] = new FactionSkinColorFilter { Color = colorSelector.Color, PassHigher = modeBtn.Text == Loc.GetString("faction-skin-filter-pass-hsv-lighter") };
                     }
                     else
                     {
@@ -698,7 +699,8 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
                 colorSelector.OnColorChanged += _ => save();
                 modeBtn.OnPressed += _ =>
                 {
-                    modeBtn.Text = modeBtn.Text == "Пропускать светлее (по HSV)" ? "Пропускать темнее (по HSV)" : "Пропускать светлее (по HSV)";
+                    var passHigher = modeBtn.Text == Loc.GetString("faction-skin-filter-pass-hsv-lighter");
+                    modeBtn.Text = passHigher ? Loc.GetString("faction-skin-filter-pass-hsv-darker") : Loc.GetString("faction-skin-filter-pass-hsv-lighter");
                     save();
                 };
                 cb.OnToggled += _ => save();
@@ -771,7 +773,7 @@ public sealed class FilterSelectorPrompt : DefaultWindow
 
         var saveBtn = new Button
         {
-            Text = "Сохранить",
+            Text = Loc.GetString("faction-selector-save"),
             HorizontalAlignment = HAlignment.Center,
             Margin = new Thickness(0, 10, 0, 0)
         };

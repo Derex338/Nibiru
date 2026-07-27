@@ -1,0 +1,11 @@
+marking-CETieflingHorns = Curved
+marking-CETieflingHorns2 = Pressed
+marking-CETieflingHorns3 = Vertical Authority
+marking-CETieflingHorns3Broken = Broken Vertical
+marking-CETieflingHorns4 = Small
+marking-CETieflingHorns5 = Devil
+marking-CETieflingHorns5Broken = Broken Devil
+marking-CETieflingHorns6 = Ram
+marking-CETieflingHorns7 = Snug
+marking-CETieflingHorns8 = Crown
+marking-CETieflingHorns9 = Unicorn

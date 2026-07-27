@@ -1,0 +1,12 @@
+ent-Stone = stone
+    .desc = just a stone
+    .suffix = Nibiru, Stone Age
+ent-Stone1 = stone
+    .desc = { ent-Stone.desc }
+    .suffix = Single, Nibiru, Stone Age
+ent-SharpStone = sharp stone
+    .desc = just a sharp stone
+    .suffix = Nibiru, Stone Age
+ent-SharpStone1 = sharp stone
+    .desc = { ent-SharpStone.desc }
+    .suffix = Single, Nibiru, Stone Age

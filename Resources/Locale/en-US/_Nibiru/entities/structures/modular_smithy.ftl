@@ -1,0 +1,12 @@
+ent-ModularWeaponBase = modular weapon
+    .desc = A weapon forged by hand from individual components.
+ent-ModularSword = forged sword
+    .desc = A sword assembled from individual smithing modules.
+ent-ModularKnife = forged knife
+    .desc = A handcrafted knife made from selected modules.
+ent-ModularAxe = forged axe
+    .desc = An axe assembled piece by piece in the forge.
+ent-ModularSpear = forged spear
+    .desc = A spear with a choice of head and shaft.
+ent-NibiruModularCraft = smithy workbench
+    .desc = A workbench for hand-crafting modular weapons. Interact to open the smithy menu.

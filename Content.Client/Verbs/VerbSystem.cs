@@ -176,7 +176,10 @@ namespace Content.Client.Verbs
         public SortedSet<Verb> GetVerbs(NetEntity target, EntityUid user, List<Type> verbTypes, out List<VerbCategory> extraCategories, bool force = false)
         {
             if (!target.IsClientSide())
-                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
+            {
+                var locale = _cfg.GetCVar(Content.Shared.CCVar.CCVars.ClientLanguage);
+                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force, locale: locale));
+            }
 
             // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
             if (!TryGetEntity(target, out var local))

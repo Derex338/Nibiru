@@ -1,0 +1,12 @@
+ent-WoodenBow = wooden bow
+    .desc = A simple bow made from a flexible branch and plant fiber string.
+    .suffix = Nibiru, Stone Age
+ent-ArrowWood = wooden arrow
+    .desc = A simple arrow with a sharpened wooden tip. Not very effective, but easy to make.
+    .suffix = Nibiru, Stone Age
+ent-ArrowStone = stone-tipped arrow
+    .desc = An arrow with a sharpened stone tip, bound with plant fiber. More deadly than wooden arrows.
+    .suffix = Nibiru, Stone Age
+ent-QuiverLeather = leather quiver
+    .desc = A simple leather quiver for holding arrows.
+    .suffix = Nibiru, Stone Age

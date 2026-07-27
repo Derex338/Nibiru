@@ -4,7 +4,7 @@
 
 - type: construction
   id: BannerNanotrasen
-  name: Знамя Нанотрейзен
+  name: Nanotrasen Banner
   graph: BannerNanotrasen
   startNode: start
   targetNode: fin
@@ -16,7 +16,7 @@
 
 - type: construction
   id: BannerCargo
-  name: Знамя Карго
+  name: Cargo Banner
   graph: BannerCargo
   startNode: start
   targetNode: fin
@@ -28,7 +28,7 @@
 
 - type: construction
   id: BannerEngineering
-  name: Знамя Инженерного отдела
+  name: Engineering Banner
   graph: BannerEngineering
   startNode: start
   targetNode: fin
@@ -40,7 +40,7 @@
 
 - type: construction
   id: BannerMedical
-  name: Знамя Медотдела
+  name: Medical Banner
   graph: BannerMedical
   startNode: start
   targetNode: fin
@@ -52,7 +52,7 @@
 
 - type: construction
   id: BannerRevolution
-  name: Знамя Революции
+  name: Revolution Banner
   graph: BannerRevolution
   startNode: start
   targetNode: fin
@@ -64,7 +64,7 @@
 
 - type: construction
   id: BannerSyndicate
-  name: Знамя Синдиката
+  name: Syndicate Banner
   graph: BannerSyndicate
   startNode: start
   targetNode: fin
@@ -76,7 +76,7 @@
 
 - type: construction
   id: BannerScience
-  name: Знамя Научного отдела
+  name: Science Banner
   graph: BannerScience
   startNode: start
   targetNode: fin
@@ -88,7 +88,7 @@
 
 - type: construction
   id: BannerBlue
-  name: Синее знамя
+  name: Blue Banner
   graph: BannerBlue
   startNode: start
   targetNode: fin
@@ -100,7 +100,7 @@
 
 - type: construction
   id: BannerRed
-  name: Красное знамя
+  name: Red Banner
   graph: BannerRed
   startNode: start
   targetNode: fin
@@ -112,7 +112,7 @@
 
 - type: construction
   id: BannerYellow
-  name: Желтое знамя
+  name: Yellow Banner
   graph: BannerYellow
   startNode: start
   targetNode: fin
@@ -124,7 +124,7 @@
 
 - type: construction
   id: BannerGreen
-  name: Зеленое знамя
+  name: Green Banner
   graph: BannerGreen
   startNode: start
   targetNode: fin
@@ -136,7 +136,7 @@
 
 - type: construction
   id: BronzeBell
-  name: Бронзовый колокол
+  name: Bronze Bell
   graph: BronzeBell
   startNode: start
   targetNode: fin
@@ -145,7 +145,7 @@
 
 - type: construction
   id: Harp
-  name: арфа
+  name: Harp
   graph: Harp
   startNode: start
   targetNode: fin
@@ -158,7 +158,7 @@
 
 - type: construction
   id: Flute
-  name: флейта
+  name: Flute
   graph: Flute
   startNode: start
   targetNode: fin
@@ -171,7 +171,7 @@
 
 - type: construction
   id: AngelStatue
-  name: Статуя ангела
+  name: Angel Statue
   graph: AngelStatue
   startNode: start
   targetNode: fin
@@ -180,7 +180,7 @@
 
 - type: construction
   id: Bell
-  name: Колокольчик
+  name: Bell
   graph: Bell
   startNode: start
   targetNode: fin
@@ -191,7 +191,7 @@
 
 - type: construction
   id: FedoraBlack
-  name: Черная федора
+  name: Black Fedora
   graph: FedoraBlack
   startNode: start
   targetNode: fin
@@ -202,7 +202,7 @@
 
 - type: construction
   id: FedoraBlue
-  name: Синяя федора
+  name: Blue Fedora
   graph: FedoraBlue
   startNode: start
   targetNode: fin
@@ -213,7 +213,7 @@
 
 - type: construction
   id: FedoraGreen
-  name: Зеленая федора
+  name: Green Fedora
   graph: FedoraGreen
   startNode: start
   targetNode: fin
@@ -224,7 +224,7 @@
 
 - type: construction
   id: FedoraBrown
-  name: Коричневая федора
+  name: Brown Fedora
   graph: FedoraBrown
   startNode: start
   targetNode: fin
@@ -235,7 +235,7 @@
 
 - type: construction
   id: FedoraRed
-  name: Красная федора
+  name: Red Fedora
   graph: FedoraRed
   startNode: start
   targetNode: fin
@@ -246,7 +246,7 @@
 
 - type: construction
   id: BlacksmithGloves
-  name: Перчатки кузнеца
+  name: Blacksmith Gloves
   graph: BlacksmithGloves
   startNode: start
   targetNode: fin
@@ -257,7 +257,7 @@
 
 - type: construction
   id: BlueCarpet
-  name: Синий ковер
+  name: Blue Carpet
   graph: BlueCarpet
   startNode: start
   targetNode: fin
@@ -268,7 +268,7 @@
 
 - type: construction
   id: RedCarpet
-  name: Красный ковер
+  name: Red Carpet
   graph: RedCarpet
   startNode: start
   targetNode: fin
@@ -279,7 +279,7 @@
 
 - type: construction
   id: PurpleCarpet
-  name: Фиолетовый ковер
+  name: Purple Carpet
   graph: PurpleCarpet
   startNode: start
   targetNode: fin
@@ -290,7 +290,7 @@
 
 - type: construction
   id: BlackCarpet
-  name: Черный ковер
+  name: Black Carpet
   graph: BlackCarpet
   startNode: start
   targetNode: fin
@@ -301,7 +301,7 @@
 
 - type: construction
   id: EyePatch
-  name: Повязка на глаз
+  name: Eye Patch
   graph: EyePatch
   startNode: start
   targetNode: fin
@@ -312,7 +312,7 @@
 
 - type: construction
   id: FloorTorch
-  name: Напольный факел
+  name: Floor Torch
   graph: FloorTorch
   startNode: start
   targetNode: fin
@@ -322,7 +322,7 @@
 
 - type: construction
   id: WallTorch
-  name: Настенный факел
+  name: Wall Torch
   graph: WallTorch
   startNode: start
   targetNode: fin
@@ -332,7 +332,7 @@
 
 - type: construction
   id: GlovesJagermeister
-  name: Перчатки егермейстера
+  name: Jagermeister Gloves
   graph: GlovesJagermeister
   startNode: start
   targetNode: fin
@@ -344,7 +344,7 @@
 
 - type: construction
   id: CookingPot
-  name: Котелок
+  name: Cooking Pot
   graph: CookingPot
   startNode: start
   targetNode: fin
@@ -355,7 +355,7 @@
 
 - type: construction
   id: FryingPan
-  name: Сковородка
+  name: Frying Pan
   graph: FryingPan
   startNode: start
   targetNode: fin
@@ -366,7 +366,7 @@
 
 - type: construction
   id: TriangularLeatherHat
-  name: Треугольная кожаная шляпа
+  name: Triangular Leather Hat
   graph: TriangularLeatherHat
   startNode: start
   targetNode: fin
@@ -378,7 +378,7 @@
 
 - type: construction
   id: StoneCrucible
-  name: Каменный тигель
+  name: Stone Crucible
   graph: StoneCrucible
   startNode: start
   targetNode: fin

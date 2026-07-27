@@ -156,13 +156,13 @@ namespace Content.Client.Examine
 
             var entity = GetEntity(ev.EntityUid);
 
-            // Don't reopen tooltip if already open for this entity — just update message.
-            // Prevents locale flicker when server responds with same-locale text.
+            // Don't reopen tooltip if already open for this entity — prevents flicker.
             if (_examineTooltipOpen == null || _examinedEntity != entity)
             {
                 OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
             }
-            UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs, getVerbs: false);
+            // Only update verbs from server response, keep client-locale message text.
+            UpdateTooltipInfo(player.Value, entity, null, ev.Verbs, getVerbs: false);
         }
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
@@ -263,7 +263,7 @@ namespace Content.Client.Examine
         /// <summary>
         ///     Fills the examine tooltip with a message and buttons if applicable.
         /// </summary>
-        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage message, List<Verb>? verbs=null, bool getVerbs = true)
+        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage? message, List<Verb>? verbs=null, bool getVerbs = true)
         {
             var vBox = _examineTooltipOpen?.GetChild(0).GetChild(0);
             if (vBox == null)
@@ -271,27 +271,24 @@ namespace Content.Client.Examine
                 return;
             }
 
-            // Remove existing message labels before adding new one to avoid duplicates on server response.
-            var existingLabels = vBox.Children.Where(c => c is RichTextLabel && c.Name != "ExamineButtonsHBox" && !(c.Parent?.Name == "ExamineButtonsHBox")).ToArray();
-            foreach (var label in existingLabels)
+            // Add message label only when message is not null.
+            if (message != null)
             {
-                vBox.Children.Remove(label);
-            }
+                foreach (var msg in message.Nodes)
+                {
+                    if (msg.Name != null)
+                        continue;
 
-            foreach (var msg in message.Nodes)
-            {
-                if (msg.Name != null)
-                    continue;
+                    var text = msg.Value.StringValue ?? "";
 
-                var text = msg.Value.StringValue ?? "";
+                    if (string.IsNullOrWhiteSpace(text))
+                        continue;
 
-                if (string.IsNullOrWhiteSpace(text))
-                    continue;
-
-                var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
-                richLabel.SetMessage(message);
-                vBox.AddChild(richLabel);
-                break;
+                    var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
+                    richLabel.SetMessage(message);
+                    vBox.AddChild(richLabel);
+                    break;
+                }
             }
 
             var totalVerbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));

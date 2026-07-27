@@ -4,7 +4,7 @@
 
 - type: construction
   id: Wagon
-  name: Повозка
+  name: Wagon
   graph: Wagon
   startNode: start
   targetNode: fin
@@ -13,7 +13,7 @@
 
 - type: construction
   id: Saddle
-  name: Седло
+  name: Saddle
   graph: Saddle
   startNode: start
   targetNode: fin
@@ -24,7 +24,7 @@
 
 - type: construction
   id: BronzeAgeBed
-  name: Деревянная кровать
+  name: Wooden Bed
   graph: BronzeAgeBed
   startNode: start
   targetNode: fin
@@ -34,7 +34,7 @@
 
 - type: construction
   id: BronzeAgeChest
-  name: Сундук
+  name: Chest
   graph: BronzeAgeChest
   startNode: start
   targetNode: fin
@@ -44,7 +44,7 @@
 
 - type: construction
   id: CoinPurse
-  name: Кошелёк
+  name: Coin Purse
   graph: CoinPurse
   startNode: start
   targetNode: fin
@@ -55,7 +55,7 @@
 
 - type: construction
   id: LeatherBackBackpack
-  name: Кожаный рюкзак
+  name: Leather Backpack
   graph: LeatherBackBackpack
   startNode: start
   targetNode: fin
@@ -66,7 +66,7 @@
 
 - type: construction
   id: LeatherBackSatchel
-  name: Кожаная сумка
+  name: Leather Satchel
   graph: LeatherBackSatchel
   startNode: start
   targetNode: fin
@@ -77,7 +77,7 @@
 
 - type: construction
   id: LeatherBeltPouch
-  name: Кожаный подсумок
+  name: Leather Belt Pouch
   graph: LeatherBeltPouch
   startNode: start
   targetNode: fin

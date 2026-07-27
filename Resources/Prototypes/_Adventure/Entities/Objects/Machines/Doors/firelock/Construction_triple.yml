@@ -145,7 +145,7 @@
 
 
 - type: construction
-  name: пожарный шлюз [Тройной](firelock)
+  name: firelock [Triple]
   id: TripleFirelockGlass
   graph: FirelockTriple
   startNode: start

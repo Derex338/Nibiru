@@ -54,6 +54,29 @@ humanoid-profile-editor-markings-tab = Markings
 humanoid-profile-editor-flavortext-tab = Description
 
 # Traits
+humanoid-profile-editor-faction-tab = Faction
+humanoid-profile-editor-faction-name-label = Faction name
+humanoid-profile-editor-faction-name-placeholder = Enter faction name...
+humanoid-profile-editor-faction-description-label = Faction description
+humanoid-profile-editor-faction-description-placeholder = Enter your faction description...
+humanoid-profile-editor-faction-color-label = Color (Hex)
+humanoid-profile-editor-faction-icon-label = Icon (path)
+humanoid-profile-editor-faction-recruiting-label = Open recruitment
+humanoid-profile-editor-faction-subtab-main = Main
+humanoid-profile-editor-faction-subtab-logo = Logo
+humanoid-profile-editor-faction-subtab-roles = Roles
+humanoid-profile-editor-faction-subtab-filters = Filters
+humanoid-profile-editor-faction-logo-label = Logo (16x16)
+humanoid-profile-editor-faction-logo-eraser-button = Eraser
+humanoid-profile-editor-faction-logo-clear-button = Clear
+humanoid-profile-editor-faction-logo-8x8-label = Icon (8x8)
+humanoid-profile-editor-faction-logo-clear-8x8-button = Clear 8x8
+humanoid-profile-editor-faction-logo-palette-label = Palette
+humanoid-profile-editor-faction-logo-brush-label = Brush
+humanoid-profile-editor-faction-logo-bg-label = Background
+humanoid-profile-editor-faction-logo-bg-color-button = BG Color
+humanoid-profile-editor-faction-logo-brush-color-button = Brush Color
+humanoid-profile-editor-faction-logo-presets-label = Templates
 humanoid-profile-editor-traits-tab = Traits
 humanoid-profile-editor-no-traits = No traits available
 

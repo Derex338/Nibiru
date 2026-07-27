@@ -33,3 +33,39 @@
   name: Плавление
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Smelting.xml"
   filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMehanicsGuideEN
+  name: Mechanics
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Mehanics_EN.xml"
+  filterEnabled: True
+  children:
+  - NibiruMehanicsGuideFactionEN
+  - NibiruMehanicsGuideFireEN
+  - NibiruMehanicsGuideSmeltingEN
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMehanicsGuideFactionEN
+  name: Factions
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Faction_EN.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMehanicsGuideFireEN
+  name: Fire
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Fire_EN.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  hidden: false
+  locFilter: "en-US"
+  id: NibiruMehanicsGuideSmeltingEN
+  name: Smelting
+  text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Smelting_EN.xml"
+  filterEnabled: True

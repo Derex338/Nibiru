@@ -7,6 +7,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Verbs;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Verbs
@@ -55,8 +56,29 @@ namespace Content.Server.Verbs
                     Log.Error($"Unknown verb type received: {key}");
             }
 
+            SortedSet<Verb>? verbs;
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+            var oldCulture = loc.DefaultCulture;
+            try
+            {
+                loc.DefaultCulture = new System.Globalization.CultureInfo(args.Locale);
+            }
+            catch
+            {
+                // Ignore invalid cultures
+            }
+
+            // Relocalize static VerbCategory fields so category text matches the switched locale.
+            // (VerbCategory has TextLocId + ReLocalize — no reflection needed.)
+            RelocalizeVerbCategories();
+
+            verbs = GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force);
+
+            loc.DefaultCulture = oldCulture;
+            RelocalizeVerbCategories();
+
             var response =
-                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force));
+                new VerbsResponseEvent(args.EntityUid, verbs);
             RaiseNetworkEvent(response, player.Channel);
         }
 
@@ -114,5 +136,17 @@ namespace Content.Server.Verbs
             }
         }
 
+    private static void RelocalizeVerbCategories()
+    {
+        var loc = IoCManager.Resolve<ILocalizationManager>();
+        foreach (var field in typeof(VerbCategory).GetFields(
+            System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public))
+        {
+            if (field.GetValue(null) is VerbCategory cat)
+            {
+                cat.ReLocalize(loc);
+            }
+        }
     }
+}
 }

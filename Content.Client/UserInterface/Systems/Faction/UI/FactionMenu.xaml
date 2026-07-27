@@ -4,45 +4,45 @@
             xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
             xmlns:uiControls="clr-namespace:Content.Client.UserInterface.Controls"
             xmlns:ui1="clr-namespace:Content.Client.UserInterface.Systems.Faction.UI"
-            Title="{Loc 'Окно фракции'}"
+            Title="{Loc 'faction-menu-title'}"
             MinWidth="450"
             MinHeight="550"
             Resizable="True">
 
     <BoxContainer Name="FactionCreate" Orientation="Vertical" SeparationOverride="10" MinWidth="250" Access="Public" Visible="True">
-        <Label Name="CurrentTextLabel" Text="{Loc 'Название фракции'}" />
+        <Label Name="CurrentTextLabel" Text="{Loc 'faction-create-label'}" />
         <BoxContainer Orientation="Vertical" SeparationOverride="50">
-            <LineEdit Name="LabelLineEdit" Access="Public" />
+            <LineEdit Name="LabelLineEdit" Access="Public" PlaceHolder="{Loc 'faction-name-placeholder'}" />
             <Button Name="CreateButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
                     MinSize="60 50"
-                    Text="{Loc 'Создать'}"/>
+                    Text="{Loc 'faction-create-button'}"/>
         </BoxContainer>
     </BoxContainer>
 
     <BoxContainer Name="FactionLeaderWindow" Orientation="Vertical" SeparationOverride="10" MinWidth="400" Access="Public" Visible="False">
         <BoxContainer Orientation="Horizontal" SeparationOverride="10">
             <ui1:FactionLogoControl Name="FactionLogoLeader" Access="Public" MinSize="48 48" />
-            <RichTextLabel Name="FactionName" Text="{Loc 'Название фракции: '}" Access="Public" VerticalAlignment="Center" />
+            <RichTextLabel Name="FactionName" Text="{Loc 'faction-name-prefix'}" Access="Public" VerticalAlignment="Center" />
         </BoxContainer>
 
         <TabContainer Name="LeaderTabs" Access="Public" VerticalExpand="True">
             <BoxContainer Name="SettingsTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
                 <!-- Название фракции -->
                 <BoxContainer Name="FactionNameChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
-                    <LineEdit Name="FactionNameChange" Access="Public" MinSize="200 20" PlaceHolder="Название фракции" HorizontalExpand="True"/>
-                    <Button Name="FactionNameChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
+                    <LineEdit Name="FactionNameChange" Access="Public" MinSize="200 20" PlaceHolder="{Loc 'faction-name-placeholder'}" HorizontalExpand="True"/>
+                    <Button Name="FactionNameChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'faction-change-button'}"/>
                 </BoxContainer>
 
                 <!-- Описание фракции -->
                 <BoxContainer Name="FactionDescriptionChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
-                    <LineEdit Name="FactionDescriptionChange" Access="Public" MinSize="200 20" PlaceHolder="Описание фракции" HorizontalExpand="True"/>
-                    <Button Name="FactionDescriptionChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
+                    <LineEdit Name="FactionDescriptionChange" Access="Public" MinSize="200 20" PlaceHolder="{Loc 'faction-description-placeholder'}" HorizontalExpand="True"/>
+                    <Button Name="FactionDescriptionChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'faction-change-button'}"/>
                 </BoxContainer>
 
                 <!-- Цвет фракции -->
                 <BoxContainer Name="FactionColorChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionColorChange" Access="Public" MinSize="200 20" PlaceHolder="#000000 or blue" HorizontalExpand="True"/>
-                    <Button Name="FactionColorChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
+                    <Button Name="FactionColorChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'faction-change-button'}"/>
                 </BoxContainer>
 
                 <!-- Иконка фракции
@@ -52,42 +52,42 @@
                 </BoxContainer>
                 -->
                 <!-- Логотип фракции -->
-                <Button Name="EditLogoButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Редактировать логотип'}" Margin="5"/>
+                <Button Name="EditLogoButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-edit-logo-button'}" Margin="5"/>
 
                 <!-- Переключатель набора -->
                 <BoxContainer Name="RecruitingContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
                     <CheckBox Name="RecruitingToggle" Access="Public" Text="{Loc 'faction-ui-recruiting-toggle'}"/>
                 </BoxContainer>
 
-                <uiControls:ConfirmButton Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Расформировать фракцию'}" ConfirmationText="Точно распустить?" Margin="0 10 0 0"/>
+                <uiControls:ConfirmButton Name="Delete" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-disband-button'}" ConfirmationText="{Loc 'faction-disband-confirmation'}" Margin="0 10 0 0"/>
             </BoxContainer>
 
             <ScrollContainer Name="FiltersTab" VerticalExpand="True" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
-                    <Label Text="Фильтры вступления:" Margin="0 10 0 0" StyleClasses="LabelBig"/>
+                    <Label Text="{Loc 'faction-filters-title'}" Margin="0 10 0 0" StyleClasses="LabelBig"/>
 
                     <BoxContainer Orientation="Horizontal" Margin="5">
-                        <Label Text="Расы:" MinSize="80 0"/>
-                        <Button Name="FilterSpeciesButton" Access="Public" Text="Выбрать..." HorizontalExpand="True"/>
+                        <Label Text="{Loc 'faction-filter-species-label'}" MinSize="80 0"/>
+                        <Button Name="FilterSpeciesButton" Access="Public" Text="{Loc 'faction-filter-choose-button'}" HorizontalExpand="True"/>
                     </BoxContainer>
-                    <Label Name="FilterSpeciesLabel" Access="Public" Text="Все" FontColorOverride="Gray" Margin="85 0 0 0"/>
+                    <Label Name="FilterSpeciesLabel" Access="Public" Text="{Loc 'faction-filter-all'}" FontColorOverride="Gray" Margin="85 0 0 0"/>
 
                     <BoxContainer Orientation="Horizontal" Margin="5">
-                        <Label Text="Пол:" MinSize="80 0"/>
-                        <Button Name="FilterGenderButton" Access="Public" Text="Выбрать..." HorizontalExpand="True"/>
+                        <Label Text="{Loc 'faction-filter-gender-label'}" MinSize="80 0"/>
+                        <Button Name="FilterGenderButton" Access="Public" Text="{Loc 'faction-filter-choose-button'}" HorizontalExpand="True"/>
                     </BoxContainer>
-                    <Label Name="FilterGenderLabel" Access="Public" Text="Все" FontColorOverride="Gray" Margin="85 0 0 0"/>
+                    <Label Name="FilterGenderLabel" Access="Public" Text="{Loc 'faction-filter-all'}" FontColorOverride="Gray" Margin="85 0 0 0"/>
 
                     <BoxContainer Orientation="Vertical" Margin="5">
-                        <Label Text="Цвета кожи:" Margin="0 5 0 5"/>
+                        <Label Text="{Loc 'faction-filter-skin-colors-label'}" Margin="0 5 0 5"/>
                         <BoxContainer Name="SkinColorFiltersContainer" Access="Public" Orientation="Vertical"/>
                     </BoxContainer>
 
                     <BoxContainer Orientation="Vertical" Margin="5">
-                        <Label Text="Слова в имени (через запятую):"/>
+                        <Label Text="{Loc 'faction-filter-name-words-label'}"/>
                         <BoxContainer Orientation="Horizontal">
-                            <LineEdit Name="FilterName" Access="Public" MinSize="200 20" PlaceHolder="Иван, Петро..." HorizontalExpand="True"/>
-                            <Button Name="FilterNameButton" Access="Public" Text="Ок"/>
+                            <LineEdit Name="FilterName" Access="Public" MinSize="200 20" PlaceHolder="{Loc 'faction-filter-name-placeholder'}" HorizontalExpand="True"/>
+                            <Button Name="FilterNameButton" Access="Public" Text="{Loc 'faction-filter-name-ok'}"/>
                         </BoxContainer>
                     </BoxContainer>
                 </BoxContainer>
@@ -95,7 +95,7 @@
 
             <BoxContainer Name="MembersTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
                 <!-- Управление ролями -->
-                <Button Name="CreateRoleButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Управление ролями'}"/>
+                <Button Name="CreateRoleButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-manage-roles-button'}"/>
 
                 <!-- Список членов -->
                 <BoxContainer Name="MembersContainer" Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="2" Margin="5" Access="Public">
@@ -114,8 +114,8 @@
 
                 <!-- Кнопки управления -->
                 <GridContainer Name="Buttons" HorizontalExpand="true" Columns="2">
-                    <Button Name="TransferTitle" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Передать титул'}"/>
-                    <Button Name="Heir" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'Назначить наследником'}"/>
+                    <Button Name="TransferTitle" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-transfer-title-button'}"/>
+                    <Button Name="Heir" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-appoint-heir-button'}"/>
                 </GridContainer>
             </BoxContainer>
         </TabContainer>
@@ -143,14 +143,14 @@
             </PanelContainer.PanelOverride>
             <BoxContainer Orientation="Vertical" SeparationOverride="8" Margin="12">
                 <BoxContainer Orientation="Horizontal" SeparationOverride="8">
-                    <Label Text="Лидер:" FontColorOverride="#a0a0a0" MinSize="80 0" />
+                    <Label Text="{Loc 'faction-leader-label'}" FontColorOverride="#a0a0a0" MinSize="80 0" />
                     <Label Name="FactionLeader" Access="Public" FontColorOverride="#e0e0e0" />
                 </BoxContainer>
 
                 <customControls:HSeparator StyleClasses="LowDivider" />
 
                 <BoxContainer Orientation="Horizontal" SeparationOverride="8">
-                    <Label Text="Ваш ранг:" FontColorOverride="#a0a0a0" MinSize="80 0" />
+                    <Label Text="{Loc 'faction-rank-label-prefix'}" FontColorOverride="#a0a0a0" MinSize="80 0" />
                     <Label Name="FactionRank" Access="Public" FontColorOverride="#5fa3e0" />
                 </BoxContainer>
             </BoxContainer>
@@ -160,7 +160,7 @@
         <BoxContainer Orientation="Vertical" SeparationOverride="10" Margin="0 4 0 0">
              <Button Name="LeaveButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
                     MinSize="140 40"
-                    Text="{Loc 'Выйти из фракции'}"
+                    Text="{Loc 'faction-leave-button'}"
                     HorizontalAlignment="Center"/>
         </BoxContainer>
     </BoxContainer>

@@ -197,13 +197,12 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             return null;
 
         // Check for a saved body matching this player
-        var userId = ev.Player.UserId.ToString();
-        var selectedName = ev.Profile.Name;
+        var userId = ev.Player.UserId;
         var savedQuery = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
 
         while (savedQuery.MoveNext(out var uid, out var saved, out var meta))
         {
-            if (saved.UserId != userId)
+            if (saved.UserId != userId.ToString())
                 continue;
 
             // In Nibiru, we force use of the saved character if one exists for the user.
@@ -214,12 +213,11 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
             var savedEntity = uid;
             var session = ev.Player;
-            var data = session.ContentData();
 
+            // Calling PlayerJoinGame sets JoinedGame flag and sends ticker join msg.
+            // Player already gets InGame status via normal flow — this is needed for the
+            // game status tracking.
             _gameTicker.PlayerJoinGame(session, true);
-
-            var savedMind = _mind.CreateMind(data!.UserId, meta.EntityName);
-            _mind.SetUserId(savedMind, data.UserId);
 
             if (session.Status == SessionStatus.Disconnected)
                 return null;
@@ -227,12 +225,12 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             if (!Exists(savedEntity))
                 return null;
 
-            var mind = session.GetMind();
-            if (mind == null)
-                return null;
+            // Always create fresh mind. GetMind() hits DebugAssert when ContentData.Mind
+            // is stale after WipeAllMinds during round restart. CreateMind handles cleanup.
+            var mindId = _mind.CreateMind(userId, meta.EntityName);
 
             // Transfer from observer ghost -> saved entity. The ghost auto-deletes.
-            _mind.TransferTo(savedMind, savedEntity);
+            _mind.TransferTo(mindId, savedEntity);
             RemComp<Content.Shared.SSDIndicator.SSDIndicatorComponent>(savedEntity);
 
             return savedEntity;

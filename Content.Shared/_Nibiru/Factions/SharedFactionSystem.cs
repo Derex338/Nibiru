@@ -29,7 +29,7 @@ public sealed class SharedFactionSystem : EntitySystem
         var colorHex = component.FactionColor.ToHex();
         var rank = string.IsNullOrEmpty(component.Rank) ? Loc.GetString("faction-rank-no-rank") : component.Rank;
         
-        args.PushMarkup($"\nУчастник фракции [color={colorHex}]{component.FactionName}[/color]. Роль: {rank}.");
+        args.PushMarkup(Loc.GetString("faction-examine-member", ("color", colorHex), ("name", component.FactionName), ("rank", rank)));
     }
 
     public bool OnFactionStateRequest(ICommonSession session, bool CreatorCheck)

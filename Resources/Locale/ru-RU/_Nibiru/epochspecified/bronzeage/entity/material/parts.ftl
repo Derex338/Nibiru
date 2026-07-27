@@ -1,3 +1,9 @@
+ent-BronzeRod = бронзовый стержень
+    .desc = Бронзовый стержень.
+    .suffix = Nibiru, BronzeAge
+ent-BronzeChainmailPiece = бронзовое звено кольчуги
+    .desc = Бронзовое звено для изготовления кольчуги.
+    .suffix = Nibiru, BronzeAge
 ent-BronzeInlay = бронзовая вставка
     .desc = Бронзовая пластина для укрепления конструкций и снаряжения.
     .suffix = Nibiru, BronzeAge

@@ -1,49 +1,47 @@
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using Content.Server._CE.ZLevels.Core;
 using Content.Server._CE.ZLevels.Core.Components;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.GameTicking;
-using Content.Server.Maps;
 using Content.Server.Mind;
+using Content.Server.Parallax;
 using Content.Shared._CE.ZLevels.Core.Components;
 using Content.Shared._Nibiru.GameTicking.Rules;
+using Content.Shared._Nibiru.SaveLoad;
+using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.SSDIndicator;
 using Robust.Server.GameObjects;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Utility;
-using Robust.Shared.Network;
-using Robust.Shared.Enums;
-using Content.Shared._Nibiru.SaveLoad;
-using Content.Shared.Mind;
-using Content.Shared.Players;
 using Robust.Shared.Timing;
-using Content.Shared.SSDIndicator;
-using Content.Shared.Atmos;
-using System.Reflection;
-using Robust.Shared.Analyzers;
-using Content.Shared.Body.Components;
-using Content.Server.Body.Systems;
-using Content.Server.Body.Components;
-using Content.Shared._Nibiru.Factions;
-using Content.Server._Nibiru.Factions;
-using Content.Shared.Nutrition.Components;
-using Content.Server.Parallax;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Nibiru.SaveLoad;
 
+/// <summary>
+/// Saves/loads a full round: maps (split by CE Z-level), living entities (players + NPCs)
+/// and a JSON manifest tying it all together. Public API is intentionally small:
+/// <see cref="SaveRound"/>, <see cref="RequestLoad"/>, <see cref="LoadSavedMaps"/>,
+/// <see cref="TryLoadSavedPlayer"/>.
+/// </summary>
 public sealed class NibiruRoundSaveSystem : EntitySystem
 {
     [Dependency] private readonly IResourceManager _res = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IGameMapManager _mapManager = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
@@ -51,9 +49,27 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly RespiratorSystem _respirator = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
+    /// <summary>Name of the save that should be loaded on the next round start, if any.</summary>
     public string? SaveToLoad { get; private set; }
-    private bool _savingLivingEntities = false;
+
+    /// <summary>
+    /// What the system is currently doing. Used both to reject overlapping save/load calls
+    /// and to tell <see cref="OnIsSerializable"/> what to do with mob entities.
+    /// </summary>
+    private enum Phase
+    {
+        Idle,
+        SavingMaps,
+        SavingEntities,
+        Loading
+    }
+
+    private Phase _state = Phase.Idle;
+
+    // Per-type reflection cache for resetting [AutoPausedField] members after load.
+    private static readonly Dictionary<Type, (FieldInfo[] Fields, PropertyInfo[] Props)> AutoPausedCache = new();
 
     public override void Initialize()
     {
@@ -62,418 +78,464 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         SubscribeNetworkEvent<RequestSavedCharacterMessage>(OnSaveCharacterRequest);
     }
 
-    private void OnSaveCharacterRequest(RequestSavedCharacterMessage msg, EntitySessionEventArgs args)
+    public override void Shutdown()
     {
-        CheckAndSendSavedCharacterInfo(args.SenderSession);
+        base.Shutdown();
+        _mapLoader.OnIsSerializable -= OnIsSerializable;
     }
 
-    private void CheckAndSendSavedCharacterInfo(ICommonSession session)
+    #region Client requests
+
+    private void OnSaveCharacterRequest(RequestSavedCharacterMessage msg, EntitySessionEventArgs args)
+    {
+        SendSavedCharacterList(args.SenderSession);
+    }
+
+    private void SendSavedCharacterList(ICommonSession session)
     {
         var userId = session.UserId.ToString();
+        var names = new List<string>();
+
         var query = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
-        var characterNames = new HashSet<string>();
         while (query.MoveNext(out _, out var saved, out var meta))
         {
             if (saved.UserId == userId && !string.IsNullOrWhiteSpace(meta.EntityName))
-            {
-                characterNames.Add(meta.EntityName);
-            }
+                names.Add(meta.EntityName);
         }
 
-        RaiseNetworkEvent(new SavedCharacterAvailableMessage(characterNames.ToList()), session.Channel);
+        RaiseNetworkEvent(new SavedCharacterAvailableMessage(names), session.Channel);
     }
 
+    #endregion
+
+    #region Reconnect
+
     /// <summary>
-    /// Reconnects a player to their saved entity. Used for late-join reconnection.
-    /// Uses the same two-step observer → entity approach as SpawnPlayer in NibiruWorldSystem
-    /// to ensure the client's game UI is fully initialized before entity attachment.
+    /// Reconnects a player to their saved entity (late-join reconnection via console command).
+    /// The player is assumed to already be in-game as an observer; this does not call
+    /// PlayerJoinGame, it just transfers the existing mind onto the saved entity.
     /// </summary>
     public void TryLoadSavedPlayer(ICommonSession player, string? targetCharacter = null)
     {
-        var userId = player.UserId.ToString();
-        var mindSystem = EntityManager.System<MindSystem>();
-        var savedQuery = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
+        if (player.Status == SessionStatus.Disconnected)
+            return;
 
-        while (savedQuery.MoveNext(out var uid, out var saved, out var meta))
+        var userId = player.UserId.ToString();
+        var query = EntityQueryEnumerator<NibiruSavedPlayerComponent, MetaDataComponent>();
+
+        while (query.MoveNext(out var uid, out var saved, out var meta))
         {
             if (saved.UserId != userId)
                 continue;
-
             if (targetCharacter != null && meta.EntityName != targetCharacter)
                 continue;
+            if (!Exists(uid))
+                continue;
 
-            // Remove the saved marker immediately to prevent double-reconnect.
+            // Remove the marker immediately so a duplicate call can't reconnect twice.
             RemComp<NibiruSavedPlayerComponent>(uid);
 
-            var savedEntity = uid;
-            var session = player;
-            var data = player.ContentData();
+            Log.Info($"[SaveLoad] Reconnecting {player.Name} to saved entity {uid} ({meta.EntityName}).");
 
-            _ticker.PlayerJoinGame(session, true);
+            // Always create a fresh mind instead of reusing GetMind(): after WipeAllMinds the
+            // old ContentData.Mind reference can be stale even though UserMinds is empty,
+            // which trips a DebugAssert. CreateMind cleans up any stale mind via SetUserId.
+            var mindId = _mind.CreateMind(player.UserId, meta.EntityName);
+            _mind.TransferTo(mindId, uid);
+            RemComp<SSDIndicatorComponent>(uid);
 
-            var newMind = mindSystem.CreateMind(data!.UserId, meta.EntityName);
-            mindSystem.SetUserId(newMind, data.UserId);
-
-            if (session.Status == SessionStatus.Disconnected)
-                return;
-
-            if (!Exists(savedEntity))
-                return;
-
-            var mind = session.GetMind();
-            if (mind == null)
-                return;
-
-            // Transfer from observer ghost → saved entity. The ghost auto-deletes.
-            mindSystem.TransferTo(newMind, savedEntity);
-            RemComp<Content.Shared.SSDIndicator.SSDIndicatorComponent>(savedEntity);
+            Log.Info($"[SaveLoad] Player {player.Name} transferred to saved entity {uid}.");
             return;
         }
+
+        Log.Warning($"[SaveLoad] No saved entity found for {player.Name} (character={targetCharacter}).");
     }
+
+    #endregion
+
+    #region Serialization filter
 
     private void OnIsSerializable(Entity<MetaDataComponent> ent, ref bool serializable)
     {
-        if (!_savingLivingEntities && HasComp<MobStateComponent>(ent))
+        switch (_state)
         {
-            serializable = false;
+            case Phase.SavingEntities:
+                // Saving a single player/NPC tree: everything in it must serialize, including
+                // organs/items that don't have MobStateComponent themselves.
+                serializable = true;
+                break;
+
+            case Phase.SavingMaps:
+                // Saving a map: mobs are saved separately as entity files, so skip them here.
+                if (HasComp<MobStateComponent>(ent))
+                    serializable = false;
+                break;
         }
     }
 
-    public void SaveRound(string savename)
+    #endregion
+
+    #region Save
+
+    public void SaveRound(string saveName)
     {
-        Log.Info($"[SaveLoad] Начало сохранения раунда '{savename}'...");
-        var basePath = new ResPath($"/Saves/{savename}");
-
-        if (!_res.UserData.Exists(basePath))
+        if (_state != Phase.Idle)
         {
-            _res.UserData.CreateDir(basePath);
+            Log.Error($"[SaveLoad] Cannot start save '{saveName}': operation already in progress ({_state}).");
+            return;
         }
 
-        var preset = _ticker.CurrentPreset?.ID ?? "sandbox";
-        Log.Info($"[SaveLoad] Пресет: '{preset}'");
-
-        var mapFolder = basePath / "Maps";
-        _res.UserData.CreateDir(mapFolder);
-
-        var manifest = new RoundSaveManifest()
-        {
-            PresetId = preset
-        };
-
-        // Identify networks
-        var networkIds = new Dictionary<EntityUid, int>();
-        int nextNetworkId = 0;
-        var networkQuery = EntityQueryEnumerator<CEZLevelsNetworkComponent>();
-        while (networkQuery.MoveNext(out var uid, out _))
-        {
-            networkIds[uid] = nextNetworkId++;
-        }
-        Log.Info($"[SaveLoad] Найдено Z-сетей: {networkIds.Count}");
-
-        // Снимок FactionRegistry: сохраняем Leader/Members и очищаем перед сохранением карты,
-        // чтобы NetEntity-ссылки на игроков не попали в карту и не вызывали ошибки при загрузке.
-        var factionRegistrySnapshot = new Dictionary<EntityUid, Dictionary<string, (NetEntity leader, List<NetEntity> members)>>();
-        var factionRegistryQuery = EntityQueryEnumerator<FactionRegistryComponent>();
-        while (factionRegistryQuery.MoveNext(out var regUid, out var registry))
-        {
-            var snap = new Dictionary<string, (NetEntity, List<NetEntity>)>();
-            foreach (var (name, data) in registry.Factions)
-            {
-                snap[name] = (data.Leader, new List<NetEntity>(data.Members));
-                var cleared = data;
-                cleared.Leader = NetEntity.Invalid;
-                cleared.Members = new List<NetEntity>();
-                registry.Factions[name] = cleared;
-            }
-            factionRegistrySnapshot[regUid] = snap;
-        }
+        Log.Info($"[SaveLoad] Saving round '{saveName}'...");
 
         try
         {
-            // Save Maps
-            var allMapIds = _map.GetAllMapIds().ToList();
-            Log.Info($"[SaveLoad] Всего карт в мире: {allMapIds.Count} (включая Nullspace)");
+            var basePath = new ResPath($"/Saves/{saveName}");
+            PrepareSaveDirectory(basePath);
 
-            foreach (var mapId in allMapIds)
+            var manifest = new RoundSaveManifest
             {
-                if (mapId == MapId.Nullspace) continue;
+                PresetId = _ticker.CurrentPreset?.ID ?? "sandbox"
+            };
+            Log.Info($"[SaveLoad] Preset: '{manifest.PresetId}'.");
 
-                var mapUid = _map.GetMapEntityId(mapId);
-                if (!Exists(mapUid))
-                {
-                    Log.Warning($"[SaveLoad] Карта {mapId}: entity не существует, пропускаем.");
-                    continue;
-                }
+            _state = Phase.SavingMaps;
+            SaveMaps(basePath, manifest);
+            Log.Info($"[SaveLoad] Saved maps: {manifest.Maps.Count}.");
 
-                var mapName = MetaData(mapUid).EntityName;
-                int zLevel = 0;
-                int networkId = -1;
-                bool shouldSave = false;
+            _state = Phase.SavingEntities;
+            SaveLivingEntities(basePath, manifest);
 
-                if (TryComp<CEZLevelMapComponent>(mapUid, out var mapZLevelComp))
-                {
-                    // У карты есть CEZLevelMapComponent — используем Depth напрямую
-                    zLevel = mapZLevelComp.Depth;
-                    shouldSave = true;
-                    if (_zLevels.TryGetZNetwork(mapUid, out var zNetwork))
-                    {
-                        networkId = networkIds.GetValueOrDefault(zNetwork.Value.Owner, -1);
-                    }
-                    Log.Debug($"[SaveLoad] Карта {mapId} '{mapName}': CEZLevelMapComponent.Depth={zLevel}, networkId={networkId}");
-                }
-                else
-                {
-                    // CEZLevelMapComponent — [UnsavedComponent], не сохраняется в yml.
-                    // Определяем уровень альтернативными методами.
+            WriteManifest(basePath, manifest);
 
-                    // 1) Попытка через NibiruSurvivalRuleComponent (WorldMap/CaveMap)
-                    var rules = EntityQuery<NibiruSurvivalRuleComponent>();
-                    foreach (var rule in rules)
-                    {
-                        if (rule.WorldMap == mapUid)
-                        {
-                            zLevel = 0; shouldSave = true;
-                            Log.Debug($"[SaveLoad] Карта {mapId} '{mapName}': определена как WorldMap (z=0) через Rule.");
-                        }
-                        else if (rule.CaveMap == mapUid)
-                        {
-                            zLevel = -1; shouldSave = true;
-                            Log.Debug($"[SaveLoad] Карта {mapId} '{mapName}': определена как CaveMap (z=-1) через Rule.");
-                        }
-                    }
-
-                    // 2) Fallback: по имени entity карты ("level -1", "level 0", "level 1", "level 2")
-                    if (!shouldSave && !string.IsNullOrEmpty(mapName))
-                    {
-                        if (mapName == "level -1") { zLevel = -1; shouldSave = true; }
-                        else if (mapName == "level 0") { zLevel = 0; shouldSave = true; }
-                        else if (mapName == "level 1") { zLevel = 1; shouldSave = true; }
-                        else if (mapName == "level 2") { zLevel = 2; shouldSave = true; }
-
-                        if (shouldSave)
-                            Log.Debug($"[SaveLoad] Карта {mapId} '{mapName}': определена по имени entity (z={zLevel}).");
-                    }
-
-                    if (!shouldSave)
-                    {
-                        Log.Warning($"[SaveLoad] Карта {mapId} '{mapName}': не удалось определить Z-уровень, пропускаем.");
-                        continue;
-                    }
-                }
-
-                var mapFile = mapFolder / $"map_{(int)mapId}.yml";
-                Log.Info($"[SaveLoad] Сохранение карты {mapId} '{mapName}' (z={zLevel}) -> {mapFile}...");
-
-                // BiomeComponent хранит LoadedEntities (загруженные Entity чанков биома) с EntityUid-ключами.
-                // При сериализации удалённые entity превращаются в NetEntity.Invalid (ключ "invalid"),
-                // что вызывает ArgumentException: "An item with the same key has already been added".
-                // Биом восстановится процедурно по сиду при загрузке, поэтому очищать безопасно.
-                var biomeSnap = _biome.PrepareMapForSave(mapUid);
-                if (biomeSnap.HasValue)
-                    Log.Debug($"[SaveLoad] BiomeComponent на карте {mapId}: очищено LoadedEntities ({biomeSnap.Value.Entities.Count} чанков) и LoadedChunks для сохранения.");
-
-                bool mapSaved;
-                try
-                {
-                    mapSaved = _mapLoader.TrySaveMap(mapId, mapFile);
-                }
-                finally
-                {
-                    // Восстанавливаем рантайм-состояние BiomeComponent
-                    if (biomeSnap.HasValue)
-                        _biome.RestoreMapAfterSave(mapUid, biomeSnap.Value);
-                }
-
-                if (mapSaved)
-                {
-                    manifest.Maps.Add(new MapSaveData()
-                    {
-                        MapId = (int)mapId,
-                        ZLevel = zLevel,
-                        NetworkId = networkId,
-                        MapFile = mapFile.ToString()
-                    });
-                    Log.Info($"[SaveLoad] Карта {mapId} сохранена успешно.");
-                }
-                else
-                {
-                    Log.Error($"[SaveLoad] Не удалось сохранить карту {mapId} '{mapName}'!");
-                }
-            }
-
-            Log.Info($"[SaveLoad] Сохранено карт: {manifest.Maps.Count}");
+            Log.Info($"[SaveLoad] Save '{saveName}' complete. Maps: {manifest.Maps.Count}, Players: {manifest.Players.Count}.");
+        }
+        catch (Exception e)
+        {
+            Log.Error($"[SaveLoad] Save '{saveName}' failed with an exception: {e}");
         }
         finally
         {
-            // Восстанавливаем Leader/Members в FactionRegistry
-            foreach (var (regUid, snap) in factionRegistrySnapshot)
-            {
-                if (!TryComp<FactionRegistryComponent>(regUid, out var registry))
-                    continue;
-                foreach (var (name, (leader, members)) in snap)
-                {
-                    if (!registry.Factions.TryGetValue(name, out var data))
-                        continue;
-                    data.Leader = leader;
-                    data.Members = members;
-                    registry.Factions[name] = data;
-                }
-            }
+            _state = Phase.Idle;
         }
+    }
 
-        // Save Living Entities
-        Log.Info("[SaveLoad] Сохранение живых существ...");
-        _savingLivingEntities = true;
+    private void PrepareSaveDirectory(ResPath basePath)
+    {
+        // Wipe any previous save with this name so we never mix files from two saves.
+        if (_res.UserData.Exists(basePath))
+            _res.UserData.Delete(basePath);
 
-        // Temporarily make mob prototypes savable
-        var impactedProtos = new HashSet<EntityPrototype>();
-        var mobProtoQuery = EntityQueryEnumerator<MobStateComponent, MetaDataComponent>();
-        while (mobProtoQuery.MoveNext(out _, out _, out var meta))
+        _res.UserData.CreateDir(basePath);
+    }
+
+    private void SaveMaps(ResPath basePath, RoundSaveManifest manifest)
+    {
+        var mapFolder = basePath / "Maps";
+        _res.UserData.CreateDir(mapFolder);
+
+        var networkIds = BuildNetworkIndex();
+        var allMapIds = _map.GetAllMapIds().ToList();
+        Log.Info($"[SaveLoad] All maps: {allMapIds.Count}.");
+
+        foreach (var mapId in allMapIds)
         {
-            if (meta.EntityPrototype != null && !meta.EntityPrototype.MapSavable)
+            if (mapId == MapId.Nullspace)
+                continue;
+
+            var mapUid = _map.GetMapEntityId(mapId);
+            if (!Exists(mapUid))
             {
-                impactedProtos.Add(meta.EntityPrototype);
-                meta.EntityPrototype.MapSavable = true;
+                Log.Warning($"[SaveLoad] Map {mapId}: entity doesn't exist, skipping.");
+                continue;
+            }
+
+            if (!TryGetZLevel(mapUid, out var zLevel))
+            {
+                Log.Warning($"[SaveLoad] Map {mapId} '{MetaData(mapUid).EntityName}': cannot determine Z-level, skipping.");
+                continue;
+            }
+
+            var networkId = -1;
+            if (_zLevels.TryGetZNetwork(mapUid, out var zNetwork))
+                networkId = networkIds.GetValueOrDefault(zNetwork.Value.Owner, -1);
+
+            SaveSingleMap(mapId, mapUid, zLevel, networkId, mapFolder, manifest);
+        }
+    }
+
+    private Dictionary<EntityUid, int> BuildNetworkIndex()
+    {
+        var ids = new Dictionary<EntityUid, int>();
+        var next = 0;
+
+        var query = EntityQueryEnumerator<CEZLevelsNetworkComponent>();
+        while (query.MoveNext(out var uid, out _))
+            ids[uid] = next++;
+
+        Log.Info($"[SaveLoad] Found Z-networks: {ids.Count}.");
+        return ids;
+    }
+
+    /// <summary>
+    /// CEZLevelMapComponent is the normal source of truth for a map's depth, but it's
+    /// [UnsavedComponent] and won't exist right after a fresh round start, so we fall back
+    /// to the survival rule's map references, then to a fixed map name.
+    /// </summary>
+    private bool TryGetZLevel(EntityUid mapUid, out int zLevel)
+    {
+        if (TryComp<CEZLevelMapComponent>(mapUid, out var comp))
+        {
+            zLevel = comp.Depth;
+            return true;
+        }
+
+        foreach (var rule in EntityQuery<NibiruSurvivalRuleComponent>())
+        {
+            if (rule.WorldMap == mapUid)
+            {
+                zLevel = 0;
+                return true;
+            }
+
+            if (rule.CaveMap == mapUid)
+            {
+                zLevel = -1;
+                return true;
             }
         }
+
+        zLevel = MetaData(mapUid).EntityName switch
+        {
+            "level -1" => -1,
+            "level 0" => 0,
+            "level 1" => 1,
+            "level 2" => 2,
+            _ => int.MinValue
+        };
+
+        return zLevel != int.MinValue;
+    }
+
+    private void SaveSingleMap(MapId mapId, EntityUid mapUid, int zLevel, int networkId, ResPath mapFolder, RoundSaveManifest manifest)
+    {
+        var mapFile = mapFolder / $"map_{(int)mapId}.yml";
+        var mapName = MetaData(mapUid).EntityName;
+        Log.Info($"[SaveLoad] Saving map {mapId} '{mapName}' (z={zLevel}) -> {mapFile}");
+
+        // Biome runtime state (loaded chunks/entities/decals) can't round-trip as-is:
+        // entity/decal references would be stale on reload, but the chunk list itself
+        // must be kept so the biome doesn't regenerate from scratch after loading.
+        var biomeSnap = _biome.PrepareMapForSave(mapUid);
+        bool saved;
+        try
+        {
+            saved = _mapLoader.TrySaveMap(mapId, mapFile);
+        }
+        finally
+        {
+            if (biomeSnap.HasValue)
+                _biome.RestoreMapAfterSave(mapUid, biomeSnap.Value);
+        }
+
+        if (!saved)
+        {
+            Log.Error($"[SaveLoad] Failed to save map {mapId} '{mapName}'!");
+            return;
+        }
+
+        manifest.Maps.Add(new MapSaveData
+        {
+            MapId = (int)mapId,
+            ZLevel = zLevel,
+            NetworkId = networkId,
+            MapFile = mapFile.ToString()
+        });
+        Log.Info($"[SaveLoad] Map {mapId} saved.");
+    }
+
+    private void SaveLivingEntities(ResPath basePath, RoundSaveManifest manifest)
+    {
+        Log.Info("[SaveLoad] Saving living entities...");
+
+        var playerFolder = basePath / "Players";
+        _res.UserData.CreateDir(playerFolder);
+
+        var npcFolder = basePath / "Mobs";
+        _res.UserData.CreateDir(npcFolder);
+
+        var (players, npcs) = CollectLivingEntities();
+        Log.Info($"[SaveLoad] Players to save: {players.Count}, NPCs: {npcs.Count}.");
+
+        // Engine serialization checks EntityPrototype.MapSavable before calling
+        // OnIsSerializable — so the delegate can't override it. Temporarily enable
+        // MapSavable on all mob prototypes so their full entity tree serializes.
+        var impactedProtos = new HashSet<EntityPrototype>();
+        foreach (var uid in players.Concat(npcs))
+        {
+            var meta = MetaData(uid);
+            if (meta.EntityPrototype is { MapSavable: false } proto)
+                impactedProtos.Add(proto);
+        }
+        foreach (var proto in impactedProtos)
+            proto.MapSavable = true;
+
+        var saveOpts = new SerializationOptions { ErrorOnOrphan = false };
 
         try
         {
-            var playerFolder = basePath / "Players";
-            _res.UserData.CreateDir(playerFolder);
+            foreach (var uid in players)
+                SavePlayer(uid, playerFolder, saveOpts, manifest);
 
-            var npcFolder = basePath / "Mobs";
-            _res.UserData.CreateDir(npcFolder);
-            var npcFile = npcFolder / "npcs.yml";
-
-            var npcsToSave = new HashSet<EntityUid>();
-            var playersToSave = new List<EntityUid>();
-
-            var query = EntityQueryEnumerator<MetaDataComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var meta, out var xform))
-            {
-                if (HasComp<MapComponent>(uid) || HasComp<MapGridComponent>(uid))
-                    continue;
-
-                if (!HasComp<MobStateComponent>(uid))
-                    continue;
-
-                var mapId = (int)xform.MapID;
-                var parentComp = EnsureComp<NibiruSaveParentComponent>(uid);
-                parentComp.MapId = mapId;
-                parentComp.Position = _xform.GetWorldPosition(xform);
-                parentComp.Rotation = _xform.GetWorldRotation(xform);
-
-                if (TryComp<MindContainerComponent>(uid, out var mindComp) && mindComp.HasMind)
-                {
-                    playersToSave.Add(uid);
-                }
-                else
-                {
-                    npcsToSave.Add(uid);
-                }
-            }
-
-            Log.Info($"[SaveLoad] Игроков для сохранения: {playersToSave.Count}, NPC: {npcsToSave.Count}");
-
-            var saveOpts = new SerializationOptions { ErrorOnOrphan = false };
-
-            foreach (var uid in playersToSave)
-            {
-                var meta = Comp<MetaDataComponent>(uid);
-                var userId = string.Empty;
-                if (TryComp<ActorComponent>(uid, out var actor))
-                {
-                    userId = actor.PlayerSession.UserId.ToString();
-                }
-                else
-                {
-                    userId = $"entity_{uid}";
-                }
-
-                var playerFile = playerFolder / $"{userId}.yml";
-                Log.Debug($"[SaveLoad] Сохранение игрока '{meta.EntityName}' ({userId}) -> {playerFile}");
-
-                if (_mapLoader.TrySaveEntity(uid, playerFile, saveOpts))
-                {
-                    manifest.Players.Add(new PlayerSaveData()
-                    {
-                        UserId = userId,
-                        EntityName = meta.EntityName,
-                        File = playerFile.ToString()
-                    });
-                    Log.Info($"[SaveLoad] Игрок '{meta.EntityName}' сохранён.");
-                }
-                else
-                {
-                    Log.Error($"[SaveLoad] Не удалось сохранить игрока '{meta.EntityName}' ({userId})!");
-                }
-
-                RemComp<NibiruSaveParentComponent>(uid);
-            }
-
-            if (npcsToSave.Count > 0)
-            {
-                Log.Debug($"[SaveLoad] Сохранение NPC ({npcsToSave.Count} шт.) -> {npcFile}");
-                if (_mapLoader.TrySaveGeneric(npcsToSave, npcFile, out _, saveOpts))
-                {
-                    manifest.NpcFile = npcFile.ToString();
-                    Log.Info($"[SaveLoad] NPC сохранены.");
-                }
-                else
-                {
-                    Log.Error($"[SaveLoad] Не удалось сохранить NPC!");
-                }
-
-                foreach (var npc in npcsToSave)
-                {
-                    RemComp<NibiruSaveParentComponent>(npc);
-                }
-            }
+            if (npcs.Count > 0)
+                SaveNpcs(npcs, npcFolder, saveOpts, manifest);
         }
         finally
         {
             foreach (var proto in impactedProtos)
-            {
                 proto.MapSavable = false;
-            }
-            _savingLivingEntities = false;
         }
-
-        var manifestPath = basePath / "manifest.json";
-        var jsonStr = JsonSerializer.Serialize(manifest, new JsonSerializerOptions() { WriteIndented = true });
-
-        using (var stream = _res.UserData.OpenWriteText(manifestPath))
-        {
-            stream.Write(jsonStr);
-        }
-
-        Log.Info($"[SaveLoad] Сохранение '{savename}' завершено. Карт: {manifest.Maps.Count}, Игроков: {manifest.Players.Count}.");
     }
 
-    public void RequestLoad(string savename)
+    /// <summary>
+    /// Finds every mob in the world, tags it with where it is (so it can be put back in the
+    /// right place after loading) and splits it into players vs. NPCs.
+    /// </summary>
+    private (List<EntityUid> Players, HashSet<EntityUid> Npcs) CollectLivingEntities()
     {
-        var basePath = new ResPath($"/Saves/{savename}");
-        var manifestPath = basePath / "manifest.json";
+        var players = new List<EntityUid>();
+        var npcs = new HashSet<EntityUid>();
 
-        if (!_res.UserData.Exists(manifestPath))
+        var query = EntityQueryEnumerator<MobStateComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
         {
-            Log.Error($"Nibiru: Save '{savename}' not found!");
+            var parent = EnsureComp<NibiruSaveParentComponent>(uid);
+            parent.MapId = (int)xform.MapID;
+            parent.Position = _xform.GetWorldPosition(xform);
+            parent.Rotation = _xform.GetWorldRotation(xform);
+
+            if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+                players.Add(uid);
+            else
+                npcs.Add(uid);
+        }
+
+        return (players, npcs);
+    }
+
+    private void SavePlayer(EntityUid uid, ResPath playerFolder, SerializationOptions opts, RoundSaveManifest manifest)
+    {
+        var meta = Comp<MetaDataComponent>(uid);
+        var userId = GetPlayerUserId(uid);
+        var file = playerFolder / $"{userId}.yml";
+
+        try
+        {
+            Log.Debug($"[SaveLoad] Saving player '{meta.EntityName}' ({userId}) -> {file}");
+
+            if (_mapLoader.TrySaveEntity(uid, file, opts))
+            {
+                manifest.Players.Add(new PlayerSaveData
+                {
+                    UserId = userId,
+                    EntityName = meta.EntityName,
+                    File = file.ToString()
+                });
+                Log.Info($"[SaveLoad] Player '{meta.EntityName}' saved.");
+            }
+            else
+            {
+                Log.Error($"[SaveLoad] Failed to save player '{meta.EntityName}' ({userId})!");
+            }
+        }
+        finally
+        {
+            RemComp<NibiruSaveParentComponent>(uid);
+        }
+    }
+
+    private void SaveNpcs(HashSet<EntityUid> npcs, ResPath npcFolder, SerializationOptions opts, RoundSaveManifest manifest)
+    {
+        var file = npcFolder / "npcs.yml";
+
+        try
+        {
+            Log.Debug($"[SaveLoad] Saving NPCs ({npcs.Count}) -> {file}");
+
+            if (_mapLoader.TrySaveGeneric(npcs, file, out _, opts))
+            {
+                manifest.NpcFile = file.ToString();
+                Log.Info("[SaveLoad] NPCs saved.");
+            }
+            else
+            {
+                Log.Error("[SaveLoad] Failed to save NPCs!");
+            }
+        }
+        finally
+        {
+            foreach (var uid in npcs)
+                RemComp<NibiruSaveParentComponent>(uid);
+        }
+    }
+
+    private void WriteManifest(ResPath basePath, RoundSaveManifest manifest)
+    {
+        var path = basePath / "manifest.json";
+        var json = JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true });
+
+        using var stream = _res.UserData.OpenWriteText(path);
+        stream.Write(json);
+    }
+
+    /// <summary>
+    /// Extracts a stable UserId for a player entity. Prefers the live session (connected
+    /// player), falls back to the mind's stored UserId (disconnected), then to a synthetic
+    /// id so the save never fails outright.
+    /// </summary>
+    private string GetPlayerUserId(EntityUid uid)
+    {
+        if (TryComp<ActorComponent>(uid, out var actor))
+            return actor.PlayerSession.UserId.ToString();
+
+        if (TryComp<MindContainerComponent>(uid, out var mindContainer)
+            && mindContainer.HasMind
+            && _mind.TryGetMind(uid, out _, out var mindComp))
+        {
+            return mindComp.UserId?.ToString() ?? $"entity_{uid}";
+        }
+
+        return $"entity_{uid}";
+    }
+
+    #endregion
+
+    #region Load
+
+    public void RequestLoad(string saveName)
+    {
+        if (_state != Phase.Idle)
+        {
+            Log.Error($"[SaveLoad] Cannot request load of '{saveName}': operation already in progress ({_state}).");
             return;
         }
 
-        RoundSaveManifest? manifest;
-        using (var stream = _res.UserData.OpenRead(manifestPath))
+        var manifestPath = new ResPath($"/Saves/{saveName}") / "manifest.json";
+        if (!_res.UserData.Exists(manifestPath))
         {
-            manifest = JsonSerializer.Deserialize<RoundSaveManifest>(stream);
+            Log.Error($"[SaveLoad] Save '{saveName}' not found (missing manifest).");
+            return;
         }
 
-        if (manifest != null && !string.IsNullOrEmpty(manifest.PresetId))
+        var manifest = ReadManifest(manifestPath);
+        if (manifest == null || string.IsNullOrEmpty(manifest.PresetId))
         {
-            _ticker.SetGamePreset(manifest.PresetId, force: false);
-            SaveToLoad = savename;
-            _ticker.RestartRound();
+            Log.Error($"[SaveLoad] Save '{saveName}' has an invalid manifest.");
+            return;
         }
+
+        SaveToLoad = saveName;
+        _ticker.SetGamePreset(manifest.PresetId, force: false);
+        _ticker.RestartRound();
     }
 
     public void ClearLoad()
@@ -481,6 +543,10 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         SaveToLoad = null;
     }
 
+    /// <summary>
+    /// Actually loads the maps/entities for <see cref="SaveToLoad"/>. Meant to be called once
+    /// during round setup, after <see cref="RequestLoad"/> has restarted the round.
+    /// </summary>
     public bool LoadSavedMaps(out EntityUid loadedCave, out EntityUid loadedWorld, out EntityUid loadedSky1, out EntityUid loadedSky2)
     {
         loadedCave = EntityUid.Invalid;
@@ -488,195 +554,230 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         loadedSky1 = EntityUid.Invalid;
         loadedSky2 = EntityUid.Invalid;
 
-        if (SaveToLoad == null) return false;
+        if (SaveToLoad is not { } saveName)
+            return false;
 
-        Log.Info($"[SaveLoad] Начало загрузки сохранения '{SaveToLoad}'...");
-
-        var basePath = new ResPath($"/Saves/{SaveToLoad}");
-        var manifestPath = basePath / "manifest.json";
-
-        if (!_res.UserData.Exists(manifestPath))
+        if (_state != Phase.Idle)
         {
-            Log.Error($"[SaveLoad] Манифест не найден: {manifestPath}!");
+            Log.Error($"[SaveLoad] Cannot load '{saveName}': operation already in progress ({_state}).");
             return false;
         }
 
-        RoundSaveManifest? manifest;
-        using (var stream = _res.UserData.OpenRead(manifestPath))
-        {
-            manifest = JsonSerializer.Deserialize<RoundSaveManifest>(stream);
-        }
+        _state = Phase.Loading;
+        Log.Info($"[SaveLoad] Loading save '{saveName}'...");
 
-        if (manifest == null)
+        try
         {
-            Log.Error("[SaveLoad] Не удалось десериализовать манифест!");
+            var basePath = new ResPath($"/Saves/{saveName}");
+            var manifestPath = basePath / "manifest.json";
+
+            if (!_res.UserData.Exists(manifestPath))
+            {
+                Log.Error($"[SaveLoad] Manifest not found: {manifestPath}!");
+                return false;
+            }
+
+            var manifest = ReadManifest(manifestPath);
+            if (manifest == null)
+            {
+                Log.Error("[SaveLoad] Failed to deserialize manifest!");
+                return false;
+            }
+
+            Log.Info($"[SaveLoad] Manifest: {manifest.Maps.Count} maps, {manifest.Players.Count} players, NpcFile={manifest.NpcFile ?? "none"}.");
+
+            var oldIdToNewUid = LoadMaps(manifest, out var mapsByZLevel);
+            RestoreZNetworks(manifest, oldIdToNewUid);
+            LoadLivingEntities(manifest, oldIdToNewUid);
+
+            loadedCave = mapsByZLevel.GetValueOrDefault(-1, EntityUid.Invalid);
+            loadedWorld = mapsByZLevel.GetValueOrDefault(0, EntityUid.Invalid);
+            loadedSky1 = mapsByZLevel.GetValueOrDefault(1, EntityUid.Invalid);
+            loadedSky2 = mapsByZLevel.GetValueOrDefault(2, EntityUid.Invalid);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Log.Error($"[SaveLoad] Load '{saveName}' failed with an exception: {e}");
             return false;
         }
+        finally
+        {
+            _state = Phase.Idle;
+        }
+    }
 
-        Log.Info($"[SaveLoad] Манифест: {manifest.Maps.Count} карт, {manifest.Players.Count} игроков, NpcFile={manifest.NpcFile ?? "нет"}.");
+    private RoundSaveManifest? ReadManifest(ResPath path)
+    {
+        using var stream = _res.UserData.OpenRead(path);
+        return JsonSerializer.Deserialize<RoundSaveManifest>(stream);
+    }
 
-        // Load maps and reconstruct Z-networks
-        var networks = new Dictionary<int, Dictionary<EntityUid, int>>();
-        var loadedMapsByZ = new Dictionary<int, EntityUid>();
-        var oldToNewMapMapping = new Dictionary<int, EntityUid>();
+    private Dictionary<int, EntityUid> LoadMaps(RoundSaveManifest manifest, out Dictionary<int, EntityUid> mapsByZLevel)
+    {
+        var oldIdToNewUid = new Dictionary<int, EntityUid>();
+        mapsByZLevel = new Dictionary<int, EntityUid>();
 
         foreach (var mapData in manifest.Maps)
         {
-            Log.Info($"[SaveLoad] Загрузка карты z={mapData.ZLevel}, file={mapData.MapFile}, oldMapId={mapData.MapId}...");
+            Log.Info($"[SaveLoad] Loading map z={mapData.ZLevel}, file={mapData.MapFile} (oldMapId={mapData.MapId})...");
 
-            if (_mapLoader.TryLoadMap(new ResPath(mapData.MapFile), out var newMapUid, out _))
+            if (!_mapLoader.TryLoadMap(new ResPath(mapData.MapFile), out var newMap, out _))
             {
-                var mapUid = newMapUid.Value.Owner;
-                oldToNewMapMapping[mapData.MapId] = mapUid;
-
-                if (mapData.NetworkId != -1)
-                {
-                    if (!networks.ContainsKey(mapData.NetworkId))
-                        networks[mapData.NetworkId] = new();
-
-                    networks[mapData.NetworkId].Add(mapUid, mapData.ZLevel);
-                }
-
-                loadedMapsByZ[mapData.ZLevel] = mapUid;
-                Log.Info($"[SaveLoad] Карта z={mapData.ZLevel} загружена: newUid={mapUid} (oldId={mapData.MapId})");
-            }
-            else
-            {
-                Log.Error($"[SaveLoad] Не удалось загрузить карту '{mapData.MapFile}' (z={mapData.ZLevel})!");
-            }
-        }
-
-        Log.Info($"[SaveLoad] Старые ID -> новые Entity: [{string.Join(", ", oldToNewMapMapping.Select(kv => $"{kv.Key}->{kv.Value}"))}]");
-
-        foreach (var networkMaps in networks.Values)
-        {
-            var newNetwork = _zLevels.CreateZNetwork();
-            _zLevels.TryAddMapsIntoZNetwork(newNetwork, networkMaps);
-            Log.Info($"[SaveLoad] Создана Z-сеть с {networkMaps.Count} картами.");
-        }
-
-        // Load entity files (players and NPCs)
-        var entityFiles = new List<string>();
-        foreach (var p in manifest.Players)
-            entityFiles.Add(p.File);
-        if (!string.IsNullOrEmpty(manifest.NpcFile))
-            entityFiles.Add(manifest.NpcFile);
-
-        foreach (var file in entityFiles)
-        {
-            var resPath = new ResPath(file);
-            if (!_res.UserData.Exists(resPath))
-            {
-                Log.Error($"[SaveLoad] Файл entity не найден: {file}");
+                Log.Error($"[SaveLoad] Failed to load map '{mapData.MapFile}' (z={mapData.ZLevel})!");
                 continue;
             }
 
-            Log.Info($"[SaveLoad] Загрузка entity-файла: {file}");
+            var mapUid = newMap.Value.Owner;
+            oldIdToNewUid[mapData.MapId] = mapUid;
+            mapsByZLevel[mapData.ZLevel] = mapUid;
 
-            if (_mapLoader.TryLoadGeneric(resPath, out var result))
-            {
-                var isPlayerFile = file.Contains("Players/");
-                var userId = isPlayerFile ? Path.GetFileNameWithoutExtension(file) : string.Empty;
-
-                Log.Debug($"[SaveLoad] Загружено entity: {result.Entities.Count} + orphans: {result.Orphans.Count}");
-
-                foreach (var uid in result.Entities.Concat(result.Orphans))
-                {
-                    bool isRoot = HasComp<NibiruSaveParentComponent>(uid);
-
-                    if (isPlayerFile && isRoot)
-                    {
-                        Log.Debug($"[SaveLoad] Восстановление игрока uid={uid}, userId={userId}");
-                        var savedComp = EnsureComp<NibiruSavedPlayerComponent>(uid);
-                        savedComp.UserId = userId;
-
-                        var ssd = EnsureComp<SSDIndicatorComponent>(uid);
-                        ssd.IsSSD = true;
-                        EnsureComp<NibiruNoSSDSleepComponent>(uid);
-                    }
-
-                    // Явный сброс Respirator: насыщение кислородом на максимум и сброс таймера
-                    if (TryComp<RespiratorComponent>(uid, out var respirator))
-                    {
-                        _respirator.UpdateSaturation(uid, respirator.MaxSaturation - respirator.Saturation, respirator);
-                        _respirator.ResetTimer((uid, respirator));
-                        Log.Debug($"[SaveLoad] Respirator uid={uid}: сброс насыщения до макс ({respirator.MaxSaturation}), сброс таймера.");
-                    }
-
-                    // Явный сброс лёгких: восстановить газовую смесь в лёгких до нормального уровня
-                    if (TryComp<LungComponent>(uid, out var lung))
-                    {
-                        // Заполняем лёгкие нормальным воздухом: ~21% O2, 79% N2
-                        lung.Air.SetMoles(Gas.Oxygen, 1.5f);
-                        lung.Air.SetMoles(Gas.Nitrogen, 5.6f);
-                        //lung.Air.Temperature = Atmospherics.NormalBodyTemperature;
-                        Log.Debug($"[SaveLoad] Lung uid={uid}: восстановлена газовая смесь.");
-                    }
-
-                    // Явный сброс SSDIndicator таймеров
-                    if (TryComp<SSDIndicatorComponent>(uid, out var ssdComp))
-                    {
-                        ssdComp.NextUpdate = _gameTiming.CurTime + ssdComp.UpdateInterval;
-                        //ssdComp.FallAsleepTime = TimeSpan.Zero;
-                    }
-
-                    // Явный сброс таймеров голода и жажды
-                    if (TryComp<HungerComponent>(uid, out var hunger))
-                    {
-                        var curTime = _gameTiming.CurTime;
-                        // Сбрасываем время последнего авторитарного обновления голода
-                        // (без [AutoPausedField] это поле не сбрасывается автоматически)
-                        //hunger.LastAuthoritativeHungerChangeTime = curTime;
-                        //hunger.NextThresholdUpdateTime = curTime + hunger.ThresholdUpdateRate;
-                    }
-                    if (TryComp<ThirstComponent>(uid, out var thirst))
-                    {
-                        //thirst.NextUpdateTime = _gameTiming.CurTime + thirst.UpdateRate;
-                    }
-
-                    // Дополнительный сброс всех [AutoPausedField] на случай других компонентов
-                    ResetAllAutoPausedFields(uid);
-
-                    if (TryComp<NibiruSaveParentComponent>(uid, out var parentComp))
-                    {
-                        if (oldToNewMapMapping.TryGetValue(parentComp.MapId, out var targetMap))
-                        {
-                            Log.Debug($"[SaveLoad] Размещение uid={uid}: mapId={parentComp.MapId} -> targetMap={targetMap}, pos={parentComp.Position}");
-                            _xform.SetParent(uid, targetMap);
-                            _xform.SetLocalPositionRotation(uid, parentComp.Position, parentComp.Rotation);
-
-                            if (TryComp<MapComponent>(targetMap, out var mapComp)
-                                && _map.TryFindGridAt(mapComp.MapId, parentComp.Position, out var gridUid, out _))
-                            {
-                                _xform.SetParent(uid, gridUid);
-                            }
-                        }
-                        else
-                        {
-                            Log.Error($"[SaveLoad] uid={uid}: нет маппинга для сохранённого mapId={parentComp.MapId}! Доступные: [{string.Join(", ", oldToNewMapMapping.Keys)}]");
-                        }
-                        RemComp<NibiruSaveParentComponent>(uid);
-                    }
-                }
-            }
-            else
-            {
-                Log.Error($"[SaveLoad] Не удалось загрузить entity-файл: {file}");
-            }
+            Log.Info($"[SaveLoad] Map z={mapData.ZLevel} loaded: newUid={mapUid} (oldId={mapData.MapId}).");
         }
 
-        loadedCave = loadedMapsByZ.GetValueOrDefault(-1, EntityUid.Invalid);
-        loadedWorld = loadedMapsByZ.GetValueOrDefault(0, EntityUid.Invalid);
-        loadedSky1 = loadedMapsByZ.GetValueOrDefault(1, EntityUid.Invalid);
-        loadedSky2 = loadedMapsByZ.GetValueOrDefault(2, EntityUid.Invalid);
+        return oldIdToNewUid;
+    }
 
-        return true;
+    private void RestoreZNetworks(RoundSaveManifest manifest, Dictionary<int, EntityUid> oldIdToNewUid)
+    {
+        var byNetwork = new Dictionary<int, Dictionary<EntityUid, int>>();
+
+        foreach (var mapData in manifest.Maps)
+        {
+            if (mapData.NetworkId == -1 || !oldIdToNewUid.TryGetValue(mapData.MapId, out var mapUid))
+                continue;
+
+            if (!byNetwork.TryGetValue(mapData.NetworkId, out var maps))
+                byNetwork[mapData.NetworkId] = maps = new Dictionary<EntityUid, int>();
+
+            maps[mapUid] = mapData.ZLevel;
+        }
+
+        foreach (var maps in byNetwork.Values)
+        {
+            var network = _zLevels.CreateZNetwork();
+            _zLevels.TryAddMapsIntoZNetwork(network, maps);
+            Log.Info($"[SaveLoad] Created Z-network with {maps.Count} maps.");
+        }
+    }
+
+    private void LoadLivingEntities(RoundSaveManifest manifest, Dictionary<int, EntityUid> oldIdToNewUid)
+    {
+        foreach (var player in manifest.Players)
+            LoadEntityFile(player.File, isPlayerFile: true, oldIdToNewUid);
+
+        if (!string.IsNullOrEmpty(manifest.NpcFile))
+            LoadEntityFile(manifest.NpcFile, isPlayerFile: false, oldIdToNewUid);
+    }
+
+    private void LoadEntityFile(string file, bool isPlayerFile, Dictionary<int, EntityUid> oldIdToNewUid)
+    {
+        var resPath = new ResPath(file);
+        if (!_res.UserData.Exists(resPath))
+        {
+            Log.Error($"[SaveLoad] Entity file not found: {file}");
+            return;
+        }
+
+        Log.Info($"[SaveLoad] Loading entity file: {file}");
+
+        if (!_mapLoader.TryLoadGeneric(resPath, out var result))
+        {
+            Log.Error($"[SaveLoad] Failed to load entity file: {file}");
+            return;
+        }
+
+        var userId = isPlayerFile ? GetFileNameWithoutExtension(resPath) : string.Empty;
+        Log.Debug($"[SaveLoad] Loaded entities: {result.Entities.Count} + orphans: {result.Orphans.Count}");
+
+        foreach (var uid in result.Entities.Concat(result.Orphans))
+            RestoreLoadedEntity(uid, isPlayerFile, userId, oldIdToNewUid);
+    }
+
+    private void RestoreLoadedEntity(EntityUid uid, bool isPlayerFile, string userId, Dictionary<int, EntityUid> oldIdToNewUid)
+    {
+        var isRoot = HasComp<NibiruSaveParentComponent>(uid);
+
+        if (isPlayerFile && isRoot)
+            MarkAsSavedPlayer(uid, userId);
+
+        // Position first — physiology reset below needs the entity's final atmosphere.
+        RepositionEntity(uid, oldIdToNewUid);
+        ResetPhysiology(uid);
+        ResetAllAutoPausedFields(uid);
+    }
+
+    private void MarkAsSavedPlayer(EntityUid uid, string userId)
+    {
+        Log.Debug($"[SaveLoad] Restoring player uid={uid}, userId={userId}");
+
+        var saved = EnsureComp<NibiruSavedPlayerComponent>(uid);
+        saved.UserId = userId;
+
+        var ssd = EnsureComp<SSDIndicatorComponent>(uid);
+        ssd.IsSSD = true;
+        EnsureComp<NibiruNoSSDSleepComponent>(uid);
+    }
+
+    private void RepositionEntity(EntityUid uid, Dictionary<int, EntityUid> oldIdToNewUid)
+    {
+        if (!TryComp<NibiruSaveParentComponent>(uid, out var parent))
+            return;
+
+        try
+        {
+            if (!oldIdToNewUid.TryGetValue(parent.MapId, out var targetMap))
+            {
+                Log.Error($"[SaveLoad] uid={uid}: no mapping for saved mapId={parent.MapId}! Available: [{string.Join(", ", oldIdToNewUid.Keys)}]");
+                return;
+            }
+
+            _xform.SetParent(uid, targetMap);
+            _xform.SetLocalPositionRotation(uid, parent.Position, parent.Rotation);
+
+            if (TryComp<MapComponent>(targetMap, out var mapComp)
+                && _map.TryFindGridAt(mapComp.MapId, parent.Position, out var gridUid, out _))
+            {
+                _xform.SetParent(uid, gridUid);
+            }
+        }
+        finally
+        {
+            RemComp<NibiruSaveParentComponent>(uid);
+        }
+    }
+
+    /// <summary>Resets breathing gas mix and respirator/SSD timers so the entity doesn't wake
+    /// up mid-suffocation or with a wildly out-of-date SSD timer after being restored.</summary>
+    private void ResetPhysiology(EntityUid uid)
+    {
+        if (TryComp<RespiratorComponent>(uid, out var respirator))
+        {
+            _respirator.UpdateSaturation(uid, respirator.MaxSaturation - respirator.Saturation, respirator);
+            _respirator.ResetTimer((uid, respirator));
+        }
+
+        if (TryComp<LungComponent>(uid, out var lung))
+        {
+            lung.Air.SetMoles(Gas.Oxygen, 1.5f);
+            lung.Air.SetMoles(Gas.Nitrogen, 5.6f);
+        }
+
+        if (TryComp<SSDIndicatorComponent>(uid, out var ssd))
+            ssd.NextUpdate = _gameTiming.CurTime + ssd.UpdateInterval;
+    }
+
+    private static string GetFileNameWithoutExtension(ResPath path)
+    {
+        return Path.GetFileNameWithoutExtension(path.Filename);
     }
 
     /// <summary>
-    /// Dynamically finds all [AutoPausedField] components on an entity
-    /// and resets their TimeSpan timers to current server time.
-    /// This fixes the "rapid breathing / metabolism" glitch after save reloads.
+    /// Resets every [AutoPausedField] TimeSpan field/property on an entity's components to the
+    /// current time. Without this, timestamps serialized from before the save (e.g. "next
+    /// breath at T") are in the past on load, and systems think a huge interval has elapsed —
+    /// causing rapid-fire metabolism/breathing/etc. right after loading.
     /// </summary>
     private void ResetAllAutoPausedFields(EntityUid uid)
     {
@@ -686,46 +787,44 @@ public sealed class NibiruRoundSaveSystem : EntitySystem
         {
             var compType = component.GetType();
 
-            // Check fields
-            foreach (var field in compType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            if (!AutoPausedCache.TryGetValue(compType, out var cache))
             {
-                if (Attribute.IsDefined(field, typeof(AutoPausedFieldAttribute)))
-                {
-                    if (field.FieldType == typeof(TimeSpan))
-                    {
-                        var val = (TimeSpan)field.GetValue(component)!;
-                        // If it's zero or in the past, reset it to now
-                        if (val == TimeSpan.Zero || val < curTime)
-                            field.SetValue(component, curTime);
-                    }
-                    else if (field.FieldType == typeof(TimeSpan?))
-                    {
-                        var val = (TimeSpan?)field.GetValue(component);
-                        if (val != null && (val.Value == TimeSpan.Zero || val.Value < curTime))
-                            field.SetValue(component, curTime);
-                    }
-                }
+                var fields = compType
+                    .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    .Where(f => Attribute.IsDefined(f, typeof(AutoPausedFieldAttribute)))
+                    .ToArray();
+                var props = compType
+                    .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    .Where(p => Attribute.IsDefined(p, typeof(AutoPausedFieldAttribute)))
+                    .ToArray();
+
+                cache = (fields, props);
+                AutoPausedCache[compType] = cache;
             }
 
-            // Check properties
-            foreach (var prop in compType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
-            {
-                if (Attribute.IsDefined(prop, typeof(AutoPausedFieldAttribute)))
-                {
-                    if (prop.PropertyType == typeof(TimeSpan))
-                    {
-                        var val = (TimeSpan)prop.GetValue(component)!;
-                        if (val == TimeSpan.Zero || val < curTime)
-                            prop.SetValue(component, curTime);
-                    }
-                    else if (prop.PropertyType == typeof(TimeSpan?))
-                    {
-                        var val = (TimeSpan?)prop.GetValue(component);
-                        if (val != null && (val.Value == TimeSpan.Zero || val.Value < curTime))
-                            prop.SetValue(component, curTime);
-                    }
-                }
-            }
+            foreach (var field in cache.Fields)
+                ResetIfStale(field.FieldType, () => field.GetValue(component), v => field.SetValue(component, v), curTime);
+
+            foreach (var prop in cache.Props)
+                ResetIfStale(prop.PropertyType, () => prop.GetValue(component), v => prop.SetValue(component, v), curTime);
         }
     }
+
+    private static void ResetIfStale(Type memberType, Func<object?> getter, Action<object?> setter, TimeSpan curTime)
+    {
+        if (memberType == typeof(TimeSpan))
+        {
+            var val = (TimeSpan)getter()!;
+            if (val == TimeSpan.Zero || val < curTime)
+                setter(curTime);
+        }
+        else if (memberType == typeof(TimeSpan?))
+        {
+            var val = (TimeSpan?)getter();
+            if (val != null && (val.Value == TimeSpan.Zero || val.Value < curTime))
+                setter(curTime);
+        }
+    }
+
+    #endregion
 }

@@ -1,0 +1,2 @@
+ent-AnimalZzzEffect = Zzz
+    .desc = { "" }

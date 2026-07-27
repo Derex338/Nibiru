@@ -1,0 +1,53 @@
+<Document>
+# Taming and Training
+
+In the world of Nibiru, wild and neutral animals can become your loyal companions. To do this, you need to tame them and then teach them the desired commands.
+
+---
+
+## How to tame an animal?
+
+The taming process is based on gradually building trust with the animal. You must feed it its favorite or suitable food. To feed an animal, take the food in your hand and [color=yellow]click on it[/color].
+
+<Box>
+  <GuideEntityEmbed Entity="MobNibiruWolf"/>
+  <GuideEntityEmbed Entity="MobNibiruSheep"/>
+  <GuideEntityEmbed Entity="MobNibiruCow"/>
+</Box>
+
+- [color=red]**Carnivores**[/color] (e.g., wolves or dogs) can be tamed with raw meat.
+- [color=green]**Herbivores**[/color] (sheep, cows) — with apples, wheat, and other plant-based food.
+
+Each feeding increases the trust level. Once trust reaches a critical threshold, the animal will stop fearing you and officially recognize you as its **owner**.
+> [!TIP]
+> Each species has its own preferences! Favorite food will speed up the taming process many times over compared to regular food.
+
+---
+
+## Training Menu and Commands
+
+Once an animal becomes yours, you can open a special **Training Menu** by interacting with it. Training does not happen instantly: each command requires practice and time to solidify. The higher the trust (which can be further increased by feeding) and the better the pet's mood, the [color=cyan]faster[/color] the training process.
+
+<Box>
+  <GuideEntityEmbed Entity="MobNibiruDog"/>
+  <GuideEntityEmbed Entity="MobNibiruPigeon"/>
+</Box>
+
+**Depending on the intelligence and species of the animal, different commands are available:**
+
+- [color=yellow]Follow[/color]: The pet will relentlessly follow you.
+- [color=yellow]Stay[/color]: The animal will sit in place and patiently wait for your return.
+- [color=red]Attack[/color]: The pet will attack your specified target, fighting to the death.
+- [color=cyan]Guard[/color]: The animal will patrol the area around a specified point, attacking enemies.
+- [color=orange]Search[/color]: The pet will sniff around and search for specific items or hidden creatures nearby.
+- [color=white]Deliver[/color]: A command for birds (pigeons) — send a parcel to a specified Pigeon Post.
+
+You can issue learned commands through a special action panel that will appear on your screen!
+
+---
+
+## Innate Abilities
+
+Different animal species naturally possess unique instincts and abilities.
+For example, dogs have an excellent sense of smell and loyalty. If a dog is trained in the **Search** command, it can find hidden threats and lost items much more effectively than others. Wolves have a strong pack instinct and deal increased damage, and carrier pigeons are the only ones capable of long-distance delivery. Choose a pet that suits your needs!
+</Document>

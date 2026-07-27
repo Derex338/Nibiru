@@ -1,0 +1,24 @@
+<Document>
+# Fuel
+
+Some items can be used as [color=yellow]fuel[/color] for suitable things like a campfire or torch.
+
+<Box>
+  <GuideEntityEmbed Entity="Bonfire"/>
+  <GuideEntityEmbed Entity="CETorch"/>
+</Box>
+
+Different items provide different amounts of fuel and different burning temperatures.
+For example, sticks provide very little fuel and temperature compared to logs and coal.
+
+# Consumption
+
+Some things, as you may have guessed, consume fuel to keep burning.
+For them to work properly, you need to keep the fuel at a sufficient level.
+
+If the fuel runs out, the thing will go out, but it can be used again if you add fuel and relight it.
+
+# Extinguishing
+
+You can extinguish a burning object with a shovel or with your hands if the object is small.
+</Document>

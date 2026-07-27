@@ -33,7 +33,7 @@
 
 - type: construction
   id: FactionBanner
-  name: фракционный баннер
+  name: faction banner
   graph: FactionVisuals
   startNode: start
   targetNode: banner
@@ -43,7 +43,7 @@
 
 - type: construction
   id: FactionFlag
-  name: фракционный флаг
+  name: faction flag
   graph: FactionVisuals
   startNode: start
   targetNode: flag

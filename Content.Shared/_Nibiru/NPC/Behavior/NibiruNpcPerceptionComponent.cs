@@ -43,7 +43,7 @@ public sealed partial class NibiruNpcPerceptionComponent : Component
     #region Hearing
 
     /// <summary>
-    /// Дальность слуха. В этом радиусе NPC может "услышать" бегущих или шумящих существ.
+    /// Hearing range. Within this radius the NPC can "hear" running or noisy entities.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float HearingRange = 8f;

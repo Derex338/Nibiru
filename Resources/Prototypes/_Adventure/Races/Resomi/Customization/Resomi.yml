@@ -1,6 +1,6 @@
 - type: marking
   id: ResomiTailBase
-  name: Резоми, Хвост (С перьями)
+  name: Resomi, Tail (Feathered)
   bodyPart: Tail
   markingCategory: Tail
   groupWhitelist: [Resomi]
@@ -12,7 +12,7 @@
 
 - type: marking
   id: ResomiEarsBase
-  name: Резоми, Голова (Парные уши)
+  name: Resomi, Head (Twin Ears)
   bodyPart: HeadTop
   followSkinColor: true
   forcedColoring: true
@@ -24,7 +24,7 @@
 
 - type: marking
   id: ResomiBackstrafe
-  name: Резоми, Перья (Отступающие)
+  name: Resomi, Feathers (Receding)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -34,7 +34,7 @@
 
 - type: marking
   id: ResomiBurstShort
-  name: Резоми, Перья (Взыв)
+  name: Resomi, Feathers (Spiky)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -44,7 +44,7 @@
 
 - type: marking
   id: ResomiDefault
-  name: Резоми, Перья (Классика)
+  name: Resomi, Feathers (Classic)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -54,7 +54,7 @@
 
 - type: marking
   id: ResomiEars
-  name: Резоми, Перья (Ушки)
+  name: Resomi, Feathers (Ear-tufts)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -64,7 +64,7 @@
 
 - type: marking
   id: ResomiFluffymohawk
-  name: Резоми, Перья (Панк)
+  name: Resomi, Feathers (Punk)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -74,7 +74,7 @@
 
 - type: marking
   id: ResomiHedge
-  name: Резоми, Перья (Изгородь)
+  name: Resomi, Feathers (Hedge)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -84,7 +84,7 @@
 
 - type: marking
   id: ResomiLong
-  name: Резоми, Перья (Длинные)
+  name: Resomi, Feathers (Long)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]
@@ -94,7 +94,7 @@
 
 - type: marking
   id: ResomiSpiky
-  name: Резоми, Перья (Шипы)
+  name: Resomi, Feathers (Spines)
   bodyPart: Hair
   markingCategory: Hair
   groupWhitelist: [Resomi]

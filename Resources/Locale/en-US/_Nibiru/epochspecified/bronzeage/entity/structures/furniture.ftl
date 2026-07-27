@@ -1,0 +1,9 @@
+ent-BronzeAgeBed = wooden bed
+    .desc = A simple bed made of planks and straw.
+    .suffix = Nibiru, BronzeAge
+ent-BronzeAgeChest = chest
+    .desc = A wooden chest for storing belongings.
+    .suffix = Nibiru, BronzeAge
+ent-BronzeBell = bronze bell
+    .desc = A large bronze bell. Its toll carries for many miles.
+    .suffix = Nibiru, BronzeAge

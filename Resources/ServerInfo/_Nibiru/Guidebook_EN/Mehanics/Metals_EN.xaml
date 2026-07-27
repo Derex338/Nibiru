@@ -1,0 +1,47 @@
+<Document>
+# Metals
+
+This section lists all smelted metals and alloys available in the game.
+All metals currently have a melting point of **960.5 degrees** and a boiling point of **2212.0 degrees**.
+
+## Base Metals
+
+<Box>
+  <GuideReagentEmbed Reagent="CopperMolten"/>
+</Box>
+**Copper**
+Color: [color=#FF9021]Orange (#FF9021)[/color]
+
+<Box>
+  <GuideReagentEmbed Reagent="TinMolten"/>
+</Box>
+**Tin**
+Color: [color=#545454]Dark Gray (#545454)[/color]
+
+<Box>
+  <GuideReagentEmbed Reagent="GoldMolten"/>
+</Box>
+**Gold**
+Color: [color=#FFAD00]Gold (#FFAD00)[/color]
+
+<Box>
+  <GuideReagentEmbed Reagent="SilverMolten"/>
+</Box>
+**Silver**
+Color: [color=#C2C2C2]Silver (#C2C2C2)[/color]
+
+## Alloys
+
+<Box>
+  <GuideReagentEmbed Reagent="BronzeMolten"/>
+</Box>
+**Bronze**
+Color: [color=#B36215]Bronze (#B36215)[/color]
+
+**Crafting recipe (mixing proportions):**
+To obtain bronze, you need to heat the furnace to at least **900 degrees** and mix:
+- 1 part molten copper (`CopperMolten`)
+- 1 part molten tin (`TinMolten`)
+As a result of the reaction, you will get 2 parts of molten bronze (`BronzeMolten`).
+
+</Document>

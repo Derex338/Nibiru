@@ -145,7 +145,7 @@
 
 
 - type: construction
-  name: пожарный шлюз [Двойной](firelock)
+  name: firelock [Double]
   id: DoubleFirelockGlass
   graph: FirelockDouble
   startNode: start

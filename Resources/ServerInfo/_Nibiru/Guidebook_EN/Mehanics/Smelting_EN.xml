@@ -1,0 +1,27 @@
+<Document>
+# Smelting
+
+Smelting is the process of obtaining metal from ore.
+For this you need a smelting furnace and enough fuel with sufficient temperature.
+Smelting copper and tin requires nothing beyond good fuel to produce bronze. Iron, however, requires extra effort to obtain.
+
+Before smelting, I strongly recommend getting smithing gloves and a smelting crucible for the furnace.
+Insert the crucible into the furnace before smelting, and wear the gloves to avoid burning yourself and dropping it when taking it out.
+
+# Molds
+
+To get something better than a shapeless mass of metal, it is better to use molds.
+Pour [color=yellow](fill to the brim!)[/color] metal into them to obtain the desired item.
+To speed up cooling, you can dip the mold into a container of water.
+
+Depending on the shape, the mold may break after removing the item or it may remain intact.
+
+# Forge
+
+To obtain more complex tools, you need to make an anvil.
+On it you can forge items after heating them to the required temperature.
+
+# Pouring
+
+If you have smelted more metal than the crucible can hold, some of it remains in the furnace. You can pour it back into the crucible by clicking the pour button in the furnace's right-click menu while the crucible is inserted.
+</Document>

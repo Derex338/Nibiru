@@ -29,7 +29,7 @@
 
 - type: construction
   id: CrateWoodenGrave
-  name: Деревянная могила
+  name: Wooden Grave
   graph: CrateWoodenGrave
   startNode: start
   targetNode: fin
@@ -46,7 +46,7 @@
 
 - type: construction
   id: CrateStoneGrave
-  name: Каменная могила
+  name: Stone Grave
   graph: CrateStoneGrave
   startNode: start
   targetNode: fin
