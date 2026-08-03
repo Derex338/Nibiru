@@ -36,6 +36,14 @@ public sealed partial class FactionComponent : Component//, IInspectableComponen
     public List<EntityUid> Members { get; set; } = new();
 
     /// <summary>
+    /// Все когда-либо бывшие члены фракции (включая лидера).
+    /// Никогда не очищается — используется для статуй и истории.
+    /// </summary>
+    [AutoNetworkedField]
+    [ViewVariables]
+    public List<FactionMemberRecord> AllMembers { get; set; } = new();
+
+    /// <summary>
     /// Данные о членах фракции для отображения в UI (кэш для клиента)
     /// </summary>
     [AutoNetworkedField]
@@ -216,6 +224,23 @@ public partial struct FactionMemberData
 }
 
 /// <summary>
+/// Запись о члене фракции для списка всех когда-либо бывших членов.
+/// Хранит EntityId персонажа для получения спрайта.
+/// </summary>
+[Serializable, NetSerializable, DataDefinition]
+public partial struct FactionMemberRecord
+{
+    [DataField("entity")]
+    public NetEntity Entity;
+
+    [DataField("name")]
+    public string Name;
+
+    [DataField("joinedTime")]
+    public TimeSpan JoinedTime;
+}
+
+/// <summary>
 /// Компонент для хранения всех фракций на карте
 /// Прикрепляется к entity карты
 /// </summary>
@@ -256,6 +281,12 @@ public partial struct FactionRegistryData
     /// </summary>
     [DataField("members")]
     public List<NetEntity> Members;
+
+    /// <summary>
+    /// Список всех когда-либо бывших членов фракции (сериализуемый)
+    /// </summary>
+    [DataField("allMembers")]
+    public List<FactionMemberRecord> AllMembers;
 
     /// <summary>
     /// Цвет фракции

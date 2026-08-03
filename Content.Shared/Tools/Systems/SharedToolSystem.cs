@@ -6,6 +6,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
+using Content.Shared._CE.ZLevels.Core.EntitySystems;
+using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
@@ -34,6 +36,9 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private TileSystem _tiles = default!;
     [Dependency] private TurfSystem _turfs = default!;
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public const string CutQuality = "Cutting";
     public const string PulseQuality = "Pulsing";

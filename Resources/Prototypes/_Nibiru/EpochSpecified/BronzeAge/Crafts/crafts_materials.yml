@@ -53,7 +53,16 @@
   graph: PapyrusLeather
   startNode: start
   targetNode: fin
-  category: construction-category-weapons
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: PlanetMap
+  name: Planet Map
+  graph: PlanetMap
+  startNode: start
+  targetNode: fin
+  category: construction-category-tools
   objectType: Item
 
 - type: construction

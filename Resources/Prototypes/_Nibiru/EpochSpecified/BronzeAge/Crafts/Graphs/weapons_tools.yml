@@ -382,12 +382,8 @@
           steps:
             - material: BronzeArrowTip
               amount: 1
-            - tool: Hammering
-              minTemperature: 700
-              doAfter: 3
             - material: WoodStick
               amount: 1
-            - tool: Hammering
               doAfter: 1
     - node: fin
       entity: BronzeArrow
@@ -480,12 +476,8 @@
           steps:
             - material: BronzeArrowTipArmor
               amount: 1
-            - tool: Hammering
-              minTemperature: 700
-              doAfter: 4
             - material: WoodStick
               amount: 1
-            - tool: Hammering
               doAfter: 1
     - node: fin
       entity: BronzeArrowAP

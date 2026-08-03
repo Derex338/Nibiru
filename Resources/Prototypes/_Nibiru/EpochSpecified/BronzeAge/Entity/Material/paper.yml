@@ -21,3 +21,7 @@
   - type: Construction
     graph: PapyrusLeather
     node: fin
+  - type: Material
+  - type: Stack
+    stackType: Papyrus
+

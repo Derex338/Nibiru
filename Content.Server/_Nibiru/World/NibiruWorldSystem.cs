@@ -5,8 +5,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Parallax;
-using Content.Server.Preferences.Managers;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._CE.DayCycle;
 using Content.Shared._CE.ZLevels.Core.Components;
@@ -16,25 +14,18 @@ using Content.Shared._Nibiru.GameTicking.Rules;
 using Content.Shared._Nibiru.World;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Light.Components;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Parallax.Biomes;
-using Content.Shared.Pinpointer;
-using Content.Shared.Players;
-using Content.Shared.Preferences;
-using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Maths;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -56,9 +47,9 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
     [Dependency] private readonly CEZLevelsSystem _ceZLevels = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -83,7 +74,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         var saveSys = EntityManager.System<Content.Server._Nibiru.SaveLoad.NibiruRoundSaveSystem>();
         if (saveSys.SaveToLoad != null)
         {
-            var success = saveSys.LoadSavedMaps(out var loadedCave, out var loadedWorld, out var loadedSky1, out var loadedSky2);
+            var success = saveSys.LoadSavedMaps(out var loadedCave, out var loadedWorld, out _);
             if (success)
             {
                 rule.WorldMap = loadedWorld;
@@ -98,6 +89,8 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         // Генерируем общий сид для синхронизации высот
         var seed = new Random().Next();
+
+        var skyLevelsCount = _cfg.GetCVar(CCVars.ZLevelsCount);
 
         // 1. Создаем подземный мир (шахта) - Уровень -1
         var caveMap = _map.CreateMap();
@@ -114,24 +107,25 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
         EnsureComp<CEZLevelMapRoofComponent>(worldMap);
         EnsureComp<SunLightRayComponent>(worldMap);
 
-        // Уровень 1
-        var sky1Map = _map.CreateMap();
-        _metadata.SetEntityName(sky1Map, "level 1");
-        SetupUpperLayer(sky1Map);
-
-        // Уровень 2
-        var sky2Map = _map.CreateMap();
-        _metadata.SetEntityName(sky2Map, "level 2");
-        SetupUpperLayer(sky2Map);
-
-        // Добавляем все карты в сеть
-        _ceZLevels.TryAddMapsIntoZNetwork(network, new Dictionary<EntityUid, int>
+        // Создаем skyLevelsCount уровней неба (уровни 1..N)
+        var skyMaps = new List<EntityUid>();
+        var zNetworkMaps = new Dictionary<EntityUid, int>
         {
             { caveMap, -1 },
-            { worldMap, 0 },
-            { sky1Map, 1 },
-            { sky2Map, 2 }
-        });
+            { worldMap, 0 }
+        };
+
+        for (var i = 1; i <= skyLevelsCount; i++)
+        {
+            var skyMap = _map.CreateMap();
+            _metadata.SetEntityName(skyMap, $"level {i}");
+            SetupUpperLayer(skyMap);
+            skyMaps.Add(skyMap);
+            zNetworkMaps[skyMap] = i;
+        }
+
+        // Добавляем все карты в сеть
+        _ceZLevels.TryAddMapsIntoZNetwork(network, zNetworkMaps);
 
         if (HasComp<LightCycleComponent>(caveMap))
             RemComp<LightCycleComponent>(caveMap);
@@ -139,7 +133,7 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             RemComp<MapLightComponent>(caveMap);
 
         // Настройка цикла дня и ночи
-        foreach (var map in new[] { worldMap, sky1Map, sky2Map })
+        foreach (var map in new[] { worldMap }.Concat(skyMaps))
         {
             if (TryComp(map, out LightCycleComponent? cycle))
             {
@@ -202,7 +196,8 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
 
         while (savedQuery.MoveNext(out var uid, out var saved, out var meta))
         {
-            if (saved.UserId != userId.ToString())
+            return uid;
+            /*if (saved.UserId != userId.ToString())
                 continue;
 
             // In Nibiru, we force use of the saved character if one exists for the user.
@@ -214,26 +209,28 @@ public sealed class NibiruWorldSystem : SharedNibiruWorldSystem
             var savedEntity = uid;
             var session = ev.Player;
 
-            // Calling PlayerJoinGame sets JoinedGame flag and sends ticker join msg.
-            // Player already gets InGame status via normal flow — this is needed for the
-            // game status tracking.
-            _gameTicker.PlayerJoinGame(session, true);
-
             if (session.Status == SessionStatus.Disconnected)
                 return null;
 
             if (!Exists(savedEntity))
                 return null;
 
-            // Always create fresh mind. GetMind() hits DebugAssert when ContentData.Mind
-            // is stale after WipeAllMinds during round restart. CreateMind handles cleanup.
-            var mindId = _mind.CreateMind(userId, meta.EntityName);
+            // Get player's active session mind or create one if absent
+            if (!_mind.TryGetMind(session, out var mindId, out _))
+            {
+                mindId = _mind.CreateMind(userId, meta.EntityName);
+            }
 
-            // Transfer from observer ghost -> saved entity. The ghost auto-deletes.
+            // Transfer mind & session from ghost/lobby -> saved entity. Ghost auto-deletes.
             _mind.TransferTo(mindId, savedEntity);
-            RemComp<Content.Shared.SSDIndicator.SSDIndicatorComponent>(savedEntity);
+            RemComp<Content.Shared._Nibiru.SaveLoad.NibiruNoSSDSleepComponent>(savedEntity);
+            if (TryComp<Content.Shared.SSDIndicator.SSDIndicatorComponent>(savedEntity, out var ssd))
+            {
+                ssd.IsSSD = false;
+                Dirty(savedEntity, ssd);
+            }
 
-            return savedEntity;
+            return savedEntity;*/
         }
 
         // No saved entity — spawn a new character normally.

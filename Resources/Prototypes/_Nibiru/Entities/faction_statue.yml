@@ -1,0 +1,17 @@
+- type: entity
+  id: FactionStatue
+  parent: BaseStructure
+  name: faction statue
+  description: A stone statue depicting a faction member.
+  suffix: Faction
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/statues.rsi
+    state: venus_blue
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: FactionStatue
+  - type: Construction
+    graph: FactionStatue
+    node: statue

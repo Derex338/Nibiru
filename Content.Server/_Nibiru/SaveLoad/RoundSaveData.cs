@@ -7,14 +7,14 @@ public sealed class RoundSaveManifest
     [JsonPropertyName("preset_id")]
     public string PresetId { get; set; } = string.Empty;
 
+    [JsonPropertyName("saved_at")]
+    public string SavedAt { get; set; } = string.Empty;
+
     [JsonPropertyName("maps")]
     public List<MapSaveData> Maps { get; set; } = new();
 
     [JsonPropertyName("players")]
     public List<PlayerSaveData> Players { get; set; } = new();
-
-    [JsonPropertyName("npc_file")]
-    public string? NpcFile { get; set; }
 }
 
 public sealed class PlayerSaveData
@@ -22,11 +22,11 @@ public sealed class PlayerSaveData
     [JsonPropertyName("user_id")]
     public string UserId { get; set; } = string.Empty;
 
-    [JsonPropertyName("entity_name")]
-    public string EntityName { get; set; } = string.Empty;
+    [JsonPropertyName("character_name")]
+    public string CharacterName { get; set; } = string.Empty;
 
-    [JsonPropertyName("file")]
-    public string File { get; set; } = string.Empty;
+    [JsonPropertyName("map_id")]
+    public int MapId { get; set; }
 }
 
 public sealed class MapSaveData

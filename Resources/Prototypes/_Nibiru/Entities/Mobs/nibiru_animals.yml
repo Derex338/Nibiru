@@ -1,6 +1,6 @@
 - type: entity
   id: NibiruAnimalBase
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinable]
   abstract: true
   components:
   - type: ActiveNPC
@@ -44,8 +44,24 @@
         type: NibiruBirdDeliveryBoundUserInterface
 
 - type: entity
-  id: MobNibiruPig
+  id: NibiruPassiveAnimalBase
   parent: NibiruAnimalBase
+  abstract: true
+  components:
+  - type: NibiruNpcStateMachine
+    behaviorType: Shy
+
+- type: entity
+  id: NibiruHostileAnimalBase
+  parent: NibiruAnimalBase
+  abstract: true
+  components:
+  - type: NibiruNpcStateMachine
+    behaviorType: Aggressive
+
+- type: entity
+  id: MobNibiruPig
+  parent: NibiruPassiveAnimalBase
   name: свинья
   description: Хрю-хрю.
   components:
@@ -79,8 +95,8 @@
         modifier: 0.5
       - progress: 0.7
         modifier: 0.8
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
@@ -107,7 +123,6 @@
   - type: Sprite
     sprite: Mobs/Animals/goat.rsi
     state: goat
-  - type: NibiruNpcStateMachine
   - type: NibiruNpcCombat
     combatStyle: Charge
   - type: NibiruNpcChargeAttack
@@ -154,8 +169,8 @@
       growthTime: 180
       yield: 1
       requiredTool: CEScissors
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
@@ -166,7 +181,7 @@
 - type: entity
   id: MobNibiruChicken
   parent:
-  - NibiruAnimalBase
+  - NibiruPassiveAnimalBase
   - MobChicken
   name: курица
   description: Птица, дающая яйца.
@@ -210,8 +225,8 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: SmallBodyButcherBird
       amount: 1
     - id: HideSmall
@@ -219,7 +234,7 @@
 
 - type: entity
   id: NibiruMobDuckMallard
-  parent: NibiruAnimalBase
+  parent: NibiruPassiveAnimalBase
   suffix: Nibiru
   name: утка
   description: Кряк.
@@ -232,8 +247,8 @@
     trustThreshold: 10
   - type: NibiruNpcStateMachine
     behaviorType: Passive
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideSmall
       amount: 1
     - id: SmallBodyButcherBird
@@ -254,6 +269,8 @@
     state: bat
   - type: NibiruNpcStateMachine
     behaviorType: Passive
+  - type: ToolRefinable
+    refineResult: []
 
 - type: entity
   id: NibiruMobButterfly
@@ -267,6 +284,8 @@
     state: butterfly
   - type: NibiruNpcStateMachine
     behaviorType: Passive
+  - type: ToolRefinable
+    refineResult: []
 
 - type: entity
   id: NibiruMobFox
@@ -282,8 +301,8 @@
     diet: Carnivore
     trustThreshold: 50
     favoriteFoods: [ FoodMeatSteak ]
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
@@ -301,8 +320,8 @@
     state: lizard
   - type: NibiruNpcStateMachine
     behaviorType: Passive
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideSmall
       amount: 1
     - id: SmallBodyButcher
@@ -311,7 +330,7 @@
 
 - type: entity
   id: MobNibiruWolf
-  parent: NibiruAnimalBase
+  parent: NibiruHostileAnimalBase
   name: волк
   description: Опасный хищник Нибиру. Охотится стаями.
   components:
@@ -353,8 +372,8 @@
     damage:
       types:
         Piercing: 15
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
@@ -366,15 +385,83 @@
 # Овца (Мирная, ресурсная, приручаемая)
 - type: entity
   id: MobNibiruSheep
-  parent: NibiruAnimalBase
+  parent: NibiruPassiveAnimalBase
   name: овца
   description: Пушистое создание. Даёт шерсть.
   components:
   - type: Sprite
-    sprite: Mobs/Animals/goat.rsi
-    state: goat
-  - type: NibiruNpcStateMachine
-    behaviorType: Passive
+    drawdepth: Mobs
+    layers:
+    - state: sheep_bare
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+      visible: true
+      sprite: Mobs/Animals/sheep.rsi
+    # this wooly layer relates to the shearable component.
+    - state: sheep_wool
+      map: [ "wooly" ]
+      visible: true
+      sprite: Mobs/Animals/sheep.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.ShearableVisuals.Shearable:
+        wooly:
+          True: {visible: true}
+          False: {visible: false}
+      enum.MobStateVisuals.State:
+        wooly:
+          Alive: {state: sheep_wool}
+          Dead: {state: sheep_wool_dead}
+          Critical: {state: sheep_wool_dead}
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    # let moths eat wool directly
+    - ClothMade
+    - DoorBumpOpener
+    - Sheep
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: sheep_bare
+      Critical:
+        Base: sheep_dead
+      Dead:
+        Base: sheep_dead
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderSheep
+    - SolutionWoolSheep
+  - type: Wooly
+  - type: Shearable
+    targetSolutionName: wool
+    shearedProductId: CECotton # Cotton is spawned because there is no wool item.
+    solutionPerProduct: 2.5 # 1 Cotton contains 2.5 Fibre, therefore this is the same.
+    toolQuality: Shearing
+    shearableMarkupText: sheep-shearable-examine-markup
+    unShearableMarkupText: sheep-not-shearable-examine-markup
+  - type: InteractionPopup
+    successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
+    interactDelay: 1
+    interactSuccessString: petting-success-sheep
+    interactFailureString: petting-failure-sheep
+    interactSuccessSpawn: EffectHearts #🥰
+    interactSuccessSound:
+      collection: Sheep
+      params:
+        variation: 0.05
+  - type: Perishable
+    molsPerSecondPerUnitMass: 0.0015
   - type: NibiruNpcAggro
     fleeRange: 7
     fleeDistance: 15
@@ -389,17 +476,17 @@
   - type: NibiruLivestock
     canBreed: true
     offspringPrototype: MobNibiruLamb
-    harvestableResources:
-    - itemPrototype: NibiruWool
-      growthTime: 300
-      yield: 2
-      requiredTool: Scissors
+    #harvestableResources:
+    #- itemPrototype: NibiruWool
+    #  growthTime: 300
+    #  yield: 2
+    #  requiredTool: Scissors
     femaleSprite:
-      sprite: Mobs/Animals/goat.rsi
-      state: goat
+      sprite: Mobs/Animals/sheep.rsi
+      state: sheep_bare
     maleSprite:
-      sprite: Mobs/Animals/goat.rsi
-      state: goat
+      sprite: Mobs/Animals/sheep.rsi
+      state: sheep_bare
   - type: NibiruLeashable
   - type: NibiruSleepCycle
     isNocturnal: false
@@ -408,8 +495,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.0
     baseSprintSpeed: 1.5
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst
@@ -453,8 +540,8 @@
         Blunt: 20
   - type: Rideable
   - type: Buckle
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideBig
       amount: 1
     - id: BigBodyButcherFirst
@@ -474,7 +561,7 @@
 # Лев (Агрессивный, опасный)
 - type: entity
   id: MobNibiruLion
-  parent: NibiruAnimalBase
+  parent: NibiruHostileAnimalBase
   name: лев
   description: Грозный царь зверей.
   components:
@@ -495,8 +582,8 @@
       enum.MobStateVisuals.State:
         enum.MobState.Dead:
           Base: { state: DeadLion }
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: ClothingHeadLionSkin
       amount: 1
     - id: HideBig
@@ -554,6 +641,10 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: ToolRefinable
+    refineResult:
+    - id: SmallBodyButcherBird
+      amount: 1
 
 # Голубятня (Для проверки доставки)
 - type: entity
@@ -592,15 +683,13 @@
 # Северный олень (Для примера разных спрайтов)
 - type: entity
   id: MobNibiruReindeer
-  parent: NibiruAnimalBase
+  parent: NibiruPassiveAnimalBase
   name: северный олень
   description: Величественное животное севера.
   components:
   - type: Sprite
     sprite: Mobs/Animals/reindeer_doe.rsi
     state: reindeer_doe
-  - type: NibiruNpcStateMachine
-    behaviorType: Shy
   - type: NibiruNpcCombat
     combatStyle: Charge
   - type: NibiruNpcChargeAttack
@@ -629,8 +718,8 @@
     possibleCommands: [ Follow, Stay ]
   - type: Rideable
   - type: Buckle
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideBig
       amount: 1
     - id: BigBodyButcherFirst
@@ -686,8 +775,8 @@
     damage:
       types:
         Piercing: 8
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideMedium
       amount: 1
     - id: MediumBodyButcherFirst

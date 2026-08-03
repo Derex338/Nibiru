@@ -95,3 +95,8 @@ faction-logo-preset-star = Звезда
 faction-logo-preset-heart = Сердце
 faction-logo-preset-shield = Щит
 faction-logo-preset-skull = Череп
+
+## Статуя фракции
+faction-statue-select-title = Выберите члена фракции
+faction-statue-select-prompt = Члена какой фракции должна изображать эта статуя?
+faction-statue-member-set = Статуя теперь изображает { $name }.

@@ -116,6 +116,7 @@ public sealed partial class FactionSystem
                 Name = faction.FactionName,
                 Leader = leaderNet,
                 Members = membersNet,
+                AllMembers = faction.AllMembers,
                 Color = faction.FactionColor,
                 Description = faction.Description,
                 IconPath = faction.IconPath,
@@ -228,6 +229,7 @@ public sealed partial class FactionSystem
             data.WhiteListNames = faction.WhiteListNames;
             data.Leader = leaderNet;
             data.Members = membersNet;
+            data.AllMembers = faction.AllMembers;
             data.Roles = faction.Roles;
 
             registry.Factions[faction.FactionName] = data;

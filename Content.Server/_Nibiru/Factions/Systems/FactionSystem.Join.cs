@@ -45,6 +45,9 @@ public sealed partial class FactionSystem
             factionComponent.IsCreator = true;
             factionComponent.Rank = Loc.GetString("faction-default-rank-leader");
 
+            // Добавляем создателя в список всех членов
+            AddToAllMembers(factionComponent, player);
+
             _adminLog.Add(LogType.FactionCreated, LogImpact.Medium,
                 $"{ToPrettyString(player):player} создал фракцию с названием {factionName}");
 
@@ -168,6 +171,12 @@ public sealed partial class FactionSystem
             var playerFaction = EnsureComp<FactionComponent>(playerEntity);
             playerFaction.FactionName = factionName;
             playerFaction.Leader = leaderUid;
+
+            // Загружаем историю всех членов из реестра
+            playerFaction.AllMembers = factionData.AllMembers ?? new();
+
+            // Добавляем в список всех когда-либо бывших членов (если ещё нет)
+            AddToAllMembers(playerFaction, playerEntity);
             playerFaction.FactionColor = factionData.Color;
             playerFaction.Description = factionData.Description;
             playerFaction.IconPath = factionData.IconPath;
@@ -201,6 +210,9 @@ public sealed partial class FactionSystem
                 if (leaderUid != playerEntity && !leaderComp.Members.Contains(playerEntity))
                     leaderComp.Members.Add(playerEntity);
 
+                // Добавляем в список всех членов у лидера
+                AddToAllMembers(leaderComp, playerEntity);
+
                 Dirty(leaderUid, leaderComp);
                 UpdateFactionRegistry(leaderComp);
             }
@@ -216,6 +228,24 @@ public sealed partial class FactionSystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Добавляет игрока в список всех когда-либо бывших членов фракции.
+    /// Если игрок уже есть в списке — пропускает.
+    /// </summary>
+    private void AddToAllMembers(FactionComponent faction, EntityUid member)
+    {
+        var netMember = GetNetEntity(member);
+        if (faction.AllMembers.Any(r => r.Entity == netMember))
+            return;
+
+        faction.AllMembers.Add(new FactionMemberRecord
+        {
+            Entity = netMember,
+            Name = Name(member),
+            JoinedTime = _timing.CurTime
+        });
     }
 
     private bool CheckFactionFilters(EntityUid player, FactionRegistryData data, out string error)

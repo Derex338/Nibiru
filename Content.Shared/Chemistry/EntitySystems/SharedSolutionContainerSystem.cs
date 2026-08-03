@@ -227,6 +227,33 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return true;
         }
 
+        // Fallback: If solutions cache doesn't have the solution (e.g. after map load from save where MapInitEvent did not fire),
+        // populate Solutions cache from whatever solution entities are currently in the container.
+        if (ContainerSystem.TryGetContainer(entity.Owner, entity.Comp.Container, out var container) && container is Container c)
+        {
+            foreach (var existing in c.ContainedEntities)
+            {
+                if (!SolutionQuery.TryComp(existing, out var existingSol))
+                    continue;
+
+                EnsureComp<ContainedSolutionComponent>(existing, out var containedComp);
+                containedComp.Container = entity.Owner;
+                entity.Comp.Solutions[existingSol.Id] = (existing, existingSol);
+            }
+
+            if (entity.Comp.Solutions.TryGetValue(name, out solution))
+            {
+                var attemptEv = new SolutionAccessAttemptEvent(name);
+                RaiseLocalEvent(entity, ref attemptEv);
+
+                if (attemptEv.Cancelled)
+                    return false;
+
+                solutionEnt = solution;
+                return true;
+            }
+        }
+
         if (errorOnMissing)
             Log.Error($"{ToPrettyString(entity)} does not have a solution with ID: {name}");
 
@@ -1083,7 +1110,21 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
 
         if (entity.Comp.SolutionEnts == null)
+        {
+            // SolutionEnts is null — this can happen after map load where the container was deserialized
+            // with existing solution entities, but Solutions dict was not serialized (it's ViewVariables).
+            // Rebuild the Solutions cache from whatever is already in the container.
+            foreach (var existing in container.ContainedEntities)
+            {
+                if (!SolutionQuery.TryComp(existing, out var existingSol))
+                    continue;
+
+                EnsureComp<ContainedSolutionComponent>(existing, out var containedComp);
+                containedComp.Container = entity.Owner;
+                entity.Comp.Solutions[existingSol.Id] = (existing, existingSol);
+            }
             return;
+        }
 
         foreach (var solution in entity.Comp.SolutionEnts)
         {

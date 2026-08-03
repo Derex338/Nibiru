@@ -265,6 +265,13 @@
   spawn: BronzeChainmailPiece
   maxCount: 30
 
+- type: stack
+  id: Papyrus
+  name: papyrus
+  icon: { sprite: _CE/Objects/Bureaucracy/paper.rsi, state: paper }
+  spawn: Papyrus
+  maxCount: 1
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Materials
 # ──────────────────────────────────────────────────────────────────────────────
@@ -573,4 +580,12 @@
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeRod.rsi, state: rod_1 }
   color: "#CD7F32"
+  price: 1
+
+- type: material
+  id: Papyrus
+  stackEntity: Papyrus
+  name: papyrus
+  unit: materials-unit-piece
+  icon: { sprite: _CE/Objects/Bureaucracy/paper.rsi, state: paper }
   price: 1

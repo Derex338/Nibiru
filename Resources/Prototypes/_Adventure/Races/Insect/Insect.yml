@@ -158,6 +158,7 @@
     markingData:
       group: Insect
       #layers: []
+
 - type: metabolizerType
   id: InsectSerpentide
   name: Serpentid
@@ -260,27 +261,27 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Metabolizer
-    metabolizerTypes: [ InsectSerpentide ]
-  - type: Lung
-    alert: LowOxygen
-  - type: Item
-    size: Small
-    heldPrefix: lungs
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        reagents:
-        - ReagentId: InsectBlood
-          Quantity: 10
-      Lung:
-        maxVol: 100.0
-        canReact: false
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: InsectBlood
-          Quantity: 5
+  #- type: Metabolizer
+  #  metabolizerTypes: [ InsectSerpentide ]
+  #- type: Lung
+  #  alert: LowOxygen
+  #- type: Item
+  #  size: Small
+  #  heldPrefix: lungs
+  #- type: SolutionContainerManager
+  #  solutions:
+  #    organ:
+  #      reagents:
+  #      - ReagentId: InsectBlood
+  #        Quantity: 10
+  #    Lung:
+  #      maxVol: 100.0
+  #      canReact: false
+  #    food:
+  #      maxVol: 5
+  #      reagents:
+  #      - ReagentId: InsectBlood
+  #        Quantity: 5
 
 - type: entity
   id: OrganInsectStomach
@@ -513,6 +514,17 @@
   spawn: MaterialWax1
   maxCount: 20
 
+- type: damageModifierSet
+  id: InsectArmor
+  coefficients:
+    Blunt: 0.80
+    Slash: 0.80
+    Piercing: 0.80
+    Cold: 0.90
+    Heat: 1.8
+    Poison: 1.5
+    Radiation: 0.5
+
 #пол
 - type: entity
   id: InsectWaxTile
@@ -535,11 +547,11 @@
     state: tile
   - type: Transform
     anchored: true
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: LarvaFootStep
-      params:
-        volume: -5
+  #- type: FootstepModifier
+  #  footstepSoundCollection:
+  #    collection: LarvaFootStep
+  #    params:
+  #      volume: -5
   - type: Tag
     tags:
       - Catwalk

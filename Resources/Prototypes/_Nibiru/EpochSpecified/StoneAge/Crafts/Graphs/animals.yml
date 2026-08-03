@@ -49,8 +49,70 @@
     entity: !type:StaticNodeEntity
       id: MobNibiruPigeon
 
+- type: constructionGraph
+  id: Cow
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: BigHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 25
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobNibiruCow
 
+- type: constructionGraph
+  id: Sheep
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: MediumHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 25
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobNibiruSheep
 
+- type: constructionGraph
+  id: Pig
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: MediumHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 15
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobNibiruPig
 
-
-
+- type: constructionGraph
+  id: Chicken
+  start: start
+  graph:
+  - edges:
+    - steps:
+      - !type:MaterialConstructionGraphStep
+        material: SmallHide
+      to: fin
+      completed:
+      - !type:PointsFromCraft
+        points: 10
+    node: start
+  - node: fin
+    entity: !type:StaticNodeEntity
+      id: MobNibiruChicken

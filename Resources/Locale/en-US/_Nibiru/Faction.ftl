@@ -95,3 +95,10 @@ faction-logo-preset-star = Star
 faction-logo-preset-heart = Heart
 faction-logo-preset-shield = Shield
 faction-logo-preset-skull = Skull
+
+## Faction statue
+faction-statue-name = faction statue
+faction-statue-desc = A stone statue depicting a faction member.
+faction-statue-select-title = Choose a faction member
+faction-statue-select-prompt = Which faction member should this statue depict?
+faction-statue-member-set = The statue now depicts { $name }.

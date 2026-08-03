@@ -1,0 +1,29 @@
+# Statue graph
+- type: constructionGraph
+  id: FactionStatue
+  start: start
+  graph:
+    - node: statue
+      entity: FactionStatue
+    - node: start
+      edges:
+        - to: statue
+          completed:
+            - !type:SetFactionStatue
+          steps:
+            - material: StoneBlock
+              amount: 5
+              doAfter: 5
+            - material: CEStone
+              amount: 5
+              doAfter: 3
+
+- type: construction
+  id: FactionStatue
+  name: faction statue
+  graph: FactionStatue
+  startNode: start
+  targetNode: statue
+  category: construction-category-decor
+  objectType: Structure
+  placementMode: SnapgridCenter

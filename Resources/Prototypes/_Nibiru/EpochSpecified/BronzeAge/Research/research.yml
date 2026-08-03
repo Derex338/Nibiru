@@ -402,6 +402,7 @@
     - RedCarpet
     - PurpleCarpet
     - BlackCarpet
+    #- FactionStatue
     #- NoticeBoard
     #- Harp
     #- Flute

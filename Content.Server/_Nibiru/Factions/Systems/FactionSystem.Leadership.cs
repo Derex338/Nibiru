@@ -66,6 +66,7 @@ public sealed partial class FactionSystem
         {
             newLeaderComp.IsCreator = true;
             newLeaderComp.Members = component.Members;
+            newLeaderComp.AllMembers = component.AllMembers;
             newLeaderComp.Members.Remove(newLeader);
             newLeaderComp.Roles = component.Roles;
             newLeaderComp.Rank = Loc.GetString("faction-rank-leader");
@@ -81,6 +82,7 @@ public sealed partial class FactionSystem
             {
                 memberComp.IsCreator = true;
                 memberComp.Members = component.Members;
+                memberComp.AllMembers = component.AllMembers;
                 memberComp.Members.Remove(randomMember);
                 memberComp.Rank = Loc.GetString("faction-rank-leader");
                 component.IsCreator = false;
@@ -157,6 +159,7 @@ public sealed partial class FactionSystem
         factionComponent.Rank = entityComponent.Rank;
 
         entityComponent.Members = factionComponent.Members;
+        entityComponent.AllMembers = factionComponent.AllMembers;
         entityComponent.Members.Remove(entity);
         entityComponent.Members.Add(player.Value);
         entityComponent.IsCreator = true;

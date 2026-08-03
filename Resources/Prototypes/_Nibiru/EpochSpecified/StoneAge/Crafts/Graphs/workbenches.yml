@@ -27,7 +27,7 @@
             - !type:AddFactionComponent
             - !type:UniqueCraft
             - !type:PointsFromCraft
-              points: 50
+              points: 10
           steps:
             - material: CEWood
               amount: 2
@@ -72,7 +72,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: CEWood
@@ -123,7 +123,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: WoodStick
@@ -175,7 +175,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: WoodStick
@@ -232,7 +232,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: SharpStone
@@ -245,7 +245,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: SharpStone
@@ -302,7 +302,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: CEStone
@@ -315,7 +315,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: CEStone
@@ -372,7 +372,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - material: CEDirt
@@ -426,7 +426,7 @@
           completed:
             - !type:AddFactionComponent
             - !type:PointsFromCraft
-              points: 50
+              points: 10
               decreasing: true
           steps:
             - tool: Hammering

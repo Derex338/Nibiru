@@ -40,3 +40,58 @@
   objectType: Item
   canRotate: false
 
+- type: construction
+  id: cowCraft
+  name: cow
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a cow
+  graph: Cow
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false
+
+- type: construction
+  id: sheepCraft
+  name: sheep
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a sheep
+  graph: Sheep
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false
+
+- type: construction
+  id: pigCraft
+  name: pig
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a pig
+  graph: Pig
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false
+
+- type: construction
+  id: chickenCraft
+  name: chicken
+  points: 100
+  entitysToShowRecipe:
+  - BasicWorkbench
+  description: Craft a chicken
+  graph: Chicken
+  targetNode: fin
+  startNode: start
+  category: construction-animals-category
+  objectType: Item
+  canRotate: false

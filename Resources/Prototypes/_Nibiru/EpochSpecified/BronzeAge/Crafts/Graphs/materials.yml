@@ -80,6 +80,20 @@
       entity: Papyrus
 
 - type: constructionGraph
+  id: PlanetMap
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: fin
+          steps:
+            - material: Papyrus
+              amount: 1
+              doAfter: 5
+    - node: fin
+      entity: PlanetMap
+
+- type: constructionGraph
   id: CoinBronze
   start: start
   graph:

@@ -662,11 +662,13 @@
   - хлюпает
   - чавкает
   - булькает
+
 - type: localizedDataset
   id: NamesDrask
   values:
     prefix: names-drask-dataset-
     count: 20
+
 - type: inventoryTemplate
   id: Drask
   slots:

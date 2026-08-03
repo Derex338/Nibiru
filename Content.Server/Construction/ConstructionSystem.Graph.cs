@@ -352,6 +352,17 @@ namespace Content.Server.Construction
                 newFaction.FactionName = faction.FactionName;
             }
 
+            // Nibiru: Transfer faction statue component.
+            if (TryComp<FactionStatueComponent>(uid, out var statue))
+            {
+                var newStatue = EnsureComp<FactionStatueComponent>(newUid);
+                newStatue.FactionName = statue.FactionName;
+                newStatue.AllMembers = statue.AllMembers;
+                newStatue.SelectedMember = statue.SelectedMember;
+                newStatue.SelectedMemberName = statue.SelectedMemberName;
+                newStatue.Builder = statue.Builder;
+            }
+
             // Prevent MapInitEvent spawned entities from spawning into the containers.
             // Containers created by ChangeNode() actions do not exist until after this function is complete,
             // but this should be fine, as long as the target entity properly declared its managed containers.

@@ -37,3 +37,12 @@ public enum FactionVisualLayers : byte
     Background,
     Logo
 }
+
+/// <summary>
+/// Визуальные слои для статуи фракции.
+/// </summary>
+[Serializable, NetSerializable]
+public enum FactionStatueVisualLayers : byte
+{
+    Statue
+}

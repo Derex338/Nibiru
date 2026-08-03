@@ -20,3 +20,6 @@
     requireVisibility: true
   - type: ActivatableUI
     key: enum.PlanetMapUiKey.Key
+  - type: Construction
+    graph: PlanetMap
+    node: fin

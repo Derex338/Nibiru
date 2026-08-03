@@ -105,9 +105,9 @@
   description: Неудобно.
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail_Cowl.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/ChainmailHelmet.rsi
   - type: Clothing
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail_Cowl.rsi
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/ChainmailHelmet.rsi
   - type: HideLayerClothing
     layers:
       Hair: HEAD
