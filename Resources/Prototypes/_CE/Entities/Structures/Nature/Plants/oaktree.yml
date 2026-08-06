@@ -39,6 +39,9 @@
   components:
   - type: CEPlant
     growthLevel: 4
+  - type: CEPlantVisuals
+    readyState: tree0
+    readyVariations: 6
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_trees.rsi
     layers:

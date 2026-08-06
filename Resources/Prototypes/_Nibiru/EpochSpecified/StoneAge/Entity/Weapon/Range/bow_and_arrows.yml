@@ -24,29 +24,31 @@
     - state: unwielded-arrow
       map: [ arrow ]
       visible: false
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound:
+          path: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Arrow
   - type: Appearance
   - type: ItemMapper
     spriteLayers:
     - arrow
-    - plunger
     mapLayers:
       arrow:
         whitelist:
           tags:
           - Arrow
-      plunger:
-        whitelist:
-          tags:
-          - Plunger
   - type: GenericVisualizer
     visuals:
       enum.WieldableVisuals.Wielded:
         arrow:
           True: { state: wielded-arrow }
           False: { state: unwielded-arrow }
-        plunger:
-          True: { state: wielded-plunger }
-          False: { state: unwielded-plunger }
         base:
           True: { state: wielded }
           False: { state: unwielded }
