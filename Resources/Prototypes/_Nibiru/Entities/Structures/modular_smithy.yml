@@ -25,7 +25,7 @@
   description: Меч, собранный из отдельных кузнечных модулей.
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/sword.rsi
+      sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
       state: icon
     - type: Item
       size: Normal
@@ -38,7 +38,7 @@
   description: Нож ручной работы из выбранных модулей.
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/knife.rsi
+      sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
       state: icon
     - type: Item
       size: Small
@@ -51,7 +51,7 @@
   description: Топор, собранный по частям в кузне.
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/hatchet.rsi
+      sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
       state: icon
     - type: Item
       size: Normal
@@ -65,7 +65,7 @@
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/spear.rsi
-      state: icon
+      state: spear
     - type: Item
       size: Large
 
@@ -80,9 +80,9 @@
   description: Верстак для ручного создания модульного оружия. Взаимодействуй для открытия меню кузни.
   components:
     - type: Sprite
-      sprite: Structures/Machines/lathe.rsi
+      sprite: Structures/Machines/autolathe.rsi
       layers:
-        - state: idle
+        - state: icon
     - type: InteractionOutline
     - type: ModularCraft
       currentmodularItemType: Sword

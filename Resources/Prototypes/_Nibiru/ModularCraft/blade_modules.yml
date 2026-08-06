@@ -29,8 +29,8 @@
     Меньший урон компенсируется скоростью.
   partType: Blade
   sprite:
-    sprite: Objects/Weapons/Melee/sword.rsi
-    state: blade_short
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
+    state: blade
   compatiblemodularItemTypes:
     - Sword
     - Knife
@@ -49,8 +49,8 @@
     Сложнее в изготовлении, требует точного материала.
   partType: Blade
   sprite:
-    sprite: Objects/Weapons/Melee/sword.rsi
-    state: blade_serrated
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
+    state: blade
   compatiblemodularItemTypes:
     - Sword
     - Knife
@@ -69,8 +69,8 @@
     Удар наносит больше тупого урона вдобавок к режущему.
   partType: Blade
   sprite:
-    sprite: Objects/Weapons/Melee/sword.rsi
-    state: blade_wide
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
+    state: blade
   compatiblemodularItemTypes:
     - Sword
   materialCost: 4
@@ -89,8 +89,8 @@
     Высокое пробитие брони, минимальный вес, но хрупкое.
   partType: Blade
   sprite:
-    sprite: Objects/Weapons/Melee/sword.rsi
-    state: blade_fine
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
+    state: blade
   compatiblemodularItemTypes:
     - Sword
     - Knife
@@ -110,8 +110,8 @@
     Хорошо подходит для снятия шкур и нанесения глубоких ран.
   partType: Blade
   sprite:
-    sprite: Objects/Weapons/Melee/knife.rsi
-    state: blade_curved
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
+    state: blade
   compatiblemodularItemTypes:
     - Knife
   materialCost: 2

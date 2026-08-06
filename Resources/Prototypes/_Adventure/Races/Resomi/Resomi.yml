@@ -252,7 +252,8 @@
   components:
   - type: Sprite
     sprite: _Adventure/Races/Resomi/organs.rsi
-    state: heart-off
+    layers:
+    - state: heart-off
 
 - type: entity
   id: OrganResomiLungs

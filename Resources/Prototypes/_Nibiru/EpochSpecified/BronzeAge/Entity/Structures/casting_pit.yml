@@ -6,8 +6,8 @@
   description: Небольшое углубление в земле для установки литейных форм.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/low_wall.rsi
-    state: icon
+    sprite: Structures/Hydroponics/misc.rsi
+    state: soil
     color: "#4B3621"
   - type: Physics
     bodyType: Static

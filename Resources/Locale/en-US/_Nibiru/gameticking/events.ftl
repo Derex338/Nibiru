@@ -1,7 +1,7 @@
-ent-WeatherRainRule = { ent-BaseStationEventShortDelay }
-    .desc = { ent-BaseStationEventShortDelay.desc }
-ent-NibiruWeatherRain = { ent-AdminInstantEffectBase }
-    .desc = { ent-AdminInstantEffectBase.desc }
+ent-WeatherRainRule = { "" }
+    .desc = { "" }
+ent-NibiruWeatherRain = instant effect
+    .desc = { "" }
     .suffix = Rain
-ent-BasicNibiruRoundstartVariation = { ent-BaseGameRule }
-    .desc = { ent-BaseGameRule.desc }
+ent-BasicNibiruRoundstartVariation = { "" }
+    .desc = { "" }
