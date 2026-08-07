@@ -1,3 +1,3 @@
-ent-NibiruGoldOre = { ent-GoldOre }
-    .desc = { ent-GoldOre.desc }
+ent-NibiruGoldOre = золотоносная руда
+    .desc = Кусок неочищенной руды.
     .suffix = Nibiru, BronzeAge

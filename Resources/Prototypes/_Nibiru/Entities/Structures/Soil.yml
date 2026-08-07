@@ -5,8 +5,8 @@
   parent: hydroponicsSoil
   components:
   - type: Sprite
-    sprite: _Nibiru/Objects/Structures/Soil/soil_plate.rsi
-    state: soil_plate
+    sprite: Structures/Hydroponics/misc.rsi
+    state: soil
   - type: Construction
     graph: GroundSoil
     node: fin

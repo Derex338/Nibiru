@@ -147,7 +147,11 @@
       - Spear
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
-    state: spear
+    layers:
+    - state: spear
+    - state: tip
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
     size: Ginormous
@@ -310,7 +314,11 @@
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
-    state: icon
+    layers:
+    - state: spear
+    - state: tip
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: MeleeWeapon
     range: 2
     wideAnimationRotation: -135

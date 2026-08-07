@@ -278,25 +278,6 @@
     node: fin
 
 - type: entity
-  name: деревянное ведро
-  parent: [Bucket, BaseWoodItem]
-  id: WoodenBucket
-  suffix: Нибиру, Каменный век
-  description: Ведро, выдолбленное из дерева. Может переносить 50 ед. жидкости.
-  components:
-  - type: Sprite
-    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/WoodenBucket.rsi
-    state: icon
-  - type: Item
-    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/WoodenBucket.rsi
-    size: Large
-    shape:
-    - 0,0,1,1
-  - type: Construction
-    graph: WoodenBucket
-    node: fin
-
-- type: entity
   name: костяная игла
   parent: BaseItem
   id: BoneNeedle

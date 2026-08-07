@@ -86,8 +86,8 @@
   category: Weapons
   description: Простое и эффективное колющее оружие.
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
+    state: spear
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
@@ -116,8 +116,8 @@
   category: Weapons
   description: Величественное оружие с тремя зубцами.
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Trident.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
+    state: spear
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
@@ -146,8 +146,8 @@
   category: Tools
   description: Бронзовая кирка для добычи ресурсов.
   icon:
-    sprite: Objects/Tools/pickaxe.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
+    state: pickaxe
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench

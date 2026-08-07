@@ -71,18 +71,6 @@
     enum.HumanoidVisualLayers.RHand:
       limit: 1
       required: false
-    enum.HumanoidVisualLayers.LLeg:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RLeg:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 1
-      required: false
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
@@ -240,7 +228,8 @@
   components:
   - type: Sprite
     sprite: _Adventure/Races/Insect/organs.rsi
-    state: heart-off
+    layers:
+    - state: heart-off
   - type: Organ
   - type: Metabolizer
     maxReagents: 2
@@ -342,42 +331,6 @@
   - type: Sprite
     sprite: _Adventure/Races/Insect/Species/parts.rsi
     state: "r_hand"
-
-- type: entity
-  id: LeftLegInsect
-  name: "Serpentid left leg"
-  parent: [PartInsect, OrganBaseLegLeft]
-  components:
-  - type: Sprite
-    sprite: _Adventure/Races/Insect/Species/parts.rsi
-    state: "l_leg"
-
-- type: entity
-  id: RightLegInsect
-  name: "Serpentid right leg"
-  parent: [PartInsect, OrganBaseLegRight]
-  components:
-  - type: Sprite
-    sprite: _Adventure/Races/Insect/Species/parts.rsi
-    state: "r_leg"
-
-- type: entity
-  id: LeftFootInsect
-  name: "Serpentid left foot"
-  parent: [PartInsect, OrganBaseFootLeft]
-  components:
-  - type: Sprite
-    sprite: _Adventure/Races/Insect/Species/parts.rsi
-    state: "l_foot"
-
-- type: entity
-  id: RightFootInsect
-  name: "Serpentid right foot"
-  parent: [PartInsect, OrganBaseFootRight]
-  components:
-  - type: Sprite
-    sprite: _Adventure/Races/Insect/Species/parts.rsi
-    state: "r_foot"
 
 - type: soundCollection
   id: InsectStep
@@ -861,7 +814,7 @@
     state: full
   - type: Body
     prototype: InsectSerpentide
-    requiredLegs: 2
+    requiredLegs: 0
   - type: Speech
     speechSounds: InsectSpeach
     allowedEmotes: ['Chitter', 'Click']

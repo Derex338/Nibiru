@@ -1,3 +1,3 @@
-ent-NibiruGoldOre = { ent-GoldOre }
-    .desc = { ent-GoldOre.desc }
+ent-NibiruGoldOre = gold ore
+    .desc = A piece of unrefined ore.
     .suffix = Nibiru, BronzeAge

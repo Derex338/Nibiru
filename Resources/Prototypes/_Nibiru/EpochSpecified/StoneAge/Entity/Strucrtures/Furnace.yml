@@ -167,8 +167,8 @@
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
     layers:
       - state: beaker
-      - state: beakerlarge1
-        sprite: Objects/Tools/bucket.rsi
+      - state: fill-1
+        sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   #- type: SolutionContainerManager

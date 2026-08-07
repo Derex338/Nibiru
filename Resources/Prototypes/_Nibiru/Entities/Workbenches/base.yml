@@ -150,7 +150,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: _Nibiru/Entities/Workbenches/SawmillWorkbench.rsi
+    sprite: _Nibiru/Entities/Workbenches/Sawmill.rsi
     state: icon
   - type: Construction
     graph: SawmillWorkbench

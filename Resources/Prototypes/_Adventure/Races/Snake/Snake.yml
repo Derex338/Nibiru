@@ -59,12 +59,6 @@
     enum.HumanoidVisualLayers.RArm:
       limit: 4
       required: false
-    enum.HumanoidVisualLayers.LLeg:
-      limit: 4
-      required: false
-    enum.HumanoidVisualLayers.RLeg:
-      limit: 4
-      required: false
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
@@ -327,7 +321,8 @@
   components:
   - type: Sprite
     sprite: _Adventure/Races/Snake/organs.rsi
-    state: heart-off
+    layers:
+    - state: heart-off
   - type: Organ
   - type: Metabolizer
     maxReagents: 2
@@ -559,7 +554,7 @@
     state: full
   - type: Body
     prototype: Zerah
-    requiredLegs: 2
+    requiredLegs: 0
   - type: Hunger
   - type: Thirst
   - type: Speech

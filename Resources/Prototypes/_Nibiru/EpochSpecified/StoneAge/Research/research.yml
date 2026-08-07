@@ -408,7 +408,7 @@
   id: WoodItems
   name: Wooden Items
   icon:
-    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/WoodenBucket.rsi
+    sprite: _CE/Objects/Tools/bucket.rsi
     state: icon
   discipline: StoneAge
   tier: 1
