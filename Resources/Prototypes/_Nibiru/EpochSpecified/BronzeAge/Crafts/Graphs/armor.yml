@@ -70,7 +70,7 @@
       edges:
         - to: fin
           steps:
-            - material: LeatherArmor
+            - material: LeatherChestplate
               amount: 1
             - material: BronzeInlay
               amount: 3

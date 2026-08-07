@@ -221,15 +221,10 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi
     state: thread_1
-    layers:
-    - state: thread_1
-      map: ["base"]
   - type: Item
     size: Tiny
     shape:
     - 0,0,0,0
-  - type: StaticPrice
-    price: 0
   - type: StackPrice
     price: 1
   - type: Fuel
