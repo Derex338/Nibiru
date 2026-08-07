@@ -265,10 +265,24 @@ namespace Content.Shared.Examine
             var hasDescription = false;
             var metadata = MetaData(entity);
 
-            //Add an entity description if one is declared
-            if (!string.IsNullOrEmpty(metadata.EntityDescription))
+            var description = metadata.EntityDescription;
+
+            // [Nibiru] The engine caches entity descriptions per-prototype in whatever culture resolves
+            // them first (getEntityData). On the server that is often a different culture than the
+            // examining client (e.g. server idle at en-US, client at ru-RU), so the metadata description
+            // can be stale. If this entity's description is just the prototype fallback, re-resolve it in
+            // the CURRENT culture via the fluent loc id, which bypasses that cache.
+            if (description == metadata.EntityPrototype?.Description && metadata.EntityPrototype is { } proto)
             {
-                message.AddMarkupOrThrow(metadata.EntityDescription);
+                var locId = proto.CustomLocalizationID ?? $"ent-{proto.ID}";
+                if (Loc.TryGetString($"{locId}.desc", out var currentCultureDesc) && !string.IsNullOrEmpty(currentCultureDesc))
+                    description = currentCultureDesc;
+            }
+
+            //Add an entity description if one is declared
+            if (!string.IsNullOrEmpty(description))
+            {
+                message.AddMarkupOrThrow(description);
                 hasDescription = true;
             }
 
