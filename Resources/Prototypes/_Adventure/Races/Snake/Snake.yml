@@ -552,6 +552,7 @@
   parent:
   - AppearanceZerah
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobZerah
   components:
   - type: Icon
@@ -575,8 +576,8 @@
       reagents:
       - ReagentId: ZerahBlood
         Quantity: 300
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: MeleeWeapon

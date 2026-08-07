@@ -71,6 +71,7 @@
   parent:
   - AppearanceArachnid
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobArachnid
   name: Urist McWebs
   components:
@@ -92,8 +93,8 @@
     - DoorBumpOpener
     - SpiderCraft
     - AnomalyHost
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSpider
       amount: 5
   - type: Reactive

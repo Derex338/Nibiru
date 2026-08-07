@@ -40,11 +40,12 @@
   parent:
   - AppearanceGingerbread
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobGingerbread
   name: Urist McCookie
   components:
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodBakedCookie
       amount: 5
   - type: Damageable

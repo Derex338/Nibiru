@@ -69,6 +69,7 @@
   parent:
   - AppearanceDiona
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobDiona
   name: Urist McPlants
   components:
@@ -92,10 +93,10 @@
         color: "#cd7314"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
-  - type: Butcherable
-    spawned:
-      - id: FoodMeatPlant
-        amount: 5
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodMeatPlant
+      amount: 5
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

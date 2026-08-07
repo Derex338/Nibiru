@@ -418,6 +418,7 @@
   parent:
   - AppearanceResomi
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobResomi
   components:
   - type: Sprite
@@ -444,8 +445,8 @@
       reagents:
       - ReagentId: ResomiBlood
         Quantity: 300
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: MeleeWeapon

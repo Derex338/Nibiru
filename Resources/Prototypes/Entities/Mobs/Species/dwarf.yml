@@ -1,7 +1,9 @@
 - type: entity
   save: false
   name: Urist McHands The Dwarf
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseSlicingRefinable
   id: BaseMobDwarf
   abstract: true
   components:
@@ -22,9 +24,8 @@
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatHuman
       amount: 5
   - type: Fixtures

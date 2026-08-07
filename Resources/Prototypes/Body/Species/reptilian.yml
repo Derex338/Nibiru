@@ -134,13 +134,14 @@
   parent:
   - AppearanceReptilian
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobReptilian
   name: Urist McScales
   components:
   - type: Puller
     needsHands: false
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatLizard
       amount: 5
   - type: LizardAccent

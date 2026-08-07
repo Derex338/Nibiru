@@ -90,11 +90,12 @@
   parent:
   - AppearanceHuman
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobHuman
   name: Urist McHands
   components:
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatHuman
       amount: 5
 

@@ -1,7 +1,9 @@
 - type: entity
   save: false
   name: Urist McFluff
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseSlicingRefinable
   id: BaseMobMoth
   abstract: true
   components:
@@ -23,9 +25,8 @@
     allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: Bloodstream

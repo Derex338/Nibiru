@@ -1,5 +1,7 @@
 ﻿- type: entity
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseSlicingRefinable
   id: BaseMobVox
   abstract: true
   components:
@@ -23,9 +25,8 @@
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatVox # Adventure
       amount: 5
   - type: Damageable

@@ -2,6 +2,7 @@
   id: CECarpetBase
   parent:
   - BaseStructure
+  - BaseSlicingRefinable
   name: carpet
   description: Fancy walking surface.
   categories: [ ForkFiltered ]
@@ -33,9 +34,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Butcherable
-    butcheringType: Knife
-    butcherDelay: 2
 
 - type: entity
   id: CECarpetBlue
@@ -48,8 +46,8 @@
     sprite: _CE/Structures/Furniture/Carpets/blue.rsi
   - type: IconSmooth
     key: carpet_blue
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: CEFloorCarpetItemBlue1
       amount: 1
 
@@ -64,8 +62,8 @@
     sprite: _CE/Structures/Furniture/Carpets/red.rsi
   - type: IconSmooth
     key: carpet_red
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: CEFloorCarpetItemRed1
       amount: 1
 
@@ -80,8 +78,8 @@
     sprite: _CE/Structures/Furniture/Carpets/purple.rsi
   - type: IconSmooth
     key: carpet_purple
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: CEFloorCarpetItemPurple1
       amount: 1
 
@@ -96,7 +94,7 @@
     sprite: _CE/Structures/Furniture/Carpets/black.rsi
   - type: IconSmooth
     key: carpet_black
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: CEFloorCarpetItemBlack1
       amount: 1

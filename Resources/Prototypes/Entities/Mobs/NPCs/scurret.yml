@@ -4,7 +4,9 @@
 - type: entity
   name: scurret
   id: MobBaseScurret
-  parent: MobBaseAncestor
+  parent:
+  - MobBaseAncestor
+  - BaseSlicingRefinable
   abstract: true
   components:
   # Custom names
@@ -42,8 +44,8 @@
     heatDamageThreshold: 360
     coldDamageThreshold: 285
   # Good eatin', you monster.
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 4
   # They wawa!

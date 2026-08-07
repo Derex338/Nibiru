@@ -114,8 +114,8 @@
     state: skin
   - type: Item
     size: Tiny
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: Skin_notready
       amount: 1
 
@@ -209,8 +209,8 @@
     state: vein
   - type: Item
     size: Tiny
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: VeinTimer
       amount: 1
 
@@ -265,8 +265,8 @@
     state: small
   - type: Item
     size: Tiny
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: Skin
       amount: 1
   - type: Material
@@ -287,8 +287,8 @@
     state: mid
   - type: Item
     size: Tiny
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: Skin
       amount: 2
   - type: Material
@@ -309,8 +309,8 @@
     state: big
   - type: Item
     size: Tiny
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: Skin
       amount: 4
   - type: Material
@@ -331,8 +331,8 @@
     state: small1
   - type: Item
     size: Large
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: CEFoodMeatRabbit
         amount: 1
       - id: Gut
@@ -352,8 +352,8 @@
     state: small1
   - type: Item
     size: Large
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: CEPenFeather
         amount: 4
 
@@ -367,8 +367,8 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: mid1
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: CEFoodMeatLamb
         amount: 3
       - id: Gut
@@ -390,8 +390,8 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: mid2
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: CEBone1
         amount: 2
         maxAmount: 4
@@ -411,8 +411,8 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big1
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: CEFoodMeatBoar
         amount: 3
         maxAmount: 7
@@ -431,8 +431,8 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big2
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: Fat
         amount: 2
         maxAmount: 5
@@ -452,8 +452,8 @@
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big3
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: CEBone1
         amount: 3
         maxAmount: 7
