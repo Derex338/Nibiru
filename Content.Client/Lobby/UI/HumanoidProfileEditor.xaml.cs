@@ -635,25 +635,21 @@ namespace Content.Client.Lobby.UI
 
             foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
             {
-                var folderName = preset.SpriteFolder.Filename;
+                // Прямые пути к файлам или папка с конвенцией имён
+                ResPath? file16 = preset.Sprite16;
+                ResPath? file8 = preset.Sprite8;
 
-                ResPath? file16 = null;
-                var path16 = preset.SpriteFolder / $"{folderName}.png";
-                var path16Alt = preset.SpriteFolder / $"{folderName}_16.png";
+                if (preset.SpriteFolder != null)
+                {
+                    var folder = preset.SpriteFolder.Value;
+                    var folderName = folder.Filename;
 
-                if (resourceManager.ContentFileExists(path16))
-                    file16 = path16;
-                else if (resourceManager.ContentFileExists(path16Alt))
-                    file16 = path16Alt;
+                    file16 ??= TryResolveFile(resourceManager, folder / $"{folderName}.png");
+                    file16 ??= TryResolveFile(resourceManager, folder / $"{folderName}_16.png");
 
-                ResPath? file8 = null;
-                var path8 = preset.SpriteFolder / $"{folderName}_8x8.png";
-                var path8Alt = preset.SpriteFolder / $"{folderName}_8.png";
-
-                if (resourceManager.ContentFileExists(path8))
-                    file8 = path8;
-                else if (resourceManager.ContentFileExists(path8Alt))
-                    file8 = path8Alt;
+                    file8 ??= TryResolveFile(resourceManager, folder / $"{folderName}_8x8.png");
+                    file8 ??= TryResolveFile(resourceManager, folder / $"{folderName}_8.png");
+                }
 
                 if (file16 == null || file8 == null)
                     continue;
@@ -663,6 +659,11 @@ namespace Content.Client.Lobby.UI
 
                 AddFactionPresetButton(Loc.GetString(preset.Name), pixels16, pixels8);
             }
+        }
+
+        private static ResPath? TryResolveFile(IResourceManager resourceManager, ResPath path)
+        {
+            return resourceManager.ContentFileExists(path) ? path : null;
         }
 
         private List<Color> LoadFactionPixelsFromTexture(IResourceCache cache, ResPath path, int expectedSize)

@@ -203,34 +203,37 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 
         foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
         {
-            var folderName = preset.SpriteFolder.Filename;
+            var rootFolder = preset.SpriteFolder;
 
-            ResPath? file16 = null;
-            var path16 = preset.SpriteFolder / $"{folderName}.png";
-            var path16Alt = preset.SpriteFolder / $"{folderName}_16.png";
+        // Прямые пути к файлам или папка с конвенцией имён
+        ResPath? file16 = preset.Sprite16;
+        ResPath? file8 = preset.Sprite8;
 
-            if (resourceManager.ContentFileExists(path16))
-                file16 = path16;
-            else if (resourceManager.ContentFileExists(path16Alt))
-                file16 = path16Alt;
+        if (rootFolder != null)
+        {
+            var folder = rootFolder.Value;
+            var folderName = folder.Filename;
 
-            ResPath? file8 = null;
-            var path8 = preset.SpriteFolder / $"{folderName}_8x8.png";
-            var path8Alt = preset.SpriteFolder / $"{folderName}_8.png";
+            file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}.png");
+            file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_16.png");
 
-            if (resourceManager.ContentFileExists(path8))
-                file8 = path8;
-            else if (resourceManager.ContentFileExists(path8Alt))
-                file8 = path8Alt;
+            file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8x8.png");
+            file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8.png");
+        }
 
-            if (file16 == null || file8 == null)
-                continue;
+        if (file16 == null || file8 == null)
+            continue;
 
             var pixels16 = LoadPixelsFromTexture(resourceCache, file16.Value, 16);
             var pixels8 = LoadPixelsFromTexture(resourceCache, file8.Value, 8);
 
             AddPresetButton(Loc.GetString(preset.Name), pixels16, pixels8);
         }
+    }
+
+    private static ResPath? TryResolvePresetFile(IResourceManager resourceManager, ResPath path)
+    {
+        return resourceManager.ContentFileExists(path) ? path : null;
     }
 
     private List<Color> LoadPixelsFromTexture(IResourceCache cache, ResPath path, int expectedSize)
