@@ -1,6 +1,8 @@
 - type: entity
   id: MobHorseRideable
-  parent: MobPig
+  parent:
+  - MobPig
+  - BaseSlicingRefinable
   name: rideable horse
   suffix: Nibiru
   description: A majestic horse you can ride.
@@ -39,8 +41,8 @@
     points: 50
   - type: Body
     prototype: NibiruAnimal
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: HideBig
       amount: 1
     - id: BigBodyButcherFirst

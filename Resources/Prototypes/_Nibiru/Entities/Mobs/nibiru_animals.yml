@@ -611,8 +611,8 @@
   description: Маленькая, но очень важная птица.
   components:
   - type: Sprite
-    sprite: Mobs/Animals/butterfly.rsi
-    state: butterfly
+    sprite: _Nibiru/Entities/Mobs/Pigeon.rsi
+    state: icon
   - type: NibiruNpcStateMachine
     behaviorType: Passive
   - type: NibiruTamable

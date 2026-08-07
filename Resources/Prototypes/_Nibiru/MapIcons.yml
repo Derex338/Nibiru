@@ -18,3 +18,34 @@
   idPattern: Wall
   shape: Rectangle
   scale: 1.9
+
+#------------------------------------------------------------------------------
+# Zones: dense clusters of small entities render as smooth tinted/textured blobs
+#------------------------------------------------------------------------------
+
+- type: planetMapZone
+  id: Forest
+  # Все деревья Nibiru: зелёные, крупные, яблони (леса в биомах спавнят эти ID).
+  idPattern: CEFloraTree
+  entities:
+    - CEPlantAppleTreeGrown
+  radius: 3
+  minNeighbors: 5
+  color: "#FFFFFF"
+  alpha: 0.55
+  sprite: /Textures/_Nibiru/Planet/forest.png
+  repeatScale: 16
+  textureOffset: 0.5, 0
+
+# Large contiguous bodies of water render as one smooth tinted/patterned area.
+- type: planetMapZone
+  id: Water
+  entities:
+    - FloorWaterEntity
+  radius: 2
+  minNeighbors: 4
+  color: "#FFFFFF"
+  alpha: 0.6
+  sprite: /Textures/_Nibiru/Planet/water.png
+  repeatScale: 12
+  textureOffset: 0.5, 0.25

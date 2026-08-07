@@ -1,6 +1,8 @@
 - type: entity
   name: Urist McSlime
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseSlicingRefinable
   id: BaseMobSlimePerson
   abstract: true
   components:
@@ -96,9 +98,8 @@
         visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSlime
       amount: 5
   - type: Respirator

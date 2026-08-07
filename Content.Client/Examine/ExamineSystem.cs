@@ -161,8 +161,7 @@ namespace Content.Client.Examine
             {
                 OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
             }
-            // Only update verbs from server response, keep client-locale message text.
-            UpdateTooltipInfo(player.Value, entity, null, ev.Verbs, getVerbs: false);
+            UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs, getVerbs: false);
         }
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
@@ -274,6 +273,16 @@ namespace Content.Client.Examine
             // Add message label only when message is not null.
             if (message != null)
             {
+                // Remove existing message labels before adding new one to avoid duplicates
+                // when the server response replaces the client-side text.
+                var existingLabels = vBox.Children
+                    .Where(c => c is RichTextLabel && c.Name != "ExamineButtonsHBox" && !(c.Parent?.Name == "ExamineButtonsHBox"))
+                    .ToArray();
+                foreach (var label in existingLabels)
+                {
+                    vBox.Children.Remove(label);
+                }
+
                 foreach (var msg in message.Nodes)
                 {
                     if (msg.Name != null)

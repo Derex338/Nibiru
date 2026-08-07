@@ -408,6 +408,7 @@
   parent:
   - AppearanceSkrell
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobSkrell
   components:
   - type: Icon
@@ -430,8 +431,8 @@
       reagents:
       - ReagentId: SkrellBlood
         Quantity: 300
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: MeleeWeapon

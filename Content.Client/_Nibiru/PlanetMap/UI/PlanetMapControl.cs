@@ -33,6 +33,7 @@ public sealed class PlanetMapControl : Control
     // -----------------------------------------------------------------------
     private readonly Dictionary<Vector2i, uint[]> _savedChunks  = new();
     private readonly Dictionary<Vector2i, uint[]> _savedObjects = new();
+    private readonly Dictionary<Vector2i, uint[]> _savedZones   = new();
 
     // -----------------------------------------------------------------------
     // Camera state
@@ -90,6 +91,11 @@ public sealed class PlanetMapControl : Control
     private readonly Dictionary<string, Color> _spriteColorCache = new();
 
     private List<string> _objectPrototypes = new();
+    private List<string> _zonePrototypes   = new();
+
+    // Resolved zone visuals (prototype ID → cached render data)
+    private readonly Dictionary<string, PlanetMapZonePrototype?> _resolvedZoneCache = new();
+    private readonly Dictionary<string, Texture>                  _zoneTextureCache  = new();
 
     public event Action? OnPenPressed;
 
@@ -139,6 +145,7 @@ public sealed class PlanetMapControl : Control
     {
         _savedChunks.Clear();
         _savedObjects.Clear();
+        _savedZones.Clear();
     }
 
     /// <summary>Replaces all saved data (clear + merge).</summary>
@@ -151,18 +158,33 @@ public sealed class PlanetMapControl : Control
         MergeChunks(chunks, objects, objectPrototypes);
     }
 
-    /// <summary>Merges incoming chunk data into the saved map (non-zero values win).</summary>
+    /// <summary>
+    /// Merges incoming chunk data into the saved map. When <paramref name="overwriteTiles"/> is
+    /// provided (scan results), only those tiles are overwritten (including zeroing, so removed
+    /// objects disappear); tiles in the same chunk not part of that scan are preserved. When null
+    /// (initial open-stream), everything overwrites.
+    /// </summary>
     public void MergeChunks(
         Dictionary<Vector2i, uint[]> newChunks,
         Dictionary<Vector2i, uint[]> newObjects,
-        List<string>                 objectPrototypes)
+        List<string>                 objectPrototypes,
+        Dictionary<Vector2i, uint[]>? newZones = null,
+        List<string>?                zonePrototypes = null,
+        HashSet<Vector2i>?           overwriteTiles = null)
     {
-        MergeDict(_savedChunks,  newChunks);
-        MergeDict(_savedObjects, newObjects);
+        MergeDict(_savedChunks,  newChunks,  overwriteTiles);
+        MergeDict(_savedObjects, newObjects, overwriteTiles);
+        if (newZones != null)
+            MergeDict(_savedZones, newZones, overwriteTiles);
+        if (zonePrototypes != null)
+            _zonePrototypes = zonePrototypes;
         _objectPrototypes = objectPrototypes;
     }
 
-    private static void MergeDict(Dictionary<Vector2i, uint[]> saved, Dictionary<Vector2i, uint[]> incoming)
+    private static void MergeDict(
+        Dictionary<Vector2i, uint[]> saved,
+        Dictionary<Vector2i, uint[]> incoming,
+        HashSet<Vector2i>? overwriteTiles)
     {
         foreach (var (origin, data) in incoming)
         {
@@ -171,9 +193,24 @@ public sealed class PlanetMapControl : Control
                 existing = new uint[SharedPlanetMapSystem.ArraySize];
                 saved[origin] = existing;
             }
-            for (var i = 0; i < SharedPlanetMapSystem.ArraySize; i++)
+
+            if (overwriteTiles == null)
             {
-                if (data[i] != 0) existing[i] = data[i];
+                // Full overwrite (initial open-stream).
+                data.CopyTo(existing, 0);
+                continue;
+            }
+
+            // Scan result: only re-classified tiles are overwritten (incl. zeroing).
+            var baseX = origin.X * SharedPlanetMapSystem.ChunkSize;
+            var baseY = origin.Y * SharedPlanetMapSystem.ChunkSize;
+            for (var lx = 0; lx < SharedPlanetMapSystem.ChunkSize; lx++)
+            for (var ly = 0; ly < SharedPlanetMapSystem.ChunkSize; ly++)
+            {
+                if (!overwriteTiles.Contains(new Vector2i(baseX + lx, baseY + ly)))
+                    continue;
+                existing[lx * SharedPlanetMapSystem.ChunkSize + ly] =
+                    data[lx * SharedPlanetMapSystem.ChunkSize + ly];
             }
         }
     }
@@ -324,7 +361,7 @@ public sealed class PlanetMapControl : Control
                     var screenPos = TileToScreen(tx, ty, size, tileSize, camRot);
                     var rect      = new UIBox2(screenPos, screenPos + new Vector2(tileSize, tileSize));
 
-                    // 1. Floor tile (with subtle position-hash variation for visual texture)
+                    // 1. Floor tile (intensity variation for visual texture)
                     if (tileId != 0)
                     {
                         var tileColor = GetTileColor(tileId);
@@ -338,10 +375,44 @@ public sealed class PlanetMapControl : Control
                             1f);
                         handle.DrawRect(rect, varColor);
                     }
+                }
+            }
+        }
 
-                    // 2. Object overlay
-                    if (objId != 0)
-                        DrawObject(handle, rect, objId, tileSize);
+        // Zone blobs (forests, etc.) — under the object icons
+        DrawZones(handle, size, tileSize, camRot, minTileX, maxTileX, minTileY, maxTileY);
+
+        // 2. Object overlay (skipping tiles covered by a dense zone)
+        foreach (var (chunkOrigin, chunkData) in _savedChunks)
+        {
+            if (chunkOrigin.X < minCX || chunkOrigin.X > maxCX) continue;
+            if (chunkOrigin.Y < minCY || chunkOrigin.Y > maxCY) continue;
+
+            _savedObjects.TryGetValue(chunkOrigin, out var objData);
+            _savedZones.TryGetValue(chunkOrigin, out var zoneData);
+
+            var baseX = chunkOrigin.X * cSize;
+            var baseY = chunkOrigin.Y * cSize;
+
+            for (var lx = 0; lx < cSize; lx++)
+            {
+                var tx = baseX + lx;
+                if (tx < minTileX || tx > maxTileX) continue;
+                for (var ly = 0; ly < cSize; ly++)
+                {
+                    var ty = baseY + ly;
+                    if (ty < minTileY || ty > maxTileY) continue;
+
+                    var idx   = lx * cSize + ly;
+                    var objId = objData != null ? objData[idx] : 0u;
+                    if (objId == 0) continue;
+
+                    // Dense zone members are drawn by the blob; skip their icons
+                    if (zoneData != null && zoneData[idx] != 0) continue;
+
+                    var screenPos = TileToScreen(tx, ty, size, tileSize, camRot);
+                    var rect      = new UIBox2(screenPos, screenPos + new Vector2(tileSize, tileSize));
+                    DrawObject(handle, rect, objId, tileSize);
                 }
             }
         }
@@ -427,6 +498,204 @@ public sealed class PlanetMapControl : Control
         {
             handle.DrawRect(objRect, GetObjectColor(protoId));
         }
+    }
+
+    // -----------------------------------------------------------------------
+    // Zone blob rendering
+    //
+    // Each zone member is drawn as a soft-edged disc in screen space. Overlapping discs of a
+    // dense cluster merge into one smooth blob, with round (not spiky) edges. No marching-squares
+    // polygon tessellation is used, avoiding seams and spikes entirely.
+    // -----------------------------------------------------------------------
+
+    // Base disc radius (tiles) around each zone member. Small enough to stay within the member's
+    // own tile — isolated members render as a single small dot. Members that have a neighbour
+    // within the zone's <radius> grow a bit larger so dense clusters read as one connected blob.
+    private const float ZoneBlobRadius = 0.5f;
+    private const int   ZoneDiscSegments = 20;
+    private const int   ZoneViewPad = 4; // tiles of padding beyond the viewport when culling members
+
+    private void DrawZones(
+        DrawingHandleScreen handle,
+        Vector2i            size,
+        int                 tileSize,
+        Angle               camRot,
+        int                 minTileX, int maxTileX,
+        int                 minTileY, int maxTileY)
+    {
+        if (_zonePrototypes == null || _savedZones.Count == 0)
+            return;
+
+        // Collect all zone members in view, grouped by zone id.
+        var perZone = new Dictionary<int, List<Vector2i>>();
+        var cSize   = SharedPlanetMapSystem.ChunkSize;
+        foreach (var (chunkOrigin, zoneData) in _savedZones)
+        {
+            var baseX = chunkOrigin.X * cSize;
+            var baseY = chunkOrigin.Y * cSize;
+
+            for (var lx = 0; lx < cSize; lx++)
+            {
+                var tx = baseX + lx;
+                if (tx < minTileX - ZoneViewPad || tx > maxTileX + ZoneViewPad) continue;
+                for (var ly = 0; ly < cSize; ly++)
+                {
+                    var idx = lx * cSize + ly;
+                    var z = (int) zoneData[idx];
+                    if (z == 0) continue;
+                    var ty = baseY + ly;
+                    if (ty < minTileY - ZoneViewPad || ty > maxTileY + ZoneViewPad) continue;
+                    if (!perZone.TryGetValue(z, out var list))
+                    {
+                        list = new List<Vector2i>();
+                        perZone[z] = list;
+                    }
+                    list.Add(new Vector2i(tx, ty));
+                }
+            }
+        }
+
+        foreach (var (zoneIdx, members) in perZone)
+        {
+            var proto = ResolveZonePrototype(zoneIdx);
+            if (proto == null) continue;
+            var color = GetZoneColor(proto);
+            var tex   = GetZoneTexture(proto);
+            var repeat = proto.TextureRepeatScale;
+
+            // Per-member disc radius: base stays within the member's tile; a member that has a
+            // neighbour close by (dense cluster) gets a slightly larger disc so the cluster reads
+            // as one connected blob, while isolated members stay a single small dot.
+            var clusterDist = proto.Radius;
+            var clusterR    = MathF.Max(ZoneBlobRadius, MathF.Min(1.4f, clusterDist * 0.45f));
+
+            // Spatial grid for fast neighbour lookups.
+            var grid = new Dictionary<Vector2i, List<Vector2i>>();
+            foreach (var m in members)
+            {
+                var cell = new Vector2i(
+                    (int) MathF.Floor(m.X / (float) clusterDist),
+                    (int) MathF.Floor(m.Y / (float) clusterDist));
+                if (!grid.TryGetValue(cell, out var list))
+                {
+                    list = new List<Vector2i>();
+                    grid[cell] = list;
+                }
+                list.Add(m);
+            }
+
+            foreach (var m in members)
+            {
+                var hasNeighbour = false;
+                var cell = new Vector2i(
+                    (int) MathF.Floor(m.X / (float) clusterDist),
+                    (int) MathF.Floor(m.Y / (float) clusterDist));
+                var distSq = clusterDist * clusterDist;
+                for (var dx = -1; dx <= 1 && !hasNeighbour; dx++)
+                for (var dy = -1; dy <= 1 && !hasNeighbour; dy++)
+                {
+                    if (!grid.TryGetValue(cell + new Vector2i(dx, dy), out var other))
+                        continue;
+                    foreach (var o in other)
+                    {
+                        if (o == m) continue;
+                        var ddx = m.X - o.X;
+                        var ddy = m.Y - o.Y;
+                        if (ddx * ddx + ddy * ddy <= distSq)
+                        {
+                            hasNeighbour = true;
+                            break;
+                        }
+                    }
+                }
+
+                DrawZoneDisc(handle, size, tileSize, camRot, m,
+                    hasNeighbour ? clusterR : ZoneBlobRadius, color, tex, repeat);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Draws one zone disc as a triangle fan built in TILE space, then projected to screen.
+    /// Each vertex carries its own UV (tile coord / repeat), so a texture tiles continuously
+    /// across overlapping discs of a cluster instead of being stretched over a single disc.
+    /// Opaque fill: overlapping discs of the same zone don't darken at their seams.
+    /// </summary>
+    private void DrawZoneDisc(
+        DrawingHandleScreen handle, Vector2i size, int tileSize, Angle camRot,
+        Vector2i centerTile, float radiusTiles, Color color, Texture? tex, float repeat)
+    {
+        var solid = color.WithAlpha(1f);
+
+        // Fan vertices in tile space (center + rim points around the disc).
+        var fan = new Vector2[ZoneDiscSegments + 2];
+        fan[0] = new Vector2(centerTile.X, centerTile.Y);
+        for (var i = 0; i <= ZoneDiscSegments; i++)
+        {
+            var a = MathF.Tau * i / ZoneDiscSegments;
+            fan[i + 1] = new Vector2(
+                centerTile.X + MathF.Cos(a) * radiusTiles,
+                centerTile.Y + MathF.Sin(a) * radiusTiles);
+        }
+
+        if (tex == null)
+        {
+            // Project rim to screen and fill the polygon.
+            var pts = new Vector2[fan.Length];
+            for (var i = 0; i < fan.Length; i++)
+                pts[i] = TileToScreen(fan[i], size, tileSize, camRot);
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, pts, solid);
+            return;
+        }
+
+        // Textured: project each tile-space vertex to screen AND keep its tile UV.
+        var uVerts = new DrawVertexUV2D[fan.Length];
+        for (var i = 0; i < fan.Length; i++)
+        {
+            var t = fan[i];
+            var screen = TileToScreen(t, size, tileSize, camRot);
+            uVerts[i] = new DrawVertexUV2D(screen, new Vector2(t.X / repeat, t.Y / repeat));
+        }
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, tex, uVerts, solid);
+    }
+
+
+    private PlanetMapZonePrototype? ResolveZonePrototype(int zoneIdx)
+    {
+        var idx = zoneIdx - 1;
+        if (idx < 0 || idx >= _zonePrototypes.Count)
+            return null;
+        var id = _zonePrototypes[idx];
+        if (id == null) return null;
+
+        if (_resolvedZoneCache.TryGetValue(id, out var cached))
+            return cached;
+
+        PlanetMapZonePrototype? proto = null;
+        _proto.TryIndex(id, out proto);
+        _resolvedZoneCache[id] = proto;
+        return proto;
+    }
+
+    private Color GetZoneColor(PlanetMapZonePrototype proto)
+    {
+        return proto.Color.WithAlpha(proto.Alpha);
+    }
+
+    private Texture? GetZoneTexture(PlanetMapZonePrototype proto)
+    {
+        if (proto.Sprite is not Robust.Shared.Utility.SpriteSpecifier.Texture texSpec)
+            return null;
+        var path = texSpec.TexturePath.ToString();
+        if (_zoneTextureCache.TryGetValue(path, out var cached))
+            return cached;
+        try
+        {
+            var tex = _resCache.GetResource<TextureResource>(path).Texture;
+            _zoneTextureCache[path] = tex;
+            return tex;
+        }
+        catch { return null; }
     }
 
     private void DrawPlayerMarker(DrawingHandleScreen handle, Vector2i size, int tileSize, Angle camRot)
@@ -598,13 +867,17 @@ public sealed class PlanetMapControl : Control
     // -----------------------------------------------------------------------
 
     private Vector2 TileToScreen(int tx, int ty, Vector2i screenSize, int tileSize, Angle camRot)
+        => TileToScreen(new Vector2(tx, ty), screenSize, tileSize, camRot);
+
+    /// <summary>Tile → screen with fractional tile coordinates.</summary>
+    private Vector2 TileToScreen(Vector2 tile, Vector2i screenSize, int tileSize, Angle camRot)
     {
         var cx = screenSize.X / 2f;
         var cy = screenSize.Y / 2f;
 
         // World-to-screen offset (Y negated because world Y↑ = screen Y↓)
-        var dx =  (tx - _pan.X) * tileSize;
-        var dy = -(ty - _pan.Y) * tileSize;
+        var dx =  (tile.X - _pan.X) * tileSize;
+        var dy = -(tile.Y - _pan.Y) * tileSize;
 
         // Rotate by camera angle
         var rot  = (float)camRot.Theta;
@@ -634,3 +907,4 @@ public sealed class PlanetMapControl : Control
         }
     }
 }
+

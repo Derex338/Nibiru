@@ -1,24 +1,24 @@
 - type: factionLogoPreset
   id: FactionLogoPresetCross
   name: faction-logo-preset-cross
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/cross/cross.png
+  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/cross
 
 - type: factionLogoPreset
   id: FactionLogoPresetStar
   name: faction-logo-preset-star
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/star/star.png
+  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/star
 
 - type: factionLogoPreset
   id: FactionLogoPresetHeart
   name: faction-logo-preset-heart
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/heart/heart.png
+  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/heart
 
 - type: factionLogoPreset
   id: FactionLogoPresetShield
   name: faction-logo-preset-shield
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/shield/shield.png
+  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/shield
 
 - type: factionLogoPreset
   id: FactionLogoPresetSkull
   name: faction-logo-preset-skull
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/skull/skull.png
+  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/skull

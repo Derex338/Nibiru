@@ -1,6 +1,8 @@
 ﻿- type: entity
   name: Largo
-  parent: SimpleMobBase
+  parent:
+  - SimpleMobBase
+  - BaseSlicingRefinable
   id: MobGorillaLargo
   description: Cargo's pet, participated in the first revolution. He seems to have an 'I love Mom' tattoo.
   components:
@@ -28,8 +30,8 @@
           Base: crawling
         Dead:
           Base: dead
-    - type: Butcherable
-      spawned:
+    - type: ToolRefinable
+      refineResult:
         - id: FoodMeat
           amount: 4
         - id: ClothingHeadHatCargosoft

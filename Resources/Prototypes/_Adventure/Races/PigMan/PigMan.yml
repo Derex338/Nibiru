@@ -409,6 +409,7 @@
   parent:
   - AppearancePigMan
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobPigMan
   components:
   - type: Icon
@@ -426,8 +427,8 @@
       Male: MalePigMan
       Female: FemalePigMan
       Unsexed: MalePigMan
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: Bloodstream

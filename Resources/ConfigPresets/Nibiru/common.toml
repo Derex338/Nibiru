@@ -63,3 +63,6 @@ arrivals = false
 
 [viewport]
 maximum_width = 26
+
+[ic]
+restricted_names = false

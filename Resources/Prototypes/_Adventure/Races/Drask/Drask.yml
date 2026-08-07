@@ -162,6 +162,7 @@
   parent:
   - AppearanceDrask
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobDrask
   components:
   - type: TypingIndicator
@@ -251,9 +252,8 @@
   - type: Icon
     sprite: _Adventure/Races/Drask/Species/parts.rsi
     state: full
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatLizard
       amount: 5
   - type: Inventory

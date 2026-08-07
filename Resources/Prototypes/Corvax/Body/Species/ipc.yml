@@ -84,6 +84,7 @@
   parent:
   - AppearanceIpc
   - BaseSpeciesMob
+  - BaseSlicingRefinable
   id: MobIpc
   name: Urist McHands
   abstract: true
@@ -221,10 +222,10 @@
     snore: /Audio/Machines/buzz-two.ogg
     interval: 30
     popUp: sleep-ipc
-  - type: Butcherable
-    spawned:
-      - id: OrganIpcHead
-        amount: 1
+  - type: ToolRefinable
+    refineResult:
+    - id: OrganIpcHead
+      amount: 1
   - type: MobThresholds
     thresholds:
       0: Alive

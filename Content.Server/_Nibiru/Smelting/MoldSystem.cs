@@ -42,29 +42,18 @@ public sealed class MoldSystem : EntitySystem
 
         bool success = false;
 
-        foreach (var (reagent, entity) in comp.ResultEntities)
+        if (comp.ResultEntities.TryGetValue(args.reagent.ID, out var entity))
         {
-            var reagentAmount = component.Solution.Volume;
-            if (reagentAmount <= 0)
-                continue;
+            var pos = _transform.GetMapCoordinates(args.uid);
 
-            if (component.Solution.Volume >= component.Solution.MaxVolume && reagentAmount >= component.Solution.MaxVolume * 0.8f)
-            {
-                var pos = _transform.GetMapCoordinates(args.uid);
+            var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
+            var spawn = Spawn(entity, pos);
+            _container.Insert(spawn, container);
+            if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
+                _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
 
-                var container = _container.EnsureContainer<ContainerSlot>(args.uid, comp.Slot, out var hasContainer);
-                var spawn = Spawn(entity, pos);
-                _container.Insert(spawn, container);
-                if (args.reagent.MeltingPoint is not null && HasComp<TemperatureComponent>(spawn))
-                    _temp.ForceChangeTemperature(spawn, args.reagent.MeltingPoint.Value);
-
-                _solution.RemoveAllSolution((args.uid, component));
-                success = true;
-                break;
-            }
-
-            if (success)
-                break;
+            _solution.RemoveAllSolution((args.uid, component));
+            success = true;
         }
 
         if (!success)

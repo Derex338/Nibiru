@@ -807,6 +807,7 @@
   parent:
   - AppearanceInsect
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobInsect
   components:
   - type: Icon
@@ -832,9 +833,8 @@
       reagents:
       - ReagentId: InsectBlood
         Quantity: 300
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: Inventory

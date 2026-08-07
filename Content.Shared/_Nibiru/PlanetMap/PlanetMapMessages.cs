@@ -53,20 +53,39 @@ public sealed class PlanetMapChunkBatchMessage : EntityEventArgs
     /// <summary>Registry of entity prototype IDs referenced in <see cref="Objects"/>.</summary>
     public List<string> ObjectPrototypes;
 
+    /// <summary>Chunk origin → flat zone-member array (ChunkSize × ChunkSize).</summary>
+    public Dictionary<Vector2i, uint[]> Zones;
+
+    /// <summary>Registry of <c>planetMapZone</c> prototype IDs referenced in <see cref="Zones"/>.</summary>
+    public List<string> ZonePrototypes;
+
     /// <summary>True when this is the final batch in the current streaming sequence.</summary>
     public bool IsLast;
+
+    /// <summary>
+    /// For scan results: the exact tiles that were re-classified. The client must overwrite
+    /// (including zeroing) ONLY these tiles; other tiles in the same chunk that weren't part of
+    /// this scan are preserved. Null for initial map-open streams (everything overwrites).
+    /// </summary>
+    public HashSet<Vector2i>? OverwriteTiles;
 
     public PlanetMapChunkBatchMessage(
         NetEntity mapEntity,
         Dictionary<Vector2i, uint[]> chunks,
         Dictionary<Vector2i, uint[]> objects,
         List<string> objectPrototypes,
-        bool isLast)
+        Dictionary<Vector2i, uint[]> zones,
+        List<string> zonePrototypes,
+        bool isLast,
+        HashSet<Vector2i>? overwriteTiles = null)
     {
         MapEntity        = mapEntity;
         Chunks           = chunks;
         Objects          = objects;
         ObjectPrototypes = objectPrototypes;
+        Zones            = zones;
+        ZonePrototypes   = zonePrototypes;
         IsLast           = isLast;
+        OverwriteTiles   = overwriteTiles;
     }
 }

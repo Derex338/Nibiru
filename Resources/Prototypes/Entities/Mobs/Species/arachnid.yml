@@ -1,7 +1,9 @@
 - type: entity
   save: false
   name: Urist McWebs
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseSlicingRefinable
   id: BaseMobArachnid
   abstract: true
   components:
@@ -21,9 +23,8 @@
     - DoorBumpOpener
     - SpiderCraft
     - AnomalyHost
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
       - id: FoodMeatSpider
         amount: 5
   - type: Reactive

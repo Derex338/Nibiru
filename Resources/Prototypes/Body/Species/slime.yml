@@ -85,6 +85,7 @@
   parent:
   - AppearanceSlimePerson
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobSlimePerson
   name: Urist McWobble
   components:
@@ -169,8 +170,8 @@
         visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSlime
       amount: 5
   - type: Respirator

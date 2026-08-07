@@ -2,7 +2,9 @@
 - type: entity
   name: burrower
   id: MobXeno
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
+  - BaseSlicingRefinable
   description: They mostly come at night. Mostly.
   components:
   - type: Insulated
@@ -89,8 +91,8 @@
       Dead:
         Base: dead
   - type: Puller
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatXeno
       amount: 5
   - type: GhostRole
@@ -299,15 +301,17 @@
 
 - type: entity
   name: rouny
-  parent: MobXenoRunner
+  parent:
+  - MobXenoRunner
+  - BaseSlicingRefinable
   id: MobXenoRouny
   components:
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/rouny.rsi
     offset: 0,0.6
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatRouny
       amount: 3
 
@@ -469,7 +473,9 @@
 - type: entity
   name: '"Dale"'
   description: A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
+  - BaseSlicingRefinable
   id: MobXenoLonePraetorianNoGhost
   components:
   - type: Insulated
@@ -523,8 +529,8 @@
       Dead:
         Base: dead
   - type: Puller
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatXeno
       amount: 5
   - type: TypingIndicator

@@ -160,6 +160,7 @@
   parent:
   - AppearanceVox
   - BaseSpeciesMobOrganic
+  - BaseSlicingRefinable
   id: MobVox
   name: Urist McVox
   components:
@@ -180,8 +181,8 @@
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatChicken
       amount: 5
   - type: Destructible

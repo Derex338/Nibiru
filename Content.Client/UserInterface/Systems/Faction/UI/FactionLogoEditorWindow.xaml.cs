@@ -203,28 +203,20 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 
         foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
         {
-            var folder = preset.SpriteFolder.Extension == "png"
-                ? preset.SpriteFolder.Directory
-                : preset.SpriteFolder;
-            var folderName = folder.Filename;
+            ResPath? file16 = preset.Sprite16;
+            ResPath? file8 = preset.Sprite8;
 
-            ResPath? file16 = null;
-            var path16 = folder / $"{folderName}.png";
-            var path16Alt = folder / $"{folderName}_16.png";
+            if (preset.SpriteFolder != null)
+            {
+                var folder = preset.SpriteFolder.Value;
+                var folderName = folder.Filename;
 
-            if (resourceManager.ContentFileExists(path16))
-                file16 = path16;
-            else if (resourceManager.ContentFileExists(path16Alt))
-                file16 = path16Alt;
+                file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}.png");
+                file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_16.png");
 
-            ResPath? file8 = null;
-            var path8 = folder / $"{folderName}_8x8.png";
-            var path8Alt = folder / $"{folderName}_8.png";
-
-            if (resourceManager.ContentFileExists(path8))
-                file8 = path8;
-            else if (resourceManager.ContentFileExists(path8Alt))
-                file8 = path8Alt;
+                file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8x8.png");
+                file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8.png");
+            }
 
             if (file16 == null || file8 == null)
                 continue;
@@ -234,6 +226,11 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 
             AddPresetButton(Loc.GetString(preset.Name), pixels16, pixels8);
         }
+    }
+
+    private static ResPath? TryResolvePresetFile(IResourceManager resourceManager, ResPath path)
+    {
+        return resourceManager.ContentFileExists(path) ? path : null;
     }
 
     private List<Color> LoadPixelsFromTexture(IResourceCache cache, ResPath path, int expectedSize)

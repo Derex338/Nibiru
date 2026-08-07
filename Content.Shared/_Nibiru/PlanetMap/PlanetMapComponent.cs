@@ -45,6 +45,20 @@ public sealed partial class PlanetMapComponent : Component
     public List<string> ObjectPrototypes = new();
 
     /// <summary>
+    /// Persistent map data for zone members (trees forming a forest, etc.).
+    /// Values are indices into <see cref="ZonePrototypes"/> (1-based; 0 = empty).
+    /// Unlike <see cref="SavedObjects"/>, these are rendered as smooth density blobs.
+    /// </summary>
+    [DataField("savedZones")]
+    public Dictionary<Vector2i, uint[]> SavedZones = new();
+
+    /// <summary>
+    /// Registry of <c>planetMapZone</c> prototype IDs referenced in <see cref="SavedZones"/>.
+    /// </summary>
+    [DataField("zonePrototypes")]
+    public List<string> ZonePrototypes = new();
+
+    /// <summary>
     /// Scan radius in tiles (how far from the player to scan on each pen-press).
     /// </summary>
     [DataField]
@@ -80,6 +94,13 @@ public static class SharedPlanetMapSystem
 {
     public const int ChunkSize = PlanetMapComponent.ChunkSize;
     public const int ArraySize = ChunkSize * ChunkSize;
+
+    /// <summary>
+    /// Number of tiles per side of the zone object sample grid used on the server.
+    /// Zone objects are sorted into buckets of this size; neighbour counting uses only the
+    /// 3×3 bucket neighbourhood, so classification stays O(n) and needs no spatial tree.
+    /// </summary>
+    public const int ZoneCellSize = 8;
 
     public static Vector2i GetChunkOrigin(Vector2i tile)
     {

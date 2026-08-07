@@ -169,6 +169,7 @@
   - MobAtmosStandard
   - MobFlammable
   - BaseSpeciesMob
+  - BaseSlicingRefinable
   id: BaseSpeciesMobOrganic
   save: false
   components:
@@ -216,8 +217,8 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
   - type: Perishable
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 5
   - type: Respirator

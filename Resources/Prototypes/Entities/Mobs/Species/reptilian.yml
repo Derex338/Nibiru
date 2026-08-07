@@ -1,7 +1,9 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseSlicingRefinable
   id: BaseMobReptilian
   abstract: true
   components:
@@ -15,9 +17,8 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatLizard
       amount: 5
   - type: LizardAccent

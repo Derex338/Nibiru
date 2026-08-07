@@ -1,6 +1,8 @@
 - type: entity
   id: HerbBase
-  parent: BaseStructure
+  parent:
+  - BaseStructure
+  - BaseSlicingRefinable
   name: трава
   suffix: Nibiru
   components:
@@ -18,8 +20,8 @@
         layer:
         - HighImpassable
         hard: false
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: BunchHerb1
       amount: 1
   - type: SyncSprite
