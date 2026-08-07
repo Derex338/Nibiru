@@ -4,9 +4,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server._Adventure.SnakeAccent;
 
-public sealed class SnakeAccentSystem : EntitySystem
+public sealed partial class SnakeAccentSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

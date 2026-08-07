@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes;
 
-[Prototype("researchEpoch")]
+[Prototype]
 public sealed partial class ResearchEpochPrototype : IPrototype  //Nibiru
 {
     [IdDataField]

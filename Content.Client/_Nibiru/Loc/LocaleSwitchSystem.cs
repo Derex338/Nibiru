@@ -23,12 +23,12 @@ namespace Content.Client.Localization
     /// Бросает <see cref="LanguageChangedEvent"/> в EventBus (EventSource.Local)
     /// и оповещает все зарегистрированные ILanguageRefreshable компоненты.
     /// </summary>
-    public sealed class LocaleSwitchSystem : EntitySystem
+    public sealed partial class LocaleSwitchSystem : EntitySystem
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly ILocalizationManager _loc = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private IStateManager _stateManager = default!;
 
         private ISawmill _sawmill = default!;
 

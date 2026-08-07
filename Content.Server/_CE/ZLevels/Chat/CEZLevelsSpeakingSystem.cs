@@ -19,10 +19,10 @@ namespace Content.Server._CE.ZLevels.Chat;
 
 public sealed partial class CEZLevelsSpeakingSystem : EntitySystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly CESharedZLevelsSystem _zLevel = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+[Dependency] private ChatSystem _chat = default!;
+[Dependency] private CESharedZLevelsSystem _zLevel = default!;
+[Dependency] private SharedTransformSystem _transform = default!;
+[Dependency] private SharedMapSystem _map = default!;
 
     private EntityQuery<MapComponent> _mapQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
@@ -109,7 +109,7 @@ public sealed partial class CEZLevelsSpeakingSystem : EntitySystem
                     continue;
 
                 var worldPos = startWorldPos + offset;
-                
+
                 bool isOpen = true;
                 if (_map.TryGetTileRef(floorMapUid, grid, worldPos, out var tileRef) && !tileRef.Tile.IsEmpty)
                 {

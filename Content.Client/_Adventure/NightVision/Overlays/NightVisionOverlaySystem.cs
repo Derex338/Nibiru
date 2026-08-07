@@ -7,8 +7,8 @@ namespace Content.Client._Adventure.NightVision.Overlays;
 
 public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightVisionComponent>
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly ILightManager _lightManager = default!;
+[Dependency] private IOverlayManager _overlayMan = default!;
+[Dependency] private ILightManager _lightManager = default!;
 
     private NightVisionOverlay? _overlay;
 

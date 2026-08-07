@@ -16,7 +16,6 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Content.Shared.Stacks;
 using Content.Server.Stack;
-using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Content.Shared._Nibiru.Factions;
 
@@ -24,16 +23,16 @@ namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+[Dependency] private InventorySystem _inventorySystem = default!;
+[Dependency] private SharedInteractionSystem _interactionSystem = default!;
+[Dependency] private ActionBlockerSystem _actionBlocker = default!;
+[Dependency] private SharedHandsSystem _handsSystem = default!;
     //[Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly StackSystem _stackSystem = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+[Dependency] private SharedTransformSystem _transformSystem = default!;
+[Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+[Dependency] private ContainerSystem _container = default!;
+[Dependency] private StackSystem _stackSystem = default!;
+[Dependency] private IRobustRandom _robustRandom = default!;
 
     /// <summary>
     /// Syncs the primary entity's database to that of the secondary entity's database.

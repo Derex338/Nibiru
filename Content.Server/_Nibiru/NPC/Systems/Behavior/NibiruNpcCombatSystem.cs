@@ -40,18 +40,18 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// импульс, нанося урон и отбрасывая всё на пути. Остановка при столкновении
 /// со стеной или по истечении максимального времени разбега.
 /// </summary>
-public sealed class NibiruNpcCombatSystem : EntitySystem
+public sealed partial class NibiruNpcCombatSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly JitteringSystem _jitter = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
+[Dependency] private IGameTiming _timing = default!;
+[Dependency] private MobStateSystem _mobState = default!;
+[Dependency] private SharedMeleeWeaponSystem _melee = default!;
+[Dependency] private SharedCombatModeSystem _combat = default!;
+[Dependency] private JitteringSystem _jitter = default!;
+[Dependency] private SharedTransformSystem _xform = default!;
+[Dependency] private SharedPhysicsSystem _physics = default!;
+[Dependency] private NPCSteeringSystem _steering = default!;
+[Dependency] private DamageableSystem _damageable = default!;
+[Dependency] private ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -408,7 +408,7 @@ public sealed class NibiruNpcCombatSystem : EntitySystem
         TransformComponent xform,
         EntityUid target)
     {
-        if (!TryComp<TransformComponent>(target, out var targetXform))
+        if (!TryComp(target, out TransformComponent? targetXform))
             return;
 
         // Фиксируем направление разбега
@@ -521,7 +521,7 @@ public sealed class NibiruNpcCombatSystem : EntitySystem
         if (TryComp<CombatModeComponent>(uid, out var combatMode) && combatMode.IsInCombatMode)
             _combat.SetInCombatMode(uid, false, combatMode);
 
-        if (state.CurrentTarget == null || !EntityManager.EntityExists(state.CurrentTarget.Value))
+        if (state.CurrentTarget == null || !Exists(state.CurrentTarget.Value))
         {
             state.CurrentState = NibiruNpcState.Returning;
             state.CurrentTarget = null;
@@ -529,7 +529,7 @@ public sealed class NibiruNpcCombatSystem : EntitySystem
         }
 
         var target = state.CurrentTarget.Value;
-        if (!TryComp<TransformComponent>(target, out var targetXform))
+        if (!TryComp(target, out TransformComponent? targetXform))
         {
             state.CurrentState = NibiruNpcState.Returning;
             state.CurrentTarget = null;
@@ -579,7 +579,7 @@ public sealed class NibiruNpcCombatSystem : EntitySystem
         target = default;
         targetXform = default!;
 
-        if (state.CurrentTarget == null || !EntityManager.EntityExists(state.CurrentTarget.Value))
+        if (state.CurrentTarget == null || !Exists(state.CurrentTarget.Value))
             return false;
 
         target = state.CurrentTarget.Value;
@@ -587,7 +587,7 @@ public sealed class NibiruNpcCombatSystem : EntitySystem
         if (_mobState.IsIncapacitated(target))
             return false;
 
-        if (!TryComp<TransformComponent>(target, out var xform) || xform == null)
+        if (!TryComp(target, out TransformComponent? xform) || xform == null)
             return false;
 
         targetXform = xform;

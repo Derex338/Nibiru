@@ -19,19 +19,19 @@ namespace Content.Server._Nibiru.Factions;
 
 public sealed partial class FactionSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly FactionBroadcaster _broadcast = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
+[Dependency] private IPrototypeManager _prototypeManager = default!;
+[Dependency] private EntityLookupSystem _lookup = default!;
+[Dependency] private PopupSystem _popup = default!;
+[Dependency] private IAdminLogManager _adminLog = default!;
+[Dependency] private IRobustRandom _random = default!;
+[Dependency] private MindSystem _mindSystem = default!;
+[Dependency] private SharedTransformSystem _transform = default!;
+[Dependency] private IMapManager _mapManager = default!;
+[Dependency] private FactionBroadcaster _broadcast = default!;
+[Dependency] private IGameTiming _timing = default!;
+[Dependency] private IEntityManager _entityManager = default!;
+[Dependency] private IChatManager _chatManager = default!;
+[Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     /// <summary>
     /// Кэш доступных фракций для отправки клиентам

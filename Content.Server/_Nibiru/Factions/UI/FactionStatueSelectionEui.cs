@@ -10,9 +10,9 @@ namespace Content.Server._Nibiru.Factions.UI;
 /// <summary>
 /// EUI для выбора члена фракции при постройке статуи.
 /// </summary>
-public sealed class FactionStatueSelectionEui : BaseEui
+public sealed partial class FactionStatueSelectionEui : BaseEui
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+[Dependency] private IEntityManager _entityManager = default!;
 
     private readonly EntityUid _statueUid;
 

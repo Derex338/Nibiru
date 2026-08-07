@@ -17,8 +17,8 @@ namespace Content.Client.Backmen.Research.UI;
 [GenerateTypedNameReferences]
 public sealed partial class FancyTechnologyInfoPanel : Control
 {
-    [Dependency] private readonly IEntityManager _ent = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+[Dependency] private IEntityManager _ent = default!;
+[Dependency] private IPrototypeManager _proto = default!;
 
     public TechnologyPrototype Prototype;
     public Action<TechnologyPrototype>? BuyAction;
@@ -59,18 +59,20 @@ public sealed partial class FancyTechnologyInfoPanel : Control
             Loc.GetString("research-console-tech-cost-label", ("cost", proto.Cost)),
             defaultColor: color
         );
-		
+
 		if(proto.MaterialToUnlock.Count > 0)
 		{
+			#pragma warning disable CS0219
 			string result = "";
-			
+#pragma warning restore CS0219
+
 			foreach(var material in proto.MaterialToUnlock)
 			{
 				var entity = _proto.Index<StackPrototype>(material.MaterialPrototypeId);
-				
+
 				var text = Loc.GetString(entity.Name, ("amount", material.Amount));
 				text = material.Amount.ToString() + " " + text;
-				
+
 				TechnologyMaterialCostLabel.SetMessage(text, defaultColor: color);
 			}
 		}

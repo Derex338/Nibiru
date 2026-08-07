@@ -33,11 +33,11 @@ using Content.Shared.StatusIcon;
 namespace Content.Client.UserInterface.Systems.Faction;
 
 [UsedImplicitly]
-public sealed class FactionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+public sealed partial class FactionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+[Dependency] private IEntityManager _entityManager = default!;
+[Dependency] private IPlayerManager _player = default!;
+[Dependency] private IGameTiming _gameTiming = default!;
 
     private FactionMenu? _factionWindow;
 
@@ -567,7 +567,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
             if (enable)
             {
-                var shader = protoManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
+                var shader = protoManager.Index<ShaderPrototype>((Robust.Shared.Prototypes.ProtoId<ShaderPrototype>)"SelectionOutlineInrange").InstanceUnique();
                 shader.SetParameter("outline_width", 1f);
                 sprite.PostShader = shader;
                 sprite.RenderOrder = 1;
@@ -714,7 +714,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
     }
 }
 
-public sealed class FilterSelectorPrompt : DefaultWindow
+public sealed partial class FilterSelectorPrompt : DefaultWindow
 {
     private readonly Action<List<string>> _onSave;
     private readonly List<string> _selected;

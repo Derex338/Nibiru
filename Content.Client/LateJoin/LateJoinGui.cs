@@ -32,7 +32,6 @@ namespace Content.Client.LateJoin
         [Dependency] private IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private ILogManager _logManager = default!;
 
-        public event Action<(NetEntity, string)>? SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;

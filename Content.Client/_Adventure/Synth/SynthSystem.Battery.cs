@@ -9,13 +9,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Adventure.Synth;
 
-public sealed class SynthSystem : SharedSynthSystem
+public sealed partial class SynthSystem : SharedSynthSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
+[Dependency] private IPlayerManager _player = default!;
+[Dependency] private IGameTiming _timing = default!;
+[Dependency] private AlertsSystem _alerts = default!;
+[Dependency] private PowerCellSystem _powerCell = default!;
+[Dependency] private SharedBatterySystem _battery = default!;
 
     private TimeSpan _nextAlertUpdate = TimeSpan.Zero;
     private static readonly TimeSpan AlertUpdateDelay = TimeSpan.FromSeconds(0.5f);

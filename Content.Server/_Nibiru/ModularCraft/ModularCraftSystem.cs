@@ -13,13 +13,11 @@ using System.Linq;
 
 namespace Content.Server._Nibiru.ModularCraft;
 
-public sealed class ModularCraftSystem : EntitySystem
+public sealed partial class ModularCraftSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui        = default!;
-    [Dependency] private readonly SharedPopupSystem   _popup     = default!;
-    [Dependency] private readonly IPrototypeManager   _proto     = default!;
-    [Dependency] private readonly SharedAudioSystem   _audio     = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+[Dependency] private UserInterfaceSystem _ui        = default!;
+[Dependency] private SharedPopupSystem   _popup     = default!;
+[Dependency] private IPrototypeManager   _proto     = default!;
 
     public override void Initialize()
     {
@@ -122,7 +120,7 @@ public sealed class ModularCraftSystem : EntitySystem
 
         var crafted = Spawn(baseEnt, Transform(uid).Coordinates);
         var modular = EnsureComp<ModularItemComponent>(crafted);
-        
+
         foreach (var kvp in stateComp.SlotConfigs)
         {
             modular.SlotConfigs[new ProtoId<ModularPartPrototype>(kvp.Key)] = new ModularSlotConfig(
@@ -150,7 +148,7 @@ public sealed class ModularCraftSystem : EntitySystem
         // But SS14 allows modifying SpriteComponent layers if we do it carefully.
         // Note: server-side SpriteComponent is mostly a shell in standard SS14 unless predicting.
         // The proper way is a Custom Visualizer on the client. I'll just add it to Appearance.
-        
+
         // For now, doing it via a list of string paths to visualizer component:
         var layers = new List<string>();
         foreach (var cfg in comp.SlotConfigs.Values)
@@ -163,7 +161,7 @@ public sealed class ModularCraftSystem : EntitySystem
                 }
             }
         }
-        
+
         var appearance = EnsureComp<AppearanceComponent>(crafted);
         _appearance.SetData(crafted, "ModularLayers", layers.ToArray(), appearance);
     }*/

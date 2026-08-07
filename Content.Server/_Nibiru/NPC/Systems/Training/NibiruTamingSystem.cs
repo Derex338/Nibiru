@@ -30,16 +30,15 @@ namespace Content.Server._Nibiru.NPC.Systems.Training;
 /// Обрабатывает рост/убывание доверия, привязку к хозяину,
 /// переключение NPC в режим следования после приручения.
 /// </summary>
-public sealed class NibiruTamingSystem : EntitySystem
+public sealed partial class NibiruTamingSystem : EntitySystem
 {
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
-    [Dependency] private readonly NibiruAnimalMoodSystem _mood = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+[Dependency] private NpcFactionSystem _faction = default!;
+[Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+[Dependency] private NibiruAnimalMoodSystem _mood = default!;
+[Dependency] private NPCSteeringSystem _steering = default!;
+[Dependency] private TagSystem _tag = default!;
+[Dependency] private SharedDoAfterSystem _doAfter = default!;
+[Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -253,7 +252,7 @@ public sealed class NibiruTamingSystem : EntitySystem
 
     private bool IsFavoriteFood(EntityUid item, NibiruTamableComponent component)
     {
-        if (!TryComp<MetaDataComponent>(item, out var meta) || meta.EntityPrototype == null)
+        if (!TryComp(item, out MetaDataComponent? meta) || meta.EntityPrototype == null)
             return false;
 
         if (component.FavoriteFoods.Contains(meta.EntityPrototype.ID))
@@ -270,13 +269,13 @@ public sealed class NibiruTamingSystem : EntitySystem
 
     private bool IsAcceptableFood(EntityUid item, NibiruTamableComponent component)
     {
-        if (!_tag.HasTag(item, "Food"))
+        if (!_tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Food"))
             return false;
 
         // Если задан конкретный список — ест только это
         if (component.AcceptedFood != null && component.AcceptedFood.Count > 0)
         {
-            if (!TryComp<MetaDataComponent>(item, out var meta) || meta.EntityPrototype == null)
+            if (!TryComp(item, out MetaDataComponent? meta) || meta.EntityPrototype == null)
                 return false;
             return component.AcceptedFood.Contains(meta.EntityPrototype.ID);
         }
@@ -285,11 +284,11 @@ public sealed class NibiruTamingSystem : EntitySystem
         switch (component.Diet)
         {
             case NibiruAnimalDiet.Carnivore:
-                return _tag.HasTag(item, "Meat"); // Плотоядные едят мясо
+                return _tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Meat"); // Плотоядные едят мясо
 
             case NibiruAnimalDiet.Herbivore:
                 // Травоядные не едят мясо
-                return !_tag.HasTag(item, "Meat") && (_tag.HasTag(item, "Plant") || _tag.HasTag(item, "Fruit") || _tag.HasTag(item, "Vegetable"));
+                return !_tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Meat") && (_tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Plant") || _tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Fruit") || _tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Vegetable"));
 
             case NibiruAnimalDiet.Omnivore:
             default:
@@ -336,10 +335,10 @@ public sealed class NibiruTamingSystem : EntitySystem
                 if (target == null)
                     return false;
 
-                if (!TryComp<TransformComponent>(target.Value, out _))
+                if (!HasComp<TransformComponent>(target.Value))
                     return false;
 
-                if (command == NibiruAnimalCommand.Grab && !TryComp<PullableComponent>(target.Value, out _))
+                if (command == NibiruAnimalCommand.Grab && !HasComp<PullableComponent>(target.Value))
                     return false;
 
                 // Check faction. If target is friendly, check mood.

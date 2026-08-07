@@ -8,11 +8,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Adventure.ThermalVision;
 
-public sealed class ThermalVisionSystem : EntitySystem
+public sealed partial class ThermalVisionSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly TransformSystem _xformSys = default!;
+[Dependency] private IPlayerManager _player = default!;
+[Dependency] private IOverlayManager _overlayMan = default!;
+[Dependency] private TransformSystem _xformSys = default!;
     private ThermalVisionOverlay _overlay = default!;
 
     private EntityUid? _effect = null;

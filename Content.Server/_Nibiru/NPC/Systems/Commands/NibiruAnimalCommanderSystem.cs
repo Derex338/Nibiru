@@ -8,7 +8,6 @@ using Content.Server._Nibiru.NPC.Systems.Behavior;
 using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Shared.Actions;
 using Content.Shared.Popups;
-using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared.Chat;
 using Content.Server.Chat.Systems;
 using Content.Shared.Mobs.Systems;
@@ -18,17 +17,17 @@ using Content.Shared.Interaction;
 
 namespace Content.Server._Nibiru.NPC.Systems.Commands;
 
-public sealed class NibiruAnimalCommanderSystem : EntitySystem
+public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
 {
     private const float SearchTargetRange = 60f;
 
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly NibiruTamingSystem _taming = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
+[Dependency] private SharedActionsSystem _actions = default!;
+[Dependency] private NibiruTamingSystem _taming = default!;
+[Dependency] private SharedPopupSystem _popup = default!;
+[Dependency] private ChatSystem _chat = default!;
+[Dependency] private SharedTransformSystem _transform = default!;
+[Dependency] private MobStateSystem _mobState = default!;
+[Dependency] private NibiruAnimalSoundSystem _sounds = default!;
 
     public override void Initialize()
     {
@@ -198,14 +197,14 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
             foreach (var animal in comp.Animals)
             {
                 // Животное больше не существует или мертво
-                if (!EntityManager.EntityExists(animal) || _mobState.IsDead(animal))
+                if (!Exists(animal) || _mobState.IsDead(animal))
                 {
                     toRemove.Add(animal);
                     continue;
                 }
 
                 // Животное слишком далеко
-                if (!TryComp<TransformComponent>(animal, out var animalXform))
+                if (!TryComp(animal, out TransformComponent? animalXform))
                 {
                     toRemove.Add(animal);
                     continue;
@@ -331,8 +330,8 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
             if (!tamable.LearnedCommands.Contains(NibiruAnimalCommand.Search)) continue;
 
             // Проверяем дистанцию до животного
-            if (!TryComp<TransformComponent>(animal, out var animalXform) ||
-                !TryComp<TransformComponent>(uid, out var ownerXform)) continue;
+            if (!TryComp(animal, out TransformComponent? animalXform) ||
+                !TryComp(uid, out TransformComponent? ownerXform)) continue;
 
             if (!ownerXform.Coordinates.TryDistance(EntityManager, animalXform.Coordinates, out var dist) || dist > 50f)
             {
@@ -474,8 +473,8 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
         var anySuccess = false;
         foreach (var animal in component.Animals)
         {
-            if (!TryComp<TransformComponent>(animal, out var animalXform) ||
-                !TryComp<TransformComponent>(uid, out var ownerXform)) continue;
+            if (!TryComp(animal, out TransformComponent? animalXform) ||
+                !TryComp(uid, out TransformComponent? ownerXform)) continue;
 
             if (!ownerXform.Coordinates.TryDistance(EntityManager, animalXform.Coordinates, out var dist) || dist > 10f)
                 continue;
@@ -508,7 +507,7 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
     {
         if (component.Animals.Count == 0) return 0;
 
-        if (!TryComp<TransformComponent>(owner, out var ownerXform))
+        if (!TryComp(owner, out TransformComponent? ownerXform))
             return 0;
 
         // Произносим речь один раз (не для каждого животного)
@@ -517,9 +516,9 @@ public sealed class NibiruAnimalCommanderSystem : EntitySystem
 
         foreach (var animal in component.Animals)
         {
-            if (!EntityManager.EntityExists(animal)) continue;
+            if (!Exists(animal)) continue;
 
-            if (!TryComp<TransformComponent>(animal, out var animalXform)) continue;
+            if (!TryComp(animal, out TransformComponent? animalXform)) continue;
 
             if (!ownerXform.Coordinates.TryDistance(EntityManager, animalXform.Coordinates, out var dist) || dist > 10f)
                 continue;

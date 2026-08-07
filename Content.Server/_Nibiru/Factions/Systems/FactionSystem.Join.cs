@@ -37,9 +37,9 @@ public sealed partial class FactionSystem
 
     private void CreateFaction(EntityUid player, string factionName)
     {
-        if (!EntityManager.TryGetComponent<FactionComponent>(player, out var factionComponent))
+        if (!TryComp<FactionComponent>(player, out var factionComponent))
         {
-            factionComponent = EntityManager.AddComponent<FactionComponent>(player);
+            factionComponent = AddComp<FactionComponent>(player);
 
             factionComponent.FactionName = factionName;
             factionComponent.IsCreator = true;
@@ -64,7 +64,7 @@ public sealed partial class FactionSystem
         if (!player.HasValue)
             return;
 
-        if (EntityManager.TryGetComponent<FactionComponent>(player, out var factionComponent))
+        if (TryComp<FactionComponent>(player, out var factionComponent))
         {
             if (factionComponent.IsCreator == true)
                 msg.Creator = true;

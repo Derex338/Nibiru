@@ -7,9 +7,9 @@ namespace Content.Client._Nibiru.NPC.Systems;
 /// <summary>
 /// Обновляет внешний вид (спрайт) животного в зависимости от его пола.
 /// </summary>
-public sealed class NibiruLivestockAppearanceSystem : EntitySystem
+public sealed partial class NibiruLivestockAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+[Dependency] private AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

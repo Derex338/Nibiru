@@ -17,11 +17,11 @@ using Robust.Shared.Timing;
 namespace Content.Server._CE.ZLevels.Weather;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class CEWeatherCommand : LocalizedCommands
+public sealed partial class CEWeatherCommand : LocalizedCommands
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+[Dependency] private IEntityManager _entities = default!;
+[Dependency] private IPrototypeManager _proto = default!;
+[Dependency] private IGameTiming _timing = default!;
     [Dependency] private IComponentFactory _compFactory = default!;
 
     public override string Command => "znetwork-weather";

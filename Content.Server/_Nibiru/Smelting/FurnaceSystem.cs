@@ -25,17 +25,15 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Server._Nibiru.Smelting;
 
-public sealed class SmeltingFurnaceSystem : EntitySystem
+public sealed partial class SmeltingFurnaceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+[Dependency] private SharedContainerSystem _container = default!;
+[Dependency] private SharedPopupSystem _popup = default!;
+[Dependency] private SharedAudioSystem _audio = default!;
+[Dependency] private SharedSolutionContainerSystem _solution = default!;
+[Dependency] private SharedAppearanceSystem _appearance = default!;
+[Dependency] private StackSystem _stack = default!;
+[Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
 
     public override void Initialize()
     {
@@ -499,7 +497,7 @@ public sealed class SmeltingFurnaceSystem : EntitySystem
 /// <summary>
 /// Событие когда руда расплавилась
 /// </summary>
-public sealed class OreMeltedEvent : EntityEventArgs
+public sealed partial class OreMeltedEvent : EntityEventArgs
 {
     public EntityUid OreEntity;
     public string Reagent;
@@ -516,7 +514,7 @@ public sealed class OreMeltedEvent : EntityEventArgs
 /// <summary>
 /// Событие когда предмет сгорел
 /// </summary>
-public sealed class ItemBurnedEvent : EntityEventArgs
+public sealed partial class ItemBurnedEvent : EntityEventArgs
 {
     public EntityUid ItemEntity;
 

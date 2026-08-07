@@ -13,11 +13,11 @@ namespace Content.Client._Nibiru.EntityInspector;
 /// <see cref="IInspectableComponent"/>.
 /// </summary>
 [UsedImplicitly]
-public sealed class EntityInspectorSystem : EntitySystem
+public sealed partial class EntityInspectorSystem : EntitySystem
 {
-    [Dependency] private readonly IUserInterfaceManager _uiManager     = default!;
-    [Dependency] private readonly IEntityManager        _entityManager = default!;
-    [Dependency] private readonly Robust.Client.Player.IPlayerManager _playerManager = default!;
+[Dependency] private IUserInterfaceManager _uiManager     = default!;
+[Dependency] private IEntityManager        _entityManager = default!;
+[Dependency] private Robust.Client.Player.IPlayerManager _playerManager = default!;
 
     /// <summary>Переиспользуемое окно инспектора.</summary>
     private EntityInspectorWindow? _window;

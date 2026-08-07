@@ -11,11 +11,9 @@ using System.Linq;
 
 namespace Content.Server._Nibiru.Factions;
 
-public sealed class NibiruFactionLeaderSystem : EntitySystem
+public sealed partial class NibiruFactionLeaderSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly FactionSystem _factionSystem = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
+[Dependency] private FactionSystem _factionSystem = default!;
     // Список победителей лотереи, ожидающих спавна
     private readonly Dictionary<NetUserId, NibiruFactionLeaderPrefsMessage> _pendingLeaders = new();
 
@@ -30,7 +28,7 @@ public sealed class NibiruFactionLeaderSystem : EntitySystem
     {
         _pendingLeaders.Clear();
         var pendingPrefs = _factionSystem.PendingFactionLeaderPrefs;
-        
+
         if (pendingPrefs.Count == 0)
             return;
 

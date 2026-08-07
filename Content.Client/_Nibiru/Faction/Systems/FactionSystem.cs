@@ -3,10 +3,8 @@ using Robust.Client.Player;
 
 namespace Content.Client._Nibiru.Faction;
 
-public sealed class FactionSystem : EntitySystem
+public sealed partial class FactionSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override void Initialize()
     {

@@ -7,9 +7,9 @@ namespace Content.Server._Nibiru.Factions.Systems;
 /// <summary>
 /// Обрабатывает постройку статуй и открытие EUI выбора члена фракции.
 /// </summary>
-public sealed class FactionStatueSystem : EntitySystem
+public sealed partial class FactionStatueSystem : EntitySystem
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
+[Dependency] private EuiManager _euiManager = default!;
 
     /// <summary>
     /// Открывает окно выбора члена фракции для статуи.

@@ -6,7 +6,7 @@ namespace Content.Shared._Nibiru.Factions;
 /// <summary>
 /// A prototype for pre-defined faction logo sprites.
 /// </summary>
-[Prototype("factionLogoPreset")]
+[Prototype]
 public sealed partial class FactionLogoPresetPrototype : IPrototype
 {
     [IdDataField]

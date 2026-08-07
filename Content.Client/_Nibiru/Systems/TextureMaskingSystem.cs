@@ -12,9 +12,9 @@ namespace Content.Client._Nibiru.Systems;
 /// Утилитарная система для генерации текстур из пиксельных данных.
 /// Результаты кешируются для повторного использования.
 /// </summary>
-public sealed class TextureGenerationSystem : EntitySystem
+public sealed partial class TextureGenerationSystem : EntitySystem
 {
-    [Dependency] private readonly IClyde _clyde = default!;
+[Dependency] private IClyde _clyde = default!;
 
     private readonly Dictionary<int, Texture> _textureCache = new();
 

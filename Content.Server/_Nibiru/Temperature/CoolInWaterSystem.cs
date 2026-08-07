@@ -17,14 +17,14 @@ using System.Linq;
 
 namespace Content.Server._Nibiru.Temperature;
 
-public sealed class CoolInWaterSystem : EntitySystem
+public sealed partial class CoolInWaterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly TemperatureSystem _temp = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+[Dependency] private SharedSolutionContainerSystem _solution = default!;
+[Dependency] private DoAfterSystem _doAfter = default!;
+[Dependency] private TemperatureSystem _temp = default!;
+[Dependency] private IPrototypeManager _prototype = default!;
+[Dependency] private SharedAudioSystem _audio = default!;
+[Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
     public override void Initialize()
     {

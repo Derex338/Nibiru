@@ -12,14 +12,14 @@ using System.Numerics;
 
 namespace Content.Server._CE.ZLevels.Stability;
 
-public sealed class CEZLevelStabilitySystem : EntitySystem
+public sealed partial class CEZLevelStabilitySystem : EntitySystem
 {
-    [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
+[Dependency] private CEZLevelsSystem _zLevels = default!;
+[Dependency] private SharedMapSystem _mapSystem = default!;
+[Dependency] private EntityLookupSystem _lookup = default!;
+[Dependency] private ITileDefinitionManager _tileDefManager = default!;
+[Dependency] private SharedTransformSystem _transform = default!;
+[Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -83,14 +83,14 @@ public sealed class CEZLevelStabilitySystem : EntitySystem
         var xform = Transform(supportUid);
         var gridUid = xform.GridUid;
         var mapUid = xform.MapUid;
-        
+
         // During shutdown, we might have already lost our grid/map parent if we are not careful.
         // But usually it's still there during Shutdown.
         if (gridUid == null || mapUid == null)
             return;
 
         EntityUid? inputEnt = HasComp<CEZLevelMapComponent>(gridUid.Value) ? gridUid.Value : mapUid.Value;
-        
+
         if (!_zLevels.TryMapUp(inputEnt.Value, out var aboveMapUid))
             return;
 
@@ -99,7 +99,7 @@ public sealed class CEZLevelStabilitySystem : EntitySystem
 
         var worldPos = _transform.GetWorldPosition(xform);
         var indices = _mapSystem.WorldToTile(aboveMapUid.Value, aboveGrid, worldPos);
-        
+
         EnqueueCheck(aboveMapUid.Value, aboveGrid, indices, isRemoving ? supportUid : null);
         ProcessQueue();
     }
@@ -168,11 +168,11 @@ public sealed class CEZLevelStabilitySystem : EntitySystem
         EntityUid? inputEnt = HasComp<CEZLevelMapComponent>(gridUid) ? gridUid : mapUid;
 
         if (inputEnt == null || !_zLevels.TryMapDown(inputEnt.Value, out var belowMapUid))
-            return true; 
+            return true;
 
         var queue = new Queue<(Vector2i pos, int dist)>();
         var visited = new HashSet<Vector2i>();
-        
+
         queue.Enqueue((indices, 0));
         visited.Add(indices);
 
@@ -209,7 +209,7 @@ public sealed class CEZLevelStabilitySystem : EntitySystem
         var targetXform = Transform(targetUid);
         var mapId = targetXform.MapID;
         var worldPos = _mapSystem.GridTileToWorld(sourceGridUid, sourceGrid, sourceIndices);
-        
+
         var box = Box2.CenteredAround(worldPos.Position, new Vector2(0.1f, 0.1f));
 
         foreach (var ent in _lookup.GetEntitiesIntersecting(mapId, box))

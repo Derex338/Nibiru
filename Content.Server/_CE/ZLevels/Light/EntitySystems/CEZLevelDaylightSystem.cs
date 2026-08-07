@@ -16,13 +16,12 @@ namespace Content.Server._CE.ZLevels.Light.EntitySystems;
 /// <summary>
 ///     Manages the spawning of SunLightRayCast entities based on Z-level holes.
 /// </summary>
-public sealed class CEZLevelDaylightSystem : EntitySystem
+public sealed partial class CEZLevelDaylightSystem : EntitySystem
 {
-    [Dependency] private readonly CESharedZLevelsSystem _zLevel = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedRoofSystem _roofSystem = default!;
+[Dependency] private CESharedZLevelsSystem _zLevel = default!;
+[Dependency] private SharedMapSystem _map = default!;
+[Dependency] private IEntityManager _entManager = default!;
+[Dependency] private SharedRoofSystem _roofSystem = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<RoofComponent> _roofQuery;
@@ -161,7 +160,7 @@ public sealed class CEZLevelDaylightSystem : EntitySystem
     {
         if (!_gridQuery.TryComp(mapUid, out var grid))
             return;
-        
+
         if (!_roofQuery.TryComp(mapUid, out var roof))
             return;
 

@@ -14,8 +14,8 @@ namespace Content.Client._Nibiru.LanguageSelect.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LanguageSelectWindow : DefaultWindow
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+[Dependency] private IConfigurationManager _cfg = default!;
+[Dependency] private ILocalizationManager _loc = default!;
 
     /// <summary>
     /// Raised when the player confirms their language choice.

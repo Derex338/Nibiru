@@ -11,12 +11,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server._Nibiru.NPC.Systems.Utility;
 
-public sealed class NibiruBirdDeliverySystem : EntitySystem
+public sealed partial class NibiruBirdDeliverySystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+[Dependency] private UserInterfaceSystem _ui = default!;
+[Dependency] private SharedPopupSystem _popup = default!;
+[Dependency] private SharedTransformSystem _transform = default!;
+[Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -78,7 +78,7 @@ public sealed class NibiruBirdDeliverySystem : EntitySystem
     private void OnPostSelected(EntityUid uid, NibiruBirdComponent component, NibiruBirdSelectPostMessage args)
     {
         var postUid = GetEntity(args.Post);
-        if (!EntityManager.EntityExists(postUid))
+        if (!Exists(postUid))
             return;
 
         // Птица улетает (исчезает и телепортируется через время)

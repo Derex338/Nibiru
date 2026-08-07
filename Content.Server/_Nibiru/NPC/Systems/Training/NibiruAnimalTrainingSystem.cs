@@ -10,10 +10,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server._Nibiru.NPC.Systems.Training;
 
-public sealed class NibiruAnimalTrainingSystem : EntitySystem
+public sealed partial class NibiruAnimalTrainingSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+[Dependency] private UserInterfaceSystem _ui = default!;
+[Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -134,9 +134,9 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
 
         component.LearnedCommands.Add(args.Command);
         component.TrustLevel -= 30f; // Training commands "spends" trust
-        
+
         RaiseLocalEvent(component.OwnerUid.Value, new NibiruAnimalCommandLearnedEvent(uid, args.Command));
-        
+
         UpdateUiState(uid, component);
         _popup.PopupEntity(Loc.GetString("nibiru-animal-training-success", ("command", args.Command.ToString())), uid, user);
     }
@@ -165,9 +165,9 @@ public sealed class NibiruAnimalTrainingSystem : EntitySystem
 
         component.TrustLevel -= 15f;
         mountFear.StressTraining = MathF.Min(mountFear.StressTraining + 10f, mountFear.MaxStressTraining);
-        
+
         _popup.PopupEntity(Loc.GetString("nibiru-animal-training-stress-success"), uid, user);
-        
+
         UpdateUiState(uid, component);
     }
 }

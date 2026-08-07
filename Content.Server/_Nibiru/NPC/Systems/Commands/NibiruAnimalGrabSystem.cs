@@ -19,17 +19,15 @@ using System.Numerics;
 
 namespace Content.Server._Nibiru.NPC.Systems.Commands;
 
-public sealed class NibiruAnimalGrabSystem : EntitySystem
+public sealed partial class NibiruAnimalGrabSystem : EntitySystem
 {
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+[Dependency] private PullingSystem _pulling = default!;
+[Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+[Dependency] private SharedDoAfterSystem _doAfter = default!;
+[Dependency] private SharedPopupSystem _popup = default!;
+[Dependency] private DamageableSystem _damageable = default!;
+[Dependency] private SharedTransformSystem _xform = default!;
+[Dependency] private SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -57,7 +55,7 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
         var query = EntityQueryEnumerator<NibiruAnimalGrabbedComponent>();
         while (query.MoveNext(out var animalUid, out var grabbed))
         {
-            if (grabbed.Target == null || !EntityManager.EntityExists(grabbed.Target.Value))
+            if (grabbed.Target == null || !Exists(grabbed.Target.Value))
             {
                 RemComp<NibiruAnimalGrabbedComponent>(animalUid);
                 continue;
@@ -84,8 +82,8 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
                 grabbed.ShakeAccumulator -= grabbed.ShakeInterval;
                 grabbed.ShakeDirection = -grabbed.ShakeDirection;
 
-                if (TryComp<TransformComponent>(animalUid, out var animalXform) &&
-                    TryComp<TransformComponent>(target, out var targetXform) &&
+                if (TryComp(animalUid, out TransformComponent? animalXform) &&
+                    TryComp(target, out TransformComponent? targetXform) &&
                     TryComp<PhysicsComponent>(target, out var targetPhys))
                 {
                     var animalPos = _xform.GetWorldPosition(animalXform);
@@ -130,7 +128,7 @@ public sealed class NibiruAnimalGrabSystem : EntitySystem
 
     private void OnGrabbedShutdown(EntityUid uid, NibiruAnimalGrabbedComponent component, ComponentShutdown args)
     {
-        if (component.Target != null && EntityManager.EntityExists(component.Target.Value))
+        if (component.Target != null && Exists(component.Target.Value))
         {
             // Сбрасываем скорость цели при отцеплении
             if (TryComp<PhysicsComponent>(component.Target.Value, out var phys))

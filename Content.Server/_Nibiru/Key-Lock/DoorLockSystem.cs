@@ -22,17 +22,17 @@ using Content.Server.DoAfter;
 
 namespace Content.Server._Nibiru.Key;
 
-public sealed class DoorLockSystem : EntitySystem
+public sealed partial class DoorLockSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly ISerializationManager _serMan = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly ToolSystem _tool = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+[Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+[Dependency] private ISerializationManager _serMan = default!;
+[Dependency] private IAdminLogManager _adminLog = default!;
+[Dependency] private AudioSystem _audio = default!;
+[Dependency] private ToolSystem _tool = default!;
+[Dependency] private EuiManager _eui = default!;
+[Dependency] private ISharedPlayerManager _player = default!;
+[Dependency] private MindSystem _mind = default!;
+[Dependency] private PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -78,7 +78,7 @@ public sealed class DoorLockSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.LockCode == 0 && TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, "Rasp", tool))
+        if (component.LockCode == 0 && TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tools.ToolQualityPrototype>)"Rasp", tool))
         {
             SetCode(args.Target, args.User);
             return;
@@ -145,7 +145,7 @@ public sealed class DoorLockSystem : EntitySystem
         if (args.Handled || component.LockCode != 0)
             return;
 
-        if (TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, "Rasp", tool))
+        if (TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tools.ToolQualityPrototype>)"Rasp", tool))
             SetCode(args.Target, args.User);
     }
 

@@ -6,7 +6,6 @@ namespace Content.Client._Nibiru.PlanetMap.UI;
 public sealed class PlanetMapBoundUserInterface : BoundUserInterface
 {
 
-    private PlanetMapWindow? _window;
 
     public PlanetMapBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -25,7 +24,7 @@ public sealed class PlanetMapBoundUserInterface : BoundUserInterface
     {
         base.Dispose(disposing);
 
-        if (disposing && _window != null)
+        if (disposing && false) //_window != null
         {
             //_window?.Dispose();
         }

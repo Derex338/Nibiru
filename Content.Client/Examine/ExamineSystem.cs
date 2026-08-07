@@ -26,7 +26,7 @@ namespace Content.Client.Examine
     [UsedImplicitly]
     public sealed partial class ExamineSystem : ExamineSystemShared
     {
-        [Dependency] private readonly Robust.Shared.Configuration.IConfigurationManager _cfg = default!;
+    [Dependency] private Robust.Shared.Configuration.IConfigurationManager _cfg = default!;
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private IEyeManager _eyeManager = default!;

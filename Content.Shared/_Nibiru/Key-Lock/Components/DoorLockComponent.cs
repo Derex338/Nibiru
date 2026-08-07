@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.Lock;
 
 [RegisterComponent, NetworkedComponent]
-public partial class DoorLockComponent : Component
+public sealed partial class DoorLockComponent : Component
 {	
 	[DataField]
     public int LockCode = 00000;

@@ -16,14 +16,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Nibiru.WeaponAttackType;
 
-public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
+public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
+[Dependency] private IPlayerManager _player = default!;
+[Dependency] private IStateManager _stateManager = default!;
+[Dependency] private IUserInterfaceManager _ui = default!;
+[Dependency] private IGameTiming _timing = default!;
+[Dependency] private SharedHandsSystem _hands = default!;
+[Dependency] private SharedGunSystem _gun = default!;
 
     private AttackTypeGrid? _grid;
     private bool _keyWasDown;

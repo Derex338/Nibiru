@@ -13,9 +13,9 @@ namespace Content.Shared._Nibiru.WeaponAttackType;
 
 public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly BlockingSystem _blocking = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private BlockingSystem _blocking = default!;
+    [Dependency] private SharedItemSystem _item = default!;
 
     public override void Initialize()
     {

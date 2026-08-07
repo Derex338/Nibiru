@@ -8,7 +8,7 @@ using Content.Shared.Eui;
 namespace Content.Shared._Nibiru.Lock;
 
 [RegisterComponent, NetworkedComponent]
-public partial class LockPickComponent : Component
+public sealed partial class LockPickComponent : Component
 {	
 
 }

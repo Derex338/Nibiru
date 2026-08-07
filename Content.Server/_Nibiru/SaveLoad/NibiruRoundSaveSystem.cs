@@ -42,19 +42,18 @@ namespace Content.Server._Nibiru.SaveLoad;
 /// Handles unified round save and load operations for Nibiru.
 /// All map grids, structures, items, NPCs, and player character bodies are saved directly inside Z-level map files.
 /// </summary>
-public sealed class NibiruRoundSaveSystem : EntitySystem
+public sealed partial class NibiruRoundSaveSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IResourceManager _res = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly RespiratorSystem _respirator = default!;
-    [Dependency] private readonly BiomeSystem _biome = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+[Dependency] private IPlayerManager _playerManager = default!;
+[Dependency] private IResourceManager _res = default!;
+[Dependency] private GameTicker _ticker = default!;
+[Dependency] private IMapManager _map = default!;
+[Dependency] private MapLoaderSystem _mapLoader = default!;
+[Dependency] private CEZLevelsSystem _zLevels = default!;
+[Dependency] private IGameTiming _gameTiming = default!;
+[Dependency] private RespiratorSystem _respirator = default!;
+[Dependency] private BiomeSystem _biome = default!;
+[Dependency] private MindSystem _mind = default!;
 
     /// <summary>
     /// Name of the save file to load on round restart, if any.

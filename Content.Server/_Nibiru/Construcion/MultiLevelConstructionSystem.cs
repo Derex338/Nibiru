@@ -9,11 +9,11 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server._Nibiru.Construcion;
 
-public sealed class MultiLevelConstructionSystem : EntitySystem
+public sealed partial class MultiLevelConstructionSystem : EntitySystem
 {
-    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+[Dependency] private CESharedZLevelsSystem _zLevels = default!;
+[Dependency] private SharedTransformSystem _transform = default!;
+[Dependency] private TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -58,7 +58,7 @@ public sealed class MultiLevelConstructionSystem : EntitySystem
 
     public EntityUid? ProjectToOffset(EntityUid origin, string prototype, int offset, Vector2 localOffset, bool offsetByRotation)
     {
-        if (!TryComp<TransformComponent>(origin, out var xform))
+        if (!TryComp(origin, out TransformComponent? xform))
             return null;
 
         var mapUid = xform.MapUid;
@@ -99,7 +99,7 @@ public sealed class MultiLevelConstructionSystem : EntitySystem
 
         originComp.LinkedEntities.Add(spawned);
         spawnedComp.LinkedEntities.Add(origin);
-        
+
         foreach (var existing in originComp.LinkedEntities)
         {
             if (existing == spawned) continue;

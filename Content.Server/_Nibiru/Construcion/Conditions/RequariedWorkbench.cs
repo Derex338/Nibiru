@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+#pragma warning disable CS0162
 
 namespace Content.Server._Nibiru.Construction.Conditions
 {

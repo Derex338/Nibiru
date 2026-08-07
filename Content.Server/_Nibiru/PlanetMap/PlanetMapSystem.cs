@@ -22,16 +22,14 @@ namespace Content.Server._Nibiru.PlanetMap;
 /// • Saved map data is streamed to the client in chunks per tick on BUI open (no giant packet).
 /// • Entity validity is checked before each Update pass so stale jobs are cleaned up.
 /// </summary>
-public sealed class PlanetMapSystem : EntitySystem
+public sealed partial class PlanetMapSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _xform      = default!;
-    [Dependency] private readonly SharedPhysicsSystem   _physics    = default!;
-    [Dependency] private readonly SharedBiomeSystem     _biome      = default!;
-    [Dependency] private readonly TagSystem             _tag        = default!;
-    [Dependency] private readonly IMapManager           _mapManager = default!;
-    [Dependency] private readonly UserInterfaceSystem   _ui         = default!;
-    [Dependency] private readonly SharedMapSystem       _mapSys     = default!;
-    [Dependency] private readonly IPrototypeManager     _proto      = default!;
+[Dependency] private SharedTransformSystem _xform      = default!;
+[Dependency] private SharedBiomeSystem     _biome      = default!;
+[Dependency] private TagSystem             _tag        = default!;
+[Dependency] private IMapManager           _mapManager = default!;
+[Dependency] private SharedMapSystem       _mapSys     = default!;
+[Dependency] private IPrototypeManager     _proto      = default!;
 
     // -----------------------------------------------------------------------
     // Job types (runtime-only, not serialised)
@@ -399,7 +397,7 @@ public sealed class PlanetMapSystem : EntitySystem
                 zoneIdx = GetZoneIndex(mapComp, id);
 
             var hasHardPhysics  = TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard;
-            var hasPlanetMapTag = _tag.HasTag(ent.Value, "PlanetMapEntity");
+            var hasPlanetMapTag = _tag.HasTag(ent.Value, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"PlanetMapEntity");
 
             // Draw as an individual icon when it's a hard wall, tagged, OR part of a zone.
             // Zone members also go into the zone layer; sparse ones (below the density

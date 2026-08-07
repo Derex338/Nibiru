@@ -24,12 +24,12 @@ namespace Content.Server._Nibiru.GameTicking.Rules;
 /// </summary>
 public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurvivalRuleComponent>
 {
-    [Dependency] private readonly NibiruWorldSystem _world = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly FactionSystem _factionSystem = default!;
+[Dependency] private NibiruWorldSystem _world = default!;
+[Dependency] private IGameTiming _timing = default!;
+[Dependency] private IRobustRandom _random = default!;
+[Dependency] private IAdminLogManager _adminLogger = default!;
+[Dependency] private IChatManager _chat = default!;
+[Dependency] private FactionSystem _factionSystem = default!;
 
 
 
@@ -90,7 +90,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
                 PlayerFactionChoices.Remove(userId);
                 choiceMade = true;
             }
-            
+
             // Если через сетку выбора не выбрано, пробуем взять из профиля
             if (!choiceMade && string.IsNullOrEmpty(factionName) && ev.Profile is HumanoidCharacterProfile profile)
             {

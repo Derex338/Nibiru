@@ -9,9 +9,8 @@ namespace Content.Client._Nibiru.Faction.Systems;
 /// Client-сайд система. Когда статуя получает выбранного члена фракции,
 /// копирует его спрайт (RSI+state+color) на статую навсегда.
 /// </summary>
-public sealed class FactionStatueVisualsSystem : EntitySystem
+public sealed partial class FactionStatueVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

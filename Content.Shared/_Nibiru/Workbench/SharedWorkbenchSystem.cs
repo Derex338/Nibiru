@@ -6,12 +6,10 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared._Nibiru.Workbench;
 
-public sealed class SharedWorkbenchSystem : EntitySystem
+public sealed partial class SharedWorkbenchSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private IPrototypeManager PrototypeManager = default!;
+    [Dependency] private SharedTransformSystem TransformSystem = default!;
 
     public string GetExamineName(GenericPartInfo info)
     {

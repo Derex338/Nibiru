@@ -24,11 +24,11 @@
 //    [UsedImplicitly]
 //    public sealed class WorkbenchSystem : SharedWorkbenchSystem
 //    {
-//        [Dependency] private readonly IPlayerManager _playerManager = default!;
-//        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-//        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-//        [Dependency] private readonly SpriteSystem _sprite = default!;
-//        [Dependency] private readonly PopupSystem _popupSystem = default!;
+//    [Dependency] private IPlayerManager _playerManager = default!;
+//    [Dependency] private ExamineSystemShared _examineSystem = default!;
+//    [Dependency] private SharedTransformSystem _transformSystem = default!;
+//    [Dependency] private SpriteSystem _sprite = default!;
+//    [Dependency] private PopupSystem _popupSystem = default!;
 //		[Dependency] private readonly IPrototypeManager _proto = default!;
 
 //        private readonly Dictionary<int, EntityUid> _ghosts = new();
@@ -422,9 +422,9 @@
 
 //            _ghosts.Clear();
 //        }
-		
+
 //		# region Nibiru
-	
+
 //		public string GetCraftName(ProtoId<ConstructionPrototype> proto)
 //		{
 //			return GetCraftName(_proto.Index(proto));
@@ -449,8 +449,8 @@
 
 //			return string.Empty;
 //		}
-	
-//		# endregion 
+
+//		# endregion
 //    }
 
 //    //public sealed class CraftingAvailabilityChangedArgs : EventArgs

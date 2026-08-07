@@ -148,7 +148,7 @@ public abstract partial class SharedToolSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(belowPos, 0.2f, LookupFlags.Static))
         {
-            if (_tag.HasTag(ent, "Wall"))
+            if (_tag.HasTag(ent, WallTag))
                 return true;
         }
 

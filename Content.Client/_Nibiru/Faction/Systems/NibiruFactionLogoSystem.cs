@@ -9,9 +9,9 @@ using Content.Shared._Nibiru.Factions.Messeges;
 
 namespace Content.Client._Nibiru.Factions;
 
-public sealed class NibiruFactionLogoSystem : EntitySystem
+public sealed partial class NibiruFactionLogoSystem : EntitySystem
 {
-    [Dependency] private readonly IClyde _clyde = default!;
+[Dependency] private IClyde _clyde = default!;
 
     // Кэш текстур логотипов фракций по названию фракции
     // Кэш текстур логотипов фракций по названию фракции
@@ -104,7 +104,7 @@ public sealed class NibiruFactionLogoSystem : EntitySystem
 
             _logo8x8Cache[factionName] = _clyde.LoadTextureFromImage(image8, "FactionLogo8x8_" + factionName);
         }
-        
+
         RaiseLocalEvent(new FactionLogoUpdatedEvent(factionName));
     }
 

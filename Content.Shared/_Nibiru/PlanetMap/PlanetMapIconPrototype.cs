@@ -9,7 +9,7 @@ namespace Content.Shared._Nibiru.PlanetMap;
 /// Prototype for custom icons on the planet map.
 /// Replaces the default drawing shapes for specific entities.
 /// </summary>
-[Prototype("planetMapIcon")]
+[Prototype]
 public sealed partial class PlanetMapIconPrototype : IPrototype
 {
     [IdDataField]

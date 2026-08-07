@@ -5,9 +5,9 @@ using Content.Shared.IdentityManagement.Components;
 
 namespace Content.Shared._Nibiru.Factions;
 
-public sealed class SharedFactionSystem : EntitySystem
+public sealed partial class SharedFactionSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private IEntityManager _entity = default!;
 
     public override void Initialize()
     {
@@ -39,7 +39,7 @@ public sealed class SharedFactionSystem : EntitySystem
         if (!player.HasValue)
             return false;
 
-        if (EntityManager.TryGetComponent<FactionComponent>(player, out var factionComponent))
+        if (TryComp<FactionComponent>(player, out var factionComponent))
         {
             if(CreatorCheck)
                 return factionComponent.IsCreator;

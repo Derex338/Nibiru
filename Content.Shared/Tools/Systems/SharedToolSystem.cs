@@ -36,12 +36,14 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private TileSystem _tiles = default!;
     [Dependency] private TurfSystem _turfs = default!;
-    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private CESharedZLevelsSystem _zLevels = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     public const string CutQuality = "Cutting";
     public const string PulseQuality = "Pulsing";
+
+    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
     public override void Initialize()
     {

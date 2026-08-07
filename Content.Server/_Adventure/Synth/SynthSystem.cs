@@ -39,19 +39,19 @@ namespace Content.Server._Adventure.Synth;
 
 public sealed partial class SynthSystem : SharedSynthSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly Shared.Damage.Systems.DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly SharedBatteryDrainerSystem _batteryDrainer = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedActionsSystem _action = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private Shared.Damage.Systems.DamageableSystem _damageableSystem = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private SharedBatteryDrainerSystem _batteryDrainer = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedActionsSystem _action = default!;
 
     public override void Initialize()
     {

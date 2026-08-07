@@ -11,9 +11,9 @@ namespace Content.Client._Nibiru.LanguageSelect;
 /// The selection is persisted via <see cref="CCVars.NibiruLanguageSelected"/> and
 /// <see cref="Robust.Shared.CVars.LocCultureName"/> CVars.
 /// </summary>
-public sealed class LanguageSelectUIController : UIController, IOnStateEntered<LobbyState>
+public sealed partial class LanguageSelectUIController : UIController, IOnStateEntered<LobbyState>
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+[Dependency] private IConfigurationManager _cfg = default!;
 
     private LanguageSelectWindow? _window;
 

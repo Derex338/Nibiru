@@ -4,17 +4,16 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Client.Graphics;
 using Robust.Client.Player;
 
 namespace Content.Client._Nibiru.Factions.Systems;
 
-public sealed class FactionVisualsSystem : EntitySystem
+public sealed partial class FactionVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly TextureGenerationSystem _texGen = default!;
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    
+[Dependency] private TextureGenerationSystem _texGen = default!;
+[Dependency] private IOverlayManager _overlayManager = default!;
+[Dependency] private IPlayerManager _playerManager = default!;
+
     private FactionIconOverlay? _overlay;
 
     public override void Initialize()

@@ -12,11 +12,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server._Nibiru.Chemestry;
 
-public sealed class SolutionCoolingSystem : EntitySystem
+public sealed partial class SolutionCoolingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+[Dependency] private SharedSolutionContainerSystem _solution = default!;
+[Dependency] private AtmosphereSystem _atmos = default!;
+[Dependency] private IPrototypeManager _prototype = default!;
 
     public float HeatTransferRate = 6f;
 
@@ -93,7 +93,7 @@ public sealed class SolutionCoolingSystem : EntitySystem
     }
 }
 
-public sealed class MoltenPointChange : EventArgs
+public sealed partial class MoltenPointChange : EventArgs
 {
     public float CurrentTemperature;
     public EntityUid uid;

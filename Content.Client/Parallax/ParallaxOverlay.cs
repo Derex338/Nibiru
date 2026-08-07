@@ -11,6 +11,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+#pragma warning disable CS0162
 
 namespace Content.Client.Parallax;
 
