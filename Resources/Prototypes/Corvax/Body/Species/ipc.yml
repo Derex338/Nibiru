@@ -53,6 +53,8 @@
   parent: BaseSpeciesAppearance
   id: AppearanceIpc
   name: Ipc appearance
+  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     femaleDisplacements:
@@ -85,6 +87,8 @@
   - BaseSlicingRefinable
   id: MobIpc
   name: Urist McHands
+  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Damageable
     damageModifierSet: Ipc

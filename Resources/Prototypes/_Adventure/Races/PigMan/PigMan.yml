@@ -156,7 +156,8 @@
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/organs.rsi
-    state: heart
+    layers:
+    - state: heart
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ PigMan ]

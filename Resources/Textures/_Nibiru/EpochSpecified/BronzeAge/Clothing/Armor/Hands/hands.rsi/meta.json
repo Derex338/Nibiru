@@ -9,10 +9,6 @@
     "states": [
         {
             "name": "icon"
-        },
-        {
-            "name": "equipped-OUTERCLOTHING",
-            "directions": 4
         }
     ]
 }

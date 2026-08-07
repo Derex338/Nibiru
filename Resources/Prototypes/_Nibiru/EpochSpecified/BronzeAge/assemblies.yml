@@ -69,8 +69,8 @@
   name: заготовка бронзового копья
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Spear.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
+    state: spear
   - type: Construction
     graph: BronzeSpear
     node: assembly
@@ -93,8 +93,8 @@
   name: заготовка бронзового трезубца
   components:
   - type: Sprite
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Trident.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
+    state: spear
   - type: Construction
     graph: BronzeTrident
     node: assembly
@@ -117,8 +117,8 @@
   name: заготовка бронзовой кирки
   components:
   - type: Sprite
-    sprite: Objects/Tools/pickaxe.rsi
-    state: icon
+    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
+    state: pickaxe
   - type: Construction
     graph: BronzePickaxe
     node: assembly

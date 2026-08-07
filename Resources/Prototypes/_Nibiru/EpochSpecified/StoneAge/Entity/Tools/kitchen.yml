@@ -91,7 +91,7 @@
     state: icon
     color: "#7a6e60"
   - type: Item
-    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
   - type: Construction
     graph: ClayJug
     node: raw
@@ -123,11 +123,11 @@
   description: Еще влажная и мягкая тарелка из глины. Нужно обжечь ее, чтобы она стала твердой.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/plate.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: plate
     color: "#7a6e60"
   - type: Item
-    sprite: Objects/Consumable/Food/plate.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
   - type: Construction
     graph: ClayPlate
     node: raw
@@ -192,7 +192,7 @@
   description: Вместительный кувшин из обожженной глины.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
     layers:
     - state: icon
       color: "#d2691e"
@@ -200,7 +200,7 @@
       state: fill-1
       visible: false
   - type: Item
-    sprite: Objects/Consumable/Food/Drinks/pitcher.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
   - type: SolutionContainerManager
     solutions:
       food:
@@ -241,7 +241,7 @@
   description: Небольшая кружка из обожженной глины.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+    sprite: Objects/Consumable/Drinks/mug.rsi
     layers:
     - state: icon
       color: "#d2691e"
@@ -249,7 +249,7 @@
       state: fill-1
       visible: false
   - type: Item
-    sprite: Objects/Consumable/Food/Drinks/cup.rsi
+    sprite: Objects/Consumable/Drinks/mug.rsi
   - type: SolutionContainerManager
     solutions:
       food:
@@ -290,11 +290,11 @@
   description: Широкая тарелка из обожженной глины.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/plate.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: plate
     color: "#d2691e"
   - type: Item
-    sprite: Objects/Consumable/Food/plate.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
   - type: Construction
     graph: ClayPlate
     node: fin
