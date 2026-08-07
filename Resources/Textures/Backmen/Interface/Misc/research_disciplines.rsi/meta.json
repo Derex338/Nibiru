@@ -1,0 +1,17 @@
+﻿{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Placeholder from Interface/Misc/research_disciplines.rsi for Backmen disciplines",
+  "size": { "x": 8, "y": 8 },
+  "states": [
+        { "name": "engineering" },
+    { "name": "arsenal" },
+    { "name": "security" },
+    { "name": "cargo" },
+    { "name": "shaft" },
+    { "name": "scientific" },
+    { "name": "robotics" },
+    { "name": "medical" },
+    { "name": "service" }
+  ]
+}

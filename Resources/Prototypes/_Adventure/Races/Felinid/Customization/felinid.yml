@@ -1,4 +1,4 @@
-- type: marking
+﻿- type: marking
   id: FelinidEars
   bodyPart: HeadTop
   markingCategory: HeadTop
@@ -57,9 +57,9 @@
           !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_stubby_outer
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_stubby_inner
 
 - type: marking
@@ -80,9 +80,9 @@
           !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_curled_outer
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_curled_inner
 
 - type: marking
@@ -103,9 +103,9 @@
           !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_torn_outer
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_torn_inner
 
 - type: marking
@@ -123,9 +123,9 @@
           category: FacialHair
         - !type:SkinColoring
   sprites:
-    - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+    - sprite: Corvax/Mobs/Customization/cat_parts.rsi
       state: tail_cat_wag_stripes_prime
-    - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+    - sprite: Corvax/Mobs/Customization/cat_parts.rsi
       state: tail_cat_wag_stripes_second
 
 - type: marking
@@ -207,7 +207,7 @@
           !type:SimpleColoring
             color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/fox_parts.rsi
+  - sprite: Corvax/Mobs/Customization/fox_parts.rsi
     state: ears_fox_outer
-  - sprite: _Corvax/Mobs/Customization/fox_parts.rsi
+  - sprite: Corvax/Mobs/Customization/fox_parts.rsi
     state: ears_fox_inner

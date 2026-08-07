@@ -324,7 +324,7 @@
 - type: stack
   id: LeatherChestplate
   name: leather armor
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherArmor.rsi, state: icon }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi, state: icon }
   spawn: LeatherChestplate
   maxCount: 1
 
@@ -333,14 +333,14 @@
   stackEntity: LeatherChestplate
   name: leather armor
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherArmor.rsi, state: icon }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi, state: icon }
   color: "#80ffff"
   price: 5
 
 - type: stack
   id: LeatherHelmet
   name: leather helmet
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherHelmet.rsi, state: icon }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi, state: icon }
   spawn: LeatherHelmet
   maxCount: 1
 
@@ -349,6 +349,6 @@
   stackEntity: LeatherHelmet
   name: leather helmet
   unit: materials-unit-piece
-  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/LeatherHelmet.rsi, state: icon }
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi, state: icon }
   color: "#80ffff"
   price: 5

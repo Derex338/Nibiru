@@ -56,7 +56,7 @@
   category: Gear
   description: Кожаная броня усиленая бронзовыми вставками.
   icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
+    sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
     state: icon
   objectType: Item
   entitysToShowRecipe:

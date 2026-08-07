@@ -261,7 +261,7 @@
 - type: stack
   id: BronzeChainmailPiece
   name: bronze chainmail link
-  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainPiece.rsi, state: pice_1 }
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainPiece.rsi, state: piece_1 }
   spawn: BronzeChainmailPiece
   maxCount: 30
 

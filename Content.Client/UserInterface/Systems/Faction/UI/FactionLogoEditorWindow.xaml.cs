@@ -203,11 +203,14 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 
         foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
         {
-            var folderName = preset.SpriteFolder.Filename;
+            var folder = preset.SpriteFolder.Extension == "png"
+                ? preset.SpriteFolder.Directory
+                : preset.SpriteFolder;
+            var folderName = folder.Filename;
 
             ResPath? file16 = null;
-            var path16 = preset.SpriteFolder / $"{folderName}.png";
-            var path16Alt = preset.SpriteFolder / $"{folderName}_16.png";
+            var path16 = folder / $"{folderName}.png";
+            var path16Alt = folder / $"{folderName}_16.png";
 
             if (resourceManager.ContentFileExists(path16))
                 file16 = path16;
@@ -215,8 +218,8 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
                 file16 = path16Alt;
 
             ResPath? file8 = null;
-            var path8 = preset.SpriteFolder / $"{folderName}_8x8.png";
-            var path8Alt = preset.SpriteFolder / $"{folderName}_8.png";
+            var path8 = folder / $"{folderName}_8x8.png";
+            var path8Alt = folder / $"{folderName}_8.png";
 
             if (resourceManager.ContentFileExists(path8))
                 file8 = path8;
