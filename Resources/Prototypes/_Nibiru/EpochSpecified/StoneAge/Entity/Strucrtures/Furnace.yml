@@ -205,7 +205,7 @@
   - type: FitsInDispenser
     solution: smelted_metal
   - type: SolutionContainerVisuals
-    maxFillLevels: 3
+    maxFillLevels: 1
     inHandsFillBaseName: null
     fillBaseName: fill-
   - type: AtmosExposed
