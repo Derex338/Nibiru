@@ -90,11 +90,13 @@ faction-join-fail-gender = Your gender is not suitable for this faction.
 faction-join-fail-skin-color = Your skin color is not suitable for this faction.
 faction-join-fail-name = Your name must contain the word: { $word }
 
-faction-logo-preset-cross = Cross
-faction-logo-preset-star = Star
-faction-logo-preset-heart = Heart
+faction-logo-preset-axe = Axe
+faction-logo-preset-eye = Eye
 faction-logo-preset-shield = Shield
+faction-logo-preset-circle = Circle
+faction-logo-preset-circle-full = Full Circle
 faction-logo-preset-skull = Skull
+faction-logo-preset-sword = Sword
 
 ## Faction statue
 faction-statue-name = faction statue

@@ -1,24 +1,41 @@
-- type: factionLogoPreset
-  id: FactionLogoPresetCross
-  name: faction-logo-preset-cross
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/cross
+#- type: factionLogoPreset
+#  id: FactionLogoPresetAxe
+#  name: faction-logo-preset-axe
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/axe-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/axe-8x8.png
 
-- type: factionLogoPreset
-  id: FactionLogoPresetStar
-  name: faction-logo-preset-star
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/star
+#- type: factionLogoPreset
+#  id: FactionLogoPresetEye
+#  name: faction-logo-preset-eye
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/eye-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/eye-8x8.png
 
-- type: factionLogoPreset
-  id: FactionLogoPresetHeart
-  name: faction-logo-preset-heart
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/heart
+#- type: factionLogoPreset
+#  id: FactionLogoPresetShield
+#  name: faction-logo-preset-shield
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/shield-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/shield-8x8.png
 
-- type: factionLogoPreset
-  id: FactionLogoPresetShield
-  name: faction-logo-preset-shield
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/shield
+# - type: factionLogoPreset
+#  id: FactionLogoPresetCircle
+#  name: faction-logo-preset-circle
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/sircle-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/sircle-8x8.png
 
-- type: factionLogoPreset
-  id: FactionLogoPresetSkull
-  name: faction-logo-preset-skull
-  spriteFolder: /Textures/_Nibiru/Interface/FactionPresets/skull
+#- type: factionLogoPreset
+#  id: FactionLogoPresetCircleFull
+#  name: faction-logo-preset-circle-full
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/sircle_full-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/sircle_full-8x8.png
+
+#- type: factionLogoPreset
+#  id: FactionLogoPresetSkull
+#  name: faction-logo-preset-skull
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/skull-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/skull-8x8.png
+
+#- type: factionLogoPreset
+#  id: FactionLogoPresetSword
+#  name: faction-logo-preset-sword
+#  sprite16: /Textures/_Nibiru/Interface/FactionIcons/sword-16x16.png
+#  sprite8: /Textures/_Nibiru/Interface/FactionIcons/sword-8x8.png

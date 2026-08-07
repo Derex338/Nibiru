@@ -90,11 +90,13 @@ faction-join-fail-gender = Вы не подходите по полу для э�
 faction-join-fail-skin-color = Вы не подходите по цвету кожи для этой фракции.
 faction-join-fail-name = Ваше имя должно содержать слово: { $word }
 
-faction-logo-preset-cross = Крест
-faction-logo-preset-star = Звезда
-faction-logo-preset-heart = Сердце
+faction-logo-preset-axe = Топор
+faction-logo-preset-eye = Глаз
 faction-logo-preset-shield = Щит
+faction-logo-preset-circle = Круг
+faction-logo-preset-circle-full = Залитый круг
 faction-logo-preset-skull = Череп
+faction-logo-preset-sword = Меч
 
 ## Статуя фракции
 faction-statue-select-title = Выберите члена фракции
