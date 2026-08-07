@@ -35,15 +35,24 @@ public sealed class PlanetMapSystem : EntitySystem
         public readonly Dictionary<Vector2i, uint[]> Chunks;
         public readonly Dictionary<Vector2i, uint[]> Objects;
         public readonly List<string>                 ObjectPrototypes;
+        public readonly Dictionary<Vector2i, uint[]> Zones;
+        public readonly List<string>                 ZonePrototypes;
+        public readonly HashSet<Vector2i>?           OverwriteTiles;
 
         public PendingBatch(
             Dictionary<Vector2i, uint[]> chunks,
             Dictionary<Vector2i, uint[]> objects,
-            List<string>                 protos)
+            List<string>                 protos,
+            Dictionary<Vector2i, uint[]> zones,
+            List<string>                 zoneProtos,
+            HashSet<Vector2i>?           overwriteTiles = null)
         {
             Chunks           = chunks;
             Objects          = objects;
             ObjectPrototypes = protos;
+            Zones            = zones;
+            ZonePrototypes   = zoneProtos;
+            OverwriteTiles   = overwriteTiles;
         }
     }
 
@@ -152,7 +161,8 @@ public sealed class PlanetMapSystem : EntitySystem
         while (_pendingBatches.Count > 0 && appliedChunks < ClientBatchSize)
         {
             var batch = _pendingBatches.Dequeue();
-            _window.MergeChunks(batch.Chunks, batch.Objects, batch.ObjectPrototypes);
+            _window.MergeChunks(batch.Chunks, batch.Objects, batch.ObjectPrototypes,
+                batch.Zones, batch.ZonePrototypes, batch.OverwriteTiles);
             // Count chunks to keep the budget meaningful; treat empty batch as 1 to avoid spin
             appliedChunks += Math.Max(1, batch.Chunks.Count);
         }
@@ -188,6 +198,9 @@ public sealed class PlanetMapSystem : EntitySystem
         if (_activeMap != msg.MapEntity || _window == null)
             return;
 
-        _pendingBatches.Enqueue(new PendingBatch(msg.Chunks, msg.Objects, msg.ObjectPrototypes));
+        _pendingBatches.Enqueue(new PendingBatch(
+            msg.Chunks, msg.Objects, msg.ObjectPrototypes,
+            msg.Zones, msg.ZonePrototypes,
+            msg.OverwriteTiles));
     }
 }

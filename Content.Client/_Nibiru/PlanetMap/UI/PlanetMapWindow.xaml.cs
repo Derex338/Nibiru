@@ -37,9 +37,12 @@ public sealed partial class PlanetMapWindow : FancyWindow
 
     public void MergeChunks(Dictionary<Vector2i, uint[]> newChunks,
                             Dictionary<Vector2i, uint[]> newObjects,
-                            List<string>                 objectPrototypes)
+                            List<string>                 objectPrototypes,
+                            Dictionary<Vector2i, uint[]>? newZones = null,
+                            List<string>?                zonePrototypes = null,
+                            HashSet<Vector2i>?           overwriteTiles = null)
     {
-        MapControl.MergeChunks(newChunks, newObjects, objectPrototypes);
+        MapControl.MergeChunks(newChunks, newObjects, objectPrototypes, newZones, zonePrototypes, overwriteTiles);
     }
 
     public void LoadSavedChunks(Dictionary<Vector2i, uint[]> chunks,

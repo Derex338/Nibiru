@@ -3,6 +3,7 @@ using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -51,6 +52,12 @@ public sealed class PlanetMapSystem : EntitySystem
         public Queue<Vector2i>           RemainingTiles = new();
         public Dictionary<Vector2i, uint[]> ResultChunks  = new();
         public Dictionary<Vector2i, uint[]> ResultObjects = new();
+        public Dictionary<Vector2i, uint[]> ResultZones   = new();
+        // absolute tile -> 1-based zone prototype index (into PlanetMapComponent.ZonePrototypes)
+        public Dictionary<Vector2i, int>   ZoneMembers   = new();
+        // Tiles actually classified this scan. Used so the merge overwrites (incl. zeroes) ONLY
+        // these tiles — others in the same chunk (outside the scan circle / behind LOS) are kept.
+        public HashSet<Vector2i>           ProcessedTiles = new();
         public ICommonSession Session   = default!;
         public int            BatchSize;
     }
@@ -142,6 +149,7 @@ public sealed class PlanetMapSystem : EntitySystem
 
             var batchChunks  = new Dictionary<Vector2i, uint[]>();
             var batchObjects = new Dictionary<Vector2i, uint[]>();
+            var batchZones   = new Dictionary<Vector2i, uint[]>();
             var sent = 0;
 
             while (job.RemainingChunks.Count > 0 && sent < job.BatchSize)
@@ -151,18 +159,22 @@ public sealed class PlanetMapSystem : EntitySystem
                     batchChunks[key] = chunkArr;
                 if (mapComp.SavedObjects.TryGetValue(key, out var objArr))
                     batchObjects[key] = objArr;
+                if (mapComp.SavedZones.TryGetValue(key, out var zoneArr))
+                    batchZones[key] = zoneArr;
                 sent++;
             }
 
             var isLast = job.RemainingChunks.Count == 0;
 
-            if (batchChunks.Count > 0 || batchObjects.Count > 0)
+            if (batchChunks.Count > 0 || batchObjects.Count > 0 || batchZones.Count > 0)
             {
                 var msg = new PlanetMapChunkBatchMessage(
                     job.MapNetEnt,
                     batchChunks,
                     batchObjects,
                     new List<string>(mapComp.ObjectPrototypes),
+                    batchZones,
+                    new List<string>(mapComp.ZonePrototypes),
                     isLast);
                 RaiseNetworkEvent(msg, job.Session);
             }
@@ -263,7 +275,7 @@ public sealed class PlanetMapSystem : EntitySystem
                 var relative    = SharedPlanetMapSystem.GetRelativeTile(tile, chunkOrigin);
                 var index       = SharedPlanetMapSystem.GetTileIndex(relative);
 
-                var (packedTile, packedObj) = ClassifyTile(mapComp, job.GridUid, job.Grid, tile, job.Biome, job.MapId);
+                var (packedTile, packedObj, zoneIdx) = ClassifyTile(mapComp, job.GridUid, job.Grid, tile, job.Biome, job.MapId);
 
                 if (!job.ResultChunks.TryGetValue(chunkOrigin, out var chunkData))
                 {
@@ -278,6 +290,10 @@ public sealed class PlanetMapSystem : EntitySystem
 
                 chunkData[index] = packedTile;
                 objData[index]   = packedObj;
+                job.ProcessedTiles.Add(tile);
+
+                if (zoneIdx > 0)
+                    job.ZoneMembers[tile] = zoneIdx;
                 processed++;
             }
 
@@ -285,9 +301,14 @@ public sealed class PlanetMapSystem : EntitySystem
 
             if (isDone)
             {
-                // Merge into persistent storage once the whole scan is complete
-                MergeChunks(mapComp.SavedChunks,  job.ResultChunks);
-                MergeChunks(mapComp.SavedObjects, job.ResultObjects);
+                // Merge into persistent storage once the whole scan is complete.
+                // Only the tiles actually re-classified this scan are overwritten (incl. zeroing);
+                // tiles in the same chunk that weren't scanned are preserved.
+                MergeChunks(mapComp.SavedChunks,  job.ResultChunks,  job.ProcessedTiles);
+                MergeChunks(mapComp.SavedObjects, job.ResultObjects, job.ProcessedTiles);
+
+                var zoneChunks = ClassifyZones(mapComp, job.ZoneMembers);
+                MergeChunks(mapComp.SavedZones, zoneChunks, job.ProcessedTiles);
                 Dirty(job.MapEnt, mapComp);
 
                 // Send the completed scan result to the client in one batch
@@ -297,7 +318,10 @@ public sealed class PlanetMapSystem : EntitySystem
                     job.ResultChunks,
                     job.ResultObjects,
                     new List<string>(mapComp.ObjectPrototypes),
-                    isLast: true);
+                    zoneChunks,
+                    new List<string>(mapComp.ZonePrototypes),
+                    isLast: true,
+                    overwriteTiles: job.ProcessedTiles);
                 RaiseNetworkEvent(response, job.Session);
 
                 _activeScanJobs.RemoveAt(i);
@@ -309,7 +333,16 @@ public sealed class PlanetMapSystem : EntitySystem
     // Merge helper
     // -----------------------------------------------------------------------
 
-    private static void MergeChunks(Dictionary<Vector2i, uint[]> savedMap, Dictionary<Vector2i, uint[]> newMap)
+    /// <summary>
+    /// Merges a re-scanned region into persistent storage. Only tiles listed in
+    /// <paramref name="processed"/> are OVERWRITTEN (including to zero), so removed
+    /// entities/objects disappear from the map on a fresh scan. Tiles in the same chunk that were
+    /// not re-classified (outside the scan circle, or hidden behind LOS) are preserved.
+    /// </summary>
+    private static void MergeChunks(
+        Dictionary<Vector2i, uint[]> savedMap,
+        Dictionary<Vector2i, uint[]> newMap,
+        HashSet<Vector2i> processed)
     {
         foreach (var (origin, data) in newMap)
         {
@@ -318,9 +351,16 @@ public sealed class PlanetMapSystem : EntitySystem
                 saved = new uint[SharedPlanetMapSystem.ArraySize];
                 savedMap[origin] = saved;
             }
-            for (var i = 0; i < SharedPlanetMapSystem.ArraySize; i++)
+
+            var baseX = origin.X * SharedPlanetMapSystem.ChunkSize;
+            var baseY = origin.Y * SharedPlanetMapSystem.ChunkSize;
+            for (var lx = 0; lx < SharedPlanetMapSystem.ChunkSize; lx++)
+            for (var ly = 0; ly < SharedPlanetMapSystem.ChunkSize; ly++)
             {
-                if (data[i] != 0) saved[i] = data[i];
+                if (!processed.Contains(new Vector2i(baseX + lx, baseY + ly)))
+                    continue;
+                saved[lx * SharedPlanetMapSystem.ChunkSize + ly] =
+                    data[lx * SharedPlanetMapSystem.ChunkSize + ly];
             }
         }
     }
@@ -333,7 +373,7 @@ public sealed class PlanetMapSystem : EntitySystem
     /// Determines the visual content of a tile (floor + object).
     /// Priority: anchored entities with hard physics or PlanetMapEntity tag > actual tile > biome virtual tile.
     /// </summary>
-    private (uint tile, uint obj) ClassifyTile(
+    private (uint tile, uint obj, int zoneIdx) ClassifyTile(
         PlanetMapComponent mapComp,
         EntityUid          gridUid,
         MapGridComponent   grid,
@@ -343,6 +383,7 @@ public sealed class PlanetMapSystem : EntitySystem
     {
         uint objData  = 0;
         uint tileData = 0;
+        var  zoneIdx  = 0;
 
         // 1. Check anchored entities
         var anchored = _mapSys.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
@@ -351,20 +392,28 @@ public sealed class PlanetMapSystem : EntitySystem
             var meta = MetaData(ent.Value);
             if (meta.EntityPrototype == null) continue;
 
+            var id = meta.EntityPrototype.ID;
+
+            // ZoneId? (forests etc.) — recorded even without hard physics/tag.
+            if (zoneIdx == 0)
+                zoneIdx = GetZoneIndex(mapComp, id);
+
             var hasHardPhysics  = TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard;
             var hasPlanetMapTag = _tag.HasTag(ent.Value, "PlanetMapEntity");
 
-            if (hasHardPhysics || hasPlanetMapTag)
+            // Draw as an individual icon when it's a hard wall, tagged, OR part of a zone.
+            // Zone members also go into the zone layer; sparse ones (below the density
+            // threshold) render as icons while dense clusters become a blob.
+            if (hasHardPhysics || hasPlanetMapTag || zoneIdx != 0)
             {
-                var id       = meta.EntityPrototype.ID;
                 var objIndex = mapComp.ObjectPrototypes.IndexOf(id);
                 if (objIndex < 0)
                 {
                     objIndex = mapComp.ObjectPrototypes.Count;
                     mapComp.ObjectPrototypes.Add(id);
                 }
-                objData = (uint)(objIndex + 1); // 0 = empty
-                break;
+                if (objData == 0)
+                    objData = (uint)(objIndex + 1); // 0 = empty
             }
         }
 
@@ -381,7 +430,178 @@ public sealed class PlanetMapSystem : EntitySystem
             tileData = (uint)biomeTile.Value.TypeId;
         }
 
-        return (tileData, objData);
+        return (tileData, objData, zoneIdx);
+    }
+
+    /// <summary>
+    /// Looks up the <c>planetMapZone</c> prototype index for an entity prototype ID,
+    /// registering it into <see cref="PlanetMapComponent.ZonePrototypes"/> on first use.
+    /// Returns 0 when the entity does not belong to any zone.
+    /// </summary>
+    private int GetZoneIndex(PlanetMapComponent mapComp, string entityId)
+    {
+        foreach (var zone in _proto.EnumeratePrototypes<PlanetMapZonePrototype>())
+        {
+            foreach (var e in zone.Entities)
+            {
+                if (string.Equals(e, entityId, StringComparison.OrdinalIgnoreCase))
+                    return GetOrAddZoneIndex(mapComp, zone.ID);
+            }
+            if (zone.IdPattern != null &&
+                entityId.Contains(zone.IdPattern, StringComparison.OrdinalIgnoreCase))
+                return GetOrAddZoneIndex(mapComp, zone.ID);
+        }
+        return 0;
+    }
+
+    private static int GetOrAddZoneIndex(PlanetMapComponent mapComp, string zoneId)
+    {
+        var idx = mapComp.ZonePrototypes.IndexOf(zoneId);
+        if (idx < 0)
+        {
+            idx = mapComp.ZonePrototypes.Count;
+            mapComp.ZonePrototypes.Add(zoneId);
+        }
+        return idx + 1; // 1-based; 0 = empty
+    }
+
+    /// <summary>
+    /// Converts the per-tile zone members into the persistent zone chunk layer.
+    /// For each zone member an entity is kept only when it has enough other members of the same
+    /// zone nearby (dense cluster), i.e. it is part of a forest rather than a lone tree.
+    /// </summary>
+    private Dictionary<Vector2i, uint[]> ClassifyZones(
+        PlanetMapComponent mapComp,
+        Dictionary<Vector2i, int> members)
+    {
+        var result = new Dictionary<Vector2i, uint[]>();
+        if (members.Count == 0)
+            return result;
+
+        // Radius lookup by 1-based zone index
+        var radii = new float[mapComp.ZonePrototypes.Count + 1];
+        var mins  = new int[mapComp.ZonePrototypes.Count + 1];
+        // Cache of zone-ID → radius/minNeighbors, resolved once
+        var zoneLookup = new Dictionary<string, (float Radius, int Min)>();
+        foreach (var zone in _proto.EnumeratePrototypes<PlanetMapZonePrototype>())
+            zoneLookup[zone.ID] = (zone.Radius, zone.MinNeighbors);
+
+        for (var i = 0; i < mapComp.ZonePrototypes.Count; i++)
+        {
+            var protoId = mapComp.ZonePrototypes[i];
+            if (zoneLookup.TryGetValue(protoId, out var cfg))
+            {
+                radii[i + 1] = cfg.Radius;
+                mins[i + 1]  = cfg.Min;
+            }
+            else
+            {
+                radii[i + 1] = 3f;  // sensible defaults
+                mins[i + 1]  = 5;
+            }
+        }
+
+        // ---- Flood-fill cluster growth ----
+        // A cluster begins at any member and grows outward: any member within <radius> of an
+        // already-accepted member is added, which in turn widens the search radius. This growth
+        // behaviour matches "two trees nearby both expand the zone, and the zone keeps growing as
+        // new trees join", rather than a per-tree fixed neighbour count.
+        var cellSize = SharedPlanetMapSystem.ZoneCellSize;
+
+        // Spatial grid: cell → list of members, for fast radius queries.
+        var buckets = new Dictionary<Vector2i, List<Vector2i>>();
+        foreach (var (tile, idx) in members)
+        {
+            var cell = new Vector2i(
+                (int) MathF.Floor((float) tile.X / cellSize),
+                (int) MathF.Floor((float) tile.Y / cellSize));
+            if (!buckets.TryGetValue(cell, out var list))
+            {
+                list = new List<Vector2i>();
+                buckets[cell] = list;
+            }
+            list.Add(tile);
+        }
+
+        // ---- Flood-fill cluster growth ----
+        // A cluster begins at any single member and grows outward: every member within <radius>
+        // of an already-accepted member joins, which in turn widens the search radius. This
+        // matches the user's intent ("two nearby trees both search nearby, find more, and the
+        // zone keeps growing"), instead of a fixed per-tree neighbour count.
+        // Only members inside the SAME zone id can join a cluster, so different zones never merge.
+        // A cluster is only rendered as a zone once its total population reaches the prototype's
+        // <minNeighbors>; smaller groups keep their individual icons.
+        var done = new HashSet<Vector2i>();      // tiles already processed (any cluster seed)
+        var keep = new Dictionary<Vector2i, int>(); // accepted tile -> zone id
+
+        foreach (var (seedTile, seedZone) in members)
+        {
+            if (done.Contains(seedTile))
+                continue;
+
+            var rSq = radii[seedZone] * radii[seedZone];
+            var cluster = new List<Vector2i>(); // members of this cluster
+            var frontier = new Queue<Vector2i>();
+            frontier.Enqueue(seedTile);
+            done.Add(seedTile);
+            cluster.Add(seedTile);
+
+            while (frontier.Count > 0)
+            {
+                var a = frontier.Dequeue();
+                var aCell = new Vector2i(
+                    (int) MathF.Floor((float) a.X / cellSize),
+                    (int) MathF.Floor((float) a.Y / cellSize));
+
+                for (var dx = -1; dx <= 1; dx++)
+                for (var dy = -1; dy <= 1; dy++)
+                {
+                    var nCell = new Vector2i(aCell.X + dx, aCell.Y + dy);
+                    if (!buckets.TryGetValue(nCell, out var cellMembers))
+                        continue;
+
+                    foreach (var b in cellMembers)
+                    {
+                        if (done.Contains(b))
+                            continue;
+                        if (members[b] != seedZone) // only same-zone growth
+                            continue;
+
+                        var ddx = a.X - b.X;
+                        var ddy = a.Y - b.Y;
+                        if (ddx * ddx + ddy * ddy <= rSq)
+                        {
+                            done.Add(b);
+                            cluster.Add(b);
+                            frontier.Enqueue(b);
+                        }
+                    }
+                }
+            }
+
+            // Accept the cluster as a zone only if it is dense enough.
+            if (cluster.Count >= mins[seedZone])
+            {
+                foreach (var t in cluster)
+                    keep[t] = seedZone;
+            }
+        }
+
+        // Write accepted members into the chunk arrays
+        foreach (var (tile, zoneIdx) in keep)
+        {
+            var origin  = SharedPlanetMapSystem.GetChunkOrigin(tile);
+            var rel     = SharedPlanetMapSystem.GetRelativeTile(tile, origin);
+            var index   = SharedPlanetMapSystem.GetTileIndex(rel);
+            if (!result.TryGetValue(origin, out var arr))
+            {
+                arr = new uint[SharedPlanetMapSystem.ArraySize];
+                result[origin] = arr;
+            }
+            arr[index] = (uint) zoneIdx;
+        }
+
+        return result;
     }
 
     // -----------------------------------------------------------------------
@@ -425,12 +645,19 @@ public sealed class PlanetMapSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// True if anything anchored on the tile blocks the view (does not let light / sight pass).
+    /// Only an ENABLED <see cref="OccluderComponent"/> blocks — this is the signal the game's
+    /// lighting/vision actually uses. Entities that are "hard" or have an Opaque collision fixture
+    /// but no Occluder (trees, bushes, small plants such as flowers, grates, low fences) let
+    /// light through and therefore do NOT block the map scan, matching what the player can see.
+    /// </summary>
     private bool IsTileBlocking(EntityUid gridUid, MapGridComponent grid, Vector2i tile)
     {
         var anchored = _mapSys.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
         while (anchored.MoveNext(out var ent))
         {
-            if (TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard)
+            if (TryComp<OccluderComponent>(ent.Value, out var occluder) && occluder.Enabled)
                 return true;
         }
         return false;
