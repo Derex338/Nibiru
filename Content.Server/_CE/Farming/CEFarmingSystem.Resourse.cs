@@ -61,7 +61,7 @@ public sealed partial class CEFarmingSystem
         if (!TryComp<SolutionManagerComponent>(args.Plant, out var solmanager))
             return;
 
-        var solEntity = new Entity<SolutionManagerComponent?>(args.Plant, solmanager);
+        Entity<SolutionManagerComponent?> solEntity = new(args.Plant, solmanager!);
         if (!_solutionContainer.TryGetSolution(solEntity, ent.Comp.Solution, out var soln, out _))
             return;
 

@@ -346,7 +346,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
                 if (!TryComp(target.Value, out TransformComponent? _))
                     return false;
 
-                if (command == NibiruAnimalCommand.Grab && !TryComp<PullableComponent>(target.Value, out _))
+                if (command == NibiruAnimalCommand.Grab && !HasComp<PullableComponent>(target.Value))
                     return false;
 
                 // Check faction. If target is friendly, check mood.

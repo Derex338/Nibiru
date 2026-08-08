@@ -422,9 +422,9 @@
 
 //            _ghosts.Clear();
 //        }
-		
+
 //		# region Nibiru
-	
+
 //		public string GetCraftName(ProtoId<ConstructionPrototype> proto)
 //		{
 //			return GetCraftName(_proto.Index(proto));
@@ -449,8 +449,8 @@
 
 //			return string.Empty;
 //		}
-	
-//		# endregion 
+
+//		# endregion
 //    }
 
 //    //public sealed class CraftingAvailabilityChangedArgs : EventArgs

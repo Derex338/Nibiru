@@ -35,9 +35,9 @@ public sealed partial class SunLightRayOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
         _lookup = _entManager.System<EntityLookupSystem>();
-        // Draw after shadows or similar? 
+        // Draw after shadows or similar?
         // SunShadowOverlay has ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
-        ZIndex = AfterLightTargetOverlay.ContentZIndex + 2; 
+        ZIndex = AfterLightTargetOverlay.ContentZIndex + 2;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -114,7 +114,7 @@ public sealed partial class SunLightRayOverlay : Overlay
             else if (_entManager.TryGetComponent(grid.Owner, out MapLightComponent? mapLight))
             {
                 rayColor = mapLight.AmbientLightColor;
-                
+
                 // If the current map's ambient is too dark, it's likely an indoor level.
                 // We should try to find the "sun" color from the map above if possible.
                 if (rayColor.R < 0.1f && rayColor.G < 0.1f && rayColor.B < 0.1f)
@@ -136,7 +136,7 @@ public sealed partial class SunLightRayOverlay : Overlay
                     {
                         var xform = _entManager.GetComponent<TransformComponent>(ent.Owner);
                         var (worldPos, worldRot) = _xformSys.GetWorldPositionRotation(xform);
-                        
+
                         var worldMatrix = Matrix3x2.CreateTranslation(worldPos);
                         var renderMatrix = Matrix3x2.Multiply(worldMatrix, invMatrix);
                         var pointCount = ent.Comp.Points.Length;

@@ -17,6 +17,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+#pragma warning disable CS0162, CS0642
 
 namespace Content.Server._Nibiru.Temperature;
 

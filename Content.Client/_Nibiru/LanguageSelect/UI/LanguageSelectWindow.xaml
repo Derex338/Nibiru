@@ -1,6 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              Title="Select Language / Выбор языка"
               MinSize="420 300"
               SetSize="420 300">
     <BoxContainer Orientation="Vertical" Margin="16 16 16 16">

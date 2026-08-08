@@ -346,7 +346,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
 /// <summary>
 /// Событие когда руда расплавилась на поверхности
 /// </summary>
-public sealed class OreMeltedOnSurfaceEvent : EntityEventArgs
+public sealed partial class OreMeltedOnSurfaceEvent : EntityEventArgs
 {
     public EntityUid Surface;
     public EntityUid Ore;
@@ -361,7 +361,7 @@ public sealed class OreMeltedOnSurfaceEvent : EntityEventArgs
 /// <summary>
 /// Событие когда предмет сгорел на поверхности
 /// </summary>
-public sealed class ItemBurnedOnSurfaceEvent : EntityEventArgs
+public sealed partial class ItemBurnedOnSurfaceEvent : EntityEventArgs
 {
     public EntityUid Surface;
     public EntityUid Item;

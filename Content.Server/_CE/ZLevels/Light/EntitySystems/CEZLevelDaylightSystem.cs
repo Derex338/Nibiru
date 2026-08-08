@@ -161,7 +161,7 @@ public sealed partial class CEZLevelDaylightSystem : EntitySystem
     {
         if (!_gridQuery.TryComp(mapUid, out var grid))
             return;
-        
+
         if (!_roofQuery.TryComp(mapUid, out var roof))
             return;
 

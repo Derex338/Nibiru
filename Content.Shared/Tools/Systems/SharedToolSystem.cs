@@ -43,6 +43,8 @@ public abstract partial class SharedToolSystem : EntitySystem
     public const string CutQuality = "Cutting";
     public const string PulseQuality = "Pulsing";
 
+    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
+
     public override void Initialize()
     {
         InitializeMultipleTool();

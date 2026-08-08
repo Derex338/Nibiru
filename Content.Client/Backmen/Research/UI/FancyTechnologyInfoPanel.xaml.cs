@@ -59,16 +59,16 @@ public sealed partial class FancyTechnologyInfoPanel : Control
             Loc.GetString("research-console-tech-cost-label", ("cost", proto.Cost)),
             defaultColor: color
         );
-		
+
 		if(proto.MaterialToUnlock.Count > 0)
 		{
 			foreach(var material in proto.MaterialToUnlock)
 			{
 				var entity = _proto.Index<StackPrototype>(material.MaterialPrototypeId);
-				
+
 				var text = Loc.GetString(entity.Name, ("amount", material.Amount));
 				text = material.Amount.ToString() + " " + text;
-				
+
 				TechnologyMaterialCostLabel.SetMessage(text, defaultColor: color);
 			}
 		}

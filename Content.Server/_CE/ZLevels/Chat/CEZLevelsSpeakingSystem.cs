@@ -109,7 +109,7 @@ public sealed partial class CEZLevelsSpeakingSystem : EntitySystem
                     continue;
 
                 var worldPos = startWorldPos + offset;
-                
+
                 bool isOpen = true;
                 if (_map.TryGetTileRef(floorMapUid, grid, worldPos, out var tileRef) && !tileRef.Tile.IsEmpty)
                 {

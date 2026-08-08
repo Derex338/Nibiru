@@ -499,7 +499,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
 /// <summary>
 /// Событие когда руда расплавилась
 /// </summary>
-public sealed class OreMeltedEvent : EntityEventArgs
+public sealed partial class OreMeltedEvent : EntityEventArgs
 {
     public EntityUid OreEntity;
     public string Reagent;
@@ -516,7 +516,7 @@ public sealed class OreMeltedEvent : EntityEventArgs
 /// <summary>
 /// Событие когда предмет сгорел
 /// </summary>
-public sealed class ItemBurnedEvent : EntityEventArgs
+public sealed partial class ItemBurnedEvent : EntityEventArgs
 {
     public EntityUid ItemEntity;
 

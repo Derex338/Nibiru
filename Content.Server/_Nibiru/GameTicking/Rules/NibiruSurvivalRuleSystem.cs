@@ -90,7 +90,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
                 PlayerFactionChoices.Remove(userId);
                 choiceMade = true;
             }
-            
+
             // Если через сетку выбора не выбрано, пробуем взять из профиля
             if (!choiceMade && string.IsNullOrEmpty(factionName) && ev.Profile is HumanoidCharacterProfile profile)
             {

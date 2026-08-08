@@ -16,8 +16,6 @@ namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem
 {
-    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
-
     [Dependency] private INetManager _net = default!;
 
     public void InitializeTile()

@@ -30,7 +30,7 @@ public sealed partial class NibiruFactionLeaderSystem : EntitySystem
     {
         _pendingLeaders.Clear();
         var pendingPrefs = _factionSystem.PendingFactionLeaderPrefs;
-        
+
         if (pendingPrefs.Count == 0)
             return;
 

@@ -10,14 +10,14 @@ public sealed partial class NibiruLeashSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        
+
         _overlayManager.AddOverlay(new NibiruLeashOverlay(EntityManager));
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        
+
         _overlayManager.RemoveOverlay<NibiruLeashOverlay>();
     }
 }

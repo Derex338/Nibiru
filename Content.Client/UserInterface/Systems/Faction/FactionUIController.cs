@@ -716,7 +716,7 @@ public sealed partial class FactionUIController : UIController, IOnStateEntered<
     }
 }
 
-public sealed class FilterSelectorPrompt : DefaultWindow
+public sealed partial class FilterSelectorPrompt : DefaultWindow
 {
     private readonly Action<List<string>> _onSave;
     private readonly List<string> _selected;

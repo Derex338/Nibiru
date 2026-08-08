@@ -93,7 +93,7 @@ public sealed partial class SolutionCoolingSystem : EntitySystem
     }
 }
 
-public sealed class MoltenPointChange : EventArgs
+public sealed partial class MoltenPointChange : EventArgs
 {
     public float CurrentTemperature;
     public EntityUid uid;

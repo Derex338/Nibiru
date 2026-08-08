@@ -99,7 +99,7 @@ public sealed partial class MultiLevelConstructionSystem : EntitySystem
 
         originComp.LinkedEntities.Add(spawned);
         spawnedComp.LinkedEntities.Add(origin);
-        
+
         foreach (var existing in originComp.LinkedEntities)
         {
             if (existing == spawned) continue;
