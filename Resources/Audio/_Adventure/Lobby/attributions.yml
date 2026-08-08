@@ -1,6 +1,7 @@
 - files: ["Galaxies_and_echoes.ogg"]
-  license: "CC-SA-3.0"
+  license: "CC-BY-SA-3.0"
   copyright: "Made by AI"
+  source: "NA"
 
 - files: ["Metropolis.ogg", "Bluespace.ogg", "Downtown.ogg", "Runner_in_motion.ogg"]
   license: "CC-BY-NC-SA-3.0"
