@@ -1,10 +1,12 @@
 - type: marking
   id: InsectHeadForward
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
+  bodyPart: HeadTop
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: forward

@@ -1,7 +1,7 @@
 - type: marking
   id: PigBaki
   bodyPart: FacialHair
-  markingCategory: FacialHair
+  bodyPart: FacialHair
   groupWhitelist: [PigMan]
   sprites:
     - sprite: _Adventure/Races/PigMan/Customization/Pig_beard.rsi

@@ -85,8 +85,8 @@
         - state: icon
     - type: InteractionOutline
     - type: ModularCraft
-      currentmodularItemType: Sword
-      baseWeaponPrototype: ModularSword
+      currentItemType: Sword
+      baseEntityPrototype: ModularSword
     - type: UserInterface
       interfaces:
         enum.ModularCraftUiKey.Key:

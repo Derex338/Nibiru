@@ -140,9 +140,6 @@
   targetNode: glassAirlockTriple
   category: construction-category-structures
   description: Он открывается, он закрывается, и он может вас раздавить.
-  icon:
-    sprite: _Adventure/Structures/Doors/Triple/triple_glass.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

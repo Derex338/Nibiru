@@ -4,8 +4,9 @@
   name: Следуй за мной
   description: Приказывает всем вашим животным следовать за вами.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Mobs/Pets/corgi.rsi, state: corgi }
+  - type: InstantAction
     event: !type:NibiruAnimalFollowActionEvent
       speech: Следуй за мной!
 
@@ -15,8 +16,9 @@
   name: Стоять
   description: Приказывает всем вашим животным оставаться на месте.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Markers/cross.rsi, state: cross }
+  - type: InstantAction
     event: !type:NibiruAnimalStayActionEvent
       speech: Стоять!
 
@@ -26,12 +28,13 @@
   name: Взять!
   description: Включает режим атаки. Укажите на цель, чтобы отправить животное атаковать.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi, state: icon }
-    event: !type:NibiruAnimalAttackActionEvent
-      speech: Взять его!
     useDelay: 1
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:NibiruAnimalAttackActionEvent
+      speech: Взять его!
 
 - type: entity
   id: ActionNibiruAnimalGrab
@@ -39,12 +42,13 @@
   name: Схвати!
   description: Включает режим захвата. Укажите на цель, чтобы животное схватило и тащило её.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Objects/Weapons/Melee/stunbaton.rsi, state: stunbaton_off }
-    event: !type:NibiruAnimalGrabActionEvent
-      speech: Схвати его!
     useDelay: 1
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:NibiruAnimalGrabActionEvent
+      speech: Схвати его!
 
 - type: entity
   id: ActionNibiruAnimalSearch
@@ -52,12 +56,13 @@
   name: Ищи!
   description: Дать питомцу понюхать предмет, чтобы найти его владельца по запаху.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Objects/Misc/tracker.rsi, state: tracker }
-    event: !type:NibiruAnimalSearchActionEvent
-      speech: Ищи!
     checkCanInteract: false
     useDelay: 4
+  - type: InstantAction
+    event: !type:NibiruAnimalSearchActionEvent
+      speech: Ищи!
 
 - type: entity
   id: ActionNibiruAnimalDeliver
@@ -65,7 +70,8 @@
   name: Доставка
   description: Отправить птицу в известное почтовое отделение.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Objects/Misc/box.rsi, state: box_6 }
+  - type: InstantAction
     event: !type:NibiruAnimalDeliverActionEvent
       speech: Лети!

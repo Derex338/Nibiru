@@ -37,8 +37,9 @@
         sound:
           collection: MetalBreak
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Stone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Material
   - type: MeleeWeapon
     soundHit:

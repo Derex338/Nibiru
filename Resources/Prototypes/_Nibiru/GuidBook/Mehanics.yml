@@ -1,8 +1,6 @@
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMehanicsGuideRU
-  name: Механики
+  name: guide-entry-nibiru-mechanics
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Mehanics.xml"
   filterEnabled: True
   children:
@@ -11,34 +9,26 @@
   - NibiruMehanicsGuideSmeltingRU
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMehanicsGuideFactionRU
-  name: Фракции
-  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Faction.xml"
+  name: guide-entry-nibiru-mechanics-factions
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Faction/Faction.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMehanicsGuideFireRU
-  name: Огонь
-  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Fire.xml"
+  name: guide-entry-nibiru-mechanics-fire
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Smelting/Fire.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMehanicsGuideSmeltingRU
-  name: Плавление
-  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Smelting.xml"
+  name: guide-entry-nibiru-mechanics-smelting
+  text: "/ServerInfo/_Nibiru/Guidebook_RU/Mehanics/Smelting/Smelting.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMehanicsGuideEN
-  name: Mechanics
+  name: guide-entry-nibiru-mechanics
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Mehanics_EN.xml"
   filterEnabled: True
   children:
@@ -47,25 +37,19 @@
   - NibiruMehanicsGuideSmeltingEN
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMehanicsGuideFactionEN
-  name: Factions
+  name: guide-entry-nibiru-mechanics-factions
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Faction_EN.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMehanicsGuideFireEN
-  name: Fire
+  name: guide-entry-nibiru-mechanics-fire
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Fire_EN.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMehanicsGuideSmeltingEN
-  name: Smelting
+  name: guide-entry-nibiru-mechanics-smelting
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Mehanics/Smelting_EN.xml"
   filterEnabled: True

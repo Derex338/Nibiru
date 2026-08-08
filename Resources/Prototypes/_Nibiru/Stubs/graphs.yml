@@ -1,0 +1,83 @@
+- type: constructionGraph
+  id: GroundSoil
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: fin
+      steps:
+      - material: CEDirt
+        amount: 1
+        doAfter: 1
+  - node: fin
+    entity: soilPlate
+
+- type: constructionGraph
+  id: MaterialThread
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: fin
+      steps:
+      - material: Herb
+        amount: 2
+        doAfter: 1
+  - node: fin
+    entity: MaterialThread1
+
+- type: constructionGraph
+  id: BronzeRod
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: fin
+      steps:
+      - material: Bronze
+        amount: 1
+        doAfter: 1
+  - node: fin
+    entity: BronzeRod
+
+- type: constructionGraph
+  id: CastingPit
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: fin
+      steps:
+      - material: CEDirt
+        amount: 2
+        doAfter: 2
+  - node: fin
+    entity: CastingPit
+
+- type: constructionGraph
+  id: Longbow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: fin
+      steps:
+      - material: WoodStick
+        amount: 3
+        doAfter: 2
+  - node: fin
+    entity: Longbow
+
+- type: constructionGraph
+  id: SkeletonGuitar
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: fin
+      steps:
+      - material: CEBone
+        amount: 2
+        doAfter: 2
+  - node: fin
+    entity: CEInstrumentGuitarSkeleton

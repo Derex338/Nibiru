@@ -1,7 +1,7 @@
 - type: entity
   id: AnimalZzzEffect
   name: Zzz
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Transform
     noRot: true

@@ -1,10 +1,12 @@
 - type: marking
   id: InsectHeadBase
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
+  bodyPart: HeadTop
   forcedColoring: true
-  speciesRestriction: [Insect]
+  groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: base
@@ -234,10 +236,6 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ InsectSerpentide ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 - type: entity
   id: OrganInsectLungs
@@ -283,11 +281,6 @@
     state: stomach
   - type: Metabolizer
     metabolizerTypes: [InsectSerpentide]
-    removeEmpty: true
-    groups:
-    - id: Food
-    - id: Drink
-    - id: Alcohol
   - type: Stomach
     specialDigestible:
       tags:
@@ -512,8 +505,9 @@
     graph: InsectStructures
     node: tile
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: InsectArmor
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -553,8 +547,9 @@
   description: Стена из твёрдого, насекомого воска.
   components:
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: InsectArmor
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Sprite
     sprite: _Adventure/Races/Insect/Structures.rsi
     state: wall1
@@ -634,8 +629,9 @@
     graph: InsectStructures
     node: door
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: InsectArmor
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -814,8 +810,6 @@
     sprite: _Adventure/Races/Insect/Species/parts.rsi
     state: full
   - type: Body
-    prototype: InsectSerpentide
-    requiredLegs: 0
   - type: Speech
     speechSounds: InsectSpeach
     allowedEmotes: ['Chitter', 'Click']

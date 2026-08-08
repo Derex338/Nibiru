@@ -1,0 +1,36 @@
+- type: entity
+  parent: BaseItem
+  id: Mud1
+  name: mud
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Materials/dirt.rsi
+    state: dirt_1
+  - type: Item
+    size: Small
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Mud: 100
+  - type: Stack
+    stackType: Mud
+    count: 1
+
+- type: entity
+  parent: MaterialWoodPlank1
+  id: WoodPlank1
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: SpindleWorkbench
+  id: Workbench
+  categories: [ HideSpawnMenu ]
+
+- type: stack
+  id: Mud
+  name: stack-mud
+  icon: { sprite: _CE/Objects/Materials/dirt.rsi, state: dirt_1 }
+  spawn: Mud1
+  maxCount: 30

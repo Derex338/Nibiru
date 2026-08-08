@@ -12,7 +12,7 @@
   sprite:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
     state: blade
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
   materialCost: 3
   damageBonus: 4.0
@@ -31,7 +31,7 @@
   sprite:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
     state: blade
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
   materialCost: 2
@@ -51,7 +51,7 @@
   sprite:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
     state: blade
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
   materialCost: 3
@@ -71,7 +71,7 @@
   sprite:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
     state: blade
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
   materialCost: 4
   damageBonus: 5.5
@@ -91,7 +91,7 @@
   sprite:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Modules/Sword.rsi
     state: blade
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
   materialCost: 2
@@ -112,7 +112,7 @@
   sprite:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
     state: blade
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Knife
   materialCost: 2
   damageBonus: 2.5

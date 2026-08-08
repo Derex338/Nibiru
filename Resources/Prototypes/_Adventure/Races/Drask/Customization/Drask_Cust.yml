@@ -1,10 +1,12 @@
 - type: marking
   id: FaceDraskBig
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
+  bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Drask]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Drask/Customization/Face.rsi
     state: tentacles_big

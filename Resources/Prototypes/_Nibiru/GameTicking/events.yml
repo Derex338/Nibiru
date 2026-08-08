@@ -21,7 +21,7 @@
   parent: AdminInstantEffectBase
   components:
   - type: WeatherOnTrigger
-    weather: Rain
+    weather: WeatherRain
     duration: 60
 
 - type: entity

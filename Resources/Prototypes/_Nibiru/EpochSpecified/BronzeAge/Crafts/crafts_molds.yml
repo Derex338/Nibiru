@@ -4,570 +4,420 @@
 
 - type: construction
   id: MoldIngot
-  name: Ingot Mold
+  name: construction-recipe-mold-ingot
+
   graph: MoldIngot
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки металлических слитков.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: fill-1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-ingot-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldInlay
-  name: Inlay Mold
+  name: construction-recipe-mold-inlay
+
   graph: MoldInlay
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки бронзовых вставок.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-inlay-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldArrowTip
-  name: Arrow Tip Mold
+  name: construction-recipe-mold-arrow-tip
+
   graph: MoldArrowTip
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки бронзовых наконечников стрел.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: sharp-tip1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-arrow-tip-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldArrowTipArmor
-  name: Armor-Piercing Tip Mold
+  name: construction-recipe-mold-arrow-tip-armor
+
   graph: MoldArrowTipArmor
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки бронебойных наконечников стрел.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: sharp-tip1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-arrow-tip-armor-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldTopHammer
-  name: Hammer Head Mold
+  name: construction-recipe-mold-top-hammer
+
   graph: MoldTopHammer
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки навершия небольшого молотка.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: hammer1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-top-hammer-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldTopMace
-  name: Mace Head Mold
+  name: construction-recipe-mold-top-mace
+
   graph: MoldTopMace
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки навершия боевого молота.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: hammer1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-top-mace-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldTopAxe
-  name: Axe Head Mold
+  name: construction-recipe-mold-top-axe
+
   graph: MoldTopAxe
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки навершия рабочего топора.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: axe1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-top-axe-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldTopBattleAxe
-  name: Battle Axe Head Mold
+  name: construction-recipe-mold-top-battle-axe
+
   graph: MoldTopBattleAxe
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки навершия боевого топора.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: axe1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-top-battle-axe-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldTopSpear
-  name: Spear Tip Mold
+  name: construction-recipe-mold-top-spear
+
   graph: MoldTopSpear
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки наконечника копья.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: sharp-tip1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-top-spear-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldSwordBlade
-  name: Sword Blade Mold
+  name: construction-recipe-mold-sword-blade
+
   graph: MoldSwordBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия меча.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-sword-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldDaggerBlade
-  name: Dagger Blade Mold
+  name: construction-recipe-mold-dagger-blade
+
   graph: MoldDaggerBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия кинжала.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-dagger-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldTrident
-  name: Trident Head Mold
+  name: construction-recipe-mold-trident
+
   graph: MoldTrident
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки навершия трезубца.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: sharp-tip1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-trident-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldShield
-  name: Shield Trim Mold
+  name: construction-recipe-mold-shield
+
   graph: MoldShield
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки элементов щита.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-shield-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldKnifeBlade
-  name: Knife Blade Mold
+  name: construction-recipe-mold-knife-blade
+
   graph: MoldKnifeBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия ножа.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-knife-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldClippers
-  name: Clippers Part Mold
+  name: construction-recipe-mold-clippers
+
   graph: MoldClippers
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки детали секатора.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-clippers-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldHoeBlade
-  name: Hoe Blade Mold
+  name: construction-recipe-mold-hoe-blade
+
   graph: MoldHoeBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия мотыги.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: axe1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-hoe-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldPickaxeBlade
-  name: Pickaxe Tip Mold
+  name: construction-recipe-mold-pickaxe-blade
+
   graph: MoldPickaxeBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки наконечника кирки.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: sharp-tip1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-pickaxe-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldScytheBlade
-  name: Scythe Blade Mold
+  name: construction-recipe-mold-scythe-blade
+
   graph: MoldScytheBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия косы.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-scythe-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldShovel
-  name: Shovel Tip Mold
+  name: construction-recipe-mold-shovel
+
   graph: MoldShovel
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки наконечника лопаты.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-shovel-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldHelmet
-  name: Helmet Mold
+  name: construction-recipe-mold-helmet
+
   graph: MoldHelmet
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки основы шлема.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-helmet-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldChestplate
-  name: Chestplate Mold
+  name: construction-recipe-mold-chestplate
+
   graph: MoldChestplate
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки детали нагрудника.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: fill-1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-chestplate-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldAnvil
-  name: Anvil Mold
+  name: construction-recipe-mold-anvil
+
   graph: MoldAnvil
   startNode: start
   targetNode: fin
   category: Molds
-  description: Огромная каменная форма для отливки наковальни.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: fill-1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-anvil-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldLock
-  name: Lock Mold
+  name: construction-recipe-mold-lock
+
   graph: MoldLock
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки детали замка.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: fill-1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-lock-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldKey
-  name: Key Mold
+  name: construction-recipe-mold-key
+
   graph: MoldKey
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки ключа.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-key-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldLockpick
-  name: Lockpick Mold
+  name: construction-recipe-mold-lockpick
+
   graph: MoldLockpick
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки отмычки.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-lockpick-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldRasp
-  name: Rasp Mold
+  name: construction-recipe-mold-rasp
+
   graph: MoldRasp
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки рашпиля.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-rasp-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldKhapeshBlade
-  name: Khopesh Blade Mold
+  name: construction-recipe-mold-khapesh-blade
+
   graph: MoldKhapeshBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия хопеша.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-khapesh-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldCrown
-  name: Crown Mold
+  name: construction-recipe-mold-crown
+
   graph: MoldCrown
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки короны.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-crown-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldXiphosBlade
-  name: Xiphos Blade Mold
+  name: construction-recipe-mold-xiphos-blade
+
   graph: MoldXiphosBlade
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки лезвия ксифоса.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: blade1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-xiphos-blade-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MoldRod
-  name: Rod Mold
+  name: construction-recipe-mold-rod
+
   graph: MoldRod
   startNode: start
   targetNode: fin
   category: Molds
-  description: Каменная форма для отливки стержня.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
-    layers:
-      - state: base-old
-        color: "#808080"
-      - state: round1
-        color: "#2B2B2B"
+  description: construction-recipe-mold-rod-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench

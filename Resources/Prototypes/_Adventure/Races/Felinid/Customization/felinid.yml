@@ -1,7 +1,7 @@
-﻿- type: marking
+- type: marking
   id: FelinidEars
   bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:

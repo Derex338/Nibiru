@@ -428,8 +428,6 @@
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Resomi
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech

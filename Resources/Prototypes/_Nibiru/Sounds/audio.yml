@@ -104,13 +104,12 @@
 - type: soundCollection
   id: NibiruForestDayLoopCollection
   files:
-    - /Audio/_Nibiru/Ambient/background/Forest_Day1.ogg
     - /Audio/_Nibiru/Ambient/background/Forest1.ogg
 
 - type: soundCollection
   id: NibiruForestNightLoopCollection
   files:
-    - /Audio/_Nibiru/Ambient/background/Forest_Night.ogg
+    - /Audio/_Nibiru/Ambient/background/Forest_Night1.ogg
     - /Audio/_Nibiru/Ambient/background/Forest1.ogg
 
 - type: soundCollection

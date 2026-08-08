@@ -152,9 +152,6 @@
   targetNode: DoubleFirelockGlass
   category: construction-category-structures
   description: Это пожарный шлюз - он закрывается в зонах где сработала воздушная сигнализация. Постарайтесь не быть раздавленным!
-  icon:
-    sprite: _Adventure/Structures/Doors/Double/double_firelock_glass.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

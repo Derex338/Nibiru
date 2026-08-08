@@ -16,7 +16,6 @@
             - material: BronzeInlay
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 10
             - material: WheelBlank
               amount: 1
@@ -41,7 +40,6 @@
             - material: BronzeTopHammerPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 5
             - material: WoodStick
               amount: 1
@@ -64,7 +62,6 @@
             - material: BronzeTopMacePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 10
             - material: WoodStick
               amount: 2
@@ -87,7 +84,6 @@
             - material: BronzeTopAxePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 5
             - material: WoodStick
               amount: 1
@@ -110,7 +106,6 @@
             - material: BronzeTopBattleAxePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 10
             - material: WoodStick
               amount: 2
@@ -133,14 +128,11 @@
             - material: BronzeTopSpearPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 3
             - tool: Hammering
               doAfter: 3
-    - node: fin
-      entity: BronzeSpearBase
     - node: fin
       entity: BronzeSpear
 
@@ -158,7 +150,6 @@
             - material: BronzeSwordBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 12
             - material: WoodStick
               amount: 2
@@ -181,14 +172,11 @@
             - material: BronzeTridentPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 15
             - material: WoodStick
               amount: 3
             - tool: Hammering
               doAfter: 4
-    - node: fin
-      entity: BronzeTridentBase
     - node: fin
       entity: BronzeTrident
 
@@ -208,7 +196,6 @@
             - material: BronzeTopSpearPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 20
             - material: WoodStick
               amount: 4
@@ -233,7 +220,6 @@
             - material: BronzePickaxeBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 2
@@ -258,7 +244,6 @@
             - material: BronzeShovelPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 2
@@ -283,7 +268,6 @@
             - material: BronzeScytheBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 3
@@ -308,7 +292,6 @@
             - material: BronzeHoeBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 2
@@ -333,7 +316,6 @@
             - material: BronzeKnifeBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 2
@@ -358,7 +340,6 @@
             - material: BronzeClippersPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 8
             - material: WoodStick
               amount: 1
@@ -402,7 +383,6 @@
             - material: BronzeXiphosBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 15
             - material: WoodStick
               amount: 1
@@ -427,7 +407,6 @@
             - material: BronzeDaggerBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 10
             - material: Leather
               amount: 1
@@ -452,7 +431,6 @@
             - material: BronzeKhapeshBladePiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 20
             - material: Leather
               amount: 1
@@ -538,7 +516,6 @@
             - material: BronzeTopSpearPiece
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 5
             - material: WoodStick
               amount: 1
@@ -563,7 +540,6 @@
             - material: BronzeArrowTip
               amount: 1
             - tool: Hammering
-              minTemperature: 700
               doAfter: 5
             - tool: Hammering
               doAfter: 3

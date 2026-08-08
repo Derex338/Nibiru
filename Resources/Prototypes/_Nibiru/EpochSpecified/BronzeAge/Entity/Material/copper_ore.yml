@@ -25,7 +25,8 @@
 
 - type: stack
   id: CopperOre
-  name: медная руда
+  name: stack-copper-ore
+
   spawn: CopperOre
   maxCount: 30
 

@@ -40,28 +40,26 @@
 
 - type: construction
   id: WoodenShield
-  name: Wooden Shield
+  name: construction-recipe-wooden-shield
+
   graph: WoodenShield
   startNode: start
   targetNode: fin
   category: Weapons
-  description: Просто кусок дерева с рукоятью. Каменная эра.
-  icon:
-    sprite: Objects/Weapons/Melee/shields.rsi
-    state: buckler-icon
+  description: construction-recipe-wooden-shield-desc
+
   objectType: Item
 
 - type: construction
   id: WickerShield
-  name: Wicker Shield
+  name: construction-recipe-wicker-shield
+
   graph: WickerShield
   startNode: start
   targetNode: fin
   category: Weapons
-  description: Лёгкий щит из прутьев. Каменная эра.
-  icon:
-    sprite: Objects/Weapons/Melee/web-shield.rsi
-    state: icon
+  description: construction-recipe-wicker-shield-desc
+
   objectType: Item
 
 - type: construction
@@ -74,37 +72,36 @@
 
 - type: construction
   id: PanFlute
-  name: Pan Flute
+  name: construction-recipe-pan-flute
+
   graph: PanFlute
   startNode: start
   targetNode: fin
   category: construction-category-utilities
-  description: Музыкальный инструмент из палок.
-  icon:
-    sprite: Objects/Fun/Instruments/panflute.rsi
-    state: icon
+  description: construction-recipe-pan-flute-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: Ocarina
-  name: Ocarina
+  name: construction-recipe-ocarina
+
   graph: Ocarina
   startNode: start
   targetNode: fin
   category: construction-category-utilities
-  description: Простой духовой инструмент.
-  icon:
-    sprite: Objects/Fun/Instruments/ocarina.rsi
-    state: icon
+  description: construction-recipe-ocarina-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: FlintAndSteel
-  name: Fire Striker
+  name: construction-recipe-flint-and-steel
+
   graph: FlintAndSteel
   startNode: start
   targetNode: fin
@@ -117,15 +114,14 @@
 
 - type: construction
   id: WoodenSign
-  name: Wooden Sign (Left)
+  name: construction-recipe-wooden-sign
+
   graph: WoodenSign
   startNode: start
   targetNode: fin
   category: construction-category-furniture
-  description: Указывает куда-то влево.
-  icon:
-    sprite: Objects/Decoration/mines.rsi
-    state: sign_left
+  description: construction-recipe-wooden-sign-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -134,15 +130,14 @@
 
 - type: construction
   id: WoodenSignRight
-  name: Wooden Sign (Right)
+  name: construction-recipe-wooden-sign-right
+
   graph: WoodenSignRight
   startNode: start
   targetNode: fin
   category: construction-category-furniture
-  description: Указывает куда-то вправо.
-  icon:
-    sprite: Objects/Decoration/mines.rsi
-    state: sign_right
+  description: construction-recipe-wooden-sign-right-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -151,15 +146,14 @@
 
 - type: construction
   id: WoodenSupport
-  name: Wooden Support
+  name: construction-recipe-wooden-support
+
   graph: WoodenSupport
   startNode: start
   targetNode: fin
   category: construction-category-structures
-  description: Помогает своду шахты не упасть вам на голову.
-  icon:
-    sprite: Objects/Decoration/mines.rsi
-    state: support
+  description: construction-recipe-wooden-support-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -168,15 +162,14 @@
 
 - type: construction
   id: WoodenSupportBeam
-  name: Wooden Beams
+  name: construction-recipe-wooden-support-beam
+
   graph: WoodenSupportBeam
   startNode: start
   targetNode: fin
   category: construction-category-structures
-  description: Укрепление для потолка шахты.
-  icon:
-    sprite: Objects/Decoration/mines.rsi
-    state: support_beams
+  description: construction-recipe-wooden-support-beam-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -185,15 +178,14 @@
 
 - type: construction
   id: WoodenSupportWall
-  name: Wooden Support Wall
+  name: construction-recipe-wooden-support-wall
+
   graph: WoodenSupportWall
   startNode: start
   targetNode: fin
   category: construction-category-structures
-  description: Старая стена, удерживающая породу.
-  icon:
-    sprite: Objects/Decoration/mines.rsi
-    state: support_wall
+  description: construction-recipe-wooden-support-wall-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -206,33 +198,32 @@
 
 - type: construction
   id: Woodblock
-  name: Woodblock
+  name: construction-recipe-woodblock
+
   graph: Woodblock
   startNode: start
   targetNode: fin
   category: construction-category-utilities
-  description: Простой перкуссионный инструмент.
-  icon:
-    sprite: Objects/Fun/Instruments/woodblock.rsi
-    state: icon
+  description: construction-recipe-woodblock-desc
+
   objectType: Item
 
 - type: construction
   id: BirdWhistle
-  name: Bird Whistle
+  name: construction-recipe-bird-whistle
+
   graph: BirdWhistle
   startNode: start
   targetNode: fin
   category: construction-category-utilities
-  description: Глиняная свистулька в форме птицы.
-  icon:
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
-    state: birdtoy
+  description: construction-recipe-bird-whistle-desc
+
   objectType: Item
 
 - type: construction
   id: WoodenPlate
-  name: Wooden Plate
+  name: construction-recipe-wooden-plate
+
   graph: WoodenPlate
   startNode: start
   targetNode: fin
@@ -243,7 +234,8 @@
 
 - type: construction
   id: CEWoodenBowl
-  name: Wooden Bowl
+  name: construction-recipe-cewooden-bowl
+
   graph: CEWoodenBowl
   startNode: start
   targetNode: fin
@@ -254,7 +246,8 @@
 
 - type: construction
   id: Lyre
-  name: Lyre
+  name: construction-recipe-lyre
+
   graph: Lyre
   startNode: start
   targetNode: fin
@@ -265,7 +258,8 @@
 
 - type: construction
   id: Lute
-  name: Lute
+  name: construction-recipe-lute
+
   graph: Lute
   startNode: start
   targetNode: fin
@@ -276,7 +270,8 @@
 
 - type: construction
   id: CEFlute
-  name: Stick Flute
+  name: construction-recipe-ceflute
+
   graph: CEFlute
   startNode: start
   targetNode: fin
@@ -291,7 +286,8 @@
 
 - type: construction
   id: BandageCloth
-  name: Bandage
+  name: construction-recipe-bandage-cloth
+
   graph: BandageCloth
   startNode: start
   targetNode: fin
@@ -300,7 +296,8 @@
 
 - type: construction
   id: AloeCream
-  name: Aloe Cream
+  name: construction-recipe-aloe-cream
+
   graph: AloeCream
   startNode: start
   targetNode: fin
@@ -313,15 +310,14 @@
 
 - type: construction
   id: Well
-  name: Well
+  name: construction-recipe-well
+
   graph: Well
   startNode: start
   targetNode: fin
   category: construction-category-structures
-  description: Неглубокий колодец.
-  icon:
-    sprite: _Nibiru/EpochSpecified/StoneAge/Structures/well.rsi
-    state: icon
+  description: construction-recipe-well-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

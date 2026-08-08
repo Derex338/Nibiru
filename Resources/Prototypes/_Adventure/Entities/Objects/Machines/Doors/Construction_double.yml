@@ -142,9 +142,6 @@
   targetNode: glassAirlockDouble
   category: construction-category-structures
   description: Он открывается, он закрывается, и он может вас раздавить.
-  icon:
-    sprite: _Adventure/Structures/Doors/Double/double_glass.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

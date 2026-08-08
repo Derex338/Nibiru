@@ -10,9 +10,6 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-  cERestrictions:
-    - !type:NeedPrerequisite
-      prerequisite: BloodEssenceCreation
 
 - type: construction
   hide: false
@@ -26,9 +23,6 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-  cERestrictions:
-    - !type:NeedPrerequisite
-      prerequisite: BloodEssenceCreation
 
 - type: construction
   hide: false
@@ -42,6 +36,3 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-  cERestrictions:
-    - !type:NeedPrerequisite
-      prerequisite: BloodEssenceCreation

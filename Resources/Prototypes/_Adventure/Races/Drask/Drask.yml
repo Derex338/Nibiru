@@ -1,10 +1,12 @@
 - type: marking
   id: FaceDraskBase
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
+  bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Drask]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Drask/Species/parts.rsi
     state: Face
@@ -142,7 +144,7 @@
   flavor: medicine
   color: "#0091ff"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.50
       effects:
         - !type:HealthChange
@@ -181,8 +183,14 @@
         reagents:
         - ReagentId: CryoxadoneDrask
           Quantity: 20
+  - type: Solution
+    id: bloodstream
+    solution:
+      maxVol: 100
+      reagents:
+      - ReagentId: CryoxadoneDrask
+        Quantity: 20
   - type: SolutionRegeneration
-    solution: bloodstream
     generated:
       reagents:
       - ReagentId: CryoxadoneDrask
@@ -242,11 +250,10 @@
       295: 0.9
       294: 1.0
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: DraskCryo
+  - type: Injurable
+    damageContainer: Biological
   - type: Body
-    prototype: Drask
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -433,10 +440,6 @@
     maxReagents: 2
     metabolizerTypes:
     - Drask
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 - type: entity
   id: OrganDraskLungs
@@ -462,9 +465,6 @@
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [Drask]
-    groups:
-    - id: Food
-    - id: Drink
 
 - type: entity
   id: OrganDraskLiver
@@ -476,9 +476,6 @@
     state: liver
   - type: Metabolizer
     metabolizerTypes: [Drask]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.8
 
 - type: entity
   id: OrganDraskKidneys

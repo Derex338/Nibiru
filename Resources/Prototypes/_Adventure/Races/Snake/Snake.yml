@@ -2,9 +2,11 @@
   id: SnakeHeadBase
   bodyPart: HeadSide
   #markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Zerah]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Snake/Species/parts.rsi
     state: Head
@@ -122,7 +124,7 @@
   physicalDesc: токсичное
   color: "#fafa96"
   metabolisms:
-    Narcotic:
+    Bloodstream:
       metabolismRate: 0.50
       effects:
       - !type:Emote
@@ -327,10 +329,6 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ Zerah ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 - type: entity
   id: OrganZerahLungs
@@ -346,13 +344,8 @@
   - type: Lung
     alert: LowNitrogen
   - type: Metabolizer
-    removeEmpty: true
     solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Slime ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -554,8 +547,6 @@
     sprite: _Adventure/Races/Snake/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Zerah
-    requiredLegs: 0
   - type: Hunger
   - type: Thirst
   - type: Speech

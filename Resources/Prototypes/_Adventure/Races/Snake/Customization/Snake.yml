@@ -1,10 +1,12 @@
 - type: marking
   id: SnakeTailsBig
   bodyPart: Tail
-  markingCategory: Tail
-  followSkinColor: true
+  bodyPart: Tail
   forcedColoring: true
   groupWhitelist: [Zerah]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Snake/Customization/Tails48.rsi
     state: Snake_tail_big

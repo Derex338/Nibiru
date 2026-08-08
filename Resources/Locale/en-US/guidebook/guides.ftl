@@ -206,3 +206,36 @@ guide-entry-rules-ban-durations = Ban Durations
 
 guide-entry-writing = Writing
 guide-entry-glossary = Glossary
+
+guide-entry-ce-welcome = Welcome to Nibiru
+guide-entry-ce-farming = Farming
+guide-entry-ce-cooking = Food & Cooking
+guide-entry-ce-cooking-meals = Dishes
+guide-entry-ce-cooking-soups = Soups
+guide-entry-ce-mining = Mining
+guide-entry-ce-imperial-laws = Imperial Laws
+guide-entry-ce-crime-light = Minor Violations
+guide-entry-ce-crime-light-medium = Minor-Medium Violations
+guide-entry-ce-crime-medium = Medium Violations
+guide-entry-ce-crime-medium-hard = Medium-Severe Violations
+guide-entry-ce-crime-hard = Severe Violations
+guide-entry-ce-species = Playable Species
+guide-entry-ce-species-human = Humans
+guide-entry-ce-species-elf = Elves
+guide-entry-ce-species-carcat = Carcats
+guide-entry-ce-species-carrin = Carrins
+guide-entry-ce-species-goblin = Goblins
+guide-entry-ce-species-silva = Silvas
+guide-entry-ce-species-tiefling = Tieflings
+guide-entry-nibiru-materials = Materials
+
+guide-entry-nibiru-materials-stone = Stone
+guide-entry-nibiru-materials-herbs = Bushes
+guide-entry-nibiru-materials-wood = Wood
+guide-entry-nibiru-materials-veins = Animal Butchering
+guide-entry-nibiru-mechanics = Mechanics
+guide-entry-nibiru-mechanics-factions = Factions
+guide-entry-nibiru-mechanics-fire = Fire
+guide-entry-nibiru-mechanics-smelting = Smelting
+guide-entry-nibiru-rules = Server Rules
+

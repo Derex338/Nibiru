@@ -178,7 +178,6 @@
     damage:
       types:
         Piercing: 5
-    attackRate: 1,5
   - type: Construction
     graph: BronzeSpear
     node: fin

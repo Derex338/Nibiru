@@ -40,7 +40,6 @@
   - type: PointsFromKill
     points: 50
   - type: Body
-    prototype: NibiruAnimal
   - type: ToolRefinable
     refineResult:
     - id: HideBig

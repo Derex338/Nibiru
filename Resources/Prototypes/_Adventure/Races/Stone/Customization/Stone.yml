@@ -1,10 +1,12 @@
 - type: marking
   id: StoneBase
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
+  bodyPart: Tail
   groupWhitelist: [Stone]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Stone/Species/parts.rsi
     state: stone

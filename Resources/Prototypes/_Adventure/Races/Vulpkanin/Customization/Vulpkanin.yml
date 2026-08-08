@@ -1,9 +1,8 @@
-﻿#РЈС€Рё
+#РЈС€Рё
 - type: marking
   id: EarClose
-  name: Close-set
   bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -62,9 +61,8 @@
 #РҐРІРѕСЃС‚С‹
 - type: marking
   id: TailDocked
-  name: Cropped
   bodyPart: Tail
-  markingCategory: Tail
+  bodyPart: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi

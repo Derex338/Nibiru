@@ -174,7 +174,8 @@
 
 - type: stack
   id: acorn
-  name: жёлудь
+  name: stack-acorn
+
   icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
   spawn: Acorn1
   maxCount: 30

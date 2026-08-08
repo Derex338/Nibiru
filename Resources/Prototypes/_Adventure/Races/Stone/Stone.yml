@@ -133,8 +133,9 @@
   parent: OrganHumanBrain
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: AdventureStone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -172,8 +173,9 @@
   abstract: true
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: AdventureStone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -510,8 +512,6 @@
     sprite: _Adventure/Races/Stone/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Stone
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech
@@ -524,8 +524,9 @@
   - type: BodyEmotes
     soundsId: StoneBodyEmotes
   - type: Damageable
-    damageContainer: Stone
     damageModifierSet: AdventureStone
+  - type: Injurable
+    damageContainer: Stone
   - type: MeleeWeapon
     soundHit:
       collection: Punch

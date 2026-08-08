@@ -4,139 +4,118 @@
 
 - type: construction
   id: BannerNanotrasen
-  name: Nanotrasen Banner
+  name: construction-recipe-banner-nanotrasen
+
   graph: BannerNanotrasen
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner
   objectType: Structure
 
 - type: construction
   id: BannerCargo
-  name: Cargo Banner
+  name: construction-recipe-banner-cargo
+
   graph: BannerCargo
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_cargo
   objectType: Structure
 
 - type: construction
   id: BannerEngineering
-  name: Engineering Banner
+  name: construction-recipe-banner-engineering
+
   graph: BannerEngineering
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_engineering
   objectType: Structure
 
 - type: construction
   id: BannerMedical
-  name: Medical Banner
+  name: construction-recipe-banner-medical
+
   graph: BannerMedical
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_medical
   objectType: Structure
 
 - type: construction
   id: BannerRevolution
-  name: Revolution Banner
+  name: construction-recipe-banner-revolution
+
   graph: BannerRevolution
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_revolution
   objectType: Structure
 
 - type: construction
   id: BannerSyndicate
-  name: Syndicate Banner
+  name: construction-recipe-banner-syndicate
+
   graph: BannerSyndicate
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_syndicate
   objectType: Structure
 
 - type: construction
   id: BannerScience
-  name: Science Banner
+  name: construction-recipe-banner-science
+
   graph: BannerScience
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_science
   objectType: Structure
 
 - type: construction
   id: BannerBlue
-  name: Blue Banner
+  name: construction-recipe-banner-blue
+
   graph: BannerBlue
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-blue
   objectType: Structure
 
 - type: construction
   id: BannerRed
-  name: Red Banner
+  name: construction-recipe-banner-red
+
   graph: BannerRed
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
   objectType: Structure
 
 - type: construction
   id: BannerYellow
-  name: Yellow Banner
+  name: construction-recipe-banner-yellow
+
   graph: BannerYellow
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-yellow
   objectType: Structure
 
 - type: construction
   id: BannerGreen
-  name: Green Banner
+  name: construction-recipe-banner-green
+
   graph: BannerGreen
   startNode: start
   targetNode: fin
   category: Decorations
-  icon:
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-green
   objectType: Structure
 
 - type: construction
   id: BronzeBell
-  name: Bronze Bell
+  name: construction-recipe-bronze-bell
+
   graph: BronzeBell
   startNode: start
   targetNode: fin
@@ -145,33 +124,32 @@
 
 - type: construction
   id: Harp
-  name: Harp
+  name: construction-recipe-harp
+
   graph: Harp
   startNode: start
   targetNode: fin
   category: construction-category-utilities
-  description: Изящный струнный инструмент. (Использует звуки гарфона).
-  icon:
-    sprite: Objects/Fun/Instruments/structureinstruments.rsi
-    state: harp
+  description: construction-recipe-harp-desc
+
   objectType: Structure
 
 - type: construction
   id: Flute
-  name: Flute
+  name: construction-recipe-flute
+
   graph: Flute
   startNode: start
   targetNode: fin
   category: construction-category-utilities
-  description: Поперечная флейта для утонченных мелодий.
-  icon:
-    sprite: Objects/Fun/Instruments/flute.rsi
-    state: icon
+  description: construction-recipe-flute-desc
+
   objectType: Item
 
 - type: construction
   id: AngelStatue
-  name: Angel Statue
+  name: construction-recipe-angel-statue
+
   graph: AngelStatue
   startNode: start
   targetNode: fin
@@ -180,7 +158,8 @@
 
 - type: construction
   id: Bell
-  name: Bell
+  name: construction-recipe-bell
+
   graph: Bell
   startNode: start
   targetNode: fin
@@ -191,7 +170,8 @@
 
 - type: construction
   id: FedoraBlack
-  name: Black Fedora
+  name: construction-recipe-fedora-black
+
   graph: FedoraBlack
   startNode: start
   targetNode: fin
@@ -202,7 +182,8 @@
 
 - type: construction
   id: FedoraBlue
-  name: Blue Fedora
+  name: construction-recipe-fedora-blue
+
   graph: FedoraBlue
   startNode: start
   targetNode: fin
@@ -213,7 +194,8 @@
 
 - type: construction
   id: FedoraGreen
-  name: Green Fedora
+  name: construction-recipe-fedora-green
+
   graph: FedoraGreen
   startNode: start
   targetNode: fin
@@ -224,7 +206,8 @@
 
 - type: construction
   id: FedoraBrown
-  name: Brown Fedora
+  name: construction-recipe-fedora-brown
+
   graph: FedoraBrown
   startNode: start
   targetNode: fin
@@ -235,7 +218,8 @@
 
 - type: construction
   id: FedoraRed
-  name: Red Fedora
+  name: construction-recipe-fedora-red
+
   graph: FedoraRed
   startNode: start
   targetNode: fin
@@ -246,7 +230,8 @@
 
 - type: construction
   id: BlacksmithGloves
-  name: Blacksmith Gloves
+  name: construction-recipe-blacksmith-gloves
+
   graph: BlacksmithGloves
   startNode: start
   targetNode: fin
@@ -257,7 +242,8 @@
 
 - type: construction
   id: BlueCarpet
-  name: Blue Carpet
+  name: construction-recipe-blue-carpet
+
   graph: BlueCarpet
   startNode: start
   targetNode: fin
@@ -268,7 +254,8 @@
 
 - type: construction
   id: RedCarpet
-  name: Red Carpet
+  name: construction-recipe-red-carpet
+
   graph: RedCarpet
   startNode: start
   targetNode: fin
@@ -279,7 +266,8 @@
 
 - type: construction
   id: PurpleCarpet
-  name: Purple Carpet
+  name: construction-recipe-purple-carpet
+
   graph: PurpleCarpet
   startNode: start
   targetNode: fin
@@ -290,7 +278,8 @@
 
 - type: construction
   id: BlackCarpet
-  name: Black Carpet
+  name: construction-recipe-black-carpet
+
   graph: BlackCarpet
   startNode: start
   targetNode: fin
@@ -301,7 +290,8 @@
 
 - type: construction
   id: EyePatch
-  name: Eye Patch
+  name: construction-recipe-eye-patch
+
   graph: EyePatch
   startNode: start
   targetNode: fin
@@ -312,7 +302,8 @@
 
 - type: construction
   id: FloorTorch
-  name: Floor Torch
+  name: construction-recipe-floor-torch
+
   graph: FloorTorch
   startNode: start
   targetNode: fin
@@ -322,7 +313,8 @@
 
 - type: construction
   id: WallTorch
-  name: Wall Torch
+  name: construction-recipe-wall-torch
+
   graph: WallTorch
   startNode: start
   targetNode: fin
@@ -332,7 +324,8 @@
 
 - type: construction
   id: GlovesJagermeister
-  name: Jagermeister Gloves
+  name: construction-recipe-gloves-jagermeister
+
   graph: GlovesJagermeister
   startNode: start
   targetNode: fin
@@ -344,7 +337,8 @@
 
 - type: construction
   id: CookingPot
-  name: Cooking Pot
+  name: construction-recipe-cooking-pot
+
   graph: CookingPot
   startNode: start
   targetNode: fin
@@ -355,7 +349,8 @@
 
 - type: construction
   id: FryingPan
-  name: Frying Pan
+  name: construction-recipe-frying-pan
+
   graph: FryingPan
   startNode: start
   targetNode: fin
@@ -366,7 +361,8 @@
 
 - type: construction
   id: TriangularLeatherHat
-  name: Triangular Leather Hat
+  name: construction-recipe-triangular-leather-hat
+
   graph: TriangularLeatherHat
   startNode: start
   targetNode: fin
@@ -378,7 +374,8 @@
 
 - type: construction
   id: StoneCrucible
-  name: Stone Crucible
+  name: construction-recipe-stone-crucible
+
   graph: StoneCrucible
   startNode: start
   targetNode: fin

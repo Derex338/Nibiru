@@ -9,7 +9,7 @@
     Простая рукоять для одной руки. Баланс между контролем и скоростью.
     Подходит как начинающим, так и опытным бойцам.
   partType: Handle
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
     - Axe
@@ -25,7 +25,7 @@
     Рукоять полуторного меча позволяет использовать хват одной или двух рук.
     Повышает урон двуручным хватом и улучшает баланс.
   partType: Handle
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
   materialCost: 2
   damageBonus: 1.5
@@ -40,7 +40,7 @@
     Рукоять обёрнута кожаными полосами — улучшенный хват в любых условиях.
     Немного быстрее стандартной благодаря лучшему контролю.
   partType: Handle
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
     - Axe
@@ -55,7 +55,7 @@
     Рукоять из кости — лёгкая и удобная в примитивном вооружении.
     Символ охотника или воина из диких земель.
   partType: Handle
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
     - Axe
@@ -74,7 +74,7 @@
     Классическая крестообразная гарда защищает руку от соскальзывания
     вражеского клинка. Небольшой бонус к блокированию.
   partType: Guard
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
   materialCost: 1
   blockBonus: 0.15
@@ -87,7 +87,7 @@
     Ажурная корзинчатая гарда полностью прикрывает руку.
     Значительный бонус к защите, но добавляет вес.
   partType: Guard
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
   materialCost: 2
   blockBonus: 0.3
@@ -101,7 +101,7 @@
     Полное отсутствие гарды — максимальная скорость и минимальный вес.
     Рискованный выбор для опытных фехтовальщиков.
   partType: Guard
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Knife
   materialCost: 0
@@ -120,7 +120,7 @@
     Стандартное круглое навершие. Балансирует меч и может использоваться
     для удара в ближнем бою.
   partType: Pommel
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Axe
   materialCost: 1
@@ -134,7 +134,7 @@
     Навершие со стальным шипом — смертельно при ударе в упор.
     Значительный бонус к урону тычком.
   partType: Pommel
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
   materialCost: 1
   damageBonus: 1.5
@@ -148,7 +148,7 @@
     Плоское дисковое навершие улучшает баланс меча — удары быстрее,
     хотя урон немного ниже.
   partType: Pommel
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Sword
     - Axe
   materialCost: 1
@@ -166,7 +166,7 @@
     Большое широкое полотно топора — максимальная рубящая поверхность.
     Медленный, но страшный удар.
   partType: Head
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Axe
   materialCost: 3
   damageBonus: 7.0
@@ -181,7 +181,7 @@
     Узкое полотно отличается высокой концентрацией силы удара.
     Хорошее пробитие при умеренном размере.
   partType: Head
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Axe
   materialCost: 2
   damageBonus: 4.5
@@ -196,7 +196,7 @@
     Широкий листовидный наконечник копья — большая площадь раны.
     Балансирует между уроном и пробитием.
   partType: Head
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Spear
   materialCost: 2
   damageBonus: 3.5
@@ -211,7 +211,7 @@
     Тонкий длинный наконечник пробивает броню словно игла.
     Минимальный урон, зато максимальное бронепробитие.
   partType: Head
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Spear
   materialCost: 2
   damageBonus: 1.5
@@ -228,7 +228,7 @@
   description: >
     Классическое древко из твёрдого дерева. Лёгкое и достаточно прочное.
   partType: Shaft
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Spear
   materialCost: 2
   reachBonus: 0.8
@@ -242,7 +242,7 @@
     Удлинённое древко даёт значительное преимущество в дальности,
     но существенно замедляет смену позиции.
   partType: Shaft
-  compatiblemodularItemTypes:
+  compatibleItemTypes:
     - Spear
   materialCost: 3
   reachBonus: 1.4

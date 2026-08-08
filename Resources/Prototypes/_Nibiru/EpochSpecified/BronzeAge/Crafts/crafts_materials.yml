@@ -4,52 +4,50 @@
 
 - type: construction
   id: WheelBlank
-  name: Wheel Blank
+  name: construction-recipe-wheel-blank
+
   graph: WheelBlank
   startNode: start
   targetNode: fin
   category: Materials
-  description: Круглая оправа для будущего колеса или щита.
-  icon:
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+  description: construction-recipe-wheel-blank-desc
+
   objectType: Item
   entitysToShowRecipe:
     - SawmillWorkbench
 
 - type: construction
   id: WoodenWheel
-  name: Wooden Wheel
+  name: construction-recipe-wooden-wheel
+
   graph: WoodenWheel
   startNode: start
   targetNode: fin
   category: Materials
-  description: Полностью собранное деревянное колесо.
-  icon:
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+  description: construction-recipe-wooden-wheel-desc
+
   objectType: Item
   entitysToShowRecipe:
     - SawmillWorkbench
 
 - type: construction
   id: BronzeInlay
-  name: Bronze Inlay
+  name: construction-recipe-bronze-inlay
+
   graph: BronzeInlay
   startNode: start
   targetNode: fin
   category: Materials
-  description: Декоративная и укрепляющая вставка из бронзы.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
+  description: construction-recipe-bronze-inlay-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: PapyrusLeather
-  name: Papyrus
+  name: construction-recipe-papyrus-leather
+
   graph: PapyrusLeather
   startNode: start
   targetNode: fin
@@ -58,7 +56,8 @@
 
 - type: construction
   id: PlanetMap
-  name: Planet Map
+  name: construction-recipe-planet-map
+
   graph: PlanetMap
   startNode: start
   targetNode: fin
@@ -67,75 +66,70 @@
 
 - type: construction
   id: BronzeXiphosBladePiece
-  name: Xiphos Blade Piece
+  name: construction-recipe-bronze-xiphos-blade-piece
+
   graph: BronzeXiphosBladePiece
   startNode: start
   targetNode: fin
   category: Materials
-  description: Бронзовое лезвие ксифоса, готовое к обработке.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
+  description: construction-recipe-bronze-xiphos-blade-piece-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: CoinBronze
-  name: Bronze Coin
+  name: construction-recipe-coin-bronze
+
   graph: CoinBronze
   startNode: start
   targetNode: fin
   category: Materials
-  description: Небольшая монета из бронзы.
-  icon:
-    sprite: Objects/Misc/coins.rsi
-    state: coin_iron
+  description: construction-recipe-coin-bronze-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: CoinSilver
-  name: Silver Coin
+  name: construction-recipe-coin-silver
+
   graph: CoinSilver
   startNode: start
   targetNode: fin
   category: Materials
-  description: Монета из серебра.
-  icon:
-    sprite: Objects/Misc/coins.rsi
-    state: coin_silver
+  description: construction-recipe-coin-silver-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: CoinGold
-  name: Gold Coin
+  name: construction-recipe-coin-gold
+
   graph: CoinGold
   startNode: start
   targetNode: fin
   category: Materials
-  description: Блестящая золотая монета.
-  icon:
-    sprite: Objects/Misc/coins.rsi
-    state: coin_gold
+  description: construction-recipe-coin-gold-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeChainmailPiece
-  name: Bronze Ring
+  name: construction-recipe-bronze-chainmail-piece
+
   graph: BronzeChainmailPiece
   startNode: start
   targetNode: fin
   category: Materials
-  description: Бронзовое кольцо для изготовления кольчуги.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
-    state: Bronze_1
+  description: construction-recipe-bronze-chainmail-piece-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench

@@ -1,0 +1,245 @@
+- type: entity
+  parent: BaseStructure
+  id: CEMeltingFurnace
+  name: melting furnace
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CERecycler
+  name: recycler
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CEDrill
+  name: drill
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CECharger
+  name: charger
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CESalaryPlatform
+  name: salary platform
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CEHeater
+  name: heater
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CEDistributionUnitBasic
+  name: distribution unit
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CEAccumulatorVesselEmpty
+  name: accumulator vessel
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CEPipeTerminalDebug
+  name: pipe terminal
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CEGeneratorMagicCapacitor
+  name: magic capacitor
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: BaseStructure
+  id: CETradingPlatformEmpireGuard
+  name: trading platform
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/vending_machines.rsi
+    state: broken
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformBlackMarket
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformHomeDecor
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformTailors
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformHorticulture
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformDwarfMiners
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformAlcohol
+
+- type: entity
+  parent: CETradingPlatformEmpireGuard
+  id: CETradingPlatformApothecariesGuild
+
+- type: entity
+  parent: BaseItem
+  id: CEManaTransferGlove
+  name: mana transfer glove
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/latex.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots:
+    - gloves
+
+- type: entity
+  parent: BaseStructure
+  id: CEMannequinSnowman
+  name: snowman
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/statues.rsi
+    state: venus_blue
+
+- type: entity
+  parent: BaseStructure
+  id: CEVampireStoneAltar
+  name: vampire stone altar
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: optable
+
+- type: entity
+  parent: BaseStructure
+  id: CEVampireClanHeartFrame
+  name: vampire clan heart frame
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: optable
+
+- type: entity
+  parent: BaseStructure
+  id: CEVampireClanHeart
+  name: vampire clan heart
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: optable
+
+- type: entity
+  parent: BaseStructure
+  id: CEWorkbenchVampire
+  name: vampire workbench
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
+    state: filler
+
+- type: entity
+  parent: BaseStructure
+  id: CEConveyorBelt
+  name: conveyor belt
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/conveyor.rsi
+    state: conveyor_loose
+
+- type: entity
+  parent: BaseStructure
+  id: CEConveyorLadder
+  name: conveyor ladder
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_steel
+
+- type: entity
+  parent: CEConveyorLadder
+  id: CEConveyorLadderReverse

@@ -2,7 +2,7 @@
 - type: marking
   id: HumanHairCombedShaved
   bodyPart: Hair
-  markingCategory: Hair
+  bodyPart: Hair
   sprites:
     - sprite: _Adventure/Races/Human_hair.rsi
       state: combed
@@ -91,7 +91,7 @@
 - type: marking
   id: HumanFacialHairDED
   bodyPart: FacialHair
-  markingCategory: FacialHair
+  bodyPart: FacialHair
   sprites:
     - sprite: _Adventure/Races/Human_hair.rsi
       state: ded
@@ -164,7 +164,7 @@
 - type: marking
   id: BodyHairM
   bodyPart: Chest
-  markingCategory: Overlay
+  bodyPart: Overlay
   groupWhitelist: [Human, Dwarf, Felinid]
   coloring:
     default:

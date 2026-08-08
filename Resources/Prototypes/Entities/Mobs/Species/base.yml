@@ -130,8 +130,6 @@
     - RadiationProtection
     - Adrenaline
   - type: Body
-    prototype: Human
-    requiredLegs: 2
   - type: Identity
   - type: IdExaminable
   - type: Hands
@@ -352,8 +350,6 @@
     - map: [ "pocket2" ]
   - type: Appearance
   - type: Body
-    prototype: Human
-    requiredLegs: 2
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key: # sure, this can go here too

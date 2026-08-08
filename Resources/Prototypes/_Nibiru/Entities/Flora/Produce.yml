@@ -86,7 +86,8 @@
 
 - type: stack
   id: CEFoodAloe
-  name: aloe
+  name: stack-cefood-aloe
+
   icon: { sprite: _Nibiru/Flora/Plants/aloe.rsi, state: produce }
   spawn: CEFoodAloe
   maxCount: 30

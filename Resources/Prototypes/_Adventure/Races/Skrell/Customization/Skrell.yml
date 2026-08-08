@@ -2,10 +2,12 @@
 - type: marking
   id: SkrellTailsBig
   bodyPart: Tail
-  markingCategory: Tail
-  followSkinColor: true
+  bodyPart: Tail
   forcedColoring: true
   groupWhitelist: [Skrell]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Skrell/Customization/Tails.rsi
     state: Tails_Big

@@ -159,9 +159,6 @@
   id: TailThumpCollection
   files:
   - /Audio/Voice/Reptilian/reptilian_tailthump.ogg
-  - /Audio/Voice/Reptilian/reptilian_tailthump2.ogg
-  - /Audio/Voice/Reptilian/reptilian_tailthump3.ogg
-  - /Audio/Voice/Reptilian/reptilian_tailthump4.ogg
 
 # шипеть
 - type: emote

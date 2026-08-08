@@ -11,11 +11,10 @@
     sprite: Mobs/Species/Gingerbread/parts.rsi
     state: full
   - type: Body
-    prototype: Gingerbread
-    requiredLegs: 2
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Gingerbread
+  - type: Injurable
+    damageContainer: Biological
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

@@ -1,10 +1,12 @@
 - type: marking
   id: PigNoseBase
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
+  bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [PigMan]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: nose_base
@@ -161,10 +163,6 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ PigMan ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 #Части Троттина
 
@@ -416,7 +414,6 @@
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: full
   - type: Body
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech

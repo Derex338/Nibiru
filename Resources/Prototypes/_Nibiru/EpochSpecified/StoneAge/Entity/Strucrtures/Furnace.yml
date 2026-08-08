@@ -35,8 +35,6 @@
     containerId: ore_container
     solutionContainerId: solution_container
     maxOreCapacity: 10
-    heatingRate: 80 # Быстро нагревается
-    coolingRate: 20 # Медленно остывает
     solution: smelted_metal
   #- type: SolutionContainerManager
   #  solutions:
@@ -67,9 +65,10 @@
     extinguisherQuality: Digging
     fadeOutBehaviourID: fade_out
     iconStateSpent: icon
-    # Sounds legit nuff
     litSound:
       path: /Audio/Items/Flare/flare_on.ogg
+    loopedSound:
+      path: /Audio/Items/Flare/flare_burn.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: LightBehaviour

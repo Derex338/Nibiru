@@ -30,6 +30,7 @@
   - type: NibiruAnimalAbility
   - type: NibiruAnimalSleep
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: MobState
   - type: MobThresholds
@@ -186,7 +187,7 @@
   name: курица
   description: Птица, дающая яйца.
   components:
-  - type: NibiruNpcBehavior
+  - type: NibiruNpcAudio
     ambientSound:
       path: /Audio/_Nibiru/Mobs/Chicken/AmbientSound.ogg
     deathSound:
@@ -533,7 +534,6 @@
     possibleCommands: [ Follow, Stay ]
   - type: NibiruMountFear
     maxFear: 100
-    panicThreshold: 80
   - type: MeleeWeapon
     damage:
       types:
@@ -724,7 +724,7 @@
       amount: 1
     - id: BigBodyButcherFirst
       amount: 1
-    - id: skull_goat
+    - id: Skull_goat
       amount: 1
 
 # Собака (Приручаемая, обучаемая)
@@ -781,9 +781,6 @@
       amount: 1
     - id: MediumBodyButcherFirst
       amount: 1
-  - type: Construction
-    graph: dogCraft
-    node: fin
 
 - type: entity
   id: ClothingHeadLionSkin
@@ -796,7 +793,7 @@
     state: LionSkin
   - type: Clothing
     sprite: _Nibiru/Entities/Mobs/Lion/LionSkinHead.rsi
-    state: equipped-HELMET
+    equippedState: equipped-HELMET
   - type: Item
     size: Large
 

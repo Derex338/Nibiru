@@ -2,7 +2,7 @@
   id: SkrellTailsBase
   bodyPart: Tail
   #markingCategory: Tail
-  speciesRestriction: [Skrell]
+  groupWhitelist: [Skrell]
   sprites:
   - sprite: _Adventure/Races/Skrell/Species/parts.rsi
     state: tails_base
@@ -415,8 +415,6 @@
     sprite: _Adventure/Races/Skrell/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Skrell
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech

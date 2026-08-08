@@ -195,6 +195,8 @@ flavor-complex-rocksandstones = как скалы и камни
 
 ## Basic drinks
 flavor-complex-water = как вода
+flavor-complex-cucumber = как огурец
+flavor-complex-pungent = как что-то резкое
 flavor-complex-beer = как моча
 flavor-complex-cognac = как сухой пряный алкоголь
 flavor-complex-mead = как забродивший мёд

@@ -15,8 +15,6 @@
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
   - type: Body
-    prototype: Reptilian
-    requiredLegs: 2
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatLizard
@@ -36,8 +34,9 @@
   - type: BodyEmotes
     soundsId: ReptilianBodyEmotes
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Scale
+  - type: Injurable
+    damageContainer: Biological
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw

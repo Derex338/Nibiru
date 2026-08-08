@@ -1,0 +1,53 @@
+- type: entity
+  parent: BaseStructure
+  id: CEPipeBrassMedium
+  name: brass pipe
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+
+- type: entity
+  parent: CEPipeBrassMedium
+  id: CEPipeBrassMediumVerticalDown
+
+- type: entity
+  parent: CEPipeBrassMedium
+  id: CEPipeBrassMediumVerticalUp
+
+- type: entity
+  parent: CEPipeBrassMedium
+  id: CEPipeBrassMediumValve
+
+- type: entity
+  parent: CEPipeBrassMedium
+  id: CEPipeBrassMediumBroken
+
+- type: entity
+  parent: BaseStructure
+  id: CEPipeBrassBig
+  name: brass pipe big
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+
+- type: entity
+  parent: CEPipeBrassBig
+  id: CEPipeBrassBigVerticalDown
+
+- type: entity
+  parent: CEPipeBrassBig
+  id: CEPipeBrassBigVerticalUp
+
+- type: entity
+  parent: CEPipeBrassBig
+  id: CEPipeBrassBigValve
+
+- type: entity
+  parent: CEPipeBrassBig
+  id: CEPipeBrassBigBroken
