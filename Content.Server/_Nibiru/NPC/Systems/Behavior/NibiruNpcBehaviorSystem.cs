@@ -22,28 +22,31 @@ using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.EntitySystems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
-public sealed class NibiruNpcBehaviorSystem : EntitySystem
+public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
 {
-    [Dependency] private readonly NibiruNpcPerceptionSystem _perception = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly NibiruNpcCombatSystem _combatSystem = default!;
-    [Dependency] private readonly Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly NibiruAnimalGrabSystem _grabSystem = default!;
-    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
-    [Dependency] private readonly Robust.Shared.Map.ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly Content.Shared.Tag.TagSystem _tag = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+    private static readonly ProtoId<TagPrototype> FoodTag = "Food";
+
+    [Dependency] private NibiruNpcPerceptionSystem _perception = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private NibiruNpcCombatSystem _combatSystem = default!;
+    [Dependency] private Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private NibiruAnimalGrabSystem _grabSystem = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private Robust.Shared.Map.ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private Content.Shared.Tag.TagSystem _tag = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
 
     private const float ThreatCheckInterval = 0.1f;
     private float _threatCheckAccumulator;
@@ -106,7 +109,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                 break;
 
             case NibiruNpcBehaviorType.Aggressive:
-                if (state.CurrentTarget == null || !EntityManager.EntityExists(state.CurrentTarget.Value))
+                if (state.CurrentTarget == null || !Exists(state.CurrentTarget.Value))
                 {
                     state.CurrentTarget = attacker;
                     state.CurrentState = NibiruNpcState.Chasing;
@@ -194,7 +197,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         var toRemove = new List<EntityUid>();
         foreach (var (entity, expiry) in memory.HostileMemory)
         {
-            if (curTime > expiry || !EntityManager.EntityExists(entity))
+            if (curTime > expiry || !Exists(entity))
                 toRemove.Add(entity);
         }
 
@@ -279,7 +282,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
     private void ProcessChasing(EntityUid uid, NibiruNpcStateMachineComponent state,
         NibiruNpcPerceptionComponent perception, TransformComponent xform)
     {
-        if (state.CurrentTarget == null || !EntityManager.EntityExists(state.CurrentTarget.Value))
+        if (state.CurrentTarget == null || !Exists(state.CurrentTarget.Value))
         {
             state.CurrentState = NibiruNpcState.Returning;
             state.CurrentTarget = null;
@@ -294,7 +297,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<TransformComponent>(target, out var targetXform))
+        if (!TryComp(target, out TransformComponent? targetXform))
         {
             state.CurrentState = NibiruNpcState.Returning;
             state.CurrentTarget = null;
@@ -387,7 +390,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         {
             state.CurrentTarget = food;
 
-            if (!TryComp<TransformComponent>(food.Value, out var foodXform))
+            if (!TryComp(food.Value, out TransformComponent? foodXform))
             {
                 state.CurrentTarget = null;
                 return;
@@ -433,7 +436,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
     {
         foreach (var detected in perception.DetectedEntities)
         {
-            if (_tag.HasTag(detected, "Food") || HasComp<Content.Shared.Nutrition.Components.EdibleComponent>(detected))
+            if (_tag.HasTag(detected, FoodTag) || HasComp<Content.Shared.Nutrition.Components.EdibleComponent>(detected))
                 return detected;
         }
         return null;
@@ -495,7 +498,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
 
     private void ProcessFollowing(EntityUid uid, NibiruNpcStateMachineComponent state, TransformComponent xform)
     {
-        if (state.CurrentTarget == null || !EntityManager.EntityExists(state.CurrentTarget.Value))
+        if (state.CurrentTarget == null || !Exists(state.CurrentTarget.Value))
         {
             state.CurrentState = NibiruNpcState.Idle;
             state.CurrentTarget = null;
@@ -504,7 +507,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
 
         var target = state.CurrentTarget.Value;
 
-        if (!TryComp<TransformComponent>(target, out var targetXform))
+        if (!TryComp(target, out TransformComponent? targetXform))
         {
             state.CurrentState = NibiruNpcState.Idle;
             state.CurrentTarget = null;
@@ -561,7 +564,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         EntityUid? closest = null;
         float closestDist = float.MaxValue;
 
-        if (!TryComp<TransformComponent>(uid, out var myXform))
+        if (!TryComp(uid, out TransformComponent? myXform))
             return null;
 
         var aggroRange = 8f;
@@ -577,7 +580,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
 
         foreach (var detected in perception.DetectedEntities)
         {
-            if (!EntityManager.EntityExists(detected))
+            if (!Exists(detected))
                 continue;
 
             if (!_faction.IsEntityFriendly(uid, detected) ||
@@ -587,7 +590,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
                     tamable.IsTamed && tamable.OwnerUid == detected)
                     continue;
 
-                if (!TryComp<TransformComponent>(detected, out var targetXform))
+                if (!TryComp(detected, out TransformComponent? targetXform))
                     continue;
 
                 if (!myXform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var dist))
@@ -643,7 +646,7 @@ public sealed class NibiruNpcBehaviorSystem : EntitySystem
         if (state.HomePosition == null)
             return;
 
-        if (!EntityManager.EntityExists(state.HomePosition.Value.EntityId))
+        if (!Exists(state.HomePosition.Value.EntityId))
         {
             state.HomePosition = xform.Coordinates;
             return;

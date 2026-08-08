@@ -12,7 +12,7 @@ namespace Content.Server.Examine
     public sealed partial class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private VerbSystem _verbSystem = default!;
-        [Dependency] private readonly Robust.Shared.Localization.ILocalizationManager _loc = default!;
+        [Dependency] private Robust.Shared.Localization.ILocalizationManager _loc = default!;
 
         private readonly FormattedMessage _entityNotFoundMessage = new();
         private readonly FormattedMessage _entityOutOfRangeMessage = new();

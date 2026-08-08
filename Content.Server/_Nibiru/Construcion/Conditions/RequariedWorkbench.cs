@@ -63,18 +63,6 @@ namespace Content.Server._Nibiru.Construction.Conditions
                 args.PushMarkup(Loc.GetString("workbench-condition-must-lay-on-workbench"));
                 return true;
             }
-
-                //switch (Anchored)
-                //{
-                //    case true when !anchored:
-                //        args.PushMarkup(Loc.GetString("construction-examine-condition-entity-anchored"));
-                //        return true;
-                //    case false when anchored:
-                //        args.PushMarkup(Loc.GetString("construction-examine-condition-entity-unanchored"));
-                //        return true;
-                //}
-
-            return false;
         }
 
         public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()

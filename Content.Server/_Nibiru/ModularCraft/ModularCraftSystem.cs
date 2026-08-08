@@ -13,13 +13,13 @@ using System.Linq;
 
 namespace Content.Server._Nibiru.ModularCraft;
 
-public sealed class ModularCraftSystem : EntitySystem
+public sealed partial class ModularCraftSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui        = default!;
-    [Dependency] private readonly SharedPopupSystem   _popup     = default!;
-    [Dependency] private readonly IPrototypeManager   _proto     = default!;
-    [Dependency] private readonly SharedAudioSystem   _audio     = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private UserInterfaceSystem _ui        = default!;
+    [Dependency] private SharedPopupSystem   _popup     = default!;
+    [Dependency] private IPrototypeManager   _proto     = default!;
+    [Dependency] private SharedAudioSystem   _audio     = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

@@ -10,10 +10,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server._Nibiru.NPC.Systems.Training;
 
-public sealed class NibiruAnimalTrainingSystem : EntitySystem
+public sealed partial class NibiruAnimalTrainingSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

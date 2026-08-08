@@ -16,16 +16,16 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
-public sealed class NibiruAnimalAbilitySystem : EntitySystem
+public sealed partial class NibiruAnimalAbilitySystem : EntitySystem
 {
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private void ProcessPestControl(EntityUid uid, NibiruAnimalAbilityComponent ability, TransformComponent xform)
     {
@@ -38,7 +38,7 @@ public sealed class NibiruAnimalAbilitySystem : EntitySystem
             if (nearby == uid)
                 continue;
 
-            if (!TryComp<MetaDataComponent>(nearby, out var meta) || meta.EntityPrototype == null)
+            if (!TryComp(nearby, out MetaDataComponent? meta) || meta.EntityPrototype == null)
                 continue;
 
             var protoId = meta.EntityPrototype.ID;
@@ -57,7 +57,7 @@ public sealed class NibiruAnimalAbilitySystem : EntitySystem
 
     private void ProcessDelivery(EntityUid uid, NibiruAnimalAbilityComponent ability, TransformComponent xform)
     {
-        if (ability.CarriedItem == null || !EntityManager.EntityExists(ability.CarriedItem.Value))
+        if (ability.CarriedItem == null || !Exists(ability.CarriedItem.Value))
             return;
 
         if (TryComp<NibiruNpcStateMachineComponent>(uid, out var state) &&

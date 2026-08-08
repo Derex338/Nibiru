@@ -97,8 +97,6 @@ public sealed class PlanetMapControl : Control
     private readonly Dictionary<string, PlanetMapZonePrototype?> _resolvedZoneCache = new();
     private readonly Dictionary<string, Texture>                  _zoneTextureCache  = new();
 
-    public event Action? OnPenPressed;
-
     // -----------------------------------------------------------------------
     // Constructor
     // -----------------------------------------------------------------------

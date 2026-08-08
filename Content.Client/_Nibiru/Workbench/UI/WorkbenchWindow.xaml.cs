@@ -20,9 +20,9 @@ namespace Content.Client._Nibiru.Workbench.UI;
 [GenerateTypedNameReferences]
 public sealed partial class WorkbenchWindow : DefaultWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntitySystemManager _systemManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
     private ConstructionSystem? _constructionSystem;
@@ -74,8 +74,6 @@ public sealed partial class WorkbenchWindow : DefaultWindow
 
 		SelectRecipe(_selected);
 	}
-
-    public event EventHandler<(string search, string category)>? PopulateRecipes;
 
     public void SetEntity(EntityUid uid)
     {

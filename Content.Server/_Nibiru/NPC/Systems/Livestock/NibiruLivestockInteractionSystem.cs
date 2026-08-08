@@ -17,12 +17,12 @@ namespace Content.Server._Nibiru.NPC.Systems.Livestock;
 /// - Сбор ресурсов (стрижка/дойка) через клик + DoAfter
 /// - Просмотр информации (настроение, доверие, рост ресурсов)
 /// </summary>
-public sealed class NibiruLivestockInteractionSystem : EntitySystem
+public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly NibiruLivestockSystem _livestock = default!;
-    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private NibiruLivestockSystem _livestock = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -115,7 +115,7 @@ public sealed class NibiruLivestockInteractionSystem : EntitySystem
     /// </summary>
     private bool TryStartHarvest(EntityUid animal, EntityUid user, EntityUid tool)
     {
-        if (!TryComp<MetaDataComponent>(tool, out var toolMeta) || toolMeta.EntityPrototype == null)
+        if (!TryComp(tool, out MetaDataComponent? toolMeta) || toolMeta.EntityPrototype == null)
             return false;
 
         var toolProtoId = toolMeta.EntityPrototype.ID;

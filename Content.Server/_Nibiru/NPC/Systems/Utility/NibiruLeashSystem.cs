@@ -26,19 +26,19 @@ namespace Content.Server._Nibiru.NPC.Systems.Utility;
 /// Обрабатывает привязывание животных верёвкой и ведение за собой.
 /// Блокирует стандартное перетаскивание для тяжёлых животных.
 /// </summary>
-public sealed class NibiruLeashSystem : EntitySystem
+public sealed partial class NibiruLeashSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedJointSystem _joints = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
 
     public override void Initialize()
     {
@@ -55,7 +55,7 @@ public sealed class NibiruLeashSystem : EntitySystem
             return;
 
         // Проверяем, что предмет — верёвка
-        if (!TryComp<MetaDataComponent>(args.Used, out var meta) || meta.EntityPrototype == null)
+        if (!TryComp(args.Used, out MetaDataComponent? meta) || meta.EntityPrototype == null)
             return;
 
         var protoId = meta.EntityPrototype.ID;
@@ -80,7 +80,7 @@ public sealed class NibiruLeashSystem : EntitySystem
             return;
 
         // Проверяем, что предмет — верёвка
-        if (!TryComp<MetaDataComponent>(args.Used, out var meta) || meta.EntityPrototype == null)
+        if (!TryComp(args.Used, out MetaDataComponent? meta) || meta.EntityPrototype == null)
             return;
 
         var protoId = meta.EntityPrototype.ID;
@@ -128,13 +128,13 @@ public sealed class NibiruLeashSystem : EntitySystem
             if (!leash.IsLeashed || leash.LeashedTo == null)
                 continue;
 
-            if (!EntityManager.EntityExists(leash.LeashedTo.Value))
+            if (!Exists(leash.LeashedTo.Value))
             {
                 Unleash(uid, leash);
                 continue;
             }
 
-            if (TryComp<TransformComponent>(leash.LeashedTo.Value, out var targetXform))
+            if (TryComp(leash.LeashedTo.Value, out TransformComponent? targetXform))
             {
                 if (xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var dist))
                 {
@@ -192,7 +192,7 @@ public sealed class NibiruLeashSystem : EntitySystem
     private void LeashTo(EntityUid animal, EntityUid target, NibiruLeashableComponent component, EntityUid? usedItem = null)
     {
         // Расходуем верёвку, если она используется
-        if (usedItem != null && TryComp<MetaDataComponent>(usedItem.Value, out var meta))
+        if (usedItem != null && TryComp(usedItem.Value, out MetaDataComponent? meta))
         {
             if (!_stack.TryUse(usedItem.Value, 1))
                 return;

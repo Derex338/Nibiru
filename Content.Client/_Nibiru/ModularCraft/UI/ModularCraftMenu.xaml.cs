@@ -12,7 +12,7 @@ namespace Content.Client._Nibiru.ModularCraft.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ModularCraftMenu : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public event Action<string>?                  OnItemTypeSelected;
     public event Action<string, string?, string?>? OnSlotChanged;

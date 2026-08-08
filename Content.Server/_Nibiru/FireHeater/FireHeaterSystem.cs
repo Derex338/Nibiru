@@ -23,15 +23,15 @@ namespace Content.Server._Nibiru.Heating;
 /// <summary>
 /// Система для нагрева предметов на поверхности (костры, жаровни и т.д.)
 /// </summary>
-public sealed class HeatingSurfaceSystem : EntitySystem
+public sealed partial class HeatingSurfaceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {
@@ -67,7 +67,6 @@ public sealed class HeatingSurfaceSystem : EntitySystem
     {
         var (uid, surface, fuel) = ent;
         var sourceTemp = fuel.CurrentTemperature;
-        var hasItems = false;
         var isHeating = false;
 
         // Получаем предметы на поверхности

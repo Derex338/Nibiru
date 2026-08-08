@@ -3,17 +3,21 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem
 {
+    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
+
     [Dependency] private INetManager _net = default!;
 
     public void InitializeTile()
@@ -148,7 +152,7 @@ public abstract partial class SharedToolSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(belowPos, 0.2f, LookupFlags.Static))
         {
-            if (_tag.HasTag(ent, "Wall"))
+            if (_tag.HasTag(ent, WallTag))
                 return true;
         }
 

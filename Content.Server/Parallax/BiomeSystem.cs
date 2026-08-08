@@ -47,25 +47,25 @@ namespace Content.Server.Parallax;
 
 public sealed partial class BiomeSystem : SharedBiomeSystem
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IConsoleHost _console = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IParallelManager _parallel = default!;
-    [Dependency] private readonly ISerializationManager _serManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly DecalSystem _decals = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ShuttleSystem _shuttles = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IConsoleHost _console = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IParallelManager _parallel = default!;
+    [Dependency] private ISerializationManager _serManager = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private DecalSystem _decals = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ShuttleSystem _shuttles = default!;
+    [Dependency] private TagSystem _tags = default!;
+    [Dependency] private TileSystem _tile = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private MapLoaderSystem _mapLoader = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     [Dependency] private EntityQuery<BiomeComponent> _biomeQuery = default!;
     [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
@@ -1128,7 +1128,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     if (Deleted(ent) || ent == gridUid)
                         continue;
 
-                    if (!TryComp<MetaDataComponent>(ent, out var metadata))
+                    if (!TryComp(ent, out MetaDataComponent? metadata))
                     {
                         modified.Add(indices);
                         break;
@@ -1342,7 +1342,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private bool IsBiomeDefault(EntityUid uid, ICollection<string>? ignoredComps)
     {
-        if (!EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata) || metadata.EntityPrototype == null)
+        if (!TryComp(uid, out MetaDataComponent? metadata) || metadata.EntityPrototype == null)
             return false;
 
         var prototype = metadata.EntityPrototype;
@@ -1353,7 +1353,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         var protoData = _proto.GetPrototypeData(prototype);
 
-        foreach (var component in EntityManager.GetComponents(uid))
+        foreach (var component in AllComps(uid))
         {
             if (component.Deleted)
                 continue;

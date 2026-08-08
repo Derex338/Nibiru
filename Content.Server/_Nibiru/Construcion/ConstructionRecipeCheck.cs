@@ -21,11 +21,11 @@ namespace Content.Server._Nibiru.Construction;
 [UsedImplicitly]
 public sealed partial class ConstructionRecipeCheck : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private MindSystem _minds = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private UserInterfaceSystem _uiSys = default!;
 
     private static readonly HashSet<Entity<TechnologyDatabaseComponent>> ClientLookup = new();
 
@@ -46,7 +46,7 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
             return;
 
         var entity = args.SenderSession.AttachedEntity.Value;
-        if (!EntityManager.TryGetComponent<FactionComponent>(entity, out var comp))
+        if (!TryComp<FactionComponent>(entity, out var comp))
             return;
 
         // comp.StaticPacks.Add(new ProtoId<ConstructionPackPrototype>("FactionBase"));
@@ -63,7 +63,7 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
 
     private void UpdateUI(EntityUid uid, WorkbenchComponent component)
     {
-        if (!EntityManager.TryGetComponent<FactionComponent>(uid, out var comp))
+        if (!TryComp<FactionComponent>(uid, out var comp))
             return;
 
         var state = new WorkbenchUpdateState(GetAvailableRecipes(uid, comp, component.StaticPacks));
@@ -74,14 +74,14 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
     {
         var ev = new CraftsGetRecipesEvent((uid, comp), getUnavailable);
 
-        if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Player)
-        && (Player.ResearchServer is null || !EntityManager.EntityExists(Player.ResearchServer)))
+        if (TryComp<FactionComponent>(uid, out var Player)
+        && (Player.ResearchServer is null || !Exists(Player.ResearchServer)))
         {
             var allServers = GetServers(uid).ToList();
 
             foreach (var server in allServers)
             {
-                if (EntityManager.TryGetComponent<FactionComponent>(server, out var Serv)
+                if (TryComp<FactionComponent>(server, out var Serv)
                 && Serv.FactionName == Player.FactionName)
                 {
                     Player.ResearchServer = server;
@@ -91,9 +91,9 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
                 }
             }
         }
-        else if (EntityManager.TryGetComponent<FactionComponent>(uid, out var PlayerHui)
+        else if (TryComp<FactionComponent>(uid, out var PlayerHui)
         && PlayerHui.ResearchServer is { } serverUid
-        && EntityManager.TryGetComponent<FactionComponent>(serverUid, out var server)
+        && TryComp<FactionComponent>(serverUid, out var server)
         && server.FactionName == PlayerHui.FactionName)
         {
             RaiseLocalEvent(serverUid, ev);
@@ -127,15 +127,15 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
 
     public void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, CraftsGetRecipesEvent args)
     {
-        if (EntityManager.TryGetComponent<FactionComponent>(uid, out var Server)
-            && EntityManager.TryGetComponent<FactionComponent>(args.User, out var Player)
+        if (TryComp<FactionComponent>(uid, out var Server)
+            && TryComp<FactionComponent>(args.User, out var Player)
             && Server.FactionName == Player.FactionName)
         {
             foreach (var recipe in component.UnlockedCrafts)
             {
                 if (_proto.TryIndex<ConstructionPrototype>(recipe, out var comp)
                     && comp.EntitysToShowRecipe.Count > 0
-                    && EntityManager.TryGetComponent<MetaDataComponent>(args.User, out var meta)
+                    && TryComp(args.User, out MetaDataComponent? meta)
                     && meta.EntityPrototype != null)
                 {
                     foreach (var entity in comp.EntitysToShowRecipe)

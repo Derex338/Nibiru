@@ -15,14 +15,14 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// <summary>
 /// Обрабатывает территориальное поведение, циклы сна и боязнь огня.
 /// </summary>
-public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
+public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
 {
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private const float TerritoryCheckInterval = 2f;
     private const float FireCheckInterval = 0.2f;
@@ -73,13 +73,13 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
 
             foreach (var detected in perception.DetectedEntities)
             {
-                if (!EntityManager.EntityExists(detected))
+                if (!Exists(detected))
                     continue;
 
                 if (_faction.IsEntityFriendly(uid, detected))
                     continue;
 
-                if (!TryComp<TransformComponent>(detected, out var detectedXform) || !TryComp< NibiruNpcAggroComponent>(uid, out var agro))
+                if (!TryComp(detected, out TransformComponent? detectedXform) || !TryComp< NibiruNpcAggroComponent>(uid, out var agro))
                     continue;
 
                 if (!behavior.HomePosition.Value.TryDistance(EntityManager, detectedXform.Coordinates, out var distToHome))
@@ -116,8 +116,8 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
             if (nearby == uid || !TryComp<NibiruLivestockComponent>(nearby, out var livestock))
                 continue;
 
-            if (!TryComp<MetaDataComponent>(nearby, out var nearbyMeta) ||
-                !TryComp<MetaDataComponent>(uid, out var myMeta))
+            if (!TryComp(nearby, out MetaDataComponent? nearbyMeta) ||
+                !TryComp(uid, out MetaDataComponent? myMeta))
                 continue;
 
             if (nearbyMeta.EntityPrototype?.ID == myMeta.EntityPrototype?.ID)
@@ -218,10 +218,10 @@ public sealed class NibiruAdvancedBehaviorSystem : EntitySystem
             EntityUid? fireSource = null;
             foreach (var nearby in nearbyEntities)
             {
-                if (!EntityManager.EntityExists(nearby))
+                if (!Exists(nearby))
                     continue;
 
-                if (!TryComp<MetaDataComponent>(nearby, out var meta) || meta.EntityPrototype == null)
+                if (!TryComp(nearby, out MetaDataComponent? meta) || meta.EntityPrototype == null)
                     continue;
 
                 var protoId = meta.EntityPrototype.ID;

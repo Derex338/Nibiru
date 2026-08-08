@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Nibiru.WeaponAttackType;
 
-[Prototype("attackType")]
+[Prototype]
 public sealed partial class AttackTypePrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;

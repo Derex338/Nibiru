@@ -12,14 +12,14 @@ using System.Numerics;
 
 namespace Content.Server._CE.ZLevels.Stability;
 
-public sealed class CEZLevelStabilitySystem : EntitySystem
+public sealed partial class CEZLevelStabilitySystem : EntitySystem
 {
-    [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private CEZLevelsSystem _zLevels = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
 

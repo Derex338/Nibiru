@@ -3,9 +3,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._Nibiru.NPC.Systems;
 
-public sealed class NibiruLeashSystem : EntitySystem
+public sealed partial class NibiruLeashSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
 
     public override void Initialize()
     {

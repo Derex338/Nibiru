@@ -21,23 +21,13 @@ namespace Content.Shared._Nibiru.World;
 /// </summary>
 public abstract partial class SharedNibiruWorldSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] protected readonly TurfSystem Turf = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IConfigurationManager _cvar = default!;
-    [Dependency] private readonly SharedBiomeSystem _biome = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] protected TurfSystem Turf = default!;
+    [Dependency] private SharedBiomeSystem _biome = default!;
 
     protected NibiruSurvivalRuleComponent? Rule;
 
-    //protected const byte ChunkSize = SharedBiomeSystem.ChunkSize;
-
-    //protected EntityQuery<RimFortressPlayerComponent> PlayerQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
-
-    private int _maxSettlementRadius = 100;
-    private int _minSettlementMembers = 2;
     private int _playerSafeRadius = 100;
     protected int SpawnAreaRadius = 20;
     protected int MinSpawnAreaTiles = 100;

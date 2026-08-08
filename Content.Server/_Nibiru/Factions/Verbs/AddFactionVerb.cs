@@ -22,13 +22,13 @@ using Content.Shared.Mind.Components;
 //Часть кода взята с ReservStation
 namespace Content.Server._Nibiru.Factions
 {
-    public sealed class AddFactionVerb : EntitySystem
+    public sealed partial class AddFactionVerb : EntitySystem
     {
-        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly MindSystem _mind = default!;
-        [Dependency] private readonly EuiManager _euiMan = default!;
-        [Dependency] private readonly ISharedPlayerManager _player = default!;
+        [Dependency] private SharedUserInterfaceSystem _ui = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private MindSystem _mind = default!;
+        [Dependency] private EuiManager _euiMan = default!;
+        [Dependency] private ISharedPlayerManager _player = default!;
 
         public override void Initialize()
         {
@@ -42,10 +42,10 @@ namespace Content.Server._Nibiru.Factions
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
                 return;
 
-            if (!EntityManager.TryGetComponent<FactionComponent>(args.User, out var Leader) || !Leader.IsCreator)
+            if (!TryComp<FactionComponent>(args.User, out var Leader) || !Leader.IsCreator)
                 return;
 
-            if (EntityManager.TryGetComponent<FactionComponent>(args.Target, out var TargetFact))
+            if (TryComp<FactionComponent>(args.Target, out var TargetFact))
             {
                 //if(string.IsNullOrWhiteSpace(TargetFact.FactionName) || string.IsNullOrWhiteSpace(Leader.FactionName) || Leader.FactionName == TargetFact.FactionName)
                 return;

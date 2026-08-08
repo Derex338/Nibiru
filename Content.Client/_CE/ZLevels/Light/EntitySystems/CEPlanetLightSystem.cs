@@ -2,9 +2,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._CE.ZLevels.Light.EntitySystems;
 
-public sealed class CEPlanetLightSystem : EntitySystem
+public sealed partial class CEPlanetLightSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     public override void Initialize()
     {

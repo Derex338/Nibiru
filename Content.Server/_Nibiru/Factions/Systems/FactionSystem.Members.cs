@@ -1,6 +1,5 @@
 using Content.Shared._Nibiru.Factions;
 using Robust.Shared.Map;
-using Robust.Shared.Map;
 using System.Linq;
 using Content.Shared.Database;
 

@@ -11,9 +11,9 @@ using Content.Server.Research.Systems;
 
 namespace Content.Server._Nibiru.Research;
 
-public sealed class PointsFromStuffSystem : EntitySystem
+public sealed partial class PointsFromStuffSystem : EntitySystem
 {
-    [Dependency] private readonly ResearchSystem _research = default!;
+    [Dependency] private ResearchSystem _research = default!;
 
     private float _accumulator;
 
@@ -46,9 +46,9 @@ public sealed class PointsFromStuffSystem : EntitySystem
         if (args.NewMobState != MobState.Dead || args.OldMobState >= args.NewMobState)
             return;
 
-		if(EntityManager.TryGetComponent<FactionComponent>(args.Origin, out var user)
-		&& EntityManager.TryGetComponent<FactionComponent>(user.ResearchServer, out var server)
-		&& EntityManager.TryGetComponent<ResearchServerComponent>(user.ResearchServer, out var research)
+		if(TryComp<FactionComponent>(args.Origin, out var user)
+		&& TryComp<FactionComponent>(user.ResearchServer, out var server)
+		&& TryComp<ResearchServerComponent>(user.ResearchServer, out var research)
 		&& server.FactionName == user.FactionName)
 		{
             research.Points += component.Points;
@@ -61,8 +61,8 @@ public sealed class PointsFromStuffSystem : EntitySystem
         if (comp.ResearchServer == null)
             return;
 
-        if (EntityManager.TryGetComponent<FactionComponent>(comp.ResearchServer, out var server)
-        && EntityManager.TryGetComponent<ResearchServerComponent>(comp.ResearchServer, out var research)
+        if (TryComp<FactionComponent>(comp.ResearchServer, out var server)
+        && TryComp<ResearchServerComponent>(comp.ResearchServer, out var research)
         && server.FactionName == comp.FactionName)
         {
             research.Points += msg._seed.Points;

@@ -33,11 +33,13 @@ using Content.Shared.StatusIcon;
 namespace Content.Client.UserInterface.Systems.Faction;
 
 [UsedImplicitly]
-public sealed class FactionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+public sealed partial class FactionUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    private static readonly ProtoId<ShaderPrototype> SelectionOutlineShader = "SelectionOutlineInrange";
+
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     private FactionMenu? _factionWindow;
 
@@ -567,7 +569,7 @@ public sealed class FactionUIController : UIController, IOnStateEntered<Gameplay
 
             if (enable)
             {
-                var shader = protoManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
+                var shader = protoManager.Index(SelectionOutlineShader).InstanceUnique();
                 shader.SetParameter("outline_width", 1f);
                 sprite.PostShader = shader;
                 sprite.RenderOrder = 1;

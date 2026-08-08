@@ -20,14 +20,14 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// При максимуме — сбрасывает наездника и убегает.
 /// Постоянное воздействие стресса тренирует устойчивость.
 /// </summary>
-public sealed class NibiruMountFearSystem : EntitySystem
+public sealed partial class NibiruMountFearSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -113,7 +113,7 @@ public sealed class NibiruMountFearSystem : EntitySystem
 
         foreach (var nearby in nearbyEntities)
         {
-            if (!TryComp<MetaDataComponent>(nearby, out var meta) || meta.EntityPrototype == null)
+            if (!TryComp(nearby, out MetaDataComponent? meta) || meta.EntityPrototype == null)
                 continue;
 
             var protoId = meta.EntityPrototype.ID;

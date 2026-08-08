@@ -5,7 +5,7 @@ namespace Content.Shared._Nibiru.Workbench;
 
 public sealed partial class SharedWorkbenchSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public string GetExamineName(GenericPartInfo info)
     {

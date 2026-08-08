@@ -13,11 +13,11 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// Проверяет угол обзора, дальность зрения, наличие препятствий (raycast),
 /// а также обнаружение по шуму на основе скорости движения цели.
 /// </summary>
-public sealed class NibiruNpcPerceptionSystem : EntitySystem
+public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

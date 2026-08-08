@@ -11,15 +11,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Nibiru.NPC.Behavior;
 
-public sealed class AnimalSleepSystem : EntitySystem
+public sealed partial class AnimalSleepSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly CEDayCycleSystem _dayCycle = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SleepingSystem _sleepingSystem = default!;
+    [Dependency] private CEDayCycleSystem _dayCycle = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {

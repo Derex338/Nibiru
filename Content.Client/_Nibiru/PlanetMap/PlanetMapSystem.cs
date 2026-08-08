@@ -10,11 +10,11 @@ namespace Content.Client._Nibiru.PlanetMap;
 /// <summary>
 /// Client-side system handling planet map UI and progressive chunk loading.
 /// </summary>
-public sealed class PlanetMapSystem : EntitySystem
+public sealed partial class PlanetMapSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager     _playerManager = default!;
-    [Dependency] private readonly SharedTransformSystem _xform      = default!;
-    [Dependency] private readonly SharedMapSystem    _mapSys        = default!;
+    [Dependency] private IPlayerManager     _playerManager = default!;
+    [Dependency] private SharedTransformSystem _xform      = default!;
+    [Dependency] private SharedMapSystem    _mapSys        = default!;
 
     private PlanetMapWindow? _window;
     private NetEntity?       _activeMap;

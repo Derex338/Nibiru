@@ -15,12 +15,12 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// Синхронизирует цели между членами стаи, обрабатывает иерархию
 /// и панику при потере лидера.
 /// </summary>
-public sealed class NibiruNpcPackSystem : EntitySystem
+public sealed partial class NibiruNpcPackSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {

@@ -20,6 +20,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Interaction.Events;
 
@@ -30,16 +31,22 @@ namespace Content.Server._Nibiru.NPC.Systems.Training;
 /// Обрабатывает рост/убывание доверия, привязку к хозяину,
 /// переключение NPC в режим следования после приручения.
 /// </summary>
-public sealed class NibiruTamingSystem : EntitySystem
+public sealed partial class NibiruTamingSystem : EntitySystem
 {
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
-    [Dependency] private readonly NibiruAnimalMoodSystem _mood = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly NPCSteeringSystem _steering = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    private static readonly ProtoId<TagPrototype> FoodTag = "Food";
+    private static readonly ProtoId<TagPrototype> MeatTag = "Meat";
+    private static readonly ProtoId<TagPrototype> PlantTag = "Plant";
+    private static readonly ProtoId<TagPrototype> FruitTag = "Fruit";
+    private static readonly ProtoId<TagPrototype> VegetableTag = "Vegetable";
+
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private NibiruAnimalMoodSystem _mood = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -253,7 +260,7 @@ public sealed class NibiruTamingSystem : EntitySystem
 
     private bool IsFavoriteFood(EntityUid item, NibiruTamableComponent component)
     {
-        if (!TryComp<MetaDataComponent>(item, out var meta) || meta.EntityPrototype == null)
+        if (!TryComp(item, out MetaDataComponent? meta) || meta.EntityPrototype == null)
             return false;
 
         if (component.FavoriteFoods.Contains(meta.EntityPrototype.ID))
@@ -270,13 +277,13 @@ public sealed class NibiruTamingSystem : EntitySystem
 
     private bool IsAcceptableFood(EntityUid item, NibiruTamableComponent component)
     {
-        if (!_tag.HasTag(item, "Food"))
+        if (!_tag.HasTag(item, FoodTag))
             return false;
 
         // Если задан конкретный список — ест только это
         if (component.AcceptedFood != null && component.AcceptedFood.Count > 0)
         {
-            if (!TryComp<MetaDataComponent>(item, out var meta) || meta.EntityPrototype == null)
+            if (!TryComp(item, out MetaDataComponent? meta) || meta.EntityPrototype == null)
                 return false;
             return component.AcceptedFood.Contains(meta.EntityPrototype.ID);
         }
@@ -285,11 +292,11 @@ public sealed class NibiruTamingSystem : EntitySystem
         switch (component.Diet)
         {
             case NibiruAnimalDiet.Carnivore:
-                return _tag.HasTag(item, "Meat"); // Плотоядные едят мясо
+                return _tag.HasTag(item, MeatTag); // Плотоядные едят мясо
 
             case NibiruAnimalDiet.Herbivore:
                 // Травоядные не едят мясо
-                return !_tag.HasTag(item, "Meat") && (_tag.HasTag(item, "Plant") || _tag.HasTag(item, "Fruit") || _tag.HasTag(item, "Vegetable"));
+                return !_tag.HasTag(item, MeatTag) && (_tag.HasTag(item, PlantTag) || _tag.HasTag(item, FruitTag) || _tag.HasTag(item, VegetableTag));
 
             case NibiruAnimalDiet.Omnivore:
             default:
@@ -336,7 +343,7 @@ public sealed class NibiruTamingSystem : EntitySystem
                 if (target == null)
                     return false;
 
-                if (!TryComp<TransformComponent>(target.Value, out _))
+                if (!TryComp(target.Value, out TransformComponent? _))
                     return false;
 
                 if (command == NibiruAnimalCommand.Grab && !TryComp<PullableComponent>(target.Value, out _))

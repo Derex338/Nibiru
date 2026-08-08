@@ -31,9 +31,9 @@ public sealed partial class LobbedSystem : SharedLobbedSystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly Content.Shared.Blocking.BlockingSystem _blocking = default!;
-    [Dependency] private readonly Content.Shared._CE.ZLevels.Core.EntitySystems.CESharedZLevelsSystem _zLevels = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private Content.Shared.Blocking.BlockingSystem _blocking = default!;
+    [Dependency] private Content.Shared._CE.ZLevels.Core.EntitySystems.CESharedZLevelsSystem _zLevels = default!;
 
     private readonly List<PendingLobbedShot> _pending = new();
     private readonly List<FallingProjectile> _falling = new();

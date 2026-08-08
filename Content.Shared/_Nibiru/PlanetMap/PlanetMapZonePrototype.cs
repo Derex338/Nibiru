@@ -17,7 +17,7 @@ namespace Content.Shared._Nibiru.PlanetMap;
 /// The blob boundary is then produced client-side from this density, giving soft
 /// diagonal-corners rather than hard square edges.
 /// </summary>
-[Prototype("planetMapZone")]
+[Prototype]
 public sealed partial class PlanetMapZonePrototype : IPrototype
 {
     [IdDataField]

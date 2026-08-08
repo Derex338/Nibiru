@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -26,18 +25,17 @@ namespace Content.Shared.Movement.Systems;
 /// <summary>
 /// Система управления транспортом через StrapComponent
 /// </summary>
-public sealed class RideableSystem : EntitySystem
+public sealed partial class RideableSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly PullingSystem _pull = default!;
-    [Dependency] private readonly SharedHandsSystem _hand = default!;
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
-    [Dependency] private readonly SharedPhysicsSystem _phys = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private PullingSystem _pull = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private SharedPhysicsSystem _phys = default!;
 
     public override void Initialize()
     {

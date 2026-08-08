@@ -17,10 +17,10 @@ namespace Content.Server._Nibiru.NPC.Systems.Utility;
 /// <summary>
 /// Воспроизводит звуки животных в зависимости от их состояния и действий.
 /// </summary>
-public sealed class NibiruAnimalSoundSystem : EntitySystem
+public sealed partial class NibiruAnimalSoundSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

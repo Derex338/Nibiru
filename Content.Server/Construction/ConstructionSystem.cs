@@ -8,7 +8,6 @@ using Robust.Server.GameObjects;
 using Content.Shared.Research.Components;
 using Content.Shared._Nibiru.Factions;
 using Content.Shared.Construction.Messages;
-using Content.Shared.Construction;
 using Content.Shared.UserInterface;
 using Content.Shared.IdentityManagement;
 using JetBrains.Annotations;
@@ -26,14 +25,14 @@ namespace Content.Server.Construction
     [UsedImplicitly]
     public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly ContainerSystem _container = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-		[Dependency] private readonly IPrototypeManager _proto = default!;
-		[Dependency] private readonly UserInterfaceSystem _uiSys = default!;
-		[Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private ContainerSystem _container = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private SharedToolSystem _toolSystem = default!;
+		[Dependency] private IPrototypeManager _proto = default!;
+		[Dependency] private UserInterfaceSystem _uiSys = default!;
+		[Dependency] private MindSystem _minds = default!;
 
         public override void Initialize()
         {
@@ -55,13 +54,13 @@ namespace Content.Server.Construction
             var construction = ent.Comp;
             if (GetCurrentGraph(ent, construction) is not {} graph)
             {
-                Log.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid graph specified.");
+                Log.Warning($"Prototype {Comp<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid graph specified.");
                 return;
             }
 
             if (GetNodeFromGraph(graph, construction.Node) is not {} node)
             {
-                Log.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid node specified.");
+                Log.Warning($"Prototype {Comp<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid node specified.");
                 return;
             }
 
@@ -70,7 +69,7 @@ namespace Content.Server.Construction
             {
                 if (GetEdgeFromNode(node, edgeIndex) is not {} currentEdge)
                 {
-                    Log.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid edge index specified.");
+                    Log.Warning($"Prototype {Comp<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid edge index specified.");
                     return;
                 }
 
@@ -81,7 +80,7 @@ namespace Content.Server.Construction
             {
                 if (GetNodeFromGraph(graph, targetNodeId) is not { } targetNode)
                 {
-                    Log.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid target node specified.");
+                    Log.Warning($"Prototype {Comp<MetaDataComponent>(ent).EntityPrototype?.ID}'s construction component has an invalid target node specified.");
                     return;
                 }
 

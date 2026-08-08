@@ -9,12 +9,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server._Nibiru.WeaponAttackType;
 
-public sealed class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
+public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedRoofSystem _roof = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedRoofSystem _roof = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IMapManager _map = default!;
 
     public override void Initialize()
     {

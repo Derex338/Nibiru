@@ -5,11 +5,11 @@ using Content.Shared.Popups;
 
 namespace Content.Server._Nibiru.Construcion;
 
-public sealed class MultiLevelClimbSystem : EntitySystem
+public sealed partial class MultiLevelClimbSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

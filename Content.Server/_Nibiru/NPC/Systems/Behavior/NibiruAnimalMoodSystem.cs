@@ -14,9 +14,9 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// Настроение убывает со временем, повышается при кормлении и поглаживании.
 /// При низком настроении животное может перестать слушаться или одичать.
 /// </summary>
-public sealed class NibiruAnimalMoodSystem : EntitySystem
+public sealed partial class NibiruAnimalMoodSystem : EntitySystem
 {
-    [Dependency] private readonly NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
 
     public override void Initialize()
     {
