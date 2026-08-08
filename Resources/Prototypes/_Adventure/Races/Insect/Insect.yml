@@ -1,7 +1,6 @@
 - type: marking
   id: InsectHeadBase
   bodyPart: HeadTop
-  bodyPart: HeadTop
   forcedColoring: true
   groupWhitelist: [Insect]
   coloring:
@@ -14,10 +13,11 @@
 - type: marking
   id: InsectTailBase
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
-  speciesRestriction: [Insect]
+  groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
     state: base_tail
@@ -25,17 +25,18 @@
 - type: marking
   id: InsectHandBase
   bodyPart: LArm
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: LArm
   groupWhitelist: [InsectSerpentide]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Species/parts.rsi
     state: hand
 
 - type: species
   id: InsectSerpentide
-  name: Serpentid
+  name: species-name-serpentid
   roundStart: true
   prototype: MobInsect
   dollPrototype: AppearanceInsect
@@ -86,7 +87,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceInsect
   categories: [ HideSpawnMenu ]
-  name: insect appearance
+  name: adventure-appearance-insect
   components:
   - type: Inventory
     speciesId: InsectSerpentide
@@ -151,12 +152,11 @@
 
 - type: metabolizerType
   id: InsectSerpentide
-  name: Serpentid
-
+  name: species-name-serpentid
 - type: entity
   id: PartInsect
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Serpentid body part"
+  name: ent-PartInsect
   abstract: true
   components:
   - type: Sprite
@@ -176,7 +176,7 @@
 
 - type: entity
   id: TorsoInsect
-  name: "Serpentid torso"
+  name: ent-TorsoInsect
   parent: [OrganBaseTorsoSexed, PartInsect, OrganBaseTorso]
   components:
   - type: Sprite
@@ -189,7 +189,7 @@
 
 - type: entity
   id: HeadInsect
-  name: "Serpentid head"
+  name: ent-HeadInsect
   parent: [OrganBaseHeadSexed, PartInsect, OrganBaseHead]
   components:
   - type: Sprite
@@ -203,7 +203,7 @@
 - type: entity
   id: OrganInsectBrain
   parent: OrganHumanBrain
-  name: Serpentid brain
+  name: ent-OrganInsectBrain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -213,7 +213,7 @@
 - type: entity
   id: OrganInsectEyes
   parent: OrganHumanEyes
-  name: Serpentid eyes
+  name: ent-OrganInsectEyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -225,7 +225,7 @@
 - type: entity
   id: OrganInsectHeart
   parent: OrganHumanHeart
-  name: Serpentid heart
+  name: ent-OrganInsectHeart
   description: Тук тук.
   components:
   - type: Sprite
@@ -240,7 +240,7 @@
 - type: entity
   id: OrganInsectLungs
   parent: OrganHumanLungs
-  name: breathing tubes
+  name: ent-OrganInsectLungs
   description: Сеть трубок для дыхания насекомых.
   components:
   - type: Sprite
@@ -272,7 +272,7 @@
 
 - type: entity
   id: OrganInsectStomach
-  name: Serpentid stomach
+  name: ent-OrganInsectStomach
   parent: OrganAnimalStomach
   description: Отвратительно! Кто там сидит?!
   components:
@@ -291,7 +291,7 @@
 
 - type: entity
   id: LeftArmInsect
-  name: "Serpentid left arm"
+  name: ent-LeftArmInsect
   parent: [PartInsect, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -300,7 +300,7 @@
 
 - type: entity
   id: RightArmInsect
-  name: "Serpentid right arm"
+  name: ent-RightArmInsect
   parent: [PartInsect, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -309,7 +309,7 @@
 
 - type: entity
   id: LeftHandInsect
-  name: "Serpentid left hand"
+  name: ent-LeftHandInsect
   parent: [PartInsect, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -318,7 +318,7 @@
 
 - type: entity
   id: RightHandInsect
-  name: "Serpentid right hand"
+  name: ent-RightHandInsect
   parent: [PartInsect, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -416,7 +416,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialWax
-  name: wax
+  name: ent-MaterialWax
   description: мягкий воск, только что выплюнутый.
   suffix: Full
   components:
@@ -455,7 +455,7 @@
 
 - type: stack
   id: InsectWax
-  name: wax
+  name: stack-insect-wax
   icon: { sprite: /Textures/_Adventure/Races/Insect/Structures.rsi, state: wax }
   spawn: MaterialWax1
   maxCount: 20
@@ -474,7 +474,7 @@
 #пол
 - type: entity
   id: InsectWaxTile
-  name: floor wax
+  name: ent-InsectWaxTile
   placement:
     mode: SnapgridCenter
   components:
@@ -543,7 +543,7 @@
 - type: entity
   parent: BaseWall
   id: InsectWaxWall
-  name: wax wall
+  name: ent-InsectWaxWall
   description: Стена из твёрдого, насекомого воска.
   components:
   - type: Damageable
@@ -595,7 +595,7 @@
 #дверь
 - type: entity
   id: InsectWaxDoor
-  name: wax passage
+  name: ent-InsectWaxDoor
   description: Липкая восковая дырка.
   placement:
     mode: SnapgridCenter
@@ -787,7 +787,7 @@
 - type: entity
   parent: BaseAction
   id: ActionSericultureInsectWax
-  name: Produce wax
+  name: ent-ActionSericultureInsectWax
   description: Производите воск для строительства.
   components:
   - type: Action
@@ -799,7 +799,7 @@
     event: !type:SericultureActionEvent
 
 - type: entity
-  name: MobInsect
+  name: ent-MobInsect
   parent:
   - AppearanceInsect
   - BaseSpeciesMobOrganic
@@ -819,7 +819,7 @@
       Female: UnisexInsect
       Unsexed: UnisexInsect
   - type: TypingIndicator
-    proto: insect
+    proto: Insect
   - type: Hunger
   - type: Thirst
   - type: Bloodstream

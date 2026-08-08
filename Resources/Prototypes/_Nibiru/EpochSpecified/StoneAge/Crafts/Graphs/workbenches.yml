@@ -342,7 +342,7 @@
               prototype: CEWoodLog
               amount: 3
             - !type:SpawnPrototype
-              prototype: CEStone
+              prototype: CEStoneBlock1
               amount: 3
             - !type:DeleteEntity {}
           steps:
@@ -435,7 +435,7 @@
         - to: destroy
           completed:
             - !type:SpawnPrototype
-              prototype: CEStone
+              prototype: CEStoneBlock1
               amount: 5
             - !type:DeleteEntity {}
           steps:
@@ -447,7 +447,7 @@
         - to: destroy
           completed:
             - !type:SpawnPrototype
-              prototype: CEStone
+              prototype: CEStoneBlock1
               amount: 8
             - !type:DeleteEntity {}
           steps:

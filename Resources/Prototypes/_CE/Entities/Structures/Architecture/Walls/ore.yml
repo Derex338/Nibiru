@@ -108,7 +108,6 @@
     color: "#b87333"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#b87333"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -160,7 +159,6 @@
     color: "#91a1b0"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#91a1b0"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -212,7 +210,6 @@
     color: "#d1d1d1"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#d1d1d1"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -264,7 +261,6 @@
     color: "#ffd700"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#ffd700"
   - type: IconSmooth
     base: wall
   - type: Destructible

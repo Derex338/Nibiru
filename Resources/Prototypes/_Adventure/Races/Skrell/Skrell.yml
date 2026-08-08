@@ -9,7 +9,7 @@
 
 - type: species
   id: Skrell
-  name: Skrell
+  name: species-name-skrell
   roundStart: true
   prototype: MobSkrell
   dollPrototype: AppearanceSkrell
@@ -70,7 +70,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceSkrell
   categories: [ HideSpawnMenu ]
-  name: skrell appearance
+  name: adventure-appearance-skrell
   components:
   - type: InitialBody
     organs:
@@ -101,7 +101,7 @@
 - type: reagent
   id: SkrellBlood
   parent: Blood
-  name: Blue blood
+  name: reagent-name-skrell-blood
   group: Biological
   flavor: metallic
   color: "#454078"
@@ -109,7 +109,7 @@
 - type: entity
   id: PartSkrell
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Skrell body part"
+  name: ent-PartSkrell
   abstract: true
   components:
   - type: Sprite
@@ -133,7 +133,7 @@
 
 - type: entity
   id: TorsoSkrell
-  name: "Skrell torso"
+  name: ent-TorsoSkrell
   parent: [OrganBaseTorsoSexed, PartSkrell, OrganBaseTorso]
   components:
   - type: Sprite
@@ -141,7 +141,7 @@
 
 - type: entity
   id: HeadSkrell
-  name: "Skrell head"
+  name: ent-HeadSkrell
   parent: [OrganBaseHeadSexed, PartSkrell, OrganBaseHead]
   components:
   - type: Sprite
@@ -149,7 +149,7 @@
 
 - type: entity
   id: LeftArmSkrell
-  name: "Skrell left arm"
+  name: ent-LeftArmSkrell
   parent: [PartSkrell, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -158,7 +158,7 @@
 
 - type: entity
   id: RightArmSkrell
-  name: "Skrell right arm"
+  name: ent-RightArmSkrell
   parent: [PartSkrell, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -167,7 +167,7 @@
 
 - type: entity
   id: LeftHandSkrell
-  name: "Skrell left hand"
+  name: ent-LeftHandSkrell
   parent: [PartSkrell, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -176,7 +176,7 @@
 
 - type: entity
   id: RightHandSkrell
-  name: "Skrell right hand"
+  name: ent-RightHandSkrell
   parent: [PartSkrell, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -185,7 +185,7 @@
 
 - type: entity
   id: LeftLegSkrell
-  name: "Skrell left leg"
+  name: ent-LeftLegSkrell
   parent: [PartSkrell, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -194,7 +194,7 @@
 
 - type: entity
   id: RightLegSkrell
-  name: "Skrell right leg"
+  name: ent-RightLegSkrell
   parent: [PartSkrell, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -203,7 +203,7 @@
 
 - type: entity
   id: LeftFootSkrell
-  name: "Skrell left foot"
+  name: ent-LeftFootSkrell
   parent: [PartSkrell, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -212,7 +212,7 @@
 
 - type: entity
   id: RightFootSkrell
-  name: "Skrell right foot"
+  name: ent-RightFootSkrell
   parent: [PartSkrell, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -221,7 +221,7 @@
 - type: entity
   id: OrganSkrellBrain
   parent: OrganHumanBrain
-  name: Skrell brain
+  name: ent-OrganSkrellBrain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -231,7 +231,7 @@
 - type: entity
   id: OrganSkrellEyes
   parent: OrganHumanEyes
-  name: Skrell eyes
+  name: ent-OrganSkrellEyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -243,7 +243,7 @@
 - type: entity
   id: OrganSkrellHeart
   parent: OrganHumanHeart
-  name: Skrell heart
+  name: ent-OrganSkrellHeart
   description: Мне жаль бессердечного ублюдка, который потерял это.
   components:
   - type: Sprite
@@ -254,7 +254,7 @@
 - type: entity
   id: OrganSkrellLungs
   parent: OrganHumanLungs
-  name: Skrell lungs
+  name: ent-OrganSkrellLungs
   description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -266,7 +266,7 @@
 - type: entity
   id: OrganSkrellStomach
   parent: OrganHumanStomach
-  name: Skrell stomach
+  name: ent-OrganSkrellStomach
   description: Отвратительно. Это трудно переварить.
   components:
   - type: Sprite
@@ -276,7 +276,7 @@
 - type: entity
   id: OrganSkrellLiver
   parent: OrganHumanLiver
-  name: Skrell liver
+  name: ent-OrganSkrellLiver
   description: Побереги меня.
   components:
   - type: Sprite
@@ -286,7 +286,7 @@
 - type: entity
   id: OrganSkrellKidneys
   parent: OrganHumanKidneys
-  name: Skrell kidneys
+  name: ent-OrganSkrellKidneys
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -404,7 +404,7 @@
     count: 37
 
 - type: entity
-  name: MobSkrell
+  name: ent-MobSkrell
   parent:
   - AppearanceSkrell
   - BaseSpeciesMobOrganic

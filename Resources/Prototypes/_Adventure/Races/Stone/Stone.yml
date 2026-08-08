@@ -16,7 +16,7 @@
 
 - type: species
   id: Stone
-  name: Golem
+  name: species-name-stone
   roundStart: true
   prototype: MobStone
   dollPrototype: AppearanceStone
@@ -71,7 +71,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceStone
   categories: [ HideSpawnMenu ]
-  name: stone appearance
+  name: adventure-appearance-stone
   components:
   - type: InitialBody
     organs:
@@ -129,7 +129,7 @@
 #Мозг
 - type: entity
   id: StoneBrain
-  name: soul stone
+  name: ent-StoneBrain
   parent: OrganHumanBrain
   components:
   - type: Damageable
@@ -169,7 +169,7 @@
 - type: entity
   id: PartStone
   parent: BaseItem
-  name: "Stone body part"
+  name: ent-PartStone
   abstract: true
   components:
   - type: Damageable
@@ -221,7 +221,7 @@
 
 - type: entity
   id: TorsoStone
-  name: "golem shard"
+  name: ent-TorsoStone
   parent: [OrganBaseTorsoSexed, PartStone, OrganBaseTorso]
   components:
   - type: Sprite
@@ -229,7 +229,7 @@
 
 - type: entity
   id: HeadStone
-  name: "golem shard"
+  name: ent-HeadStone
   parent: [OrganBaseHeadSexed, PartStone, OrganBaseHead]
   components:
   - type: Sprite
@@ -237,42 +237,42 @@
 
 - type: entity
   id: LeftArmStone
-  name: "golem shard"
+  name: ent-LeftArmStone
   parent: [PartStone, OrganBaseArmLeft]
 
 - type: entity
   id: RightArmStone
-  name: "golem shard"
+  name: ent-RightArmStone
   parent: [PartStone, OrganBaseArmRight]
 
 - type: entity
   id: LeftHandStone
-  name: "golem shard"
+  name: ent-LeftHandStone
   parent: [PartStone, OrganBaseHandLeft]
 
 - type: entity
   id: RightHandStone
-  name: "golem shard"
+  name: ent-RightHandStone
   parent: [PartStone, OrganBaseHandRight]
 
 - type: entity
   id: LeftLegStone
-  name: "golem shard"
+  name: ent-LeftLegStone
   parent: [PartStone, OrganBaseLegLeft]
 
 - type: entity
   id: RightLegStone
-  name: "golem shard"
+  name: ent-RightLegStone
   parent: [PartStone, OrganBaseLegRight]
 
 - type: entity
   id: LeftFootStone
-  name: "golem shard"
+  name: ent-LeftFootStone
   parent: [PartStone, OrganBaseFootLeft]
 
 - type: entity
   id: RightFootStone
-  name: "golem shard"
+  name: ent-RightFootStone
   parent: [PartStone, OrganBaseFootRight]
 
 - type: damageContainer
@@ -502,7 +502,7 @@
       displayName: Shirt
 
 - type: entity
-  name: MobStone
+  name: ent-MobStone
   parent:
   - AppearanceStone
   - BaseSpeciesMob

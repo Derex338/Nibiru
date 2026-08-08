@@ -79,7 +79,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: BigHide
+              prototype: HideBig
               amount: 1
           steps:
             - tool: Screwing

@@ -2,7 +2,6 @@
   id: StoneBase
   bodyPart: Tail
   forcedColoring: true
-  bodyPart: Tail
   groupWhitelist: [Stone]
   coloring:
     default:
@@ -14,10 +13,11 @@
 - type: marking
   id: StoneStalagmite
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
   groupWhitelist: [Stone]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
     state: stalagmite
@@ -25,10 +25,11 @@
 - type: marking
   id: StoneMonolith
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
   groupWhitelist: [Stone]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
     state: monolith
@@ -36,10 +37,11 @@
 - type: marking
   id: StoneDemon
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: Tail
   groupWhitelist: [Stone]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
     state: demon
@@ -47,10 +49,11 @@
 - type: marking
   id: StoneRift
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: Chest
   groupWhitelist: [Stone]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
     state: rift
@@ -58,7 +61,6 @@
 - type: marking
   id: StoneCrystal1
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -67,7 +69,6 @@
 - type: marking
   id: StoneCrystal2
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -76,7 +77,6 @@
 - type: marking
   id: StoneGeode
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -85,7 +85,6 @@
 - type: marking
   id: StoneHorns
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -94,7 +93,6 @@
 - type: marking
   id: StoneNail
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -103,7 +101,6 @@
 - type: marking
   id: StoneStar
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -112,7 +109,6 @@
 - type: marking
   id: StoneSun
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -121,7 +117,6 @@
 - type: marking
   id: StoneOre
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -130,7 +125,6 @@
 - type: marking
   id: StoneOre2
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -139,7 +133,6 @@
 - type: marking
   id: StoneOreVeins
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -148,7 +141,6 @@
 - type: marking
   id: StoneGrass
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   coloring:
     default:
@@ -162,7 +154,6 @@
 - type: marking
   id: StoneTree
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   coloring:
     default:
@@ -176,7 +167,6 @@
 - type: marking
   id: StoneNeck
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -185,7 +175,6 @@
 - type: marking
   id: StoneSpine
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -194,7 +183,6 @@
 - type: marking
   id: StoneMagma
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi
@@ -203,7 +191,6 @@
 - type: marking
   id: StoneMohawk
   bodyPart: Tail
-  markingCategory: Chest
   groupWhitelist: [Stone]
   sprites:
   - sprite: _Adventure/Races/Stone/Customization/Body.rsi

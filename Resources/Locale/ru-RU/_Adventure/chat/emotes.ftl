@@ -1,0 +1,9 @@
+chat-emote-name-burp = Отрыжка
+chat-emote-name-crack-bones = Хруст костей
+chat-emote-name-fart = Пердёж
+chat-emote-name-scratch = Чесание
+chat-emote-name-facepalm = Фейспалм
+chat-emote-name-hiss = Шипение
+chat-emote-name-croak = Кваканье
+chat-emote-name-heartbeat = Сердцебиение
+chat-emote-name-oink = Хрюканье

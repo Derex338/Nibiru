@@ -418,9 +418,6 @@
       - Prying
       - CEShovel
       - Shoveling
-  - type: Shovel
-    useSound:
-      path: /Audio/Items/shovel_dig.ogg
   - type: ToolTileCompatible
 
 - type: entity

@@ -1,0 +1,13 @@
+guide-entry-sop = SOP
+guide-entry-sop-service = Service Department
+guide-entry-sop-research = Science Department
+guide-entry-sop-cargo = Cargo Department
+guide-entry-sop-medical = Medical Department
+guide-entry-sop-engineering = Engineering Department
+guide-entry-sop-security = Security Department
+guide-entry-sop-command = Command
+guide-entry-sop-centcomm = Central Command
+guide-entry-sop-legal = Legal Department
+guide-entry-sop-general = General
+guide-entry-sop-codes = Alert Levels
+guide-entry-sop-emergencies = Emergencies

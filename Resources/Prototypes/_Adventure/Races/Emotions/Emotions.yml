@@ -9,7 +9,7 @@
 
 - type: emote
   id: Bruh
-  name: Burp
+  name: chat-emote-name-burp
   icon: _Adventure/Interface/Emotes/bruh.png
   category: Vocal
   available: false
@@ -38,7 +38,7 @@
 
 - type: emote
   id: Crunch
-  name: Crack Bones
+  name: chat-emote-name-crack-bones
   icon: _Adventure/Interface/Emotes/crunch.png
   category: Hands
   whitelist:
@@ -69,7 +69,7 @@
 
 - type: emote
   id: Fart
-  name: Fart
+  name: chat-emote-name-fart
   whitelist:
     components:
     - Respirator
@@ -91,7 +91,7 @@
 
 - type: emote
   id: Scratch
-  name: Scratch
+  name: chat-emote-name-scratch
   icon: _Adventure/Interface/Emotes/scratching.png
   category: Hands
   whitelist:
@@ -131,7 +131,7 @@
 
 - type: emote
   id: Facepalm
-  name: Фейспалм
+  name: chat-emote-name-facepalm
   icon: _Adventure/Interface/Emotes/facepalm.png
   category: Hands
   whitelist:
@@ -162,7 +162,7 @@
 
 # шипеть
 - type: emote
-  name: Hiss
+  name: chat-emote-name-hiss
   id: Hissing
   icon: _Adventure/Interface/Emotes/hiss.png
   category: Vocal
@@ -192,7 +192,7 @@
 
 - type: emote
   id: Kva
-  name: Croak
+  name: chat-emote-name-croak
   icon: _Adventure/Interface/Emotes/kva.png
   category: Vocal
   available: false
@@ -217,7 +217,7 @@
 
 - type: emote
   id: HeartBeat
-  name: Heartbeat
+  name: chat-emote-name-heartbeat
   whitelist:
     components:
     - Respirator

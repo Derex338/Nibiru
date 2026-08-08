@@ -1,7 +1,6 @@
 - type: marking
   id: ResomiTailBase
   bodyPart: Tail
-  bodyPart: Tail
   groupWhitelist: [Resomi]
   sprites:
   - sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -11,21 +10,19 @@
 
 - type: marking
   id: ResomiEarsBase
-  name: Resomi, Head (Twin Ears)
   bodyPart: HeadTop
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: HeadTop
   groupWhitelist: [Resomi]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Resomi/Species/parts.rsi
     state: ears
 
 - type: marking
   id: ResomiBackstrafe
-  name: Resomi, Feathers (Receding)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -33,9 +30,7 @@
 
 - type: marking
   id: ResomiBurstShort
-  name: Resomi, Feathers (Spiky)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -43,9 +38,7 @@
 
 - type: marking
   id: ResomiDefault
-  name: Resomi, Feathers (Classic)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -53,9 +46,7 @@
 
 - type: marking
   id: ResomiEars
-  name: Resomi, Feathers (Ear-tufts)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -63,9 +54,7 @@
 
 - type: marking
   id: ResomiFluffymohawk
-  name: Resomi, Feathers (Punk)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -73,9 +62,7 @@
 
 - type: marking
   id: ResomiHedge
-  name: Resomi, Feathers (Hedge)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -83,9 +70,7 @@
 
 - type: marking
   id: ResomiLong
-  name: Resomi, Feathers (Long)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -93,9 +78,7 @@
 
 - type: marking
   id: ResomiSpiky
-  name: Resomi, Feathers (Spines)
   bodyPart: Hair
-  markingCategory: Hair
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Heir.rsi
@@ -103,9 +86,7 @@
 
 - type: marking
   id: ResomiTailBaseSpeak
-  name: Резоми, Хвост (Торчащие перья)
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Resomi]
   sprites:
   - sprite: _Adventure/Races/Resomi/Species/parts.rsi
@@ -115,9 +96,7 @@
 
 - type: marking
   id: ResomiTailDown
-  name: Резоми, Хвост (Опущенный)
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Resomi]
   sprites:
   - sprite: _Adventure/Races/Resomi/Customization/Tails.rsi
@@ -127,9 +106,7 @@
 
 - type: marking
   id: ResomiTailDownSpeak
-  name: Резоми, Хвост (Опущенный с торчащими перьями)
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Resomi]
   sprites:
   - sprite: _Adventure/Races/Resomi/Customization/Tails.rsi
@@ -139,9 +116,7 @@
 
 - type: marking
   id: ResomiTailUp
-  name: Резоми, Хвост (Поднятый)
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Resomi]
   sprites:
   - sprite: _Adventure/Races/Resomi/Customization/Tails.rsi
@@ -151,9 +126,7 @@
 
 - type: marking
   id: ResomiTailUpSpeak
-  name: Резоми, Хвост (Поднятый с торчащими перьями)
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Resomi]
   sprites:
   - sprite: _Adventure/Races/Resomi/Customization/Tails.rsi
@@ -163,9 +136,7 @@
 
 - type: marking
   id: PlumageFoot
-  name: Резоми, Ноги (Оперение)
   bodyPart: LLeg
-  markingCategory: Overlay
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Hands-Foot.rsi
@@ -173,9 +144,7 @@
 
 - type: marking
   id: PlumageHand
-  name: Резоми, Руки (Оперение)
   bodyPart: LLeg
-  markingCategory: Overlay
   groupWhitelist: [Resomi]
   sprites:
     - sprite: _Adventure/Races/Resomi/Customization/Hands-Foot.rsi

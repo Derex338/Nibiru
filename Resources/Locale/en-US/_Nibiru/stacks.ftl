@@ -64,3 +64,5 @@ stack-vein-processed = processed vein
 stack-wheel-blank = wheel blank
 stack-wood-stick = stick
 stack-wooden-wheel = wooden wheel
+stack-poppy-seeds = poppy seeds
+stack-aloe-seeds = aloe seeds

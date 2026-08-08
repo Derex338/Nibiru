@@ -4,10 +4,6 @@
   name: melting furnace
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -15,10 +11,6 @@
   name: recycler
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -26,10 +18,6 @@
   name: drill
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -37,10 +25,6 @@
   name: charger
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -48,10 +32,6 @@
   name: salary platform
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -59,10 +39,6 @@
   name: heater
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -70,10 +46,6 @@
   name: distribution unit
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -81,10 +53,6 @@
   name: accumulator vessel
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -92,10 +60,6 @@
   name: pipe terminal
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -103,10 +67,6 @@
   name: magic capacitor
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: BaseStructure
@@ -114,10 +74,6 @@
   name: trading platform
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/vending_machines.rsi
-    state: broken
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
@@ -154,14 +110,12 @@
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: Clothing/Hands/Gloves/latex.rsi
-    state: icon
   - type: Item
     size: Small
   - type: Clothing
     slots:
     - gloves
+
 
 - type: entity
   parent: BaseStructure
@@ -169,10 +123,6 @@
   name: snowman
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Decoration/statues.rsi
-    state: venus_blue
 
 - type: entity
   parent: BaseStructure
@@ -180,10 +130,6 @@
   name: vampire stone altar
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Tables/optable.rsi
-    state: optable
 
 - type: entity
   parent: BaseStructure
@@ -191,10 +137,6 @@
   name: vampire clan heart frame
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Tables/optable.rsi
-    state: optable
 
 - type: entity
   parent: BaseStructure
@@ -202,10 +144,6 @@
   name: vampire clan heart
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Tables/optable.rsi
-    state: optable
 
 - type: entity
   parent: BaseStructure
@@ -213,10 +151,6 @@
   name: vampire workbench
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _CE/Structures/Furniture/Tables/workbench.rsi
-    state: filler
 
 - type: entity
   parent: BaseStructure
@@ -224,10 +158,6 @@
   name: conveyor belt
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/conveyor.rsi
-    state: conveyor_loose
 
 - type: entity
   parent: BaseStructure
@@ -235,10 +165,6 @@
   name: conveyor ladder
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/stairs.rsi
-    state: stairs_steel
 
 - type: entity
   parent: CEConveyorLadder

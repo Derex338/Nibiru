@@ -23,7 +23,7 @@
 
 - type: techDiscipline
   id: StoneAge
-  name: Stone Age
+  name: research-discipline-stone-age
   color: "#dc373b"
   icon:
     sprite: _CE/Objects/Materials/stone.rsi
@@ -36,7 +36,7 @@
 
 - type: techDiscipline
   id: BronzeAge
-  name: Bronze Age
+  name: research-discipline-bronze-age
   color: "#dc373b"
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi

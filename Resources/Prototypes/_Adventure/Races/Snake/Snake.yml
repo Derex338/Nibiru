@@ -14,17 +14,19 @@
 - type: marking
   id: SnakeTailBase
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
   #markingCategory: Tail
   groupWhitelist: [Zerah]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Snake/Species/parts.rsi
     state: Tail_base
 
 - type: species
   id: Zerah
-  name: Zerah
+  name: species-name-zerah
   roundStart: true
   prototype: MobZerah
   #markingLimits: Zerah
@@ -74,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceZerah
   categories: [ HideSpawnMenu ]
-  name: zerah appearance
+  name: adventure-appearance-zerah
   components:
   - type: Inventory
     speciesId: Zerah
@@ -118,10 +120,10 @@
 
 - type: reagent
   id: ZerahPoison
-  name: Zerah venom
+  name: reagent-name-zerah-venom
   group: Toxins
-  desc: Довольно опасный токсин, обладающий непредсказуемым эффектом.
-  physicalDesc: токсичное
+  desc: reagent-desc-zerah-venom
+  physicalDesc: reagent-physical-desc-zerah-venom
   color: "#fafa96"
   metabolisms:
     Bloodstream:
@@ -159,7 +161,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-        refresh: false
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Zerah ]
@@ -207,7 +208,7 @@
 - type: reagent
   id: ZerahBlood
   parent: Blood
-  name: Zerah blood
+  name: reagent-name-zerah-blood
   group: Biological
   flavor: metallic
   color: "#e1b52e"
@@ -215,7 +216,7 @@
 - type: entity
   id: PartSnake
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Zerah body part"
+  name: ent-PartSnake
   abstract: true
   components:
   - type: Sprite
@@ -239,7 +240,7 @@
 
 - type: entity
   id: TorsoSnake
-  name: "Zerah torso"
+  name: ent-TorsoSnake
   parent: [OrganBaseTorsoSexed, PartSnake, OrganBaseTorso]
   components:
   - type: Sprite
@@ -247,7 +248,7 @@
 
 - type: entity
   id: HeadSnake
-  name: "Zerah head"
+  name: ent-HeadSnake
   parent: [OrganBaseHeadSexed, PartSnake, OrganBaseHead]
   components:
   - type: Sprite
@@ -255,7 +256,7 @@
 
 - type: entity
   id: LeftArmSnake
-  name: "Zerah left arm"
+  name: ent-LeftArmSnake
   parent: [PartSnake, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -264,7 +265,7 @@
 
 - type: entity
   id: RightArmSnake
-  name: "Zerah right arm"
+  name: ent-RightArmSnake
   parent: [PartSnake, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -273,7 +274,7 @@
 
 - type: entity
   id: LeftHandSnake
-  name: "Zerah left arm"
+  name: ent-LeftHandSnake
   parent: [PartSnake, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -282,7 +283,7 @@
 
 - type: entity
   id: RightHandSnake
-  name: "Zerah right arm"
+  name: ent-RightHandSnake
   parent: [PartSnake, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -291,12 +292,11 @@
 
 - type: metabolizerType
   id: Zerah
-  name: Zerah
-
+  name: species-name-zerah
 - type: entity
   id: OrganZerahiBrain
   parent: OrganHumanBrain
-  name: Zerah brain
+  name: ent-OrganZerahiBrain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -306,7 +306,7 @@
 - type: entity
   id: OrganZerahEyes
   parent: OrganHumanEyes
-  name: Zerah eyes
+  name: ent-OrganZerahEyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -318,7 +318,7 @@
 - type: entity
   id: OrganZerahHeart
   parent: OrganHumanHeart
-  name: Zerah heart
+  name: ent-OrganZerahHeart
   description: Тук тук.
   components:
   - type: Sprite
@@ -333,7 +333,7 @@
 - type: entity
   id: OrganZerahLungs
   parent: OrganHumanLungs
-  name: Zerah lungs
+  name: ent-OrganZerahLungs
   description: Фильтрует азот из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -363,7 +363,7 @@
 
 - type: entity
   id: OrganZerahStomach
-  name: Zerah stomach
+  name: ent-OrganZerahStomach
   parent: OrganAnimalStomach
   description: Отвратительно! Кто там сидит?!
   components:
@@ -404,7 +404,7 @@
 - type: entity
   id: OrganZerahiLiver
   parent: OrganAnimalLiver
-  name: Zerah liver
+  name: ent-OrganZerahiLiver
   description: Побереги меня.
   components:
   - type: Sprite
@@ -414,7 +414,7 @@
 - type: entity
   id: OrganZerahKidneys
   parent: OrganHumanKidneys
-  name: Zerah kidneys
+  name: ent-OrganZerahKidneys
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -536,7 +536,7 @@
     count: 30
 
 - type: entity
-  name: MobZerah
+  name: ent-MobZerah
   parent:
   - AppearanceZerah
   - BaseSpeciesMobOrganic

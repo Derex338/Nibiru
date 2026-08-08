@@ -1,7 +1,6 @@
 - type: marking
   id: FaceDraskBase
   bodyPart: Snout
-  bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Drask]
   coloring:
@@ -14,17 +13,18 @@
 - type: marking
   id: DraskHeadBase
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Drask]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Drask/Species/parts.rsi
     state: head
 
 - type: species
   id: Drask
-  name: Drask
+  name: species-name-drask
   roundStart: true
   prototype: MobDrask
   dollPrototype: AppearanceDrask
@@ -99,7 +99,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceDrask
   categories: [ HideSpawnMenu ]
-  name: drask appearance
+  name: adventure-appearance-drask
   components:
   - type: InitialBody
     organs:
@@ -152,15 +152,13 @@
           - !type:TemperatureCondition
             max: 213.15
           damage:
-            groups:
-              Burn: -1
             types:
               Slash: -1
               Piercing: -1
               Bloodloss: -1
 
 - type: entity
-  name: Urist McTentacle
+  name: ent-MobDrask
   parent:
   - AppearanceDrask
   - BaseSpeciesMobOrganic
@@ -286,7 +284,7 @@
 - type: entity
   id: PartDrask
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Drask body part"
+  name: ent-PartDrask
   abstract: true
   components:
   - type: Sprite
@@ -310,7 +308,7 @@
 
 - type: entity
   id: TorsoDrask
-  name: "Drask torso"
+  name: ent-TorsoDrask
   parent:
   - OrganBaseTorsoSexed
   - PartDrask
@@ -321,7 +319,7 @@
 
 - type: entity
   id: HeadDrask
-  name: "Drask head"
+  name: ent-HeadDrask
   parent: [OrganBaseHeadSexed, PartDrask, OrganBaseHead]
   components:
   - type: Sprite
@@ -329,7 +327,7 @@
 
 - type: entity
   id: LeftArmDrask
-  name: "Drask left arm"
+  name: ent-LeftArmDrask
   parent: [PartDrask, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -338,7 +336,7 @@
 
 - type: entity
   id: RightArmDrask
-  name: "Drask right arm"
+  name: ent-RightArmDrask
   parent: [PartDrask, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -347,7 +345,7 @@
 
 - type: entity
   id: LeftHandDrask
-  name: "Drask left hand"
+  name: ent-LeftHandDrask
   parent: [PartDrask, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -356,7 +354,7 @@
 
 - type: entity
   id: RightHandDrask
-  name: "Drask right hand"
+  name: ent-RightHandDrask
   parent: [PartDrask, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -365,7 +363,7 @@
 
 - type: entity
   id: LeftLegDrask
-  name: "Drask left leg"
+  name: ent-LeftLegDrask
   parent: [PartDrask, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -374,7 +372,7 @@
 
 - type: entity
   id: RightLegDrask
-  name: "Drask right leg"
+  name: ent-RightLegDrask
   parent: [PartDrask, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -383,7 +381,7 @@
 
 - type: entity
   id: LeftFootDrask
-  name: "Drask left foot"
+  name: ent-LeftFootDrask
   parent: [PartDrask, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -392,7 +390,7 @@
 
 - type: entity
   id: RightFootDrask
-  name: "Drask right foot"
+  name: ent-RightFootDrask
   parent: [PartDrask, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -400,12 +398,11 @@
     state: "r_foot"
 - type: metabolizerType
   id: Drask
-  name: Drask
-
+  name: species-name-drask
 - type: entity
   id: OrganDraskBrain
   parent: OrganHumanBrain
-  name: Drask brain
+  name: ent-OrganDraskBrain
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -415,7 +412,7 @@
 - type: entity
   id: OrganDraskEyes
   parent: OrganHumanEyes
-  name: Drask eyes
+  name: ent-OrganDraskEyes
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -428,7 +425,7 @@
 - type: entity
   id: OrganDraskHeart
   parent: OrganHumanHeart
-  name: Drask heart
+  name: ent-OrganDraskHeart
   description: тук тук
   components:
   - type: Sprite
@@ -444,7 +441,7 @@
 - type: entity
   id: OrganDraskLungs
   parent: OrganHumanLungs
-  name: Drask lungs
+  name: ent-OrganDraskLungs
   description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -456,7 +453,7 @@
 - type: entity
   id: OrganDraskStomach
   parent: OrganHumanStomach
-  name: Drask stomach
+  name: ent-OrganDraskStomach
   description: Отвратительно и пахнет мылом.
   components:
   - type: Sprite
@@ -469,7 +466,7 @@
 - type: entity
   id: OrganDraskLiver
   parent: OrganHumanLiver
-  name: Drask liver
+  name: ent-OrganDraskLiver
   components:
   - type: Sprite
     sprite: _Adventure/Races/Drask/organs.rsi
@@ -480,7 +477,7 @@
 - type: entity
   id: OrganDraskKidneys
   parent: OrganHumanKidneys
-  name: Drask kidneys
+  name: ent-OrganDraskKidneys
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -492,7 +489,7 @@
 - type: entity
   parent: [OrganBaseTorso, OrganDraskExternal]
   id: OrganDraskTorso
-  name: Drask body
+  name: ent-OrganDraskTorso
   description: A body for a Drask.
   components:
   - type: Sprite
@@ -506,7 +503,7 @@
 - type: entity
   parent: [ OrganBaseHead, OrganDraskExternal ]
   id: OrganDraskHead
-  name: Drask head
+  name: ent-OrganDraskHead
   description: Drask head
   components:
   - type: Sprite

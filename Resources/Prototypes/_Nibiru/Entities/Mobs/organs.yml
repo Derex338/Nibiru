@@ -209,10 +209,14 @@
     state: vein
   - type: Item
     size: Tiny
+  - type: Stack
+    stackType: Vein
+    count: 1
   - type: ToolRefinable
     refineResult:
     - id: VeinTimer
       amount: 1
+
 
 - type: entity
   id: VeinTimer

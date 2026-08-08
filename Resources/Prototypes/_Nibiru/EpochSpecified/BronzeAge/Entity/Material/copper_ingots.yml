@@ -91,6 +91,9 @@
   suffix: Full, Nibiru, BronzeAge
   components:
   - type: Material
+  - type: Stack
+    stackType: BronzeScrap
+    count: 30
   - type: Item
     size: Normal
     shape:
@@ -105,6 +108,7 @@
     resultReagent: BronzeMolten
     resultAmount: 10
     resultTemperature: 1100
+
 
 - type: entity
   parent: [IngotBase, BaseBronzeItem]

@@ -1,0 +1,9 @@
+chat-emote-name-burp = Burp
+chat-emote-name-crack-bones = Crack Bones
+chat-emote-name-fart = Fart
+chat-emote-name-scratch = Scratch
+chat-emote-name-facepalm = Facepalm
+chat-emote-name-hiss = Hiss
+chat-emote-name-croak = Croak
+chat-emote-name-heartbeat = Heartbeat
+chat-emote-name-oink = Oink

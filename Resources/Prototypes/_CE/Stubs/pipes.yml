@@ -4,10 +4,6 @@
   name: brass pipe
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
 
 - type: entity
   parent: CEPipeBrassMedium
@@ -31,10 +27,6 @@
   name: brass pipe big
   suffix: Stub
   categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
 
 - type: entity
   parent: CEPipeBrassBig

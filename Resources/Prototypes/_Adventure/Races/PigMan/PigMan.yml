@@ -1,7 +1,6 @@
 - type: marking
   id: PigNoseBase
   bodyPart: Snout
-  bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [PigMan]
   coloring:
@@ -14,17 +13,18 @@
 - type: marking
   id: PigEarsBase
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [PigMan]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: ears_base
 
 - type: species
   id: PigMan
-  name: Trottin
+  name: species-name-pigman
   roundStart: true
   prototype: MobPigMan
   dollPrototype: AppearancePigMan
@@ -76,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearancePigMan
   categories: [ HideSpawnMenu ]
-  name: pigman appearance
+  name: adventure-appearance-pigman
   components:
   - type: InitialBody
     organs:
@@ -120,12 +120,11 @@
 
 - type: metabolizerType
   id: PigMan
-  name: PigMan
-
+  name: species-name-pigman
 - type: entity
   id: OrganPigManStomach
   parent: OrganHumanStomach
-  name: Trottin stomach
+  name: ent-OrganPigManStomach
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/organs.rsi
@@ -152,7 +151,7 @@
 - type: entity
   id: OrganPigManHeart
   parent: OrganHumanHeart
-  name: Trottin heart
+  name: ent-OrganPigManHeart
   description: тук тук
   categories: [ HideSpawnMenu ]
   components:
@@ -169,7 +168,7 @@
 - type: entity
   id: PartPigMan
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Trottin body part"
+  name: ent-PartPigMan
   abstract: true
   components:
   - type: Sprite
@@ -191,7 +190,7 @@
 
 - type: entity
   id: TorsoPigMan
-  name: "Trottin torso"
+  name: ent-TorsoPigMan
   parent: [OrganBaseTorsoSexed, PartPigMan, OrganBaseTorso]
   components:
   - type: Sprite
@@ -206,7 +205,7 @@
 
 - type: entity
   id: HeadPigMan
-  name: "Trottin head"
+  name: ent-HeadPigMan
   parent: [OrganBaseHeadSexed, PartPigMan, OrganBaseHead]
   components:
   - type: Sprite
@@ -221,7 +220,7 @@
 
 - type: entity
   id: LeftArmPigMan
-  name: "Trottin left arm"
+  name: ent-LeftArmPigMan
   parent: [PartPigMan, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -230,7 +229,7 @@
 
 - type: entity
   id: RightArmPigMan
-  name: "Trottin right arm"
+  name: ent-RightArmPigMan
   parent: [PartPigMan, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -239,7 +238,7 @@
 
 - type: entity
   id: LeftHandPigMan
-  name: "Trottin left hand"
+  name: ent-LeftHandPigMan
   parent: [PartPigMan, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -248,7 +247,7 @@
 
 - type: entity
   id: RightHandPigMan
-  name: "Trottin right hand"
+  name: ent-RightHandPigMan
   parent: [PartPigMan, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -257,7 +256,7 @@
 
 - type: entity
   id: LeftLegPigMan
-  name: "Trottin left leg"
+  name: ent-LeftLegPigMan
   parent: [PartPigMan, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -266,7 +265,7 @@
 
 - type: entity
   id: RightLegPigMan
-  name: "Trottin right leg"
+  name: ent-RightLegPigMan
   parent: [PartPigMan, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -275,7 +274,7 @@
 
 - type: entity
   id: LeftFootPigMan
-  name: "Trottin left foot"
+  name: ent-LeftFootPigMan
   parent: [PartPigMan, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -284,7 +283,7 @@
 
 - type: entity
   id: RightFootPigMan
-  name: "Trottin right foot"
+  name: ent-RightFootPigMan
   parent: [PartPigMan, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -315,7 +314,7 @@
 
 - type: emote
   id: Hru
-  name: Oink
+  name: chat-emote-name-oink
   icon: _Adventure/Interface/Emotes/hru.png
   category: Vocal
   available: false
@@ -403,7 +402,7 @@
       collection: PigManHruCollection
 
 - type: entity
-  name: MobPigMan
+  name: ent-MobPigMan
   parent:
   - AppearancePigMan
   - BaseSpeciesMobOrganic
@@ -458,7 +457,7 @@
 - type: reagent
   id: PigManBlood
   parent: Blood
-  name: Trottin blood
+  name: reagent-name-pigman-blood
   group: Biological
   flavor: metallic
   color: "#c41e3a"

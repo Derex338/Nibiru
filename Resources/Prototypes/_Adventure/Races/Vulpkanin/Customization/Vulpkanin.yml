@@ -2,7 +2,6 @@
 - type: marking
   id: EarClose
   bodyPart: HeadTop
-  bodyPart: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -12,9 +11,7 @@
 
 - type: marking
   id: EarHanging
-  name: Drooping
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -24,9 +21,7 @@
 
 - type: marking
   id: EarHangingLeft
-  name: Drooping left ear
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -36,9 +31,7 @@
 
 - type: marking
   id: EarWide
-  name: Wide
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -48,9 +41,7 @@
 
 - type: marking
   id: EarWolf
-  name: Narrow
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -62,7 +53,6 @@
 - type: marking
   id: TailDocked
   bodyPart: Tail
-  bodyPart: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
@@ -70,9 +60,7 @@
 
 - type: marking
   id: TailDoG
-  name: Dog-like
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
@@ -82,9 +70,7 @@
 
 - type: marking
   id: TailRing
-  name: Ringed
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi

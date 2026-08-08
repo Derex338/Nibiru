@@ -1,6 +1,6 @@
 - type: construction
   id: MultiLevelRope
-  name: hanging rope
+  name: ent-CERopeHanging
   graph: MultiLevelRope
   startNode: start
   targetNode: rope
@@ -65,7 +65,7 @@
 - type: entity
   id: CERopePeg
   parent: CERopeBase
-  name: колышек
+  name: ent-CERopePeg
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
@@ -78,7 +78,7 @@
 - type: entity
   id: CERopeTop
   parent: CERopeBase
-  name: колышек с веревкой
+  name: ent-CERopeTop
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
@@ -97,7 +97,7 @@
 - type: entity
   id: CERopeHanging
   parent: CERopeBase
-  name: свисающая веревка
+  name: ent-CERopeHanging
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi

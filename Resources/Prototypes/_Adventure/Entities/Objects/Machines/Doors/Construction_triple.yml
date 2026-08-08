@@ -48,7 +48,7 @@
       steps:
       - component: DoorElectronics
         store: board
-        name: "door electronics circuit board"
+        name: ent-DoorElectronics
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
@@ -133,13 +133,13 @@
         doAfter: 8
 
 - type: construction
-  name: glass airlock [Triple]
+  name: ent-AirlockTriple
   id: AirlockTriple
   graph: AirlockTriple
   startNode: start
   targetNode: glassAirlockTriple
   category: construction-category-structures
-  description: Он открывается, он закрывается, и он может вас раздавить.
+  description: ent-AirlockTriple.desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

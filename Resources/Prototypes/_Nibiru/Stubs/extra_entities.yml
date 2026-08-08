@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseItem
+  id: Herb
+  name: ent-Herb
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    size: Small
+  - type: Stack
+    stackType: Herb
+    count: 1
+
+- type: entity
+  parent: BaseItem
+  id: BigHide
+  name: ent-BigHide
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    size: Normal
+  - type: Stack
+    stackType: BigHide
+    count: 1
+
+- type: entity
+  parent: BaseItem
+  id: CEBloodEssence
+  name: ent-CEBloodEssence
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    size: Tiny
+  - type: Stack
+    stackType: CEBloodEssence
+    count: 1

@@ -24,12 +24,6 @@
   typingState: default0
   idleState: default3
 
-- type: typingIndicator
-  id: insect
-  spritePath: _Adventure/Interface/TypingIndicators/Speech.rsi
-  typingState: insect0
-  idleState: insect1
-
 - type: markingsGroup
   parent: Undergarments
   id: InsectSerpentide

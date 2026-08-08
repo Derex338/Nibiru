@@ -2,7 +2,6 @@
 - type: marking
   id: LizardHornsArgali2
   bodyPart: HeadTop
-  bodyPart: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -11,7 +10,6 @@
 - type: marking
   id: LizardHornsAyrshire2
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -20,7 +18,6 @@
 - type: marking
   id: LizardHornsBambi
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -29,7 +26,6 @@
 - type: marking
   id: LizardHornsBig
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -38,7 +34,6 @@
 - type: marking
   id: LizardHornsBighorn2
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -47,7 +42,6 @@
 - type: marking
   id: LizardHornsCorkscrew
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -56,7 +50,6 @@
 - type: marking
   id: LizardHornsDeathclaw
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -65,7 +58,6 @@
 - type: marking
   id: LizardHornsDeathclawgreat
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -74,7 +66,6 @@
 - type: marking
   id: LizardHornsDouble2
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -83,7 +74,6 @@
 - type: marking
   id: LizardHornsDragon
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -92,7 +82,6 @@
 - type: marking
   id: LizardHornsMohawk
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -101,7 +90,6 @@
 - type: marking
   id: LizardHornsOlddragon
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -110,7 +98,6 @@
 - type: marking
   id: LizardHornsMyrsore2
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -119,7 +106,6 @@
 - type: marking
   id: LizardHornsTrike
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -128,7 +114,6 @@
 - type: marking
   id: LizardHornsFullSpike
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -137,7 +122,6 @@
 - type: marking
   id: LizardHornsLittleTrike
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -146,7 +130,6 @@
 - type: marking
   id: LizardHornsKrone
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/horns.rsi
@@ -155,7 +138,6 @@
 #Tails
 - type: marking
   id: LizardTailCurved
-  bodyPart: Tail
   bodyPart: Tail
   groupWhitelist: [Reptilian]
   sprites:
@@ -167,7 +149,6 @@
 - type: marking
   id: LizardTailFlexible
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails.rsi
@@ -178,7 +159,6 @@
 - type: marking
   id: LizardTailSpiky
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails.rsi
@@ -189,7 +169,6 @@
 - type: marking
   id: LizardTailRidge
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails.rsi
@@ -202,7 +181,6 @@
 - type: marking
   id: LizardTailSpike
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails.rsi
@@ -213,7 +191,6 @@
 - type: marking
   id: LizardTailOverBig
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails.rsi
@@ -224,7 +201,6 @@
 - type: marking
   id: LizardTailOverBigSpike
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails.rsi
@@ -235,7 +211,6 @@
 - type: marking
   id: LizardTailUltraBig
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails48.rsi
@@ -246,7 +221,6 @@
 - type: marking
   id: LizardTailUltraBigSpike
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails48.rsi
@@ -259,7 +233,6 @@
 - type: marking
   id: LizardTailUltraBigRidge
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails48.rsi
@@ -272,7 +245,6 @@
 - type: marking
   id: LizardTailUltraBigTiger
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails48.rsi
@@ -285,7 +257,6 @@
 - type: marking
   id: LizardTailUltraBigSpikeTiger
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails48.rsi
@@ -300,7 +271,6 @@
 - type: marking
   id: LizardTailUltraBigRidgeTiger
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/tails48.rsi
@@ -316,7 +286,6 @@
 - type: marking
   id: LizardChestPrickly
   bodyPart: Tail
-  bodyPart: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/body.rsi
@@ -325,7 +294,6 @@
 - type: marking
   id: LizardChestRidge
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/body.rsi
@@ -334,7 +302,6 @@
 - type: marking
   id: LizardChestUnderbellyF
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/body.rsi
@@ -343,7 +310,6 @@
 - type: marking
   id: LizardChestRidgeDouble
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/body.rsi
@@ -352,7 +318,6 @@
 - type: marking
   id: LizardChestRidgeSmall
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/body.rsi
@@ -361,7 +326,6 @@
 #Frills
 - type: marking
   id: LizardFrillsCollar
-  bodyPart: HeadSide
   bodyPart: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
@@ -373,7 +337,6 @@
 - type: marking
   id: LizardFrillsFins
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -384,7 +347,6 @@
 - type: marking
   id: LizardFrillsFinsKing
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -395,7 +357,6 @@
 - type: marking
   id: LizardFrillsFinsBig
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -406,7 +367,6 @@
 - type: marking
   id: LizardFrillsRidge
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -415,7 +375,6 @@
 - type: marking
   id: LizardFrillsRidgeFull
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -424,7 +383,6 @@
 - type: marking
   id: LizardFrillsRidgeFullFull
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -433,7 +391,6 @@
 - type: marking
   id: LizardFrillsRidgeSmall
   bodyPart: HeadSide
-  markingCategory: HeadSide
   groupWhitelist: [Reptilian]
   sprites:
   - sprite: _Adventure/Races/Reptilian/Customization/frills.rsi
@@ -442,7 +399,6 @@
 #Snout
 - type: marking
   id: LizardSnoutFlat
-  bodyPart: Snout
   bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Reptilian]
@@ -453,7 +409,6 @@
 - type: marking
   id: LizardSnoutHigh
   bodyPart: Snout
-  markingCategory: Snout
   forcedColoring: true
   groupWhitelist: [Reptilian]
   sprites:
@@ -463,7 +418,6 @@
 - type: marking
   id: LizardSnoutCroc
   bodyPart: Snout
-  markingCategory: Snout
   forcedColoring: true
   groupWhitelist: [Reptilian]
   sprites:
@@ -473,7 +427,6 @@
 - type: marking
   id: LizardSnoutTumb
   bodyPart: Snout
-  markingCategory: Snout
   forcedColoring: true
   groupWhitelist: [Reptilian]
   sprites:
@@ -483,7 +436,6 @@
 - type: marking
   id: LizardSnoutBeak
   bodyPart: Snout
-  markingCategory: Snout
   forcedColoring: true
   groupWhitelist: [Reptilian]
   sprites:
@@ -493,7 +445,6 @@
 - type: marking
   id: LizardSnoutSmall
   bodyPart: Snout
-  markingCategory: Snout
   forcedColoring: true
   groupWhitelist: [Reptilian]
   sprites:
