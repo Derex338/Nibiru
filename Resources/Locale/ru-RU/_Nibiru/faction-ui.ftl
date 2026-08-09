@@ -2,6 +2,7 @@
 
 ## Заголовки окон
 faction-menu-title = Окно фракции
+faction-window-tooltip = Окно фракции
 faction-logo-editor-title = Редактор Логотипа Фракции
 
 ## Главный/экран создания

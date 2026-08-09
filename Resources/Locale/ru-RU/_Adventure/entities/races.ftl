@@ -1,7 +1,6 @@
 ent-ActionSericultureInsectWax = Произвести воск
 ent-BaseMobFelinid = Базовый фелинид
 ent-BigHide = большая шкура
-ent-CEBloodEssence = эссенция крови
 ent-FactionStatue = статуя фракции
 ent-HeadDrask = голова драска
 ent-HeadInsect = голова серпентида

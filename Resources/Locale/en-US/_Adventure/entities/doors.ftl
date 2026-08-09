@@ -6,6 +6,4 @@ ent-DoubleFirelockGlass = firelock [Double]
     .desc = This is a firelock - it closes in areas where the air alarm has triggered. Try not to get crushed!
 ent-TripleFirelockGlass = firelock [Triple]
     .desc = This is a firelock - it closes in areas where the air alarm has triggered. Try not to get crushed!
-ent-DoorElectronics = door electronics circuit board
-ent-FirelockElectronics = firelock electronics
 ent-ActionJumpSpecies = Jump

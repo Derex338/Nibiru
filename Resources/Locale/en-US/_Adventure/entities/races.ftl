@@ -1,7 +1,6 @@
 ent-ActionSericultureInsectWax = Produce wax
 ent-BaseMobFelinid = Base felinid
 ent-BigHide = big hide
-ent-CEBloodEssence = blood essence
 ent-FactionStatue = faction statue
 ent-HeadDrask = drask head
 ent-HeadInsect = serpentid head
