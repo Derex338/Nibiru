@@ -237,7 +237,7 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
         }
     }
 
-    private static string GetCraftName(ConstructionPrototype prototype)
+    private string GetCraftName(ConstructionPrototype prototype)
     {
         if (prototype.SetName is { } locId)
             return Loc.GetString(locId);
