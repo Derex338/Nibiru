@@ -21,7 +21,19 @@
 - type: guideEntry
   id: CECookingRecipesEN
   name: guide-entry-ce-cooking
-  text: "/ServerInfo/_CE/Guidebook_RU/Cooking/Cooking.xml"
+  text: "/ServerInfo/_CE/Guidebook_EN/Cooking/Cooking.xml"
   children:
-  - CECookingMealsRU
-  - CECookingSoupsRU
+  - CECookingMealsEN
+  - CECookingSoupsEN
+
+- type: guideEntry
+  id: CECookingMealsEN
+  name: guide-entry-ce-cooking-meals
+  text: "/ServerInfo/_CE/Guidebook_EN/Cooking/Recipes/Meals.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CECookingSoupsEN
+  name: guide-entry-ce-cooking-soups
+  text: "/ServerInfo/_CE/Guidebook_EN/Cooking/Recipes/Soups.xml"
+  filterEnabled: True

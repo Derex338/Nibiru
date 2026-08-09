@@ -175,24 +175,6 @@
       types:
         Asphyxiation: -1.0
   - type: UrUAccent
-  - type: SolutionContainerManager
-    solutions:
-      bloodstream:
-        reagents:
-        - ReagentId: CryoxadoneDrask
-          Quantity: 20
-  - type: Solution
-    id: bloodstream
-    solution:
-      maxVol: 100
-      reagents:
-      - ReagentId: CryoxadoneDrask
-        Quantity: 20
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-      - ReagentId: CryoxadoneDrask
-        Quantity: 0.50
   - type: MeleeWeapon
     soundHit:
       collection: Punch
