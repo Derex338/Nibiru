@@ -310,6 +310,25 @@ public abstract partial class SharedResearchSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
     }
 
+    /// <summary>
+    /// Adds a construction craft to the specified technology database
+    /// without checking if it can be unlocked.
+    /// </summary>
+    public void AddCraft(EntityUid uid, string craft, TechnologyDatabaseComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.UnlockedCrafts.Contains(craft))
+            return;
+
+        component.UnlockedCrafts.Add(craft);
+        Dirty(uid, component);
+
+        var ev = new TechnologyDatabaseModifiedEvent(new List<string> { craft });
+        RaiseLocalEvent(uid, ref ev);
+    }
+
     #region Nibiru
 
     /// <summary>
