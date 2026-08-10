@@ -457,6 +457,8 @@
     solutionName: metal
     maxFillLevels: 1
     fillBaseName: fill-
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
   - type: SolutionContainerWhitelist
     reagents:
     - CopperMolten

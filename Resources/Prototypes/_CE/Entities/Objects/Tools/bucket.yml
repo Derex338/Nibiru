@@ -12,6 +12,11 @@
     utensil: Spoon
   - type: Sprite
     sprite: _CE/Objects/Tools/bucket.rsi
+    layers:
+    - state: icon
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     size: Normal
   - type: Clothing
