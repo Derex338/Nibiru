@@ -440,10 +440,10 @@
     size: Large
     shape:
     - 0,0,1,1
-  - type: SolutionContainerManager
-    solutions:
-      metal:
-        maxVol: 500
+  - type: Solution
+    id: metal
+    solution:
+      maxVol: 500
   - type: CoolInWater
     solution: metal
   - type: Temperature

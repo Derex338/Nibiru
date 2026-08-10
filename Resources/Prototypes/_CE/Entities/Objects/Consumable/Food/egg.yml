@@ -85,12 +85,11 @@
     state: brown_shell
   - type: Item
     size: Tiny
-  - type: Solution
-    solution:
-        maxVol: 2
-        reagents:
-        - ReagentId: Egg
-          Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
+    - Trash
+  - type: SpaceGarbage
 
 - type: entity
   parent: CEFoodEggBase

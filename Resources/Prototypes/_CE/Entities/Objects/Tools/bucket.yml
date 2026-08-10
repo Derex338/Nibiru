@@ -39,6 +39,8 @@
     solution: drink
   - type: SolutionContainerVisuals
     maxFillLevels: 3
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 0
     inHandsFillBaseName: null
   - type: Appearance
   - type: ExaminableSolution

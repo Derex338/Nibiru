@@ -15,10 +15,10 @@
       visible: false
   - type: Item
     sprite: Objects/Consumable/Food/bowl.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 50
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -153,10 +153,10 @@
       visible: false
   - type: Item
     sprite: Objects/Consumable/Food/bowl.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 50
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -203,10 +203,10 @@
       visible: false
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 100
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 100
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -252,10 +252,10 @@
       visible: false
   - type: Item
     sprite: Objects/Consumable/Drinks/mug.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 30
   - type: MixableSolution
     solution: food
   - type: Edible
