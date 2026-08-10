@@ -49,9 +49,6 @@
       - Temperature
   - type: PlaceableSurface
   - type: Clickable
-  - type: Construction #Nibiru
-    graph: Bonfire
-    node: fin
   - type: AlwaysHot
   - type: IgnitionSource
     temperature: 700

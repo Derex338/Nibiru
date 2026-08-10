@@ -123,6 +123,10 @@
   name: snowman
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEMannequinSnowman
+    node: CEMannequinSnowman
 
 - type: entity
   parent: BaseStructure
@@ -130,6 +134,10 @@
   name: vampire stone altar
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEVampireStoneAltar
+    node: CEVampireStoneAltar
 
 - type: entity
   parent: BaseStructure
@@ -137,6 +145,10 @@
   name: vampire clan heart frame
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEVampireClanHeart
+    node: CEVampireClanHeartFrame
 
 - type: entity
   parent: BaseStructure
@@ -144,6 +156,10 @@
   name: vampire clan heart
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEVampireClanHeart
+    node: CEVampireClanHeart
 
 - type: entity
   parent: BaseStructure
@@ -151,6 +167,10 @@
   name: vampire workbench
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEWorkbenchVampire
+    node: CEWorkbenchVampire
 
 - type: entity
   parent: BaseStructure
@@ -158,6 +178,10 @@
   name: conveyor belt
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEConveyorBelt
+    node: CEConveyorBelt
 
 - type: entity
   parent: BaseStructure
@@ -165,7 +189,15 @@
   name: conveyor ladder
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Construction
+    graph: CEConveyorLadder
+    node: CEConveyorLadder
 
 - type: entity
   parent: CEConveyorLadder
   id: CEConveyorLadderReverse
+  components:
+  - type: Construction
+    graph: CEConveyorLadder
+    node: CEConveyorLadderReverse

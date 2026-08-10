@@ -17,6 +17,8 @@
     - Write
     - Pen
   - type: StaticPrice
+    price: 0
+  - type: StackPrice
     price: 3
   - type: PhysicalComposition
     materialComposition:

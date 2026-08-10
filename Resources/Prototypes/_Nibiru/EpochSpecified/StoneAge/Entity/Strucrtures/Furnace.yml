@@ -182,6 +182,9 @@
     solution: smelted_metal
   - type: ExaminableSolution
     solution: smelted_metal
+  - type: Construction
+    graph: StoneCrucible
+    node: fin
   - type: DrawableSolution
     solution: smelted_metal
   - type: SolutionTransfer

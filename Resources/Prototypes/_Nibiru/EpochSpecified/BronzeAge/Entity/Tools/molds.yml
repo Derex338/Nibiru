@@ -1065,9 +1065,9 @@
     id: metal
     solution:
       maxVol: 100
-  #- type: Construction
-  #  graph: MoldCrown
-  #  node: fin
+  - type: Construction
+    graph: MoldCrown
+    node: fin
 
 - type: entity
   parent: StoneMoldBase

@@ -64,6 +64,10 @@
       Slash: 4
       Piercing: 2
   - type: Material
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 10
   - type: Stack
     stackType: LeatherHelmet
     count: 1
@@ -101,6 +105,10 @@
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: Material
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 10
   - type: Stack
     stackType: LeatherChestplate
     count: 1

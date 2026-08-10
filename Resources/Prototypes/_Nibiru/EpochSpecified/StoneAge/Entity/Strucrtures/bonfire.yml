@@ -19,7 +19,7 @@
         state: burnout
         visible: false
   - type: Construction
-    graph: Bonfire
+    graph: NibiruBonfire
     node: fin
   - type: FuelConsumption
     maxFuelAmount: 600                    # 10 минут
