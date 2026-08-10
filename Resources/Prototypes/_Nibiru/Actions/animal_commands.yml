@@ -1,8 +1,7 @@
 - type: entity
   id: ActionNibiruAnimalFollow
   parent: BaseAction
-  name: ent-ActionNibiruAnimalFollow
-  description: ent-ActionNibiruAnimalFollow.desc
+
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
@@ -13,8 +12,7 @@
 - type: entity
   id: ActionNibiruAnimalStay
   parent: BaseAction
-  name: ent-ActionNibiruAnimalStay
-  description: ent-ActionNibiruAnimalStay.desc
+
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
@@ -25,8 +23,7 @@
 - type: entity
   id: ActionNibiruAnimalAttack
   parent: BaseAction
-  name: ent-ActionNibiruAnimalAttack
-  description: ent-ActionNibiruAnimalAttack.desc
+
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
@@ -39,8 +36,7 @@
 - type: entity
   id: ActionNibiruAnimalGrab
   parent: BaseAction
-  name: ent-ActionNibiruAnimalGrab
-  description: ent-ActionNibiruAnimalGrab.desc
+
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
@@ -53,8 +49,7 @@
 - type: entity
   id: ActionNibiruAnimalSearch
   parent: BaseAction
-  name: ent-ActionNibiruAnimalSearch
-  description: ent-ActionNibiruAnimalSearch.desc
+
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
@@ -67,8 +62,7 @@
 - type: entity
   id: ActionNibiruAnimalDeliver
   parent: BaseAction
-  name: ent-ActionNibiruAnimalDeliver
-  description: ent-ActionNibiruAnimalDeliver.desc
+
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }

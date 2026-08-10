@@ -76,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceZerah
   categories: [ HideSpawnMenu ]
-  name: adventure-appearance-zerah
+
   components:
   - type: Inventory
     speciesId: Zerah
@@ -116,7 +116,6 @@
     markingData:
       group: Zerah
       #layers: []
-
 
 - type: reagent
   id: ZerahPoison
@@ -216,7 +215,7 @@
 - type: entity
   id: PartSnake
   parent: [BaseItem, OrganBaseOrganic]
-  name: ent-PartSnake
+
   abstract: true
   components:
   - type: Sprite
@@ -240,7 +239,7 @@
 
 - type: entity
   id: TorsoSnake
-  name: ent-TorsoSnake
+
   parent: [OrganBaseTorsoSexed, PartSnake, OrganBaseTorso]
   components:
   - type: Sprite
@@ -248,7 +247,7 @@
 
 - type: entity
   id: HeadSnake
-  name: ent-HeadSnake
+
   parent: [OrganBaseHeadSexed, PartSnake, OrganBaseHead]
   components:
   - type: Sprite
@@ -256,7 +255,7 @@
 
 - type: entity
   id: LeftArmSnake
-  name: ent-LeftArmSnake
+
   parent: [PartSnake, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -265,7 +264,7 @@
 
 - type: entity
   id: RightArmSnake
-  name: ent-RightArmSnake
+
   parent: [PartSnake, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -274,7 +273,7 @@
 
 - type: entity
   id: LeftHandSnake
-  name: ent-LeftHandSnake
+
   parent: [PartSnake, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -283,7 +282,7 @@
 
 - type: entity
   id: RightHandSnake
-  name: ent-RightHandSnake
+
   parent: [PartSnake, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -296,7 +295,7 @@
 - type: entity
   id: OrganZerahiBrain
   parent: OrganHumanBrain
-  name: ent-OrganZerahiBrain
+
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -306,7 +305,7 @@
 - type: entity
   id: OrganZerahEyes
   parent: OrganHumanEyes
-  name: ent-OrganZerahEyes
+
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -318,7 +317,7 @@
 - type: entity
   id: OrganZerahHeart
   parent: OrganHumanHeart
-  name: ent-OrganZerahHeart
+
   description: Тук тук.
   components:
   - type: Sprite
@@ -333,7 +332,7 @@
 - type: entity
   id: OrganZerahLungs
   parent: OrganHumanLungs
-  name: ent-OrganZerahLungs
+
   description: Фильтрует азот из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -365,7 +364,7 @@
 
 - type: entity
   id: OrganZerahStomach
-  name: ent-OrganZerahStomach
+
   parent: OrganAnimalStomach
   description: Отвратительно! Кто там сидит?!
   components:
@@ -397,7 +396,7 @@
 - type: entity
   id: OrganZerahiLiver
   parent: OrganAnimalLiver
-  name: ent-OrganZerahiLiver
+
   description: Побереги меня.
   components:
   - type: Sprite
@@ -407,7 +406,7 @@
 - type: entity
   id: OrganZerahKidneys
   parent: OrganHumanKidneys
-  name: ent-OrganZerahKidneys
+
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -529,7 +528,7 @@
     count: 30
 
 - type: entity
-  name: ent-MobZerah
+
   parent:
   - AppearanceZerah
   - BaseSpeciesMobOrganic

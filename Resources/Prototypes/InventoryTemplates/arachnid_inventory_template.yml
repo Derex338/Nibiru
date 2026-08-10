@@ -53,7 +53,7 @@
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,4
-      dependsOn: jumpsuit
+      dependsOn: pants
       displayName: Pocket 1
       stripHidden: true
     - name: pocket2
@@ -63,7 +63,7 @@
       stripTime: 3
       uiWindowPos: 2,3
       strippingWindowPos: 1,4
-      dependsOn: jumpsuit
+      dependsOn: pants
       displayName: Pocket 2
       stripHidden: true
     - name: id
@@ -73,7 +73,7 @@
       stripTime: 6
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
-      dependsOn: jumpsuit
+      dependsOn: pants
       displayName: ID
     - name: belt
       slotTexture: belt

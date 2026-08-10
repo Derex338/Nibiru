@@ -76,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceFelinid
   categories: [ HideSpawnMenu ]
-  name: adventure-appearance-felinid
+
   components:
   - type: InitialBody
     organs:
@@ -223,7 +223,7 @@
 - type: entity
   id: OrganFelinidHeart
   parent: OrganHumanHeart
-  name: ent-OrganFelinidHeart
+
   components:
   - type: Metabolizer
     metabolizerTypes: [Human]
@@ -231,7 +231,7 @@
 - type: entity
   id: OrganFelinidLiver
   parent: OrganHumanLiver
-  name: ent-OrganFelinidLiver
+
   components:
   - type: Metabolizer
     metabolizerTypes: [Human]
@@ -239,7 +239,7 @@
 - type: entity
   id: OrganFelinidStomach
   parent: OrganHumanStomach
-  name: ent-OrganFelinidStomach
+
   components:
   - type: Metabolizer
     maxReagents: 3
@@ -249,7 +249,7 @@
 - type: entity
   abstract: true
   save: false
-  name: ent-BaseMobFelinid
+
   parent:
   - AppearanceFelinid
   - BaseSpeciesMobOrganic
@@ -320,7 +320,7 @@
 
 - type: entity
   save: false
-  name: ent-MobFelinid
+
   parent: BaseMobFelinid
   id: MobFelinid
 

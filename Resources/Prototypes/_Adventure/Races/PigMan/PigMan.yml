@@ -76,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearancePigMan
   categories: [ HideSpawnMenu ]
-  name: adventure-appearance-pigman
+
   components:
   - type: InitialBody
     organs:
@@ -124,7 +124,7 @@
 - type: entity
   id: OrganPigManStomach
   parent: OrganHumanStomach
-  name: ent-OrganPigManStomach
+
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/organs.rsi
@@ -142,7 +142,7 @@
 - type: entity
   id: OrganPigManHeart
   parent: OrganHumanHeart
-  name: ent-OrganPigManHeart
+
   description: тук тук
   categories: [ HideSpawnMenu ]
   components:
@@ -159,7 +159,7 @@
 - type: entity
   id: PartPigMan
   parent: [BaseItem, OrganBaseOrganic]
-  name: ent-PartPigMan
+
   abstract: true
   components:
   - type: Sprite
@@ -181,7 +181,7 @@
 
 - type: entity
   id: TorsoPigMan
-  name: ent-TorsoPigMan
+
   parent: [OrganBaseTorsoSexed, PartPigMan, OrganBaseTorso]
   components:
   - type: Sprite
@@ -196,7 +196,7 @@
 
 - type: entity
   id: HeadPigMan
-  name: ent-HeadPigMan
+
   parent: [OrganBaseHeadSexed, PartPigMan, OrganBaseHead]
   components:
   - type: Sprite
@@ -211,7 +211,7 @@
 
 - type: entity
   id: LeftArmPigMan
-  name: ent-LeftArmPigMan
+
   parent: [PartPigMan, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -220,7 +220,7 @@
 
 - type: entity
   id: RightArmPigMan
-  name: ent-RightArmPigMan
+
   parent: [PartPigMan, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -229,7 +229,7 @@
 
 - type: entity
   id: LeftHandPigMan
-  name: ent-LeftHandPigMan
+
   parent: [PartPigMan, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -238,7 +238,7 @@
 
 - type: entity
   id: RightHandPigMan
-  name: ent-RightHandPigMan
+
   parent: [PartPigMan, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -247,7 +247,7 @@
 
 - type: entity
   id: LeftLegPigMan
-  name: ent-LeftLegPigMan
+
   parent: [PartPigMan, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -256,7 +256,7 @@
 
 - type: entity
   id: RightLegPigMan
-  name: ent-RightLegPigMan
+
   parent: [PartPigMan, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -265,7 +265,7 @@
 
 - type: entity
   id: LeftFootPigMan
-  name: ent-LeftFootPigMan
+
   parent: [PartPigMan, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -274,7 +274,7 @@
 
 - type: entity
   id: RightFootPigMan
-  name: ent-RightFootPigMan
+
   parent: [PartPigMan, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -393,7 +393,7 @@
       collection: PigManHruCollection
 
 - type: entity
-  name: ent-MobPigMan
+
   parent:
   - AppearancePigMan
   - BaseSpeciesMobOrganic

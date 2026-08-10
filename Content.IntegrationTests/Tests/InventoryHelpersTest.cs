@@ -21,11 +21,11 @@ namespace Content.IntegrationTests.Tests
   - type: MobState
 
 - type: entity
-  name: InventoryJumpsuitJanitorDummy
-  id: InventoryJumpsuitJanitorDummy
+  name: InventoryPantsDummy
+  id: InventoryPantsDummy
   components:
   - type: Clothing
-    slots: [innerclothing]
+    slots: [pants]
 
 - type: entity
   name: InventoryIDCardDummy
@@ -53,32 +53,27 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.Multiple(() =>
                 {
-                    // Can't do the test if this human doesn't have the slots for it.
-                    Assert.That(invSystem.HasSlot(human, "jumpsuit"));
+                    Assert.That(invSystem.HasSlot(human, "pants"));
                     Assert.That(invSystem.HasSlot(human, "id"));
                 });
 
-                Assert.That(invSystem.SpawnItemInSlot(human, "jumpsuit", "InventoryJumpsuitJanitorDummy", true));
+                Assert.That(invSystem.SpawnItemInSlot(human, "pants", "InventoryPantsDummy", true));
 
 #pragma warning disable NUnit2045
-                // Do we actually have the uniform equipped?
-                Assert.That(invSystem.TryGetSlotEntity(human, "jumpsuit", out var uniform));
-                Assert.That(sEntities.GetComponent<MetaDataComponent>(uniform.Value).EntityPrototype is
+                Assert.That(invSystem.TryGetSlotEntity(human, "pants", out var pants));
+                Assert.That(sEntities.GetComponent<MetaDataComponent>(pants.Value).EntityPrototype is
                 {
-                    ID: "InventoryJumpsuitJanitorDummy"
+                    ID: "InventoryPantsDummy"
                 });
 #pragma warning restore NUnit2045
 
                 systemMan.GetEntitySystem<StunSystem>().TryUpdateStunDuration(human, TimeSpan.FromSeconds(1f));
 
 #pragma warning disable NUnit2045
-                // Since the mob is stunned, they can't equip this.
                 Assert.That(invSystem.SpawnItemInSlot(human, "id", "InventoryIDCardDummy", true), Is.False);
 
-                // Make sure we don't have the ID card equipped.
                 Assert.That(invSystem.TryGetSlotEntity(human, "item", out _), Is.False);
 
-                // Let's try skipping the interaction check and see if it equips it!
                 Assert.That(invSystem.SpawnItemInSlot(human, "id", "InventoryIDCardDummy", true, true));
                 Assert.That(invSystem.TryGetSlotEntity(human, "id", out var idUid));
                 Assert.That(sEntities.GetComponent<MetaDataComponent>(idUid.Value).EntityPrototype is

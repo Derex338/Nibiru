@@ -49,7 +49,7 @@
           steps:
             - tag: FirelockElectronics
               store: board
-              name: ent-FirelockElectronics
+
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "mainboard"
@@ -143,15 +143,14 @@
             - !type:SnapToGrid
               southRotation: true
 
-
 - type: construction
-  name: ent-TripleFirelockGlass
+
   id: TripleFirelockGlass
   graph: FirelockTriple
   startNode: start
   targetNode: TripleFirelockGlass
   category: construction-category-structures
-  description: ent-TripleFirelockGlass.desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

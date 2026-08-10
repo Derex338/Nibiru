@@ -66,12 +66,11 @@
       required: true
       default: [StoneBase]
 
-
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceStone
   categories: [ HideSpawnMenu ]
-  name: adventure-appearance-stone
+
   components:
   - type: InitialBody
     organs:
@@ -129,7 +128,7 @@
 #Мозг
 - type: entity
   id: StoneBrain
-  name: ent-StoneBrain
+
   parent: OrganHumanBrain
   components:
   - type: Damageable
@@ -169,7 +168,7 @@
 - type: entity
   id: PartStone
   parent: BaseItem
-  name: ent-PartStone
+
   abstract: true
   components:
   - type: Damageable
@@ -221,7 +220,7 @@
 
 - type: entity
   id: TorsoStone
-  name: ent-TorsoStone
+
   parent: [OrganBaseTorsoSexed, PartStone, OrganBaseTorso]
   components:
   - type: Sprite
@@ -229,7 +228,7 @@
 
 - type: entity
   id: HeadStone
-  name: ent-HeadStone
+
   parent: [OrganBaseHeadSexed, PartStone, OrganBaseHead]
   components:
   - type: Sprite
@@ -237,42 +236,42 @@
 
 - type: entity
   id: LeftArmStone
-  name: ent-LeftArmStone
+
   parent: [PartStone, OrganBaseArmLeft]
 
 - type: entity
   id: RightArmStone
-  name: ent-RightArmStone
+
   parent: [PartStone, OrganBaseArmRight]
 
 - type: entity
   id: LeftHandStone
-  name: ent-LeftHandStone
+
   parent: [PartStone, OrganBaseHandLeft]
 
 - type: entity
   id: RightHandStone
-  name: ent-RightHandStone
+
   parent: [PartStone, OrganBaseHandRight]
 
 - type: entity
   id: LeftLegStone
-  name: ent-LeftLegStone
+
   parent: [PartStone, OrganBaseLegLeft]
 
 - type: entity
   id: RightLegStone
-  name: ent-RightLegStone
+
   parent: [PartStone, OrganBaseLegRight]
 
 - type: entity
   id: LeftFootStone
-  name: ent-LeftFootStone
+
   parent: [PartStone, OrganBaseFootLeft]
 
 - type: entity
   id: RightFootStone
-  name: ent-RightFootStone
+
   parent: [PartStone, OrganBaseFootRight]
 
 - type: damageContainer
@@ -502,7 +501,7 @@
       displayName: Shirt
 
 - type: entity
-  name: ent-MobStone
+
   parent:
   - AppearanceStone
   - BaseSpeciesMob

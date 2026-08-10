@@ -170,7 +170,6 @@
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
     state: scorpider_body
 
-
 - type: marking
   id: InsectBodyBristle
   bodyPart: RHand
