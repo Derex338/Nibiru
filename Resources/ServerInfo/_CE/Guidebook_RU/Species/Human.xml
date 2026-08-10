@@ -2,7 +2,7 @@
 # Люди
 
 <Box>
-<GuideEntityEmbed Entity="CEMobHuman" Caption="Человек"/>
+<GuideEntityEmbed Entity="AppearanceHuman" Caption="Человек"/>
 </Box>
 
 Пока что не имеют значимых геймплейных особенностей.

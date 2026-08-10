@@ -1,9 +1,6 @@
 <Document>
 # Carcats
 
-<Box>
-<GuideEntityEmbed Entity="CEMobCarcat" Caption="Carcat"/>
-</Box>
 
 ## Gameplay Features
 - Carcats are naturally equipped with sharp claws that deal increased melee damage.
