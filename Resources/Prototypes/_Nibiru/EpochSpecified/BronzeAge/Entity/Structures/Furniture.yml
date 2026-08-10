@@ -29,6 +29,9 @@
   - type: Icon
     sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/WoodChest.rsi
     state: crate_icon
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
   - type: Construction
     graph: BronzeAgeChest
     node: fin

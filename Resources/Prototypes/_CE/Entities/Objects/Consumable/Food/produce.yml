@@ -567,7 +567,7 @@
         - ReagentId: CENutriment
           Quantity: 1.4
   - type: Tag
-    tags: [ Food, Fruit, Plant ]
+    tags: [ Food, Fruit, Plant, Slice ]
   - type: CEFoodTag
     tags:
     - CEFruits

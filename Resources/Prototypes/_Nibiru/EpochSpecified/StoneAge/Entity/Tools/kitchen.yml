@@ -215,7 +215,7 @@
     canChangeTransferAmount: true
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
+    maxFillLevels: 3
     fillBaseName: fill-
   - type: UserInterface
     interfaces:
