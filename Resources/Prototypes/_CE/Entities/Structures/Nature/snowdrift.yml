@@ -51,6 +51,8 @@
       params:
         volume: 8
   - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

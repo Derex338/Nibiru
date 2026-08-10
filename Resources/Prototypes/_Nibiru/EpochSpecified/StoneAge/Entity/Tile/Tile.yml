@@ -37,3 +37,7 @@
   components:
   - type: Stack
     count: 4
+  - type: Construction
+    graph: StrawTile
+    node: fin
+    deconstructionTarget: null
