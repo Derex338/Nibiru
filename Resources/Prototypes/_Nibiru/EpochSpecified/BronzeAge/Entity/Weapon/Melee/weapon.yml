@@ -152,6 +152,13 @@
     - state: tip
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    fillBaseName: null
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
+    equippedMaxFillLevels: 0
+    equippedFillBaseName: null
   - type: Item
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
     size: Ginormous
@@ -318,6 +325,13 @@
     - state: tip
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    fillBaseName: null
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
+    equippedMaxFillLevels: 0
+    equippedFillBaseName: null
   - type: MeleeWeapon
     range: 2
     wideAnimationRotation: -135

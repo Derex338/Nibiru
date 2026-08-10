@@ -85,6 +85,13 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
     state: spear
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    fillBaseName: null
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
+    equippedMaxFillLevels: 0
+    equippedFillBaseName: null
   - type: MeleeWeapon
     attackRate: 1.2
     damage:
@@ -128,6 +135,13 @@
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/StoneSpear.rsi
     state: spear
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    fillBaseName: null
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
+    equippedMaxFillLevels: 0
+    equippedFillBaseName: null
   - type: MeleeWeapon
     attackRate: 1.2
     damage:

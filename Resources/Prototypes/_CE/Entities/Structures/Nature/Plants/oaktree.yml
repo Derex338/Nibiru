@@ -45,5 +45,9 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_trees.rsi
     layers:
+    - state: liq-1
+      sprite: _CE/Structures/Nature/Farm/watered.rsi
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
     - state: tree01
       map: ["enum.PlantVisualLayers.Base"]
