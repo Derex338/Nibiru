@@ -169,17 +169,7 @@ public sealed partial class SuicideSystem : EntitySystem
             return;
         }
 
-        // Corvax-IPC-start
-        //args.DamageType ??= "Bloodloss";
-        string entityPrototypeId = "";
-        if (TryComp(victim, out MetaDataComponent? metaData) && metaData.EntityPrototype != null)
-            entityPrototypeId = metaData.EntityPrototype.ID;
-
-        if (entityPrototypeId != "MobIpc")
-            args.DamageType ??= "Bloodloss";
-        else
-            args.DamageType ??= "Blunt";
-        // Corvax-IPC-end
+        args.DamageType ??= "Bloodloss";
         _suicide.ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;
     }

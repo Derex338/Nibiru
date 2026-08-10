@@ -24,16 +24,27 @@ public sealed partial class TestPair
     private async Task ResetModifiedPreferences()
     {
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        var humanProfile = new HumanoidCharacterProfile();
         foreach (var user in _modifiedProfiles)
         {
-            await Server.WaitPost(() => prefMan.SetProfile(user, 0, new HumanoidCharacterProfile()).Wait());
+            await Server.WaitPost(() => prefMan.SetProfile(user, 0, humanProfile).Wait());
         }
 
         _modifiedProfiles.Clear();
+
+        // New accounts get HumanoidCharacterProfile.Random(); pin the pooled player to Human so
+        // species like Stone (no Bloodloss) do not flake SuicideCommandTests and similar.
+        if (Player is { } session)
+            await Server.WaitPost(() => prefMan.SetProfile(session.UserId, 0, humanProfile).Wait());
     }
 
     protected override async Task Recycle(PairSettings next, TextWriter testOut)
     {
+        // Pin species before the next round spawn (prefs survive disconnect).
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        if (Player is { } session)
+            await Server.WaitPost(() => prefMan.SetProfile(session.UserId, 0, new HumanoidCharacterProfile()).Wait());
+
         // Move to pre-round lobby. Required to toggle dummy ticker on and off
         var gameTicker = Server.System<GameTicker>();
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
