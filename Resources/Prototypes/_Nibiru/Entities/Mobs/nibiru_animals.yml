@@ -66,6 +66,10 @@
   name: свинья
   description: Хрю-хрю.
   components:
+  - type: Construction
+    graph: Pig
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: Mobs/Animals/pig.rsi
     state: pig
@@ -187,6 +191,10 @@
   name: курица
   description: Птица, дающая яйца.
   components:
+  - type: Construction
+    graph: Chicken
+    node: fin
+    deconstructionTarget: null
   - type: NibiruNpcAudio
     ambientSound:
       path: /Audio/_Nibiru/Mobs/Chicken/AmbientSound.ogg
@@ -390,6 +398,10 @@
   name: овца
   description: Пушистое создание. Даёт шерсть.
   components:
+  - type: Construction
+    graph: Sheep
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -522,6 +534,10 @@
   name: корова
   description: Даёт молоко. Может боднуть, если разозлить.
   components:
+  - type: Construction
+    graph: Cow
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: Mobs/Animals/cow.rsi
     state: cow
@@ -610,6 +626,10 @@
   name: почтовый голубь
   description: Маленькая, но очень важная птица.
   components:
+  - type: Construction
+    graph: Pigeon
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Pigeon.rsi
     state: icon
@@ -734,6 +754,10 @@
   name: собака
   description: Верный друг. Можно обучать командам.
   components:
+  - type: Construction
+    graph: Dog
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: Mobs/Pets/walter.rsi
     state: walter

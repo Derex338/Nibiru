@@ -7,6 +7,10 @@
   suffix: Nibiru
   description: A majestic horse you can ride.
   components:
+  - type: Construction
+    graph: Horse
+    node: fin
+    deconstructionTarget: null
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHorse
