@@ -3,10 +3,10 @@ using Robust.Shared.Localization;
 
 namespace Content.Client._CE.Localization;
 
-public sealed class CELocalizationVisualsSystem : EntitySystem
+public sealed partial class CELocalizationVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly ILocalizationManager _loc = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
