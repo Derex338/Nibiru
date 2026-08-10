@@ -49,7 +49,7 @@
           steps:
             - tag: FirelockElectronics
               store: board
-
+              name: construction-graph-tag-firelock-electronics-circuit-board
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "mainboard"
@@ -144,7 +144,7 @@
               southRotation: true
 
 - type: construction
-
+  name: ent-DoubleFirelockGlass
   id: DoubleFirelockGlass
   graph: FirelockDouble
   startNode: start

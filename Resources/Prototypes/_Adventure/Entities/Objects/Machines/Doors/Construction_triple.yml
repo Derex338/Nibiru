@@ -48,7 +48,7 @@
       steps:
       - component: DoorElectronics
         store: board
-
+        name: construction-graph-component-door-electronics-circuit-board
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
@@ -133,7 +133,7 @@
         doAfter: 8
 
 - type: construction
-
+  name: ent-AirlockTriple
   id: AirlockTriple
   graph: AirlockTriple
   startNode: start
