@@ -78,6 +78,8 @@
     - id: CESeedCotton
       amount: 3
   - type: StaticPrice
+    price: 0
+  - type: StackPrice
     price: 1
   - type: Material
   - type: PhysicalComposition

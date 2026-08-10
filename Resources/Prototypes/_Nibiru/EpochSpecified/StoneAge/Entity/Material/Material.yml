@@ -215,18 +215,15 @@
       Thread: 100
   - type: Stack
     stackType: Thread
-    baseLayer: base
-    layerStates:
-    - thread_1
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi
-    layers:
-    - state: thread_1
-      map: ["base"]
+    state: thread_1
   - type: Item
     size: Tiny
     shape:
     - 0,0,0,0
+  - type: StaticPrice
+    price: 0
   - type: StackPrice
     price: 1
   - type: Fuel
