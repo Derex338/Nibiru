@@ -10,9 +10,8 @@
   components:
   - type: PlacementReplacement
     key: walls
-  - type: SolutionContainerManager
-    solutions:
-      pool:
+  - type: Solution
+    solution:
         maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable.
         reagents:
         - ReagentId: CEWater

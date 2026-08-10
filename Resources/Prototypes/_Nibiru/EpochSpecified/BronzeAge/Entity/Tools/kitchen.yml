@@ -10,9 +10,8 @@
     shape:
     - 0,0,1,1
     storedOffset: 0,-3
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 100
   - type: Sprite
     sprite: _CE/Objects/Consumable/Food/Soups/cooking_pot.rsi

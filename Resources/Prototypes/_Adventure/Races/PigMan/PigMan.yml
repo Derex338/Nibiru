@@ -130,15 +130,6 @@
     sprite: _Adventure/Races/PigMan/organs.rsi
     state: stomach
   - type: Organ
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 100
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 7
   - type: Stomach
     specialDigestible:
       tags:

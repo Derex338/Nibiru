@@ -19,9 +19,9 @@
       visible: false
       color: "#38312e"
       map: [ burn ]
-  - type: SolutionContainerManager
-    solutions:
-      cooker:
+  - type: Solution
+    id: cooker
+    solution:
         maxVol: 150
   - type: CEFoodHolder
     foodType: Soup

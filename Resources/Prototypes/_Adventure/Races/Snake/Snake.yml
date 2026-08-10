@@ -346,20 +346,22 @@
   - type: Metabolizer
     solutionOnBody: false
     metabolizerTypes: [ Slime ]
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      organ:
-        reagents:
-        - ReagentId: ZerahBlood
-          Quantity: 10
-      Lung:
-        maxVol: 100.0
-        canReact: false
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+    - SolutionLungGas
+    - SolutionZerahOrganBlood
+
+- type: entity
+  parent: Solution
+  id: SolutionZerahOrganBlood
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: organ
+    solution:
+      reagents:
+      - ReagentId: ZerahBlood
+        Quantity: 10
 
 - type: entity
   id: OrganZerahStomach
@@ -375,15 +377,6 @@
       tags:
       - Meat
       - Pill
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
   - type: Storage
     grid:
     - 0,0,6,3

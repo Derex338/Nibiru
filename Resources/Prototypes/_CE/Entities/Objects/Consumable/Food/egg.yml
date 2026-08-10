@@ -15,9 +15,8 @@
     state: brown
   - type: Item
     size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6
         reagents:
         - ReagentId: Egg
@@ -86,9 +85,8 @@
     state: brown_shell
   - type: Item
     size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 2
         reagents:
         - ReagentId: Egg
@@ -120,9 +118,8 @@
   components:
   - type: Edible
     trash: []
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6
         reagents:
         - ReagentId: EggCooked
