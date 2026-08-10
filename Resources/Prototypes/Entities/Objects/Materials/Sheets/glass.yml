@@ -11,6 +11,8 @@
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Damageable
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

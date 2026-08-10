@@ -31,6 +31,8 @@
           collection: MetalBreak
   - type: Damageable
     damageModifierSet: Stone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Material
   - type: PhysicalComposition
     materialComposition:
