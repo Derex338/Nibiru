@@ -4,6 +4,9 @@
   name: melting furnace
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreMeltingFurnace
 
 - type: entity
   parent: BaseStructure
@@ -11,6 +14,9 @@
   name: recycler
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreRecycler
 
 - type: entity
   parent: BaseStructure
@@ -18,6 +24,9 @@
   name: drill
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreDrill
 
 - type: entity
   parent: BaseStructure
@@ -25,6 +34,9 @@
   name: charger
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreCharger
 
 - type: entity
   parent: BaseStructure
@@ -32,6 +44,9 @@
   name: salary platform
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreSalaryPlatform
 
 - type: entity
   parent: BaseStructure
@@ -39,6 +54,9 @@
   name: heater
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreHeater
 
 - type: entity
   parent: BaseStructure
@@ -46,6 +64,9 @@
   name: distribution unit
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreDistributionUnit
 
 - type: entity
   parent: BaseStructure
@@ -53,6 +74,9 @@
   name: accumulator vessel
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreAccumulatorVessel
 
 - type: entity
   parent: BaseStructure
@@ -60,6 +84,9 @@
   name: pipe terminal
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreTerminal
 
 - type: entity
   parent: BaseStructure
@@ -67,6 +94,9 @@
   name: magic capacitor
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreGeneratorMagicCapacitor
 
 - type: entity
   parent: BaseStructure
@@ -74,34 +104,58 @@
   name: trading platform
   suffix: Stub
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformEmpireGuard
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformBlackMarket
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformBlackMarket
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformHomeDecor
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformHomeDecor
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformTailors
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformTailors
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformHorticulture
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformHorticulture
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformDwarfMiners
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformDwarfMiners
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformAlcohol
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformAlcohol
 
 - type: entity
   parent: CETradingPlatformEmpireGuard
   id: CETradingPlatformApothecariesGuild
+  components:
+  - type: Machine
+    board: CEMachineCoreTradingPlatformApothecariesGuild
 
 - type: entity
   parent: BaseItem

@@ -68,7 +68,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -159,7 +159,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
