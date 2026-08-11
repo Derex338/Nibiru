@@ -117,6 +117,8 @@
   - type: Construction
     graph: FirelockTriple
     node: TripleFirelockGlass
+  - type: StaticPrice
+    price: 200
 
 # каркас
 - type: entity

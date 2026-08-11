@@ -214,7 +214,7 @@
   components:
   - type: PhysicalComposition
     materialComposition:
-      Thread: 100
+      Thread: 1
   - type: Stack
     stackType: Thread
   - type: Sprite

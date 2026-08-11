@@ -127,7 +127,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetRGlass1
-        amount: 6
+        amount: 4
       steps:
       - tool: Prying
         doAfter: 8
