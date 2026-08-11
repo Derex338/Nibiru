@@ -88,7 +88,7 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
         {
             var bundle = _random.Pick(craftBundles);
             ent.Comp.Discipline = bundle.discipline;
-            ent.Comp.Crafts = [bundle.craft];
+            ent.Comp.Crafts = new List<ProtoId<ConstructionPrototype>> { bundle.craft };
             Dirty(ent);
             return;
         }
@@ -97,7 +97,7 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
         {
             var bundle = _random.Pick(recipeBundles);
             ent.Comp.Discipline = bundle.discipline;
-            ent.Comp.Recipes = [bundle.recipe];
+            ent.Comp.Recipes = new List<ProtoId<LatheRecipePrototype>> { bundle.recipe };
             Dirty(ent);
             return;
         }
