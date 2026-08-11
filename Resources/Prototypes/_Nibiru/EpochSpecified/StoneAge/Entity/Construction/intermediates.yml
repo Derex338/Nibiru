@@ -2,8 +2,6 @@
   id: StoneBlockIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseItem
-  name: ent-StoneBlockIntermediate
-  description: ent-StoneBlockIntermediate.desc
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
@@ -17,8 +15,6 @@
   id: UshankaIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseItem
-  name: ent-UshankaIntermediate
-  description: ent-UshankaIntermediate.desc
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/ushanka.rsi
@@ -32,8 +28,6 @@
   id: CoatTrenchIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseItem
-  name: ent-CoatTrenchIntermediate
-  description: ent-CoatTrenchIntermediate.desc
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
@@ -47,8 +41,6 @@
   id: CoatPirateIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseItem
-  name: ent-CoatPirateIntermediate
-  description: ent-CoatPirateIntermediate.desc
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
@@ -62,8 +54,6 @@
   id: LetherHelmetIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseItem
-  name: ent-LetherHelmetIntermediate
-  description: ent-LetherHelmetIntermediate.desc
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
@@ -77,8 +67,6 @@
   id: LetherChestplateIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseItem
-  name: ent-LetherChestplateIntermediate
-  description: ent-LetherChestplateIntermediate.desc
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
@@ -90,13 +78,10 @@
 
 
 
-
 - type: entity
   id: StoneWallIntermediate
   suffix: Нибиру, Каменный век
   parent: BaseStructure
-  name: ent-StoneWallIntermediate
-  description: ent-StoneWallIntermediate.desc
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi

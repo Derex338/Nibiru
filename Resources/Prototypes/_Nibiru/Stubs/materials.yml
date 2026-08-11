@@ -1,6 +1,6 @@
 - type: material
   id: Bone
-  stackEntity: Bone1
+  stackEntity: MaterialBones1
   name: materials-bones
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/materials.rsi, state: bones }

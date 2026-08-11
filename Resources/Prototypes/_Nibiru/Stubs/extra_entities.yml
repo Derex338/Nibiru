@@ -1,7 +1,6 @@
 - type: entity
   parent: BaseItem
   id: Herb
-  name: ent-Herb
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
@@ -14,7 +13,6 @@
 - type: entity
   parent: BaseItem
   id: BigHide
-  name: ent-BigHide
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
@@ -27,7 +25,6 @@
 - type: entity
   parent: BaseItem
   id: CEBloodEssence
-  name: ent-CEBloodEssence
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:

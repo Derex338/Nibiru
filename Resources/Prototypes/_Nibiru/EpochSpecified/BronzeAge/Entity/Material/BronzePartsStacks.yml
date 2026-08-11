@@ -316,7 +316,7 @@
 
 - type: material
   id: Copper
-  stackEntity: IngotCopper
+  stackEntity: IngotCopper1
   name: copper
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ingots.rsi, state: copper }
@@ -325,7 +325,7 @@
 
 - type: material
   id: Tin
-  stackEntity: IngotTin
+  stackEntity: IngotTin1
   name: tin
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ingots.rsi, state: iron }
@@ -334,7 +334,7 @@
 
 - type: material
   id: Bronze
-  stackEntity: IngotBronze
+  stackEntity: IngotBronze1
   name: bronze
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }

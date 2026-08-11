@@ -3,7 +3,7 @@
   name: stack-stone
 
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
-  spawn: Stone
+  spawn: Stone1
   maxCount: 10
 
 - type: stack
@@ -41,7 +41,7 @@
 
 - type: material
   id: Stone
-  stackEntity: Stone
+  stackEntity: Stone1
   name: stone
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi, state: icon }
