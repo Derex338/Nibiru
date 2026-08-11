@@ -134,8 +134,8 @@
           - !type:SpawnEntitiesBehavior
             spawn:
               WoodStick1:
-                min: 3
-                max: 5
+                min: 1
+                max: 2
   - type: Construction
     graph: WickerShield
     node: fin

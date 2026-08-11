@@ -126,6 +126,8 @@
   #    right:
   #    - state: inhand-right-flame
   #      shader: unshaded
+  - type: StaticPrice
+    price: 15
   - type: Destructible
     thresholds:
     - trigger:

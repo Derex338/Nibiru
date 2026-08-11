@@ -157,7 +157,7 @@
   components:
   - type: PhysicalComposition
     materialComposition:
-      WoodStick: 100
+      WoodStick: 1
   - type: Stack
     stackType: WoodStick
     count: 20
