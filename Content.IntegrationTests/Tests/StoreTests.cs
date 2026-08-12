@@ -29,15 +29,6 @@ public sealed class StoreTests : GameTest
     slots:
     - idcard
   - type: Pda
-
-- type: entity
-  name: UniformDummy
-  id: UniformDummy
-  components:
-  - type: Clothing
-    slots: [pants]
-  - type: Item
-    size: Tiny
 ";
 
     [Test]
