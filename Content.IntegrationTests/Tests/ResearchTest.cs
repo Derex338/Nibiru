@@ -46,6 +46,7 @@ public sealed class ResearchTest : GameTest
     }
 
     [Test]
+    [Ignore("Nibiru uses craftUnlocks; lathe recipeUnlocks are unused")]
     public async Task AllTechPrintableTest()
     {
         var pair = Pair;

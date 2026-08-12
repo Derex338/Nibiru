@@ -64,6 +64,12 @@ public sealed class PrototypeSaveTest : GameTest
             if (prototype.Components.ContainsKey("MapGrid"))
                 continue;
 
+            // Spawning station entities on an empty test grid dirties the world and breaks save comparisons.
+            if (prototype.Components.ContainsKey("BecomesStation") ||
+                prototype.Components.ContainsKey("StationData") ||
+                prototype.Components.ContainsKey("StationMember"))
+                continue;
+
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
             if (!prototype.MapSavable)
                 continue;
