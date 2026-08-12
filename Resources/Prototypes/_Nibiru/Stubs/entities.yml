@@ -5,6 +5,9 @@
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Nibiru/EpochSpecified/StoneAge/Material/Mud.rsi
+    state: mud_1
   - type: Item
     size: Small
   - type: Material

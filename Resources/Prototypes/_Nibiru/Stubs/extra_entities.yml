@@ -4,6 +4,9 @@
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+    state: produce
   - type: Item
     size: Small
   - type: Stack
@@ -16,6 +19,9 @@
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Hide.rsi
+    state: big
   - type: Item
     size: Normal
   - type: Stack
@@ -28,6 +34,9 @@
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _CE/Objects/Materials/blood_essence.rsi
+    state: drop
   - type: Item
     size: Tiny
   - type: Stack

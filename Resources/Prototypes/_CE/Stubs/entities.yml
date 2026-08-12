@@ -164,9 +164,13 @@
   suffix: Stub
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _CE/Objects/Tools/mana_glove.rsi
+    state: icon
   - type: Item
     size: Small
   - type: Clothing
+    sprite: _CE/Objects/Tools/mana_glove.rsi
     slots:
     - gloves
 

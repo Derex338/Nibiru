@@ -643,6 +643,7 @@
     learnedCommands: [ Follow, Stay, Deliver ]
   - type: NibiruBird
   - type: Item
+    size: Large
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.0
     baseSprintSpeed: 1.5
