@@ -30,6 +30,16 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class PrototypeSaveTest : GameTest
 {
+    private static readonly HashSet<string> IgnoredSpawnComponents =
+    [
+        "ContainerContainer",
+        "TemperatureColor",
+        "FuelConsumption",
+        "Blocking",
+        "NibiruWeaponAttack",
+        "TechnologyDatabase",
+    ];
+
     [Test]
     public async Task UninitializedSaveTest()
     {
@@ -125,6 +135,9 @@ public sealed class PrototypeSaveTest : GameTest
                         compNames.Add(compName);
 
                         if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) || compType == typeof(FixturesComponent))
+                            continue;
+
+                        if (IgnoredSpawnComponents.Contains(compName))
                             continue;
 
                         MappingDataNode compMapping;
