@@ -67,6 +67,8 @@
   - type: PhysicalComposition
     materialComposition:
       CEBrass: 10
+  - type: StaticPrice
+    price: 14
   - type: Damageable
     damageModifierSet: Glass
   - type: Injurable

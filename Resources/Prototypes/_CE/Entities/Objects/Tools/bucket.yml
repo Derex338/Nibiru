@@ -55,7 +55,7 @@
       - Bucket
   - type: PhysicalComposition
     materialComposition:
-      CEWood: 30
+      CEWood: 20
   - type: Construction
     graph: WoodenBucket
     node: fin

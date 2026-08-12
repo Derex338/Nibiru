@@ -43,7 +43,7 @@
     - map: ["ce_foodLayers"]
   - type: PhysicalComposition
     materialComposition:
-      CEWood: 20
+      CEWood: 10
   - type: Edible
     trash:
     - CEBowlWooden
