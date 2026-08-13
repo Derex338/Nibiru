@@ -1,4 +1,4 @@
-name: "Labels: Branch stable"
+name: "Лейблы: Ветка stable"
 
 on:
   pull_request_target:
@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: "Branch: Stable"
+        labels: "Ветка: Stable"

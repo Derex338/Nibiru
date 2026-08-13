@@ -1,4 +1,4 @@
-name: "Labels: Branch staging"
+name: "Лейблы: Ветка staging"
 
 on:
   pull_request_target:
@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: "Branch: Staging"
+        labels: "Ветка: Staging"

@@ -1,4 +1,4 @@
-﻿name: "Labels: Approve"
+﻿name: "Лейблы: Одобрение"
 
 on:
   pull_request_review:
@@ -16,5 +16,9 @@ jobs:
     - uses: actions-ecosystem/action-remove-labels@v1
       with:
         labels: |
+          Статус: Нужно ревью
+          Статус: Ожидает правок
           Status: Needs Review
           Status: Awaiting Changes
+          S: Needs Review
+          S: Awaiting Changes

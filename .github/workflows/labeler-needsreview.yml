@@ -1,4 +1,4 @@
-﻿name: "Labels: Review"
+﻿name: "Лейблы: Ревью"
 
 on:
   pull_request_target:
@@ -14,7 +14,10 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: "S: Needs Review"
+        labels: "Статус: Нужно ревью"
     - uses: actions-ecosystem/action-remove-labels@v1
       with:
-        labels: "S: Awaiting Changes"
+        labels: |
+          Статус: Ожидает правок
+          Status: Awaiting Changes
+          S: Awaiting Changes

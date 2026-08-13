@@ -1,4 +1,4 @@
-name: "Labels: Approved"
+name: "Лейблы: Одобрено"
 on:
   pull_request_review:
     types: [submitted]
@@ -21,4 +21,4 @@ jobs:
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
       uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: "S: Approved"
+        labels: "Статус: Одобрено"
