@@ -3,7 +3,7 @@
 - type: CERecipe
   id: CEIronBar1
   tag: CERecipeMeltingFurnace
-  category: construction-category-materials
+  category: Materials
   craftTime: 2.5
   requirements:
   - !type:MaterialResource
@@ -18,7 +18,7 @@
 - type: CERecipe
   id: CEBrassBar1
   tag: CERecipeMeltingFurnace
-  category: construction-category-materials
+  category: Materials
   craftTime: 2.5
   requirements:
   - !type:MaterialResource
@@ -35,7 +35,7 @@
 - type: CERecipe
   id: CEBrassSheet1
   tag: CERecipeMeltingFurnace
-  category: construction-category-materials
+  category: Materials
   craftTime: 2.5
   requirements:
   - !type:MaterialResource
@@ -50,7 +50,7 @@
 - type: CERecipe
   id: CEIronSheet1
   tag: CERecipeMeltingFurnace
-  category: construction-category-materials
+  category: Materials
   craftTime: 2.5
   requirements:
   - !type:MaterialResource
@@ -67,7 +67,7 @@
 - type: CERecipe
   id: CEIronRod1
   tag: CERecipeMeltingFurnace
-  category: construction-category-materials
+  category: Materials
   craftTime: 2.5
   requirements:
   - !type:MaterialResource
@@ -82,7 +82,7 @@
 - type: CERecipe
   id: CEBrassRod1
   tag: CERecipeMeltingFurnace
-  category: construction-category-materials
+  category: Materials
   craftTime: 2.5
   requirements:
   - !type:MaterialResource
