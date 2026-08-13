@@ -1,4 +1,4 @@
-name: "Лейблы: Одобрено"
+name: "Labels: Approved"
 on:
   pull_request_review:
     types: [submitted]
