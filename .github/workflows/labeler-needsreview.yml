@@ -12,12 +12,17 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - uses: actions-ecosystem/action-add-labels@v1
+    - uses: actions/checkout@v5
       with:
-        labels: "Статус: Нужно ревью"
-    - uses: actions-ecosystem/action-remove-labels@v1
+        persist-credentials: false
+        sparse-checkout: .github/actions/pr-labels
+    - uses: ./.github/actions/pr-labels
       with:
-        labels: |
+        add: |
+          Статус: Нужно ревью
+        remove: |
           Статус: Ожидает правок
           Status: Awaiting Changes
           S: Awaiting Changes
+          S: Needs Review
+          Status: Needs Review

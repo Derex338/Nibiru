@@ -13,9 +13,13 @@ jobs:
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions-ecosystem/action-remove-labels@v1
+    - uses: actions/checkout@v5
       with:
-        labels: |
+        persist-credentials: false
+        sparse-checkout: .github/actions/pr-labels
+    - uses: ./.github/actions/pr-labels
+      with:
+        remove: |
           Статус: Нужно ревью
           Статус: Ожидает правок
           Status: Needs Review

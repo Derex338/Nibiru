@@ -13,12 +13,15 @@ jobs:
     if: github.event.review.state == 'changes_requested'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions-ecosystem/action-add-labels@v1
+    - uses: actions/checkout@v5
       with:
-        labels: "Статус: Ожидает правок"
-    - uses: actions-ecosystem/action-remove-labels@v1
+        persist-credentials: false
+        sparse-checkout: .github/actions/pr-labels
+    - uses: ./.github/actions/pr-labels
       with:
-        labels: |
+        add: |
+          Статус: Ожидает правок
+        remove: |
           Статус: Нужно ревью
           Status: Needs Review
           S: Needs Review

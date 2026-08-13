@@ -19,6 +19,12 @@ jobs:
         team: "content-maintainers,junior-maintainers"
         GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
-      uses: actions-ecosystem/action-add-labels@v1
+      uses: actions/checkout@v5
       with:
-        labels: "Статус: Одобрено"
+        persist-credentials: false
+        sparse-checkout: .github/actions/pr-labels
+    - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
+      uses: ./.github/actions/pr-labels
+      with:
+        add: |
+          Статус: Одобрено
