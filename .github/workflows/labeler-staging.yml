@@ -1,4 +1,4 @@
-name: "Labels: Branch staging"
+name: "Лейблы: Ветка staging"
 
 on:
   pull_request_target:

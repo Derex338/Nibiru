@@ -1,4 +1,4 @@
-name: "Labels: Size"
+name: "Лейблы: Размер"
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]

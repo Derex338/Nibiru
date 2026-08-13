@@ -1,4 +1,4 @@
-﻿name: "Labels: Review"
+﻿name: "Лейблы: Ревью"
 
 on:
   pull_request_target:

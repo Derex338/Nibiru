@@ -1,4 +1,4 @@
-name: Check Merge Conflicts
+name: Конфликты слияния
 
 on:
   push:

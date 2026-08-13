@@ -1,4 +1,4 @@
-﻿name: "Labels: Approve"
+﻿name: "Лейблы: Одобрение"
 
 on:
   pull_request_review:

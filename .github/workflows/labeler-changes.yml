@@ -1,4 +1,4 @@
-﻿name: "Labels: Changes"
+﻿name: "Лейблы: Правки"
 
 on:
   pull_request_review:
