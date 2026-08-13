@@ -1,4 +1,4 @@
-﻿name: "Labels: Review"
+﻿name: "Лейблы: Ревью"
 
 on:
   pull_request_target:
@@ -12,9 +12,17 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - uses: actions-ecosystem/action-add-labels@v1
+    - uses: actions/checkout@v5
       with:
-        labels: "S: Needs Review"
-    - uses: actions-ecosystem/action-remove-labels@v1
+        persist-credentials: false
+        sparse-checkout: .github/actions/pr-labels
+    - uses: ./.github/actions/pr-labels
       with:
-        labels: "S: Awaiting Changes"
+        add: |
+          Статус: Нужно ревью
+        remove: |
+          Статус: Ожидает правок
+          Status: Awaiting Changes
+          S: Awaiting Changes
+          S: Needs Review
+          Status: Needs Review

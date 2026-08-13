@@ -1,4 +1,4 @@
-name: Check Merge Conflicts
+name: Конфликты слияния
 
 on:
   push:
@@ -23,6 +23,6 @@ jobs:
       - name: Check for Merge Conflicts
         uses: eps1lon/actions-label-merge-conflict@v3.1.0
         with:
-          dirtyLabel: "S: Merge Conflict"
+          dirtyLabel: "Статус: Конфликт слияния"
           repoToken: ${{ github.token }}
-          commentOnDirty: "This pull request has conflicts, please resolve those before we can evaluate the pull request."
+          commentOnDirty: "В этом pull request есть конфликты. Разрешите их, прежде чем мы сможем его рассмотреть."

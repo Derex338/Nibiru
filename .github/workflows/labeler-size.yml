@@ -1,4 +1,4 @@
-name: "Labels: Size"
+name: "Лейблы: Размер"
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
@@ -10,7 +10,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@v8
         with:
           script: |
             const sizes = [

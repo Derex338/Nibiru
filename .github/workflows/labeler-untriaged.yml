@@ -1,4 +1,4 @@
-﻿name: "Labels: Untriaged"
+﻿name: "Лейблы: Без триажа"
 
 on:
   issues:
@@ -8,13 +8,20 @@ on:
 
 jobs:
   add_label:
+    if: |
+      (github.event_name == 'issues' && join(github.event.issue.labels) == '') ||
+      (github.event_name == 'pull_request_target' && join(github.event.pull_request.labels) == '')
     runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
       pull-requests: write
     steps:
-    - uses: actions-ecosystem/action-add-labels@v1
-      if: join(github.event.issue.labels) == ''
+    - uses: actions/checkout@v5
       with:
-        labels: "S: Untriaged"
+        persist-credentials: false
+        sparse-checkout: .github/actions/pr-labels
+    - uses: ./.github/actions/pr-labels
+      with:
+        add: |
+          Статус: Без триажа
