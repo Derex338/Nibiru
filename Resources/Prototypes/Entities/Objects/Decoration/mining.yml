@@ -105,7 +105,7 @@
           acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          CEWoodLog:
+          CEWoodenPlanks1:
             min: 1
             max: 2
   - type: Construction
@@ -183,7 +183,7 @@
           acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          CEWoodLog:
+          CEWoodenPlanks1:
             min: 1
             max: 2
   - type: Construction
@@ -207,6 +207,6 @@
           acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          CEWoodLog:
+          CEWoodenPlanks1:
             min: 1
             max: 2
