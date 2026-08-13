@@ -7,6 +7,8 @@ on:
 jobs:
   update_label:
     permissions:
+      contents: read
+      issues: write
       pull-requests: write
     if: github.event.review.state == 'changes_requested'
     runs-on: ubuntu-latest
