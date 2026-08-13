@@ -1,4 +1,4 @@
-﻿name: "Лейблы: PR"
+﻿name: "Labels: PR"
 
 on:
 - pull_request_target

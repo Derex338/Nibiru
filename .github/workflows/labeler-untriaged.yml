@@ -1,4 +1,4 @@
-﻿name: "Лейблы: Без триажа"
+﻿name: "Labels: Untriaged"
 
 on:
   issues:
@@ -24,4 +24,4 @@ jobs:
     - uses: ./.github/actions/pr-labels
       with:
         add: |
-          Статус: Без триажа
+          Статус: Новое
