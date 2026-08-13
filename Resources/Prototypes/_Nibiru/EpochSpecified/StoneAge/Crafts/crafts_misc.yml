@@ -45,7 +45,7 @@
   graph: WoodenShield
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-wooden-shield-desc
 
   objectType: Item
@@ -57,7 +57,7 @@
   graph: WickerShield
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-wicker-shield-desc
 
   objectType: Item

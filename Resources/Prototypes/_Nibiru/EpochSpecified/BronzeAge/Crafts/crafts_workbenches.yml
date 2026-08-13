@@ -9,7 +9,7 @@
   graph: BronzeAnvilWorkbench
   startNode: start
   targetNode: fin
-  category: Workbenches
+  category: construction-category-workbenches
   description: construction-recipe-bronze-anvil-workbench-desc
 
   objectType: Structure

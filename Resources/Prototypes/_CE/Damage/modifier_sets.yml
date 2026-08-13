@@ -31,11 +31,15 @@
 - type: damageModifierSet
   id: CERock
   coefficients:
-    Blunt: 0.75
-    Slash: 0.5
-    Piercing: 1.0
+    Blunt: 0.4
+    Slash: 0.35
+    Piercing: 0.5
     Heat: 0.15
     Structural: 4
+  flatReductions:
+    Blunt: 6
+    Slash: 4
+    Piercing: 3
 
 # For thick, monolithic stone structures such as statues, large stones, stone walls
 - type: damageModifierSet

@@ -11,10 +11,21 @@
   - type: Sprite
     drawdepth: Mobs
     snapCardinals: true
+  - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: Rock
+    damageModifierSet: CERock
   - type: Injurable
     damageContainer: StructuralInorganic
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/break_stone.ogg
+        params:
+          volume: -8
+          variation: 0.05
+  - type: Tag
+    tags:
+    - Rock
 
 - type: entity
   id: CERockSmall
@@ -52,13 +63,7 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 150
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-            !type:DamageTrigger
-            damage: 75
+          damage: 160
         behaviors:
           - !type:PlaySoundBehavior
             sound:
@@ -106,13 +111,7 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 300
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-            !type:DamageTrigger
-            damage: 150
+          damage: 320
         behaviors:
           - !type:PlaySoundBehavior
             sound:

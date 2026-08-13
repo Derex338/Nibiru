@@ -9,7 +9,7 @@
   graph: BronzeShield
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-shield-desc
 
   objectType: Item
@@ -23,7 +23,7 @@
   graph: BronzeHammerSmall
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-hammer-small-desc
 
   objectType: Item
@@ -37,7 +37,7 @@
   graph: BronzeHammer
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-hammer-desc
 
   objectType: Item
@@ -51,7 +51,7 @@
   graph: BronzeHatchet
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-hatchet-desc
 
   objectType: Item
@@ -65,7 +65,7 @@
   graph: BronzeAxe
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-axe-desc
 
   objectType: Item
@@ -79,7 +79,7 @@
   graph: BronzeSpear
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-spear-desc
 
   objectType: Item
@@ -93,7 +93,7 @@
   graph: BronzeSword
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-sword-desc
 
   objectType: Item
@@ -107,7 +107,7 @@
   graph: BronzeTrident
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-trident-desc
 
   objectType: Item
@@ -121,7 +121,7 @@
   graph: BronzeHalberd
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-halberd-desc
 
   objectType: Item
@@ -135,7 +135,7 @@
   graph: BronzePickaxe
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-pickaxe-desc
 
   objectType: Item
@@ -149,7 +149,7 @@
   graph: BronzeShovel
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-shovel-desc
 
   objectType: Item
@@ -163,7 +163,7 @@
   graph: BronzeScythe
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-scythe-desc
 
   objectType: Item
@@ -177,7 +177,7 @@
   graph: BronzeHoe
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-hoe-desc
 
   objectType: Item
@@ -191,7 +191,7 @@
   graph: BronzeKnife
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-knife-desc
 
   objectType: Item
@@ -205,7 +205,7 @@
   graph: BronzeClippers
   startNode: start
   targetNode: fin
-  category: Tools
+  category: construction-category-tools
   description: construction-recipe-bronze-clippers-desc
 
   objectType: Item
@@ -219,7 +219,7 @@
   graph: BronzeArrow
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-arrow-desc
 
   objectType: Item
@@ -231,7 +231,7 @@
   graph: BronzeXiphos
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-xiphos-desc
 
   objectType: Item
@@ -245,7 +245,7 @@
   graph: BronzeDagger
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-dagger-desc
 
   objectType: Item
@@ -259,7 +259,7 @@
   graph: BronzeKhapesh
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-khapesh-desc
 
   objectType: Item
@@ -273,7 +273,7 @@
   graph: BronzeArrowAP
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   description: construction-recipe-bronze-arrow-ap-desc
 
   objectType: Item
@@ -285,7 +285,7 @@
   graph: LightBronzeSpear
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
@@ -297,7 +297,7 @@
   graph: ThrowingDart
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench

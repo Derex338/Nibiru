@@ -74,40 +74,63 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
     {
         var ev = new CraftsGetRecipesEvent((uid, comp), getUnavailable);
 
-        if (TryComp<FactionComponent>(uid, out var Player)
-        && (Player.ResearchServer is null || !Exists(Player.ResearchServer)))
+        if (!TryComp<FactionComponent>(uid, out var player))
         {
-            var allServers = GetServers(uid).ToList();
+            AddRecipesFromPacks(ev.Recipes, packs);
+            return FilterRecipes(ev.Recipes, comp.FactionName);
+        }
 
-            foreach (var server in allServers)
+        if (player.ResearchServer is null || !Exists(player.ResearchServer) || !HasComp<TechnologyDatabaseComponent>(player.ResearchServer.Value))
+        {
+            player.ResearchServer = null;
+
+            foreach (var server in GetServers(uid))
             {
-                if (TryComp<FactionComponent>(server, out var Serv)
-                && Serv.FactionName == Player.FactionName)
-                {
-                    Player.ResearchServer = server;
-                    RaiseLocalEvent(server, ev);
+                if (!TryComp<FactionComponent>(server, out var serverFaction) ||
+                    serverFaction.FactionName != player.FactionName)
+                    continue;
 
+                if (!HasComp<ResearchServerComponent>(server))
+                    continue;
+
+                player.ResearchServer = server;
+                break;
+            }
+
+            if (player.ResearchServer is null)
+            {
+                foreach (var server in GetServers(uid))
+                {
+                    if (!TryComp<FactionComponent>(server, out var serverFaction) ||
+                        serverFaction.FactionName != player.FactionName)
+                        continue;
+
+                    player.ResearchServer = server;
                     break;
                 }
             }
         }
-        else if (TryComp<FactionComponent>(uid, out var PlayerHui)
-        && PlayerHui.ResearchServer is { } serverUid
-        && TryComp<FactionComponent>(serverUid, out var server)
-        && server.FactionName == PlayerHui.FactionName)
+
+        if (player.ResearchServer is { } serverUid &&
+            TryComp<FactionComponent>(serverUid, out var boundServer) &&
+            boundServer.FactionName == player.FactionName)
         {
             RaiseLocalEvent(serverUid, ev);
         }
 
         AddRecipesFromPacks(ev.Recipes, packs);
+        return FilterRecipes(ev.Recipes, comp.FactionName);
+    }
 
+    private List<ProtoId<ConstructionPrototype>> FilterRecipes(HashSet<ProtoId<ConstructionPrototype>> recipes, string factionName)
+    {
         var result = new List<ProtoId<ConstructionPrototype>>();
-        foreach (var recipeId in ev.Recipes)
+        foreach (var recipeId in recipes)
         {
             if (!_proto.TryIndex(recipeId, out var recipe))
                 continue;
 
-            if (IsRecipeUnique(recipe) && IsAlreadyBuilt(recipe, comp.FactionName))
+            if (IsRecipeUnique(recipe) && IsAlreadyBuilt(recipe, factionName))
                 continue;
 
             result.Add(recipeId);

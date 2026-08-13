@@ -213,8 +213,27 @@ public sealed partial class FactionSystem
                 // Добавляем в список всех членов у лидера
                 AddToAllMembers(leaderComp, playerEntity);
 
+                if (leaderComp.ResearchServer is { } researchServer && Exists(researchServer))
+                    playerFaction.ResearchServer = researchServer;
+
                 Dirty(leaderUid, leaderComp);
                 UpdateFactionRegistry(leaderComp);
+            }
+
+            if (playerFaction.ResearchServer is null)
+            {
+                var memberQuery = EntityQueryEnumerator<FactionComponent>();
+                while (memberQuery.MoveNext(out _, out var memberFaction))
+                {
+                    if (memberFaction.FactionName != factionName)
+                        continue;
+
+                    if (memberFaction.ResearchServer is not { } researchServer || !Exists(researchServer))
+                        continue;
+
+                    playerFaction.ResearchServer = researchServer;
+                    break;
+                }
             }
 
             Dirty(playerEntity, playerFaction);

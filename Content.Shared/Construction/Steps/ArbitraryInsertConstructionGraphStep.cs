@@ -20,11 +20,10 @@ namespace Content.Shared.Construction.Steps
 
         public override ConstructionGuideEntry GenerateGuideEntry()
         {
-            var stepName = Loc.GetString(Name);
             return new ConstructionGuideEntry
             {
                 Localization = "construction-presenter-arbitrary-step",
-                Arguments = new (string, object)[]{("name", stepName)},
+                Arguments = new (string, object)[]{("name", Name)},
                 Icon = Icon,
             };
         }

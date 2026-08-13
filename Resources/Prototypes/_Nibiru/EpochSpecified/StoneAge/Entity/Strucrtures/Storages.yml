@@ -1,9 +1,9 @@
 - type: entity
   id: Barrel
   parent: StorageTank
-  name: бочка
-  description: Деревянная бочка готовая к наполнению житкостями.
-  suffix: Empty, Нибиру, Каменный век
+  name: barrel
+  description: A wooden barrel ready to be filled with liquids.
+  suffix: Empty, Nibiru, Stone Age
   components:
   - type: StaticPrice
     price: 500

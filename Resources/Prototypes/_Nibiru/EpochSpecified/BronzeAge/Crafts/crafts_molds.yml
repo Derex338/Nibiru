@@ -9,7 +9,7 @@
   graph: MoldIngot
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-ingot-desc
 
   objectType: Item
@@ -23,7 +23,7 @@
   graph: MoldInlay
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-inlay-desc
 
   objectType: Item
@@ -37,7 +37,7 @@
   graph: MoldArrowTip
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-arrow-tip-desc
 
   objectType: Item
@@ -51,7 +51,7 @@
   graph: MoldArrowTipArmor
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-arrow-tip-armor-desc
 
   objectType: Item
@@ -65,7 +65,7 @@
   graph: MoldTopHammer
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-top-hammer-desc
 
   objectType: Item
@@ -79,7 +79,7 @@
   graph: MoldTopMace
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-top-mace-desc
 
   objectType: Item
@@ -93,7 +93,7 @@
   graph: MoldTopAxe
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-top-axe-desc
 
   objectType: Item
@@ -107,7 +107,7 @@
   graph: MoldTopBattleAxe
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-top-battle-axe-desc
 
   objectType: Item
@@ -121,7 +121,7 @@
   graph: MoldTopSpear
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-top-spear-desc
 
   objectType: Item
@@ -135,7 +135,7 @@
   graph: MoldSwordBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-sword-blade-desc
 
   objectType: Item
@@ -149,7 +149,7 @@
   graph: MoldDaggerBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-dagger-blade-desc
 
   objectType: Item
@@ -163,7 +163,7 @@
   graph: MoldTrident
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-trident-desc
 
   objectType: Item
@@ -177,7 +177,7 @@
   graph: MoldShield
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-shield-desc
 
   objectType: Item
@@ -191,7 +191,7 @@
   graph: MoldKnifeBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-knife-blade-desc
 
   objectType: Item
@@ -205,7 +205,7 @@
   graph: MoldClippers
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-clippers-desc
 
   objectType: Item
@@ -219,7 +219,7 @@
   graph: MoldHoeBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-hoe-blade-desc
 
   objectType: Item
@@ -233,7 +233,7 @@
   graph: MoldPickaxeBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-pickaxe-blade-desc
 
   objectType: Item
@@ -247,7 +247,7 @@
   graph: MoldScytheBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-scythe-blade-desc
 
   objectType: Item
@@ -261,7 +261,7 @@
   graph: MoldShovel
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-shovel-desc
 
   objectType: Item
@@ -275,7 +275,7 @@
   graph: MoldHelmet
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-helmet-desc
 
   objectType: Item
@@ -289,7 +289,7 @@
   graph: MoldChestplate
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-chestplate-desc
 
   objectType: Item
@@ -303,7 +303,7 @@
   graph: MoldAnvil
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-anvil-desc
 
   objectType: Item
@@ -317,7 +317,7 @@
   graph: MoldLock
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-lock-desc
 
   objectType: Item
@@ -331,7 +331,7 @@
   graph: MoldKey
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-key-desc
 
   objectType: Item
@@ -345,7 +345,7 @@
   graph: MoldLockpick
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-lockpick-desc
 
   objectType: Item
@@ -359,7 +359,7 @@
   graph: MoldRasp
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-rasp-desc
 
   objectType: Item
@@ -373,7 +373,7 @@
   graph: MoldKhapeshBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-khapesh-blade-desc
 
   objectType: Item
@@ -387,7 +387,7 @@
   graph: MoldCrown
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-crown-desc
 
   objectType: Item
@@ -401,7 +401,7 @@
   graph: MoldXiphosBlade
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-xiphos-blade-desc
 
   objectType: Item
@@ -415,7 +415,7 @@
   graph: MoldRod
   startNode: start
   targetNode: fin
-  category: Molds
+  category: construction-category-molds
   description: construction-recipe-mold-rod-desc
 
   objectType: Item

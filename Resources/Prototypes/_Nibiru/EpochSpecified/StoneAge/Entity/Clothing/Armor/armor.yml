@@ -1,9 +1,9 @@
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseWoodItem, AllowSuitStorageClothing ]
   id: WoodChestplate
-  suffix: Нибиру, Каменный век
-  name: деревянный нагрудник
-  description: Грубая защита из досок.
+  suffix: Nibiru, Stone Age
+  name: wooden chestplate
+  description: Crude protection made of planks.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
@@ -34,9 +34,9 @@
 - type: entity
   parent: ClothingHeadHelmetArmoredBase
   id: LetherHelmet
-  suffix: Нибиру, Каменный век
-  name: кожаный шлем
-  description: Простая кожаная защита головы.
+  suffix: Nibiru, Stone Age
+  name: leather helmet
+  description: Simple leather head protection.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi
@@ -75,9 +75,9 @@
 - type: entity
   parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothing ]
   id: LetherChestplate
-  suffix: Нибиру, Каменный век
-  name: кожаный нагрудник
-  description: Нагрудник из нескольких слоев кожи.
+  suffix: Nibiru, Stone Age
+  name: leather chestplate
+  description: A chestplate made of several layers of leather.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
@@ -116,9 +116,9 @@
 - type: entity
   parent: ClothingOuterArmorBone
   id: PrimitiveBoneArmor
-  suffix: Нибиру, Каменный век
-  name: костяной нагрудник
-  description: Нагрудник, собранный из множества заточенных костей. Тяжелый, но надежный.
+  suffix: Nibiru, Stone Age
+  name: bone chestplate
+  description: A chestplate assembled from many sharpened bones. Heavy, but reliable.
   components:
   - type: Item
     size: Large
@@ -143,9 +143,9 @@
 - type: entity
   parent: ClothingHeadHelmetBone
   id: PrimitiveBoneHelmet
-  suffix: Нибиру, Каменный век
-  name: костяной шлем
-  description: Шлем из черепа крупного зверя, укрепленный костяными пластинами.
+  suffix: Nibiru, Stone Age
+  name: bone helmet
+  description: A helmet made from the skull of a large beast, reinforced with bone plates.
   components:
   - type: Item
     size: Large
@@ -172,9 +172,9 @@
 - type: entity
   parent: [ ClothingOuterBaseLarge, AllowSuitStorageClothing ]
   id: LetherChestplateReinforced
-  suffix: Нибиру, Каменный век
-  name: усиленный кожаный нагрудник
-  description: Кожаный нагрудник с нашитыми костяными пластинами. Вершина защиты Каменного Века.
+  suffix: Nibiru, Stone Age
+  name: reinforced leather chestplate
+  description: A leather chestplate with bone plates sewn on. The pinnacle of Stone Age protection.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherArmor.rsi
@@ -205,9 +205,9 @@
 - type: entity
   parent:  ClothingHeadHelmetArmoredBase
   id: LetherHelmetReinforced
-  suffix: Нибиру, Каменный век
-  name: усиленный кожаный шлем
-  description: Кожаный шлем, укрепленный костью для защиты от самых тяжелых ударов.
+  suffix: Nibiru, Stone Age
+  name: reinforced leather helmet
+  description: A leather helmet reinforced with bone to protect against the heaviest blows.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/BoneLeatherHelmet.rsi

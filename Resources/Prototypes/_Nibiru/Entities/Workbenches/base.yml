@@ -1,7 +1,7 @@
 - type: entity
   id: BaseWorkbench
   parent: BaseStructure
-  name: верстак
+  name: workbench
   suffix: Nibiru
   abstract: true
   components:
@@ -56,9 +56,9 @@
 - type: entity
   id: SpindleWorkbench
   parent: BaseWorkbench
-  name: верстак прядения
+  name: spinning workbench
   suffix: Nibiru
-  description: Используется для создания нитей и веревок.
+  description: Used for creating threads and ropes.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -71,9 +71,9 @@
 - type: entity
   id: LoomWorkbench
   parent: BaseWorkbench
-  name: ткацкий станок
+  name: loom
   suffix: Nibiru
-  description: Используется для создания тканей.
+  description: Used for creating fabrics.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -86,7 +86,7 @@
 - type: entity
   id: BasicWorkbench
   parent: BaseWorkbench
-  name: верстак
+  name: workbench
   suffix: Nibiru
   components:
   - type: Sprite
@@ -100,9 +100,9 @@
 - type: entity
   id: StoneAnvilWorkbench
   parent: BaseWorkbench
-  name: каменная наковальня
+  name: stone anvil
   suffix: Nibiru
-  description: Грубая каменная поверхность для обработки материалов.
+  description: A rough stone surface for working materials.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -117,7 +117,7 @@
 - type: entity
   id: BronzeAnvilWorkbench
   parent: BaseWorkbench
-  name: бронзовая наковальня
+  name: bronze anvil
   suffix: Nibiru
   components:
   - type: Sprite
@@ -131,9 +131,9 @@
 - type: entity
   id: QuarryWorkbench
   parent: BaseWorkbench
-  name: камнетес
+  name: stonecutter
   suffix: Nibiru
-  description: Верстак для обработки камня.
+  description: A workbench for stone processing.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -146,9 +146,9 @@
 - type: entity
   id: SawmillWorkbench
   parent: BaseWorkbench
-  name: лесопилка
+  name: sawmill
   suffix: Nibiru
-  description: Верстак для обработки дерева.
+  description: A workbench for wood processing.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -166,9 +166,9 @@
 - type: entity
   id: BasicWorkbenchFrame
   parent: BaseStructure
-  name: каркас верстака
+  name: workbench frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -185,9 +185,9 @@
 - type: entity
   id: ResearchTableFrame
   parent: BaseStructure
-  name: каркас стола исследований
+  name: research table frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -204,9 +204,9 @@
 - type: entity
   id: SpindleWorkbenchFrame
   parent: BaseStructure
-  name: каркас верстака прядения
+  name: spinning workbench frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -223,9 +223,9 @@
 - type: entity
   id: LoomWorkbenchFrame
   parent: BaseStructure
-  name: каркас ткацкого станка
+  name: loom frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -242,9 +242,9 @@
 - type: entity
   id: SawmillWorkbenchFrame
   parent: BaseStructure
-  name: каркас лесопилки
+  name: sawmill frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -261,9 +261,9 @@
 - type: entity
   id: QuarryWorkbenchFrame
   parent: BaseStructure
-  name: каркас камнетеса
+  name: stonecutter frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -280,9 +280,9 @@
 - type: entity
   id: StoneAnvilWorkbenchFrame
   parent: BaseStructure
-  name: каркас каменной наковальни
+  name: stone anvil frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -299,9 +299,9 @@
 - type: entity
   id: SmeltingFurnaceFrame
   parent: BaseStructure
-  name: каркас плавильной печи
+  name: smelting furnace frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -318,9 +318,9 @@
 - type: entity
   id: BronzeAnvilWorkbenchFrame
   parent: BaseStructure
-  name: каркас бронзовой наковальни
+  name: bronze anvil frame
   suffix: Nibiru
-  description: Незаконченный каркас.
+  description: An unfinished frame.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -337,7 +337,7 @@
 - type: entity
   id: WorkbenchFrame
   parent: BaseStructure
-  name: каркас верстака
+  name: workbench frame
   suffix: Nibiru
   components:
   - type: Sprite

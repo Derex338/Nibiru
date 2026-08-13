@@ -7,3 +7,13 @@ chat-emote-name-hiss = Hiss
 chat-emote-name-croak = Croak
 chat-emote-name-heartbeat = Heartbeat
 chat-emote-name-oink = Oink
+
+chat-emote-msg-burp = burps
+chat-emote-msg-crack-bones = cracks bones
+chat-emote-msg-fart = farts
+chat-emote-msg-scratch = scratches
+chat-emote-msg-facepalm = facepalms
+chat-emote-msg-hiss = hisses!
+chat-emote-msg-croak = croaks
+chat-emote-msg-heartbeat = heart beats
+chat-emote-msg-oink = oinks

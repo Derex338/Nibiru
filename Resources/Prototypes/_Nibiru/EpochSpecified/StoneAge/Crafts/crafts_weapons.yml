@@ -93,5 +93,5 @@
   graph: SpearThrower
   startNode: start
   targetNode: fin
-  category: Weapons
+  category: construction-category-weapons
   objectType: Item

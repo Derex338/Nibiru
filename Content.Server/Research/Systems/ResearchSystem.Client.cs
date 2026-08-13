@@ -63,6 +63,16 @@ public sealed partial class ResearchSystem
 
     private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
+        if (component.Server != null)
+            return;
+
+        if (HasComp<ResearchServerComponent>(uid))
+            return;
+
+        var protoId = MetaData(uid).EntityPrototype?.ID;
+        if (protoId is "ResearchTable" or "ResearchTableDebug")
+            return;
+
         if (GetServers(uid).FirstOrNull() is { } server)
             RegisterClient(uid, server, component, server);
     }

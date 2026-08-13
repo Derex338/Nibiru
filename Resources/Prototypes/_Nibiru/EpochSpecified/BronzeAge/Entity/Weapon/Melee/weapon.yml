@@ -1,9 +1,9 @@
 - type: entity
-  name: бронзовый меч
+  name: bronze sword
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeSword
   suffix: Nibiru, BronzeAge
-  description: Довольно неровный меч из сплава меди и олова. Выглядит древне, даже если является новоскованным.
+  description: A rather uneven sword of copper and tin alloy. Looks ancient even if freshly forged.
   components:
   - type: Tag
     tags:
@@ -57,11 +57,11 @@
 
 
 - type: entity
-  name: бронзовый топор
+  name: bronze axe
   parent: BaseBronzeItem
   id: BronzeAxe
   suffix: Nibiru, BronzeAge
-  description: Элитное и тяжёлое оружие настоящего варвара.
+  description: An elite, heavy weapon for a true barbarian.
   components:
   - type: Tag
     tags:
@@ -136,11 +136,11 @@
                 max: 3
 
 - type: entity
-  name: бронзовое копьё
+  name: bronze spear
   parent: [Spear, BaseBronzeItem]
   id: BronzeSpear
   suffix: Nibiru, BronzeAge
-  description: Древнее оружие, которое всё ещё может пробить вашу черепушку.
+  description: An ancient weapon that can still crack your skull.
   components:
   - type: Tag
     tags:
@@ -210,11 +210,11 @@
 
 
 - type: entity
-  name: облегченное бронзовое копьё
+  name: light bronze spear
   parent: BronzeSpear
   id: LightBronzeSpear
   suffix: Nibiru, BronzeAge
-  description: Более легкая версия бронзового копья. Летит дальше, но наносит меньше урона.
+  description: A lighter version of the bronze spear. Flies further but deals less damage.
   components:
   - type: Tag
     tags:
@@ -258,11 +258,11 @@
       Piercing: 12
 
 - type: entity
-  name: бронзовый молот
+  name: bronze war hammer
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHammer
   suffix: Nibiru, BronzeAge
-  description: Если ты попробуешь поднять его, то поймёшь, что весит он дохуя. И зачем ему сделали настолько огромный хвост..?
+  description: If you try to lift it, you will realize it weighs a ton. And why does it have such a huge tail..?
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi
@@ -312,11 +312,11 @@
                 max: 4
 
 - type: entity
-  name: бронзовый трезубец
+  name: bronze trident
   parent: [Spear, BaseBronzeItem]
   id: BronzeTrident
   suffix: Nibiru, BronzeAge
-  description: Элитное, красивое, величественное, грациозное орудие для настоящего воеводы или царя из бронзы. При помощи трёх зубцов может блокировать удары оппонента.
+  description: An elite, beautiful, majestic, graceful weapon befitting a true warlord or king, made of bronze. With its three prongs, it can block an opponent's strikes.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
@@ -377,11 +377,11 @@
                 max: 5
 
 - type: entity
-  name: бронзовая алебарда
+  name: bronze halberd
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHalberd
   suffix: Nibiru, BronzeAge
-  description: Красивая и сильная. Идеально подходит для того, чтобы рубить врагов на куски.
+  description: Beautiful and powerful. Perfect for chopping enemies to pieces.
   components:
   - type: Tag
     tags:
@@ -443,11 +443,11 @@
                 max: 3
 
 - type: entity
-  name: бронзовый ксифос
+  name: bronze xiphos
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeXiphos
   suffix: Nibiru, BronzeAge
-  description: Листовидный меч, идеально подходящий для колющих и рубящих ударов.
+  description: A leaf-shaped sword, perfect for thrusting and slashing.
   components:
   - type: Tag
     tags:
@@ -475,11 +475,11 @@
       Slash: 12
 
 - type: entity
-  name: бронзовый кинжал
+  name: bronze dagger
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeDagger
   suffix: Nibiru, BronzeAge
-  description: Короткий, но смертоносный бронзовый кинжал.
+  description: A short but deadly bronze dagger.
   components:
   - type: Tag
     tags:
@@ -507,11 +507,11 @@
       Piercing: 10
 
 - type: entity
-  name: бронзовый хопеш
+  name: bronze khopesh
   parent: [ BaseSword, BaseBronzeItem ]
   id: BronzeKhapesh
   suffix: Nibiru, BronzeAge
-  description: Изогнутый меч с тяжёлым лезвием, способный наносить сокрушительные рубящие удары.
+  description: A curved sword with a heavy blade capable of devastating slashing blows.
   components:
   - type: Tag
     tags:

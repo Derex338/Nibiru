@@ -1,7 +1,7 @@
 - type: entity
   id: CopperOre
   suffix: Nibiru, BronzeAge
-  name: медная руда
+  name: copper ore
   parent: [BaseItem, BaseCopperItem]
   description: A chunk of copper ore.
   components:

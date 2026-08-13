@@ -9,7 +9,7 @@
   graph: Wagon
   startNode: start
   targetNode: fin
-  category: Structures
+  category: construction-category-structures
   objectType: Structure
 
 - type: construction
@@ -19,7 +19,7 @@
   graph: Saddle
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -31,7 +31,7 @@
   graph: BronzeAgeBed
   startNode: start
   targetNode: fin
-  category: Furniture
+  category: construction-category-furniture
   objectType: Structure
   canRotate: true
 
@@ -42,7 +42,7 @@
   graph: BronzeAgeChest
   startNode: start
   targetNode: fin
-  category: Furniture
+  category: construction-category-furniture
   objectType: Structure
   canRotate: true
 
@@ -53,7 +53,7 @@
   graph: CoinPurse
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -65,7 +65,7 @@
   graph: LeatherBackBackpack
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
@@ -77,7 +77,7 @@
   graph: LeatherBackSatchel
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
@@ -89,7 +89,7 @@
   graph: LeatherBeltPouch
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench

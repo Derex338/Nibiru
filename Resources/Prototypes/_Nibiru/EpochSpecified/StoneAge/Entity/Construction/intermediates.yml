@@ -1,6 +1,6 @@
 - type: entity
   id: StoneBlockIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseItem
   components:
   - type: Sprite
@@ -13,7 +13,7 @@
 
 - type: entity
   id: UshankaIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseItem
   components:
   - type: Sprite
@@ -26,7 +26,7 @@
 
 - type: entity
   id: CoatTrenchIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseItem
   components:
   - type: Sprite
@@ -39,7 +39,7 @@
 
 - type: entity
   id: CoatPirateIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseItem
   components:
   - type: Sprite
@@ -52,7 +52,7 @@
 
 - type: entity
   id: LetherHelmetIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseItem
   components:
   - type: Sprite
@@ -65,7 +65,7 @@
 
 - type: entity
   id: LetherChestplateIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseItem
   components:
   - type: Sprite
@@ -80,7 +80,7 @@
 
 - type: entity
   id: StoneWallIntermediate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseStructure
   components:
   - type: Sprite

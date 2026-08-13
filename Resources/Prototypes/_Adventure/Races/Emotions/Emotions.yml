@@ -19,7 +19,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["рыгает"]
+  chatMessages: ["chat-emote-msg-burp"]
   chatTriggers:
     - рыгает
     - рыгает!
@@ -49,7 +49,7 @@
     - BorgChassis
     - IgnoreKudzu
     - Storage
-  chatMessages: ["хрустит костями"]
+  chatMessages: ["chat-emote-msg-crack-bones"]
   chatTriggers:
     - хрустит костями
     - хрустит костяшками
@@ -76,7 +76,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["пердит"]
+  chatMessages: ["chat-emote-msg-fart"]
   chatTriggers:
     - ЧтОбЫнИкТоНеМоГэТоВыВеСтИ
 
@@ -102,7 +102,7 @@
     - BorgChassis
     - IgnoreKudzu
     - Storage
-  chatMessages: ["чешется"]
+  chatMessages: ["chat-emote-msg-scratch"]
   chatTriggers:
     - чешется
     - чешет волосы
@@ -140,7 +140,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["делает фейспалм"]
+  chatMessages: ["chat-emote-msg-facepalm"]
   chatTriggers:
     - Делает фейспалм
     - испанский стыд
@@ -173,7 +173,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [шипит!]
+  chatMessages: ["chat-emote-msg-hiss"]
   chatTriggers:
     - шипит
     - шипит.
@@ -201,7 +201,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["квакает"]
+  chatMessages: ["chat-emote-msg-croak"]
   chatTriggers:
     - квакает
     - квакает!

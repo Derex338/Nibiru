@@ -1,7 +1,7 @@
 - type: entity
   id: NibiruFoodMeatTest
-  name: тестовое мясо
-  description: Сочное мясо для проверки приручения.
+  name: test meat
+  description: Juicy meat for testing taming.
   components:
   - type: Item
   - type: Sprite
@@ -12,8 +12,8 @@
 
 - type: entity
   id: NibiruFoodVegetableTest
-  name: тестовый овощ
-  description: Свежий овощ для проверки приручения.
+  name: test vegetable
+  description: Fresh vegetable for testing taming.
   components:
   - type: Item
   - type: Sprite

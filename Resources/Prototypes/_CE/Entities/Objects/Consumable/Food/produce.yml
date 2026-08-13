@@ -917,6 +917,56 @@
     - CEVegetable
 
 - type: entity
+  parent: FoodFlyAmanita
+  id: CEFoodFlyAmanita
+  categories: [ ForkFiltered ]
+  name: fly agaric
+  description: A delicious-looking mushroom like you see in those cartoons.
+  components:
+  - type: CEFoodTag
+    tags:
+    - CEFlyAgaric
+
+- type: entity
+  id: CEFoodLumish
+  parent: BaseCEProduce
+  categories: [ ForkFiltered ]
+  name: lumish
+  description: A softly glowing mushroom. Looks edible enough.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/chanterelle.rsi
+    layers:
+      - state: base1
+        map: [ "random" ]
+  - type: RandomSprite
+    available:
+      - random:
+          base1: ""
+          base2: ""
+          base3: ""
+          base4: ""
+          base5: ""
+  - type: Solution
+    solution:
+        maxVol: 11
+        reagents:
+        - ReagentId: CENutriment
+          Quantity: 3.47
+  - type: Tag
+    tags: [ Food, Mushroom, Plant ]
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    thickness: 0.006
+    area: 0.006
+  - type: CEFoodTag
+    tags:
+    - CELumish
+
+- type: entity
   id: CEFoodChanterelle
   parent: BaseCEProduce
   categories: [ ForkFiltered ]

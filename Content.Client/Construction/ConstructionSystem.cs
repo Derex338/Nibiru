@@ -460,20 +460,11 @@ namespace Content.Client.Construction
 
 		public string GetCraftName(ConstructionPrototype proto)
 		{
+			if (proto.SetName.HasValue)
+				return Loc.GetString(proto.SetName);
+
 			if (!string.IsNullOrWhiteSpace(proto.Name))
-				return Loc.GetString(proto.Name);
-
-			//if (proto.Graph is {} result)
-			//{
-			//    return  //_proto.Index(result).Name;
-			//}
-
-			//if (proto.ResultReagents is { } resultReagents)
-			//{
-			//    return ContentLocalizationManager.FormatList(resultReagents
-			//        .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", _proto.Index(p.Key).LocalizedName), ("amount", p.Value)))
-			//        .ToList());
-			//}
+				return proto.Name;
 
 			return string.Empty;
 		}

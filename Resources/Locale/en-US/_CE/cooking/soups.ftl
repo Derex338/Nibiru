@@ -39,3 +39,12 @@ ce-porridge-recipe-meat-desc = Hearty porridge, slow-cooked with pieces of meat.
 
 ce-porridge-recipe-pumpkin-name = oatmeal with pumpkin
 ce-porridge-recipe-pumpkin-desc = Delicate porridge with pumpkin puree.
+
+ce-soup-recipe-flyagaric-name = fly agaric soup
+ce-soup-recipe-flyagaric-desc = A bright soup made from fly agarics. Eat at your own risk.
+
+ce-soup-recipe-flylumish-name = fly agaric and lumish soup
+ce-soup-recipe-flylumish-desc = A strange glowing broth of fly agarics and lumish.
+
+ce-soup-recipe-lumish-name = lumish soup
+ce-soup-recipe-lumish-desc = A softly glowing soup made from lumish.

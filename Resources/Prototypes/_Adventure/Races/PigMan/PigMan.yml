@@ -315,7 +315,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["Хрюкает"]
+  chatMessages: ["chat-emote-msg-oink"]
   chatTriggers:
     - хрюкает
     - хрюкнул

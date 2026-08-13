@@ -2,8 +2,8 @@
   id: Bone1
   parent: BaseItem
   suffix: Organs Nibiru
-  name: кость
-  description: "бедное животное"
+  name: bone
+  description: poor animal
   components:
   - type: Material
   - type: Stack
@@ -28,8 +28,8 @@
   id: Fang
   parent: BaseItem
   suffix: Organs Nibiru
-  name: зубы
-  description: "бедное животное"
+  name: fangs
+  description: poor animal
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -53,8 +53,8 @@
   id: Fat
   parent: BaseItem
   suffix: Organs Nibiru
-  name: жир
-  description: "САЛО"
+  name: fat
+  description: LARD
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -84,8 +84,8 @@
   id: Gut
   parent: BaseItem
   suffix: Organs Nibiru
-  name: потроха
-  description: "фу"
+  name: guts
+  description: ew
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -106,8 +106,8 @@
   id: Skin
   parent: BaseItem
   suffix: Organs Nibiru
-  name: шкура
-  description: "Шкура животного"
+  name: hide
+  description: Animal hide
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -123,8 +123,8 @@
   id: Skin_notready
   parent: BaseItem
   suffix: Organs Nibiru
-  name: необработаная кожа
-  description: "почти готова"
+  name: unprocessed hide
+  description: almost ready
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -144,8 +144,8 @@
   id: Skin_processed
   parent: BaseItem
   suffix: Organs Nibiru
-  name: кожа
-  description: "готова кожа"
+  name: leather
+  description: ready leather
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -162,8 +162,8 @@
   id: Skull_cow
   parent: BaseItem
   suffix: Organs Nibiru
-  name: череп
-  description: "йорик?"
+  name: skull
+  description: yorick?
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -175,8 +175,8 @@
   id: Skull_goat
   parent: BaseItem
   suffix: Organs Nibiru
-  name: череп
-  description: "йорик?"
+  name: skull
+  description: yorick?
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -188,8 +188,8 @@
   id: Skull_human
   parent: BaseItem
   suffix: Organs Nibiru
-  name: череп
-  description: "йорик?"
+  name: skull
+  description: yorick?
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -201,8 +201,8 @@
   id: Vein
   parent: BaseItem
   suffix: Organs Nibiru
-  name: жилы
-  description: "макароны"
+  name: sinews
+  description: pasta
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -222,8 +222,8 @@
   id: VeinTimer
   parent: BaseItem
   suffix: Organs Nibiru
-  name: жилы
-  description: "макароны"
+  name: sinews
+  description: pasta
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -243,8 +243,8 @@
   id: Vein_processed
   parent: BaseItem
   suffix: Organs Nibiru
-  name: обделаные жилы
-  description: "готовые макароны"
+  name: processed sinews
+  description: ready pasta
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Organs.rsi
@@ -261,8 +261,8 @@
   id: HideSmall
   parent: BaseItem
   suffix: Organs Nibiru
-  name: шкура
-  description: "Шкура животного"
+  name: hide
+  description: Animal hide
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Hide.rsi
@@ -283,8 +283,8 @@
   id: HideMedium
   parent: BaseItem
   suffix: Organs Nibiru
-  name: шкура
-  description: "Шкура животного"
+  name: hide
+  description: Animal hide
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Hide.rsi
@@ -305,8 +305,8 @@
   id: HideBig
   parent: BaseItem
   suffix: Organs Nibiru
-  name: шкура
-  description: "Шкура животного"
+  name: hide
+  description: Animal hide
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Hide.rsi
@@ -327,8 +327,8 @@
   id: SmallBodyButcher
   parent: BaseItem
   suffix: Organs Nibiru
-  name: маленький труп
-  description: маленький труп для дальнейшей разделки
+  name: small corpse
+  description: small corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
@@ -348,8 +348,8 @@
   id: SmallBodyButcherBird
   parent: SmallBodyButcher
   suffix: Organs Nibiru
-  name: маленький труп птицы
-  description: маленький труп птицы для дальнейшей разделки
+  name: small bird corpse
+  description: small bird corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
@@ -365,8 +365,8 @@
   id: MediumBodyButcherFirst
   parent: BaseItem
   suffix: Organs Nibiru
-  name: труп
-  description: труп для дальнейшей разделки
+  name: corpse
+  description: corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
@@ -388,8 +388,8 @@
   id: MediumBodyButcherSecond
   parent: BaseItem
   suffix: Organs Nibiru
-  name: труп
-  description: труп для дальнейшей разделки
+  name: corpse
+  description: corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
@@ -409,8 +409,8 @@
   id: BigBodyButcherFirst
   parent: BaseItem
   suffix: Organs Nibiru
-  name: большой труп
-  description: большой труп для дальнейшей разделки
+  name: large corpse
+  description: large corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
@@ -429,8 +429,8 @@
   id: BigBodyButcherSecond
   parent: BaseItem
   suffix: Organs Nibiru
-  name: большой труп
-  description: большой труп для дальнейшей разделки
+  name: large corpse
+  description: large corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
@@ -450,8 +450,8 @@
   id: BigBodyButcherThree
   parent: BaseItem
   suffix: Organs Nibiru
-  name: большой труп
-  description: большой труп для дальнейшей разделки
+  name: large corpse
+  description: large corpse for further butchering
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Butch.rsi

@@ -2,8 +2,8 @@
   parent: [ClothingBeltBase, ClothingSlotBase]
   id: ClothingBeltBronzeScabbard
   suffix: Nibiru, BronzeAge
-  name: бронзовые ножны
-  description: Простые кожаные ножны с бронзовыми вставками, предназначенные для хранения мечей.
+  name: bronze scabbard
+  description: Simple leather scabbard with bronze trim, designed for storing swords.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Belt/Nozni.rsi

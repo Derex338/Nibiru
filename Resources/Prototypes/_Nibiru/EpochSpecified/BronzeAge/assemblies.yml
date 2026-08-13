@@ -18,7 +18,7 @@
 - type: entity
   id: BronzeHammerSmallAssembly
   parent: BaseBronzeAssembly
-  name: заготовка малого бронзового молота
+  name: small bronze hammer assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
@@ -30,7 +30,7 @@
 - type: entity
   id: BronzeHammerAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового молота
+  name: bronze hammer assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi
@@ -42,7 +42,7 @@
 - type: entity
   id: BronzeHatchetAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового топорика
+  name: bronze hatchet assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
@@ -54,7 +54,7 @@
 - type: entity
   id: BronzeAxeAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового топора
+  name: bronze axe assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
@@ -66,7 +66,7 @@
 - type: entity
   id: BronzeSpearAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового копья
+  name: bronze spear assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
@@ -78,7 +78,7 @@
 - type: entity
   id: BronzeSwordAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового меча
+  name: bronze sword assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
@@ -90,7 +90,7 @@
 - type: entity
   id: BronzeTridentAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового трезубца
+  name: bronze trident assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
@@ -102,7 +102,7 @@
 - type: entity
   id: BronzeHalberdAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзовой алебарды
+  name: bronze halberd assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
@@ -114,7 +114,7 @@
 - type: entity
   id: BronzePickaxeAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзовой кирки
+  name: bronze pickaxe assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
@@ -126,7 +126,7 @@
 - type: entity
   id: BronzeShovelAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзовой лопаты
+  name: bronze shovel assembly
   components:
   - type: Sprite
     sprite: Objects/Tools/shovel.rsi
@@ -138,7 +138,7 @@
 - type: entity
   id: BronzeScytheAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзовой косы
+  name: bronze scythe assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
@@ -150,7 +150,7 @@
 - type: entity
   id: BronzeHoeAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзовой мотыги
+  name: bronze hoe assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
@@ -162,7 +162,7 @@
 - type: entity
   id: BronzeKnifeAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового ножа
+  name: bronze knife assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
@@ -174,7 +174,7 @@
 - type: entity
   id: BronzeClippersAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового секатора
+  name: bronze clippers assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
@@ -188,7 +188,7 @@
 - type: entity
   id: BronzeBucklerAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового баклера
+  name: bronze buckler assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
@@ -200,7 +200,7 @@
 - type: entity
   id: BronzeChestplateAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового нагрудника
+  name: bronze chestplate assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
@@ -212,7 +212,7 @@
 - type: entity
   id: BronzeHelmetAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового шлема
+  name: bronze helmet assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
@@ -224,7 +224,7 @@
 - type: entity
   id: BronzeXiphosAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового ксифоса
+  name: bronze xiphos assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
@@ -236,7 +236,7 @@
 - type: entity
   id: BronzeDaggerAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового кинжала
+  name: bronze dagger assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
@@ -248,7 +248,7 @@
 - type: entity
   id: BronzeKhapeshAssembly
   parent: BaseBronzeAssembly
-  name: заготовка бронзового хопеша
+  name: bronze khopesh assembly
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi

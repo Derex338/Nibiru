@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
@@ -47,11 +48,13 @@ public sealed partial class ResearchSystem
             return;
 
         primaryDb.MainDiscipline = otherDb.MainDiscipline;
-        primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards;
-        primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
-        primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
-        primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes;
-        primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts;
+        primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards.ToList();
+        primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines.ToList();
+        primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies.ToList();
+        primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes.ToList();
+        primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts.ToList();
+        primaryDb.CurrentEpoch = otherDb.CurrentEpoch;
+        primaryDb.UnlockedEpochs = otherDb.UnlockedEpochs.ToList();
 
         Dirty(primaryUid, primaryDb);
 

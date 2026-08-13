@@ -2,8 +2,8 @@
   parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
   id: BronzeChestplate
   suffix: Nibiru, BronzeAge
-  name: бронзовый нагрудник
-  description: Ляпота.
+  name: bronze chestplate
+  description: Gorgeous.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
@@ -35,8 +35,8 @@
   parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
   id: BronzeHelmet
   suffix: Nibiru, BronzeAge
-  name: бронзовый шлем
-  description: Где хохолок?
+  name: bronze helmet
+  description: Where is the crest?
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
@@ -68,8 +68,8 @@
   parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
   id: BronzeChainmail
   suffix: Nibiru, BronzeAge
-  name: бронзовая кольчуга
-  description: Ляпота.
+  name: bronze chainmail
+  description: A dense weave of bronze rings.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail.rsi
@@ -101,8 +101,8 @@
   parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
   id: BronzeChainmailCowl
   suffix: Nibiru, BronzeAge
-  name: бронзовый кольчужный наголовник
-  description: Неудобно.
+  name: bronze chainmail coif
+  description: A headdress made of bronze rings.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/ChainmailHelmet.rsi
@@ -134,8 +134,8 @@
   parent: [ ClothingOuterBaseLarge, BaseBronzeItem, AllowSuitStorageClothing ]
   id: BronzeLeatherArmor
   suffix: Nibiru, BronzeAge
-  name: кожаная броня
-  description: Кожаная броня усиленая бронзовыми вставками.
+  name: leather armor
+  description: Leather armor reinforced with bronze inserts.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
@@ -170,8 +170,8 @@
   parent: [ ClothingHeadHelmetArmoredBase, BaseBronzeItem ]
   id: BronzeLeatherHelmet
   suffix: Nibiru, BronzeAge
-  name: кожаный шлем
-  description: Кожаный шлем усиленый бронзовыми вставками.
+  name: leather helmet
+  description: Leather helmet reinforced with bronze inserts.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherHelmet.rsi

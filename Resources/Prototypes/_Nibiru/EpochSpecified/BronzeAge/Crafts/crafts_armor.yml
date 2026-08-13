@@ -9,7 +9,7 @@
   graph: BronzeArmorBuckler
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-armor-buckler-desc
 
   objectType: Item
@@ -23,7 +23,7 @@
   graph: BronzeChainmail
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-chainmail-desc
 
   objectType: Item
@@ -37,7 +37,7 @@
   graph: BronzeChainmailCowl
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-chainmail-cowl-desc
 
   objectType: Item
@@ -51,7 +51,7 @@
   graph: BronzeLeatherArmor
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-leather-armor-desc
 
   objectType: Item
@@ -65,7 +65,7 @@
   graph: BronzeLeatherHelmet
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-leather-helmet-desc
 
   objectType: Item
@@ -79,7 +79,7 @@
   graph: BronzeChestplate
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-chestplate-desc
 
   objectType: Item
@@ -93,7 +93,7 @@
   graph: BronzeHelmet
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-helmet-desc
 
   objectType: Item
@@ -107,7 +107,7 @@
   graph: BronzeScabbard
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-bronze-scabbard-desc
 
   objectType: Item
@@ -121,7 +121,7 @@
   graph: GladiatorHelmet
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-gladiator-helmet-desc
 
   objectType: Item
@@ -135,7 +135,7 @@
   graph: GladiatorUniform
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   description: construction-recipe-gladiator-uniform-desc
 
   objectType: Item
@@ -149,7 +149,7 @@
   graph: CloakBarbarian
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
@@ -161,7 +161,7 @@
   graph: BoneMask
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -173,7 +173,7 @@
   graph: BoneHornedMask
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -185,7 +185,7 @@
   graph: MimeMask
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -198,7 +198,7 @@
   graph: FurCloak
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
@@ -210,7 +210,7 @@
   graph: FurCape
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
@@ -222,7 +222,7 @@
   graph: FurCape2
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
@@ -234,7 +234,7 @@
   graph: BlacksmithApron
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench

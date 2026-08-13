@@ -1,10 +1,10 @@
 
 - type: entity
-  name: каменный молоток
+  name: stone hammer
   parent: [BaseItem, BaseStoneItem]
   id: StoneHammer
-  suffix: Нибиру, Каменный век
-  description: Грубый молоток, сделанный из камня, привязанного к палке. Незаменим в строительстве.
+  suffix: Nibiru, Stone Age
+  description: A crude hammer made of a stone tied to a stick. Indispensable in construction.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi
@@ -55,11 +55,11 @@
                 max: 1
 
 - type: entity
-  name: каменный топор
+  name: stone hatchet
   parent: [BaseItem, BaseStoneItem]
   id: StoneHatchet
-  suffix: Нибиру, Каменный век
-  description: Простой топор с каменным лезвием. Полезен для рубки деревьев и голов.
+  suffix: Nibiru, Stone Age
+  description: A simple hatchet with a stone blade. Useful for chopping trees and heads.
   components:
   - type: Tag
     tags:
@@ -107,11 +107,11 @@
                 max: 1
 
 - type: entity
-  name: каменный нож
+  name: stone knife
   parent: [BaseKnife, BaseStoneItem]
   id: StoneKnife
-  suffix: Нибиру, Каменный век
-  description: Острый осколок камня с примитивной рукояткой.
+  suffix: Nibiru, Stone Age
+  description: A sharp stone shard with a primitive handle.
   components:
   - type: Tag
     tags:
@@ -166,11 +166,11 @@
                 max: 1
 
 - type: entity
-  name: каменная кирка
+  name: stone pickaxe
   parent: BaseStoneItem
   id: StonePickaxe
-  suffix: Нибиру, Каменный век
-  description: Тяжелый камень, закрепленный на палке, для дробления породы.
+  suffix: Nibiru, Stone Age
+  description: A heavy stone attached to a stick for breaking rock.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Pickaxe.rsi
@@ -226,11 +226,11 @@
 
 
 - type: entity
-  name: каменная лопата
+  name: stone shovel
   parent: [BaseItem, BaseStoneItem]
   id: StoneShovel
-  suffix: Нибиру, Каменный век
-  description: Примитивный инструмент для копания земли.
+  suffix: Nibiru, Stone Age
+  description: A primitive tool for digging earth.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Shovel.rsi
@@ -278,11 +278,11 @@
     node: fin
 
 - type: entity
-  name: костяная игла
+  name: bone needle
   parent: BaseItem
   id: BoneNeedle
-  suffix: Нибиру, Каменный век
-  description: Острая игла из кости. Используется для шитья.
+  suffix: Nibiru, Stone Age
+  description: A sharp needle made of bone. Used for sewing.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Needle.rsi
@@ -318,11 +318,11 @@
       Bone: 1
 
 - type: entity
-  name: приспособление для разжигания огня
+  name: fire starter
   parent: BaseItem
   id: FireStarter
-  suffix: Нибиру, Каменный век
-  description: Две деревянные палочки, которые при быстром трении создают искру.
+  suffix: Nibiru, Stone Age
+  description: Two wooden sticks that create a spark when rubbed together quickly.
   components:
   - type: Sprite
     sprite: Objects/Materials/parts.rsi

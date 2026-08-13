@@ -9,7 +9,7 @@
   graph: WheelBlank
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-wheel-blank-desc
 
   objectType: Item
@@ -23,7 +23,7 @@
   graph: WoodenWheel
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-wooden-wheel-desc
 
   objectType: Item
@@ -37,7 +37,7 @@
   graph: BronzeInlay
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-bronze-inlay-desc
 
   objectType: Item
@@ -71,7 +71,7 @@
   graph: BronzeXiphosBladePiece
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-bronze-xiphos-blade-piece-desc
 
   objectType: Item
@@ -85,7 +85,7 @@
   graph: CoinBronze
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-coin-bronze-desc
 
   objectType: Item
@@ -99,7 +99,7 @@
   graph: CoinSilver
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-coin-silver-desc
 
   objectType: Item
@@ -113,7 +113,7 @@
   graph: CoinGold
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-coin-gold-desc
 
   objectType: Item
@@ -127,7 +127,7 @@
   graph: BronzeChainmailPiece
   startNode: start
   targetNode: fin
-  category: Materials
+  category: construction-category-materials
   description: construction-recipe-bronze-chainmail-piece-desc
 
   objectType: Item

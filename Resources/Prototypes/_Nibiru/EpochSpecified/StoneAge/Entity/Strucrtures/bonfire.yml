@@ -1,10 +1,10 @@
 
 - type: entity
   id: NibiruBonfire
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseStructure
-  name: костёр
-  description: Кучка дров в форме костра
+  name: bonfire
+  description: A pile of firewood shaped like a bonfire.
   components:
   - type: Sprite
     noRot: true

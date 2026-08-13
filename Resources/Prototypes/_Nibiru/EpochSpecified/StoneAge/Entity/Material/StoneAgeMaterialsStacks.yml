@@ -78,7 +78,7 @@
 - type: material
   id: WoodStick
   stackEntity: WoodStick1
-  name: stick
+  name: materials-wood-stick
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stick.rsi, state: stick_1 }
   color: "#80ffff"
@@ -96,7 +96,7 @@
 - type: material
   id: Thread
   stackEntity: MaterialThread1
-  name: thread
+  name: materials-thread
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi, state: thread_1 }
   color: "#80ffff"
@@ -114,7 +114,7 @@
 - type: material
   id: Herb
   stackEntity: BunchHerb
-  name: herb
+  name: materials-herb
   unit: materials-unit-piece
   icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
   color: "#80ffff"
@@ -132,7 +132,7 @@
 - type: material
   id: HerbRope
   stackEntity: CERope
-  name: grass rope
+  name: materials-herb-rope
   unit: materials-unit-piece
   icon: { sprite: _CE/Objects/Tool/rope.rsi, state: icon }
   color: "#80ffff"

@@ -3,6 +3,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Random;
 using Content.Shared.Database;
+using Robust.Shared.Player;
 
 namespace Content.Server._Nibiru.Factions;
 
@@ -200,23 +201,32 @@ public sealed partial class FactionSystem
             return;
         }
 
-        foreach (var member in factionComponent.Members)
-        {
-            if (TryComp<FactionComponent>(member, out var memberComp))
-            {
-                _popup.PopupEntity(
-                    Loc.GetString("faction-disbanded", ("factionName", factionComponent.FactionName)),
-                    member,
-                    member);
+        var factionName = factionComponent.FactionName;
+        EntityManager.System<Content.Server.Research.Systems.ResearchSystem>().ClearFactionResearch(factionName);
 
-                RemComp<FactionComponent>(member);
-            }
+        var toStrip = new List<EntityUid>();
+        var query = EntityQueryEnumerator<FactionComponent>();
+        while (query.MoveNext(out var uid, out var faction))
+        {
+            if (faction.FactionName == factionName)
+                toStrip.Add(uid);
         }
 
-        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} распустил фракцию {factionComponent.FactionName}");
+        foreach (var uid in toStrip)
+        {
+            if (TryComp<ActorComponent>(uid, out _))
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("faction-disbanded", ("factionName", factionName)),
+                    uid,
+                    uid);
+            }
 
-        UnregisterFaction(factionComponent.FactionName);
+            RemComp<FactionComponent>(uid);
+        }
 
-        RemComp<FactionComponent>(player.Value);
+        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(player.Value):player} распустил фракцию {factionName}");
+
+        UnregisterFaction(factionName);
     }
 }

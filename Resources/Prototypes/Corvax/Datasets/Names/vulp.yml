@@ -2,13 +2,13 @@
   id: NamesVulpFirstMale
   values:
     prefix: names-vulpkanin-male-dataset-
-    count: 80
+    count: 345
 
 - type: localizedDataset
   id: NamesVulpFirstFemale
   values:
     prefix: names-vulpkanin-female-dataset-
-    count: 113
+    count: 345
 
 - type: localizedDataset
   id: NamesVulpLast

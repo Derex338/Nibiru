@@ -288,9 +288,63 @@
     tags:
     - CESalad
 
-# Unused soup.rsi states lacking recipes:
-# - flyagaric
-# - flylumish
-# - lumish
-# - fish
-# - kharcho
+- type: CECookingRecipe
+  id: FlyAgaricSoup
+  foodType: Soup
+  foodData:
+    name: ce-soup-recipe-flyagaric-name
+    desc: ce-soup-recipe-flyagaric-desc
+    visuals:
+    - sprite: _CE/Objects/Consumable/Food/Soups/food.rsi
+      state: flyagaric
+    statusEffects:
+      CEStatusEffectBadFoodVomit: 8
+  requirements:
+  - !type:ReagentRequired
+    amount: 20
+    reagents:
+    - Water
+  - !type:TagRequired
+    tags:
+    - CEFlyAgaric
+
+- type: CECookingRecipe
+  id: FlyLumishSoup
+  foodType: Soup
+  foodData:
+    name: ce-soup-recipe-flylumish-name
+    desc: ce-soup-recipe-flylumish-desc
+    visuals:
+    - sprite: _CE/Objects/Consumable/Food/Soups/food.rsi
+      state: flylumish
+    statusEffects:
+      CEStatusEffectBadFoodVomit: 5
+  requirements:
+  - !type:ReagentRequired
+    amount: 20
+    reagents:
+    - Water
+  - !type:TagRequired
+    tags:
+    - CEFlyAgaric
+  - !type:TagRequired
+    tags:
+    - CELumish
+
+- type: CECookingRecipe
+  id: LumishSoup
+  foodType: Soup
+  foodData:
+    name: ce-soup-recipe-lumish-name
+    desc: ce-soup-recipe-lumish-desc
+    visuals:
+    - sprite: _CE/Objects/Consumable/Food/Soups/food.rsi
+      state: lumish
+  requirements:
+  - !type:ReagentRequired
+    amount: 20
+    reagents:
+    - Water
+  - !type:TagRequired
+    tags:
+    - CELumish

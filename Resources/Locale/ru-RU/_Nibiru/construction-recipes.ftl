@@ -1,6 +1,6 @@
-construction-recipe-aloe-cream = Aloe Cream
+construction-recipe-aloe-cream = крем из алоэ
 construction-recipe-angel-statue = Angel Statue
-construction-recipe-bandage-cloth = Bandage
+construction-recipe-bandage-cloth = бинт
 construction-recipe-banner-blue = Blue Banner
 construction-recipe-banner-cargo = Cargo Banner
 construction-recipe-banner-engineering = Engineering Banner
@@ -119,7 +119,7 @@ construction-recipe-fedora-blue = Blue Fedora
 construction-recipe-fedora-brown = Brown Fedora
 construction-recipe-fedora-green = Green Fedora
 construction-recipe-fedora-red = Red Fedora
-construction-recipe-flint-and-steel = Fire Striker
+construction-recipe-flint-and-steel = огниво
 construction-recipe-floor-torch = Floor Torch
 construction-recipe-flute = Flute
 construction-recipe-flute-desc = Поперечная флейта для утонченных мелодий.

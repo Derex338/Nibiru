@@ -3,7 +3,7 @@
 - type: CERecipe
   id: CEMachinePartCoalDiffuser
   tag: CERecipeEngineeringTable
-  category: Materials
+  category: construction-category-materials
   craftTime: 2.0
   requirements:
   - !type:StackResource
@@ -24,7 +24,7 @@
 - type: CERecipe
   id: CEMachinePartEnergyLine1
   tag: CERecipeEngineeringTable
-  category: Materials
+  category: construction-category-materials
   craftTime: 2.0
   requirements:
   - !type:ProtoIdResource
@@ -42,7 +42,7 @@
 - type: CERecipe
   id: CEEnergyCrystalCell
   tag: CERecipeEngineeringTable
-  category: Materials
+  category: construction-category-materials
   craftTime: 1.0
   requirements:
   - !type:ProtoIdResource
@@ -59,7 +59,7 @@
 - type: CERecipe
   id: CEMediumBrassPipe15
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 2.0
   requirements:
   - !type:StackResource
@@ -71,7 +71,7 @@
 - type: CERecipe
   id: CEBigBrassPipe15
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 2.0
   requirements:
   - !type:StackResource
@@ -83,7 +83,7 @@
 - type: CERecipe
   id: CEPipeValve10
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -95,7 +95,7 @@
 - type: CERecipe
   id: CEWrench
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -110,7 +110,7 @@
 - type: CERecipe
   id: CECrowbar
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -125,7 +125,7 @@
 - type: CERecipe
   id: CEScrewdriver
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -140,7 +140,7 @@
 - type: CERecipe
   id: CEWeaponPickaxeIron
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -158,7 +158,7 @@
 - type: CERecipe
   id: CEWeaponShovelIron
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -173,7 +173,7 @@
 - type: CERecipe
   id: CELantern
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:ProtoIdResource
@@ -191,7 +191,7 @@
 - type: CERecipe
   id: CEManaTransferGlove
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 1.0
   requirements:
   - !type:StackResource
@@ -209,7 +209,7 @@
 - type: CERecipe
   id: CEClothingEyesMiningGlasses
   tag: CERecipeEngineeringTable
-  category: Tools
+  category: construction-category-tools
   craftTime: 2.0
   requirements:
   - !type:StackResource

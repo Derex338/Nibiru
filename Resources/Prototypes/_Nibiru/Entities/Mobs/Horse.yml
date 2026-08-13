@@ -55,9 +55,9 @@
 - type: entity
   id: Saddle
   parent: Clothing
-  name: седло
+  name: saddle
   suffix: Nibiru
-  description: Кожаное седло с бронзовыми вставками для верховой езды.
+  description: A leather saddle with bronze fittings for horseback riding.
   components:
   - type: Clothing
     slots: [back]

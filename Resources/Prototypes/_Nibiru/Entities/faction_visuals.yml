@@ -1,8 +1,8 @@
 - type: entity
   id: FactionBanner
   parent: BannerBase
-  name: фракционный баннер
-  description: Баннер с логотипом и цветами вашей фракции.
+  name: faction banner
+  description: A banner with your faction's logo and colors.
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/banner.rsi
@@ -20,8 +20,8 @@
 - type: entity
   id: FactionFlag
   parent: BaseFlag
-  name: фракционный флаг
-  description: Флаг с логотипом и цветами вашей фракции.
+  name: faction flag
+  description: A flag with your faction's logo and colors.
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/banner.rsi

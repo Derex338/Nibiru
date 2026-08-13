@@ -3,7 +3,7 @@
   parent:
   - BaseStructure
   - BaseSlicingRefinable
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: Sprite
@@ -30,7 +30,7 @@
 - type: entity
   id: HerbD
   parent: HerbBase
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: RandomSprite
@@ -44,7 +44,7 @@
 - type: entity
   id: HerbE
   parent: HerbBase
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: RandomSprite
@@ -58,7 +58,7 @@
 - type: entity
   id: HerbG
   parent: HerbBase
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: RandomSprite
@@ -72,7 +72,7 @@
 - type: entity
   id: HerbH
   parent: HerbBase
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: RandomSprite
@@ -85,7 +85,7 @@
 - type: entity
   id: HerbJ
   parent: HerbBase
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: RandomSprite
@@ -98,7 +98,7 @@
 - type: entity
   id: HerbK
   parent: HerbBase
-  name: трава
+  name: grass
   suffix: Nibiru
   components:
   - type: RandomSprite
@@ -111,8 +111,8 @@
 - type: entity
   parent: BaseItem
   id: BunchHerb
-  name: пучок травы
-  description: Пучок свежесобранной травы.
+  name: bunch of herbs
+  description: A bunch of freshly picked herbs.
   suffix: Full Nibiru
   components:
   - type: Material
@@ -148,8 +148,8 @@
 - type: entity
   parent: BaseWoodItem
   id: Acorn
-  name: жёлудь
-  description: Плоды дуба, можно посадить или использовать в хозяйстве.
+  name: acorn
+  description: Acorn of an oak tree, can be planted or used around the household.
   suffix: Full Nibiru
   components:
   - type: Material
@@ -183,7 +183,7 @@
 - type: material
   id: acorn
   stackEntity: Acorn1
-  name: жёлудь
+  name: materials-acorn
   unit: materials-unit-piece
   icon: { sprite: Objects/Specific/Hydroponics/oat.rsi, state: produce }
   color: "#80ffff"
