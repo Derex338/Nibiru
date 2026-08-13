@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.NPC.Systems;
+using Content.Server.Parallax;
 using Content.Server.Stack;
 // Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior.Components;
@@ -39,6 +40,7 @@ public sealed partial class NibiruLeashSystem : EntitySystem
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private BiomeSystem _biome = default!;
 
     public override void Initialize()
     {
@@ -213,6 +215,7 @@ public sealed partial class NibiruLeashSystem : EntitySystem
 
         component.IsLeashed = true;
         component.LeashedTo = target;
+        _biome.ClaimBiomeMob(animal);
 
         // Если привязываем к игроку (не к столбику)
         if (!HasComp<NibiruLeashAnchorComponent>(target))

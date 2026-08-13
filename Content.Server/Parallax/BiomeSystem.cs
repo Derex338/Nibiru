@@ -22,6 +22,7 @@ using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Tag;
 using Content.Shared.Maps;
+using Content.Shared.Movement.Pulling.Events;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Microsoft.Extensions.ObjectPool;
@@ -77,6 +78,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private float _loadRange = DefaultLoadRange;
     private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
     private static readonly ProtoId<TagPrototype> BiomeMobTag = "BiomeMob";
+    private const float RelocatedBiomeMobDistance = 24f;
 
     public bool SaveBiomeMobs { get; set; } = false;
 
@@ -150,6 +152,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Subs.CVar(_configManager, CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(ProtoReload);
+        SubscribeLocalEvent<BiomeMobComponent, PullStartedMessage>(OnBiomeMobPulled);
         _mapLoader.OnIsSerializable += OnIsSerializable;
     }
 
@@ -163,6 +166,49 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         if (serializable && !SaveBiomeMobs && _tags.HasTag(ent, BiomeMobTag))
             serializable = false;
+    }
+
+    public void ClaimBiomeMob(EntityUid uid)
+    {
+        _tags.RemoveTag(uid, BiomeMobTag);
+        RemComp<BiomeMobComponent>(uid);
+    }
+
+    private void MarkBiomeMob(EntityUid uid)
+    {
+        _tags.AddTag(uid, BiomeMobTag);
+        var biomeMob = EnsureComp<BiomeMobComponent>(uid);
+        biomeMob.SpawnPosition = _transform.GetWorldPosition(uid);
+    }
+
+    private void OnBiomeMobPulled(Entity<BiomeMobComponent> ent, ref PullStartedMessage args)
+    {
+        if (args.PulledUid != ent.Owner)
+            return;
+
+        if (!HasComp<ActorComponent>(args.PullerUid))
+            return;
+
+        ClaimBiomeMob(ent);
+    }
+
+    private bool ShouldKeepOnUnload(EntityUid ent, TransformComponent xform)
+    {
+        if (!HasComp<MobStateComponent>(ent))
+            return false;
+
+        if (!_tags.HasTag(ent, BiomeMobTag))
+            return true;
+
+        if (!TryComp<BiomeMobComponent>(ent, out var origin))
+            return false;
+
+        var offset = _transform.GetWorldPosition(xform) - origin.SpawnPosition;
+        if (offset.LengthSquared() < RelocatedBiomeMobDistance * RelocatedBiomeMobDistance)
+            return false;
+
+        ClaimBiomeMob(ent);
+        return true;
     }
 
     private void ProtoReload(PrototypesReloadedEventArgs obj)
@@ -835,7 +881,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 EntityManager.InitializeAndStartEntity(uid);
 
                 if (HasComp<MobStateComponent>(uid))
-                    _tags.AddTag(uid, BiomeMobTag);
+                    MarkBiomeMob(uid);
 
                 if (component.LoadedEntities.TryGetValue(chunk, out var loadedEntities))
                 {
@@ -932,7 +978,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
 
                 if (HasComp<MobStateComponent>(ent))
-                    _tags.AddTag(ent, BiomeMobTag);
+                    MarkBiomeMob(ent);
 
                 loadedEntities.Add(ent, indices);
             }
@@ -1088,8 +1134,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     }
                 }
 
-                // 1. Проверяем, должен ли этот ентити здесь находиться (мягкая проверка имени прототипа и маркеров)
-                if (!IsExpectedByGenerator(ent, tile, metadata.EntityPrototype?.ID, component, gridUid, grid))
+                if (ShouldKeepOnUnload(ent, xform) ||
+                    !IsExpectedByGenerator(ent, tile, metadata.EntityPrototype?.ID, component, gridUid, grid))
                 {
                     modified.Add(tile);
                     continue;
@@ -1134,7 +1180,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         break;
                     }
 
-                    if (!IsExpectedByGenerator(ent, indices, metadata.EntityPrototype?.ID, component, gridUid, grid))
+                    if (ShouldKeepOnUnload(ent, xformQuery.GetComponent(ent)) ||
+                        !IsExpectedByGenerator(ent, indices, metadata.EntityPrototype?.ID, component, gridUid, grid))
                     {
                         modified.Add(indices);
                         break;
@@ -1301,10 +1348,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private bool IsExpectedByGenerator(EntityUid ent, Vector2i tile, string? currentProto, BiomeComponent biome, EntityUid gridUid, MapGridComponent grid)
     {
-        // Если у сущности нет прототипа (игроки, системные объекты), мы не считаем это модификацией биома.
-        if (currentProto == null) return true;
+        if (currentProto == null)
+            return false;
 
-        // Биомные мобы могут свободно перемещаться, их наличие на "неродном" тайле не является модификацией.
         if (_tags.HasTag(ent, BiomeMobTag))
             return true;
 
