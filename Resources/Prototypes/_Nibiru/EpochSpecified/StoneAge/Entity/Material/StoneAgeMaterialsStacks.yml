@@ -179,12 +179,12 @@
   name: stack-log
 
   icon: { sprite: _CE/Objects/Materials/wood.rsi, state: log }
-  spawn: Log
+  spawn: CEWoodLog
   maxCount: 1
 
 - type: material
   id: Log
-  stackEntity: Log
+  stackEntity: CEWoodLog
   name: log
   unit: materials-unit-piece
   icon: { sprite: _CE/Objects/Materials/wood.rsi, state: log }

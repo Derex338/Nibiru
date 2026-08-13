@@ -173,7 +173,7 @@
     - itemPrototype: MaterialCloth1
       growthTime: 180
       yield: 1
-      requiredTool: CEScissors
+      requiredTool: Shearing
   - type: ToolRefinable
     refineResult:
     - id: HideMedium

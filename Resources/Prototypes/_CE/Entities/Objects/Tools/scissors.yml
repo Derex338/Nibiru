@@ -35,6 +35,9 @@
   - type: Tag
     tags:
     - CEScissors
+  - type: Tool
+    qualities:
+    - Shearing
   - type: PhysicalComposition
     materialComposition:
       CEIron: 5
