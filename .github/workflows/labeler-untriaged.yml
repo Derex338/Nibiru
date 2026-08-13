@@ -1,4 +1,4 @@
-﻿name: "Лейблы: Без триажа"
+﻿name: "Labels: Untriaged"
 
 on:
   issues:

@@ -1,4 +1,4 @@
-name: "Лейблы: Ветка stable"
+name: "Labels: Branch stable"
 
 on:
   pull_request_target:
