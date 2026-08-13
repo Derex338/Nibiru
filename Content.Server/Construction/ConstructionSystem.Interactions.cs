@@ -170,16 +170,17 @@ namespace Content.Server.Construction
             if (construction.StepIndex >= edge.Steps.Count)
             {
                 // Edge finished!
+                PerformActions(uid, user, edge.Completed);
+
+                if (construction.Deleted)
+                    return HandleResult.True;
+
                 construction.TargetEdgeIndex = null;
                 construction.EdgeIndex = null;
                 construction.StepIndex = 0;
 
                 // We change the node now.
-                var finalUid = ChangeNode(uid, user, edge.Target, true, construction);
-
-                // Perform edge completion actions on the final entity result of the transition.
-                if (Exists(finalUid))
-                    PerformActions(finalUid, user, edge.Completed);
+                ChangeNode(uid, user, edge.Target, true, construction);
             }
 
             return HandleResult.True;

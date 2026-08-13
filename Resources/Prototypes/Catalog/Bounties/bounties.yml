@@ -550,6 +550,8 @@
       - Bread
       - Pistachios
       - Creamsicle
+      components:
+      - ToolRefinable
 
 - type: cargoBounty
   id: BountyVegetable
@@ -567,6 +569,8 @@
       - Cake
       - Pie
       - Bread
+      components:
+      - ToolRefinable
 
 - type: cargoBounty
   id: BountyChili

@@ -39,3 +39,12 @@ ce-porridge-recipe-meat-desc = Сытная каша, томлёная с кус
 
 ce-porridge-recipe-pumpkin-name = овсянка с тыквой
 ce-porridge-recipe-pumpkin-desc = Нежная каша с тыквенным пюре.
+
+ce-soup-recipe-flyagaric-name = мухоморовый суп
+ce-soup-recipe-flyagaric-desc = Яркий суп из мухоморов. Есть на свой страх и риск.
+
+ce-soup-recipe-flylumish-name = суп с мухоморами и люмишем
+ce-soup-recipe-flylumish-desc = Странный светящийся бульон из мухоморов и люмиша.
+
+ce-soup-recipe-lumish-name = суп из люмиша
+ce-soup-recipe-lumish-desc = Мягко светящийся суп из люмиша.

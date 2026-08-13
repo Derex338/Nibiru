@@ -21,17 +21,17 @@ namespace Content.Client.Lobby
 {
     public sealed partial class LobbyState : Robust.Client.State.State
     {
-    [Dependency] private IBaseClient _baseClient = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IClientConsoleHost _consoleHost = default!;
-    [Dependency] private IEntityManager _entityManager = default!;
-    [Dependency] private IResourceCache _resourceCache = default!;
-    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private IVoteManager _voteManager = default!;
-    [Dependency] private ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
-    [Dependency] private IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private IBaseClient _baseClient = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IResourceCache _resourceCache = default!;
+        [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IVoteManager _voteManager = default!;
+        [Dependency] private ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
+        [Dependency] private IPrototypeManager _protoMan = default!;
+        [Dependency] private IClientPreferencesManager _preferencesManager = default!;
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;

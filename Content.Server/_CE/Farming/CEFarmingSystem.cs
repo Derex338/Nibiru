@@ -2,6 +2,7 @@ using Content.Shared._CE.DayCycle;
 using Content.Shared._CE.Farming;
 using Content.Shared._CE.Farming.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -11,6 +12,7 @@ public sealed partial class CEFarmingSystem : CESharedFarmingSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()

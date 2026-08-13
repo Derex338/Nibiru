@@ -88,3 +88,6 @@ ent-StoneMoldXiphosBlade = каменная форма для лезвия кс�
 ent-StoneMoldCrown = каменная форма для короны
     .desc = Каменная форма для отливки короны.
     .suffix = { ent-StoneMoldBase.suffix }
+ent-StoneMoldRod = каменная форма для стержня
+    .desc = Каменная форма для отливки стержня.
+    .suffix = Nibiru, BronzeAge

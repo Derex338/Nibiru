@@ -48,7 +48,7 @@
       steps:
       - component: DoorElectronics
         store: board
-        name: "door electronics circuit board"
+        name: construction-graph-component-door-electronics-circuit-board
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
@@ -127,22 +127,19 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetRGlass1
-        amount: 6
+        amount: 4
       steps:
       - tool: Prying
         doAfter: 8
 
 - type: construction
-  name: glass airlock [Triple]
+  name: ent-AirlockTriple
   id: AirlockTriple
   graph: AirlockTriple
   startNode: start
   targetNode: glassAirlockTriple
   category: construction-category-structures
-  description: Он открывается, он закрывается, и он может вас раздавить.
-  icon:
-    sprite: _Adventure/Structures/Doors/Triple/triple_glass.rsi
-    state: assembly
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

@@ -1,7 +1,7 @@
 - type: entity
   parent: [IngotBase, BaseCopperItem]
   id: IngotCopper
-  name: медный слиток
+  name: copper ingot
   suffix: Full, Nibiru, BronzeAge
   components:
   - type: Item
@@ -32,7 +32,7 @@
 - type: entity
   parent: IngotCopper
   id: IngotCopper1
-  name: медный слиток
+  name: copper ingot
   suffix: Single, Nibiru, BronzeAge
   components:
   - type: Sprite
@@ -43,7 +43,7 @@
 - type: entity
   parent: [IngotBase, BaseItem]
   id: IngotTin
-  name: оловянный слиток
+  name: tin ingot
   suffix: Full, Nibiru, BronzeAge
   components:
   - type: Item
@@ -75,7 +75,7 @@
 - type: entity
   parent: IngotTin
   id: IngotTin1
-  name: оловянный слиток
+  name: tin ingot
   suffix: Single, Nibiru, BronzeAge
   components:
   - type: Sprite
@@ -87,10 +87,13 @@
 - type: entity
   parent: [IngotBase, BaseBronzeItem]
   id: BronzeScrap
-  name: металлические осколки
+  name: metal scrap
   suffix: Full, Nibiru, BronzeAge
   components:
   - type: Material
+  - type: Stack
+    stackType: BronzeScrap
+    count: 30
   - type: Item
     size: Normal
     shape:
@@ -106,10 +109,11 @@
     resultAmount: 10
     resultTemperature: 1100
 
+
 - type: entity
   parent: [IngotBase, BaseBronzeItem]
   id: IngotBronze
-  name: бронзовый слиток
+  name: bronze ingot
   suffix: Full, Nibiru, BronzeAge
   components:
   - type: Material
@@ -141,7 +145,7 @@
 - type: entity
   parent: IngotBronze
   id: IngotBronze1
-  name: бронзовый слиток
+  name: bronze ingot
   suffix: Single, Nibiru, BronzeAge
   components:
   - type: Sprite

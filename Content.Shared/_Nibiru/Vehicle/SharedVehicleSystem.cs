@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -35,7 +34,6 @@ public sealed partial class RideableSystem : EntitySystem
     [Dependency] private SharedBuckleSystem _buckle = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private PullingSystem _pull = default!;
-    [Dependency] private SharedHandsSystem _hand = default!;
     [Dependency] private SharedStaminaSystem _stamina = default!;
     [Dependency] private SharedPhysicsSystem _phys = default!;
 

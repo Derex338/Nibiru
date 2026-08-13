@@ -4,7 +4,7 @@
               SetSize="420 300">
     <BoxContainer Orientation="Vertical" Margin="16 16 16 16">
         <!-- Header -->
-        <Label Name="TopLabel"
+        <Label Name="HeaderLabel"
                Text="Select Language / Выбор языка"
                HorizontalAlignment="Center"
                StyleClasses="LabelKeyText"

@@ -6,8 +6,8 @@
   parent: [BaseItem, BaseBronzeItem]
   id: CoinBronze
   suffix: Nibiru, BronzeAge
-  name: бронзовая монета
-  description: Небольшая монета из бронзы. Ходовая валюта бронзового века.
+  name: bronze coin
+  description: A small coin made of bronze. Common currency of the Bronze Age.
   components:
   - type: Sprite
     sprite: _CE/Objects/Materials/Currency/coin_cp.rsi
@@ -37,6 +37,9 @@
   - type: Tag
     tags:
     - Coin
+  - type: Construction
+    graph: CoinBronze
+    node: fin
 
 - type: entity
   id: CoinBronze10
@@ -62,8 +65,8 @@
   parent: BaseItem
   id: CoinSilver
   suffix: Nibiru, BronzeAge
-  name: серебряная монета
-  description: Монета из серебра. Ценится выше бронзовой.
+  name: silver coin
+  description: A coin made of silver. Valued higher than bronze.
   components:
   - type: Sprite
     sprite: _CE/Objects/Materials/Currency/coin_sp.rsi
@@ -93,6 +96,9 @@
   - type: Tag
     tags:
     - Coin
+  - type: Construction
+    graph: CoinSilver
+    node: fin
 
 - type: entity
   id: CoinSilver10
@@ -118,8 +124,8 @@
   parent: BaseItem
   id: CoinGold
   suffix: Nibiru, BronzeAge
-  name: золотая монета
-  description: Блестящая золотая монета. Редкость и символ богатства.
+  name: gold coin
+  description: A shiny gold coin. A rarity and symbol of wealth.
   components:
   - type: Sprite
     sprite: _CE/Objects/Materials/Currency/coin_gp.rsi
@@ -149,6 +155,9 @@
   - type: Tag
     tags:
     - Coin
+  - type: Construction
+    graph: CoinGold
+    node: fin
 
 - type: entity
   id: CoinGold10
@@ -178,8 +187,8 @@
   parent: ClothingBeltStorageBase
   id: CoinPurse
   suffix: Nibiru, BronzeAge
-  name: кошелёк
-  description: Кожаный кошелёк для хранения монет. Крепится на пояс.
+  name: purse
+  description: A leather purse for storing coins. Attaches to a belt.
   components:
   - type: Sprite
     sprite: _CE/Objects/Storage/wallet.rsi

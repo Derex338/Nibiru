@@ -1,14 +1,14 @@
 - type: researchEpoch
   id: StoneAge
-  name: Stone Age
-  description: It ends when the stones run out
+  name: research-epoch-stone-age
+  description: research-epoch-stone-age-desc
   order: 0
   color: "#8B4513"
 
 - type: researchEpoch
   id: EpochBronze
-  name: Bronze Age
-  description: It ends when the bronze runs out
+  name: research-epoch-bronze-age
+  description: research-epoch-bronze-age-desc
   order: 1
   color: "#CD7F32"
   unlockNextEpochTech: BronzeAgeTransition # ID технологии из прошлой эпохи которая должна открыть эту
@@ -23,7 +23,7 @@
 
 - type: techDiscipline
   id: StoneAge
-  name: Stone Age
+  name: research-discipline-stone-age
   color: "#dc373b"
   icon:
     sprite: _CE/Objects/Materials/stone.rsi
@@ -36,7 +36,7 @@
 
 - type: techDiscipline
   id: BronzeAge
-  name: Bronze Age
+  name: research-discipline-bronze-age
   color: "#dc373b"
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi

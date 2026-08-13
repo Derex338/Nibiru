@@ -19,11 +19,11 @@ namespace Content.Server._Nibiru.Smelting;
 [UsedImplicitly]
 public sealed partial class MoldSystem : EntitySystem
 {
-[Dependency] private SharedSolutionContainerSystem _solution = default!;
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private SharedContainerSystem _container = default!;
-[Dependency] private TemperatureSystem _temp = default!;
-[Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private TemperatureSystem _temp = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {

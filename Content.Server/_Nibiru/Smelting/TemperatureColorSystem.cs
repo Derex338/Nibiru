@@ -8,8 +8,8 @@ namespace Content.Server._Nibiru.Smelting;
 [UsedImplicitly]
 public sealed partial class TemperatureColorSystem : EntitySystem
 {
-[Dependency] private AppearanceSystem _appearance = default!;
-[Dependency] private PointLightSystem _pointLight = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private PointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {

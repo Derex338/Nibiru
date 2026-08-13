@@ -8,8 +8,8 @@ namespace Content.Client._CE.Farming;
 
 public sealed partial class CEClientFarmingSystem : CESharedFarmingSystem
 {
-[Dependency] private SpriteSystem _sprite = default!;
-[Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

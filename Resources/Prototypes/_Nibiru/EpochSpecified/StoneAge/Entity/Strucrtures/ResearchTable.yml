@@ -1,9 +1,9 @@
 - type: entity
   id: ResearchTable
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseWoodStructure
-  name: исследовательский стол
-  description: Тут происходит магия прогресса.
+  name: research table
+  description: This is where the magic of progress happens.
   components:
   - type: Sprite
     sprite: _CE/Structures/Furniture/Tables/workbench.rsi
@@ -25,13 +25,12 @@
   - type: Construction
     graph: ResearchTable
     node: fin
-  - type: ResearchServer
 
 - type: entity
   id: ResearchTableDebug
   parent: ResearchTable
-  name: исследовательский стол
-  suffix: Дебаг
-  description: Тут происходит магия прогресса.
+  name: research table
+  suffix: Debug
+  description: This is where the magic of progress happens.
   components:
   - type: DebugUnlockAllTechnologies

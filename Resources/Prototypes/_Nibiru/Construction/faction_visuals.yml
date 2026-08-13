@@ -10,9 +10,7 @@
       edges:
         - to: banner
           completed:
-            - !type:SetFactionVisuals 
-              rsiPath: _Nibiru/Entities/banner.rsi
-              maskState: banner_bg
+            - !type:SetFactionVisuals
           steps:
             - material: WoodStick
               amount: 1
@@ -21,9 +19,7 @@
               doAfter: 3
         - to: flag
           completed:
-            - !type:SetFactionVisuals 
-              rsiPath: Structures/Wallmounts/flags.rsi
-              maskState: blank_flag
+            - !type:SetFactionVisuals
           steps:
             - material: WoodStick
               amount: 1
@@ -33,7 +29,7 @@
 
 - type: construction
   id: FactionBanner
-  name: faction banner
+  name: construction-recipe-faction-banner
   graph: FactionVisuals
   startNode: start
   targetNode: banner
@@ -43,7 +39,7 @@
 
 - type: construction
   id: FactionFlag
-  name: faction flag
+  name: construction-recipe-faction-flag
   graph: FactionVisuals
   startNode: start
   targetNode: flag

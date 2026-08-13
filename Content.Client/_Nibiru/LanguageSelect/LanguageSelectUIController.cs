@@ -13,7 +13,7 @@ namespace Content.Client._Nibiru.LanguageSelect;
 /// </summary>
 public sealed partial class LanguageSelectUIController : UIController, IOnStateEntered<LobbyState>
 {
-[Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private LanguageSelectWindow? _window;
 

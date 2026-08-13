@@ -73,8 +73,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -90,8 +90,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -103,8 +103,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -120,8 +120,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -133,8 +133,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -150,8 +150,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -163,8 +163,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -180,8 +180,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 2
+              prototype: CEWoodenPlanks1
+              amount: 3
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -193,8 +193,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 3
+              prototype: CEWoodenPlanks1
+              amount: 4
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -210,8 +210,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEWoodLog
-              amount: 3
+              prototype: CEWoodenPlanks1
+              amount: 4
             - !type:DeleteEntity {}
           steps:
             - tool: Prying
@@ -251,7 +251,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEStone
+              prototype: CEStoneBlock1
               amount: 2
             - !type:DeleteEntity {}
           steps:

@@ -88,3 +88,6 @@ ent-StoneMoldXiphosBlade = stone mold (xiphos blade)
 ent-StoneMoldCrown = stone mold (crown)
     .desc = A stone mold for casting a crown.
     .suffix = { ent-StoneMoldBase.suffix }
+ent-StoneMoldRod = stone mold (rod)
+    .desc = A stone mold for casting a rod.
+    .suffix = Nibiru, BronzeAge

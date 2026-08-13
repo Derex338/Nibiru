@@ -207,3 +207,36 @@ guide-entry-rules-ban-durations = Длительности банов
 
 guide-entry-writing = Разметка письма
 guide-entry-glossary = Словарь терминов
+
+guide-entry-ce-welcome = Добро пожаловать в Nibiru
+guide-entry-ce-farming = Фермерство
+guide-entry-ce-cooking = Еда и готовка
+guide-entry-ce-cooking-meals = Блюда
+guide-entry-ce-cooking-soups = Супы
+guide-entry-ce-mining = Шахтерское дело
+guide-entry-ce-imperial-laws = Имперские законы
+guide-entry-ce-crime-light = Легкие нарушения
+guide-entry-ce-crime-light-medium = Легко-средние нарушения
+guide-entry-ce-crime-medium = Средние нарушения
+guide-entry-ce-crime-medium-hard = Средне-тяжкие нарушения
+guide-entry-ce-crime-hard = Тяжкие нарушения
+guide-entry-ce-species = Играбельные расы
+guide-entry-ce-species-human = Люди
+guide-entry-ce-species-elf = Эльфы
+guide-entry-ce-species-carcat = Каркаты
+guide-entry-ce-species-carrin = Каррины
+guide-entry-ce-species-goblin = Гоблины
+guide-entry-ce-species-silva = Сильвы
+guide-entry-ce-species-tiefling = Тифлинги
+guide-entry-nibiru-materials = Материалы
+
+guide-entry-nibiru-materials-stone = Камень
+guide-entry-nibiru-materials-herbs = Кусты
+guide-entry-nibiru-materials-wood = Дерево
+guide-entry-nibiru-materials-veins = Разделка животных
+guide-entry-nibiru-mechanics = Механики
+guide-entry-nibiru-mechanics-factions = Фракции
+guide-entry-nibiru-mechanics-fire = Огонь
+guide-entry-nibiru-mechanics-smelting = Плавление
+guide-entry-nibiru-rules = Правила сервера
+

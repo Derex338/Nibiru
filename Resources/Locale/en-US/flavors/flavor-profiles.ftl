@@ -195,6 +195,8 @@ flavor-complex-rocksandstones = like rocks and stones
 
 ## Basic drinks
 flavor-complex-water = like water
+flavor-complex-cucumber = like cucumber
+flavor-complex-pungent = like something pungent
 flavor-complex-beer = like piss
 flavor-complex-cognac = like dry spicy alcohol
 flavor-complex-mead = like fermented honey

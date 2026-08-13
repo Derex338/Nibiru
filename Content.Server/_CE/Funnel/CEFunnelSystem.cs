@@ -17,12 +17,12 @@ namespace Content.Server._CE.Funnel;
 
 public sealed partial class CEFunnelSystem : EntitySystem
 {
-[Dependency] private SharedContainerSystem _container = default!;
-[Dependency] private SharedMapSystem _mapSystem = default!;
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private IGameTiming _timing = default!;
-[Dependency] private INetManager _net = default!;
-[Dependency] private StorageSystem _storage = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private StorageSystem _storage = default!;
 
     public override void Initialize()
     {

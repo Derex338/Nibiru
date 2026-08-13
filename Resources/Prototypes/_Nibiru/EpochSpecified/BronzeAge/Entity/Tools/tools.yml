@@ -1,9 +1,9 @@
 - type: entity
-  name: бронзовый молоточек
+  name: bronze hammer
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHammerSmall
   suffix: Nibiru, BronzeAge
-  description: 'Зачарованный силами Богов молоток, способный чинить структуры. Мелким шрифтом выгривировано на бронзе: "1 удар-1 год жизни".'
+  description: 'A hammer blessed by the Gods, capable of repairing structures. In fine print engraved on the bronze: "1 swing-1 year of life".'
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
@@ -44,11 +44,11 @@
                 max: 2
 
 - type: entity
-  name: бронзовая мотыга
+  name: bronze hoe
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHoe
   suffix: Nibiru, BronzeAge
-  description: Используется для вспахивания сорняков. Иди работай.
+  description: Used for tilling weeds. Get to work.
   components:
   - type: Tag
     tags:
@@ -90,11 +90,11 @@
                 max: 1
 
 - type: entity
-  name: бронзовый секатор
+  name: bronze clippers
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeClippers
   suffix: Nibiru, BronzeAge
-  description: Используется для извлечения семян растений. Иди работай.
+  description: Used to extract plant seeds. Get to work.
   components:
   - type: Tag
     tags:
@@ -134,11 +134,11 @@
                 max: 1
 
 - type: entity
-  name: бронзовая коса
+  name: bronze scythe
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeScythe
   suffix: Nibiru, BronzeAge
-  description: Красивая, длинная, с неровной рукоятью бронзовая коса.
+  description: A beautiful, long, uneven-handled bronze scythe.
   components:
   - type: Tool
     qualities:
@@ -181,11 +181,11 @@
                 max: 2
 
 - type: entity
-  name: бронзовый топорик
+  name: bronze hatchet
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeHatchet
   suffix: Nibiru, BronzeAge
-  description: Идеально подходящий для рубки, но плохой для боёв бронзовый топор.
+  description: A bronze hatchet perfect for chopping, but poor for fighting.
   components:
   - type: Tag
     tags:
@@ -232,11 +232,11 @@
                 max: 2
 
 - type: entity
-  name: бронзовый нож
+  name: bronze knife
   parent: [BaseKnife, BaseBronzeItem]
   id: BronzeKnife
   suffix: Nibiru, BronzeAge
-  description: Красивый боевой нож для ближних конфронтаций.
+  description: A beautiful combat knife for close confrontations.
   components:
   - type: Tag
     tags:
@@ -353,11 +353,11 @@
     - 0,0,0,1
 
 - type: entity
-  name: бронзовая кирка
+  name: bronze pickaxe
   parent: [BaseItem, BaseBronzeItem]
   id: BronzePickaxe
   suffix: Nibiru, BronzeAge
-  description: Тяжелая бронзовая кирка для добычи камня и руды.
+  description: A heavy bronze pickaxe for mining stone and ore.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
@@ -390,11 +390,11 @@
     delay: 5
 
 - type: entity
-  name: бронзовая лопата
+  name: bronze shovel
   parent: [BaseItem, BaseBronzeItem]
   id: BronzeShovel
   suffix: Nibiru, BronzeAge
-  description: Прочная бронзовая лопата для земляных работ.
+  description: A sturdy bronze shovel for earthworks.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Shovel.rsi
@@ -418,17 +418,14 @@
       - Prying
       - CEShovel
       - Shoveling
-  - type: Shovel
-    useSound:
-      path: /Audio/Items/shovel_dig.ogg
   - type: ToolTileCompatible
 
 - type: entity
   parent: [BaseStoneItem, DrinkVisualsFill]
   id: StoneCrucible
   suffix: Nibiru, BronzeAge
-  name: каменный тигель
-  description: Тяжелый сосуд из обожженного камня для переноски расплавленного металла.
+  name: stone crucible
+  description: A heavy vessel of fired stone for carrying molten metal.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
@@ -443,10 +440,10 @@
     size: Large
     shape:
     - 0,0,1,1
-  - type: SolutionContainerManager
-    solutions:
-      metal:
-        maxVol: 500
+  - type: Solution
+    id: metal
+    solution:
+      maxVol: 500
   - type: CoolInWater
     solution: metal
   - type: Temperature
@@ -460,6 +457,8 @@
     solutionName: metal
     maxFillLevels: 1
     fillBaseName: fill-
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
   - type: SolutionContainerWhitelist
     reagents:
     - CopperMolten

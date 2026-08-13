@@ -32,7 +32,6 @@ namespace Content.Client.LateJoin
         [Dependency] private IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private ILogManager _logManager = default!;
 
-
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
         private readonly ISawmill _sawmill;

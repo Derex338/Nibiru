@@ -1,6 +1,6 @@
 - type: construction
   id: MultiLevelRope
-  name: hanging rope
+  name: ent-CERopeHanging
   graph: MultiLevelRope
   startNode: start
   targetNode: rope
@@ -48,6 +48,7 @@
       canCollide: false
     - type: MultiLevelConstruction
     - type: Damageable
+    - type: Injurable
       damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
@@ -64,7 +65,6 @@
 - type: entity
   id: CERopePeg
   parent: CERopeBase
-  name: колышек
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
@@ -77,7 +77,6 @@
 - type: entity
   id: CERopeTop
   parent: CERopeBase
-  name: колышек с веревкой
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi
@@ -96,7 +95,6 @@
 - type: entity
   id: CERopeHanging
   parent: CERopeBase
-  name: свисающая веревка
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/StoneAge/Structures/Kolishek.rsi

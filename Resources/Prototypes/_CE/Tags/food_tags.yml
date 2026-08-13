@@ -89,3 +89,11 @@
 - type: CEFoodTag
   id: CECucumber
   name: ce-cooking-tag-cucumber
+
+- type: CEFoodTag
+  id: CEFlyAgaric
+  name: ce-cooking-tag-fly-agaric
+
+- type: CEFoodTag
+  id: CELumish
+  name: ce-cooking-tag-lumish

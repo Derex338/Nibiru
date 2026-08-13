@@ -37,16 +37,19 @@ namespace Content.Server._Nibiru.World;
 /// Взято за основу с RimFortress
 public sealed partial class NibiruWorldSystem : SharedNibiruWorldSystem
 {
-[Dependency] private MindSystem _mind = default!;
-[Dependency] private BiomeSystem _biome = default!;
-[Dependency] private MapSystem _map = default!;
-[Dependency] private IPrototypeManager _prototype = default!;
-[Dependency] private StationSpawningSystem _stationSpawn = default!;
-[Dependency] private CEZLevelsSystem _ceZLevels = default!;
-[Dependency] private AtmosphereSystem _atmos = default!;
-[Dependency] private IRobustRandom _random = default!;
-[Dependency] private MetaDataSystem _metadata = default!;
-[Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private BiomeSystem _biome = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private StationSpawningSystem _stationSpawn = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private CEZLevelsSystem _ceZLevels = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {

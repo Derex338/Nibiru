@@ -2,8 +2,8 @@
   parent: Paper
   id: Papyrus
   suffix: Nibiru, BronzeAge
-  name: папирус
-  description: Плотный материал для письма.
+  name: papyrus
+  description: A dense material for writing.
   components:
   - type: Sprite
     sprite: _CE/Objects/Bureaucracy/paper.rsi

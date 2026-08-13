@@ -45,6 +45,12 @@ public sealed partial class PointsFromCraft : IGraphAction
             if (entityManager.TryGetComponent<ResearchServerComponent>(faction.ResearchServer.Value, out var server))
             {
                 server.Points += points;
+                entityManager.Dirty(faction.ResearchServer.Value, server);
+                var ev = new ResearchServerPointsChangedEvent(faction.ResearchServer.Value, server.Points, points);
+                foreach (var client in server.Clients)
+                {
+                    entityManager.EventBus.RaiseLocalEvent(client, ref ev);
+                }
             }
         }
     }

@@ -71,6 +71,8 @@
   #      shader: unshaded
   - type: Damageable
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -113,6 +115,8 @@
     normalState: triple_fire
   - type: Damageable
     damageModifierSet: CEMetallic
+  - type: Injurable
+    damageContainer: Inorganic
   #- type: ToggleableLightVisuals #TODO inhands
   #  spriteLayer: null
   #  inhandVisuals:
@@ -122,6 +126,8 @@
   #    right:
   #    - state: inhand-right-flame
   #      shader: unshaded
+  - type: StaticPrice
+    price: 15
   - type: Destructible
     thresholds:
     - trigger:

@@ -30,11 +30,24 @@ public sealed partial class SharedSuicideSystem : EntitySystem
         // grabbing the last key will give us how much damage is needed to kill a target from zero
         // The exact lethal damage amount is adjusted based on their current damage taken
         var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - _damageableSystem.GetTotalDamage(target.AsNullable());
-        var totalDamage = appliedDamageSpecifier.GetTotal();
 
         // Removing structural because it causes issues against entities that cannot take structural damage,
         // then getting the total to use in calculations for spreading out damage.
         appliedDamageSpecifier.DamageDict.Remove("Structural");
+
+        foreach (var type in appliedDamageSpecifier.DamageDict.Keys.ToList())
+        {
+            if (!_damageableSystem.CanBeDamagedBy(target.Owner, type))
+                appliedDamageSpecifier.DamageDict.Remove(type);
+        }
+
+        if (appliedDamageSpecifier.Empty)
+        {
+            ApplyLethalDamage(target, FallbackDamageType);
+            return;
+        }
+
+        var totalDamage = appliedDamageSpecifier.GetTotal();
 
         // Split the total amount of damage needed to kill the target by every damage type in the DamageSpecifier
         foreach (var (key, value) in appliedDamageSpecifier.DamageDict)
@@ -62,6 +75,10 @@ public sealed partial class SharedSuicideSystem : EntitySystem
         if (!_prototypeManager.TryIndex(damageType, out var damagePrototype) || damagePrototype.ID == "Structural")
         {
             Log.Error($"{nameof(SharedSuicideSystem)} could not find the damage type prototype associated with {damageType}. Falling back to {FallbackDamageType}");
+            damagePrototype = _prototypeManager.Index(FallbackDamageType);
+        }
+        else if (!_damageableSystem.CanBeDamagedBy(target.Owner, damagePrototype.ID))
+        {
             damagePrototype = _prototypeManager.Index(FallbackDamageType);
         }
 

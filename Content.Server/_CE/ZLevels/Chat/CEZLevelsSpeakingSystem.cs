@@ -19,10 +19,10 @@ namespace Content.Server._CE.ZLevels.Chat;
 
 public sealed partial class CEZLevelsSpeakingSystem : EntitySystem
 {
-[Dependency] private ChatSystem _chat = default!;
-[Dependency] private CESharedZLevelsSystem _zLevel = default!;
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private CESharedZLevelsSystem _zLevel = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     private EntityQuery<MapComponent> _mapQuery;
     private EntityQuery<MapGridComponent> _gridQuery;

@@ -78,24 +78,20 @@
 
 - type: construction
   id: Sling
-  name: Sling
+  name: construction-recipe-sling
+
   graph: Sling
   startNode: start
   targetNode: fin
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: _Nibiru/EpochSpecified/StoneAge/Entity/Weapon/Range/Sling.rsi # Placeholder
-    state: icon
 
 - type: construction
   id: SpearThrower
-  name: Spear Thrower
+  name: construction-recipe-spear-thrower
+
   graph: SpearThrower
   startNode: start
   targetNode: fin
-  category: Weapons
-  icon:
-    sprite: Objects/Weapons/Guns/Bow/bow.rsi
-    state: icon
+  category: construction-category-weapons
   objectType: Item

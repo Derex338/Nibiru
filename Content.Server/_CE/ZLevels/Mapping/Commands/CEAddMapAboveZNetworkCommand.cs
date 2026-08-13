@@ -20,11 +20,11 @@ namespace Content.Server._CE.ZLevels.Mapping.Commands;
 [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
 public sealed partial class CEAddMapAboveZNetworkCommand : LocalizedEntityCommands
 {
-[Dependency] private IEntityManager _entities = default!;
-[Dependency] private IResourceManager _resourceMgr = default!;
-[Dependency] private MapLoaderSystem _mapLoader = default!;
-[Dependency] private CEZLevelsSystem _zLevel = default!;
-[Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IResourceManager _resourceMgr = default!;
+    [Dependency] private MapLoaderSystem _mapLoader = default!;
+    [Dependency] private CEZLevelsSystem _zLevel = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
 
     public override string Command => "znetwork-add-above";
     public override string Description => "Add a map above an existing z-network.";

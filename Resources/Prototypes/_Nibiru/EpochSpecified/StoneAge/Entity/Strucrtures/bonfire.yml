@@ -1,10 +1,10 @@
 
 - type: entity
   id: NibiruBonfire
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseStructure
-  name: костёр
-  description: Кучка дров в форме костра
+  name: bonfire
+  description: A pile of firewood shaped like a bonfire.
   components:
   - type: Sprite
     noRot: true
@@ -19,7 +19,7 @@
         state: burnout
         visible: false
   - type: Construction
-    graph: Bonfire
+    graph: NibiruBonfire
     node: fin
   - type: FuelConsumption
     maxFuelAmount: 600                    # 10 минут
@@ -79,8 +79,9 @@
         startValue: 6.0
         endValue: 1.0
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:

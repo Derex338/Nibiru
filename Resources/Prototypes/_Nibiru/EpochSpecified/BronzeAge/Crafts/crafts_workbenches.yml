@@ -4,15 +4,14 @@
 
 - type: construction
   id: BronzeAnvilWorkbench
-  name: Bronze Anvil
+  name: construction-recipe-bronze-anvil-workbench
+
   graph: BronzeAnvilWorkbench
   startNode: start
   targetNode: fin
-  category: Workbenches
-  description: Основной рабочий инструмент для ковки изделий из бронзы.
-  icon:
-    sprite: _CE/Structures/Furniture/Tables/wood.rsi
-    state: frame
+  category: construction-category-workbenches
+  description: construction-recipe-bronze-anvil-workbench-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

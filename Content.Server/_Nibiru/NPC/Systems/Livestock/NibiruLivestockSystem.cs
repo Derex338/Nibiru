@@ -22,15 +22,15 @@ namespace Content.Server._Nibiru.NPC.Systems.Livestock;
 
 public sealed partial class NibiruLivestockSystem : EntitySystem
 {
-[Dependency] private IRobustRandom _random = default!;
-[Dependency] private EntityLookupSystem _lookup = default!;
-[Dependency] private HungerSystem _hunger = default!;
-[Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
-[Dependency] private SharedAppearanceSystem _appearance = default!;
-[Dependency] private SharedScaleVisualsSystem _scale = default!;
-[Dependency] private NPCSteeringSystem _steering = default!;
-[Dependency] private SharedDoAfterSystem _doAfter = default!;
-[Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedScaleVisualsSystem _scale = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
     private readonly Dictionary<DoAfterId, (EntityUid Female, EntityUid Male)> _matingHearts = new();
     private readonly Dictionary<EntityUid, EntityUid> _reservedPartners = new();
 

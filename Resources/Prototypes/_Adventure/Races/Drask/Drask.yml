@@ -1,10 +1,11 @@
 - type: marking
   id: FaceDraskBase
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Drask]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Drask/Species/parts.rsi
     state: Face
@@ -12,17 +13,18 @@
 - type: marking
   id: DraskHeadBase
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Drask]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Drask/Species/parts.rsi
     state: head
 
 - type: species
   id: Drask
-  name: Drask
+  name: species-name-drask
   roundStart: true
   prototype: MobDrask
   dollPrototype: AppearanceDrask
@@ -97,7 +99,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceDrask
   categories: [ HideSpawnMenu ]
-  name: drask appearance
+
   components:
   - type: InitialBody
     organs:
@@ -142,7 +144,7 @@
   flavor: medicine
   color: "#0091ff"
   metabolisms:
-    Poison:
+    Bloodstream:
       metabolismRate: 0.50
       effects:
         - !type:HealthChange
@@ -150,15 +152,13 @@
           - !type:TemperatureCondition
             max: 213.15
           damage:
-            groups:
-              Burn: -1
             types:
               Slash: -1
               Piercing: -1
               Bloodloss: -1
 
 - type: entity
-  name: Urist McTentacle
+
   parent:
   - AppearanceDrask
   - BaseSpeciesMobOrganic
@@ -175,18 +175,6 @@
       types:
         Asphyxiation: -1.0
   - type: UrUAccent
-  - type: SolutionContainerManager
-    solutions:
-      bloodstream:
-        reagents:
-        - ReagentId: CryoxadoneDrask
-          Quantity: 20
-  - type: SolutionRegeneration
-    solution: bloodstream
-    generated:
-      reagents:
-      - ReagentId: CryoxadoneDrask
-        Quantity: 0.50
   - type: MeleeWeapon
     soundHit:
       collection: Punch
@@ -242,11 +230,10 @@
       295: 0.9
       294: 1.0
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: DraskCryo
+  - type: Injurable
+    damageContainer: Biological
   - type: Body
-    prototype: Drask
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -279,7 +266,7 @@
 - type: entity
   id: PartDrask
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Drask body part"
+
   abstract: true
   components:
   - type: Sprite
@@ -303,7 +290,7 @@
 
 - type: entity
   id: TorsoDrask
-  name: "Drask torso"
+
   parent:
   - OrganBaseTorsoSexed
   - PartDrask
@@ -314,7 +301,7 @@
 
 - type: entity
   id: HeadDrask
-  name: "Drask head"
+
   parent: [OrganBaseHeadSexed, PartDrask, OrganBaseHead]
   components:
   - type: Sprite
@@ -322,7 +309,7 @@
 
 - type: entity
   id: LeftArmDrask
-  name: "Drask left arm"
+
   parent: [PartDrask, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -331,7 +318,7 @@
 
 - type: entity
   id: RightArmDrask
-  name: "Drask right arm"
+
   parent: [PartDrask, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -340,7 +327,7 @@
 
 - type: entity
   id: LeftHandDrask
-  name: "Drask left hand"
+
   parent: [PartDrask, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -349,7 +336,7 @@
 
 - type: entity
   id: RightHandDrask
-  name: "Drask right hand"
+
   parent: [PartDrask, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -358,7 +345,7 @@
 
 - type: entity
   id: LeftLegDrask
-  name: "Drask left leg"
+
   parent: [PartDrask, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -367,7 +354,7 @@
 
 - type: entity
   id: RightLegDrask
-  name: "Drask right leg"
+
   parent: [PartDrask, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -376,7 +363,7 @@
 
 - type: entity
   id: LeftFootDrask
-  name: "Drask left foot"
+
   parent: [PartDrask, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -385,7 +372,7 @@
 
 - type: entity
   id: RightFootDrask
-  name: "Drask right foot"
+
   parent: [PartDrask, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -393,12 +380,11 @@
     state: "r_foot"
 - type: metabolizerType
   id: Drask
-  name: Drask
-
+  name: species-name-drask
 - type: entity
   id: OrganDraskBrain
   parent: OrganHumanBrain
-  name: Drask brain
+
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -408,7 +394,7 @@
 - type: entity
   id: OrganDraskEyes
   parent: OrganHumanEyes
-  name: Drask eyes
+
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -421,7 +407,7 @@
 - type: entity
   id: OrganDraskHeart
   parent: OrganHumanHeart
-  name: Drask heart
+
   description: тук тук
   components:
   - type: Sprite
@@ -433,15 +419,11 @@
     maxReagents: 2
     metabolizerTypes:
     - Drask
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 - type: entity
   id: OrganDraskLungs
   parent: OrganHumanLungs
-  name: Drask lungs
+
   description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -453,7 +435,7 @@
 - type: entity
   id: OrganDraskStomach
   parent: OrganHumanStomach
-  name: Drask stomach
+
   description: Отвратительно и пахнет мылом.
   components:
   - type: Sprite
@@ -462,28 +444,22 @@
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [Drask]
-    groups:
-    - id: Food
-    - id: Drink
 
 - type: entity
   id: OrganDraskLiver
   parent: OrganHumanLiver
-  name: Drask liver
+
   components:
   - type: Sprite
     sprite: _Adventure/Races/Drask/organs.rsi
     state: liver
   - type: Metabolizer
     metabolizerTypes: [Drask]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.8
 
 - type: entity
   id: OrganDraskKidneys
   parent: OrganHumanKidneys
-  name: Drask kidneys
+
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -495,7 +471,7 @@
 - type: entity
   parent: [OrganBaseTorso, OrganDraskExternal]
   id: OrganDraskTorso
-  name: Drask body
+
   description: A body for a Drask.
   components:
   - type: Sprite
@@ -509,7 +485,7 @@
 - type: entity
   parent: [ OrganBaseHead, OrganDraskExternal ]
   id: OrganDraskHead
-  name: Drask head
+
   description: Drask head
   components:
   - type: Sprite

@@ -12,8 +12,8 @@ namespace Content.Server._Nibiru.NPC.Systems.Training;
 
 public sealed partial class NibiruAnimalTrainingSystem : EntitySystem
 {
-[Dependency] private UserInterfaceSystem _ui = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

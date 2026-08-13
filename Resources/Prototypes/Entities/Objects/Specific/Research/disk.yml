@@ -71,6 +71,8 @@
     visuals:
       enum.TechDiskVisuals.Discipline:
         base:
+          StoneAge: { color: "#8B4513" }
+          BronzeAge: { color: "#CD7F32" }
           Industrial: { color: "#eeac34" }
           Arsenal: { color: "#dc373b" }
           Experimental: { color: "#9a6ef0" }
@@ -109,43 +111,51 @@
 - type: entity
   parent: TechnologyDisk
   id: TechnologyDiskT3
-  suffix: Tier 3
+  suffix: Tier 2
+  abstract: true
+  categories: [ DoNotMap ]
   components:
   - type: TechnologyDisk
-    tier: 3
+    tier: 2
 
 # random tech disks by discipline
 - type: entity
   parent: TechnologyDisk
   id: TechnologyDiskIndustrial
-  suffix: Industrial
+  suffix: Stone Age
   components:
   - type: TechnologyDisk
-    discipline: Industrial
+    discipline: StoneAge
+    tier: 1
 
 - type: entity
   parent: TechnologyDisk
   id: TechnologyDiskArsenal
-  suffix: Arsenal
+  suffix: Bronze Age
   components:
   - type: TechnologyDisk
-    discipline: Arsenal
+    discipline: BronzeAge
+    tier: 2
 
 - type: entity
   parent: TechnologyDisk
   id: TechnologyDiskExperimental
+  abstract: true
+  categories: [ DoNotMap ]
   suffix: Experimental
   components:
   - type: TechnologyDisk
-    discipline: Experimental
+    crafts: []
 
 - type: entity
   parent: TechnologyDisk
   id: TechnologyDiskCivilianServices
+  abstract: true
+  categories: [ DoNotMap ]
   suffix: Civilian Services
   components:
   - type: TechnologyDisk
-    discipline: CivilianServices
+    crafts: []
 
 - type: entity
   parent: TechnologyDisk

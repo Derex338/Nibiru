@@ -23,16 +23,19 @@ namespace Content.Server._Nibiru.Temperature;
 
 public sealed partial class DamageHighTemperature : EntitySystem
 {
-[Dependency] private DamageOnInteractSystem _damage = default!;
-[Dependency] private InventorySystem _inventorySystem = default!;
-[Dependency] private DamageableSystem _damageableSystem = default!;
-[Dependency] private ISharedAdminLogManager _adminLogger = default!;
-[Dependency] private SharedAudioSystem _audioSystem = default!;
-[Dependency] private IPrototypeManager _proto = default!;
-[Dependency] private PopupSystem _popup = default!;
-[Dependency] private ThrowingSystem _throwing = default!;
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private IRobustRandom _random = default!;
+    private static readonly ProtoId<DamageTypePrototype> HeatDamageType = "Heat";
+
+    [Dependency] private DamageOnInteractSystem _damage = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -89,7 +92,7 @@ public sealed partial class DamageHighTemperature : EntitySystem
 
         if (comp.CurrentTemperature > 300)
         {
-            if (!_proto.TryIndex<DamageTypePrototype>((Robust.Shared.Prototypes.ProtoId<DamageTypePrototype>)"Heat", out var damageProto))
+            if (!_proto.TryIndex(HeatDamageType, out var damageProto))
                 return;
             var totalDamage = new DamageSpecifier(damageProto, comp.CurrentTemperature / 100);
 
@@ -109,7 +112,7 @@ public sealed partial class DamageHighTemperature : EntitySystem
                 totalDamage = DamageSpecifier.ApplyModifierSet(totalDamage, protectiveEntity.Comp.DamageProtection);
             }
 
-            if (!_damageableSystem.TryChangeDamage(User, totalDamage, out totalDamage));
+            if (!_damageableSystem.TryChangeDamage(User, totalDamage, out totalDamage))
                 return;
 
             if (totalDamage != null && totalDamage.AnyPositive())

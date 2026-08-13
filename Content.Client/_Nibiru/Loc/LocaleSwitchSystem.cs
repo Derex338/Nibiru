@@ -25,10 +25,10 @@ namespace Content.Client.Localization
     /// </summary>
     public sealed partial class LocaleSwitchSystem : EntitySystem
     {
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IUserInterfaceManager _ui = default!;
-    [Dependency] private ILocalizationManager _loc = default!;
-    [Dependency] private IStateManager _stateManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
+        [Dependency] private ILocalizationManager _loc = default!;
+        [Dependency] private IStateManager _stateManager = default!;
 
         private ISawmill _sawmill = default!;
 

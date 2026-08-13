@@ -9,7 +9,7 @@
 
 - type: emote
   id: Bruh
-  name: Burp
+  name: chat-emote-name-burp
   icon: _Adventure/Interface/Emotes/bruh.png
   category: Vocal
   available: false
@@ -19,7 +19,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["рыгает"]
+  chatMessages: ["chat-emote-msg-burp"]
   chatTriggers:
     - рыгает
     - рыгает!
@@ -38,7 +38,7 @@
 
 - type: emote
   id: Crunch
-  name: Crack Bones
+  name: chat-emote-name-crack-bones
   icon: _Adventure/Interface/Emotes/crunch.png
   category: Hands
   whitelist:
@@ -49,7 +49,7 @@
     - BorgChassis
     - IgnoreKudzu
     - Storage
-  chatMessages: ["хрустит костями"]
+  chatMessages: ["chat-emote-msg-crack-bones"]
   chatTriggers:
     - хрустит костями
     - хрустит костяшками
@@ -69,14 +69,14 @@
 
 - type: emote
   id: Fart
-  name: Fart
+  name: chat-emote-name-fart
   whitelist:
     components:
     - Respirator
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["пердит"]
+  chatMessages: ["chat-emote-msg-fart"]
   chatTriggers:
     - ЧтОбЫнИкТоНеМоГэТоВыВеСтИ
 
@@ -91,7 +91,7 @@
 
 - type: emote
   id: Scratch
-  name: Scratch
+  name: chat-emote-name-scratch
   icon: _Adventure/Interface/Emotes/scratching.png
   category: Hands
   whitelist:
@@ -102,7 +102,7 @@
     - BorgChassis
     - IgnoreKudzu
     - Storage
-  chatMessages: ["чешется"]
+  chatMessages: ["chat-emote-msg-scratch"]
   chatTriggers:
     - чешется
     - чешет волосы
@@ -131,7 +131,7 @@
 
 - type: emote
   id: Facepalm
-  name: Фейспалм
+  name: chat-emote-name-facepalm
   icon: _Adventure/Interface/Emotes/facepalm.png
   category: Hands
   whitelist:
@@ -140,7 +140,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["делает фейспалм"]
+  chatMessages: ["chat-emote-msg-facepalm"]
   chatTriggers:
     - Делает фейспалм
     - испанский стыд
@@ -159,13 +159,10 @@
   id: TailThumpCollection
   files:
   - /Audio/Voice/Reptilian/reptilian_tailthump.ogg
-  - /Audio/Voice/Reptilian/reptilian_tailthump2.ogg
-  - /Audio/Voice/Reptilian/reptilian_tailthump3.ogg
-  - /Audio/Voice/Reptilian/reptilian_tailthump4.ogg
 
 # шипеть
 - type: emote
-  name: Hiss
+  name: chat-emote-name-hiss
   id: Hissing
   icon: _Adventure/Interface/Emotes/hiss.png
   category: Vocal
@@ -176,12 +173,11 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [шипит!]
+  chatMessages: ["chat-emote-msg-hiss"]
   chatTriggers:
     - шипит
     - шипит.
     - шипит!
-
 
 # квакать
 - type: soundCollection
@@ -195,7 +191,7 @@
 
 - type: emote
   id: Kva
-  name: Croak
+  name: chat-emote-name-croak
   icon: _Adventure/Interface/Emotes/kva.png
   category: Vocal
   available: false
@@ -205,7 +201,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["квакает"]
+  chatMessages: ["chat-emote-msg-croak"]
   chatTriggers:
     - квакает
     - квакает!
@@ -220,7 +216,7 @@
 
 - type: emote
   id: HeartBeat
-  name: Heartbeat
+  name: chat-emote-name-heartbeat
   whitelist:
     components:
     - Respirator

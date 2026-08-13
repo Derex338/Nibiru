@@ -25,9 +25,9 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     public Action<string>? OnTechnologyCardPressed;
     public Action? OnServerButtonPressed;
 
-[Dependency] private IEntityManager _entity = default!;
-[Dependency] private IPrototypeManager _prototype = default!;
-[Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
@@ -82,6 +82,15 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     /// </summary>
     private Vector2 _position = new Vector2(45, 250);
 
+    private const float BaseTechSpacing = 150f;
+    private const float MinZoom = 0.4f;
+    private const float MaxZoom = 2.5f;
+    private const float ZoomStep = 0.1f;
+
+    private float _zoom = 1f;
+
+    private float TechSpacing => BaseTechSpacing * _zoom;
+
     public FancyResearchConsoleMenu()
     {
         RobustXamlLoader.Load(this);
@@ -103,7 +112,10 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     }
 
     public void SetEntity(EntityUid entity)
-        => Entity = entity;
+    {
+        Entity = entity;
+        this.SetTitleFromEntity(_entity, entity);
+    }
 
     public void UpdatePanels(Dictionary<string, ResearchAvailability> dict)
     {
@@ -116,9 +128,8 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
 
             var control = new FancyResearchConsoleItem(proto, _sprite, tech.Value);
             DragContainer.AddChild(control);
-
-            // Set position for all tech, relating to _position
-            LayoutContainer.SetPosition(control, _position + proto.Position * 150);
+            control.ApplyZoom(_zoom);
+            LayoutContainer.SetPosition(control, _position + proto.Position * TechSpacing);
             control.SelectAction += SelectTech;
 
             if (tech.Key == CurrentTech)
@@ -187,6 +198,29 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         }
     }
 
+    protected override void MouseWheel(GUIMouseWheelEventArgs args)
+    {
+        base.MouseWheel(args);
+
+        if (args.Handled)
+            return;
+
+        var localPx = DragContainer.GetLocalPosition(args.GlobalPixelPosition);
+        if (localPx.X < 0 || localPx.Y < 0 || localPx.X > DragContainer.PixelWidth || localPx.Y > DragContainer.PixelHeight)
+            return;
+
+        var oldZoom = _zoom;
+        var newZoom = Math.Clamp(oldZoom + args.Delta.Y * ZoomStep, MinZoom, MaxZoom);
+        if (MathHelper.CloseTo(oldZoom, newZoom))
+            return;
+
+        var focus = localPx / UIScale;
+        _zoom = newZoom;
+        _position = focus - (focus - _position) * (newZoom / oldZoom);
+        RelayoutTechnologies();
+        args.Handle();
+    }
+
     /// <summary>
     /// Raised when LMB is pressed at <see cref="DragContainer"/>
     /// </summary>
@@ -231,13 +265,20 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     /// </summary>
     public void Recenter()
     {
+        _zoom = 1f;
         _position = new(45, 250);
+        RelayoutTechnologies();
+    }
+
+    private void RelayoutTechnologies()
+    {
         foreach (var item in DragContainer.Children)
         {
             if (item is not FancyResearchConsoleItem research)
                 continue;
 
-            LayoutContainer.SetPosition(item, _position + research.Prototype.Position * 150);
+            research.ApplyZoom(_zoom);
+            LayoutContainer.SetPosition(item, _position + research.Prototype.Position * TechSpacing);
         }
     }
 

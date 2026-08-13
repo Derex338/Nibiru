@@ -15,9 +15,8 @@
     sprite: _CE/Objects/Consumable/Food/cheese.rsi
     layers:
       - state: cheese_wheel
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 30
         reagents:
         - ReagentId: CENutriment
@@ -57,9 +56,8 @@
           cheese_part: ""
           cheese_part2: ""
           cheese_part3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         reagents:
         - ReagentId: CENutriment
           Quantity: 7.2 # 3 slices
@@ -98,9 +96,8 @@
           cheese_slice: ""
           cheese_slice2: ""
           cheese_slice3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 2 # 1/3 cheese part
         reagents:
         - ReagentId: CENutriment
@@ -125,9 +122,8 @@
     flavors:
       - cheesy
       - pungent
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 30
         reagents:
         - ReagentId: CENutriment
@@ -164,9 +160,8 @@
           blue_cheese_part: ""
           blue_cheese_part2: ""
           blue_cheese_part3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6 # 1/5 of wheel
         reagents:
         - ReagentId: CENutriment
@@ -203,9 +198,8 @@
           blue_cheese_slice: ""
           blue_cheese_slice2: ""
           blue_cheese_slice3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 2 # 1/3 of part
         reagents:
         - ReagentId: CENutriment
@@ -230,9 +224,8 @@
     flavors:
       - cheesy
       - savory
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 30
         reagents:
         - ReagentId: CENutriment
@@ -269,9 +262,8 @@
           aged_cheese_part: ""
           aged_cheese_part2: ""
           aged_cheese_part3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6 # 1/5 of wheel
         reagents:
         - ReagentId: CENutriment
@@ -308,9 +300,8 @@
           aged_cheese_slice: ""
           aged_cheese_slice2: ""
           aged_cheese_slice3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 2 # 1/3 of part
         reagents:
         - ReagentId: CENutriment

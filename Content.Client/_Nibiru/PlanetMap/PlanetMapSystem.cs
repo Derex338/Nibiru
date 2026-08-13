@@ -12,8 +12,9 @@ namespace Content.Client._Nibiru.PlanetMap;
 /// </summary>
 public sealed partial class PlanetMapSystem : EntitySystem
 {
-[Dependency] private IPlayerManager     _playerManager = default!;
-[Dependency] private SharedMapSystem    _mapSys        = default!;
+    [Dependency] private IPlayerManager     _playerManager = default!;
+    [Dependency] private SharedTransformSystem _xform      = default!;
+    [Dependency] private SharedMapSystem    _mapSys        = default!;
 
     private PlanetMapWindow? _window;
     private NetEntity?       _activeMap;

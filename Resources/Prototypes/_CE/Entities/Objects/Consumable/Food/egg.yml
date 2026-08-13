@@ -15,9 +15,8 @@
     state: brown
   - type: Item
     size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6
         reagents:
         - ReagentId: Egg
@@ -33,6 +32,7 @@
       types:
         Blunt: 1
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Destructible
     thresholds:
@@ -85,13 +85,11 @@
     state: brown_shell
   - type: Item
     size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 2
-        reagents:
-        - ReagentId: Egg
-          Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
+    - Trash
+  - type: SpaceGarbage
 
 - type: entity
   parent: CEFoodEggBase
@@ -119,9 +117,8 @@
   components:
   - type: Edible
     trash: []
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6
         reagents:
         - ReagentId: EggCooked

@@ -31,6 +31,8 @@ public sealed partial class ResearchSystem
         {
             UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
         }
+
+        HandleFactionServerShutdown(uid);
     }
 
     private void OnServerDatabaseModified(EntityUid uid, ResearchServerComponent component, ref TechnologyDatabaseModifiedEvent args)
@@ -44,6 +46,8 @@ public sealed partial class ResearchSystem
 
             RaiseLocalEvent(client, ref args);
         }
+
+        HandleFactionDatabaseModified(uid);
     }
 
     private bool CanRun(EntityUid uid)

@@ -66,7 +66,7 @@ public abstract partial class SharedFuelConsumptionComponent : Component
     /// Звук горения
     /// </summary>
     [DataField]
-    public SoundSpecifier? LoopedSound = new SoundPathSpecifier("/Audio/Items/flare_burn.ogg");
+    public SoundSpecifier? LoopedSound = new SoundPathSpecifier("/Audio/Items/Flare/flare_burn.ogg");
 
     /// <summary>
     /// Звук поджигания

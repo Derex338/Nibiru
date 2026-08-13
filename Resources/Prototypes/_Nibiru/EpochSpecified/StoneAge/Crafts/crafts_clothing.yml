@@ -92,7 +92,8 @@
 
 - type: construction
   id: BrownFurCoat
-  name: Brown Fur Coat
+  name: construction-recipe-brown-fur-coat
+
   graph: BrownFurCoat
   startNode: start
   targetNode: fin
@@ -103,7 +104,8 @@
 
 - type: construction
   id: Neckerchief
-  name: Neckerchief
+  name: construction-recipe-neckerchief
+
   graph: Neckerchief
   startNode: start
   targetNode: fin
@@ -114,7 +116,8 @@
 
 - type: construction
   id: RedNeckerchief
-  name: Red Neckerchief
+  name: construction-recipe-red-neckerchief
+
   graph: RedNeckerchief
   startNode: start
   targetNode: fin
@@ -125,7 +128,8 @@
 
 - type: construction
   id: ShirtWarriorGarb
-  name: Warrior Garb
+  name: construction-recipe-shirt-warrior-garb
+
   graph: ShirtWarriorGarb
   startNode: start
   targetNode: fin
@@ -136,7 +140,8 @@
 
 - type: construction
   id: Loincloth
-  name: Loincloth
+  name: construction-recipe-loincloth
+
   graph: Loincloth
   startNode: start
   targetNode: fin
@@ -147,7 +152,8 @@
 
 - type: construction
   id: HeadWreath
-  name: Head Wreath
+  name: construction-recipe-head-wreath
+
   graph: HeadWreath
   startNode: start
   targetNode: fin
@@ -158,7 +164,8 @@
 
 - type: construction
   id: CEStrawHat
-  name: Straw Hat
+  name: construction-recipe-cestraw-hat
+
   graph: CEStrawHat
   startNode: start
   targetNode: fin

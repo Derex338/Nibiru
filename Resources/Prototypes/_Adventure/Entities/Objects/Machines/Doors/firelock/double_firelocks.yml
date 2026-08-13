@@ -52,8 +52,9 @@
     offset: 0.5,0
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 6
@@ -67,7 +68,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -116,6 +117,8 @@
   - type: Construction
     graph: FirelockTriple
     node: TripleFirelockGlass
+  - type: StaticPrice
+    price: 200
 
 # каркас
 - type: entity
@@ -142,8 +145,9 @@
     offset: 0,0
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 6
@@ -157,7 +161,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:

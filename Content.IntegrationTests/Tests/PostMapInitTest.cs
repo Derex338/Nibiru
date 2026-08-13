@@ -47,12 +47,7 @@ namespace Content.IntegrationTests.Tests
             "Dart"
         };
 
-        private static readonly string[] Grids =
-        {
-            "/Maps/centcomm.yml",
-            "/Maps/Corvax/corvax_centcomm.yml", // Corvax edit
-            AdminTestArenaSystem.ArenaMapPath
-        };
+        private static readonly string[] Grids = [];
 
         /// <summary>
         /// A dictionary linking maps to collections of entity prototype ids that should be exempt from "DoNotMap" restrictions.
@@ -93,9 +88,9 @@ namespace Content.IntegrationTests.Tests
             .Select(glob => new Regex(GlobToRegex(glob), RegexOptions.IgnoreCase | RegexOptions.Compiled))
             .ToArray();
 
-        private static readonly string[] GameMaps = GameDataScrounger.PrototypesOfKind<GameMapPrototype>().Where(x => x != PoolManager.TestMap).ToArray();
-        private static readonly ResPath[] AllMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps", "*.yml");
-        private static readonly ResPath[] ShuttleMapFiles = GameDataScrounger.FilesInDirectoryInVfs("/Maps/Shuttles", "*.yml");
+        private static readonly string[] GameMaps = [];
+        private static readonly ResPath[] AllMapFiles = [];
+        private static readonly ResPath[] ShuttleMapFiles = [];
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
 

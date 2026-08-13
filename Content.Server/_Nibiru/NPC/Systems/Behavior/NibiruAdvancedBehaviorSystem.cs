@@ -17,10 +17,12 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// </summary>
 public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
 {
-[Dependency] private NpcFactionSystem _faction = default!;
-[Dependency] private NPCSteeringSystem _steering = default!;
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private const float TerritoryCheckInterval = 2f;
     private const float FireCheckInterval = 0.2f;

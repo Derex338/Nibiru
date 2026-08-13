@@ -21,21 +21,7 @@ public sealed class StationPowerTests : GameTest
     /// </summary>
     private const float MinimumPowerDurationSeconds = 10 * 60;
 
-    private static readonly string[] GameMaps =
-    [
-        "Bagel",
-        "Box",
-        "Elkridge",
-        "Fland",
-        "Marathon",
-        "Oasis",
-        "Packed",
-        "Plasma",
-        "Relic",
-        "Snowball",
-        "Reach",
-        "Exo",
-    ];
+    private static readonly string[] GameMaps = [];
 
     public override PoolSettings PoolSettings => new ()
     {

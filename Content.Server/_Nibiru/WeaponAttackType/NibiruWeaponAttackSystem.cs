@@ -11,10 +11,10 @@ namespace Content.Server._Nibiru.WeaponAttackType;
 
 public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
 {
-[Dependency] private SharedHandsSystem _hands = default!;
-[Dependency] private SharedRoofSystem _roof = default!;
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private IMapManager _map = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedRoofSystem _roof = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IMapManager _map = default!;
 
     public override void Initialize()
     {

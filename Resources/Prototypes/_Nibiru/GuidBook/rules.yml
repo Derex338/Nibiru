@@ -1,18 +1,13 @@
-# Default rules
 - type: guideEntry
   id: NibiruRuleset
-  name: Правила сервера
+  name: guide-entry-nibiru-rules
   priority: 0
-  locFilter: "ru-RU"
-  hidden: false
   ruleEntry: true
   text: "/ServerInfo/_Nibiru/Rules/Rules_RU.xml"
 
 - type: guideEntry
   id: NibiruRulesetEN
-  name: Server Rules
+  name: guide-entry-nibiru-rules
   priority: 0
-  locFilter: "en-US"
-  hidden: false
   ruleEntry: true
   text: "/ServerInfo/_Nibiru/Rules/Rules_EN.xml"

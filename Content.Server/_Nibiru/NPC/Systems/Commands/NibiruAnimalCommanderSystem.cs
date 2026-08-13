@@ -21,13 +21,13 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
 {
     private const float SearchTargetRange = 60f;
 
-[Dependency] private SharedActionsSystem _actions = default!;
-[Dependency] private NibiruTamingSystem _taming = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
-[Dependency] private ChatSystem _chat = default!;
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private MobStateSystem _mobState = default!;
-[Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private NibiruTamingSystem _taming = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
 
     public override void Initialize()
     {

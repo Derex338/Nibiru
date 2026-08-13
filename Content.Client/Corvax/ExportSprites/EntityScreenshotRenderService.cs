@@ -607,7 +607,7 @@ public sealed partial class EntityScreenshotRenderService
         return image;
     }
 
-    private readonly record struct PixelRect(int Left, int Top, int Width, int Height);
+    private readonly partial record struct PixelRect(int Left, int Top, int Width, int Height);
 
     private sealed partial class EntityScreenshotRenderControl : Control
     {

@@ -35,7 +35,7 @@ public sealed class CharacterCreationTest : GameTest
         HumanoidCharacterProfile profile = null;
         await client.WaitPost(() =>
         {
-            profile = HumanoidCharacterProfile.Random();
+            profile = HumanoidCharacterProfile.RandomWithSpecies("Human");
             clientPrefManager.CreateCharacter(profile);
         });
         await pair.RunTicksSync(5);
@@ -61,7 +61,7 @@ public sealed class CharacterCreationTest : GameTest
 
         await client.WaitAssertion(() =>
         {
-            profile = HumanoidCharacterProfile.Random();
+            profile = HumanoidCharacterProfile.RandomWithSpecies("Human");
             clientPrefManager.CreateCharacter(profile);
         });
         await pair.RunTicksSync(5);

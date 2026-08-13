@@ -24,12 +24,12 @@ namespace Content.Server._Nibiru.GameTicking.Rules;
 /// </summary>
 public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurvivalRuleComponent>
 {
-[Dependency] private NibiruWorldSystem _world = default!;
-[Dependency] private IGameTiming _timing = default!;
-[Dependency] private IRobustRandom _random = default!;
-[Dependency] private IAdminLogManager _adminLogger = default!;
-[Dependency] private IChatManager _chat = default!;
-[Dependency] private FactionSystem _factionSystem = default!;
+    [Dependency] private NibiruWorldSystem _world = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private FactionSystem _factionSystem = default!;
 
 
 

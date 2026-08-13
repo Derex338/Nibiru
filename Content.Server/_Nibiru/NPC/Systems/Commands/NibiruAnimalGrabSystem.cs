@@ -21,13 +21,15 @@ namespace Content.Server._Nibiru.NPC.Systems.Commands;
 
 public sealed partial class NibiruAnimalGrabSystem : EntitySystem
 {
-[Dependency] private PullingSystem _pulling = default!;
-[Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
-[Dependency] private SharedDoAfterSystem _doAfter = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
-[Dependency] private DamageableSystem _damageable = default!;
-[Dependency] private SharedTransformSystem _xform = default!;
-[Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {

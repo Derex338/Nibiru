@@ -24,12 +24,16 @@ namespace Content.Server._Nibiru.PlanetMap;
 /// </summary>
 public sealed partial class PlanetMapSystem : EntitySystem
 {
-[Dependency] private SharedTransformSystem _xform      = default!;
-[Dependency] private SharedBiomeSystem     _biome      = default!;
-[Dependency] private TagSystem             _tag        = default!;
-[Dependency] private IMapManager           _mapManager = default!;
-[Dependency] private SharedMapSystem       _mapSys     = default!;
-[Dependency] private IPrototypeManager     _proto      = default!;
+    private static readonly ProtoId<TagPrototype> PlanetMapEntityTag = "PlanetMapEntity";
+
+    [Dependency] private SharedTransformSystem _xform      = default!;
+    [Dependency] private SharedPhysicsSystem   _physics    = default!;
+    [Dependency] private SharedBiomeSystem     _biome      = default!;
+    [Dependency] private TagSystem             _tag        = default!;
+    [Dependency] private IMapManager           _mapManager = default!;
+    [Dependency] private UserInterfaceSystem   _ui         = default!;
+    [Dependency] private SharedMapSystem       _mapSys     = default!;
+    [Dependency] private IPrototypeManager     _proto      = default!;
 
     // -----------------------------------------------------------------------
     // Job types (runtime-only, not serialised)
@@ -397,7 +401,7 @@ public sealed partial class PlanetMapSystem : EntitySystem
                 zoneIdx = GetZoneIndex(mapComp, id);
 
             var hasHardPhysics  = TryComp<PhysicsComponent>(ent.Value, out var physics) && physics.Hard;
-            var hasPlanetMapTag = _tag.HasTag(ent.Value, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"PlanetMapEntity");
+            var hasPlanetMapTag = _tag.HasTag(ent.Value, PlanetMapEntityTag);
 
             // Draw as an individual icon when it's a hard wall, tagged, OR part of a zone.
             // Zone members also go into the zone layer; sparse ones (below the density

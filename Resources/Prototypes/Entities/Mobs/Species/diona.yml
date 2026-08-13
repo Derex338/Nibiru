@@ -15,11 +15,10 @@
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
   - type: Body
-    prototype: Diona
-    requiredLegs: 2
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Diona
+  - type: Injurable
+    damageContainer: Biological
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

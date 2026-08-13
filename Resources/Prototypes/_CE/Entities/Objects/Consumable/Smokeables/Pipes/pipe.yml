@@ -21,7 +21,7 @@
 #  - type: CEIgnitionModifier
 #    hideCaution: true
   - type: StaticPrice
-    price: 1
+    price: 2
   - type: PhysicalComposition
     materialComposition:
       CEWood: 20 # 2 wooden plank in craft

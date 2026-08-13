@@ -1,7 +1,7 @@
 - type: entity
   parent: [BaseFenceWood, BaseWoodStructure]
   id: FenceStockadeStraight
-  suffix: Straight, Нибиру, Каменный век
+  suffix: Straight, Nibiru, Stone Age
   components:
   - type: Icon
     sprite: Structures/Walls/wooden_fence.rsi
@@ -30,7 +30,7 @@
 - type: entity
   parent: [BaseFenceWood, BaseWoodStructure]
   id: FenceStockadeEnd
-  suffix: End, Нибиру, Каменный век
+  suffix: End, Nibiru, Stone Age
   components:
   - type: Icon
     sprite: Structures/Walls/wooden_fence.rsi
@@ -59,7 +59,7 @@
 - type: entity
   parent: [BaseFenceWood, BaseWoodStructure]
   id: FenceStockadeCorner
-  suffix: Corner, Нибиру, Каменный век
+  suffix: Corner, Nibiru, Stone Age
   components:
   - type: Icon
     sprite: Structures/Walls/wooden_fence.rsi
@@ -97,7 +97,7 @@
 - type: entity
   parent: [BaseFenceWood, BaseWoodStructure]
   id: FenceStockadeTJunction
-  suffix: T-Junction, Нибиру, Каменный век
+  suffix: T-Junction, Nibiru, Stone Age
   components:
   - type: Icon
     sprite: Structures/Walls/wooden_fence.rsi
@@ -135,7 +135,7 @@
 - type: entity
   parent: [BaseFenceWood, BaseWoodStructure]
   id: FenceStockadeGate
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   name: wooden fence gate
   description: Do you have any idea what awaits you behind these gates? It can be either a toilet or a luxurious mansion. But you continue to love your emo boys.
   components:
@@ -184,7 +184,7 @@
 - type: entity
   parent: BaseWall
   id: WallWoodWindow
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   name: wood wall
   description: The traditional greytide defense.
   components:
@@ -232,7 +232,7 @@
 
 - type: entity
   id: BaseFenceStockadeSharp
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseStructure
   abstract: true
   components:
@@ -251,8 +251,9 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 2
     delay: 2
@@ -288,7 +289,7 @@
 - type: entity
   parent: BaseFenceStockadeSharp
   id: FenceStockadeSharpStraight
-  suffix: Sharp, Нибиру, Каменный век
+  suffix: Sharp, Nibiru, Stone Age
   name: sharp stockade
   description: A stockade with sharpened tops. Climbing this would be a bad idea.
   components:
@@ -319,7 +320,7 @@
 - type: entity
   parent: BaseFenceStockadeSharp
   id: FenceStockadeSharpEnd
-  suffix: Sharp, Нибиру, Каменный век
+  suffix: Sharp, Nibiru, Stone Age
   name: sharp stockade
   description: A stockade with sharpened tops.
   components:
@@ -350,7 +351,7 @@
 - type: entity
   parent: BaseFenceStockadeSharp
   id: FenceStockadeSharpCorner
-  suffix: Sharp, Нибиру, Каменный век
+  suffix: Sharp, Nibiru, Stone Age
   name: sharp stockade
   description: A stockade with sharpened tops.
   components:
@@ -390,7 +391,7 @@
 - type: entity
   parent: BaseFenceStockadeSharp
   id: FenceStockadeSharpTJunction
-  suffix: Sharp, Нибиру, Каменный век
+  suffix: Sharp, Nibiru, Stone Age
   name: sharp stockade
   description: A stockade with sharpened tops.
   components:
@@ -430,7 +431,7 @@
 - type: entity
   parent: BaseFenceStockadeSharp
   id: FenceStockadeSharpGate
-  suffix: Sharp, Нибиру, Каменный век
+  suffix: Sharp, Nibiru, Stone Age
   name: sharp stockade gate
   description: A stockade gate with sharpened tops.
   components:

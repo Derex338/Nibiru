@@ -126,8 +126,8 @@
 
 - type: trait
   id: KringeAccent
-  name: Cringe Speech
-  description: Ваша речь припитана словами, вызывающими кринж у окружающих.
+  name: trait-kringe-accent-name
+  description: trait-kringe-accent-desc
   category: SpeechTraits
   cost: 1
   components:

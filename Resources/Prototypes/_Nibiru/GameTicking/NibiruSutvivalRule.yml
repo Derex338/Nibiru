@@ -2,8 +2,8 @@
   id: Nibiru
   alias:
     - nibiru
-  name: Nibiru survival
-  description: Голопопое выживание
+  name: nibiru-preset-title
+  description: nibiru-preset-description
   rules:
     - NibiruSurvival
     #- BasicNibiruEventScheduler

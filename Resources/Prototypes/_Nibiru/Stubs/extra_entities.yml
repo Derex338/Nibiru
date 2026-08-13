@@ -1,0 +1,44 @@
+- type: entity
+  parent: BaseItem
+  id: Herb
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+    state: produce
+  - type: Item
+    size: Small
+  - type: Stack
+    stackType: Herb
+    count: 1
+
+- type: entity
+  parent: BaseItem
+  id: BigHide
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Nibiru/Entities/Mobs/Hide.rsi
+    state: big
+  - type: Item
+    size: Normal
+  - type: Stack
+    stackType: BigHide
+    count: 1
+
+- type: entity
+  parent: BaseItem
+  id: CEBloodEssence
+  suffix: Stub
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _CE/Objects/Materials/blood_essence.rsi
+    state: drop
+  - type: Item
+    size: Tiny
+  - type: Stack
+    stackType: CEBloodEssence
+    count: 1

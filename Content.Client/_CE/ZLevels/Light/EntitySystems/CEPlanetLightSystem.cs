@@ -4,7 +4,7 @@ namespace Content.Client._CE.ZLevels.Light.EntitySystems;
 
 public sealed partial class CEPlanetLightSystem : EntitySystem
 {
-[Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     public override void Initialize()
     {

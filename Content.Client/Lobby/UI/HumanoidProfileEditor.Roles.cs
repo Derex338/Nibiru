@@ -199,7 +199,7 @@ public sealed partial class HumanoidProfileEditor
                 {
                     Margin = new Thickness(3f, 3f, 3f, 0f),
                 };
-                selector.OnOpenGuidebook += OnOpenGuidebook;
+                selector.OnOpenGuidebook += guides => OnOpenGuidebook?.Invoke(guides);
 
                 var icon = new TextureRect
                 {
@@ -320,7 +320,7 @@ public sealed partial class HumanoidProfileEditor
             {
                 Margin = new Thickness(3f, 3f, 3f, 0f),
             };
-            selector.OnOpenGuidebook += OnOpenGuidebook;
+            selector.OnOpenGuidebook += guides => OnOpenGuidebook?.Invoke(guides);
 
             var title = Loc.GetString(antag.Name);
             var description = Loc.GetString(antag.Objective);

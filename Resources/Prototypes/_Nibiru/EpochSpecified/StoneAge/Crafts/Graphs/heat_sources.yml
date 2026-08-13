@@ -71,7 +71,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: CEStone
+              prototype: CEStoneBlock1
               amount: 3
             - !type:SpawnPrototype
               prototype: CEDirtBlock1
@@ -89,7 +89,7 @@
               prototype: MudBlock1
               amount: 5
             - !type:SpawnPrototype
-              prototype: CEStone
+              prototype: CEStoneBlock1
               amount: 3
             - !type:DeleteEntity {}
           steps:

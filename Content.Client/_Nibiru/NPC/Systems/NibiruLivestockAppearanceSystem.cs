@@ -9,7 +9,7 @@ namespace Content.Client._Nibiru.NPC.Systems;
 /// </summary>
 public sealed partial class NibiruLivestockAppearanceSystem : EntitySystem
 {
-[Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

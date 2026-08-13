@@ -1,10 +1,10 @@
 - type: entity
   parent: BaseStoneItem
   id: Stone
-  name: камень
-  suffix: Нибиру, Каменный век
+  name: stone
+  suffix: Nibiru, Stone Age
   abstract: true
-  description: тупо камень
+  description: just a stone
   components:
   - type: Tag
     tags:
@@ -37,8 +37,9 @@
         sound:
           collection: MetalBreak
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Stone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Material
   - type: MeleeWeapon
     soundHit:
@@ -96,8 +97,8 @@
 - type: entity
   parent: Stone
   id: Stone1
-  name: камень
-  suffix: Single, Нибиру, Каменный век
+  name: stone
+  suffix: Single, Nibiru, Stone Age
   components:
   - type: Stack
     count: 1
@@ -105,9 +106,9 @@
 - type: entity
   parent: BaseStoneItem
   id: SharpStone
-  suffix: Нибиру, Каменный век
-  name: острый камень
-  description: тупо острый камень
+  suffix: Nibiru, Stone Age
+  name: sharp stone
+  description: just a sharp stone
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Stone.rsi
@@ -143,8 +144,8 @@
 - type: entity
   parent: SharpStone
   id: SharpStone1
-  name: острый камень
-  suffix: Single, Нибиру, Каменный век
+  name: sharp stone
+  suffix: Single, Nibiru, Stone Age
   components:
   - type: Stack
     count: 1

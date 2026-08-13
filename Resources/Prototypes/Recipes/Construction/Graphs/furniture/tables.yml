@@ -11,8 +11,8 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: WoodStick # Nibiru - was MetalRod
-              amount: 4 # Nibiru - was 2
+            - material: MetalRod
+              amount: 2
               doAfter: 1
         - to: CounterWoodFrame
           completed:
@@ -38,8 +38,8 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-                prototype: WoodStick1 # Nibiru - was PartRodMetal
-                amount: 3 # Nibiru - was 2
+                prototype: PartRodMetal
+                amount: 2
           steps:
             - tool: Anchoring
               doAfter: 1

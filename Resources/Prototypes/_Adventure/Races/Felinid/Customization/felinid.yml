@@ -1,7 +1,6 @@
 - type: marking
   id: FelinidEars
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -24,7 +23,6 @@
 - type: marking
   id: FelinidTail
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -42,7 +40,6 @@
 - type: marking
   id: FelinidEarsStubby
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -57,15 +54,14 @@
           !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_stubby_outer
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_stubby_inner
 
 - type: marking
   id: FelinidEarsCurled
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -80,15 +76,14 @@
           !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_curled_outer
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_curled_inner
 
 - type: marking
   id: FelinidEarsTorn
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -103,15 +98,14 @@
           !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_torn_outer
-  - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_torn_inner
 
 - type: marking
   id: FelinidTailStripes
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -123,15 +117,14 @@
           category: FacialHair
         - !type:SkinColoring
   sprites:
-    - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+    - sprite: Corvax/Mobs/Customization/cat_parts.rsi
       state: tail_cat_wag_stripes_prime
-    - sprite: _Corvax/Mobs/Customization/cat_parts.rsi
+    - sprite: Corvax/Mobs/Customization/cat_parts.rsi
       state: tail_cat_wag_stripes_second
 
 - type: marking
   id: FelinidTailBell
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -149,7 +142,6 @@
 - type: marking
   id: FelinidEarsBell
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -172,7 +164,6 @@
 - type: marking
   id: FelinidTailFox
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -192,7 +183,6 @@
 - type: marking
   id: FelinidEarsFox
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Felinid]
   coloring:
     default:
@@ -207,7 +197,7 @@
           !type:SimpleColoring
             color: "#FFFFFF"
   sprites:
-  - sprite: _Corvax/Mobs/Customization/fox_parts.rsi
+  - sprite: Corvax/Mobs/Customization/fox_parts.rsi
     state: ears_fox_outer
-  - sprite: _Corvax/Mobs/Customization/fox_parts.rsi
+  - sprite: Corvax/Mobs/Customization/fox_parts.rsi
     state: ears_fox_inner

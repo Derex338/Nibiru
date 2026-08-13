@@ -16,7 +16,7 @@
 
 - type: species
   id: Stone
-  name: Golem
+  name: species-name-stone
   roundStart: true
   prototype: MobStone
   dollPrototype: AppearanceStone
@@ -66,12 +66,11 @@
       required: true
       default: [StoneBase]
 
-
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceStone
   categories: [ HideSpawnMenu ]
-  name: stone appearance
+
   components:
   - type: InitialBody
     organs:
@@ -129,12 +128,13 @@
 #Мозг
 - type: entity
   id: StoneBrain
-  name: soul stone
+
   parent: OrganHumanBrain
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: AdventureStone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -168,12 +168,13 @@
 - type: entity
   id: PartStone
   parent: BaseItem
-  name: "Stone body part"
+
   abstract: true
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: AdventureStone
+  - type: Injurable
+    damageContainer: Inorganic
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -219,7 +220,7 @@
 
 - type: entity
   id: TorsoStone
-  name: "golem shard"
+
   parent: [OrganBaseTorsoSexed, PartStone, OrganBaseTorso]
   components:
   - type: Sprite
@@ -227,7 +228,7 @@
 
 - type: entity
   id: HeadStone
-  name: "golem shard"
+
   parent: [OrganBaseHeadSexed, PartStone, OrganBaseHead]
   components:
   - type: Sprite
@@ -235,42 +236,42 @@
 
 - type: entity
   id: LeftArmStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseArmLeft]
 
 - type: entity
   id: RightArmStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseArmRight]
 
 - type: entity
   id: LeftHandStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseHandLeft]
 
 - type: entity
   id: RightHandStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseHandRight]
 
 - type: entity
   id: LeftLegStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseLegLeft]
 
 - type: entity
   id: RightLegStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseLegRight]
 
 - type: entity
   id: LeftFootStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseFootLeft]
 
 - type: entity
   id: RightFootStone
-  name: "golem shard"
+
   parent: [PartStone, OrganBaseFootRight]
 
 - type: damageContainer
@@ -500,7 +501,7 @@
       displayName: Shirt
 
 - type: entity
-  name: MobStone
+
   parent:
   - AppearanceStone
   - BaseSpeciesMob
@@ -510,8 +511,6 @@
     sprite: _Adventure/Races/Stone/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Stone
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech
@@ -524,8 +523,22 @@
   - type: BodyEmotes
     soundsId: StoneBodyEmotes
   - type: Damageable
-    damageContainer: Stone
     damageModifierSet: AdventureStone
+  - type: Injurable
+    damageContainer: Stone
+  - type: DamageVisuals
+    thresholds: [ 10, 20, 30, 50, 70, 100 ]
+    targetLayers:
+    - "enum.HumanoidVisualLayers.Chest"
+    - "enum.HumanoidVisualLayers.Head"
+    - "enum.HumanoidVisualLayers.LArm"
+    - "enum.HumanoidVisualLayers.LLeg"
+    - "enum.HumanoidVisualLayers.RArm"
+    - "enum.HumanoidVisualLayers.RLeg"
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#808080"
   - type: MeleeWeapon
     soundHit:
       collection: Punch

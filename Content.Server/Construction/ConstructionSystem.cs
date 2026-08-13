@@ -30,6 +30,9 @@ namespace Content.Server.Construction
         [Dependency] private ContainerSystem _container = default!;
         [Dependency] private StackSystem _stackSystem = default!;
         [Dependency] private SharedToolSystem _toolSystem = default!;
+		[Dependency] private IPrototypeManager _proto = default!;
+		[Dependency] private UserInterfaceSystem _uiSys = default!;
+		[Dependency] private MindSystem _minds = default!;
 
         public override void Initialize()
         {

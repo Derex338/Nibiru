@@ -12,7 +12,7 @@ namespace Content.Server._Nibiru.Factions.UI;
 /// </summary>
 public sealed partial class FactionStatueSelectionEui : BaseEui
 {
-[Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     private readonly EntityUid _statueUid;
 

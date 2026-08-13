@@ -1,9 +1,6 @@
 <Document>
 # Гоблины
 
-<Box>
-<GuideEntityEmbed Entity="CEMobGoblin" Caption="Гоблин"/>
-</Box>
 
 ## Игровые особенности
 - Тяжелее тащить большие объекты

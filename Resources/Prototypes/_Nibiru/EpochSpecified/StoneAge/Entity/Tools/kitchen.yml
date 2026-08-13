@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseWoodItem
   id: WoodenBowl
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   name: wooden bowl
   description: A rustic bowl carved from wood.
   components:
@@ -15,10 +15,10 @@
       visible: false
   - type: Item
     sprite: Objects/Consumable/Food/bowl.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 50
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -41,6 +41,8 @@
     node: fin
   - type: Damageable
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -64,9 +66,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayBowlRaw
-  suffix: Нибиру, Каменный век
-  name: сырая глиняная миска
-  description: Еще влажная и мягкая миска из глины. Нужно обжечь ее, чтобы она стала твердой.
+  suffix: Nibiru, Stone Age
+  name: raw clay bowl
+  description: A still wet and soft clay bowl. It needs to be fired to become hard.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
@@ -82,9 +84,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayJugRaw
-  suffix: Нибиру, Каменный век
-  name: сырой глиняный кувшин
-  description: Еще влажный и мягкий кувшин из глины. Нужно обжечь его, чтобы он стал твердым.
+  suffix: Nibiru, Stone Age
+  name: raw clay jug
+  description: A still wet and soft clay jug. It needs to be fired to become hard.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
@@ -100,9 +102,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayCupRaw
-  suffix: Нибиру, Каменный век
-  name: сырая глиняная кружка
-  description: Еще влажная и мягкая кружка из глины. Нужно обжечь ее, чтобы она стала твердой.
+  suffix: Nibiru, Stone Age
+  name: raw clay cup
+  description: A still wet and soft clay cup. It needs to be fired to become hard.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
@@ -118,9 +120,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayPlateRaw
-  suffix: Нибиру, Каменный век
-  name: сырая глиняная тарелка
-  description: Еще влажная и мягкая тарелка из глины. Нужно обжечь ее, чтобы она стала твердой.
+  suffix: Nibiru, Stone Age
+  name: raw clay plate
+  description: A still wet and soft clay plate. It needs to be fired to become hard.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
@@ -137,9 +139,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayBowl
-  suffix: Нибиру, Каменный век
-  name: глиняная миска
-  description: Прочная миска из обожженной глины.
+  suffix: Nibiru, Stone Age
+  name: clay bowl
+  description: A sturdy bowl made of fired clay.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
@@ -151,10 +153,10 @@
       visible: false
   - type: Item
     sprite: Objects/Consumable/Food/bowl.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 50
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -187,9 +189,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayJug
-  suffix: Нибиру, Каменный век
-  name: глиняный кувшин
-  description: Вместительный кувшин из обожженной глины.
+  suffix: Nibiru, Stone Age
+  name: clay jug
+  description: A spacious jug made of fired clay.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
@@ -201,10 +203,10 @@
       visible: false
   - type: Item
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Kuvshin.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 100
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 100
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -215,7 +217,7 @@
     canChangeTransferAmount: true
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
+    maxFillLevels: 3
     fillBaseName: fill-
   - type: UserInterface
     interfaces:
@@ -236,9 +238,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayCup
-  suffix: Нибиру, Каменный век
-  name: глиняная кружка
-  description: Небольшая кружка из обожженной глины.
+  suffix: Nibiru, Stone Age
+  name: clay cup
+  description: A small cup made of fired clay.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
@@ -250,10 +252,10 @@
       visible: false
   - type: Item
     sprite: Objects/Consumable/Drinks/mug.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 30
   - type: MixableSolution
     solution: food
   - type: Edible
@@ -285,9 +287,9 @@
 - type: entity
   parent: BaseStoneItem
   id: ClayPlate
-  suffix: Нибиру, Каменный век
-  name: глиняная тарелка
-  description: Широкая тарелка из обожженной глины.
+  suffix: Nibiru, Stone Age
+  name: clay plate
+  description: A wide plate made of fired clay.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi

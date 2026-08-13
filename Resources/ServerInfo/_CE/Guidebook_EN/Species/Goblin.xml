@@ -1,9 +1,6 @@
 <Document>
 # Goblins
 
-<Box>
-<GuideEntityEmbed Entity="CEMobGoblin" Caption="Goblin"/>
-</Box>
 
 ## Gameplay Features
 - Harder to drag large objects

@@ -11,6 +11,8 @@
   - type: PhysicalComposition
     materialComposition:
       CEIron: 10
+  - type: StaticPrice
+    price: 12
 
 - type: entity
   parent: CEClothingGlovesBase

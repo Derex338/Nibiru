@@ -6,8 +6,8 @@
 - type: entity
   id: ModularWeaponBase
   abstract: true
-  name: модульное оружие
-  description: Оружие, выкованное вручную из отдельных компонентов.
+  name: modular weapon
+  description: A weapon forged by hand from individual components.
   components:
     - type: Item
       size: Normal
@@ -21,8 +21,8 @@
 - type: entity
   id: ModularSword
   parent: ModularWeaponBase
-  name: кованый меч
-  description: Меч, собранный из отдельных кузнечных модулей.
+  name: forged sword
+  description: A sword assembled from individual smithing modules.
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
@@ -34,8 +34,8 @@
 - type: entity
   id: ModularKnife
   parent: ModularWeaponBase
-  name: кованый нож
-  description: Нож ручной работы из выбранных модулей.
+  name: forged knife
+  description: A handcrafted knife made from selected modules.
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
@@ -47,8 +47,8 @@
 - type: entity
   id: ModularAxe
   parent: ModularWeaponBase
-  name: кованый топор
-  description: Топор, собранный по частям в кузне.
+  name: forged axe
+  description: An axe assembled piece by piece in the forge.
   components:
     - type: Sprite
       sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
@@ -60,8 +60,8 @@
 - type: entity
   id: ModularSpear
   parent: ModularWeaponBase
-  name: кованое копьё
-  description: Копьё с наконечником и древком на выбор.
+  name: forged spear
+  description: A spear with a choice of head and shaft.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/spear.rsi
@@ -76,8 +76,8 @@
 - type: entity
   id: NibiruModularCraft
   parent: BaseStructure
-  name: кузнечный верстак
-  description: Верстак для ручного создания модульного оружия. Взаимодействуй для открытия меню кузни.
+  name: smithy workbench
+  description: A workbench for hand-crafting modular weapons. Interact to open the smithy menu.
   components:
     - type: Sprite
       sprite: Structures/Machines/autolathe.rsi
@@ -85,8 +85,8 @@
         - state: icon
     - type: InteractionOutline
     - type: ModularCraft
-      currentmodularItemType: Sword
-      baseWeaponPrototype: ModularSword
+      currentItemType: Sword
+      baseEntityPrototype: ModularSword
     - type: UserInterface
       interfaces:
         enum.ModularCraftUiKey.Key:

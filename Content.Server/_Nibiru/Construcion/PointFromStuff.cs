@@ -13,7 +13,7 @@ namespace Content.Server._Nibiru.Research;
 
 public sealed partial class PointsFromStuffSystem : EntitySystem
 {
-[Dependency] private ResearchSystem _research = default!;
+    [Dependency] private ResearchSystem _research = default!;
 
     private float _accumulator;
 
@@ -33,10 +33,17 @@ public sealed partial class PointsFromStuffSystem : EntitySystem
         while (_accumulator >= 10.0f)
         {
             _accumulator -= 10.0f;
-            var query = EntityQueryEnumerator<ResearchServerComponent>();
-            while (query.MoveNext(out var uid, out var research))
+            var paid = new HashSet<EntityUid>();
+            var query = EntityQueryEnumerator<FactionComponent>();
+            while (query.MoveNext(out _, out var faction))
             {
-                _research.ModifyServerPoints(uid, 1, research);
+                if (faction.ResearchServer is not { } server || !paid.Add(server))
+                    continue;
+
+                if (!TryComp<ResearchServerComponent>(server, out var research))
+                    continue;
+
+                _research.ModifyServerPoints(server, 1, research);
             }
         }
     }
@@ -51,8 +58,7 @@ public sealed partial class PointsFromStuffSystem : EntitySystem
 		&& TryComp<ResearchServerComponent>(user.ResearchServer, out var research)
 		&& server.FactionName == user.FactionName)
 		{
-            research.Points += component.Points;
-            //_research.ModifyServerPoints(user.ResearchServer.Value, component.Points, research);
+            _research.ModifyServerPoints(user.ResearchServer.Value, component.Points, research);
 		}
     }
 
@@ -65,8 +71,7 @@ public sealed partial class PointsFromStuffSystem : EntitySystem
         && TryComp<ResearchServerComponent>(comp.ResearchServer, out var research)
         && server.FactionName == comp.FactionName)
         {
-            research.Points += msg._seed.Points;
-            //_research.ModifyServerPoints(comp.ResearchServer.Value, msg._seed.Points, research);
+            _research.ModifyServerPoints(comp.ResearchServer.Value, msg._seed.Points, research);
         }
     }
     //private void OnDestruction(EntityUid uid, PointsFromDestructionComponent component, DestructionEventArgs args)

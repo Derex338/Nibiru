@@ -10,9 +10,9 @@ namespace Content.Client._Nibiru.Fuel;
 
 public sealed partial class FuelConsumptionSystem : VisualizerSystem<FuelConsumptionComponent>
 {
-[Dependency] private PointLightSystem _pointLightSystem = default!;
-[Dependency] private SharedAudioSystem _audioSystem = default!;
-[Dependency] private LightBehaviorSystem _lightBehavior = default!;
+    [Dependency] private PointLightSystem _pointLightSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
     public override void Initialize()
     {
@@ -53,12 +53,13 @@ public sealed partial class FuelConsumptionSystem : VisualizerSystem<FuelConsump
         {
             case FuelLightState.BrandNew:
                 _audioSystem.Stop(comp.PlayingStream);
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out var overlayIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out var overlayIdx, false))
                     SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayIdx, false);
 
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), FuelLightVisualLayers.Glow, false);
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Glow, out var glowIdx, false))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), glowIdx, false);
 
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out var baseIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out var baseIdx, false))
                     SpriteSystem.LayerSetVisible((uid, args.Sprite), baseIdx, true);
                 break;
 
@@ -67,23 +68,24 @@ public sealed partial class FuelConsumptionSystem : VisualizerSystem<FuelConsump
                 comp.PlayingStream = _audioSystem.PlayPvs(
                     comp.LoopedSound, uid)?.Entity;
 
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out overlayIdx, true))
-                {
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out overlayIdx, false))
                     SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayIdx, false);
+
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Glow, out glowIdx, false))
+                {
+                    if (comp.GlowColorLit.HasValue)
+                        SpriteSystem.LayerSetColor((uid, args.Sprite), glowIdx, comp.GlowColorLit.Value);
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), glowIdx, true);
                 }
 
-                if (comp.GlowColorLit.HasValue)
-                    SpriteSystem.LayerSetColor((uid, args.Sprite), FuelLightVisualLayers.Glow, comp.GlowColorLit.Value);
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), FuelLightVisualLayers.Glow, true);
-
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out baseIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out baseIdx, false))
                     SpriteSystem.LayerSetVisible((uid, args.Sprite), baseIdx, true);
 
                 break;
             case FuelLightState.Dead:
                 comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
                 var hasOverlay = false;
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out overlayIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Overlay, out overlayIdx, false))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
                     {
@@ -102,9 +104,10 @@ public sealed partial class FuelConsumptionSystem : VisualizerSystem<FuelConsump
                     }
                 }
 
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), FuelLightVisualLayers.Glow, false);
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Glow, out glowIdx, false))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), glowIdx, false);
 
-                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out baseIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), FuelLightVisualLayers.Base, out baseIdx, false))
                     SpriteSystem.LayerSetVisible((uid, args.Sprite), baseIdx, !hasOverlay);
                 break;
         }

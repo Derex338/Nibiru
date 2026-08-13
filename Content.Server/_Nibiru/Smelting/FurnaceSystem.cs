@@ -27,13 +27,15 @@ namespace Content.Server._Nibiru.Smelting;
 
 public sealed partial class SmeltingFurnaceSystem : EntitySystem
 {
-[Dependency] private SharedContainerSystem _container = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private SharedSolutionContainerSystem _solution = default!;
-[Dependency] private SharedAppearanceSystem _appearance = default!;
-[Dependency] private StackSystem _stack = default!;
-[Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
 
     public override void Initialize()
     {

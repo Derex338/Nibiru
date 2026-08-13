@@ -2,6 +2,7 @@
 
 ## Window titles
 faction-menu-title = Faction Window
+faction-window-tooltip = Faction Window
 faction-logo-editor-title = Faction Logo Editor
 
 ## Main/creation screen

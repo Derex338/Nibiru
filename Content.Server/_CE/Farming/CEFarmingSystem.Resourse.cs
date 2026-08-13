@@ -7,6 +7,7 @@ namespace Content.Server._CE.Farming;
 
 public sealed partial class CEFarmingSystem
 {
+    [Dependency] private EntityQuery<SolutionComponent> SolutionQuery = default!;
     private void InitializeResources()
     {
         SubscribeLocalEvent<CEPlantEnergyFromLightComponent, CEPlantUpdateEvent>(OnTakeEnergyFromLight);

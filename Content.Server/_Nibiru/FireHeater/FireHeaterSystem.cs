@@ -25,11 +25,13 @@ namespace Content.Server._Nibiru.Heating;
 /// </summary>
 public sealed partial class HeatingSurfaceSystem : EntitySystem
 {
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
-[Dependency] private EntityLookupSystem _lookup = default!;
-[Dependency] private TemperatureSystem _temperature = default!;
-[Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {

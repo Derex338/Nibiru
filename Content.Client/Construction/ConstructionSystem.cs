@@ -24,11 +24,11 @@ namespace Content.Client.Construction
     [UsedImplicitly]
     public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
-    [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private ExamineSystemShared _examineSystem = default!;
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private ExamineSystemShared _examineSystem = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private SpriteSystem _sprite = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 		[Dependency] private IPrototypeManager _proto = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
@@ -460,20 +460,11 @@ namespace Content.Client.Construction
 
 		public string GetCraftName(ConstructionPrototype proto)
 		{
+			if (proto.SetName.HasValue)
+				return Loc.GetString(proto.SetName);
+
 			if (!string.IsNullOrWhiteSpace(proto.Name))
-				return Loc.GetString(proto.Name);
-
-			//if (proto.Graph is {} result)
-			//{
-			//    return  //_proto.Index(result).Name;
-			//}
-
-			//if (proto.ResultReagents is { } resultReagents)
-			//{
-			//    return ContentLocalizationManager.FormatList(resultReagents
-			//        .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", _proto.Index(p.Key).LocalizedName), ("amount", p.Value)))
-			//        .ToList());
-			//}
+				return proto.Name;
 
 			return string.Empty;
 		}

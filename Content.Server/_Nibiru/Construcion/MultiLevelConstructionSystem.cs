@@ -11,9 +11,9 @@ namespace Content.Server._Nibiru.Construcion;
 
 public sealed partial class MultiLevelConstructionSystem : EntitySystem
 {
-[Dependency] private CESharedZLevelsSystem _zLevels = default!;
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private TurfSystem _turf = default!;
+    [Dependency] private CESharedZLevelsSystem _zLevels = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
     public override void Initialize()
     {

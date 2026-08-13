@@ -110,6 +110,7 @@ public sealed partial class ResearchSystem
 
     private void OnBuiOpen(EntityUid uid, ResearchConsoleComponent component, BoundUIOpenedEvent args)
     {
+        HandleFactionConsoleOpened(uid, args.Actor);
         UpdateFancyConsoleInterface(uid);
     }
 }

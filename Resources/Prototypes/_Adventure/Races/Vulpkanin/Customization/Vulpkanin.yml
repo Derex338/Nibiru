@@ -1,9 +1,7 @@
-#Уши
+#РЈС€Рё
 - type: marking
   id: EarClose
-  name: Close-set
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -13,9 +11,7 @@
 
 - type: marking
   id: EarHanging
-  name: Drooping
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -25,9 +21,7 @@
 
 - type: marking
   id: EarHangingLeft
-  name: Drooping left ear
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -37,9 +31,7 @@
 
 - type: marking
   id: EarWide
-  name: Wide
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
@@ -49,22 +41,18 @@
 
 - type: marking
   id: EarWolf
-  name: Narrow
   bodyPart: HeadTop
-  markingCategory: HeadTop
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/ear.rsi
     state: wolf
-  - sprite: _Corvax/Mobs/Customization/vulpkanin.rsi
+  - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
     state: vulp_ear_inner
 
-#Хвосты
+#РҐРІРѕСЃС‚С‹
 - type: marking
   id: TailDocked
-  name: Cropped
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
@@ -72,9 +60,7 @@
 
 - type: marking
   id: TailDoG
-  name: Dog-like
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi
@@ -84,9 +70,7 @@
 
 - type: marking
   id: TailRing
-  name: Ringed
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Vulpkanin]
   sprites:
   - sprite: _Adventure/Races/Vulpkanin/Customization/tails.rsi

@@ -21,3 +21,5 @@ ce-cooking-tag-corn = Кукуруза
 
 ce-cooking-tag-carrot = Морковь
 ce-cooking-tag-cucumber = Огурец
+ce-cooking-tag-fly-agaric = Мухомор
+ce-cooking-tag-lumish = Люмиш

@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Research.Prototypes;
 
 [Prototype]
-public sealed partial class ResearchEpochPrototype : IPrototype  //Nibiru
+public sealed partial class ResearchEpochPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

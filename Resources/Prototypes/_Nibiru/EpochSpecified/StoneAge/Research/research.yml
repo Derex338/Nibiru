@@ -7,7 +7,7 @@
 
 - type: technology
   id: PrimitiveProcessing
-  name: Origins
+  name: research-technology-primitive-processing
   icon:
     sprite: Structures/Decoration/bonfire.rsi
     state: bonfire
@@ -24,7 +24,7 @@
 
 - type: technology
   id: PrimitiveMedicine
-  name: Primitive Medicine
+  name: research-technology-primitive-medicine
   icon:
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
@@ -44,7 +44,7 @@
 
 - type: technology
   id: PrimitiveTools
-  name: Primitive Tools
+  name: research-technology-primitive-tools
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Hammer.rsi
     state: icon
@@ -60,7 +60,7 @@
 
 - type: technology
   id: BiggerTools
-  name: Large Tools
+  name: research-technology-bigger-tools
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Pickaxe.rsi
     state: icon
@@ -77,7 +77,7 @@
 
 - type: technology
   id: PrimitiveWeapons
-  name: Primitive Weapons
+  name: research-technology-primitive-weapons
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
     state: spear
@@ -92,7 +92,7 @@
 
 - type: technology
   id: IndividualProtection
-  name: Personal Protection
+  name: research-technology-individual-protection
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodShield.rsi
     state: icon
@@ -108,7 +108,7 @@
 
 - type: technology
   id: HuntingWeapons
-  name: Hunting Weapons
+  name: research-technology-hunting-weapons
   icon:
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
@@ -124,7 +124,7 @@
 
 - type: technology
   id: BoneWeapons
-  name: Bone Weapons
+  name: research-technology-bone-weapons
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/BoneKnife.rsi
     state: icon
@@ -156,7 +156,7 @@
 
 - type: technology
   id: Archery
-  name: Archery
+  name: research-technology-archery
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/Range/Bow.rsi
     state: unwielded
@@ -179,7 +179,7 @@
 
 - type: technology
   id: SpindleWorking
-  name: Spindle & Thread
+  name: research-technology-spindle-working
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/Thread.rsi
     state: thread_1
@@ -196,7 +196,7 @@
 
 - type: technology
   id: Weaving
-  name: Weaving
+  name: research-technology-weaving
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth
@@ -212,7 +212,7 @@
 
 - type: technology
   id: BasicClothing
-  name: Basic Clothing
+  name: research-technology-basic-clothing
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Tunic.rsi
     state: icon
@@ -234,7 +234,7 @@
 
 - type: technology
   id: BoneArmor
-  name: Bone Armor
+  name: research-technology-bone-armor
   icon:
     sprite: Clothing/Head/Helmets/bone_helmet.rsi
     state: icon
@@ -253,7 +253,7 @@
 
 - type: technology
   id: LeatherClothing
-  name: Leather Clothing
+  name: research-technology-leather-clothing
   icon:
     sprite: Clothing/OuterClothing/Coats/trenchcoat.rsi
     state: icon
@@ -277,7 +277,7 @@
 
 - type: technology
   id: LeatherArmor
-  name: Leather Armor
+  name: research-technology-leather-armor
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/LeatherArmor.rsi
     state: icon
@@ -299,7 +299,7 @@
 
 - type: technology
   id: BasicConstruction
-  name: Basic Construction
+  name: research-technology-basic-construction
   icon:
     sprite: Decals/Flora/flora_bushes.rsi
     state: bushk1
@@ -326,7 +326,7 @@
 
 - type: technology
   id: WoodWorking
-  name: Woodworking
+  name: research-technology-wood-working
   icon:
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
     state: closed
@@ -351,7 +351,7 @@
 
 - type: technology
   id: Furniture
-  name: Furniture
+  name: research-technology-furniture
   icon:
     sprite: Structures/Furniture/chairs.rsi
     state: wooden
@@ -374,7 +374,7 @@
 
 - type: technology
   id: Flooring
-  name: Flooring
+  name: research-technology-flooring
   icon:
     sprite: _CE/Objects/tile.rsi
     state: oak_woodplanks
@@ -406,7 +406,7 @@
 
 - type: technology
   id: WoodItems
-  name: Wooden Items
+  name: research-technology-wood-items
   icon:
     sprite: _CE/Objects/Tools/bucket.rsi
     state: icon
@@ -431,7 +431,7 @@
 
 - type: technology
   id: WoodChestplate
-  name: Wooden Armor
+  name: research-technology-wood-chestplate
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Clothing/Armor/WoodArmor.rsi
     state: icon
@@ -447,7 +447,7 @@
 
 - type: technology
   id: Fortifications
-  name: Fortifications
+  name: research-technology-fortifications
   icon:
     sprite: _CE/Structures/Architecture/Walls/wooden_palisade.rsi
     state: full
@@ -470,7 +470,7 @@
 
 - type: technology
   id: StoneMasonry
-  name: Stone Masonry
+  name: research-technology-stone-masonry
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Material/StoneBlock.rsi
     state: icon
@@ -533,7 +533,7 @@
 
 - type: technology
   id: FireMaking
-  name: Fire & Light
+  name: research-technology-fire-making
   icon:
     sprite: Objects/Misc/candles.rsi
     state: candle-big
@@ -551,7 +551,7 @@
 
 - type: technology
   id: Metallurgy
-  name: Fundamentals of Metallurgy
+  name: research-technology-metallurgy
   icon:
     sprite: _Nibiru/EpochSpecified/StoneAge/Structures/furnace.rsi
     state: icon
@@ -567,7 +567,7 @@
 
 - type: technology
   id: animals
-  name: Animal Husbandry
+  name: research-technology-animals
   icon:
     sprite: Mobs/Pets/corgi.rsi
     state: ian
@@ -588,7 +588,7 @@
 
 - type: technology
   id: BronzeAgeTransition
-  name: Transition to Bronze Age
+  name: research-technology-bronze-age-transition
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
     state: Bronze_3
@@ -600,4 +600,3 @@
     - LeatherArmor
     - HuntingWeapons
   position: 0, -7
-

@@ -16,6 +16,7 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// </summary>
 public sealed partial class NibiruAnimalMoodSystem : EntitySystem
 {
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
 
     public override void Initialize()
     {

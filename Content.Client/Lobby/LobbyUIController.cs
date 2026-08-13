@@ -33,7 +33,7 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
     [Dependency] private IStateManager _stateManager = default!;
     [Dependency] private JobRequirementsManager _requirements = default!;
     [Dependency] private MarkingManager _markings = default!;
-    //[UISystemDependency] private readonly GuidebookSystem _guide = default!;
+    [UISystemDependency] private readonly GuidebookSystem _guide = default!;
 
     private CharacterSetupGui? _characterSetup;
     private HumanoidProfileEditor? _profileEditor;
@@ -267,7 +267,7 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
             _requirements,
             _markings);
 
-        //_profileEditor.OnOpenGuidebook += (_, _) => _guide.OpenHelp;
+        _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
 
         _characterSetup = new CharacterSetupGui(_profileEditor);
 

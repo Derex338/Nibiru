@@ -1,0 +1,16 @@
+species-name-drask = Drask
+species-name-felinid = Felinid
+species-name-serpentid = Serpentid
+species-name-pigman = Trottin
+species-name-resomi = Resomi
+species-name-skrell = Skrell
+species-name-zerah = Zerah
+species-name-stone = Golem
+adventure-appearance-drask = Drask appearance
+adventure-appearance-felinid = Felinid appearance
+adventure-appearance-insect = Insect appearance
+adventure-appearance-pigman = Trottin appearance
+adventure-appearance-resomi = Resomi appearance
+adventure-appearance-skrell = Skrell appearance
+adventure-appearance-zerah = Zerah appearance
+adventure-appearance-stone = Golem appearance

@@ -24,10 +24,11 @@ namespace Content.Server._Nibiru.Factions
 {
     public sealed partial class AddFactionVerb : EntitySystem
     {
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private MindSystem _mind = default!;
-    [Dependency] private EuiManager _euiMan = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
+        [Dependency] private SharedUserInterfaceSystem _ui = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private MindSystem _mind = default!;
+        [Dependency] private EuiManager _euiMan = default!;
+        [Dependency] private ISharedPlayerManager _player = default!;
 
         public override void Initialize()
         {

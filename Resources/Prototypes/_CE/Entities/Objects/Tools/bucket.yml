@@ -12,6 +12,11 @@
     utensil: Spoon
   - type: Sprite
     sprite: _CE/Objects/Tools/bucket.rsi
+    layers:
+    - state: icon
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     size: Normal
   - type: Clothing
@@ -22,9 +27,8 @@
     equipWhileMoving: true
     slots:
     - HEAD
-  - type: SolutionContainerManager
-    solutions:
-      drink:
+  - type: Solution
+    solution:
         maxVol: 50
   - type: SolutionTransfer
     transferAmount: 50
@@ -40,6 +44,8 @@
     solution: drink
   - type: SolutionContainerVisuals
     maxFillLevels: 3
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 0
     inHandsFillBaseName: null
   - type: Appearance
   - type: ExaminableSolution
@@ -49,7 +55,7 @@
       - Bucket
   - type: PhysicalComposition
     materialComposition:
-      CEWood: 30
+      CEWood: 20
   - type: Construction
     graph: WoodenBucket
     node: fin

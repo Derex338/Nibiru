@@ -13,7 +13,9 @@ namespace Content.Server._Nibiru.Factions;
 
 public sealed partial class NibiruFactionLeaderSystem : EntitySystem
 {
-[Dependency] private FactionSystem _factionSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private FactionSystem _factionSystem = default!;
+    [Dependency] private IChatManager _chatManager = default!;
     // Список победителей лотереи, ожидающих спавна
     private readonly Dictionary<NetUserId, NibiruFactionLeaderPrefsMessage> _pendingLeaders = new();
 

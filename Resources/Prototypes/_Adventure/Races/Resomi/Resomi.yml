@@ -1,6 +1,6 @@
 - type: species
   id: Resomi
-  name: Resomi
+  name: species-name-resomi
   roundStart: true
   prototype: MobResomi
   dollPrototype: AppearanceResomi
@@ -53,7 +53,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceResomi
   categories: [ HideSpawnMenu ]
-  name: resomi appearance
+
   components:
   - type: InitialBody
     organs:
@@ -98,7 +98,7 @@
 - type: entity
   id: PartResomi
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Resomi body part"
+
   abstract: true
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
 
 - type: entity
   id: TorsoResomi
-  name: "Resomi torso"
+
   parent: [OrganBaseTorsoSexed, PartResomi, OrganBaseTorso]
   components:
   - type: Sprite
@@ -131,7 +131,7 @@
 
 - type: entity
   id: HeadResomi
-  name: "Resomi head"
+
   parent: [OrganBaseHeadSexed, PartResomi, OrganBaseHead]
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 
 - type: entity
   id: LeftArmResomi
-  name: "Resomi left arm"
+
   parent: [PartResomi, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -153,7 +153,7 @@
 
 - type: entity
   id: RightArmResomi
-  name: "Resomi right arm"
+
   parent: [PartResomi, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -162,7 +162,7 @@
 
 - type: entity
   id: LeftHandResomi
-  name: "Resomi left hand"
+
   parent: [PartResomi, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -171,7 +171,7 @@
 
 - type: entity
   id: RightHandResomi
-  name: "Resomi right hand"
+
   parent: [PartResomi, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -180,7 +180,7 @@
 
 - type: entity
   id: LeftLegResomi
-  name: "Resomi left leg"
+
   parent: [PartResomi, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -188,7 +188,7 @@
 
 - type: entity
   id: RightLegResomi
-  name: "Resomi right leg"
+
   parent: [PartResomi, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -197,7 +197,7 @@
 
 - type: entity
   id: LeftFootResomi
-  name: "Resomi left foot"
+
   parent: [PartResomi, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -206,7 +206,7 @@
 
 - type: entity
   id: RightFootResomi
-  name: "Resomi right foot"
+
   parent: [PartResomi, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -217,7 +217,7 @@
 - type: reagent
   id: ResomiBlood
   parent: Blood
-  name: Resomi blood
+  name: reagent-name-resomi-blood
   group: Biological
   flavor: metallic
   color: "#a70195"
@@ -225,7 +225,7 @@
 - type: entity
   id: OrganResomiBrain
   parent: OrganHumanBrain
-  name: Resomi brain
+
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -235,7 +235,7 @@
 - type: entity
   id: OrganResomiEyes
   parent: OrganHumanEyes
-  name: Resomi eyes
+
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -247,7 +247,7 @@
 - type: entity
   id: OrganResomiHeart
   parent: OrganHumanHeart
-  name: Resomi heart
+
   description: Мне жаль бессердечного ублюдка, который потерял это.
   components:
   - type: Sprite
@@ -258,7 +258,7 @@
 - type: entity
   id: OrganResomiLungs
   parent: OrganHumanLungs
-  name: Resomi lungs
+
   description: Фильтрует кислород из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -269,7 +269,7 @@
 
 - type: entity
   id: OrganResomiStomach
-  name: Resomi stomach
+
   parent: OrganAnimalStomach
   description: Такой маленький и вкусный.
   components:
@@ -284,20 +284,11 @@
       - Pill
       - Crayon
       - Paper
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
 
 - type: entity
   id: OrganResomiLiver
   parent: OrganAnimalLiver
-  name: Resomi liver
+
   description: Побереги меня.
   components:
   - type: Sprite
@@ -307,7 +298,7 @@
 - type: entity
   id: OrganResomiKidneys
   parent: OrganHumanKidneys
-  name: Resomi kidneys
+
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -415,7 +406,7 @@
     count: 50
 
 - type: entity
-  name: MobResomi
+
   parent:
   - AppearanceResomi
   - BaseSpeciesMobOrganic
@@ -428,8 +419,6 @@
     sprite: _Adventure/Races/Resomi/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Resomi
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech

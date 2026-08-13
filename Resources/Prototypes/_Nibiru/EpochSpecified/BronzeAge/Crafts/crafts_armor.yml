@@ -4,194 +4,188 @@
 
 - type: construction
   id: BronzeArmorBuckler
-  name: Bronze Buckler
+  name: construction-recipe-bronze-armor-buckler
+
   graph: BronzeArmorBuckler
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Легкий бронзовый щит.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
-    state: bronze-buckler-icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-armor-buckler-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeChainmail
-  name: Bronze Chainmail
+  name: construction-recipe-bronze-chainmail
+
   graph: BronzeChainmail
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Плотное плетение из бронзовых колец.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-chainmail-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeChainmailCowl
-  name: Bronze Chainmail Coif
+  name: construction-recipe-bronze-chainmail-cowl
+
   graph: BronzeChainmailCowl
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Головной убор из бронзовых колец.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chainmail_Cowl.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-chainmail-cowl-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeLeatherArmor
-  name: Leather Armor
+  name: construction-recipe-bronze-leather-armor
+
   graph: BronzeLeatherArmor
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Кожаная броня усиленая бронзовыми вставками.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/LeatherArmor.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-leather-armor-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeLeatherHelmet
-  name: Leather Helmet
+  name: construction-recipe-bronze-leather-helmet
+
   graph: BronzeLeatherHelmet
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Кожаный шлем усиленый бронзовыми вставками.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-leather-helmet-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeChestplate
-  name: Bronze Chestplate
+  name: construction-recipe-bronze-chestplate
+
   graph: BronzeChestplate
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Бронированная кираса из бронзы.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-chestplate-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeHelmet
-  name: Bronze Helmet
+  name: construction-recipe-bronze-helmet
+
   graph: BronzeHelmet
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Защитный головной убор из бронзы.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-helmet-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeScabbard
-  name: Bronze Scabbard
+  name: construction-recipe-bronze-scabbard
+
   graph: BronzeScabbard
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Кожаные ножны для хранения меча.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Belt/Nozni.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-bronze-scabbard-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: GladiatorHelmet
-  name: Gladiator Helmet
+  name: construction-recipe-gladiator-helmet
+
   graph: GladiatorHelmet
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Тяжелый шлем для гладиаторских боев.
-  icon:
-    sprite: Clothing/Head/Hats/gladiator.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-gladiator-helmet-desc
+
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: GladiatorUniform
-  name: Gladiator Uniform
+  name: construction-recipe-gladiator-uniform
+
   graph: GladiatorUniform
   startNode: start
   targetNode: fin
-  category: Gear
-  description: Одежда гладиатора, укрепленная бронзовыми пластинами.
-  icon:
-    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
-    state: icon
+  category: construction-category-gear
+  description: construction-recipe-gladiator-uniform-desc
+
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: CloakBarbarian
-  name: Barbarian Cloak
+  name: construction-recipe-cloak-barbarian
+
   graph: CloakBarbarian
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: BoneMask
-  name: Bone Mask
+  name: construction-recipe-bone-mask
+
   graph: BoneMask
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: BoneHornedMask
-  name: Horned Bone Mask
+  name: construction-recipe-bone-horned-mask
+
   graph: BoneHornedMask
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: MimeMask
-  name: Mime Mask
+  name: construction-recipe-mime-mask
+
   graph: MimeMask
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
@@ -199,44 +193,48 @@
 
 - type: construction
   id: FurCloak
-  name: Fur Cloak
+  name: construction-recipe-fur-cloak
+
   graph: FurCloak
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: FurCape
-  name: Fur Cape
+  name: construction-recipe-fur-cape
+
   graph: FurCape
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: FurCape2
-  name: Thick Fur Cape
+  name: construction-recipe-fur-cape2
+
   graph: FurCape2
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: BlacksmithApron
-  name: Blacksmith Apron
+  name: construction-recipe-blacksmith-apron
+
   graph: BlacksmithApron
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench

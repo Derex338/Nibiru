@@ -36,8 +36,8 @@
   penetrationMultiplier: 0.8
   previewColor: "#CD7F32"
   texture:
-    sprite: _Nibiru/Textures/Materials/bronze.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
   stackPrototype: BronzeBar1
 
 - type: modularMaterial
@@ -54,8 +54,8 @@
   penetrationMultiplier: 1.0
   previewColor: "#8C8C9A"
   texture:
-    sprite: _Nibiru/Textures/Materials/iron.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
   stackPrototype: IronBar1
 
 - type: modularMaterial
@@ -72,8 +72,8 @@
   penetrationMultiplier: 1.2
   previewColor: "#B0B0C0"
   texture:
-    sprite: _Nibiru/Textures/Materials/steel.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
   stackPrototype: SteelBar1
 
 - type: modularMaterial
@@ -90,8 +90,8 @@
   penetrationMultiplier: 1.5
   previewColor: "#6699CC"
   texture:
-    sprite: _Nibiru/Textures/Materials/mithril.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
   stackPrototype: MithrilBar1
 
 - type: modularMaterial
@@ -108,8 +108,8 @@
   penetrationMultiplier: 2.0
   previewColor: "#3A2A4A"
   texture:
-    sprite: _Nibiru/Textures/Materials/darksteel.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
   stackPrototype: DarksteelBar1
 
 # ── Природные материалы ────────────────────────────────────────────────────────
@@ -128,8 +128,8 @@
   penetrationMultiplier: 0.4
   previewColor: "#E8DEC0"
   texture:
-    sprite: _Nibiru/Textures/Materials/bone.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
 
 - type: modularMaterial
   id: MatHardwood
@@ -145,8 +145,8 @@
   penetrationMultiplier: 0.3
   previewColor: "#8B5E3C"
   texture:
-    sprite: _Nibiru/Textures/Materials/wood.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
 
 - type: modularMaterial
   id: MatObsidian
@@ -162,8 +162,8 @@
   penetrationMultiplier: 1.8
   previewColor: "#2A1A2A"
   texture:
-    sprite: _Nibiru/Textures/Materials/obsidian.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
 
 - type: modularMaterial
   id: MatCrystal
@@ -179,6 +179,6 @@
   penetrationMultiplier: 1.6
   previewColor: "#AA44FF"
   texture:
-    sprite: _Nibiru/Textures/Materials/crystal.rsi
-    state: base
+    sprite: _Nibiru/Materials.rsi
+    state: material_test
 

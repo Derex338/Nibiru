@@ -2,9 +2,9 @@
   parent: [BaseStoneItem, DrinkVisualsFill]
   id: StoneMoldBase
   suffix: Nibiru, BronzeAge
-  name: каменная форма
+  name: stone mold
   abstract: true
-  description: Форма из обожженного камня для отливки предметов.
+  description: A fired stone mold for casting items.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
@@ -59,8 +59,8 @@
   parent: StoneMoldBase
   id: StoneMoldIngot
   suffix: Nibiru, BronzeAge
-  name: каменная форма для слитка
-  description: Каменная форма для отливки металлических слитков.
+  name: stone mold (ingot)
+  description: A stone mold for casting metal ingots.
   components:
   - type: Sprite
     layers:
@@ -98,8 +98,8 @@
   parent: StoneMoldBase
   id: StoneMoldInlay
   suffix: Nibiru, BronzeAge
-  name: каменная форма для вставки
-  description: Каменная форма для отливки бронзовых вставок.
+  name: stone mold (inlay)
+  description: A stone mold for casting bronze inlays.
   components:
   - type: Sprite
     layers:
@@ -133,8 +133,8 @@
   parent: StoneMoldBase
   id: StoneMoldArrowTip
   suffix: Nibiru, BronzeAge
-  name: каменная форма для наконечника стрелы
-  description: Каменная форма для отливки бронзовых наконечников стрел.
+  name: stone mold (arrow tip)
+  description: A stone mold for casting bronze arrow tips.
   components:
   - type: Sprite
     layers:
@@ -168,8 +168,8 @@
   parent: StoneMoldBase
   id: StoneMoldArrowTipArmor
   suffix: Nibiru, BronzeAge
-  name: каменная форма для бронебойного наконечника
-  description: Каменная форма для отливки бронебойных наконечников стрел.
+  name: stone mold (armor-piercing arrow tip)
+  description: A stone mold for casting armor-piercing arrow tips.
   components:
   - type: Sprite
     layers:
@@ -203,8 +203,8 @@
   parent: StoneMoldBase
   id: StoneMoldTopHammer
   suffix: Nibiru, BronzeAge
-  name: каменная форма для навершия молотка
-  description: Каменная форма для отливки навершия небольшого молотка.
+  name: stone mold (hammer head)
+  description: A stone mold for casting a small hammer head.
   components:
   - type: Sprite
     layers:
@@ -238,8 +238,8 @@
   parent: StoneMoldBase
   id: StoneMoldTopMace
   suffix: Nibiru, BronzeAge
-  name: каменная форма для навершия молота
-  description: Каменная форма для отливки навершия боевого молота.
+  name: stone mold (mace head)
+  description: A stone mold for casting a war hammer head.
   components:
   - type: Sprite
     layers:
@@ -273,8 +273,8 @@
   parent: StoneMoldBase
   id: StoneMoldTopAxe
   suffix: Nibiru, BronzeAge
-  name: каменная форма для навершия топора
-  description: Каменная форма для отливки навершия рабочего топора.
+  name: stone mold (axe head)
+  description: A stone mold for casting a working axe head.
   components:
   - type: Sprite
     layers:
@@ -308,8 +308,8 @@
   parent: StoneMoldBase
   id: StoneMoldTopBattleAxe
   suffix: Nibiru, BronzeAge
-  name: каменная форма для навершия боевого топора
-  description: Каменная форма для отливки навершия боевого топора.
+  name: stone mold (battle axe head)
+  description: A stone mold for casting a battle axe head.
   components:
   - type: Sprite
     layers:
@@ -343,8 +343,8 @@
   parent: StoneMoldBase
   id: StoneMoldTopSpear
   suffix: Nibiru, BronzeAge
-  name: каменная форма для наконечника копья
-  description: Каменная форма для отливки наконечника копья.
+  name: stone mold (spear tip)
+  description: A stone mold for casting a spear tip.
   components:
   - type: Sprite
     layers:
@@ -378,8 +378,8 @@
   parent: StoneMoldBase
   id: StoneMoldSwordBlade
   suffix: Nibiru, BronzeAge
-  name: каменная форма для лезвия меча
-  description: Каменная форма для отливки лезвия меча.
+  name: stone mold (sword blade)
+  description: A stone mold for casting a sword blade.
   components:
   - type: Sprite
     layers:
@@ -413,8 +413,8 @@
   parent: StoneMoldBase
   id: StoneMoldDaggerBlade
   suffix: Nibiru, BronzeAge
-  name: каменная форма для лезвия кинжала
-  description: Каменная форма для отливки лезвия кинжала.
+  name: stone mold (dagger blade)
+  description: A stone mold for casting a dagger blade.
   components:
   - type: Sprite
     layers:
@@ -448,8 +448,8 @@
   parent: StoneMoldBase
   id: StoneMoldTrident
   suffix: Nibiru, BronzeAge
-  name: каменная форма для навершия трезубца
-  description: Каменная форма для отливки навершия трезубца.
+  name: stone mold (trident head)
+  description: A stone mold for casting a trident head.
   components:
   - type: Sprite
     layers:
@@ -483,8 +483,8 @@
   parent: StoneMoldBase
   id: StoneMoldShield
   suffix: Nibiru, BronzeAge
-  name: каменная форма для обивки щита
-  description: Каменная форма для отливки элементов щита.
+  name: stone mold (shield facing)
+  description: A stone mold for casting shield elements.
   components:
   - type: Sprite
     layers:
@@ -518,8 +518,8 @@
   parent: StoneMoldBase
   id: StoneMoldKnifeBlade
   suffix: Nibiru, BronzeAge
-  name: каменная форма для лезвия ножа
-  description: Каменная форма для отливки лезвия ножа.
+  name: stone mold (knife blade)
+  description: A stone mold for casting a knife blade.
   components:
   - type: Sprite
     layers:
@@ -553,8 +553,8 @@
   parent: StoneMoldBase
   id: StoneMoldClippers
   suffix: Nibiru, BronzeAge
-  name: каменная форма для детали секатора
-  description: Каменная форма для отливки детали секатора.
+  name: stone mold (clippers part)
+  description: A stone mold for casting a clippers part.
   components:
   - type: Sprite
     layers:
@@ -588,8 +588,8 @@
   parent: StoneMoldBase
   id: StoneMoldHoeBlade
   suffix: Nibiru, BronzeAge
-  name: каменная форма для лезвия мотыги
-  description: Каменная форма для отливки лезвия мотыги.
+  name: stone mold (hoe blade)
+  description: A stone mold for casting a hoe blade.
   components:
   - type: Sprite
     layers:
@@ -623,8 +623,8 @@
   parent: StoneMoldBase
   id: StoneMoldPickaxeBlade
   suffix: Nibiru, BronzeAge
-  name: каменная форма для наконечника кирки
-  description: Каменная форма для отливки наконечника кирки.
+  name: stone mold (pickaxe tip)
+  description: A stone mold for casting a pickaxe tip.
   components:
   - type: Sprite
     layers:
@@ -658,8 +658,8 @@
   parent: StoneMoldBase
   id: StoneMoldScytheBlade
   suffix: Nibiru, BronzeAge
-  name: каменная форма для лезвия косы
-  description: Каменная форма для отливки лезвия косы.
+  name: stone mold (scythe blade)
+  description: A stone mold for casting a scythe blade.
   components:
   - type: Sprite
     layers:
@@ -693,8 +693,8 @@
   parent: StoneMoldBase
   id: StoneMoldShovel
   suffix: Nibiru, BronzeAge
-  name: каменная форма для наконечника лопаты
-  description: Каменная форма для отливки наконечника лопаты.
+  name: stone mold (shovel head)
+  description: A stone mold for casting a shovel head.
   components:
   - type: Sprite
     layers:
@@ -728,8 +728,8 @@
   parent: StoneMoldBase
   id: StoneMoldHelmet
   suffix: Nibiru, BronzeAge
-  name: каменная форма для шлема
-  description: Каменная форма для отливки основы шлема.
+  name: stone mold (helmet)
+  description: A stone mold for casting a helmet base.
   components:
   - type: Sprite
     layers:
@@ -763,8 +763,8 @@
   parent: StoneMoldBase
   id: StoneMoldChestplate
   suffix: Nibiru, BronzeAge
-  name: каменная форма для нагрудника
-  description: Каменная форма для отливки детали нагрудника.
+  name: stone mold (chestplate)
+  description: A stone mold for casting a chestplate part.
   components:
   - type: Sprite
     layers:
@@ -798,8 +798,8 @@
   parent: StoneMoldBase
   id: StoneMoldAnvil
   suffix: Nibiru, BronzeAge
-  name: каменная форма для наковальни
-  description: Огромная каменная форма для отливки наковальни.
+  name: stone mold (anvil)
+  description: An enormous stone mold for casting an anvil.
   components:
   - type: Sprite
     layers:
@@ -833,8 +833,8 @@
   parent: StoneMoldBase
   id: StoneMoldLock
   suffix: Nibiru, BronzeAge
-  name: каменная форма для замка
-  description: Каменная форма для отливки детали замка.
+  name: stone mold (lock)
+  description: A stone mold for casting a lock part.
   components:
   - type: Sprite
     layers:
@@ -868,8 +868,8 @@
   parent: StoneMoldBase
   id: StoneMoldKey
   suffix: Nibiru, BronzeAge
-  name: каменная форма для ключа
-  description: Каменная форма для отливки ключа.
+  name: stone mold (key)
+  description: A stone mold for casting a key.
   components:
   - type: Sprite
     layers:
@@ -902,8 +902,8 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldLockpick
-  name: каменная форма для отмычки
-  description: Каменная форма для отливки отмычки.
+  name: stone mold (lockpick)
+  description: A stone mold for casting a lockpick.
   components:
   - type: Sprite
     layers:
@@ -936,8 +936,8 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldRasp
-  name: каменная форма для напильника
-  description: Каменная форма для отливки напильника.
+  name: stone mold (rasp)
+  description: A stone mold for casting a rasp.
   components:
   - type: Sprite
     layers:
@@ -970,8 +970,8 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldKhapeshBlade
-  name: каменная форма для лезвия хопеша
-  description: Каменная форма для отливки лезвия хопеша.
+  name: stone mold (khopesh blade)
+  description: A stone mold for casting a khopesh blade.
   components:
   - type: Sprite
     layers:
@@ -1004,8 +1004,8 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldXiphosBlade
-  name: каменная форма для лезвия ксифоса
-  description: Каменная форма для отливки лезвия ксифоса.
+  name: stone mold (xiphos blade)
+  description: A stone mold for casting a xiphos blade.
   components:
   - type: Sprite
     layers:
@@ -1038,8 +1038,8 @@
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldCrown
-  name: каменная форма для короны
-  description: Каменная форма для отливки короны.
+  name: stone mold (crown)
+  description: A stone mold for casting a crown.
   components:
   - type: Sprite
     layers:
@@ -1065,15 +1065,15 @@
     id: metal
     solution:
       maxVol: 100
-  #- type: Construction
-  #  graph: MoldCrown
-  #  node: fin
+  - type: Construction
+    graph: MoldCrown
+    node: fin
 
 - type: entity
   parent: StoneMoldBase
   id: StoneMoldRod
-  name: каменная форма для стержня
-  description: Каменная форма для отливки стержня.
+  name: stone mold (rod)
+  description: A stone mold for casting a rod.
   components:
   - type: Sprite
     layers:

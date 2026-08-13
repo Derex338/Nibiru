@@ -2,9 +2,11 @@
   id: SnakeHeadBase
   bodyPart: HeadSide
   #markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Zerah]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Snake/Species/parts.rsi
     state: Head
@@ -12,17 +14,19 @@
 - type: marking
   id: SnakeTailBase
   bodyPart: Tail
-  followSkinColor: true
   forcedColoring: true
   #markingCategory: Tail
   groupWhitelist: [Zerah]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Snake/Species/parts.rsi
     state: Tail_base
 
 - type: species
   id: Zerah
-  name: Zerah
+  name: species-name-zerah
   roundStart: true
   prototype: MobZerah
   #markingLimits: Zerah
@@ -72,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceZerah
   categories: [ HideSpawnMenu ]
-  name: zerah appearance
+
   components:
   - type: Inventory
     speciesId: Zerah
@@ -113,16 +117,15 @@
       group: Zerah
       #layers: []
 
-
 - type: reagent
   id: ZerahPoison
-  name: Zerah venom
+  name: reagent-name-zerah-venom
   group: Toxins
-  desc: Довольно опасный токсин, обладающий непредсказуемым эффектом.
-  physicalDesc: токсичное
+  desc: reagent-desc-zerah-venom
+  physicalDesc: reagent-physical-desc-zerah-venom
   color: "#fafa96"
   metabolisms:
-    Narcotic:
+    Bloodstream:
       metabolismRate: 0.50
       effects:
       - !type:Emote
@@ -157,7 +160,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-        refresh: false
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Zerah ]
@@ -205,7 +207,7 @@
 - type: reagent
   id: ZerahBlood
   parent: Blood
-  name: Zerah blood
+  name: reagent-name-zerah-blood
   group: Biological
   flavor: metallic
   color: "#e1b52e"
@@ -213,7 +215,7 @@
 - type: entity
   id: PartSnake
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Zerah body part"
+
   abstract: true
   components:
   - type: Sprite
@@ -237,7 +239,7 @@
 
 - type: entity
   id: TorsoSnake
-  name: "Zerah torso"
+
   parent: [OrganBaseTorsoSexed, PartSnake, OrganBaseTorso]
   components:
   - type: Sprite
@@ -245,7 +247,7 @@
 
 - type: entity
   id: HeadSnake
-  name: "Zerah head"
+
   parent: [OrganBaseHeadSexed, PartSnake, OrganBaseHead]
   components:
   - type: Sprite
@@ -253,7 +255,7 @@
 
 - type: entity
   id: LeftArmSnake
-  name: "Zerah left arm"
+
   parent: [PartSnake, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -262,7 +264,7 @@
 
 - type: entity
   id: RightArmSnake
-  name: "Zerah right arm"
+
   parent: [PartSnake, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -271,7 +273,7 @@
 
 - type: entity
   id: LeftHandSnake
-  name: "Zerah left arm"
+
   parent: [PartSnake, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -280,7 +282,7 @@
 
 - type: entity
   id: RightHandSnake
-  name: "Zerah right arm"
+
   parent: [PartSnake, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -289,12 +291,11 @@
 
 - type: metabolizerType
   id: Zerah
-  name: Zerah
-
+  name: species-name-zerah
 - type: entity
   id: OrganZerahiBrain
   parent: OrganHumanBrain
-  name: Zerah brain
+
   description: Источник невероятного, бесконечного интеллекта.
   components:
   - type: Sprite
@@ -304,7 +305,7 @@
 - type: entity
   id: OrganZerahEyes
   parent: OrganHumanEyes
-  name: Zerah eyes
+
   description: Я тебя вижу
   components:
   - type: Sprite
@@ -316,7 +317,7 @@
 - type: entity
   id: OrganZerahHeart
   parent: OrganHumanHeart
-  name: Zerah heart
+
   description: Тук тук.
   components:
   - type: Sprite
@@ -327,15 +328,11 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ Zerah ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 - type: entity
   id: OrganZerahLungs
   parent: OrganHumanLungs
-  name: Zerah lungs
+
   description: Фильтрует азот из атмосферы, который затем поступает в кровоток.
   components:
   - type: Sprite
@@ -346,31 +343,28 @@
   - type: Lung
     alert: LowNitrogen
   - type: Metabolizer
-    removeEmpty: true
     solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Slime ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      organ:
-        reagents:
-        - ReagentId: ZerahBlood
-          Quantity: 10
-      Lung:
-        maxVol: 100.0
-        canReact: false
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+    - SolutionLungGas
+    - SolutionZerahOrganBlood
+
+- type: entity
+  parent: Solution
+  id: SolutionZerahOrganBlood
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: organ
+    solution:
+      reagents:
+      - ReagentId: ZerahBlood
+        Quantity: 10
 
 - type: entity
   id: OrganZerahStomach
-  name: Zerah stomach
+
   parent: OrganAnimalStomach
   description: Отвратительно! Кто там сидит?!
   components:
@@ -382,15 +376,6 @@
       tags:
       - Meat
       - Pill
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
   - type: Storage
     grid:
     - 0,0,6,3
@@ -411,7 +396,7 @@
 - type: entity
   id: OrganZerahiLiver
   parent: OrganAnimalLiver
-  name: Zerah liver
+
   description: Побереги меня.
   components:
   - type: Sprite
@@ -421,7 +406,7 @@
 - type: entity
   id: OrganZerahKidneys
   parent: OrganHumanKidneys
-  name: Zerah kidneys
+
   description: Выводит токсины из кровотока.
   components:
   - type: Sprite
@@ -543,7 +528,7 @@
     count: 30
 
 - type: entity
-  name: MobZerah
+
   parent:
   - AppearanceZerah
   - BaseSpeciesMobOrganic
@@ -554,8 +539,6 @@
     sprite: _Adventure/Races/Snake/Species/parts.rsi
     state: full
   - type: Body
-    prototype: Zerah
-    requiredLegs: 0
   - type: Hunger
   - type: Thirst
   - type: Speech

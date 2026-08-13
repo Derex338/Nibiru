@@ -18,8 +18,14 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 public sealed partial class NibiruAnimalAbilitySystem : EntitySystem
 {
-[Dependency] private SharedTransformSystem _xform = default!;
-[Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private void ProcessPestControl(EntityUid uid, NibiruAnimalAbilityComponent ability, TransformComponent xform)
     {

@@ -19,8 +19,8 @@ namespace Content.Server._Nibiru.NPC.Systems.Utility;
 /// </summary>
 public sealed partial class NibiruAnimalSoundSystem : EntitySystem
 {
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

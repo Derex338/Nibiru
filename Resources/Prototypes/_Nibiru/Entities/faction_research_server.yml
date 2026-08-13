@@ -1,0 +1,14 @@
+- type: entity
+  id: FactionResearchServer
+  name: faction research
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+  - type: FactionResearchServer
+  - type: ResearchServer
+    serverName: Faction Research
+  - type: TechnologyDatabase
+    supportedDisciplines:
+    - StoneAge
+    - BronzeAge
+  - type: Faction

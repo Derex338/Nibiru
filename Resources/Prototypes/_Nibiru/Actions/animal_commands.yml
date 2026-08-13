@@ -1,71 +1,71 @@
 - type: entity
   id: ActionNibiruAnimalFollow
   parent: BaseAction
-  name: Следуй за мной
-  description: Приказывает всем вашим животным следовать за вами.
+
   components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
   - type: InstantAction
-    icon: { sprite: Mobs/Pets/corgi.rsi, state: corgi }
     event: !type:NibiruAnimalFollowActionEvent
-      speech: Следуй за мной!
+      speech: nibiru-action-animal-follow-speech
 
 - type: entity
   id: ActionNibiruAnimalStay
   parent: BaseAction
-  name: Стоять
-  description: Приказывает всем вашим животным оставаться на месте.
+
   components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
   - type: InstantAction
-    icon: { sprite: Markers/cross.rsi, state: cross }
     event: !type:NibiruAnimalStayActionEvent
-      speech: Стоять!
+      speech: nibiru-action-animal-stay-speech
 
 - type: entity
   id: ActionNibiruAnimalAttack
   parent: BaseAction
-  name: Взять!
-  description: Включает режим атаки. Укажите на цель, чтобы отправить животное атаковать.
+
   components:
-  - type: InstantAction
-    icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi, state: icon }
-    event: !type:NibiruAnimalAttackActionEvent
-      speech: Взять его!
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
     useDelay: 1
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:NibiruAnimalAttackActionEvent
+      speech: nibiru-action-animal-attack-speech
 
 - type: entity
   id: ActionNibiruAnimalGrab
   parent: BaseAction
-  name: Схвати!
-  description: Включает режим захвата. Укажите на цель, чтобы животное схватило и тащило её.
+
   components:
-  - type: InstantAction
-    icon: { sprite: Objects/Weapons/Melee/stunbaton.rsi, state: stunbaton_off }
-    event: !type:NibiruAnimalGrabActionEvent
-      speech: Схвати его!
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
     useDelay: 1
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:NibiruAnimalGrabActionEvent
+      speech: nibiru-action-animal-grab-speech
 
 - type: entity
   id: ActionNibiruAnimalSearch
   parent: BaseAction
-  name: Ищи!
-  description: Дать питомцу понюхать предмет, чтобы найти его владельца по запаху.
+
   components:
-  - type: InstantAction
-    icon: { sprite: Objects/Misc/tracker.rsi, state: tracker }
-    event: !type:NibiruAnimalSearchActionEvent
-      speech: Ищи!
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
     checkCanInteract: false
     useDelay: 4
+  - type: InstantAction
+    event: !type:NibiruAnimalSearchActionEvent
+      speech: nibiru-action-animal-search-speech
 
 - type: entity
   id: ActionNibiruAnimalDeliver
   parent: BaseAction
-  name: Доставка
-  description: Отправить птицу в известное почтовое отделение.
+
   components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
   - type: InstantAction
-    icon: { sprite: Objects/Misc/box.rsi, state: box_6 }
     event: !type:NibiruAnimalDeliverActionEvent
-      speech: Лети!
+      speech: nibiru-action-animal-deliver-speech

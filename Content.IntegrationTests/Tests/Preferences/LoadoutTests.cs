@@ -17,21 +17,30 @@ public sealed class LoadoutTests : GameTest
 - type: playTimeTracker
   id: PlayTimeLoadoutTester
 
+- type: entity
+  id: TestPantsLoadout
+  name: test pants
+  components:
+  - type: Clothing
+    slots: [pants]
+  - type: Item
+    size: Tiny
+
 - type: loadout
-  id: TestJumpsuit
+  id: TestPants
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
+    pants: TestPantsLoadout
 
 - type: loadoutGroup
-  id: LoadoutTesterJumpsuit
+  id: LoadoutTesterPants
   name: generic-unknown
   loadouts:
-  - TestJumpsuit
+  - TestPants
 
 - type: roleLoadout
   id: JobLoadoutTester
   groups:
-  - LoadoutTesterJumpsuit
+  - LoadoutTesterPants
 
 - type: job
   id: LoadoutTester
@@ -40,7 +49,7 @@ public sealed class LoadoutTests : GameTest
 
     private readonly Dictionary<string, EntProtoId> _expectedEquipment = new()
     {
-        ["jumpsuit"] = "ClothingUniformJumpsuitColorGrey"
+        ["pants"] = "TestPantsLoadout"
     };
 
     public override PoolSettings PoolSettings => new()

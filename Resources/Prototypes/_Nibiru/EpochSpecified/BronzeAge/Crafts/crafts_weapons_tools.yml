@@ -4,328 +4,308 @@
 
 - type: construction
   id: BronzeShield
-  name: Bronze Shield
+  name: construction-recipe-bronze-shield
+
   graph: BronzeShield
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Прочный щит, укрепленный бронзой.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
-    state: bronze-icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-shield-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeHammerSmall
-  name: Small Bronze Hammer
+  name: construction-recipe-bronze-hammer-small
+
   graph: BronzeHammerSmall
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Небольшой бронзовый молоток для ремонта.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-hammer-small-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeHammer
-  name: Bronze War Hammer
+  name: construction-recipe-bronze-hammer
+
   graph: BronzeHammer
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Тяжелый бронзовый боевой молот.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi
-    state: icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-hammer-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeHatchet
-  name: Bronze Hatchet
+  name: construction-recipe-bronze-hatchet
+
   graph: BronzeHatchet
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Бронзовый топор для рубки растений.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-hatchet-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeAxe
-  name: Bronze Axe
+  name: construction-recipe-bronze-axe
+
   graph: BronzeAxe
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Тяжелое боевое оружие.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
-    state: icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-axe-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeSpear
-  name: Bronze Spear
+  name: construction-recipe-bronze-spear
+
   graph: BronzeSpear
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Простое и эффективное колющее оружие.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
-    state: spear
+  category: construction-category-weapons
+  description: construction-recipe-bronze-spear-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeSword
-  name: Bronze Sword
+  name: construction-recipe-bronze-sword
+
   graph: BronzeSword
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Прямой меч из бронзы.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
-    state: icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-sword-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeTrident
-  name: Bronze Trident
+  name: construction-recipe-bronze-trident
+
   graph: BronzeTrident
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Величественное оружие с тремя зубцами.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
-    state: spear
+  category: construction-category-weapons
+  description: construction-recipe-bronze-trident-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeHalberd
-  name: Bronze Halberd
+  name: construction-recipe-bronze-halberd
+
   graph: BronzeHalberd
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Массивное оружие, сочетающее черты топора и копья.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
-    state: icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-halberd-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzePickaxe
-  name: Bronze Pickaxe
+  name: construction-recipe-bronze-pickaxe
+
   graph: BronzePickaxe
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Бронзовая кирка для добычи ресурсов.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
-    state: pickaxe
+  category: construction-category-tools
+  description: construction-recipe-bronze-pickaxe-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeShovel
-  name: Bronze Shovel
+  name: construction-recipe-bronze-shovel
+
   graph: BronzeShovel
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Бронзовая лопата для вскапывания земли.
-  icon:
-    sprite: Objects/Tools/shovel.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-shovel-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeScythe
-  name: Bronze Scythe
+  name: construction-recipe-bronze-scythe
+
   graph: BronzeScythe
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Инструмент для сбора урожая.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-scythe-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeHoe
-  name: Bronze Hoe
+  name: construction-recipe-bronze-hoe
+
   graph: BronzeHoe
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Инструмент для обработки пашни.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-hoe-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeKnife
-  name: Bronze Knife
+  name: construction-recipe-bronze-knife
+
   graph: BronzeKnife
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Универсальный рабочий инструмент.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-knife-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeClippers
-  name: Bronze Clippers
+  name: construction-recipe-bronze-clippers
+
   graph: BronzeClippers
   startNode: start
   targetNode: fin
-  category: Tools
-  description: Инструмент для работы с растениями.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
-    state: icon
+  category: construction-category-tools
+  description: construction-recipe-bronze-clippers-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeArrow
-  name: Bronze Arrow
+  name: construction-recipe-bronze-arrow
+
   graph: BronzeArrow
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Боезапас для лука.
-  icon:
-    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-arrow-desc
+
   objectType: Item
 
 - type: construction
   id: BronzeXiphos
-  name: Bronze Xiphos
+  name: construction-recipe-bronze-xiphos
+
   graph: BronzeXiphos
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Листовидный бронзовый меч.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+  category: construction-category-weapons
+  description: construction-recipe-bronze-xiphos-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeDagger
-  name: Bronze Dagger
+  name: construction-recipe-bronze-dagger
+
   graph: BronzeDagger
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Короткий бронзовый клинок.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+  category: construction-category-weapons
+  description: construction-recipe-bronze-dagger-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeKhapesh
-  name: Bronze Khopesh
+  name: construction-recipe-bronze-khapesh
+
   graph: BronzeKhapesh
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Тяжёлый изогнутый бронзовый меч.
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
+  category: construction-category-weapons
+  description: construction-recipe-bronze-khapesh-desc
+
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: BronzeArrowAP
-  name: Armor-Piercing Bronze Arrow
+  name: construction-recipe-bronze-arrow-ap
+
   graph: BronzeArrowAP
   startNode: start
   targetNode: fin
-  category: Weapons
-  description: Брозновая стрела способная пробить даже самую прочную броню.
-  icon:
-    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: icon
+  category: construction-category-weapons
+  description: construction-recipe-bronze-arrow-ap-desc
+
   objectType: Item
 
 - type: construction
   id: LightBronzeSpear
-  name: Throwing Bronze Spear
+  name: construction-recipe-light-bronze-spear
+
   graph: LightBronzeSpear
   startNode: start
   targetNode: fin
-  category: Weapons
-  icon:
-    sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
-    state: icon
+  category: construction-category-weapons
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: ThrowingDart
-  name: Throwing Dart
+  name: construction-recipe-throwing-dart
+
   graph: ThrowingDart
   startNode: start
   targetNode: fin
-  category: Weapons
-  icon:
-    sprite: Objects/Fun/Darts/dart_red.rsi
-    state: icon
+  category: construction-category-weapons
   objectType: Item
   entitysToShowRecipe:
     - BronzeAnvilWorkbench
 
 - type: construction
   id: RecursiveBow
-  name: Recurve Bow
+  name: construction-recipe-recursive-bow
+
   graph: RecursiveBow
   startNode: start
   targetNode: fin
@@ -334,7 +314,8 @@
 
 - type: construction
   id: LongBow
-  name: Longbow
+  name: construction-recipe-long-bow
+
   graph: LongBow
   startNode: start
   targetNode: fin
