@@ -28,15 +28,17 @@ namespace Content.Server._Nibiru.NPC.Systems.Utility;
 /// </summary>
 public sealed partial class NibiruLeashSystem : EntitySystem
 {
-[Dependency] private SharedTransformSystem _xform = default!;
-[Dependency] private IRobustRandom _random = default!;
-[Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
-[Dependency] private AlertsSystem _alerts = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
-[Dependency] private SharedAppearanceSystem _appearance = default!;
-[Dependency] private StackSystem _stack = default!;
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedJointSystem _joints = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
 
     public override void Initialize()
     {

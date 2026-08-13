@@ -25,9 +25,8 @@
     - random:
         base1: ""
         base2: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 12
         reagents:
         - ReagentId: Flour
@@ -64,9 +63,8 @@
         base1: ""
         base2: ""
         base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 12
         reagents:
         - ReagentId: Fiber
@@ -78,6 +76,8 @@
     - id: CESeedCotton
       amount: 3
   - type: StaticPrice
+    price: 0
+  - type: StackPrice
     price: 1
   - type: Material
   - type: PhysicalComposition
@@ -110,9 +110,8 @@
           base1: ""
           base2: ""
           base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 12
         reagents:
         - ReagentId: CENutriment
@@ -156,9 +155,8 @@
           slice2: ""
           slice3: ""
           slice4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 3 # 1/4 cabbage
         reagents:
         - ReagentId: CENutriment
@@ -193,9 +191,8 @@
           base2: ""
           base3: ""
           base4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 30
         reagents:
         - ReagentId: CENutriment
@@ -238,9 +235,8 @@
           slice2: ""
           slice3: ""
           slice4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6 # 1/5 pumpkin
         reagents:
         - ReagentId: CENutriment
@@ -274,9 +270,8 @@
           base2: ""
           base3: ""
           base4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 11
         reagents:
         - ReagentId: CENutriment
@@ -322,9 +317,8 @@
           base2: ""
           base3: ""
           base4: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 11
         reagents:
         - ReagentId: CENutriment
@@ -362,9 +356,8 @@
     sprite: _CE/Objects/Consumable/Food/cucumber.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 5
         reagents:
         - ReagentId: CENutriment
@@ -399,9 +392,8 @@
           base1: ""
           base2: ""
           base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 12
         reagents:
         - ReagentId: CENutriment
@@ -437,6 +429,7 @@
       - ReagentId: JuiceTomato
         Quantity: 10
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1
@@ -468,9 +461,8 @@
     available:
       - random:
           slice1: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 3 # 1/3 pumpkin
         reagents:
         - ReagentId: CENutriment
@@ -491,9 +483,8 @@
   - type: FlavorProfile
     flavors:
       - apple
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 15
         reagents:
         - ReagentId: CENutriment
@@ -558,15 +549,14 @@
       - random:
           slice1: ""
           slice2: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 4
         reagents:
         - ReagentId: CENutriment
           Quantity: 1.4
   - type: Tag
-    tags: [ Food, Fruit, Plant ]
+    tags: [ Food, Fruit, Plant, Slice ]
   - type: CEFoodTag
     tags:
     - CEFruits
@@ -604,9 +594,8 @@
   - type: CEAdditionalSliceableDrop
     loot:
       CESeedPepper: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 15
         reagents:
         - ReagentId: CENutriment
@@ -645,9 +634,8 @@
     refineResult:
     - id: CEFoodGarlicClove
       amount: 4
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 12
         reagents:
         - ReagentId: CENutriment
@@ -675,9 +663,8 @@
     sprite: _CE/Objects/Consumable/Food/garlic.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 3
         reagents:
         - ReagentId: CENutriment
@@ -712,9 +699,8 @@
   - type: CEAdditionalSliceableDrop
     loot:
       CESeedCorn: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 25
         reagents:
         - ReagentId: CENutriment
@@ -751,9 +737,8 @@
     sprite: _CE/Objects/Consumable/Food/corn.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 7
         reagents:
         - ReagentId: CENutriment
@@ -795,9 +780,8 @@
   - type: CEAdditionalSliceableDrop
     loot:
       CESeedCarrot: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 15
         reagents:
         - ReagentId: CENutriment
@@ -823,9 +807,8 @@
     sprite: _CE/Objects/Consumable/Food/carrot.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 6
         reagents:
         - ReagentId: CENutriment
@@ -851,9 +834,8 @@
     sprite: _CE/Objects/Consumable/Food/pepper.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 3.5
         reagents:
         - ReagentId: CENutriment
@@ -886,9 +868,8 @@
           base1: ""
           base2: ""
           base3: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 17
         reagents:
         - ReagentId: CENutriment
@@ -923,9 +904,8 @@
     sprite: _CE/Objects/Consumable/Food/onion.rsi
     layers:
       - state: slice1
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 5
         reagents:
         - ReagentId: CENutriment
@@ -935,6 +915,56 @@
   - type: CEFoodTag
     tags:
     - CEVegetable
+
+- type: entity
+  parent: FoodFlyAmanita
+  id: CEFoodFlyAmanita
+  categories: [ ForkFiltered ]
+  name: fly agaric
+  description: A delicious-looking mushroom like you see in those cartoons.
+  components:
+  - type: CEFoodTag
+    tags:
+    - CEFlyAgaric
+
+- type: entity
+  id: CEFoodLumish
+  parent: BaseCEProduce
+  categories: [ ForkFiltered ]
+  name: lumish
+  description: A softly glowing mushroom. Looks edible enough.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _CE/Objects/Consumable/Food/chanterelle.rsi
+    layers:
+      - state: base1
+        map: [ "random" ]
+  - type: RandomSprite
+    available:
+      - random:
+          base1: ""
+          base2: ""
+          base3: ""
+          base4: ""
+          base5: ""
+  - type: Solution
+    solution:
+        maxVol: 11
+        reagents:
+        - ReagentId: CENutriment
+          Quantity: 3.47
+  - type: Tag
+    tags: [ Food, Mushroom, Plant ]
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    thickness: 0.006
+    area: 0.006
+  - type: CEFoodTag
+    tags:
+    - CELumish
 
 - type: entity
   id: CEFoodChanterelle
@@ -958,9 +988,8 @@
           base3: ""
           base4: ""
           base5: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 11
         reagents:
         - ReagentId: CENutriment
@@ -996,9 +1025,8 @@
       - random:
           base1: ""
           base2: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
+  - type: Solution
+    solution:
         maxVol: 30
         reagents:
         - ReagentId: CENutriment

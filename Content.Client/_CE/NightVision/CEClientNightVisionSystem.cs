@@ -6,8 +6,8 @@ namespace Content.Client._CE.NightVision;
 
 public sealed partial class CEClientNightVisionSystem : CESharedNightVisionSystem
 {
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     public override void Initialize()
     {

@@ -9,6 +9,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.Research.Systems;
 using Content.Shared._Nibiru.Factions;
 
 namespace Content.Server.Construction
@@ -38,11 +39,12 @@ namespace Content.Server.Construction
 
         public void AddFactionComp(EntityUid uid, EntityUid userUid) //Nibiru
         {
-            if(TryComp<FactionComponent>(userUid, out var user))
-			{
-                var construction = EnsureComp<FactionComponent>(uid);
-                construction.FactionName = user.FactionName;
-			}
+            if (!TryComp<FactionComponent>(userUid, out var user))
+                return;
+
+            var construction = EnsureComp<FactionComponent>(uid);
+            construction.FactionName = user.FactionName;
+            EntityManager.System<ResearchSystem>().BindResearchTable(uid, userUid);
         }
 
         /// <summary>

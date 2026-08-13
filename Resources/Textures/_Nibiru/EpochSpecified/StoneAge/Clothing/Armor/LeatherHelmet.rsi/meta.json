@@ -1,22 +1,25 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Derex",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Derex",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon-bronze-overlay"
-        },
-        {
-            "name": "equipped-HELMET",
-            "directions": 4
-        },
-        {
-            "name": "equipped-bronze-overlay",
-            "directions": 4
-        }
-    ]
+    {
+      "name": "icon-bronze-overlay"
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-bronze-overlay",
+      "directions": 4
+    }
+  ]
 }

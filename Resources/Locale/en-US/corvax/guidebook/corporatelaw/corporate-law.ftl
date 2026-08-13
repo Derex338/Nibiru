@@ -1,0 +1,17 @@
+guide-entry-corporate-law = Corporate Law
+guide-entry-cl-oprs = Space Law
+guide-entry-cl-punishments = Punishments
+guide-entry-cl-modificators = Modifiers
+guide-entry-cl-misc = Misc
+guide-entry-cl-crime-list = Articles
+guide-entry-cl-chapter-11 = 11X
+guide-entry-cl-chapter-12 = 12X
+guide-entry-cl-chapter-13 = 13X
+guide-entry-cl-chapter-14 = 14X
+guide-entry-cl-chapter-21 = 21X
+guide-entry-cl-chapter-22 = 22X
+guide-entry-cl-chapter-31 = 31X
+guide-entry-cl-chapter-32 = 32X
+guide-entry-cl-chapter-41 = 41X
+guide-entry-cl-chapter-42 = 42X
+guide-entry-cl-chapter-43 = 43X

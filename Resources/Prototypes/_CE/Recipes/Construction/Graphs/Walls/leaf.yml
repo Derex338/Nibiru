@@ -17,7 +17,7 @@
       - to: start
         completed:
         - !type:SpawnPrototype
-          prototype: Herb
+          prototype: BunchHerb
           amount: 1
         - !type:DeleteEntity {}
         steps:

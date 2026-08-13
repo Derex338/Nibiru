@@ -203,26 +203,23 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 
         foreach (var preset in prototypeManager.EnumeratePrototypes<FactionLogoPresetPrototype>())
         {
-            var rootFolder = preset.SpriteFolder;
+            ResPath? file16 = preset.Sprite16;
+            ResPath? file8 = preset.Sprite8;
 
-        // Прямые пути к файлам или папка с конвенцией имён
-        ResPath? file16 = preset.Sprite16;
-        ResPath? file8 = preset.Sprite8;
+            if (preset.SpriteFolder != null)
+            {
+                var folder = preset.SpriteFolder.Value;
+                var folderName = folder.Filename;
 
-        if (rootFolder != null)
-        {
-            var folder = rootFolder.Value;
-            var folderName = folder.Filename;
+                file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}.png");
+                file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_16.png");
 
-            file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}.png");
-            file16 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_16.png");
+                file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8x8.png");
+                file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8.png");
+            }
 
-            file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8x8.png");
-            file8 ??= TryResolvePresetFile(resourceManager, folder / $"{folderName}_8.png");
-        }
-
-        if (file16 == null || file8 == null)
-            continue;
+            if (file16 == null || file8 == null)
+                continue;
 
             var pixels16 = LoadPixelsFromTexture(resourceCache, file16.Value, 16);
             var pixels8 = LoadPixelsFromTexture(resourceCache, file8.Value, 8);

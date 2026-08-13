@@ -559,6 +559,12 @@ ent-CEFoodOnionSlice = кольцо лука
 ent-CEFoodChanterelle = лисичка
     .desc = Вкусный гриб.
 
+ent-CEFoodFlyAmanita = мухомор
+    .desc = Вкусный на вид гриб, как из мультфильмов.
+
+ent-CEFoodLumish = люмиш
+    .desc = Мягко светящийся гриб. Выглядит съедобным.
+
 ent-CEFoodSunflowerHead = подсолнечная головка
     .desc = Срезанный цветок от весёлого растения, любящего солнце. Внутри много вкусных семян.
 

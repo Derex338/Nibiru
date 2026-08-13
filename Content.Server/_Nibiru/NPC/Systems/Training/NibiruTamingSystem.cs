@@ -20,6 +20,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Interaction.Events;
 
@@ -32,13 +33,20 @@ namespace Content.Server._Nibiru.NPC.Systems.Training;
 /// </summary>
 public sealed partial class NibiruTamingSystem : EntitySystem
 {
-[Dependency] private NpcFactionSystem _faction = default!;
-[Dependency] private NibiruAnimalSoundSystem _sounds = default!;
-[Dependency] private NibiruAnimalMoodSystem _mood = default!;
-[Dependency] private NPCSteeringSystem _steering = default!;
-[Dependency] private TagSystem _tag = default!;
-[Dependency] private SharedDoAfterSystem _doAfter = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
+    private static readonly ProtoId<TagPrototype> FoodTag = "Food";
+    private static readonly ProtoId<TagPrototype> MeatTag = "Meat";
+    private static readonly ProtoId<TagPrototype> PlantTag = "Plant";
+    private static readonly ProtoId<TagPrototype> FruitTag = "Fruit";
+    private static readonly ProtoId<TagPrototype> VegetableTag = "Vegetable";
+
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private NibiruAnimalMoodSystem _mood = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -269,7 +277,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
 
     private bool IsAcceptableFood(EntityUid item, NibiruTamableComponent component)
     {
-        if (!_tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Food"))
+        if (!_tag.HasTag(item, FoodTag))
             return false;
 
         // Если задан конкретный список — ест только это
@@ -284,11 +292,11 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         switch (component.Diet)
         {
             case NibiruAnimalDiet.Carnivore:
-                return _tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Meat"); // Плотоядные едят мясо
+                return _tag.HasTag(item, MeatTag); // Плотоядные едят мясо
 
             case NibiruAnimalDiet.Herbivore:
                 // Травоядные не едят мясо
-                return !_tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Meat") && (_tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Plant") || _tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Fruit") || _tag.HasTag(item, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Vegetable"));
+                return !_tag.HasTag(item, MeatTag) && (_tag.HasTag(item, PlantTag) || _tag.HasTag(item, FruitTag) || _tag.HasTag(item, VegetableTag));
 
             case NibiruAnimalDiet.Omnivore:
             default:
@@ -335,7 +343,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
                 if (target == null)
                     return false;
 
-                if (!HasComp<TransformComponent>(target.Value))
+                if (!TryComp(target.Value, out TransformComponent? _))
                     return false;
 
                 if (command == NibiruAnimalCommand.Grab && !HasComp<PullableComponent>(target.Value))

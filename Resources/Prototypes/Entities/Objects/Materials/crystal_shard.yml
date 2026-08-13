@@ -30,6 +30,8 @@
         Slash: 3.5
   - type: Damageable
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: StaticPrice
     price: 50
 

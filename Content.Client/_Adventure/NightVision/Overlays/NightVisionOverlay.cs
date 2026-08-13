@@ -12,7 +12,7 @@ public sealed partial class NightVisionOverlay : Overlay
 
     private readonly NightVisionComponent _component;
 
-[Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;

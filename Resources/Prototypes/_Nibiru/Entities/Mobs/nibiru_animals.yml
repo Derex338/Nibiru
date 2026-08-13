@@ -30,6 +30,7 @@
   - type: NibiruAnimalAbility
   - type: NibiruAnimalSleep
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: MobState
   - type: MobThresholds
@@ -62,9 +63,13 @@
 - type: entity
   id: MobNibiruPig
   parent: NibiruPassiveAnimalBase
-  name: свинья
-  description: Хрю-хрю.
+  name: pig
+  description: Oink oink.
   components:
+  - type: Construction
+    graph: Pig
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: Mobs/Animals/pig.rsi
     state: pig
@@ -105,8 +110,8 @@
 - type: entity
   id: MobNibiruPiglet
   parent: MobNibiruPig
-  name: Поросёнок
-  description: Мини хрю-хрю.
+  name: Piglet
+  description: Mini oink oink.
   components:
   - type: NibiruAnimalGrowth
     growTime: 900
@@ -117,8 +122,8 @@
 - type: entity
   id: MobNibiruGoat
   parent: NibiruAnimalBase
-  name: коза
-  description: Рогатое животное.
+  name: goat
+  description: A horned animal.
   components:
   - type: Sprite
     sprite: Mobs/Animals/goat.rsi
@@ -183,10 +188,14 @@
   parent:
   - NibiruPassiveAnimalBase
   - MobChicken
-  name: курица
-  description: Птица, дающая яйца.
+  name: chicken
+  description: A bird that lays eggs.
   components:
-  - type: NibiruNpcBehavior
+  - type: Construction
+    graph: Chicken
+    node: fin
+    deconstructionTarget: null
+  - type: NibiruNpcAudio
     ambientSound:
       path: /Audio/_Nibiru/Mobs/Chicken/AmbientSound.ogg
     deathSound:
@@ -236,8 +245,8 @@
   id: NibiruMobDuckMallard
   parent: NibiruPassiveAnimalBase
   suffix: Nibiru
-  name: утка
-  description: Кряк.
+  name: duck
+  description: Quack.
   components:
   - type: Sprite
     sprite: Mobs/Animals/duck.rsi
@@ -261,8 +270,8 @@
   id: NibiruMobBat
   parent: NibiruAnimalBase
   suffix: Nibiru
-  name: летучая мышь
-  description: Живет в пещерах.
+  name: bat
+  description: Lives in caves.
   components:
   - type: Sprite
     sprite: Mobs/Animals/bat.rsi
@@ -276,8 +285,8 @@
   id: NibiruMobButterfly
   parent: NibiruAnimalBase
   suffix: Nibiru
-  name: бабочка
-  description: Красивая.
+  name: butterfly
+  description: Beautiful.
   components:
   - type: Sprite
     sprite: Mobs/Animals/butterfly.rsi
@@ -291,8 +300,8 @@
   id: NibiruMobFox
   parent: NibiruAnimalBase
   suffix: Nibiru
-  name: лиса
-  description: Хитрая рыжая морда.
+  name: fox
+  description: A cunning red muzzle.
   components:
   - type: Sprite
     sprite: Mobs/Animals/fox.rsi
@@ -312,8 +321,8 @@
   id: NibiruMobLizard
   parent: NibiruAnimalBase
   suffix: Nibiru
-  name: ящерица
-  description: Маленькая рептилия.
+  name: lizard
+  description: A small reptile.
   components:
   - type: Sprite
     sprite: Mobs/Animals/lizard.rsi
@@ -331,8 +340,8 @@
 - type: entity
   id: MobNibiruWolf
   parent: NibiruHostileAnimalBase
-  name: волк
-  description: Опасный хищник Нибиру. Охотится стаями.
+  name: wolf
+  description: A dangerous predator of Nibiru. Hunts in packs.
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Wolf.rsi
@@ -386,9 +395,13 @@
 - type: entity
   id: MobNibiruSheep
   parent: NibiruPassiveAnimalBase
-  name: овца
-  description: Пушистое создание. Даёт шерсть.
+  name: sheep
+  description: A fluffy creature. Provides wool.
   components:
+  - type: Construction
+    graph: Sheep
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -506,8 +519,8 @@
 - type: entity
   id: MobNibiruLamb
   parent: MobNibiruSheep
-  name: ягненок
-  description: Маленькая овечка.
+  name: lamb
+  description: A little sheep.
   components:
   - type: Sprite
     scale: 0.6, 0.6
@@ -518,9 +531,13 @@
 - type: entity
   id: MobNibiruCow
   parent: NibiruAnimalBase
-  name: корова
-  description: Даёт молоко. Может боднуть, если разозлить.
+  name: cow
+  description: Provides milk. Can gore if angered.
   components:
+  - type: Construction
+    graph: Cow
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: Mobs/Animals/cow.rsi
     state: cow
@@ -533,7 +550,6 @@
     possibleCommands: [ Follow, Stay ]
   - type: NibiruMountFear
     maxFear: 100
-    panicThreshold: 80
   - type: MeleeWeapon
     damage:
       types:
@@ -562,8 +578,8 @@
 - type: entity
   id: MobNibiruLion
   parent: NibiruHostileAnimalBase
-  name: лев
-  description: Грозный царь зверей.
+  name: lion
+  description: The fearsome king of beasts.
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Lion/Lion.rsi
@@ -607,9 +623,13 @@
 - type: entity
   id: MobNibiruPigeon
   parent: NibiruAnimalBase
-  name: почтовый голубь
-  description: Маленькая, но очень важная птица.
+  name: carrier pigeon
+  description: A small but very important bird.
   components:
+  - type: Construction
+    graph: Pigeon
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Pigeon.rsi
     state: icon
@@ -623,6 +643,7 @@
     learnedCommands: [ Follow, Stay, Deliver ]
   - type: NibiruBird
   - type: Item
+    size: Large
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.0
     baseSprintSpeed: 1.5
@@ -650,8 +671,8 @@
 - type: entity
   id: NibiruPigeonPost
   parent: BaseStructure
-  name: голубятня
-  description: Место, куда слетаются почтовые птицы.
+  name: pigeon loft
+  description: A place where carrier birds gather.
   components:
   - type: Sprite
     sprite: Objects/Storage/petcarrier.rsi
@@ -660,7 +681,7 @@
     anchored: true
   - type: InteractionOutline
   - type: NibiruPigeonPost
-    postName: Центральная Голубятня
+    postName: Central Pigeon Loft
   - type: ContainerContainer
     containers:
       bird_delivery_cage: !type:Container
@@ -684,8 +705,8 @@
 - type: entity
   id: MobNibiruReindeer
   parent: NibiruPassiveAnimalBase
-  name: северный олень
-  description: Величественное животное севера.
+  name: reindeer
+  description: A majestic animal of the north.
   components:
   - type: Sprite
     sprite: Mobs/Animals/reindeer_doe.rsi
@@ -724,16 +745,20 @@
       amount: 1
     - id: BigBodyButcherFirst
       amount: 1
-    - id: skull_goat
+    - id: Skull_goat
       amount: 1
 
 # Собака (Приручаемая, обучаемая)
 - type: entity
   id: MobNibiruDog
   parent: NibiruAnimalBase
-  name: собака
-  description: Верный друг. Можно обучать командам.
+  name: dog
+  description: A loyal friend. Can be trained with commands.
   components:
+  - type: Construction
+    graph: Dog
+    node: fin
+    deconstructionTarget: null
   - type: Sprite
     sprite: Mobs/Pets/walter.rsi
     state: walter
@@ -781,22 +806,19 @@
       amount: 1
     - id: MediumBodyButcherFirst
       amount: 1
-  - type: Construction
-    graph: dogCraft
-    node: fin
 
 - type: entity
   id: ClothingHeadLionSkin
   parent: ClothingHeadBase
-  name: шкура льва
-  description: Величественная шкура льва, которую можно носить на голове как символ силы.
+  name: lion skin
+  description: A majestic lion skin worn on the head as a symbol of strength.
   components:
   - type: Sprite
     sprite: _Nibiru/Entities/Mobs/Lion/LionSkinHead.rsi
     state: LionSkin
   - type: Clothing
     sprite: _Nibiru/Entities/Mobs/Lion/LionSkinHead.rsi
-    state: equipped-HELMET
+    equippedState: equipped-HELMET
   - type: Item
     size: Large
 

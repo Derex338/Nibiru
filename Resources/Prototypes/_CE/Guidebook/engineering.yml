@@ -1,15 +1,11 @@
-# - type: guideEntry
-#   hidden: false
-#   locFilter: "en-US"
-#   id: CEMiningGuideEN
-#   name: Mining
-#   text: "/ServerInfo/_CE/Guidebook_EN/Engineering/Mining.xml"
-#   filterEnabled: True
+- type: guideEntry
+  id: CEMiningGuideEN
+  name: guide-entry-ce-mining
+  text: "/ServerInfo/_CE/Guidebook_EN/Engineering/Mining.xml"
+  filterEnabled: True
 
-#- type: guideEntry
-#  hidden: false
-#  locFilter: "ru-RU"
-#  id: CEMiningGuideRU
-#  name: Шахтерское дело
-#  text: "/ServerInfo/_CE/Guidebook_RU/Engineering/Mining.xml"
-#  filterEnabled: True
+- type: guideEntry
+  id: CEMiningGuideRU
+  name: guide-entry-ce-mining
+  text: "/ServerInfo/_CE/Guidebook_RU/Engineering/Mining.xml"
+  filterEnabled: True

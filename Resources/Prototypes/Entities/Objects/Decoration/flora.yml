@@ -160,6 +160,7 @@
   - type: Construction # Nibiru
     graph: StoneAnvilFromBoulder
     node: boulder
+    deconstructionTarget: null
 
 - type: entity
   name: stalagmite

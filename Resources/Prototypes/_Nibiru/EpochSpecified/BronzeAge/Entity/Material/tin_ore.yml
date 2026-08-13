@@ -26,6 +26,7 @@
 
 - type: stack
   id: TinOre
-  name: tin ore
+  name: stack-tin-ore
+
   spawn: TinOre
   maxCount: 30

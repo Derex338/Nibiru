@@ -1,0 +1,16 @@
+species-name-drask = Драск
+species-name-felinid = Фелинид
+species-name-serpentid = Серпентид
+species-name-pigman = Троттин
+species-name-resomi = Резоми
+species-name-skrell = Скрелл
+species-name-zerah = Зера
+species-name-stone = Голем
+adventure-appearance-drask = Внешность драска
+adventure-appearance-felinid = Внешность фелинида
+adventure-appearance-insect = Внешность насекомого
+adventure-appearance-pigman = Внешность троттина
+adventure-appearance-resomi = Внешность резоми
+adventure-appearance-skrell = Внешность скрелла
+adventure-appearance-zerah = Внешность зеры
+adventure-appearance-stone = Внешность голема

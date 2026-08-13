@@ -1,10 +1,12 @@
 - type: construction
   id: dogCraft
-  name: dog
+  name: construction-recipe-dog-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a dog
+  description: construction-recipe-dog-craft-desc
+
   graph: Dog
   targetNode: fin
   startNode: start
@@ -14,11 +16,13 @@
 
 - type: construction
   id: horseCraft
-  name: horse
+  name: construction-recipe-horse-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a horse
+  description: construction-recipe-horse-craft-desc
+
   graph: Horse
   targetNode: fin
   startNode: start
@@ -28,11 +32,13 @@
 
 - type: construction
   id: pigeonCraft
-  name: pigeon
+  name: construction-recipe-pigeon-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a pigeon
+  description: construction-recipe-pigeon-craft-desc
+
   graph: Pigeon
   targetNode: fin
   startNode: start
@@ -42,11 +48,13 @@
 
 - type: construction
   id: cowCraft
-  name: cow
+  name: construction-recipe-cow-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a cow
+  description: construction-recipe-cow-craft-desc
+
   graph: Cow
   targetNode: fin
   startNode: start
@@ -56,11 +64,13 @@
 
 - type: construction
   id: sheepCraft
-  name: sheep
+  name: construction-recipe-sheep-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a sheep
+  description: construction-recipe-sheep-craft-desc
+
   graph: Sheep
   targetNode: fin
   startNode: start
@@ -70,11 +80,13 @@
 
 - type: construction
   id: pigCraft
-  name: pig
+  name: construction-recipe-pig-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a pig
+  description: construction-recipe-pig-craft-desc
+
   graph: Pig
   targetNode: fin
   startNode: start
@@ -84,11 +96,13 @@
 
 - type: construction
   id: chickenCraft
-  name: chicken
+  name: construction-recipe-chicken-craft
+
   points: 100
   entitysToShowRecipe:
   - BasicWorkbench
-  description: Craft a chicken
+  description: construction-recipe-chicken-craft-desc
+
   graph: Chicken
   targetNode: fin
   startNode: start

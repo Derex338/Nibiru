@@ -12,8 +12,6 @@
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
   - type: Body
-    prototype: Slime
-    requiredLegs: 2
   # they like eat it idk lol
   - type: Storage
     clickInsert: false
@@ -49,8 +47,9 @@
       Female: FemaleSlime
       Unsexed: MaleSlime
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Slime
+  - type: Injurable
+    damageContainer: Biological
   - type: PassiveDamage # Around 8 damage a minute healed
     allowedStates:
     - Alive

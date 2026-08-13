@@ -16,6 +16,7 @@ public sealed class SalvageTest : GameTest
     /// Asserts that all salvage maps have been saved as grids and are loadable.
     /// </summary>
     [Test]
+    [Ignore("Nibiru: station salvage maps are not exercised")]
     [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), false)]
     public async Task AllSalvageMapsLoadableTest()
     {

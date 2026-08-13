@@ -19,10 +19,10 @@ namespace Content.Server._Nibiru.NPC.Systems.Livestock;
 /// </summary>
 public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
 {
-[Dependency] private SharedDoAfterSystem _doAfter = default!;
-[Dependency] private NibiruLivestockSystem _livestock = default!;
-[Dependency] private NibiruAnimalSoundSystem _sounds = default!;
-[Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private NibiruLivestockSystem _livestock = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {

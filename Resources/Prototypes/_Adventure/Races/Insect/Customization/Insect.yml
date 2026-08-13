@@ -1,10 +1,11 @@
 - type: marking
   id: InsectHeadForward
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: forward
@@ -12,10 +13,11 @@
 - type: marking
   id: InsectHeadStraight
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: straight
@@ -23,7 +25,6 @@
 - type: marking
   id: InsectTailNoBase
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -34,7 +35,6 @@
 - type: marking
   id: InsectChestBody
   bodyPart: Chest
-  markingCategory: Chest
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
@@ -43,10 +43,11 @@
 - type: marking
   id: InsectHeadNOBase
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: NObase
@@ -54,7 +55,6 @@
 - type: marking
   id: InsectTailDouble
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -65,7 +65,6 @@
 - type: marking
   id: InsectTailUp
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -76,10 +75,11 @@
 - type: marking
   id: InsectSnoutBig
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/face.rsi
     state: mandibles_big
@@ -87,10 +87,11 @@
 - type: marking
   id: InsectSnoutGiant
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/face.rsi
     state: mandibles_giant
@@ -98,10 +99,11 @@
 - type: marking
   id: InsectHandSaw
   bodyPart: LArm
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: LArm
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
     state: hand_saw
@@ -109,10 +111,11 @@
 - type: marking
   id: InsectHandSmall
   bodyPart: LArm
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: LArm
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
     state: hand_small
@@ -120,7 +123,6 @@
 - type: marking
   id: InsectTailFat
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -131,7 +133,6 @@
 - type: marking
   id: InsectTailGusenica
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -142,7 +143,6 @@
 - type: marking
   id: InsectTailScorpion
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -153,7 +153,6 @@
 - type: marking
   id: InsectTailSpider
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -164,7 +163,6 @@
 - type: marking
   id: InsectTailScorpider
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -172,14 +170,14 @@
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
     state: scorpider_body
 
-
 - type: marking
   id: InsectBodyBristle
   bodyPart: RHand
-  markingCategory: Overlay
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
     state: bristle
@@ -187,10 +185,11 @@
 - type: marking
   id: InsectBodySpike
   bodyPart: RHand
-  markingCategory: Overlay
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
     state: spike
@@ -198,10 +197,11 @@
 - type: marking
   id: InsectHeadBig
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: big
@@ -209,10 +209,11 @@
 - type: marking
   id: InsectHeadBigHead
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: big_head
@@ -220,10 +221,11 @@
 - type: marking
   id: InsectHeadForehead
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: forehead
@@ -231,7 +233,6 @@
 - type: marking
   id: InsectTailCentipede
   bodyPart: Tail
-  markingCategory: Tail
   groupWhitelist: [Insect]
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/Tails48.rsi
@@ -242,10 +243,11 @@
 - type: marking
   id: InsectHandDouble
   bodyPart: LArm
-  followSkinColor: true
   forcedColoring: true
-  markingCategory: LArm
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
     state: hand_double
@@ -253,10 +255,11 @@
 - type: marking
   id: InsectHeadStretch
   bodyPart: HeadTop
-  markingCategory: HeadTop
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: stretch
@@ -264,10 +267,11 @@
 - type: marking
   id: InsectHeadCrown
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/head.rsi
     state: crown
@@ -275,10 +279,11 @@
 - type: marking
   id: InsectBodyHump
   bodyPart: RHand
-  markingCategory: Overlay
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [Insect]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/Insect/Customization/body.rsi
     state: hump

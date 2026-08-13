@@ -97,7 +97,7 @@
         Name="FactionButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/_Nibiru/Interface/FactionButton/FactionButtonIcon.png'}"
-        ToolTip="{Loc 'окно фракции'}"
+        ToolTip="{Loc 'faction-window-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"

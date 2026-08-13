@@ -15,9 +15,11 @@ namespace Content.Server._Nibiru.ModularCraft;
 
 public sealed partial class ModularCraftSystem : EntitySystem
 {
-[Dependency] private UserInterfaceSystem _ui        = default!;
-[Dependency] private SharedPopupSystem   _popup     = default!;
-[Dependency] private IPrototypeManager   _proto     = default!;
+    [Dependency] private UserInterfaceSystem _ui        = default!;
+    [Dependency] private SharedPopupSystem   _popup     = default!;
+    [Dependency] private IPrototypeManager   _proto     = default!;
+    [Dependency] private SharedAudioSystem   _audio     = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

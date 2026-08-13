@@ -39,6 +39,24 @@
         },
         {
             "name": "veg_stew"
+        },
+        {
+            "name": "porridge"
+        },
+        {
+            "name": "porridge_apple"
+        },
+        {
+            "name": "porridge_meat"
+        },
+        {
+            "name": "porridge_pumpkin"
+        },
+        {
+            "name": "cucumber"
+        },
+        {
+            "name": "corn"
         }
     ]
 }

@@ -19,12 +19,12 @@ namespace Content.Server._Nibiru.Temperature;
 
 public sealed partial class CoolInWaterSystem : EntitySystem
 {
-[Dependency] private SharedSolutionContainerSystem _solution = default!;
-[Dependency] private DoAfterSystem _doAfter = default!;
-[Dependency] private TemperatureSystem _temp = default!;
-[Dependency] private IPrototypeManager _prototype = default!;
-[Dependency] private SharedAudioSystem _audio = default!;
-[Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private TemperatureSystem _temp = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
     public override void Initialize()
     {

@@ -1,0 +1,32 @@
+- type: tool
+  id: Diging
+  name: digging
+  toolName: лопата
+  spawn: Shovel
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Shovel.rsi, state: icon }
+
+- type: tool
+  id: Shoveling
+  name: digging
+  toolName: лопата
+  spawn: Shovel
+  icon: { sprite: _Nibiru/EpochSpecified/StoneAge/Tools/Shovel.rsi, state: icon }
+
+- type: soundCollection
+  id: WoodSmash
+  files:
+  - /Audio/Effects/wood_destroy1.ogg
+  - /Audio/Effects/wood_destroy2.ogg
+  - /Audio/Effects/wood_destroy3.ogg
+
+- type: technology
+  id: iron_age_final_tech
+  name: research-technology-iron-age-final-tech
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: iron
+  discipline: BronzeAge
+  tier: 1
+  cost: 1
+  position: 99, 99
+  hidden: true

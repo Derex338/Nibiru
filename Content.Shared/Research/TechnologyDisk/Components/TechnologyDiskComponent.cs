@@ -1,4 +1,5 @@
-﻿using Content.Shared.Random;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared.Random;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -26,6 +27,12 @@ public sealed partial class TechnologyDiskComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<ProtoId<LatheRecipePrototype>>? Recipes;
+
+    /// <summary>
+    /// Construction crafts unlocked by this disk. If null alongside Recipes, one will be randomly generated.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<ConstructionPrototype>>? Crafts;
 
     /// <summary>
     /// A weighted random prototype for how rare each tier should be.

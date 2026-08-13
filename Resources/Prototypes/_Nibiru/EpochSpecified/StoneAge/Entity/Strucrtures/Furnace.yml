@@ -1,9 +1,9 @@
 - type: entity
   id: SmeltingFurnace
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseStoneStructure
-  name: сыродутная печь
-  description: Простейшая каменная печь не требующая дополнительный усилий для плавки простейших руд таких как медь и олово.
+  name: bloomery furnace
+  description: A simple stone furnace requiring no additional effort for smelting basic ores such as copper and tin.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Structures/furnace.rsi
@@ -35,8 +35,6 @@
     containerId: ore_container
     solutionContainerId: solution_container
     maxOreCapacity: 10
-    heatingRate: 80 # Быстро нагревается
-    coolingRate: 20 # Медленно остывает
     solution: smelted_metal
   #- type: SolutionContainerManager
   #  solutions:
@@ -67,9 +65,10 @@
     extinguisherQuality: Digging
     fadeOutBehaviourID: fade_out
     iconStateSpent: icon
-    # Sounds legit nuff
     litSound:
       path: /Audio/Items/Flare/flare_on.ogg
+    loopedSound:
+      path: /Audio/Items/Flare/flare_burn.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: LightBehaviour
@@ -127,7 +126,7 @@
 
 - type: entity
   id: Fuel
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   name: fuel
   description: A chunk of copper ore.
   components:
@@ -144,7 +143,7 @@
 
 - type: entity
   id: ScrapMetal
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   name: ScrapMetal
   description: A chunk of fucked up ore.
   components:
@@ -158,10 +157,10 @@
 
 - type: entity
   id: FurnaceBeaker
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: LargeBeaker
-  name: тигель
-  description: Каменный тигель для плавки руды в расплавленный металл.
+  name: crucible
+  description: A stone crucible for smelting ore into molten metal.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Smelting.rsi
@@ -183,6 +182,9 @@
     solution: smelted_metal
   - type: ExaminableSolution
     solution: smelted_metal
+  - type: Construction
+    graph: StoneCrucible
+    node: fin
   - type: DrawableSolution
     solution: smelted_metal
   - type: SolutionTransfer
@@ -206,6 +208,7 @@
     solution: smelted_metal
   - type: SolutionContainerVisuals
     maxFillLevels: 1
+    inHandsMaxFillLevels: 0
     inHandsFillBaseName: null
     fillBaseName: fill-
   - type: AtmosExposed

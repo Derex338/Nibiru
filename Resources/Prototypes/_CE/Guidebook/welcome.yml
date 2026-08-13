@@ -1,21 +1,6 @@
-# - type: guideEntry
-#   hidden: false
-#   locFilter: "en-US"
-#   id: BaselineWelcomeEN
-#   name: Welcome to CrystallEdge
-#   text: "/ServerInfo/_CE/Guidebook_EN/Welcome.xml"
-#   children:
-#   - CESpeciesGuideEN
-#   - CECookingRecipesEN
-#   - CEFarmingGuideEN
-#   - CEMiningGuideEN
-#   - CEImperialLawsEN
-
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: BaselineWelcomeRU
-  name: Welcome to Nibiru
+  name: guide-entry-ce-welcome
   text: "/ServerInfo/_CE/Guidebook_RU/Welcome.xml"
   children:
   - CESpeciesGuideRU
@@ -23,3 +8,4 @@
   - CEFarmingGuideRU
   - CEMiningGuideRU
   - CEImperialLawsRU
+

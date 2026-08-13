@@ -1,9 +1,9 @@
 - type: entity
   id: CastingPit
   suffix: Nibiru, BronzeAge
-  name: ямка для литья
+  name: casting pit
   parent: BaseStructure
-  description: Небольшое углубление в земле для установки литейных форм.
+  description: A small depression in the ground for placing casting molds.
   components:
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
@@ -28,7 +28,7 @@
   - type: ItemSlots
     slots:
       mold_slot:
-        name: Форма
+        name: casting-pit-slot-mold
         whitelist:
           components:
           - Mold

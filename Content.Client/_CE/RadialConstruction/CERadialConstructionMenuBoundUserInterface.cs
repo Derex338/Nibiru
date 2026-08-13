@@ -9,7 +9,7 @@ namespace Content.Client._CE.RadialConstruction;
 [UsedImplicitly]
 public sealed partial class CERadialConstructionMenuBoundUserInterface : BoundUserInterface
 {
-[Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private SimpleRadialMenu? _menu;
 

@@ -31,9 +31,9 @@
     storageCloseSound: /Audio/_CE/Effects/pan_close.ogg
     storageInsertSound: /Audio/Items/toolbox_insert.ogg
     storageRemoveSound: /Audio/Items/toolbox_insert.ogg
-  - type: SolutionContainerManager
-    solutions:
-      cooker:
+  - type: Solution
+    id: cooker
+    solution:
         maxVol: 100
   - type: CEFoodHolder
     foodType: Meal

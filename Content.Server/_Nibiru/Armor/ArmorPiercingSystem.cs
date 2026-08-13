@@ -22,9 +22,11 @@ namespace Content.Server._Nibiru.Armor;
 /// </summary>
 public sealed partial class ArmorPenetrationSystem : EntitySystem
 {
-[Dependency] private DamageExamineSystem _damageExamine = default!;
-[Dependency] private SharedHandsSystem _hands = default!;
-[Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private DamageExamineSystem _damageExamine = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {

@@ -10,9 +10,9 @@ namespace Content.Client._Adventure.ThermalVision;
 
 public sealed partial class ThermalVisionSystem : EntitySystem
 {
-[Dependency] private IPlayerManager _player = default!;
-[Dependency] private IOverlayManager _overlayMan = default!;
-[Dependency] private TransformSystem _xformSys = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private TransformSystem _xformSys = default!;
     private ThermalVisionOverlay _overlay = default!;
 
     private EntityUid? _effect = null;

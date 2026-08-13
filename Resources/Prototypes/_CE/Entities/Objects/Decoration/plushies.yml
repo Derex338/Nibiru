@@ -36,7 +36,7 @@
         Blunt: 0
     hidden: true
   - type: StaticPrice
-    price: 5
+    price: 6
   - type: PhysicalComposition
     materialComposition:
       CECloth: 20

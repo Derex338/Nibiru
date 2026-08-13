@@ -10,10 +10,10 @@
   - type: Item
     shape:
     - 0,0,1,0
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
+  - type: Solution
+    id: food
+    solution:
+      maxVol: 30
   - type: CEFoodHolder
     foodType: Soup
     solutionId: food
@@ -43,7 +43,7 @@
     - map: ["ce_foodLayers"]
   - type: PhysicalComposition
     materialComposition:
-      CEWood: 20
+      CEWood: 10
   - type: Edible
     trash:
     - CEBowlWooden

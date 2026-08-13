@@ -7,9 +7,9 @@ namespace Content.Server._Nibiru.Construcion;
 
 public sealed partial class MultiLevelClimbSystem : EntitySystem
 {
-[Dependency] private SharedTransformSystem _transform = default!;
-[Dependency] private SharedDoAfterSystem _doAfter = default!;
-[Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

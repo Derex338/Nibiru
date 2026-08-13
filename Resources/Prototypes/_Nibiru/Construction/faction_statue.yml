@@ -20,7 +20,7 @@
 
 - type: construction
   id: FactionStatue
-  name: faction statue
+  name: ent-FactionStatue
   graph: FactionStatue
   startNode: start
   targetNode: statue

@@ -6,8 +6,8 @@
   parent: BaseBronzeItem
   id: BronzeInlay
   suffix: Nibiru, BronzeAge
-  name: бронзовая вставка
-  description: Бронзовая пластина для укрепления конструкций и снаряжения.
+  name: bronze inlay
+  description: A bronze plate used to reinforce structures and equipment.
   components:
   - type: SmeltableOre
     meltingPoint: 950
@@ -34,8 +34,8 @@
   parent: BaseBronzeItem
   id: BronzeArrowTip
   suffix: Nibiru, BronzeAge
-  name: бронзовый наконечник стрелы
-  description: Острый наконечник для изготовления стрел.
+  name: bronze arrow tip
+  description: A sharp arrowhead for crafting arrows.
   components:
   - type: SmeltableOre
     meltingPoint: 950
@@ -68,8 +68,8 @@
   parent: BaseBronzeItem
   id: BronzeArrowTipArmor
   suffix: Nibiru, BronzeAge
-  name: бронзовый бронебойный наконечник
-  description: Усиленный наконечник, способный пробивать доспехи.
+  name: bronze armor-piercing arrow tip
+  description: A reinforced arrowhead capable of penetrating armor.
   components:
   - type: SmeltableOre
     meltingPoint: 950
@@ -102,8 +102,8 @@
   parent: BaseBronzeItem
   id: BronzeTopHammerPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое навершие молотка
-  description: Литая бронзовая часть для небольшого молотка.
+  name: bronze hammer head
+  description: A cast bronze piece for a small hammer.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi
@@ -130,8 +130,8 @@
   parent: BaseBronzeItem
   id: BronzeTopMacePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое навершие молота
-  description: Массивное бронзовое навершие для боевого молота.
+  name: bronze mace head
+  description: A massive bronze head for a war hammer.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi
@@ -158,8 +158,8 @@
   parent: BaseBronzeItem
   id: BronzeTopAxePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое навершие топора
-  description: Основа для рабочего топора.
+  name: bronze axe head
+  description: The base for a working axe.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi
@@ -186,8 +186,8 @@
   parent: BaseBronzeItem
   id: BronzeTopBattleAxePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое навершие боевого топора
-  description: Тяжелая и острая рубящая часть боевого топора.
+  name: bronze battle axe head
+  description: A heavy, sharp chopping piece of a battle axe.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
@@ -214,8 +214,8 @@
   parent: BaseBronzeItem
   id: BronzeTopSpearPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовый наконечник копья
-  description: Длинный и острый наконечник для копья.
+  name: bronze spear tip
+  description: A long and sharp spearhead.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
@@ -242,8 +242,8 @@
   parent: BaseBronzeItem
   id: BronzeSwordBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие меча
-  description: Прямое лезвие, готовое к насадке на рукоять.
+  name: bronze sword blade
+  description: A straight blade ready to be fitted to a hilt.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
@@ -270,8 +270,8 @@
   parent: BaseBronzeItem
   id: BronzeDaggerBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие кинжала
-  description: Небольшое лезвие для кинжала.
+  name: bronze dagger blade
+  description: A small blade for a dagger.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Dagger.rsi
@@ -298,8 +298,8 @@
   parent: BaseBronzeItem
   id: BronzeTridentPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое навершие трезубца
-  description: Трезубое навершие для грозного оружия.
+  name: bronze trident head
+  description: A three-pronged head for a fearsome weapon.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi
@@ -326,8 +326,8 @@
   parent: BaseBronzeItem
   id: BronzeShieldPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая обивка щита
-  description: Бронзовые элементы для защиты лицевой части щита.
+  name: bronze shield facing
+  description: Bronze elements to protect the front of a shield.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -355,8 +355,8 @@
   parent: BaseBronzeItem
   id: BronzeKnifeBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие ножа
-  description: Маленькое универсальное лезвие.
+  name: bronze knife blade
+  description: A small utility blade.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
@@ -383,8 +383,8 @@
   parent: BaseBronzeItem
   id: BronzeClippersPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая деталь секатора
-  description: Одна из частей для сборки секатора.
+  name: bronze clippers part
+  description: One of the parts for assembling clippers.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi
@@ -411,8 +411,8 @@
   parent: BaseBronzeItem
   id: BronzeHoeBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие мотыги
-  description: Прочное бронзовое лезвие для сельскохозяйственных работ.
+  name: bronze hoe blade
+  description: A durable bronze blade for farm work.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
@@ -439,8 +439,8 @@
   parent: BaseBronzeItem
   id: BronzePickaxeBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовый наконечник кирки
-  description: Тяжелая бронзовая часть для добычи камня.
+  name: bronze pickaxe tip
+  description: A heavy bronze piece for mining stone.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
@@ -467,8 +467,8 @@
   parent: BaseBronzeItem
   id: BronzeScytheBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие косы
-  description: Изогнутое острое лезвие для косы.
+  name: bronze scythe blade
+  description: A curved, sharp blade for a scythe.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi
@@ -495,8 +495,8 @@
   parent: BaseBronzeItem
   id: BronzeShovelPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовый наконечник лопаты
-  description: Литой наконечник лопаты.
+  name: bronze shovel head
+  description: A cast shovel head.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Shovel.rsi
@@ -523,8 +523,8 @@
   parent: BaseBronzeItem
   id: BronzeHelmetPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая основа шлема
-  description: Массивная литая заготовка шлема.
+  name: bronze helmet base
+  description: A massive cast helmet blank.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi
@@ -551,8 +551,8 @@
   parent: BaseBronzeItem
   id: BronzeChestplatePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая деталь нагрудника
-  description: Большая бронзовая пластина для кирасы.
+  name: bronze chestplate part
+  description: A large bronze plate for a cuirass.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
@@ -579,8 +579,8 @@
   parent: BaseBronzeItem
   id: BronzeAnvilPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая заготовка наковальни
-  description: Огромный кусок литой бронзы для наковальни.
+  name: bronze anvil blank
+  description: A huge piece of cast bronze for an anvil.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -608,8 +608,8 @@
   parent: BaseBronzeItem
   id: BronzeLockPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая деталь замка
-  description: Маленькая деталь для сборки сложного механизма.
+  name: bronze lock part
+  description: A small part for assembling a complex mechanism.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -637,8 +637,8 @@
   parent: BaseBronzeItem
   id: BronzeKeyPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая деталь ключа
-  description: Литая заготовка, требующая обработки.
+  name: bronze key blank
+  description: A cast blank requiring further filing.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -666,8 +666,8 @@
   parent: BaseBronzeItem
   id: BronzeRaspPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовая заготовка рашпиля
-  description: Металлическая основа для инструмента.
+  name: bronze rasp blank
+  description: A metal base for a tool.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi
@@ -695,8 +695,8 @@
   parent: BaseBronzeItem
   id: BronzeKhapeshBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие хопеша
-  description: Изогнутое лезвие для элитного меча-хопеша.
+  name: bronze khopesh blade
+  description: A curved blade for an elite khopesh sword.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Khapesh.rsi
@@ -723,8 +723,8 @@
   parent: BaseBronzeItem
   id: BronzeXiphosBladePiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое лезвие ксифоса
-  description: Листовидное бронзовое лезвие для меча-ксифоса, отлично сбалансированное для ударов и уколов.
+  name: bronze xiphos blade
+  description: A leaf-shaped bronze blade for a xiphos sword, well balanced for slashing and thrusting.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi
@@ -751,8 +751,8 @@
   parent: BaseItem
   id: WheelBlank
   suffix: Nibiru, BronzeAge
-  name: заготовка колеса
-  description: Круглая деревянная заготовка для колеса.
+  name: wheel blank
+  description: A round wooden blank for a wheel.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
@@ -773,8 +773,8 @@
   parent: BaseItem
   id: WoodenWheel
   suffix: Nibiru, BronzeAge
-  name: деревянное колесо
-  description: Простое, но эффективное средство передвижения.
+  name: wooden wheel
+  description: Simple yet effective means of transportation.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
@@ -795,8 +795,8 @@
   parent: BaseItem
   id: BronzeRod
   suffix: Nibiru, BronzeAge
-  name: бронзовый стержень
-  description: Бронзовый стержень.
+  name: bronze rod
+  description: A bronze rod.
   components:
   - type: Sprite
     sprite: Objects/Materials/parts.rsi
@@ -818,8 +818,8 @@
   parent: BaseItem
   id: BronzeChainmailPiece
   suffix: Nibiru, BronzeAge
-  name: бронзовое звено кольчуги
-  description: Бронзовое звено для изготовления кольчуги.
+  name: bronze chainmail link
+  description: A bronze ring for making chainmail.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainPiece.rsi

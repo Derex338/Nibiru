@@ -14,8 +14,8 @@ namespace Content.Client._Nibiru.WeaponAttackType.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AttackTypeGrid : UIWidget
 {
-[Dependency] private IPrototypeManager _proto = default!;
-[Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     private readonly List<AttackTypeButton> _buttons = new();
 

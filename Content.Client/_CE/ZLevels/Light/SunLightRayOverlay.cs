@@ -14,11 +14,11 @@ namespace Content.Client._CE.ZLevels.Light;
 
 public sealed partial class SunLightRayOverlay : Overlay
 {
-[Dependency] private IClyde _clyde = default!;
-[Dependency] private IEntityManager _entManager = default!;
-[Dependency] private IMapManager _mapManager = default!;
-[Dependency] private IPrototypeManager _protoManager = default!;
-
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _xformSys;
 

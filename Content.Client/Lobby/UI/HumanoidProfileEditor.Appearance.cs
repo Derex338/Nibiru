@@ -13,7 +13,7 @@ namespace Content.Client.Lobby.UI;
 
 public sealed partial class HumanoidProfileEditor
 {
-    //public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
+    public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
 
     private ColorSelectorSliders _rgbSkinColorSelector;
     private List<SpeciesPrototype> _species = new();
@@ -240,23 +240,12 @@ public sealed partial class HumanoidProfileEditor
 
     private void OnSpeciesInfoButtonPressed(BaseButton.ButtonEventArgs args)
     {
-        // TODO GUIDEBOOK
-        // make the species guide book a field on the species prototype.
-        // I.e., do what jobs/antags do.
-
-        var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
         var species = Profile?.Species ?? HumanoidCharacterProfile.DefaultSpecies;
         var page = DefaultSpeciesGuidebook;
         if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
-            page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
+            page = new ProtoId<GuideEntryPrototype>(species.Id);
 
-        if (_prototypeManager.Resolve(DefaultSpeciesGuidebook, out var guideRoot))
-        {
-            var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
-            dict.Add(DefaultSpeciesGuidebook, guideRoot);
-            //TODO: Don't close the guidebook if its already open, just go to the correct page
-            guidebookController.OpenGuidebook(dict, includeChildren: true, selected: page);
-        }
+        OnOpenGuidebook?.Invoke(new List<ProtoId<GuideEntryPrototype>> { page });
     }
 
     private void OnSkinColorOnValueChanged()

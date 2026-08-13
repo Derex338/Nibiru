@@ -1,9 +1,9 @@
 - type: entity
-  name: нож из кости
+  name: bone knife
   parent: BaseKnife
   id: BoneKnife
-  suffix: Нибиру, Каменный век
-  description: Заточенная кость с рукояткой. Он был создан убийствои и предназначен убивать.
+  suffix: Nibiru, Stone Age
+  description: A sharpened bone with a handle. It was made for killing and is meant to kill.
   components:
   - type: Tag
     tags:
@@ -44,11 +44,11 @@
       Piercing: 2
 
 - type: entity
-  name: деревянный посох
+  name: wooden staff
   parent: BaseWoodItem
   id: WoodenStaff
-  suffix: Нибиру, Каменный век
-  description: Почувствуй себя монахом.
+  suffix: Nibiru, Stone Age
+  description: Feel like a monk.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodenStaff.rsi
@@ -76,15 +76,22 @@
       Blunt: 2
 
 - type: entity
-  name: деревянное копье
+  name: wooden spear
   parent: [BaseWoodItem, Spear]
   id: WoodSpear
-  suffix: Нибиру, Каменный век
-  description: Устрая палка
+  suffix: Nibiru, Stone Age
+  description: A sharpened stick
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodSpear.rsi
     state: spear
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    fillBaseName: null
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
+    equippedMaxFillLevels: 0
+    equippedFillBaseName: null
   - type: MeleeWeapon
     attackRate: 1.2
     damage:
@@ -119,15 +126,22 @@
     angle: 0
 
 - type: entity
-  name: каменное копье
+  name: stone spear
   parent: [BaseWoodItem, Spear]
   id: StoneSpear
-  suffix: Нибиру, Каменный век
-  description: Острый камень на палке.
+  suffix: Nibiru, Stone Age
+  description: A sharp stone on a stick.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/StoneSpear.rsi
     state: spear
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+    fillBaseName: null
+    inHandsMaxFillLevels: 0
+    inHandsFillBaseName: null
+    equippedMaxFillLevels: 0
+    equippedFillBaseName: null
   - type: MeleeWeapon
     attackRate: 1.2
     damage:
@@ -158,11 +172,11 @@
     angle: 0
 
 - type: entity
-  name: дубина
+  name: club
   parent: [BaseWoodItem, BaseBallBat]
   id: WoodBat
-  suffix: Нибиру, Каменный век
-  description: Острый камень на палке.
+  suffix: Nibiru, Stone Age
+  description: A sharp stone on a stick.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/StoneAge/Weapon/WoodBat.rsi

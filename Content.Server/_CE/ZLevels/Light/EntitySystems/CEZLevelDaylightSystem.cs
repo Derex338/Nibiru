@@ -18,10 +18,11 @@ namespace Content.Server._CE.ZLevels.Light.EntitySystems;
 /// </summary>
 public sealed partial class CEZLevelDaylightSystem : EntitySystem
 {
-[Dependency] private CESharedZLevelsSystem _zLevel = default!;
-[Dependency] private SharedMapSystem _map = default!;
-[Dependency] private IEntityManager _entManager = default!;
-[Dependency] private SharedRoofSystem _roofSystem = default!;
+    [Dependency] private CESharedZLevelsSystem _zLevel = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private ITileDefinitionManager _tileDefMan = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedRoofSystem _roofSystem = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<RoofComponent> _roofQuery;

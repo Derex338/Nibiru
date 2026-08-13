@@ -71,7 +71,7 @@ public sealed class StoreTests : GameTest
             uniform = entManager.SpawnEntity("UniformDummy", coordinates);
             pda = entManager.SpawnEntity("InventoryPdaDummy", coordinates);
 
-            Assert.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
+            Assert.That(invSystem.TryEquip(human, uniform, "pants"));
             Assert.That(invSystem.TryEquip(human, pda, "id"));
 
             var mind = mindSystem.CreateMind(null);

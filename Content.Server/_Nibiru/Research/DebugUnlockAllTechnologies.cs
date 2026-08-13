@@ -12,8 +12,8 @@ public sealed partial class DebugUnlockAllTechnologiesComponent : Component
 
 public sealed partial class DebugUnlockAllTechnologiesSystem : EntitySystem
 {
-[Dependency] private ResearchSystem _research = default!;
-[Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ResearchSystem _research = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {

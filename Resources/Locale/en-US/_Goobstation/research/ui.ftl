@@ -5,5 +5,3 @@ research-console-menu-recenter-button = Re-center
 research-console-menu-server-researched-button = Researched
 research-console-tech-cost-label = { $cost } points
 research-console-tier-percentage = : { $perc }%
-research-epoch-iron-age = Iron Age
-research-epoch-iron-age-desc = The age of iron and steel.

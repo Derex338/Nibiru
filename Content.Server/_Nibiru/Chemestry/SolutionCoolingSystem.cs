@@ -14,9 +14,9 @@ namespace Content.Server._Nibiru.Chemestry;
 
 public sealed partial class SolutionCoolingSystem : EntitySystem
 {
-[Dependency] private SharedSolutionContainerSystem _solution = default!;
-[Dependency] private AtmosphereSystem _atmos = default!;
-[Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public float HeatTransferRate = 6f;
 

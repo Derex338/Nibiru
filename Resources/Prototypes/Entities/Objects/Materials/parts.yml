@@ -10,6 +10,8 @@
     sprite: Objects/Materials/parts.rsi
   - type: Damageable
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Tag
     tags:
     - ConstructionMaterial

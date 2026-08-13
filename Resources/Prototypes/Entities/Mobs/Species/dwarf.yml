@@ -22,8 +22,6 @@
   - type: ScaleVisuals
     scale: 1, 0.8
   - type: Body
-    prototype: Dwarf
-    requiredLegs: 2
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatHuman

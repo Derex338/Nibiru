@@ -9,7 +9,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.SmartFridge;
 
-public record SmartFridgeListData(EntityUid Representative, SmartFridgeEntry Entry, int Amount) : ListData;
+public partial record SmartFridgeListData(EntityUid Representative, SmartFridgeEntry Entry, int Amount) : ListData;
 
 [GenerateTypedNameReferences]
 public sealed partial class SmartFridgeMenu : FancyWindow

@@ -68,9 +68,9 @@ jobs:
       run: |
         set -euo pipefail
         if [ "$SHARD" = "heavy" ]; then
-          FILTER='FullyQualifiedName~Content.IntegrationTests.Tests.EntityTest|FullyQualifiedName~Content.IntegrationTests.Tests.PostMapInitTest|FullyQualifiedName~Content.IntegrationTests.Tests.Power.StationPowerTests|FullyQualifiedName~Content.IntegrationTests.Tests.Power.PowerTest|FullyQualifiedName~Content.IntegrationTests.Tests.Atmos.AirtightTest|FullyQualifiedName~Content.IntegrationTests.Tests.ClickableTest'
+          FILTER='FullyQualifiedName~Content.IntegrationTests.Tests.EntityTest|FullyQualifiedName~Content.IntegrationTests.Tests.PostMapInitTest|FullyQualifiedName~Content.IntegrationTests.Tests.Power.StationPowerTests|FullyQualifiedName~Content.IntegrationTests.Tests.Power.PowerTest|FullyQualifiedName~Content.IntegrationTests.Tests.Atmos.AirtightTest|FullyQualifiedName~Content.IntegrationTests.Tests.ClickableTest|FullyQualifiedName~Content.IntegrationTests.Tests.MaterialArbitrageTest|FullyQualifiedName~Content.IntegrationTests.Tests.SalvageTest'
         else
-          FILTER='FullyQualifiedName!~Content.IntegrationTests.Tests.EntityTest&FullyQualifiedName!~Content.IntegrationTests.Tests.PostMapInitTest&FullyQualifiedName!~Content.IntegrationTests.Tests.Power.StationPowerTests&FullyQualifiedName!~Content.IntegrationTests.Tests.Power.PowerTest&FullyQualifiedName!~Content.IntegrationTests.Tests.Atmos.AirtightTest&FullyQualifiedName!~Content.IntegrationTests.Tests.ClickableTest'
+          FILTER='FullyQualifiedName!~Content.IntegrationTests.Tests.EntityTest&FullyQualifiedName!~Content.IntegrationTests.Tests.PostMapInitTest&FullyQualifiedName!~Content.IntegrationTests.Tests.Power.StationPowerTests&FullyQualifiedName!~Content.IntegrationTests.Tests.Power.PowerTest&FullyQualifiedName!~Content.IntegrationTests.Tests.Atmos.AirtightTest&FullyQualifiedName!~Content.IntegrationTests.Tests.ClickableTest&FullyQualifiedName!~Content.IntegrationTests.Tests.MaterialArbitrageTest&FullyQualifiedName!~Content.IntegrationTests.Tests.SalvageTest'
         fi
         dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj \
           --filter "$FILTER" \

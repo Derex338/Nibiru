@@ -8,266 +8,304 @@
 
 - type: stack
   id: Copper
-  name: copper
+  name: stack-copper
+
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: copper }
   spawn: IngotCopper1
   maxCount: 30
 
 - type: stack
   id: Bronze
-  name: bronze
+  name: stack-bronze
+
   icon: { sprite: "/Textures/_Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi", state: Bronze_1 }
   spawn: IngotBronze1
   maxCount: 30
 
 - type: stack
   id: Tin
-  name: tin
+  name: stack-tin
+
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: iron }
   spawn: IngotTin1
   maxCount: 30
 
 - type: stack
   id: BronzeScrap
-  name: metal scraps (bronze)
+  name: stack-bronze-scrap
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: BronzeScraps }
   spawn: BronzeScrap
   maxCount: 1
 
 - type: stack
   id: BronzeInlay
-  name: bronze inlay
+  name: stack-bronze-inlay
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi, state: icon }
   spawn: BronzeInlay
   maxCount: 2
 
 - type: stack
   id: BronzeArrowTip
-  name: bronze arrow tip
+  name: stack-bronze-arrow-tip
+
   icon: { sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi, state: tip }
   spawn: BronzeArrowTip
   maxCount: 1
 
 - type: stack
   id: BronzeArrowTipArmor
-  name: bronze armor-piercing arrow tip
+  name: stack-bronze-arrow-tip-armor
+
   icon: { sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi, state: tip }
   spawn: BronzeArrowTipArmor
   maxCount: 1
 
 - type: stack
   id: BronzeTopHammerPiece
-  name: bronze hammer head
+  name: stack-bronze-top-hammer-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/HammerSmall.rsi, state: tip }
   spawn: BronzeTopHammerPiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopMacePiece
-  name: bronze mace head
+  name: stack-bronze-top-mace-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/HammerBig.rsi, state: tip }
   spawn: BronzeTopMacePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopAxePiece
-  name: bronze axe head
+  name: stack-bronze-top-axe-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hatchet.rsi, state: tip }
   spawn: BronzeTopAxePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopBattleAxePiece
-  name: bronze battle axe head
+  name: stack-bronze-top-battle-axe-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi, state: blade }
   spawn: BronzeTopBattleAxePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTopSpearPiece
-  name: bronze spear tip
+  name: stack-bronze-top-spear-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi, state: tip }
   spawn: BronzeTopSpearPiece
   maxCount: 1
 
 - type: stack
   id: BronzeSwordBladePiece
-  name: bronze sword blade
+  name: stack-bronze-sword-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi, state: blade }
   spawn: BronzeSwordBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeDaggerBladePiece
-  name: bronze dagger blade
+  name: stack-bronze-dagger-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Dagger.rsi, state: blade }
   spawn: BronzeDaggerBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeTridentPiece
-  name: bronze trident head
+  name: stack-bronze-trident-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeTrident.rsi, state: tip }
   spawn: BronzeTridentPiece
   maxCount: 1
 
 - type: stack
   id: BronzeShieldPiece
-  name: bronze shield facing
+  name: stack-bronze-shield-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
   spawn: BronzeShieldPiece
   maxCount: 1
 
 - type: stack
   id: BronzeKnifeBladePiece
-  name: bronze knife blade
+  name: stack-bronze-knife-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi, state: blade }
   spawn: BronzeKnifeBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeClippersPiece
-  name: bronze clippers part
+  name: stack-bronze-clippers-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Clippers.rsi, state: tip }
   spawn: BronzeClippersPiece
   maxCount: 1
 
 - type: stack
   id: BronzeHoeBladePiece
-  name: bronze hoe blade
+  name: stack-bronze-hoe-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi, state: tip }
   spawn: BronzeHoeBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzePickaxeBladePiece
-  name: bronze pickaxe tip
+  name: stack-bronze-pickaxe-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi, state: tip }
   spawn: BronzePickaxeBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeScytheBladePiece
-  name: bronze scythe blade
+  name: stack-bronze-scythe-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Scythe.rsi, state: blade }
   spawn: BronzeScytheBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeShovelPiece
-  name: bronze shovel head
+  name: stack-bronze-shovel-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Shovel.rsi, state: tip }
   spawn: BronzeShovelPiece
   maxCount: 1
 
 - type: stack
   id: BronzeHelmetPiece
-  name: bronze helmet base
+  name: stack-bronze-helmet-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Helmet.rsi, state: piece }
   spawn: BronzeHelmetPiece
   maxCount: 1
 
 - type: stack
   id: BronzeChestplatePiece
-  name: bronze chestplate part
+  name: stack-bronze-chestplate-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi, state: piece }
   spawn: BronzeChestplatePiece
   maxCount: 1
 
 - type: stack
   id: BronzeAnvilPiece
-  name: bronze anvil blank
+  name: stack-bronze-anvil-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
   spawn: BronzeAnvilPiece
   maxCount: 1
 
 - type: stack
   id: BronzeLockPiece
-  name: bronze lock part
+  name: stack-bronze-lock-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
   spawn: BronzeLockPiece
   maxCount: 1
 
 - type: stack
   id: BronzeKeyPiece
-  name: bronze key blank
+  name: stack-bronze-key-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
   spawn: BronzeKeyPiece
   maxCount: 1
 
 - type: stack
   id: BronzeRaspPiece
-  name: bronze rasp blank
+  name: stack-bronze-rasp-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
   spawn: BronzeRaspPiece
   maxCount: 1
 
 - type: stack
   id: BronzeKhapeshBladePiece
-  name: bronze khopesh blade
+  name: stack-bronze-khapesh-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Khapesh.rsi, state: blade }
   spawn: BronzeKhapeshBladePiece
   maxCount: 1
 
 - type: stack
   id: BronzeXiphosBladePiece
-  name: bronze xiphos blade
+  name: stack-bronze-xiphos-blade-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi, state: blade }
   spawn: BronzeXiphosBladePiece
   maxCount: 1
 
 - type: stack
   id: WheelBlank
-  name: wheel blank
+  name: stack-wheel-blank
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: frame }
   spawn: WheelBlank
   maxCount: 1
 
 - type: stack
   id: WoodenWheel
-  name: wooden wheel
+  name: stack-wooden-wheel
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi, state: icon }
   spawn: WoodenWheel
   maxCount: 2
 
 - type: stack
   id: CoinBronze
-  name: bronze coin
+  name: stack-coin-bronze
+
   icon: { sprite: _CE/Objects/Materials/Currency/coin_cp.rsi, state: coin10 }
   spawn: CoinBronze1
   maxCount: 100
 
 - type: stack
   id: CoinSilver
-  name: silver coin
+  name: stack-coin-silver
+
   icon: { sprite: _CE/Objects/Materials/Currency/coin_sp.rsi, state: coin10 }
   spawn: CoinSilver1
   maxCount: 100
 
 - type: stack
   id: CoinGold
-  name: gold coin
+  name: stack-coin-gold
+
   icon: { sprite: _CE/Objects/Materials/Currency/coin_gp.rsi, state: coin10 }
   spawn: CoinGold1
   maxCount: 100
 
 - type: stack
   id: BronzeRod
-  name: bronze rod
+  name: stack-bronze-rod
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeRod.rsi, state: rod_1 }
   spawn: BronzeRod
   maxCount: 30
 
 - type: stack
   id: BronzeChainmailPiece
-  name: bronze chainmail link
+  name: stack-bronze-chainmail-piece
+
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeChainPiece.rsi, state: piece_1 }
   spawn: BronzeChainmailPiece
   maxCount: 30
 
 - type: stack
   id: Papyrus
-  name: papyrus
+  name: stack-papyrus
+
   icon: { sprite: _CE/Objects/Bureaucracy/paper.rsi, state: paper }
   spawn: Papyrus
   maxCount: 1
@@ -278,7 +316,7 @@
 
 - type: material
   id: Copper
-  stackEntity: IngotCopper
+  stackEntity: IngotCopper1
   name: copper
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ingots.rsi, state: copper }
@@ -287,7 +325,7 @@
 
 - type: material
   id: Tin
-  stackEntity: IngotTin
+  stackEntity: IngotTin1
   name: tin
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ingots.rsi, state: iron }
@@ -296,7 +334,7 @@
 
 - type: material
   id: Bronze
-  stackEntity: IngotBronze
+  stackEntity: IngotBronze1
   name: bronze
   unit: materials-unit-piece
   icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }

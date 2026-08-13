@@ -10,7 +10,7 @@ namespace Content.Server._CE.ZLevels.Ghost;
 
 public sealed partial class CEZLevelGhostMoverSystem : CESharedZLevelGhostMoverSystem
 {
-[Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     public override void Initialize()
     {

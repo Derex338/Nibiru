@@ -17,8 +17,10 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// </summary>
 public sealed partial class NibiruNpcPackSystem : EntitySystem
 {
-[Dependency] private IGameTiming _timing = default!;
-[Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {

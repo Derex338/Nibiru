@@ -26,7 +26,6 @@
     materialComposition:
       CEBrass: 5
   - type: FloorTile
-    placeDelay: 2
     placeTileSound:
       path: /Audio/Items/genhit.ogg
       params:
@@ -87,7 +86,6 @@
     materialComposition:
       CEIron: 5
   - type: FloorTile
-    placeDelay: 2
     placeTileSound:
       path: /Audio/Items/genhit.ogg
       params:

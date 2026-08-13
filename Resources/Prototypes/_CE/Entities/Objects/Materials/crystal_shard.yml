@@ -23,8 +23,9 @@
         shard2: Inherit
         shard3: Inherit
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -66,9 +67,12 @@
   - type: PhysicalComposition
     materialComposition:
       CEBrass: 10
+  - type: StaticPrice
+    price: 14
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

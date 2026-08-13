@@ -2,8 +2,8 @@
   id: BronzeAgeBed
   suffix: Nibiru, BronzeAge
   parent: Bed
-  name: деревянная кровать
-  description: Простая кровать из досок и соломы.
+  name: wooden bed
+  description: A simple bed made of planks and straw.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/WoodBed.rsi
@@ -16,8 +16,8 @@
   id: BronzeAgeChest
   suffix: Nibiru, BronzeAge
   parent: CrateGeneric
-  name: сундук
-  description: Деревянный сундук для хранения вещей.
+  name: chest
+  description: A wooden chest for storing belongings.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/WoodChest.rsi
@@ -29,6 +29,9 @@
   - type: Icon
     sprite: _Nibiru/EpochSpecified/BronzeAge/Structures/WoodChest.rsi
     state: crate_icon
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
   - type: Construction
     graph: BronzeAgeChest
     node: fin
@@ -36,9 +39,9 @@
 - type: entity
   id: BronzeBell
   suffix: Nibiru, BronzeAge
-  name: бронзовый колокол
+  name: bronze bell
   parent: [BaseStructure, BaseBronzeStructure]
-  description: Большой бронзовый колокол. Его звон разносится на многие мили.
+  description: A large bronze bell. Its toll carries for many miles.
   placement:
     mode: SnapgridCenter
   components:
@@ -63,6 +66,7 @@
   - type: Fixtures
   - type: InteractionOutline
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

@@ -4,84 +4,92 @@
 
 - type: construction
   id: Wagon
-  name: Wagon
+  name: construction-recipe-wagon
+
   graph: Wagon
   startNode: start
   targetNode: fin
-  category: Structures
+  category: construction-category-structures
   objectType: Structure
 
 - type: construction
   id: Saddle
-  name: Saddle
+  name: construction-recipe-saddle
+
   graph: Saddle
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: BronzeAgeBed
-  name: Wooden Bed
+  name: construction-recipe-bronze-age-bed
+
   graph: BronzeAgeBed
   startNode: start
   targetNode: fin
-  category: Furniture
+  category: construction-category-furniture
   objectType: Structure
   canRotate: true
 
 - type: construction
   id: BronzeAgeChest
-  name: Chest
+  name: construction-recipe-bronze-age-chest
+
   graph: BronzeAgeChest
   startNode: start
   targetNode: fin
-  category: Furniture
+  category: construction-category-furniture
   objectType: Structure
   canRotate: true
 
 - type: construction
   id: CoinPurse
-  name: Coin Purse
+  name: construction-recipe-coin-purse
+
   graph: CoinPurse
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - BasicWorkbench
 
 - type: construction
   id: LeatherBackBackpack
-  name: Leather Backpack
+  name: construction-recipe-leather-back-backpack
+
   graph: LeatherBackBackpack
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: LeatherBackSatchel
-  name: Leather Satchel
+  name: construction-recipe-leather-back-satchel
+
   graph: LeatherBackSatchel
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench
 
 - type: construction
   id: LeatherBeltPouch
-  name: Leather Belt Pouch
+  name: construction-recipe-leather-belt-pouch
+
   graph: LeatherBeltPouch
   startNode: start
   targetNode: fin
-  category: Gear
+  category: construction-category-gear
   objectType: Item
   entitysToShowRecipe:
     - LoomWorkbench

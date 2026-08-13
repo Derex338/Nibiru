@@ -28,10 +28,6 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
 
     protected NibiruSurvivalRuleComponent? Rule;
 
-    //protected const byte ChunkSize = SharedBiomeSystem.ChunkSize;
-
-    //protected EntityQuery<RimFortressPlayerComponent> PlayerQuery;
-
     private int _playerSafeRadius = 100;
     protected int SpawnAreaRadius = 20;
     protected int MinSpawnAreaTiles = 100;

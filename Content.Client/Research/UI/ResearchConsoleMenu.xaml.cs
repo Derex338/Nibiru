@@ -46,6 +46,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     public void SetEntity(EntityUid entity)
     {
         Entity = entity;
+        this.SetTitleFromEntity(_entity, entity);
     }
 
     public void UpdatePanels(ResearchConsoleBoundInterfaceState state)

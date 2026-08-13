@@ -1,7 +1,9 @@
 using Content.Shared.Cargo;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Research.Components;
@@ -11,7 +13,6 @@ using Content.Shared.Research.TechnologyDisk.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.Research.TechnologyDisk.Systems;
 
@@ -43,12 +44,12 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to pick and set a random recipe as the chosen one.
-    /// If the disk already has recipes, does nothing.
+    /// Attempts to pick and set a random recipe/craft as the chosen one.
+    /// If the disk already has recipes or crafts, does nothing.
     /// </summary>
     private void TryPickAndSetRecipe(Entity<TechnologyDiskComponent> ent)
     {
-        if (ent.Comp.Recipes != null)
+        if (ent.Comp.Recipes != null || ent.Comp.Crafts != null)
             return;
 
         int tier;
@@ -63,8 +64,8 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
             ent.Comp.Tier = tier;
         }
 
-        // get a list of every distinct recipe in all the technologies.
-        var bundles = new HashSet<(ProtoId<LatheRecipePrototype> recipe, ProtoId<TechDisciplinePrototype> discipline)>();
+        var recipeBundles = new HashSet<(ProtoId<LatheRecipePrototype> recipe, ProtoId<TechDisciplinePrototype> discipline)>();
+        var craftBundles = new HashSet<(ProtoId<ConstructionPrototype> craft, ProtoId<TechDisciplinePrototype> discipline)>();
         foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
         {
             if (tech.Tier != tier)
@@ -74,22 +75,34 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
 
             foreach (var recipe in tech.RecipeUnlocks)
             {
-                bundles.Add((recipe, tech.Discipline));
+                recipeBundles.Add((recipe, tech.Discipline));
+            }
+
+            foreach (var craft in tech.CraftUnlocks)
+            {
+                craftBundles.Add((craft, tech.Discipline));
             }
         }
 
-        if (bundles.Count == 0)
+        if (craftBundles.Count > 0)
         {
-            Log.Error($"Failed to pick recipe for a tech disk: no suitable recipes were found");
+            var bundle = _random.Pick(craftBundles);
+            ent.Comp.Discipline = bundle.discipline;
+            ent.Comp.Crafts = new List<ProtoId<ConstructionPrototype>> { bundle.craft };
+            Dirty(ent);
             return;
         }
 
-        // pick one
-        var bundle = _random.Pick(bundles);
-        ent.Comp.Discipline = bundle.discipline;
-        ent.Comp.Recipes = [];
-        ent.Comp.Recipes.Add(bundle.recipe);
-        Dirty(ent);
+        if (recipeBundles.Count > 0)
+        {
+            var bundle = _random.Pick(recipeBundles);
+            ent.Comp.Discipline = bundle.discipline;
+            ent.Comp.Recipes = new List<ProtoId<LatheRecipePrototype>> { bundle.recipe };
+            Dirty(ent);
+            return;
+        }
+
+        Log.Warning($"Failed to pick recipe for a tech disk: no suitable recipes were found (tier={tier}, discipline={ent.Comp.Discipline})");
     }
 
     /// <summary>
@@ -138,6 +151,15 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
                 _research.AddLatheRecipe(target, recipe, database);
             }
         }
+
+        if (ent.Comp.Crafts != null)
+        {
+            foreach (var craft in ent.Comp.Crafts)
+            {
+                _research.AddCraft(target, craft, database);
+            }
+        }
+
         _popup.PopupClient(Loc.GetString("tech-disk-inserted"), target, args.User);
         PredictedQueueDel(ent.Owner);
         args.Handled = true;
@@ -161,14 +183,24 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
         }
 
         var message = Loc.GetString("tech-disk-examine-none");
-        if (ent.Comp.Recipes != null && ent.Comp.Recipes.Count > 0)
+        var unlockCount = 0;
+
+        if (ent.Comp.Recipes is { Count: > 0 })
         {
             var prototype = _protoMan.Index(ent.Comp.Recipes[0]);
             message = Loc.GetString("tech-disk-examine", ("result", _lathe.GetRecipeName(prototype)));
-
-            if (ent.Comp.Recipes.Count > 1) //idk how to do this well. sue me.
-                message += " " + Loc.GetString("tech-disk-examine-more");
+            unlockCount += ent.Comp.Recipes.Count;
         }
+        else if (ent.Comp.Crafts is { Count: > 0 })
+        {
+            var prototype = _protoMan.Index(ent.Comp.Crafts[0]);
+            message = Loc.GetString("tech-disk-examine", ("result", GetCraftName(prototype)));
+            unlockCount += ent.Comp.Crafts.Count;
+        }
+
+        if (unlockCount > 1)
+            message += " " + Loc.GetString("tech-disk-examine-more");
+
         args.PushMarkup(message);
     }
 
@@ -194,6 +226,23 @@ public sealed partial class TechnologyDiskSystem : EntitySystem
                 args.AddModifier("tech-disk-name-format", extraArgs: ("technology", _lathe.GetRecipeName(proto)));
             }
         }
+
+        if (entity.Comp.Crafts != null)
+        {
+            foreach (var craft in entity.Comp.Crafts)
+            {
+                var proto = _protoMan.Index(craft);
+                args.AddModifier("tech-disk-name-format", extraArgs: ("technology", GetCraftName(proto)));
+            }
+        }
+    }
+
+    private string GetCraftName(ConstructionPrototype prototype)
+    {
+        if (prototype.SetName is { } locId)
+            return Loc.GetString(locId);
+
+        return prototype.Name ?? prototype.ID;
     }
 }
 

@@ -3,8 +3,8 @@
   parent: [BaseArrow, BaseBronzeItem]
   id: BronzeArrow
   suffix: Nibiru, BronzeAge
-  name: бронзовая стрела
-  description: Когда надо перестрелять птиц. Не забудьте намазать ядом гидры!
+  name: bronze arrow
+  description: For when you need to shoot birds. Do not forget to coat with hydra venom!
   components:
   - type: Item
     size: Small
@@ -42,8 +42,8 @@
   parent: [BronzeArrow]
   id: BronzeArrowAP
   suffix: Nibiru, BronzeAge
-  name: бронебойная бронзовая стрела
-  description: Тяжелая стрела с узким наконечником, способная пробить доспехи.
+  name: armor-piercing bronze arrow
+  description: A heavy arrow with a narrow tip, capable of piercing armor.
   components:
   - type: Projectile
     damage:

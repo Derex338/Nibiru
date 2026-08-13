@@ -42,16 +42,16 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// </summary>
 public sealed partial class NibiruNpcCombatSystem : EntitySystem
 {
-[Dependency] private IGameTiming _timing = default!;
-[Dependency] private MobStateSystem _mobState = default!;
-[Dependency] private SharedMeleeWeaponSystem _melee = default!;
-[Dependency] private SharedCombatModeSystem _combat = default!;
-[Dependency] private JitteringSystem _jitter = default!;
-[Dependency] private SharedTransformSystem _xform = default!;
-[Dependency] private SharedPhysicsSystem _physics = default!;
-[Dependency] private NPCSteeringSystem _steering = default!;
-[Dependency] private DamageableSystem _damageable = default!;
-[Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private SharedCombatModeSystem _combat = default!;
+    [Dependency] private JitteringSystem _jitter = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {

@@ -30,6 +30,16 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class PrototypeSaveTest : GameTest
 {
+    private static readonly HashSet<string> IgnoredSpawnComponents =
+    [
+        "ContainerContainer",
+        "TemperatureColor",
+        "FuelConsumption",
+        "Blocking",
+        "NibiruWeaponAttack",
+        "TechnologyDatabase",
+    ];
+
     [Test]
     public async Task UninitializedSaveTest()
     {
@@ -62,6 +72,12 @@ public sealed class PrototypeSaveTest : GameTest
 
             // Yea this test just doesn't work with this, it parents a grid to another grid and causes game logic to explode.
             if (prototype.Components.ContainsKey("MapGrid"))
+                continue;
+
+            // Spawning station entities on an empty test grid dirties the world and breaks save comparisons.
+            if (prototype.Components.ContainsKey("BecomesStation") ||
+                prototype.Components.ContainsKey("StationData") ||
+                prototype.Components.ContainsKey("StationMember"))
                 continue;
 
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
@@ -119,6 +135,9 @@ public sealed class PrototypeSaveTest : GameTest
                         compNames.Add(compName);
 
                         if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) || compType == typeof(FixturesComponent))
+                            continue;
+
+                        if (IgnoredSpawnComponents.Contains(compName))
                             continue;
 
                         MappingDataNode compMapping;

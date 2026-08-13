@@ -40,8 +40,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - CEMiningGuideEN
@@ -89,8 +90,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - CEMiningGuideEN
@@ -106,7 +108,6 @@
     color: "#b87333"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#b87333"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -140,8 +141,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - CEMiningGuideEN
@@ -157,7 +159,6 @@
     color: "#91a1b0"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#91a1b0"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -191,8 +192,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - CEMiningGuideEN
@@ -208,7 +210,6 @@
     color: "#d1d1d1"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#d1d1d1"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -242,8 +243,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - CEMiningGuideEN
@@ -259,7 +261,6 @@
     color: "#ffd700"
   - type: Icon
     sprite: _CE/Structures/Architecture/Walls/cave_stone_iron.rsi
-    color: "#ffd700"
   - type: IconSmooth
     base: wall
   - type: Destructible
@@ -293,8 +294,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - CEMiningGuideEN

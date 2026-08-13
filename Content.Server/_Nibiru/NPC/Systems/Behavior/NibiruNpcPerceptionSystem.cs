@@ -15,8 +15,9 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// </summary>
 public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
 {
-[Dependency] private EntityLookupSystem _lookup = default!;
-[Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

@@ -5,7 +5,7 @@ namespace Content.Client._Nibiru.NPC.Systems;
 
 public sealed partial class NibiruLeashSystem : EntitySystem
 {
-[Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
 
     public override void Initialize()
     {

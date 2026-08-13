@@ -18,11 +18,7 @@ public sealed class WorkbenchBoundUserInterface : BoundUserInterface
 
         _menu = this.CreateWindow<WorkbenchWindow>();
         _menu.SetEntity(Owner);
-
-        _menu.PopulateRecipes += (_, _) =>
-        {
-            SendMessage(new RequestRecipesWorkbenchMessage());
-        };
+        SendMessage(new RequestRecipesWorkbenchMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

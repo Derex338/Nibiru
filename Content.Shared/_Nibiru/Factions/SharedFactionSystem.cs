@@ -7,8 +7,6 @@ namespace Content.Shared._Nibiru.Factions;
 
 public sealed partial class SharedFactionSystem : EntitySystem
 {
-    [Dependency] private IEntityManager _entity = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -20,15 +18,14 @@ public sealed partial class SharedFactionSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        // Do not show faction if identity is hidden
         var ev = new SeeIdentityAttemptEvent();
-        _entity.EventBus.RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
             return;
 
         var colorHex = component.FactionColor.ToHex();
         var rank = string.IsNullOrEmpty(component.Rank) ? Loc.GetString("faction-rank-no-rank") : component.Rank;
-        
+
         args.PushMarkup(Loc.GetString("faction-examine-member", ("color", colorHex), ("name", component.FactionName), ("rank", rank)));
     }
 
@@ -41,10 +38,10 @@ public sealed partial class SharedFactionSystem : EntitySystem
 
         if (TryComp<FactionComponent>(player, out var factionComponent))
         {
-            if(CreatorCheck)
+            if (CreatorCheck)
                 return factionComponent.IsCreator;
-            else if (!CreatorCheck)
-                return !factionComponent.IsCreator;
+
+            return !factionComponent.IsCreator;
         }
 
         return false;

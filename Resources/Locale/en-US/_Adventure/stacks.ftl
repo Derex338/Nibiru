@@ -1,0 +1,1 @@
+stack-insect-wax = wax

@@ -18,9 +18,9 @@ namespace Content.Server._CE.ZLevels.Mapping.Commands;
 [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
 public sealed partial class CESaveZNetworkCommand : LocalizedEntityCommands
 {
-[Dependency] private IEntityManager _entities = default!;
-[Dependency] private MapSystem _map = default!;
-[Dependency] private MapLoaderSystem _mapLoader = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private MapLoaderSystem _mapLoader = default!;
 
     public override string Command => "znetwork-save";
     public override string Description => "Save all zNetwork maps to default server folder";

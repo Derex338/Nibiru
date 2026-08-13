@@ -15,8 +15,8 @@ namespace Content.Client._CE.ZLevels.Core;
 
 public sealed partial class CEZLevelBlurOverlay : Overlay
 {
-[Dependency] private IPrototypeManager _proto = default!;
-[Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IEntityManager _entity = default!;
     private readonly ShaderInstance? _blurShader;
 
     public override bool RequestScreenTexture => true;

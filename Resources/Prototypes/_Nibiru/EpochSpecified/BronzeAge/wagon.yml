@@ -1,8 +1,8 @@
 - type: entity
-  name: каркас повозки
+  name: wagon frame
   id: WagonFrame
   parent: BaseStructure
-  description: Незавершенный каркас деревянной повозки.
+  description: An unfinished wooden wagon frame.
   components:
     - type: Transform
       anchored: false
@@ -15,10 +15,10 @@
       node: frame
 
 - type: entity
-  name: повозка
+  name: wagon
   id: Wagon
   parent: [BaseStructureDynamic, StructureWheeled]
-  description: Деревянная повозка для перевозки грузов.
+  description: A wooden wagon for transporting goods.
   components:
     - type: Transform
       anchored: false
@@ -39,6 +39,7 @@
           mask:
           - MobMask
     - type: Damageable
+    - type: Injurable
       damageContainer: Inorganic
     - type: Destructible
       thresholds:

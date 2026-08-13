@@ -9,7 +9,7 @@ namespace Content.Client._Nibiru.Construction;
 
 public sealed partial class ConstructionRecipeCheck : EntitySystem
 {
-[Dependency] private IPlayerManager _players = default!;
+    [Dependency] private IPlayerManager _players = default!;
 
     public event Action<RecipeData>? OnConstructionRecipeUpdate;
 

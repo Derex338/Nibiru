@@ -9,6 +9,7 @@ using Content.Shared.Gibbing;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
@@ -31,6 +32,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
@@ -140,6 +142,9 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
+        var stacked = TryComp(uid, out StackComponent? stack);
+        var keepSource = stacked && stack!.Count > 1;
+
         if (component.RefineResult.Count == 0)
             Log.Warning($"Attempted to refine {ToPrettyString(ent)}, but no spawns were supplied. Refining should leave results.");
         else
@@ -148,23 +153,34 @@ public sealed partial class ToolRefinablSystem : EntitySystem
             var rndSeed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, args.User.Id, uid.Id);
             var rng = new RobustRandom();
             rng.SetSeed(rndSeed);
-            SpawnRefinement(component.RefineResult, uid, rng);
+            SpawnRefinement(component.RefineResult, uid, rng, removeSourceFromContainer: !keepSource);
         }
 
         if (component.Sound != null)
             _audio.PlayPredicted(component.Sound, Transform(uid).Coordinates, args.User, AudioParams.Default.WithVolume(-2));
 
+        if (stacked)
+        {
+            _stack.TryUse((uid, stack), 1);
+            return;
+        }
+
         _gib.Gib(uid);
         _destructible.DestroyEntity(uid);
     }
 
-    private void SpawnRefinement(List<EntitySpawnEntry> spawnList, EntityUid source, IRobustRandom rng)
+    private void SpawnRefinement(List<EntitySpawnEntry> spawnList, EntityUid source, IRobustRandom rng, bool removeSourceFromContainer = true)
     {
         var spawns = EntitySpawnCollection.GetSpawns(spawnList, rng);
         var spawned = new List<EntityUid>(spawns.Count);
 
-        if (_container.TryGetContainingContainer(source, out var container))
-            _container.Remove((source, null, null), container);
+        BaseContainer? container = null;
+        if (_container.TryGetContainingContainer(source, out var containing))
+        {
+            container = containing;
+            if (removeSourceFromContainer)
+                _container.Remove((source, null, null), container);
+        }
 
         foreach (var protoId in spawns)
         {

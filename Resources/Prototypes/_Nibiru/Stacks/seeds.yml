@@ -1,13 +1,13 @@
 - type: stack
   id: CESeedPoppy
-  name: ce-stack-poppy-seeds
+  name: stack-poppy-seeds
   spawn: CESeedPoppy
   icon: { sprite: _Nibiru/Flora/Plants/poppy.rsi, state: seed }
   maxCount: 30
 
 - type: stack
   id: CESeedAloe
-  name: ce-stack-aloe-seeds
+  name: stack-aloe-seeds
   spawn: CESeedAloe
   icon: { sprite: _Nibiru/Flora/Plants/aloe.rsi, state: seed }
   maxCount: 30

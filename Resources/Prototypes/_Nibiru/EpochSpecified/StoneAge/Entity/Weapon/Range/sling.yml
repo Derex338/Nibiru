@@ -1,9 +1,9 @@
 - type: entity
   id: Sling
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseBow
-  name: праща
-  description: Простое метательное орудие для метания камней.
+  name: sling
+  description: A simple throwing weapon for slinging stones.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
@@ -52,7 +52,7 @@
 
 - type: entity
   id: SpearThrower
-  suffix: Нибиру, Каменный век
+  suffix: Nibiru, Stone Age
   parent: BaseBow
   name: spear thrower
   description: A simple device using leverage to achieve greater velocity in dart-throwing or spear-throwing.

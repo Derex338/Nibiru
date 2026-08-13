@@ -14,10 +14,10 @@ namespace Content.Server._Nibiru.Factions;
 /// </summary>
 public sealed partial class FactionBroadcaster : EntitySystem
 {
-[Dependency] private FactionSystem _factionSystem = default!;
-[Dependency] private IPlayerManager _playerManager = default!;
-[Dependency] private GameTicker _gameTicker = default!;
-[Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private FactionSystem _factionSystem = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     private TimeSpan _nextBroadcast = TimeSpan.Zero;
     private const float BroadcastInterval = 2f; // Отправляем обновления каждые 2 секунды

@@ -1,6 +1,6 @@
 - type: reagent
   id: CopperMolten
-  name: copper
+  name: reagent-name-copper-molten
   group: Elements
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
@@ -12,7 +12,7 @@
 
 - type: reagent
   id: TinMolten
-  name: tin
+  name: reagent-name-tin-molten
   group: Elements
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
@@ -24,7 +24,7 @@
 
 - type: reagent
   id: BronzeMolten
-  name: bronze
+  name: reagent-name-bronze-molten
   group: Elements
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
@@ -36,7 +36,7 @@
 
 - type: reagent
   id: GoldMolten
-  name: gold
+  name: reagent-name-gold-molten
   group: Elements
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic
@@ -48,7 +48,7 @@
 
 - type: reagent
   id: SilverMolten
-  name: silver
+  name: reagent-name-silver-molten
   group: Elements
   desc: reagent-desc-silver
   physicalDesc: reagent-physical-desc-reasonably-metallic

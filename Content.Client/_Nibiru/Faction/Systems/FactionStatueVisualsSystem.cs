@@ -11,6 +11,7 @@ namespace Content.Client._Nibiru.Faction.Systems;
 /// </summary>
 public sealed partial class FactionStatueVisualsSystem : EntitySystem
 {
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

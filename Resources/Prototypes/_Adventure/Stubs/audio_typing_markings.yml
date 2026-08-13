@@ -1,0 +1,35 @@
+- type: soundCollection
+  id: AliensWallDestroy
+  files:
+  - /Audio/Effects/metal_break1.ogg
+  - /Audio/Effects/metal_break2.ogg
+  - /Audio/Effects/metal_break3.ogg
+
+- type: soundCollection
+  id: SnakeSpeach
+  files:
+  - /Audio/_Adventure/Voice/Snake/ZerahSpeach1.ogg
+  - /Audio/_Adventure/Voice/Snake/ZerahSpeach2.ogg
+  - /Audio/_Adventure/Voice/Snake/ZerahSpeach3.ogg
+
+- type: soundCollection
+  id: PigManSpeach
+  files:
+  - /Audio/_Adventure/Voice/PigMan/PigTalk1.ogg
+  - /Audio/_Adventure/Voice/PigMan/PigTalk2.ogg
+  - /Audio/_Adventure/Voice/PigMan/PigTalk3.ogg
+
+- type: typingIndicator
+  id: bird
+  typingState: default0
+  idleState: default3
+
+- type: markingsGroup
+  parent: Undergarments
+  id: InsectSerpentide
+  onlyGroupWhitelisted: true
+
+- type: markingsGroup
+  parent: Undergarments
+  id: Dwarf
+

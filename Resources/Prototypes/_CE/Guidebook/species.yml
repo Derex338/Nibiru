@@ -1,143 +1,111 @@
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CESpeciesGuideEN
-# #   name: Playable Races
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Species.xml"
-# #   filterEnabled: True
-# #   children:
-# #   - CEHumanGuideEN
-# #   - CEElfGuideEN
-# #   - CECarcatGuideEN
-# #   - CECarrinGuideEN
-# #   - CEGoblinGuideEN
-# #   - CESilvaGuideEN
-# #   - CETieflingGuideEN
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CESpeciesGuideRU
-# #  name: Playable Species
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Species.xml"
-# #  filterEnabled: True
-# #  children:
-# #  - CEHumanGuideRU
-# #  - CEElfGuideRU
-# #  - CECarcatRU
-# #  - CECarrinRU
-# #  - CEGoblinRU
-# #  - CESilvaRU
-# #  - CETieflingRU
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CEHumanGuideEN
-# #   name: Humans
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Human.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CEHumanGuideRU
-# #  name: Humans
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Human.xml"
-# #  filterEnabled: True
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CEElfGuideEN
-# #   name: Elves
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Elf.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CEElfGuideRU
-# #  name: Elves
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Elf.xml"
-# #  filterEnabled: True
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CECarcatGuideEN
-# #   name: Carcats
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Carcat.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CECarcatGuideRU
-# #  name: Carcats
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Carcat.xml"
-# #  filterEnabled: True
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CECarrinGuideEN
-# #   name: Carrins
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Carrin.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CECarrinGuideRU
-# #  name: Carrins
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Carrin.xml"
-# #  filterEnabled: True
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CEGoblinGuideEN
-# #   name: Goblins
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Goblin.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CEGoblinGuideRU
-# #  name: Goblins
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Goblin.xml"
-# #  filterEnabled: True
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CESilvaGuideEN
-# #   name: Silvas
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Silva.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CESilvaGuideRU
-# #  name: Silvas
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Silva.xml"
-# #  filterEnabled: True
-# 
-# # - type: guideEntry
-# #   hidden: false
-# #   locFilter: "en-US"
-# #   id: CETieflingGuideEN
-# #   name: Tieflings
-# #   text: "/ServerInfo/_CE/Guidebook_EN/Species/Tiefling.xml"
-# #   filterEnabled: True
-# 
-# #- type: guideEntry
-# #  hidden: false
-# #  locFilter: "ru-RU"
-# #  id: CETieflingGuideRU
-# #  name: Tieflings
-# #  text: "/ServerInfo/_CE/Guidebook_RU/Species/Tiefling.xml"
-# #  filterEnabled: True
+- type: guideEntry
+  id: CESpeciesGuideEN
+  name: guide-entry-ce-species
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Species.xml"
+  filterEnabled: True
+  children:
+  - CEHumanGuideEN
+  - CEElfGuideEN
+  - CECarcatGuideEN
+  - CECarrinGuideEN
+  - CEGoblinGuideEN
+  - CESilvaGuideEN
+  - CETieflingGuideEN
+
+- type: guideEntry
+  id: CESpeciesGuideRU
+  name: guide-entry-ce-species
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Species.xml"
+  filterEnabled: True
+  children:
+  - CEHumanGuideRU
+  - CEElfGuideRU
+  - CECarcatGuideRU
+  - CECarrinGuideRU
+  - CEGoblinGuideRU
+  - CESilvaGuideRU
+  - CETieflingGuideRU
+
+- type: guideEntry
+  id: CEHumanGuideEN
+  name: guide-entry-ce-species-human
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Human.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CEHumanGuideRU
+  name: guide-entry-ce-species-human
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Human.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CEElfGuideEN
+  name: guide-entry-ce-species-elf
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Elf.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CEElfGuideRU
+  name: guide-entry-ce-species-elf
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Elf.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CECarcatGuideEN
+  name: guide-entry-ce-species-carcat
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Carcat.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CECarcatGuideRU
+  name: guide-entry-ce-species-carcat
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Carcat.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CECarrinGuideEN
+  name: guide-entry-ce-species-carrin
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Carrin.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CECarrinGuideRU
+  name: guide-entry-ce-species-carrin
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Carrin.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CEGoblinGuideEN
+  name: guide-entry-ce-species-goblin
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Goblin.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CEGoblinGuideRU
+  name: guide-entry-ce-species-goblin
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Goblin.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CESilvaGuideEN
+  name: guide-entry-ce-species-silva
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Silva.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CESilvaGuideRU
+  name: guide-entry-ce-species-silva
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Silva.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CETieflingGuideEN
+  name: guide-entry-ce-species-tiefling
+  text: "/ServerInfo/_CE/Guidebook_EN/Species/Tiefling.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: CETieflingGuideRU
+  name: guide-entry-ce-species-tiefling
+  text: "/ServerInfo/_CE/Guidebook_RU/Species/Tiefling.xml"
+  filterEnabled: True

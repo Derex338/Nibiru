@@ -1,10 +1,11 @@
 - type: marking
   id: PigNoseBase
   bodyPart: Snout
-  markingCategory: Snout
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [PigMan]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: nose_base
@@ -12,17 +13,18 @@
 - type: marking
   id: PigEarsBase
   bodyPart: HeadSide
-  markingCategory: HeadSide
-  followSkinColor: true
   forcedColoring: true
   groupWhitelist: [PigMan]
+  coloring:
+    default:
+      type: !type:SkinColoring
   sprites:
   - sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: ears_base
 
 - type: species
   id: PigMan
-  name: Trottin
+  name: species-name-pigman
   roundStart: true
   prototype: MobPigMan
   dollPrototype: AppearancePigMan
@@ -74,7 +76,7 @@
   parent: BaseSpeciesAppearance
   id: AppearancePigMan
   categories: [ HideSpawnMenu ]
-  name: pigman appearance
+
   components:
   - type: InitialBody
     organs:
@@ -118,26 +120,16 @@
 
 - type: metabolizerType
   id: PigMan
-  name: PigMan
-
+  name: species-name-pigman
 - type: entity
   id: OrganPigManStomach
   parent: OrganHumanStomach
-  name: Trottin stomach
+
   components:
   - type: Sprite
     sprite: _Adventure/Races/PigMan/organs.rsi
     state: stomach
   - type: Organ
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 100
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 7
   - type: Stomach
     specialDigestible:
       tags:
@@ -150,7 +142,7 @@
 - type: entity
   id: OrganPigManHeart
   parent: OrganHumanHeart
-  name: Trottin heart
+
   description: тук тук
   categories: [ HideSpawnMenu ]
   components:
@@ -161,17 +153,13 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ PigMan ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
 
 #Части Троттина
 
 - type: entity
   id: PartPigMan
   parent: [BaseItem, OrganBaseOrganic]
-  name: "Trottin body part"
+
   abstract: true
   components:
   - type: Sprite
@@ -193,7 +181,7 @@
 
 - type: entity
   id: TorsoPigMan
-  name: "Trottin torso"
+
   parent: [OrganBaseTorsoSexed, PartPigMan, OrganBaseTorso]
   components:
   - type: Sprite
@@ -208,7 +196,7 @@
 
 - type: entity
   id: HeadPigMan
-  name: "Trottin head"
+
   parent: [OrganBaseHeadSexed, PartPigMan, OrganBaseHead]
   components:
   - type: Sprite
@@ -223,7 +211,7 @@
 
 - type: entity
   id: LeftArmPigMan
-  name: "Trottin left arm"
+
   parent: [PartPigMan, OrganBaseArmLeft]
   components:
   - type: Sprite
@@ -232,7 +220,7 @@
 
 - type: entity
   id: RightArmPigMan
-  name: "Trottin right arm"
+
   parent: [PartPigMan, OrganBaseArmRight]
   components:
   - type: Sprite
@@ -241,7 +229,7 @@
 
 - type: entity
   id: LeftHandPigMan
-  name: "Trottin left hand"
+
   parent: [PartPigMan, OrganBaseHandLeft]
   components:
   - type: Sprite
@@ -250,7 +238,7 @@
 
 - type: entity
   id: RightHandPigMan
-  name: "Trottin right hand"
+
   parent: [PartPigMan, OrganBaseHandRight]
   components:
   - type: Sprite
@@ -259,7 +247,7 @@
 
 - type: entity
   id: LeftLegPigMan
-  name: "Trottin left leg"
+
   parent: [PartPigMan, OrganBaseLegLeft]
   components:
   - type: Sprite
@@ -268,7 +256,7 @@
 
 - type: entity
   id: RightLegPigMan
-  name: "Trottin right leg"
+
   parent: [PartPigMan, OrganBaseLegRight]
   components:
   - type: Sprite
@@ -277,7 +265,7 @@
 
 - type: entity
   id: LeftFootPigMan
-  name: "Trottin left foot"
+
   parent: [PartPigMan, OrganBaseFootLeft]
   components:
   - type: Sprite
@@ -286,7 +274,7 @@
 
 - type: entity
   id: RightFootPigMan
-  name: "Trottin right foot"
+
   parent: [PartPigMan, OrganBaseFootRight]
   components:
   - type: Sprite
@@ -317,7 +305,7 @@
 
 - type: emote
   id: Hru
-  name: Oink
+  name: chat-emote-name-oink
   icon: _Adventure/Interface/Emotes/hru.png
   category: Vocal
   available: false
@@ -327,7 +315,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["Хрюкает"]
+  chatMessages: ["chat-emote-msg-oink"]
   chatTriggers:
     - хрюкает
     - хрюкнул
@@ -405,7 +393,7 @@
       collection: PigManHruCollection
 
 - type: entity
-  name: MobPigMan
+
   parent:
   - AppearancePigMan
   - BaseSpeciesMobOrganic
@@ -416,7 +404,6 @@
     sprite: _Adventure/Races/PigMan/Species/parts.rsi
     state: full
   - type: Body
-    requiredLegs: 2
   - type: Hunger
   - type: Thirst
   - type: Speech
@@ -461,7 +448,7 @@
 - type: reagent
   id: PigManBlood
   parent: Blood
-  name: Trottin blood
+  name: reagent-name-pigman-blood
   group: Biological
   flavor: metallic
   color: "#c41e3a"

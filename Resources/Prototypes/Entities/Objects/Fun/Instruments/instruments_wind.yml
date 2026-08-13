@@ -73,6 +73,9 @@
     program: 73
   - type: Sprite
     sprite: Objects/Fun/Instruments/flute.rsi
+  - type: Construction
+    graph: Flute
+    node: fin
 
 - type: entity
   parent: BaseWoodwindInstrument

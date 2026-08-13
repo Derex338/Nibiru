@@ -1,6 +1,6 @@
 - type: entity
   id: soilPlate
-  name: почва
+  name: soil
   suffix: Nibiru
   parent: hydroponicsSoil
   components:

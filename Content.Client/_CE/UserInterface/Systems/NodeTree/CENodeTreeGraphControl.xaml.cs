@@ -15,7 +15,7 @@ public sealed partial class CENodeTreeGraphControl : BoxContainer
     private const float LocalUIScaleMax = 4f;
     private const float LocalUIScaleMin = 1f;
 
-[Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     private CENodeTreeUiState? _state;
 

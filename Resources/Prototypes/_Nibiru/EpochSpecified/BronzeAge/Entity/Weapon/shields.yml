@@ -1,9 +1,9 @@
 - type: entity
-  name: бронзовый баклер
+  name: bronze buckler
   parent: [BaseShield, BaseBronzeItem]
   id: BronzeBuckler
   suffix: Nibiru, BronzeAge
-  description: Неаккуратный деревянный баклер со сплавом бронзы вокруг дерева и с бронзой по середине.
+  description: A crude wooden buckler with a bronze alloy rim around the wood and bronze in the center.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi
@@ -83,11 +83,11 @@
                 max: 3
 
 - type: entity
-  name: бронзовый щит
+  name: bronze shield
   parent: [BaseShield, BaseBronzeItem]
   id: BronzeShield
   suffix: Nibiru, BronzeAge
-  description: Искусная работа полностью из бронзы.
+  description: Expert workmanship, entirely made of bronze.
   components:
   - type: Sprite
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Shields.rsi

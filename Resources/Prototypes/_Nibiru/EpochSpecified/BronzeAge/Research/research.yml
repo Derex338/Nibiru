@@ -9,7 +9,7 @@
 
 - type: technology
   id: BronzeSmelting
-  name: Bronze Smelting
+  name: research-technology-bronze-smelting
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeInlay.rsi
     state: icon
@@ -31,7 +31,7 @@
 
 - type: technology
   id: BronzeTools
-  name: Bronze Tools
+  name: research-technology-bronze-tools
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Knife.rsi
     state: icon
@@ -52,7 +52,7 @@
 
 - type: technology
   id: BronzeAgriculture
-  name: Agriculture
+  name: research-technology-bronze-agriculture
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Hoe.rsi
     state: icon
@@ -75,7 +75,7 @@
 
 - type: technology
   id: BronzeMining
-  name: Mining
+  name: research-technology-bronze-mining
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Tools/Pickaxe.rsi
     state: pickaxe
@@ -92,7 +92,7 @@
 
 - type: technology
   id: BronzeEngineering
-  name: Engineering
+  name: research-technology-bronze-engineering
   icon:
     sprite: _CE/Objects/Tools/keys.rsi
     state: lock_iron
@@ -115,7 +115,7 @@
 
 - type: technology
   id: BronzeSwordLight
-  name: Light Armaments
+  name: research-technology-bronze-sword-light
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Dagger.rsi
     state: icon
@@ -133,7 +133,7 @@
 
 - type: technology
   id: BronzeSwordMedium
-  name: Medium Armaments
+  name: research-technology-bronze-sword-medium
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Xiphos.rsi
     state: icon
@@ -150,7 +150,7 @@
 
 - type: technology
   id: BronzeSwordLong
-  name: Long Blades
+  name: research-technology-bronze-sword-long
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSword.rsi
     state: icon
@@ -167,7 +167,7 @@
 
 - type: technology
   id: BronzeSwordHeavy
-  name: Heavy Armaments
+  name: research-technology-bronze-sword-heavy
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Khapesh.rsi
     state: icon
@@ -184,7 +184,7 @@
 
 - type: technology
   id: BronzeWeaponsHeavy
-  name: Heavy Weapons
+  name: research-technology-bronze-weapons-heavy
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeAxe.rsi
     state: icon
@@ -203,7 +203,7 @@
 
 - type: technology
   id: BronzePolearms
-  name: Polearms
+  name: research-technology-bronze-polearms
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/BronzeSpear.rsi
     state: spear
@@ -223,7 +223,7 @@
 
 - type: technology
   id: BronzeHalberd
-  name: Halberd
+  name: research-technology-bronze-halberd
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Melee/Halberd.rsi
     state: icon
@@ -240,7 +240,7 @@
 
 - type: technology
   id: BronzeArchery
-  name: Archery
+  name: research-technology-bronze-archery
   icon:
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
     state: wielded-arrow
@@ -258,7 +258,7 @@
 
 - type: technology
   id: BronzeArcheryAP
-  name: Armor-Piercing Arrows
+  name: research-technology-bronze-archery-ap
   icon:
     sprite: Objects/Weapons/Guns/Bow/bow.rsi
     state: wielded-arrow
@@ -275,7 +275,7 @@
 
 - type: technology
   id: RecursiveBow
-  name: Recurve Bow
+  name: research-technology-recursive-bow
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/RecursiveBow.rsi
     state: unwielded
@@ -291,7 +291,7 @@
 
 - type: technology
   id: LongBow
-  name: Longbow
+  name: research-technology-long-bow
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Weapons/Range/LongBow.rsi
     state: unwielded
@@ -307,7 +307,7 @@
 
 - type: technology
   id: BronzeArmor
-  name: Bronze Armor
+  name: research-technology-bronze-armor
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Clothing/Armor/Chestplate.rsi
     state: icon
@@ -335,7 +335,7 @@
 
 - type: technology
   id: GladiatorEquip
-  name: Gladiator Equipment
+  name: research-technology-gladiator-equip
   icon:
     sprite: Clothing/Head/Hats/gladiator.rsi
     state: icon
@@ -356,7 +356,7 @@
 
 - type: technology
   id: BronzeArchitecture
-  name: Architecture
+  name: research-technology-bronze-architecture
   icon:
     sprite: _Nibiru/Entities/Workbenches/BronzeAnvil.rsi
     state: icon
@@ -383,7 +383,7 @@
 
 - type: technology
   id: BronzeUrbanPlanning
-  name: Urban Planning
+  name: research-technology-bronze-urban-planning
   icon:
     sprite: _CE/Structures/Decoration/angel_statue.rsi
     state: statue1
@@ -409,7 +409,7 @@
 
 - type: technology
   id: BronzeClothing
-  name: Leatherworking & Clothing
+  name: research-technology-bronze-clothing
   icon:
     sprite: _CE/Clothing/Back/Backpacks/backpack.rsi
     state: icon
@@ -441,7 +441,7 @@
 
 - type: technology
   id: BronzeHeraldry
-  name: Bronze Age Heraldry
+  name: research-technology-bronze-heraldry
   icon:
     sprite: Structures/Decoration/banner.rsi
     state: banner
@@ -467,7 +467,7 @@
 
 - type: technology
   id: BronzeTransportation
-  name: Bronze Age Transport
+  name: research-technology-bronze-transportation
   icon:
     sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/WoodWheel.rsi
     state: icon
@@ -486,7 +486,7 @@
 
 - type: technology
   id: WebWorking
-  name: Web Weaving
+  name: research-technology-web-working
   icon:
     sprite: Structures/Walls/web.rsi
     state: full
@@ -504,4 +504,3 @@
     - ChairWeb
     - CrateWeb
     - WebDoor
-

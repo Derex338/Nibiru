@@ -18,12 +18,12 @@ namespace Content.Client._Nibiru.WeaponAttackType;
 
 public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackSystem
 {
-[Dependency] private IPlayerManager _player = default!;
-[Dependency] private IStateManager _stateManager = default!;
-[Dependency] private IUserInterfaceManager _ui = default!;
-[Dependency] private IGameTiming _timing = default!;
-[Dependency] private SharedHandsSystem _hands = default!;
-[Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IStateManager _stateManager = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
 
     private AttackTypeGrid? _grid;
     private bool _keyWasDown;

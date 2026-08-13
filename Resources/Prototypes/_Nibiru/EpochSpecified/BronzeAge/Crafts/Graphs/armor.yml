@@ -27,7 +27,6 @@
               points: 5
           steps:
             - tool: Hammering
-              minTemperature: 700
               doAfter: 10
     - node: fin
       entity: BronzeBuckler
@@ -119,7 +118,6 @@
               points: 5
           steps:
             - tool: Hammering
-              minTemperature: 700
               doAfter: 30
     - node: fin
       entity: BronzeChestplate
@@ -147,7 +145,6 @@
               points: 5
           steps:
             - tool: Hammering
-              minTemperature: 700
               doAfter: 15
     - node: fin
       entity: BronzeHelmet

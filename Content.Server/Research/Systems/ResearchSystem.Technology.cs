@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
@@ -23,16 +24,16 @@ namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
-[Dependency] private InventorySystem _inventorySystem = default!;
-[Dependency] private SharedInteractionSystem _interactionSystem = default!;
-[Dependency] private ActionBlockerSystem _actionBlocker = default!;
-[Dependency] private SharedHandsSystem _handsSystem = default!;
-    //[Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-[Dependency] private SharedTransformSystem _transformSystem = default!;
-[Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-[Dependency] private ContainerSystem _container = default!;
-[Dependency] private StackSystem _stackSystem = default!;
-[Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    //[Dependency] private EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private StackSystem _stackSystem = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
 
     /// <summary>
     /// Syncs the primary entity's database to that of the secondary entity's database.
@@ -47,11 +48,13 @@ public sealed partial class ResearchSystem
             return;
 
         primaryDb.MainDiscipline = otherDb.MainDiscipline;
-        primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards;
-        primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
-        primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
-        primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes;
-        primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts;
+        primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards.ToList();
+        primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines.ToList();
+        primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies.ToList();
+        primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes.ToList();
+        primaryDb.UnlockedCrafts = otherDb.UnlockedCrafts.ToList();
+        primaryDb.CurrentEpoch = otherDb.CurrentEpoch;
+        primaryDb.UnlockedEpochs = otherDb.UnlockedEpochs.ToList();
 
         Dirty(primaryUid, primaryDb);
 

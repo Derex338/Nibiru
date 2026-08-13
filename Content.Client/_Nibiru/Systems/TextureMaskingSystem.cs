@@ -14,7 +14,7 @@ namespace Content.Client._Nibiru.Systems;
 /// </summary>
 public sealed partial class TextureGenerationSystem : EntitySystem
 {
-[Dependency] private IClyde _clyde = default!;
+    [Dependency] private IClyde _clyde = default!;
 
     private readonly Dictionary<int, Texture> _textureCache = new();
 

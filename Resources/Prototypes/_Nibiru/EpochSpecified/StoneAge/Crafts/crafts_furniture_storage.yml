@@ -29,15 +29,14 @@
 
 - type: construction
   id: CrateWoodenGrave
-  name: Wooden Grave
+  name: construction-recipe-crate-wooden-grave
+
   graph: CrateWoodenGrave
   startNode: start
   targetNode: fin
   category: construction-category-storage
-  description: Простая могила с деревянным крестом.
-  icon:
-    sprite: Structures/Storage/Crates/wooden_grave.rsi
-    state: icon
+  description: construction-recipe-crate-wooden-grave-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -46,15 +45,14 @@
 
 - type: construction
   id: CrateStoneGrave
-  name: Stone Grave
+  name: construction-recipe-crate-stone-grave
+
   graph: CrateStoneGrave
   startNode: start
   targetNode: fin
   category: construction-category-storage
-  description: Приличная могила с надгробным камнем.
-  icon:
-    sprite: Structures/Storage/Crates/stone_grave.rsi
-    state: icon
+  description: construction-recipe-crate-stone-grave-desc
+
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

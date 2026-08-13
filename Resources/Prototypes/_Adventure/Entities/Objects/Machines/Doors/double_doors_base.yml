@@ -9,7 +9,7 @@
     soundGroups:
       Brute:
         path:
-          "/Audio/Effects/glass_hit.ogg"
+          "/Audio/Effects/glass_smack.ogg"
   - type: Sprite
     sprite: _Adventure/Structures/Doors/Double/double_glass.rsi
     snapCardinals: false
@@ -30,6 +30,8 @@
   - type: Construction
     graph: AirlockDouble
     node: glassAirlockDouble
+  - type: StaticPrice
+    price: 220
   - type: Paintable
     group: GlassDouble
 
@@ -44,7 +46,7 @@
     soundGroups:
       Brute:
         path:
-          "/Audio/Effects/glass_hit.ogg"
+          "/Audio/Effects/glass_smack.ogg"
   - type: Sprite
     sprite: _Adventure/Structures/Doors/Triple/triple_glass.rsi
     snapCardinals: false
@@ -65,6 +67,8 @@
   - type: Construction
     graph: AirlockTriple
     node: glassAirlockTriple
+  - type: StaticPrice
+    price: 350
   - type: Paintable
     group: GlassTriple
 

@@ -1,8 +1,8 @@
 - type: entity
   parent: [SolutionTank, SolutionHuge, BaseStructure]
   id: Well
-  name: колодец
-  description: Неглубокий колодец.
+  name: well
+  description: A shallow well.
   placement:
     mode: SnapgridCenter
   components:
@@ -63,8 +63,8 @@
 - type: entity
   parent: BaseStructure
   id: Pit
-  name: яма
-  description: Неглубокая яма.
+  name: pit
+  description: A shallow pit.
   placement:
     mode: SnapgridCenter
   components:

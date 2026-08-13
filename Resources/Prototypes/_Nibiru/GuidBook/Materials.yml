@@ -1,8 +1,6 @@
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMaterialsGuideRU
-  name: Материалы
+  name: guide-entry-nibiru-materials
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Welcome.xml"
   filterEnabled: True
   children:
@@ -12,42 +10,32 @@
   - NibiruMaterialsGuideVeinsRU
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMaterialsGuideStoneRU
-  name: Камень
+  name: guide-entry-nibiru-materials-stone
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Stone.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMaterialsGuideHerbsRU
-  name: Кусты
+  name: guide-entry-nibiru-materials-herbs
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Herbs.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMaterialsGuideWoodRU
-  name: Дерево
+  name: guide-entry-nibiru-materials-wood
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Wood.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "ru-RU"
   id: NibiruMaterialsGuideVeinsRU
-  name: Разделка животных
+  name: guide-entry-nibiru-materials-veins
   text: "/ServerInfo/_Nibiru/Guidebook_RU/Materials/Veins.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMaterialsGuideEN
-  name: Materials
+  name: guide-entry-nibiru-materials
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Welcome_EN.xml"
   filterEnabled: True
   children:
@@ -57,33 +45,25 @@
   - NibiruMaterialsGuideVeinsEN
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMaterialsGuideStoneEN
-  name: Stone
+  name: guide-entry-nibiru-materials-stone
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Stone_EN.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMaterialsGuideHerbsEN
-  name: Bushes
+  name: guide-entry-nibiru-materials-herbs
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Herbs_EN.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMaterialsGuideWoodEN
-  name: Wood
+  name: guide-entry-nibiru-materials-wood
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Wood_EN.xml"
   filterEnabled: True
 
 - type: guideEntry
-  hidden: false
-  locFilter: "en-US"
   id: NibiruMaterialsGuideVeinsEN
-  name: Animal Butchering
+  name: guide-entry-nibiru-materials-veins
   text: "/ServerInfo/_Nibiru/Guidebook_EN/Materials/Veins_EN.xml"
   filterEnabled: True

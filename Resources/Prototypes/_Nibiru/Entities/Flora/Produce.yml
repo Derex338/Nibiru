@@ -25,15 +25,14 @@
     available:
       - random:
           produce: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 22
-        reagents:
-        - ReagentId: CENutriment
-          Quantity: 1
-        - ReagentId: Bicaridine
-          Quantity: 10
+  - type: Solution
+    solution:
+      maxVol: 22
+      reagents:
+      - ReagentId: CENutriment
+        Quantity: 1
+      - ReagentId: Bicaridine
+        Quantity: 10
   - type: ToolRefinable
     qualityNeeded: Slicing
     refineTime: 1.5
@@ -68,15 +67,14 @@
   - type: Stack
     stackType: CEFoodAloe
     count: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Aloe
-          Quantity: 5
-        - ReagentId: Dermaline
-          Quantity: 5
+  - type: Solution
+    solution:
+      maxVol: 20
+      reagents:
+      - ReagentId: Aloe
+        Quantity: 5
+      - ReagentId: Dermaline
+        Quantity: 5
   - type: ToolRefinable
     qualityNeeded: Slicing
     refineTime: 1.5
@@ -86,7 +84,8 @@
 
 - type: stack
   id: CEFoodAloe
-  name: aloe
+  name: stack-cefood-aloe
+
   icon: { sprite: _Nibiru/Flora/Plants/aloe.rsi, state: produce }
   spawn: CEFoodAloe
   maxCount: 30

@@ -22,11 +22,12 @@ namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 /// </summary>
 public sealed partial class NibiruMountFearSystem : EntitySystem
 {
-[Dependency] private SharedBuckleSystem _buckle = default!;
-[Dependency] private NpcFactionSystem _faction = default!;
-[Dependency] private EntityLookupSystem _lookup = default!;
-[Dependency] private SharedTransformSystem _xform = default!;
-[Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

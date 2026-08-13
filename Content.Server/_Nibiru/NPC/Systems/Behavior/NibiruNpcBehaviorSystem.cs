@@ -22,27 +22,31 @@ using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.EntitySystems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
 {
-[Dependency] private NpcFactionSystem _faction = default!;
-[Dependency] private MobStateSystem _mobState = default!;
-[Dependency] private NPCSteeringSystem _steering = default!;
-[Dependency] private SharedTransformSystem _xform = default!;
-[Dependency] private IGameTiming _timing = default!;
-[Dependency] private IRobustRandom _random = default!;
-[Dependency] private NibiruNpcCombatSystem _combatSystem = default!;
-[Dependency] private Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
-[Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-[Dependency] private SharedMapSystem _mapSystem = default!;
-[Dependency] private NibiruAnimalGrabSystem _grabSystem = default!;
-[Dependency] private NibiruAnimalSoundSystem _sounds = default!;
-[Dependency] private Robust.Shared.Map.ITileDefinitionManager _tileDefManager = default!;
-[Dependency] private Content.Shared.Tag.TagSystem _tag = default!;
-[Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+    private static readonly ProtoId<TagPrototype> FoodTag = "Food";
+
+    [Dependency] private NibiruNpcPerceptionSystem _perception = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private NPCSteeringSystem _steering = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private NibiruNpcCombatSystem _combatSystem = default!;
+    [Dependency] private Content.Shared.Nutrition.EntitySystems.HungerSystem _hunger = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private NibiruAnimalGrabSystem _grabSystem = default!;
+    [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
+    [Dependency] private Robust.Shared.Map.ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private Content.Shared.Tag.TagSystem _tag = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
 
     private const float ThreatCheckInterval = 0.1f;
     private float _threatCheckAccumulator;
@@ -432,7 +436,7 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
     {
         foreach (var detected in perception.DetectedEntities)
         {
-            if (_tag.HasTag(detected, (Robust.Shared.Prototypes.ProtoId<Content.Shared.Tag.TagPrototype>)"Food") || HasComp<Content.Shared.Nutrition.Components.EdibleComponent>(detected))
+            if (_tag.HasTag(detected, FoodTag) || HasComp<Content.Shared.Nutrition.Components.EdibleComponent>(detected))
                 return detected;
         }
         return null;

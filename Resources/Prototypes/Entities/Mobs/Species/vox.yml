@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent:
   - BaseMobSpeciesOrganic
   - BaseSlicingRefinable
@@ -11,8 +11,6 @@
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
   - type: Body
-    prototype: Vox
-    requiredLegs: 2
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox
@@ -30,8 +28,9 @@
     - id: FoodMeatVox # Adventure
       amount: 5
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Vox
+  - type: Injurable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
     - trigger:
@@ -221,7 +220,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Body
-    prototype: Vox
   - type: Inventory
     speciesId: vox
     displacements:

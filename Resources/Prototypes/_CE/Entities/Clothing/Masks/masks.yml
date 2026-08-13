@@ -11,6 +11,8 @@
   - type: PhysicalComposition
     materialComposition:
       CEIron: 20
+  - type: StaticPrice
+    price: 24
 
 - type: entity
   parent: CEClothingMaskIdentityBlockerBase

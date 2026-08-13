@@ -11,8 +11,9 @@
   - type: IconSmooth
     base: wall
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: CERockStructural
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -67,8 +68,9 @@
   - type: CEAutoTilePlacement
     tile: CEDirt
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Rock
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -120,8 +122,9 @@
         params:
           variation: 0.05
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -203,8 +206,9 @@
   - type: IconSmooth
     base: wall
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Rock
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

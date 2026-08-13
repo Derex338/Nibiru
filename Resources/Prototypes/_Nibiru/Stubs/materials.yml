@@ -1,0 +1,34 @@
+- type: material
+  id: Bone
+  stackEntity: MaterialBones1
+  name: materials-bones
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/materials.rsi, state: bones }
+  color: "#896f5e"
+  price: 0
+
+- type: material
+  id: Mud
+  stackEntity: Mud1
+  name: mud
+  unit: materials-unit-chunk
+  icon: { sprite: _CE/Objects/Materials/dirt.rsi, state: dirt_2 }
+  color: "#5e3f31"
+  price: 0
+
+- type: material
+  id: IngotBronze
+  stackEntity: IngotBronze1
+  name: bronze
+  unit: materials-unit-bar
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  color: "#CD7F32"
+  price: 1
+
+- type: stack
+  id: IngotBronze
+  name: stack-bronze
+  icon: { sprite: _Nibiru/EpochSpecified/BronzeAge/Materials/BronzeIngots.rsi, state: Bronze_1 }
+  spawn: IngotBronze1
+  maxCount: 30
+

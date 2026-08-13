@@ -23,7 +23,7 @@
     - energy_line_2
     - energy_line_3
   - type: StackPrice
-    price: 20
+    price: 26
   - type: PhysicalComposition
     materialComposition:
       CEIron: 4
@@ -62,7 +62,7 @@
     - coal_diffuser_2
     - coal_diffuser_3
   - type: StackPrice
-    price: 5 # Coal + Work
+    price: 36
   - type: PhysicalComposition
     materialComposition:
       CEIron: 5
