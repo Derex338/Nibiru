@@ -149,6 +149,7 @@
   - type: Tool
     qualities:
       - Slicing
+      - Shearing
     useSound:
       path: /Audio/Items/wirecutter.ogg
   - type: Destructible

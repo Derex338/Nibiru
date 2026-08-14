@@ -7,7 +7,9 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Shared.Tag;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server._Nibiru.NPC.Systems.Livestock;
@@ -23,6 +25,8 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
     [Dependency] private NibiruLivestockSystem _livestock = default!;
     [Dependency] private NibiruAnimalSoundSystem _sounds = default!;
     [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -134,7 +138,9 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
                 continue;
 
             // Проверяем инструмент по ID прототипа или тегу
-            if (toolProtoId.Contains(resource.RequiredTool) || _tag.HasTag(tool, resource.RequiredTool))
+            if (toolProtoId.Contains(resource.RequiredTool)
+                || (_proto.HasIndex<TagPrototype>(resource.RequiredTool) && _tag.HasTag(tool, resource.RequiredTool))
+                || _tool.HasQuality(tool, resource.RequiredTool))
             {
                 StartHarvestDoAfter(animal, user, i);
                 return true;

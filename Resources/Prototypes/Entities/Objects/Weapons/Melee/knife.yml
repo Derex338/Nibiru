@@ -24,6 +24,7 @@
   - type: Tool
     qualities:
     - Slicing
+    - Shearing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
 

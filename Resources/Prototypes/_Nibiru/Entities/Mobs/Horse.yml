@@ -45,6 +45,8 @@
     points: 50
   - type: Body
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
     - id: HideBig
       amount: 1

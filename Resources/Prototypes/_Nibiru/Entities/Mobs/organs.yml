@@ -115,6 +115,8 @@
   - type: Item
     size: Tiny
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
     - id: Skin_notready
       amount: 1
@@ -213,6 +215,8 @@
     stackType: Vein
     count: 1
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
     - id: VeinTimer
       amount: 1
@@ -270,6 +274,8 @@
   - type: Item
     size: Tiny
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
     - id: Skin
       amount: 1
@@ -292,6 +298,8 @@
   - type: Item
     size: Tiny
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
     - id: Skin
       amount: 2
@@ -314,6 +322,8 @@
   - type: Item
     size: Tiny
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
     - id: Skin
       amount: 4
@@ -336,6 +346,8 @@
   - type: Item
     size: Large
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: CEFoodMeatRabbit
         amount: 1
@@ -357,6 +369,8 @@
   - type: Item
     size: Large
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: CEPenFeather
         amount: 4
@@ -372,6 +386,8 @@
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: mid1
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: CEFoodMeatLamb
         amount: 3
@@ -395,6 +411,8 @@
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: mid2
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: CEBone1
         amount: 2
@@ -416,6 +434,8 @@
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big1
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: CEFoodMeatBoar
         amount: 3
@@ -436,6 +456,8 @@
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big2
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: Fat
         amount: 2
@@ -457,6 +479,8 @@
     sprite: _Nibiru/Entities/Mobs/Butch.rsi
     state: big3
   - type: ToolRefinable
+    qualityNeeded: Slicing
+    refineFuel: 0
     refineResult:
       - id: CEBone1
         amount: 3

@@ -204,15 +204,11 @@
   - type: Produce
     seedId: towercap
   - type: ToolRefinable
-    qualityNeeded: Sawing
+    qualityNeeded: Slicing
     refineResult:
     - id: CEWoodenPlanks1
       amount: 2
       maxAmount: 4
-  - type: Material #Nibiru
-  - type: Stack
-    stackType: Log
-    baseLayer: base
 
 - type: entity
   parent: [ProduceBase, BaseSlicingRefinable]

@@ -2,6 +2,7 @@ using Content.Server._Nibiru.NPC.Systems.Behavior;
 using Content.Server._Nibiru.NPC.Systems.Commands;
 using Content.Server._Nibiru.NPC.Systems.Utility;
 using Content.Server.NPC.Systems;
+using Content.Server.Parallax;
 using Content.Shared._Nibiru.NPC.Behavior;
 using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Commands;
@@ -47,6 +48,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private BiomeSystem _biome = default!;
 
     public override void Initialize()
     {
@@ -207,6 +209,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
     {
         component.IsTamed = true;
         component.OwnerUid = owner;
+        _biome.ClaimBiomeMob(uid);
 
         // Делаем животное дружественным к хозяину через систему фракций
         _faction.IgnoreEntity(uid, owner);
