@@ -409,6 +409,19 @@
     factions:
     - SimpleHostile
 
+- type: entity
+  parent: Solution
+  id: SolutionWoolNibiruSheep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: wool
+    solution:
+      maxVol: 25
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 25
+
 # Овца (Мирная, ресурсная, приручаемая)
 - type: entity
   id: MobNibiruSheep
@@ -472,12 +485,15 @@
   - type: SolutionManager
     solutions:
     - SolutionUdderSheep
-    - SolutionWoolSheep
+    - SolutionWoolNibiruSheep
   - type: Wooly
+    quantity: 25
+    growthDelay: 300
   - type: Shearable
     targetSolutionName: wool
-    shearedProductId: CECotton # Cotton is spawned because there is no wool item.
-    solutionPerProduct: 2.5 # 1 Cotton contains 2.5 Fibre, therefore this is the same.
+    shearedProductId: CECotton
+    solutionPerProduct: 5
+    maximumProductsSpawned: 5
     toolQuality: Shearing
     shearableMarkupText: sheep-shearable-examine-markup
     unShearableMarkupText: sheep-not-shearable-examine-markup
