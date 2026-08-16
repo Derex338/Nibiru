@@ -58,6 +58,14 @@
 
             <!-- Action buttons -->
             <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
+                    <Label Text="{Loc 'workbench-queue-amount'}"
+                           VerticalAlignment="Center"
+                           Margin="0 0 8 0"/>
+                    <SpinBox Name="AmountSpin"
+                             HorizontalExpand="True"
+                             Value="1"/>
+                </BoxContainer>
                 <Button Name="BuildButton"
                        Disabled="True"
                        ToggleMode="True"
