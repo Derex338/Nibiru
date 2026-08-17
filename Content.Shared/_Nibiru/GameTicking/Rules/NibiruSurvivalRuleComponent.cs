@@ -5,9 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Nibiru.GameTicking.Rules;
 
-/// <summary>
-/// Взято за основу с RimFortress
-/// </summary>
+// From RimFortress
 [RegisterComponent]
 public sealed partial class NibiruSurvivalRuleComponent : Component
 {

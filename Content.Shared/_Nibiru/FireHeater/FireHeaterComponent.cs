@@ -5,56 +5,56 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.Heating;
 
 /// <summary>
-/// Компонент для поверхностей которые нагревают предметы (костёр, жаровня и т.д.)
-/// Работает с PlaceableSurfaceComponent для определения предметов на поверхности
+/// Component for surfaces that heat items (campfire, brazier, etc.)
+/// Works with PlaceableSurfaceComponent to detect items on the surface
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class HeatingSurfaceComponent : Component
 {
     /// <summary>
-    /// Скорость нагрева предметов в градусах в секунду
+    /// How fast items heat up in degrees per second
     /// </summary>
     [DataField]
     public float HeatingRate = 50f;
 
     /// <summary>
-    /// Температура при которой предметы начинают гореть
+    /// Temperature at which items start to burn
     /// </summary>
     [DataField]
     public float BurnTemperature = 500f;
 
     /// <summary>
-    /// Радиус нагрева (если не используется PlaceableSurface)
+    /// Heating radius (if PlaceableSurface is not used)
     /// </summary>
     [DataField]
     public float HeatingRadius = 0.5f;
 
     /// <summary>
-    /// Минимальная температура источника для работы
+    /// Minimum source temperature to work
     /// </summary>
     [DataField]
     public float MinSourceTemperature = 3f;
 
     /// <summary>
-    /// Только предметы на PlaceableSurface нагреваются
+    /// Only items on PlaceableSurface heat up
     /// </summary>
     [DataField]
     public bool RequirePlacedOnSurface = true;
 
     /// <summary>
-    /// Звук когда предмет сгорает
+    /// Sound made when item burns
     /// </summary>
     [DataField]
     public SoundSpecifier? BurnSound;
 
     /// <summary>
-    /// Звук готовки/нагрева
+    /// Sound made while cooking/heating
     /// </summary>
     [DataField]
     public SoundSpecifier? CookingSound;
 
     /// <summary>
-    /// Интервал звука готовки (секунды)
+    /// Sound interval (seconds)
     /// </summary>
     [DataField]
     public float CookingSoundInterval = 3f;

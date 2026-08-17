@@ -9,8 +9,8 @@ using Robust.Shared.Timing;
 namespace Content.Client._Nibiru.ModularCraft.UI;
 
 /// <summary>
-/// Анимированный селектор:  ← [Название] →
-/// Два лейбла меняются местами с плавной анимацией выезда.
+/// Animated selector: ← [Name] →
+/// Two labels swap places with a smooth slide animation.
 /// </summary>
 public sealed class SlidingSelector : BoxContainer
 {
@@ -23,15 +23,15 @@ public sealed class SlidingSelector : BoxContainer
     private List<(string Id, string Name)> _items = new();
     private int   _index;
 
-    // ── Анимация ──────────────────────────────────────────────────────────────
+    // Animation
     private bool  _animating;
-    private float _slideDir;       // +1 → вправо (нажали →), -1 ← влево
+    private float _slideDir;       // +1 → right (pressed →), -1 ← left
     private float _slideT;
     private const float AnimDuration = 0.22f;
     private const float LabelWidth   = 200f;
     private bool  _useLabelA = true;
 
-    /// <summary>Вызывается только когда пользователь нажимает стрелку. SetValueSilent/SetItems — не вызывают.</summary>
+    /// <summary>Called only when the user presses an arrow. SetValueSilent/SetItems do not call it.</summary>
     public event Action<string?>? OnValueChanged;
 
     public string? CurrentId => _items.Count > 0 ? _items[_index].Id : null;
@@ -73,11 +73,11 @@ public sealed class SlidingSelector : BoxContainer
         Visible             = visible,
     };
 
-    // ── Публичный API ─────────────────────────────────────────────────────────
+    // Public API
 
     /// <summary>
-    /// Установить список элементов. Не вызывает OnValueChanged.
-    /// Анимация сбрасывается, отображается первый элемент.
+    /// Set the list of items. Does not call OnValueChanged.
+    /// The animation is reset, the first element is displayed.
     /// </summary>
     public void SetItems(List<(string Id, string Name)> items)
     {
@@ -89,7 +89,7 @@ public sealed class SlidingSelector : BoxContainer
     }
 
     /// <summary>
-    /// Выбрать по ID без анимации и без вызова OnValueChanged.
+    /// Select by ID without animation and without calling OnValueChanged.
     /// </summary>
     public void SetValueSilent(string? id)
     {
@@ -101,7 +101,7 @@ public sealed class SlidingSelector : BoxContainer
         RefreshLabel();
     }
 
-    // ── Шаг ──────────────────────────────────────────────────────────────────
+    // Step
 
     private void Step(int dir)
     {
@@ -110,7 +110,7 @@ public sealed class SlidingSelector : BoxContainer
         var next = (_index + dir + _items.Count) % _items.Count;
         if (next == _index) return;
 
-        // Обновляем индекс ДО анимации, чтобы CurrentId был уже актуальным
+        // Update index BEFORE animation, so CurrentId is already actual
         _index = next;
 
         var nextLabel = _useLabelA ? _labelB : _labelA;
@@ -128,7 +128,7 @@ public sealed class SlidingSelector : BoxContainer
         OnValueChanged?.Invoke(CurrentId);
     }
 
-    // ── FrameUpdate ───────────────────────────────────────────────────────────
+    // FrameUpdate
 
     protected override void FrameUpdate(FrameEventArgs args)
     {

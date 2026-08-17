@@ -20,8 +20,7 @@ public sealed partial class SolutionCoolingSystem : EntitySystem
 
     public float HeatTransferRate = 6f;
 
-    // Throttle: обновляем не чаще раза в секунду,
-    // т.к. SolutionComponent есть у огромного числа объектов на планете
+    // Throttle
     private float _updateTimer = 0f;
     private const float UpdateInterval = 1f;
     private readonly List<(EntityUid Uid, SolutionComponent Solution, TransformComponent Transform, GasMixture Air)> _toProcess = new();

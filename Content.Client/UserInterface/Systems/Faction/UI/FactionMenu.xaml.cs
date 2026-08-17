@@ -8,8 +8,6 @@ namespace Content.Client.UserInterface.Systems.Faction.UI
     [GenerateTypedNameReferences]
     public sealed partial class FactionMenu : DefaultWindow
     {
-        //public event Action<string>? OnLabelChanged;
-
         /// <summary>
         /// Is the user currently entering text into the control?
         /// </summary>

@@ -21,7 +21,7 @@ public sealed class FactionChangeStateMessage : EntityEventArgs
 }
 
 /// <summary>
-/// Сообщение для изменения ранга члена фракции
+/// Message for rank change
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class FactionChangeMemberRankMessage : EntityEventArgs
@@ -51,8 +51,8 @@ public sealed class FactionDeleteRoleMessage : EntityEventArgs
 }
 
 /// <summary>
-/// Сообщение от сервера с обновлённым списком фракций
-/// Отправляется периодически (аналог LobbyJobsAvailableUpdated)
+/// Message from server with updated list of factions
+/// Sent periodically (analogue of LobbyJobsAvailableUpdated)
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class FactionsAvailableMessage : EntityEventArgs

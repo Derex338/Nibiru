@@ -70,7 +70,6 @@ public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackS
                 TryComp<NibiruWeaponAttackComponent>(held.Value, out var attackComp) &&
                 attackComp.Cycleable && attackComp.AvailableAttacks.Count > 1)
             {
-                // Меняем индекс сразу на клиенте предсказательно
                 attackComp.CurrentAttackIndex = (attackComp.CurrentAttackIndex + 1) % attackComp.AvailableAttacks.Count;
                 _grid?.UpdateHighlight(attackComp.CurrentAttackIndex);
                 ApplyAnimPredict(held.Value, attackComp);
@@ -80,7 +79,6 @@ public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackS
         }
         _keyWasDown = keyDown;
 
-        // Синхронизация с серверным стейтом — если сервер подтвердил, локальный индекс уже правильный
         if (_hands.TryGetActiveItem(entity.Value, out var heldCheck) &&
             TryComp<NibiruWeaponAttackComponent>(heldCheck.Value, out var comp))
         {
@@ -93,7 +91,6 @@ public sealed partial class NibiruWeaponAttackSystem : SharedNibiruWeaponAttackS
         }
     }
 
-    // Меняем анимацию на MeleeWeaponComponent + Lobbed на GunComponent
     private void ApplyAnimPredict(EntityUid uid, NibiruWeaponAttackComponent component)
     {
         if (!TryGetCurrentAttackType(component, out var proto))

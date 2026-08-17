@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Обрабатывает территориальное поведение, циклы сна и боязнь огня.
+/// Handles territorial behavior, sleep cycles, and fear of fire.
 /// </summary>
 public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
 {
@@ -47,8 +47,6 @@ public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
             UpdateTerritoriality();
         }
 
-        //UpdateSleepCycles(frameTime);
-
         if (_fireAccumulator >= FireCheckInterval)
         {
             _fireAccumulator = 0f;
@@ -56,7 +54,7 @@ public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
         }
     }
 
-    #region Территориальность
+    #region Territoriality
 
     private void UpdateTerritoriality()
     {
@@ -130,7 +128,7 @@ public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
 
     #endregion
 
-    #region Циклы сна
+    #region Sleep Cycles
 
     private void UpdateSleepCycles(float frameTime)
     {
@@ -205,7 +203,7 @@ public sealed partial class NibiruAdvancedBehaviorSystem : EntitySystem
 
     #endregion
 
-    #region Боязнь огня
+    #region Fear of fire
 
     private void UpdateFireFear()
     {

@@ -56,9 +56,7 @@ public sealed partial class PlanetMapSystem : EntitySystem
         }
     }
 
-    // -----------------------------------------------------------------------
     // Lifecycle
-    // -----------------------------------------------------------------------
 
     public override void Initialize()
     {
@@ -122,9 +120,7 @@ public sealed partial class PlanetMapSystem : EntitySystem
         }
     }
 
-    // -----------------------------------------------------------------------
     // Update: player position + progressive chunk application
-    // -----------------------------------------------------------------------
 
     public override void Update(float frameTime)
     {
@@ -168,9 +164,7 @@ public sealed partial class PlanetMapSystem : EntitySystem
         }
     }
 
-    // -----------------------------------------------------------------------
     // Network events
-    // -----------------------------------------------------------------------
 
     /// <summary>
     /// Received when the server signals "start of map data stream".

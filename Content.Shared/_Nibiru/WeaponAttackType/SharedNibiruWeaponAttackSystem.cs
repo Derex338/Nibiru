@@ -112,14 +112,12 @@ public abstract partial class SharedNibiruWeaponAttackSystem : EntitySystem
         if (!TryGetCurrentAttackType(component, out var proto))
             return;
 
-        // Подменяем анимацию — будет использована в DoLungeAnimation
         if (!string.IsNullOrEmpty(proto.Animation))
         {
             melee.Animation = proto.Animation;
             melee.WideAnimation = proto.Animation;
         }
 
-        // Подменяем угол размаха
         if (proto.AngleOverride.HasValue)
             melee.Angle = proto.AngleOverride.Value;
 

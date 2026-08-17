@@ -11,9 +11,7 @@ namespace Content.Client._Nibiru.EntityInspector;
 [GenerateTypedNameReferences]
 public sealed partial class EntityInspectorWindow : Content.Client.UserInterface.Controls.FancyWindow
 {
-    // ──────────────────────────────────────────────────────────
-    //  Внутренний контейнер поля (уже разрешённое имя + данные)
-    // ──────────────────────────────────────────────────────────
+    //  Internal field container (already resolved name + data)
 
     private sealed class ResolvedField
     {
@@ -22,9 +20,7 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
         public object? Value       { get; init; }
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Конструктор
-    // ──────────────────────────────────────────────────────────
+    //  Constructor
 
     public EntityInspectorWindow()
     {
@@ -32,12 +28,10 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
         IoCManager.InjectDependencies(this);
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Публичный API
-    // ──────────────────────────────────────────────────────────
+    //  Public API
 
     /// <summary>
-    /// Заполняет окно данными сущности. Вызывается из EntityInspectorSystem.
+    /// Fills the window with entity data. Called from EntityInspectorSystem.
     /// </summary>
     public void Populate(string entityName, IEnumerable<IComponent> components, bool isOwner)
     {
@@ -52,13 +46,13 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
             if (component is not IInspectableComponent inspectable)
                 continue;
 
-            // Имя компонента: пробуем как ключ локализации, затем сырое значение
+            // Component name: try as localization key, then raw value
             var rawName  = inspectable.InspectorDisplayName;
             var compName = string.IsNullOrEmpty(rawName)
                 ? FormatTypeName(component.GetType().Name)
                 : TryLoc(rawName) ?? rawName;
 
-            // Собираем поля
+            // Collecting fields
             var fields = new List<ResolvedField>();
             foreach (var fd in inspectable.GetInspectableFields())
             {
@@ -76,8 +70,8 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
             if (fields.Count == 0)
                 continue;
 
-            // Сортируем по Order (поля уже в порядке yield, но пересортируем если нужно)
-            // fields уже упорядочены по Order через yield-порядок
+            // Sorting by Order (fields are already in yield order, but we re-sort if needed)
+            // fields are already ordered by Order through yield order
 
             ComponentList.AddChild(BuildComponentSection(compName, fields));
         }
@@ -94,9 +88,7 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
         }
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Построение секции компонента
-    // ──────────────────────────────────────────────────────────
+    //  BuildComponentSection
 
     private Control BuildComponentSection(string compName, List<ResolvedField> fields)
     {
@@ -107,7 +99,6 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
             SeparationOverride = 0,
         };
 
-        // ── Заголовок-кнопка (сворачивает / разворачивает) ────
         var header = new Button
         {
             HorizontalExpand = true,
@@ -126,7 +117,6 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
         header.AddChild(headerLabel);
         section.AddChild(header);
 
-        // ── Контейнер строк полей ──────────────────────────────
         var fieldsBox = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -189,16 +179,12 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
         return row;
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Правая панель деталей
-    // ──────────────────────────────────────────────────────────
-
     private void SelectField(ResolvedField field)
     {
         DetailPlaceholder.Visible = false;
         DetailTitleLabel.Text     = field.DisplayName;
 
-        // Очищаем предыдущий контент (кроме Placeholder)
+        // Clear previous content (except Placeholder)
         for (var i = DetailContainer.ChildCount - 1; i >= 0; i--)
         {
             var child = DetailContainer.GetChild(i);
@@ -207,10 +193,10 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
             DetailContainer.RemoveChild(child);
         }
 
-        // ── Значение ──────────────────────────────────────────
+        //  Value
         AddDetailRow(Loc.GetString("entity-inspector-detail-value"), FormatValue(field.Value));
 
-        // ── Описание из атрибута ──────────────────────────────
+        //  Description from attribute
         if (field.Detail is { Length: > 0 } rawDetail)
         {
             DetailContainer.AddChild(new HSeparator { Margin = new Thickness(0, 6) });
@@ -221,7 +207,7 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
             DetailContainer.AddChild(detailLabel);
         }
 
-        // ── Если значение — коллекция, перечисляем элементы ──
+        // If the value is a collection, list the elements
         if (field.Value is System.Collections.IEnumerable enumerable and not string)
         {
             DetailContainer.AddChild(new HSeparator { Margin = new Thickness(0, 6) });
@@ -292,10 +278,6 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
         }
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Вспомогательные методы (нет рефлексии)
-    // ──────────────────────────────────────────────────────────
-
     private static string FormatValue(object? value)
     {
         if (value is null)   return Loc.GetString("entity-inspector-value-null");
@@ -316,19 +298,18 @@ public sealed partial class EntityInspectorWindow : Content.Client.UserInterface
     }
 
     /// <summary>
-    /// Пробует перевести строку через Loc.
-    /// Если ключ не найден в Fluent — возвращает null (используй исходную строку как fallback).
+    /// Tries to translate a string using Loc.
+    /// If the key is not found in Fluent — returns null.
     /// </summary>
     private static string? TryLoc(string key)
     {
         if (string.IsNullOrEmpty(key))
             return null;
         var result = Loc.GetString(key);
-        // Fluent возвращает ключ обёрнутым если не найден
         return (result == key || result.StartsWith('{')) ? null : result;
     }
 
-    /// <summary>Убирает суффикс «Component» из имени класса.</summary>
+    /// <summary>Removes the «Component» suffix from the class name.</summary>
     private static string FormatTypeName(string typeName)
     {
         const string suffix = "Component";

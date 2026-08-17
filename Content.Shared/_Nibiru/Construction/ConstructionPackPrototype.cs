@@ -10,14 +10,11 @@ namespace Content.Shared.Construction.Prototypes;
 /// Packs will inherit the parents recipes when using inheritance, so you don't need to copy paste them.
 /// </summary>
 [Prototype]
-public sealed partial class ConstructionPackPrototype : IPrototype//, IInheritingPrototype
+public sealed partial class ConstructionPackPrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
-
-    //[ParentDataField(typeof(AbstractPrototypeIdArraySerializer<ConstructionPackPrototype>))]
-    //public string[]? Parents { get; private set; }
 
     [ViewVariables]
     [DataField]

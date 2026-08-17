@@ -1,4 +1,3 @@
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Livestock;
 using Content.Shared._Nibiru.NPC.Behavior;
 using Content.Shared._Nibiru.NPC.Training;
@@ -15,9 +14,9 @@ using Robust.Shared.Utility;
 namespace Content.Server._Nibiru.NPC.Systems.Livestock;
 
 /// <summary>
-/// Обрабатывает Verbs для взаимодействия с животными:
-/// - Сбор ресурсов (стрижка/дойка) через клик + DoAfter
-/// - Просмотр информации (настроение, доверие, рост ресурсов)
+/// Processes Verbs for interaction with animals:
+/// - Resource gathering (shearing/milking) via click + DoAfter
+/// - Information display (mood, trust, resource growth)
 /// </summary>
 public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
 {
@@ -35,12 +34,10 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
         SubscribeLocalEvent<NibiruLivestockComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<NibiruLivestockComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<NibiruLivestockComponent, LivestockHarvestDoAfterEvent>(OnHarvestDoAfter);
-        //SubscribeLocalEvent<NibiruLivestockComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
         SubscribeLocalEvent<NibiruLivestockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, InteractUsingEvent>(OnProductsInteractUsing);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, InteractHandEvent>(OnProductsInteractHand);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, LivestockHarvestDoAfterEvent>(OnProductsHarvestDoAfter);
-        //SubscribeLocalEvent<NibiruAnimalProductsComponent, GetVerbsEvent<ExamineVerb>>(OnProductsGetExamineVerbs);
         SubscribeLocalEvent<NibiruAnimalProductsComponent, ExaminedEvent>(OnProductsExamined);
     }
 
@@ -63,18 +60,13 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
         FinishHarvest(uid, args);
     }
 
-    //private void OnProductsGetExamineVerbs(EntityUid uid, NibiruAnimalProductsComponent component, GetVerbsEvent<ExamineVerb> args)
-    //{
-    //    AddExamineVerb(args);
-    //}
-
     private void OnProductsExamined(EntityUid uid, NibiruAnimalProductsComponent component, ExaminedEvent args)
     {
         PushExamineInfo(uid, args);
     }
 
     /// <summary>
-    /// Сбор с инструментом (ножницы для стрижки и т.п.).
+    /// Harvest with a tool (shears for shearing, etc.).
     /// </summary>
     private void OnInteractUsing(EntityUid uid, NibiruLivestockComponent component, InteractUsingEvent args)
     {
@@ -86,7 +78,7 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Сбор голыми руками (дойка и т.п., если не требуется инструмент).
+    /// Harvest with bare hands (milking, etc., if no tool is required).
     /// </summary>
     private void OnInteractHand(EntityUid uid, NibiruLivestockComponent component, InteractHandEvent args)
     {
@@ -115,7 +107,7 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Пытается начать сбор ресурса, проверяя наличие нужного инструмента.
+    /// Tries to start resource gathering, checking for the required tool.
     /// </summary>
     private bool TryStartHarvest(EntityUid animal, EntityUid user, EntityUid tool)
     {
@@ -137,7 +129,7 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
             if (string.IsNullOrEmpty(resource.RequiredTool))
                 continue;
 
-            // Проверяем инструмент по ID прототипа или тегу
+            // Check tool by prototype ID or tag
             if (toolProtoId.Contains(resource.RequiredTool)
                 || (_proto.HasIndex<TagPrototype>(resource.RequiredTool) && _tag.HasTag(tool, resource.RequiredTool))
                 || _tool.HasQuality(tool, resource.RequiredTool))
@@ -178,7 +170,7 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
 
         if (_livestock.TryHarvestResource(uid, args.User, args.ResourceIndex))
         {
-            // Проигрываем звук сбора в зависимости от типа ресурса
+            // Play harvest sound based on resource type
             var resources = _livestock.GetResources(uid);
             if (resources != null && args.ResourceIndex < resources.Count)
             {
@@ -193,32 +185,6 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Добавляет Verb для просмотра информации о животном.
-    /// </summary>
-    //private void OnGetExamineVerbs(EntityUid uid, NibiruLivestockComponent component, GetVerbsEvent<ExamineVerb> args)
-    //{
-    //    AddExamineVerb(args);
-    //}
-
-    /*private void AddExamineVerb(GetVerbsEvent<ExamineVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
-        // Verb: Информация о ресурсах
-        args.Verbs.Add(new ExamineVerb
-        {
-            Act = () =>
-            {
-                // Подробная информация формируется в OnExamined
-            },
-            Text = Loc.GetString("nibiru-livestock-verb-examine"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-            Category = VerbCategory.Examine
-        });
-    }*/
-
     private void OnExamined(EntityUid uid, NibiruLivestockComponent component, ExaminedEvent args)
     {
         PushExamineInfo(uid, args);
@@ -229,7 +195,6 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        // Выбираем название группы для PushGroup: если есть компонент животного — используем его, иначе - продукты
         string groupName;
         if (TryComp<NibiruLivestockComponent>(uid, out _))
             groupName = nameof(NibiruLivestockComponent);
@@ -240,7 +205,7 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
 
         using (args.PushGroup(groupName))
         {
-            // Показываем информацию о ресурсах
+            // Show resource information
             var resources = _livestock.GetResources(uid);
             if (resources != null)
             {
@@ -289,7 +254,7 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
                     ("sex", component.Sex.ToString())));
             }
 
-            // Информация о приручении, если есть
+            // Tamability information, if available
             if (TryComp<NibiruTamableComponent>(uid, out var tamable))
             {
                 if (tamable.IsTamed)
@@ -304,14 +269,14 @@ public sealed partial class NibiruLivestockInteractionSystem : EntitySystem
                 }
             }
 
-            // Информация о настроении
+            // Mood information
             if (TryComp<NibiruAnimalMoodComponent>(uid, out var mood))
             {
                 args.PushMarkup(Loc.GetString("nibiru-animal-mood",
                     ("mood", mood.MoodState.ToString())));
             }
 
-            // Информация о страхе маунта
+            // Mount fear information
             if (TryComp<NibiruMountFearComponent>(uid, out var fear))
             {
                 var fearPercent = fear.FearLevel / fear.MaxFear * 100f;

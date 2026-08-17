@@ -34,13 +34,12 @@ public sealed partial class FactionSystem : EntitySystem
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     /// <summary>
-    /// Кэш доступных фракций для отправки клиентам
-    /// Обновляется периодически
+    /// Cash available factions for send to clients
     /// </summary>
     public IReadOnlyList<FactionInfo> AvailableFactions { get; private set; } = new List<FactionInfo>();
 
     /// <summary>
-    /// Временное хранилище предпочтений для лидеров фракций, присланных из лобби
+    /// Temp storage of faction leader preferences sent from lobby
     /// </summary>
     private readonly Dictionary<NetUserId, NibiruFactionLeaderPrefsMessage> _pendingFactionLeaderPrefs = new();
 
@@ -66,7 +65,7 @@ public sealed partial class FactionSystem : EntitySystem
 
     private void OnMapCreated(MapCreatedEvent ev)
     {
-        // Когда создается новая карта, регистрируем на ней все существующие фракции
+        // When new map is created, register all existing factions on it
         var query = EntityQueryEnumerator<FactionComponent>();
         while (query.MoveNext(out var factionUid, out var faction))
         {
@@ -96,7 +95,7 @@ public sealed partial class FactionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Валидация названия фракции
+    /// Validation of faction name
     /// </summary>
     private bool ValidateFactionName(string name, NetUserId excludeUserId, string? currentFactionName, out string error)
     {
@@ -115,7 +114,7 @@ public sealed partial class FactionSystem : EntitySystem
             return false;
         }
 
-        // Проверка в лобби
+        // Check in lobby
         foreach (var (userId, pref) in _pendingFactionLeaderPrefs)
         {
             if (userId == excludeUserId)
@@ -128,13 +127,13 @@ public sealed partial class FactionSystem : EntitySystem
             }
         }
 
-        // Проверка в реестре
+        // Check in registry
         var query = EntityQueryEnumerator<FactionRegistryComponent>();
         while (query.MoveNext(out var registry))
         {
             foreach (var (fName, _) in registry.Factions)
             {
-                // Если мы переименовываем текущую фракцию, то игнорируем совпадение с её старым названием
+                // If we rename current faction, ignore match with its old name
                 if (currentFactionName != null && fName == currentFactionName)
                     continue;
 
@@ -150,7 +149,7 @@ public sealed partial class FactionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет кэш данных о членах фракции для UI лидера
+    /// Update faction member data cache for leader UI
     /// </summary>
     public void UpdateMemberDataUI(EntityUid leaderUid, FactionComponent leaderComp)
     {

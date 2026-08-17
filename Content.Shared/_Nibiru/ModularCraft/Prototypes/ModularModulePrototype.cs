@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared._Nibiru.ModularCraft.Prototypes;
 
 /// <summary>
-/// Прототип модуля (формы) — конкретная часть модульного предмета.
+/// Module prototype - a specific part of a modular item.
 /// </summary>
 [Prototype]
 public sealed partial class ModularModulePrototype : IPrototype
@@ -21,26 +21,24 @@ public sealed partial class ModularModulePrototype : IPrototype
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
-    /// К какому типу слота относится (лезвие, рукоять и т.д.)
+    /// Type of slot the module belongs to (blade, handle, etc.)
     /// </summary>
     [DataField("partType")]
     public ProtoId<ModularPartPrototype> PartType { get; set; } = default!;
 
     /// <summary>
-    /// Совместимые типы оружия/предметов (опционально). Если пусто - подходит для всех.
+    /// Compatible types of weapons/items (optional). If empty - suitable for all.
     /// </summary>
     [DataField("compatibleItemTypes")]
     public List<ProtoId<ModularItemPrototype>> CompatibleItemTypes { get; set; } = new();
 
-    /// <summary>Сколько единиц материала расходуется на создание</summary>
+    /// <summary>How many units of material are spent on creation</summary>
     [DataField("materialCost")]
     public int MaterialCost { get; set; } = 1;
 
-    // --- Визуальные данные ---
     [DataField("sprite")]
     public SpriteSpecifier? Sprite { get; set; }
 
-    // --- Статовые модификаторы ---
     [DataField("damageBonus")]
     public FixedPoint2 DamageBonus { get; set; } = FixedPoint2.Zero;
 

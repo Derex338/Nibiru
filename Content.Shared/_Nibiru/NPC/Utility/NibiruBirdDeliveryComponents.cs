@@ -3,9 +3,6 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._Nibiru.NPC.Utility;
 
-/// <summary>
-/// Компонент для почтового отделения (голубятни).
-/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruPigeonPostComponent : Component
 {
@@ -13,14 +10,11 @@ public sealed partial class NibiruPigeonPostComponent : Component
     public string PostName = "Unknown Post";
 }
 
-/// <summary>
-/// Компонент для птиц, способных доставлять почту.
-/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruBirdComponent : Component
 {
     /// <summary>
-    /// Список ID известных почтовых отделений.
+    /// List of known post IDs.
     /// </summary>
     [DataField("knownPosts")]
     public List<EntityUid> KnownPosts = new();

@@ -40,10 +40,6 @@ public sealed partial class DamageHighTemperature : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        //SubscribeLocalEvent<TemperatureComponent, InteractHandEvent>(OnHighTempInteract);
-        //SubscribeLocalEvent<TemperatureComponent, ContainerGettingInsertedAttemptEvent>(CheckTemperature);
-        //SubscribeLocalEvent<TemperatureComponent, ContainerIsRemovingAttemptEvent>(OnContainerRemove);
     }
 
     private void OnHighTempInteract(EntityUid uid, TemperatureComponent comp, InteractHandEvent args)
@@ -56,32 +52,6 @@ public sealed partial class DamageHighTemperature : EntitySystem
                 _damage.SetIsDamageActiveTo((uid, damageComp), false);
         }
     }
-
-    //private void OnContainerRemove(EntityUid uid, TemperatureComponent comp, ContainerIsRemovingAttemptEvent args)
-    //{
-    //    if (args.Cancelled)
-    //        return;
-
-    //    if (_mind.TryGetMind(args.Container.Owner, out var mind, out var _))
-    //        return;
-
-    //    if (TryComp<TemperatureComponent>(args.Container.Owner, out var tempComp))
-    //    {
-    //        if (tempComp.CurrentTemperature > 300)
-    //        {
-    //            args.Cancel();
-    //            _popup.PopupEntity(Loc.GetString("powered-light-component-burn-hand"), args.Container.Owner);
-    //        }
-    //    }
-    //    else if (TryComp<TemperatureComponent>(args.EntityUid, out var itemTempComp))
-    //    {
-    //        if (itemTempComp.CurrentTemperature > 300)
-    //        {
-    //            args.Cancel();
-    //            _popup.PopupEntity(Loc.GetString("powered-light-component-burn-hand"), args.Container.Owner);
-    //        }
-    //    }
-    //}
 
     private void CheckTemperature(EntityUid uid, TemperatureComponent comp, ContainerGettingInsertedAttemptEvent args)
     {

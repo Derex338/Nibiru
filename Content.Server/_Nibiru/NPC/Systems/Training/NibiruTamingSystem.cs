@@ -28,9 +28,9 @@ using Content.Shared.Interaction.Events;
 namespace Content.Server._Nibiru.NPC.Systems.Training;
 
 /// <summary>
-/// Управляет приручением животных через кормление.
-/// Обрабатывает рост/убывание доверия, привязку к хозяину,
-/// переключение NPC в режим следования после приручения.
+/// Manages taming animals through feeding.
+/// Handles trust increase/decrease, owner binding,
+/// and switching NPC to following mode after taming.
 /// </summary>
 public sealed partial class NibiruTamingSystem : EntitySystem
 {
@@ -57,13 +57,12 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         SubscribeLocalEvent<NibiruTamableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<NibiruTamableComponent, NibiruAnimalFeedingDoAfterEvent>(OnFeedingDoAfter);
         SubscribeLocalEvent<NibiruTamableComponent, DamageChangedEvent>(OnDamaged);
-        //SubscribeLocalEvent<NibiruTamableComponent, InteractHandEvent>(OnInteractHand);
     }
 
     /// <summary>
-    /// Поглаживание животного (UseInHand / Z) — небольшой прирост доверия.
-    /// Совместимо с PettableFriendSystem: если на животном есть PettableFriendComponent,
-    /// то PettableSystem обрабатывает дружбу, мы добавляем лишь прирост доверия.
+    /// Petting the animal (UseInHand / Z) - small trust increase.
+    /// Compatible with PettableFriendSystem: if the animal has PettableFriendComponent,
+    /// PettableSystem handles the friendship, and we just add trust.
     /// </summary>
     /// слишком имба
     private void OnInteractHand(EntityUid uid, NibiruTamableComponent component, InteractHandEvent args)
@@ -74,20 +73,19 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         if (!TryComp<MobStateComponent>(uid, out var mobState) || mobState.CurrentState != MobState.Alive)
             return;
 
-        // Гладить можно только прирученных или частично доверяющих животных
+        // Can pet only tamed or partially trusted animals
         if (!component.IsTamed && component.TrustLevel < component.TrustThreshold * 0.3f)
             return;
 
-        // Прирост доверия за поглаживание (10% от стандартной кормёжки)
+        // Gain trust for petting (10% of standard feeding)
         var trustGain = component.TrustPerFeeding * 0.1f;
         component.TrustLevel = MathF.Min(component.TrustLevel + trustGain, component.MaxTrust);
 
-        // Спавним сердечки как визуальный эффект
         Spawn("EffectHearts", Transform(uid).Coordinates);
     }
 
     /// <summary>
-    /// Обработка кормления: игрок использует еду на животном.
+    /// Handles feeding: player uses food on animal.
     /// </summary>
     private void OnInteractUsing(EntityUid uid, NibiruTamableComponent component, InteractUsingEvent args)
     {
@@ -102,7 +100,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
             return;
         }
 
-        // Проверяем, является ли предмет подходящей едой
+        // Check if item is acceptable food
         if (!IsAcceptableFood(args.Used, component))
         {
             return;
@@ -110,7 +108,6 @@ public sealed partial class NibiruTamingSystem : EntitySystem
 
         args.Handled = true;
 
-        // Запускаем DoAfter для кормления
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(2), new NibiruAnimalFeedingDoAfterEvent(), uid, target: uid, used: args.Used)
         {
             BreakOnMove = false,
@@ -132,7 +129,6 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         if (args.Handled || args.Used == null)
             return;
 
-        // Повторная проверка еды в конце действия
         if (!IsAcceptableFood(args.Used.Value, component))
         {
             return;
@@ -140,44 +136,42 @@ public sealed partial class NibiruTamingSystem : EntitySystem
 
         var trustGain = component.TrustPerFeeding;
 
-        // Удвоенное доверие за любимую еду
+        // Double trust for favorite food
         if (IsFavoriteFood(args.Used.Value, component))
             trustGain *= 2f;
 
-        // Начисляем доверие
+        // Gain trust
         component.TrustLevel = MathF.Min(component.TrustLevel + trustGain, component.MaxTrust);
 
-        // Звук кормления
         _sounds.PlayFeedingSound(uid);
 
-        // Повышаем настроение
         _mood.OnFed(uid);
 
-        // Проверяем порог приручения
+        // Check if animal is tamed
         if (!component.IsTamed && component.TrustLevel >= component.TrustThreshold)
         {
             TameAnimal(uid, args.User, component);
         }
 
-        // Потребляем еду
+        // Consume food
         QueueDel(args.Used.Value);
         args.Handled = true;
     }
 
     /// <summary>
-    /// Штраф за агрессию хозяина.
+    /// Penalty for owner aggression.
     /// </summary>
     private void OnDamaged(EntityUid uid, NibiruTamableComponent component, DamageChangedEvent args)
     {
         if (!args.DamageIncreased || args.Origin == null)
             return;
 
-        // Если бьёт хозяин — теряем доверие
+        // If owner hits the animal - lose trust
         if (component.IsTamed && component.OwnerUid == args.Origin)
         {
             component.TrustLevel = MathF.Max(0, component.TrustLevel - component.TrustPenaltyOnHit);
 
-            // Если доверие упало ниже половины порога — животное дичает
+            // If trust drops below half threshold - animal becomes wild
             if (component.TrustLevel < component.TrustThreshold * 0.5f)
             {
                 UntameAnimal(uid, component);
@@ -192,12 +186,12 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         var query = EntityQueryEnumerator<NibiruTamableComponent, NibiruNpcBehaviorComponent>();
         while (query.MoveNext(out var uid, out var tamable, out var behavior))
         {
-            // Плавное убывание доверия
+            // Smooth trust decay
             if (tamable.IsTamed && tamable.TrustLevel > 0)
             {
                 tamable.TrustLevel = MathF.Max(0, tamable.TrustLevel - tamable.TrustDecayRate * frameTime);
 
-                // Одичание при полной потере доверия
+                // Wilding when trust is completely lost
                 if (tamable.TrustLevel <= 0)
                     UntameAnimal(uid, tamable);
             }
@@ -211,27 +205,25 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         component.OwnerUid = owner;
         _biome.ClaimBiomeMob(uid);
 
-        // Делаем животное дружественным к хозяину через систему фракций
         _faction.IgnoreEntity(uid, owner);
 
-        // Звук приручения
         _sounds.PlayTamedSound(uid);
 
-        // Визуальный эффект — сердечки при приручении!
+        // Heart effect for taming!
         Spawn("EffectHearts", Transform(uid).Coordinates);
 
-        // Добавляем базовые команды
+        // Add base commands
         LearnCommand(uid, component, NibiruAnimalCommand.Follow);
         LearnCommand(uid, component, NibiruAnimalCommand.Stay);
 
-        // Переводим в режим следования
+        // Switch to following mode
         if (TryComp<NibiruNpcStateMachineComponent>(uid, out var behavior))
         {
             behavior.CurrentTarget = owner;
             behavior.CurrentState = NibiruNpcState.Following;
         }
 
-        // Автоматически добавляем животное в группу командующего
+        // Add animal to commander group
         IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NibiruAnimalCommanderSystem>().AddAnimal(owner, uid);
     }
 
@@ -242,7 +234,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         component.OwnerUid = null;
         component.TrustLevel = 0;
 
-        // Убираем исключения из фракции
+        // Remove friendly tag
         if (prevOwner != null)
             _faction.DeAggroEntity(uid, prevOwner.Value);
 
@@ -283,7 +275,7 @@ public sealed partial class NibiruTamingSystem : EntitySystem
         if (!_tag.HasTag(item, FoodTag))
             return false;
 
-        // Если задан конкретный список — ест только это
+        // If there is a specific list - eat only this
         if (component.AcceptedFood != null && component.AcceptedFood.Count > 0)
         {
             if (!TryComp(item, out MetaDataComponent? meta) || meta.EntityPrototype == null)
@@ -291,24 +283,24 @@ public sealed partial class NibiruTamingSystem : EntitySystem
             return component.AcceptedFood.Contains(meta.EntityPrototype.ID);
         }
 
-        // Проверка по типу диеты
+        // Check by diet type
         switch (component.Diet)
         {
             case NibiruAnimalDiet.Carnivore:
-                return _tag.HasTag(item, MeatTag); // Плотоядные едят мясо
+                return _tag.HasTag(item, MeatTag); // Carnivores eat meat
 
             case NibiruAnimalDiet.Herbivore:
-                // Травоядные не едят мясо
+                // Herbivores do not eat meat
                 return !_tag.HasTag(item, MeatTag) && (_tag.HasTag(item, PlantTag) || _tag.HasTag(item, FruitTag) || _tag.HasTag(item, VegetableTag));
 
             case NibiruAnimalDiet.Omnivore:
             default:
-                return true; // Всеядные едят всё, что имеет тег Food
+                return true; // Omnivores eat everything with Food tag
         }
     }
 
     /// <summary>
-    /// Даёт животному команду. Только для обученных команд.
+    /// Give animal command. Only for learned commands.
     /// </summary>
     public bool GiveCommand(EntityUid animal, EntityUid commander, NibiruAnimalCommand command, EntityUid? target = null)
     {
@@ -375,13 +367,13 @@ public sealed partial class NibiruTamingSystem : EntitySystem
                     return false;
                 behavior.CurrentTarget = target;
                 behavior.CurrentCommand = command;
-                // Chasing: животное активно преследует цель по запаху,
-                // но не атакует (обрабатывается в ProcessChasing через команду Search)
+                // Chasing: animal actively pursues target by scent,
+                // but does not attack (handled in ProcessChasing via Search command)
                 behavior.CurrentState = NibiruNpcState.Chasing;
                 return true;
 
             case NibiruAnimalCommand.Deliver:
-                // Открываем UI выбора цели для игрока
+                // Open UI for player
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NibiruBirdDeliverySystem>().OpenUi(commander, animal);
                 return true;
 

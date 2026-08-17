@@ -283,15 +283,6 @@ public sealed partial class NibiruLivestockSystem : EntitySystem
                 TryFindMate(uid, breeder);
             }
         }
-
-        /*var legacyQuery = EntityQueryEnumerator<NibiruLivestockComponent>();
-        while (legacyQuery.MoveNext(out var uid, out var livestock))
-        {
-            if (HasComp<NibiruAnimalBreederComponent>(uid) || !livestock.CanBreed || HasComp<NibiruAnimalGrowthComponent>(uid) || IsStarving(uid))
-                continue;
-
-            UpdateLegacyBreeding(uid, livestock, frameTime);
-        }*/
     }
 
     private void UpdateLegacyBreeding(EntityUid uid, NibiruLivestockComponent livestock, float frameTime)

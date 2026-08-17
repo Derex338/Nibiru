@@ -5,14 +5,14 @@
     Title="{Loc 'faction-logo-editor-title'}"
     MinSize="900 450"
     Resizable="False">
-    
+
     <PanelContainer>
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#111112" />
         </PanelContainer.PanelOverride>
-        
+
         <BoxContainer Orientation="Horizontal" SeparationOverride="15" Margin="15">
-            <!-- Сетка 16x16 -->
+            <!-- 16x16 -->
             <BoxContainer Orientation="Vertical" SeparationOverride="10">
                 <Label Text="{Loc 'faction-logo-16-label'}" HorizontalAlignment="Center" />
                 <PanelContainer>
@@ -21,14 +21,14 @@
                     </PanelContainer.PanelOverride>
                     <GridContainer Name="PixelGrid" Access="Public" Columns="16" Margin="4" HSeparationOverride="0" VSeparationOverride="0" />
                 </PanelContainer>
-                
+
                 <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
                     <Button Name="EraserButton" Access="Public" Text="{Loc 'faction-logo-eraser'}" ToggleMode="True" MinWidth="80" />
                     <Button Name="ClearButton" Access="Public" Text="{Loc 'faction-logo-clear'}" MinWidth="100" />
                 </BoxContainer>
             </BoxContainer>
 
-            <!-- Сетка 8x8 и инструменты -->
+            <!-- 8x8 -->
             <BoxContainer Orientation="Vertical" SeparationOverride="15" MinWidth="180">
                 <BoxContainer Orientation="Vertical" SeparationOverride="10">
                     <Label Text="{Loc 'faction-logo-8-label'}" HorizontalAlignment="Center" />
@@ -42,14 +42,14 @@
                 </BoxContainer>
 
                 <Control VerticalExpand="True" />
-                
+
                 <Button Name="SaveButton" Access="Public" Text="{Loc 'faction-logo-save-all'}" MinHeight="40" StyleClasses="ButtonSquare" />
             </BoxContainer>
-            
-            <!-- Инструменты цвета -->
+
+            <!-- Palette -->
             <BoxContainer Orientation="Vertical" SeparationOverride="10" HorizontalExpand="True">
                 <Label Text="{Loc 'faction-logo-palette'}" HorizontalAlignment="Center" />
-                
+
                 <BoxContainer Orientation="Horizontal" SeparationOverride="15" HorizontalAlignment="Center">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                         <PanelContainer Name="BrushPreview" MinSize="24 24" VerticalAlignment="Center">
@@ -59,7 +59,7 @@
                         </PanelContainer>
                         <Label Text="{Loc 'faction-logo-brush'}" VerticalAlignment="Center" />
                     </BoxContainer>
-                    
+
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
                         <PanelContainer Name="BgPreview" MinSize="24 24" VerticalAlignment="Center">
                             <PanelContainer.PanelOverride>
@@ -71,14 +71,14 @@
                 </BoxContainer>
 
                 <ColorSelectorSliders Name="ColorSelector" Access="Public" VerticalExpand="True" Margin="0 5 0 5"/>
-                
+
                 <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalAlignment="Center">
                     <Button Name="BgColorButton" Access="Public" Text="{Loc 'faction-logo-bg-color-button'}" MinWidth="100" />
                     <Button Name="BrushColorButton" Access="Public" Text="{Loc 'faction-logo-brush-color-button'}" MinWidth="100" />
                 </BoxContainer>
             </BoxContainer>
 
-            <!-- Шаблоны -->
+            <!-- Presets -->
             <BoxContainer Orientation="Vertical" SeparationOverride="10" MinWidth="160">
                 <Label Text="{Loc 'faction-logo-presets'}" HorizontalAlignment="Center" />
                 <PanelContainer VerticalExpand="True">

@@ -8,21 +8,21 @@ namespace Content.Shared._Nibiru.Factions;
 public sealed partial class FactionVisualsComponent : Component
 {
     /// <summary>
-    /// Название фракции, чей логотип и фон нужно отобразить.
+    /// Name of faction whose logo and background to display.
     /// </summary>
     [DataField("factionName")]
     [AutoNetworkedField]
     public string FactionName = string.Empty;
 
     /// <summary>
-    /// Сохраненный цвет фона фракции.
+    /// Saved background color of faction.
     /// </summary>
     [DataField("logoBackground")]
     [AutoNetworkedField]
     public Color LogoBackground = Color.Transparent;
 
     /// <summary>
-    /// Сохраненный рисунок фракции.
+    /// Saved pixels of faction logo.
     /// </summary>
     [DataField("logoPixels")]
     [AutoNetworkedField]
@@ -39,7 +39,7 @@ public enum FactionVisualLayers : byte
 }
 
 /// <summary>
-/// Визуальные слои для статуи фракции.
+/// Visual layers for faction statue.
 /// </summary>
 [Serializable, NetSerializable]
 public enum FactionStatueVisualLayers : byte

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 namespace Content.Client.Localization;
 
 /// <summary>
-/// Статический реестр компонентов, которые нужно обновлять при смене языка.
-/// Альтернатива изменению движка — UIController'ы сами регистрируются через Initialize().
+/// Static registry of components that need to be updated when the language changes.
 /// </summary>
 public static class LanguageRefreshManager
 {

@@ -7,68 +7,64 @@ using System.Numerics;
 namespace Content.Shared._Nibiru.NPC.Commands;
 
 /// <summary>
-/// Компонент для животного, которое вцепилось в цель.
-/// Инвертирует обычную механику Pull - цель тащит животное.
+/// Component for an animal that has latched onto a target.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruAnimalGrabbedComponent : Component
 {
     /// <summary>
-    /// Цель, в которую вцепилось животное.
+    /// Target Entity being grabbed
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Target;
 
-    /// <summary>
-    /// Множитель замедления для цели.
-    /// </summary>
     [DataField]
     public float TargetSlowdownMultiplier = 0.6f;
 
     /// <summary>
-    /// Урон каждую секунду пока животное удерживает цель.
+    /// Damage per second while animal is grabbing target.
     /// </summary>
     [DataField]
     public DamageSpecifier? TickDamage;
 
     /// <summary>
-    /// Накопитель времени для тик-урона.
+    /// Accumulator for tick damage.
     /// </summary>
     [ViewVariables]
     public float DamageAccumulator;
 
     /// <summary>
-    /// Интервал тик-урона в секундах.
+    /// Damage interval in seconds.
     /// </summary>
     [DataField]
     public float DamageInterval = 1f;
 
     /// <summary>
-    /// Накопитель времени для встряхивания.
+    /// Accumulator for shake effect.
     /// </summary>
     [ViewVariables]
     public float ShakeAccumulator;
 
     /// <summary>
-    /// Интервал смены направления встряхивания (секунды).
+    /// Shake interval in seconds.
     /// </summary>
     [DataField]
     public float ShakeInterval = 0.25f;
 
     /// <summary>
-    /// Амплитуда встряхивания цели (в тайлах).
+    /// Shake amplitude in tiles.
     /// </summary>
     [DataField]
     public float ShakeAmplitude = 0.4f;
 
     /// <summary>
-    /// Текущее направление встряхивания (+1 или -1).
+    /// Current shake direction (+1 or -1).
     /// </summary>
     [ViewVariables]
     public float ShakeDirection = 1f;
 
     /// <summary>
-    /// Длительность DoAfter для отцепления (секунды).
+    /// DoAfter duration for detaching (seconds).
     /// </summary>
     [DataField]
     public float DetachDuration = 3f;

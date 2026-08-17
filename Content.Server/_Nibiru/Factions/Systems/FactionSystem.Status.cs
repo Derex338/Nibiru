@@ -54,7 +54,7 @@ public sealed partial class FactionSystem
 
                 factionComponent.FactionName = name;
 
-                // Обновляем имя фракции у всех сущностей мира, а не только у тех кто в списке Members
+                // Update faction name for all entities in the world, not just those in the Members list
                 var allFactionQuery = EntityQueryEnumerator<FactionComponent>();
                 while (allFactionQuery.MoveNext(out var entityUid, out var entityFaction))
                 {
@@ -64,7 +64,7 @@ public sealed partial class FactionSystem
                     entityFaction.FactionName = name;
                     Dirty(entityUid, entityFaction);
 
-                    // Уведомляем только игроков-людей (у кого есть MindComponent или похожее)
+                    // Notify only human players (those with MindComponent or similar)
                     if (factionComponent.Members.Contains(entityUid))
                     {
                         _popup.PopupEntity(
@@ -159,7 +159,6 @@ public sealed partial class FactionSystem
             needUpdate = true;
         }
 
-        // Новые фильтры
         if (msg.WhiteListSpecies != null)
         {
             factionComponent.WhiteListSpecies = msg.WhiteListSpecies;

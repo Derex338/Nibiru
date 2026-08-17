@@ -17,23 +17,17 @@ namespace Content.Client.Localization
     }
 
     /// <summary>
-    /// Замена обычному Label для ЛЮБОГО статического текста, который берётся из
-    /// локализации напрямую (не через каждый Update()). Используйте вместо Label
-    /// везде, где выставляете Text = Loc.GetString(...) один раз при создании окна.
-    ///
-    /// Пример:
-    ///   var label = new LocLabel();
-    ///   label.SetLoc("some-window-title");
-    /// вместо:
-    ///   var label = new Label { Text = Loc.GetString("some-window-title") };
+    /// Replacement for regular Label for ANY static text taken directly from
+    /// localization (not through every Update()). Use instead of Label
+    /// wherever you set Text = Loc.GetString(...) once when creating the window.
     /// </summary>
     public sealed class LocLabel : Label, ILocalizedControl
     {
         private string? _locId;
         private (string, object)[] _args = Array.Empty<(string, object)>();
 
-        /// <param name="locId">Fluent id строки.</param>
-        /// <param name="args">Аргументы Fluent-подстановки, как в Loc.GetString.</param>
+        /// <param name="locId">Fluent string ID.</param>
+        /// <param name="args">Arguments for Fluent substitution, as in Loc.GetString.</param>
         public void SetLoc(string locId, params (string, object)[] args)
         {
             _locId = locId;
@@ -51,7 +45,7 @@ namespace Content.Client.Localization
     }
 
     /// <summary>
-    /// То же самое, но для RichTextLabel (часто используется под markup-разметку).
+    /// Same, but for RichTextLabel (often used under markup).
     /// </summary>
     public sealed class LocRichTextLabel : RichTextLabel, ILocalizedControl
     {
@@ -75,9 +69,9 @@ namespace Content.Client.Localization
     }
 
     /// <summary>
-    /// Замена Button для случаев, когда текст кнопки статический
-    /// (не переключается вручную кодом при клике, как в вашем примере с кнопкой-тумблером —
-    /// для таких кнопок ничего переписывать и не нужно, они и так работали).
+    /// Replacement for Button for cases where the button text is static
+    /// (not manually switched by code on click, as in your toggle button example —
+    /// such buttons didn't need rewriting, they worked as-is).
     /// </summary>
     public sealed class LocButton : Button, ILocalizedControl
     {
@@ -101,9 +95,9 @@ namespace Content.Client.Localization
     }
 
     /// <summary>
-    /// Утилита обхода дерева контролов — используется системой смены языка,
-    /// но можно вызывать и вручную (например, только для конкретного окна сразу после его создания,
-    /// если вы открыли его ДО смены языка и хотите принудительно обновить).
+    /// Control tree traversal utility — used by the language switching system,
+    /// but can also be called manually (for example, only for a specific window right after it's created,
+    /// if you opened it BEFORE the language change and want to force an update).
     /// </summary>
     public static class LocalizedControlTreeWalker
     {

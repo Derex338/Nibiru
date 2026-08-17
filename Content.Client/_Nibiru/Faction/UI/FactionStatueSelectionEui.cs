@@ -9,9 +9,10 @@ using System.Numerics;
 namespace Content.Client._Nibiru.Faction.UI;
 
 /// <summary>
-/// Клиентское EUI для выбора члена фракции при постройке статуи.
-/// Показывает список всех членов фракции и отправляет выбор на сервер.
+/// Client-side EUI for selecting a faction member when building a statue.
+/// Shows a list of all faction members and sends the selection to the server.
 /// </summary>
+/// DONT WORK
 [UsedImplicitly]
 public sealed class FactionStatueSelectionEui : BaseEui
 {
@@ -51,7 +52,7 @@ public sealed class FactionStatueSelectionEui : BaseEui
 }
 
 /// <summary>
-/// Окно со списком членов фракции для выбора.
+/// Window with a list of faction members to select from.
 /// </summary>
 public sealed class FactionStatueSelectionWindow : DefaultWindow
 {

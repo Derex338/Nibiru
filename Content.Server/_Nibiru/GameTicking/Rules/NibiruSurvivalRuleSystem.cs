@@ -20,7 +20,7 @@ using Content.Shared.Preferences;
 namespace Content.Server._Nibiru.GameTicking.Rules;
 
 /// <summary>
-/// Система управления игровым режимом Nibiru Survival
+/// Gamemode Nibiru Survival
 /// </summary>
 public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurvivalRuleComponent>
 {
@@ -34,7 +34,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
 
 
     /// <summary>
-    /// Хранилище выбранных фракций игроками
+    /// Factions list
     /// </summary>
     public readonly Dictionary<NetUserId, string?> PlayerFactionChoices = new();
 
@@ -44,23 +44,14 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
         base.Initialize();
 
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
-        //SubscribeNetworkEvent<LateJoinFactionMessage>(OnLateJoinFactionChoice);
-
-        //InitializeCommands();
     }
 
     /// <summary>
-    /// Сохраняет выбор фракции игрока
+    /// Save player's faction choice
     /// </summary>
     public void OnLateJoinFactionChoice(ICommonSession session, string? FactionName)
     {
-       //if (session.UserId is not { } userId)
-       //     return;
-
-        // Сохраняем выбор (null означает одиночный спавн)
         PlayerFactionChoices[session.UserId] = FactionName;
-
-
     }
 
     protected override void Added(EntityUid uid, NibiruSurvivalRuleComponent comp, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -78,10 +69,10 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            // Сначала спавним игрока обычным способом
+            // First spawn player normally
             var entity = _world.SpawnPlayer(ev);
 
-            // Затем проверяем, выбрал ли он фракцию
+            // Then check if he chose a faction
             string? factionName = null;
             bool choiceMade = false;
             if (ev.Player.UserId is { } userId && PlayerFactionChoices.TryGetValue(userId, out var choice))
@@ -91,7 +82,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
                 choiceMade = true;
             }
 
-            // Если через сетку выбора не выбрано, пробуем взять из профиля
+            // If not selected through the selection grid, try to take from the profile
             if (!choiceMade && string.IsNullOrEmpty(factionName) && ev.Profile is HumanoidCharacterProfile profile)
             {
                 if (!string.IsNullOrWhiteSpace(profile.FactionName))
@@ -109,21 +100,7 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
             return;
         }
     }
-/*
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DelayedStartRuleComponent, WorldRuleComponent>();
-        while (query.MoveNext(out var uid, out var delay, out var rule))
-        {
-            if (_timing.CurTime < delay.RuleStartTime)
-                continue;
-
-            StartWorldRule(new(uid, rule));
-        }
-    }
-*/
     public NibiruSurvivalRuleComponent GetRule()
     {
         while (EntityQueryEnumerator<NibiruSurvivalRuleComponent>().MoveNext(out var comp))
@@ -138,154 +115,9 @@ public sealed partial class NibiruSurvivalRuleSystem : GameRuleSystem<NibiruSurv
     {
         return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
-/*
-    /// <summary>
-    /// Adds a world rule to the list, but does not
-    /// start it yet, instead waiting until the rule is actually started by other code
-    /// </summary>
-    /// <returns>The entity for the added worldrule</returns>
-    [PublicAPI]
-    public EntityUid AddWorldRule(EntProtoId ruleId, EntityUid target, EntityCoordinates targetCoordinates)
-    {
-        var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
-        var comp = Comp<WorldRuleComponent>(ruleEntity);
-
-        comp.Target = target;
-        comp.TargetCoordinates = targetCoordinates;
-
-        var str = $"Added world rule {ToPrettyString(ruleEntity)} for {ToPrettyString(target)}";
-        _sawmill.Info(str);
-        _chat.SendAdminAnnouncement(str);
-
-        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)} for {ToPrettyString(target)}");
-
-        var ev = new WorldRuleAddedEvent(ruleEntity, ruleId, target, targetCoordinates);
-        RaiseLocalEvent(ruleEntity, ref ev, true);
-        return ruleEntity;
-    }
 
     /// <summary>
-    /// World rules can be 'started' separately from being added. 'Starting' them usually
-    /// happens at round start while they can be added and removed before then.
-    /// </summary>
-    [PublicAPI]
-    public bool StartWorldRule(
-        EntProtoId ruleId,
-        EntityUid target,
-        EntityCoordinates targetCoordinates,
-        bool ignoreDelay = false)
-    {
-        return StartWorldRule(ruleId, target, targetCoordinates, out _, ignoreDelay);
-    }
-
-    /// <summary>
-    /// World rules can be 'started' separately from being added. 'Starting' them usually
-    /// happens at round start while they can be added and removed before then.
-    /// </summary>
-    [PublicAPI]
-    public bool StartWorldRule(
-        EntProtoId ruleId,
-        EntityUid target,
-        EntityCoordinates targetCoordinates,
-        out EntityUid ruleEntity,
-        bool ignoreDelay = false)
-    {
-        ruleEntity = AddWorldRule(ruleId, target, targetCoordinates);
-        return StartWorldRule(ruleEntity, ignoreDelay);
-    }
-
-    [PublicAPI]
-    public bool StartWorldRule(Entity<WorldRuleComponent?> ruleEntity, bool ignoreDelay = false)
-    {
-        if (!Resolve(ruleEntity, ref ruleEntity.Comp)
-            || !ruleEntity.Comp.Target.IsValid()
-            || !ruleEntity.Comp.TargetCoordinates.IsValid(EntityManager))
-            return false;
-
-        return StartWorldRule(ruleEntity, ruleEntity.Comp.Target, ruleEntity.Comp.TargetCoordinates, ignoreDelay);
-    }
-
-    /// <summary>
-    /// Game rules can be 'started' separately from being added. 'Starting' them usually
-    /// happens at round start while they can be added and removed before then.
-    /// </summary>
-    [PublicAPI]
-    public bool StartWorldRule(
-        Entity<WorldRuleComponent?> ruleEntity,
-        EntityUid target,
-        EntityCoordinates targetCoordinates,
-        bool ignoreDelay = false)
-    {
-        if (!Resolve(ruleEntity, ref ruleEntity.Comp)
-            || HasComp<ActiveGameRuleComponent>(ruleEntity)
-            || HasComp<EndedGameRuleComponent>(ruleEntity)
-            || MetaData(ruleEntity).EntityPrototype is not { } proto)
-            return false;
-
-        ruleEntity.Comp.TargetCoordinates = targetCoordinates;
-        ruleEntity.Comp.Target = target;
-
-        // If we already have it, then we just skip the delay as it has already happened.
-        if (!ignoreDelay && !RemComp<DelayedStartRuleComponent>(ruleEntity) && ruleEntity.Comp.Delay is { } delay)
-        {
-            var delayTime = TimeSpan.FromSeconds(delay.Next(_random));
-
-            if (delayTime > TimeSpan.Zero)
-            {
-                var str = $"Queued start for world rule {ToPrettyString(ruleEntity)} with delay {delayTime}";
-                _sawmill.Info(str);
-                _chat.SendAdminAnnouncement(str);
-                _adminLogger.Add(LogType.EventStarted,
-                    $"Queued start for world rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
-
-                var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
-                delayed.RuleStartTime = _timing.CurTime + delayTime;
-                return true;
-            }
-        }
-
-        var msg = $"Started world rule {ToPrettyString(ruleEntity)}";
-        _sawmill.Info(msg);
-        _chat.SendAdminAnnouncement(msg);
-        _adminLogger.Add(LogType.EventStarted,
-            $"Started world rule {ToPrettyString(ruleEntity)}");
-
-        EnsureComp<ActiveGameRuleComponent>(ruleEntity);
-
-        var ev = new WorldRuleStartedEvent(ruleEntity, proto, target, targetCoordinates);
-        RaiseLocalEvent(ruleEntity, ref ev, true);
-        return true;
-    }
-
-    /// <summary>
-    /// Ends a world rule.
-    /// </summary>
-    [PublicAPI]
-    public bool EndWorldRule(Entity<WorldRuleComponent?> uid)
-    {
-        if (!Resolve(uid, ref uid.Comp))
-            return false;
-
-        // don't end it multiple times
-        if (HasComp<EndedGameRuleComponent>(uid))
-            return false;
-
-        if (MetaData(uid).EntityPrototype is not { } proto) // you really fucked up
-            return false;
-
-        RemComp<ActiveGameRuleComponent>(uid);
-        EnsureComp<EndedGameRuleComponent>(uid);
-
-        _sawmill.Info($"Ended world rule {ToPrettyString(uid)} for {ToPrettyString(uid.Comp.Target)}");
-        _adminLogger.Add(LogType.EventStopped, $"Ended world rule {ToPrettyString(uid)} for {ToPrettyString(uid.Comp.Target)}");
-
-        var ev = new WorldRuleEndedEvent(uid, proto, uid.Comp.Target, uid.Comp.TargetCoordinates);
-        RaiseLocalEvent(uid, ref ev, true);
-        return true;
-    }
-*/
-    /// <summary>
-    /// Возвращает список доступных фракций для UI
+    /// Returns the list of available factions for UI
     /// </summary>
     public IReadOnlyList<FactionInfo> GetAvailableFactions()
     {

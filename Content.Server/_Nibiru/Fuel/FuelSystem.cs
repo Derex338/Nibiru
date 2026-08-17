@@ -63,7 +63,6 @@ public sealed partial class FuelSystem : EntitySystem
     private void OnInit(EntityUid uid, FuelConsumptionComponent comp, ComponentInit args)
     {
         comp.CurrentState = FuelLightState.BrandNew;
-        //comp.StateExpiryTime = 0f;
         comp.CurrentTemperature = 20f;
 
         var light = EnsureComp<PointLightComponent>(uid);
@@ -76,7 +75,7 @@ public sealed partial class FuelSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет потребление топлива
+    /// Updates fuel consumption
     /// </summary>
     private void UpdateFuelConsumption(Entity<FuelConsumptionComponent> ent, float dt)
     {
@@ -92,7 +91,7 @@ public sealed partial class FuelSystem : EntitySystem
             switch (comp.CurrentState)
             {
                 case FuelLightState.Lit:
-                    // Переход к затуханию
+                    // Fade out
                     comp.CurrentState = FuelLightState.Fading;
                     comp.StateExpiryTime = (float)comp.FadeOutDuration.TotalSeconds;
 
@@ -107,7 +106,7 @@ public sealed partial class FuelSystem : EntitySystem
                     break;
 
                 case FuelLightState.Fading:
-                    // Топливо закончилось
+                    // Fuel ran out
                     Extinguish(ent);
                     break;
             }
@@ -115,7 +114,7 @@ public sealed partial class FuelSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет температуру объекта
+    /// Updates object temperature
     /// </summary>
     private void UpdateTemperature(Entity<FuelConsumptionComponent> ent, float dt)
     {
@@ -123,19 +122,19 @@ public sealed partial class FuelSystem : EntitySystem
         var oldTemp = comp.CurrentTemperature;
         var targetTemp = 20f;
 
-        // Определяем целевую температуру
+        // Determining target temperature
         if (comp.CurrentState == FuelLightState.Lit)
         {
             targetTemp = comp.TargetBurnTemperature;
         }
         else if (comp.CurrentState == FuelLightState.Fading)
         {
-            // При затухании температура плавно падает
+            // Fade out temperature
             var fadeProgress = comp.StateExpiryTime / (float)comp.FadeOutDuration.TotalSeconds;
             targetTemp = 20f + (comp.TargetBurnTemperature - 20f) * fadeProgress;
         }
 
-        // Плавное изменение температуры
+        // Smooth temperature change
         if (comp.CurrentTemperature < targetTemp)
         {
             comp.CurrentTemperature = Math.Min(
@@ -156,7 +155,7 @@ public sealed partial class FuelSystem : EntitySystem
             tempComp.CurrentTemperature += comp.CurrentTemperature / 10 * dt;
         }
 
-        // Проверка изменения операционного статуса
+        // Check for operational status change
         var wasOperational = oldTemp >= comp.MinOperatingTemperature;
         var isOperational = comp.CurrentTemperature >= comp.MinOperatingTemperature;
 
@@ -173,7 +172,7 @@ public sealed partial class FuelSystem : EntitySystem
         }
         else if (Math.Abs(oldTemp - comp.CurrentTemperature) > 5.0f)
         {
-            // Редкое обновление для синхронизации температуры
+            // Rare update for temperature synchronization
             Dirty(ent, comp);
             UpdateVisualizer(ent);
         }
@@ -184,7 +183,6 @@ public sealed partial class FuelSystem : EntitySystem
         if (args.Handled)
             return;
 
-        // Поджигание
         if (TryComp<IgnitionSourceComponent>(args.Used, out var ignit) && ignit.Ignited)
         {
             if (TryIgnite((uid, comp)))
@@ -194,7 +192,7 @@ public sealed partial class FuelSystem : EntitySystem
             return;
         }
 
-        // Тушение инструментом
+        // Extinguishing with tool
         if (comp.CanBeExtinguished && (comp.CurrentState == FuelLightState.Lit || comp.CurrentState == FuelLightState.Fading))
         {
             var isTool = false;
@@ -223,7 +221,7 @@ public sealed partial class FuelSystem : EntitySystem
             }
         }
 
-        // Добавление топлива
+        // Adding fuel
         if (!TryComp<FuelComponent>(args.Used, out var fuel))
             return;
 
@@ -234,7 +232,7 @@ public sealed partial class FuelSystem : EntitySystem
         if (!canAdd)
             return;
 
-        // Если объект погас, восстанавливаем его
+        // If object is dead, restore it
         if (comp.CurrentState == FuelLightState.Dead)
         {
             comp.CurrentState = FuelLightState.BrandNew;
@@ -248,7 +246,6 @@ public sealed partial class FuelSystem : EntitySystem
             comp.TargetBurnTemperature = Math.Max(comp.TargetBurnTemperature, fuel.TemperatureMax);
         }
 
-        // Удаление топлива из стака или удаление объекта
         if (TryComp(args.Used, out StackComponent? stack))
         {
             _stack.SetCount(args.Used, stack.Count - 1, stack);
@@ -307,9 +304,6 @@ public sealed partial class FuelSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Поджигает объект
-    /// </summary>
     public bool TryIgnite(Entity<FuelConsumptionComponent> ent)
     {
         var comp = ent.Comp;
@@ -334,7 +328,6 @@ public sealed partial class FuelSystem : EntitySystem
 
         _audio.PlayPvs(comp.LitSound, ent);
 
-        // Запуск зацикленного звука горения
         if (comp.LoopedSound != null && comp.PlayingStream == null)
         {
             comp.PlayingStream = _audio.PlayPvs(comp.LoopedSound, ent, AudioParams.Default.WithLoop(true))?.Entity;
@@ -345,9 +338,6 @@ public sealed partial class FuelSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Тушит объект
-    /// </summary>
     public void Extinguish(Entity<FuelConsumptionComponent> ent)
     {
         var comp = ent.Comp;
@@ -369,7 +359,6 @@ public sealed partial class FuelSystem : EntitySystem
 
         _audio.PlayPvs(comp.DieSound, ent);
 
-        // Остановка зацикленного звука
         comp.PlayingStream = _audio.Stop(comp.PlayingStream);
 
         _nameModifier.RefreshNameModifiers(ent.Owner);
@@ -395,9 +384,6 @@ public sealed partial class FuelSystem : EntitySystem
         var behavior = string.Empty;
         if (comp.CurrentState == FuelLightState.Lit)
         {
-            // Если костер еще не нагрелся до 80% — показываем анимацию разгорания
-            // Иначе переходим на стабильное горение. Это предотвращает перезапуск
-            // анимации разгорания при возвращении в PVS уже горячего костра.
             behavior = comp.CurrentTemperature < comp.TargetBurnTemperature * 0.8f
                 ? (string.IsNullOrEmpty(comp.TurnOnBehaviourID) ? comp.LitBehaviourID : comp.TurnOnBehaviourID)
                 : (string.IsNullOrEmpty(comp.LitBehaviourID) ? comp.TurnOnBehaviourID : comp.LitBehaviourID);
@@ -409,7 +395,7 @@ public sealed partial class FuelSystem : EntitySystem
 
         if (_appearance.TryGetData<string>(ent, FuelLightVisuals.Behavior, out var oldBehavior, appearance) && oldBehavior == behavior)
         {
-            // Ничего не меняем если ID тот же
+            // =(
         }
         else
         {

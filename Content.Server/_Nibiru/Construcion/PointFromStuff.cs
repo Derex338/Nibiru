@@ -21,7 +21,6 @@ public sealed partial class PointsFromStuffSystem : EntitySystem
     {
         SubscribeLocalEvent<PointsFromKillComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<FactionComponent, HarvestPlantMessage>(OnHarvest);
-        //SubscribeLocalEvent<PointsFromDestructionComponent, DestructionEventArgs>(OnDestruction);
     }
 
     public override void Update(float frameTime)
@@ -74,21 +73,4 @@ public sealed partial class PointsFromStuffSystem : EntitySystem
             _research.ModifyServerPoints(comp.ResearchServer.Value, msg._seed.Points, research);
         }
     }
-    //private void OnDestruction(EntityUid uid, PointsFromDestructionComponent component, DestructionEventArgs args)
-    //{
-    //    if (component.CurrentOre == null)
-    //        return;
-
-    //    var proto = _proto.Index<OrePrototype>(component.CurrentOre);
-
-    //    if (proto.OreEntity == null)
-    //        return;
-
-    //    var coords = Transform(uid).Coordinates;
-    //    var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield + 1);
-    //    for (var i = 0; i < toSpawn; i++)
-    //    {
-    //        Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
-    //    }
-    //}
 }

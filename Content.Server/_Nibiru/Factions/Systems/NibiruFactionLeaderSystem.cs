@@ -16,7 +16,7 @@ public sealed partial class NibiruFactionLeaderSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private FactionSystem _factionSystem = default!;
     [Dependency] private IChatManager _chatManager = default!;
-    // Список победителей лотереи, ожидающих спавна
+
     private readonly Dictionary<NetUserId, NibiruFactionLeaderPrefsMessage> _pendingLeaders = new();
 
     public override void Initialize()
@@ -34,13 +34,12 @@ public sealed partial class NibiruFactionLeaderSystem : EntitySystem
         if (pendingPrefs.Count == 0)
             return;
 
-        // Регистрируем ВСЕ фракции из лобби в реестре
         foreach (var pref in pendingPrefs.Values)
         {
             _factionSystem.RegisterLobbyPref(pref);
         }
 
-        // Все, у кого заполнено название и кто в пуле спавна, становятся лидерами
+        // If you have faction name you will spawn
         var poolIds = ev.PlayerPool.Select(p => p.UserId).ToHashSet();
         foreach (var (userId, pref) in pendingPrefs)
         {
@@ -56,7 +55,6 @@ public sealed partial class NibiruFactionLeaderSystem : EntitySystem
         var mob = ev.Mob;
         var userId = ev.Player.UserId;
 
-        // Лидер фракции из лотереи
         if (_pendingLeaders.TryGetValue(userId, out var prefs))
         {
             var factionComp = EnsureComp<FactionComponent>(mob);
@@ -101,7 +99,6 @@ public sealed partial class NibiruFactionLeaderSystem : EntitySystem
             return;
         }
 
-        // Обычный игрок с заполненными данными о фракции в лобби
         if (ev.Profile is not HumanoidCharacterProfile profile
             || string.IsNullOrWhiteSpace(profile.FactionName))
             return;

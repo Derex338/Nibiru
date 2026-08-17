@@ -19,9 +19,9 @@ using Content.Client.Lobby;
 namespace Content.Client.Localization
 {
     /// <summary>
-    /// Клиентская система переключения языка.
-    /// Бросает <see cref="LanguageChangedEvent"/> в EventBus (EventSource.Local)
-    /// и оповещает все зарегистрированные ILanguageRefreshable компоненты.
+    /// Client system for switching languages.
+    /// Throws <see cref="LanguageChangedEvent"/> into EventBus (EventSource.Local)
+    /// and notifies all registered ILanguageRefreshable components.
     /// </summary>
     public sealed partial class LocaleSwitchSystem : EntitySystem
     {
@@ -82,23 +82,23 @@ namespace Content.Client.Localization
                 _sawmill.Error($"Error reloading localizations: {e}");
             }
 
-            // 1. Закрываем все открытые окна, которые не умеют обновляться
+            // 1. Close all open windows that cannot update themselves
             CloseAllOpenWindows();
 
-            // 2. Шлём событие всем EntitySystem'ам
+            // 2. Send event to all EntitySystems
             var ev = new LanguageChangedEvent(oldCultureCode, cultureCode);
             RaiseLocalEvent(ev);
 
-            // 3. Оповещаем все ILanguageRefreshable (UIController'ы)
+            // 3. Notify all ILanguageRefreshable (UIControllers)
             LanguageRefreshManager.RefreshAll();
 
-            // 4. Перезагружаем UI текущего состояния
+            // 4. Reload current state UI
             ReloadCurrentState();
 
-            // 5. Пересоздаём окна настроек и ESC-меню
+            // 5. Recreate Settings and ESC menu windows
             ReloadUIControllers();
 
-            // 6. Показываем подсказку что язык сменился
+            // 6. Show language changed notification
             NotifyLanguageChanged();
 
             _cfg.SaveToFile();
@@ -116,9 +116,9 @@ namespace Content.Client.Localization
                 return;
             }
 
-            // Для остальных состояний (LobbyState, MainScreen, LauncherConnecting)
-            // переключаемся на LanguageSwitchDummyState и обратно.
-            // RequestStateChange с тем же типом — no-op, поэтому нужен промежуточный.
+            // For other states (LobbyState, MainScreen, LauncherConnecting)
+            // switch to LanguageSwitchDummyState and back.
+            // RequestStateChange with the same type does nothing, so intermediate is needed.
             try
             {
                 var stateType = currentState.GetType();
@@ -169,14 +169,14 @@ namespace Content.Client.Localization
         }
 
         /// <summary>
-        /// Закрывает все открытые окна (BaseWindow) кроме тех, что мы пересоздаём сами.
+        /// Closes all open windows (BaseWindow) except those we recreate ourselves.
         /// </summary>
         private void CloseAllOpenWindows()
         {
             try
             {
-                // WindowRoot содержит все открытые BaseWindow.
-                // Собираем в список т.к. Close() удаляет из коллекции.
+                // WindowRoot contains all open BaseWindow.
+                // Collect into a list because Close() removes from the collection.
                 var windows = _ui.WindowRoot.Children;
                 var toClose = new System.Collections.Generic.List<Robust.Client.UserInterface.CustomControls.BaseWindow>();
                 foreach (var child in windows)
@@ -206,7 +206,7 @@ namespace Content.Client.Localization
         }
 
         /// <summary>
-        /// Показывает уведомление о смене языка.
+        /// Shows language changed notification.
         /// </summary>
         private void NotifyLanguageChanged()
         {

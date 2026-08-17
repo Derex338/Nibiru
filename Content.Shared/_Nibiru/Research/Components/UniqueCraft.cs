@@ -4,14 +4,14 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Construction.Completions;
 
 /// <summary>
-///     Помечает рецепт как уникальный для фракции. 
-///     В списке доступных крафтов он будет отображаться только если такого объекта еще нет у фракции.
+///     Marks a recipe as unique for a faction.
+///     In the list of available crafts, it will be displayed only if the faction does not yet have such an object.
 /// </summary>
 [DataDefinition]
 public sealed partial class UniqueCraft : IGraphAction
 {
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        // Этот экшен служит маркером для фильтрации в ConstructionRecipeCheck
+        // This action serves as a marker for filtering in ConstructionRecipeCheck
     }
 }

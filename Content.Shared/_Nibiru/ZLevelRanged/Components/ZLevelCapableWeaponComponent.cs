@@ -3,21 +3,21 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Nibiru.ZLevelRanged.Components;
 
 /// <summary>
-/// Помечает оружие как способное стрелять между Z-уровнями.
-/// Снаряды этого оружия получат ZLevelProjectileComponent.
+/// Marks the weapon as capable of shooting between Z-levels.
+/// Projectiles of this weapon will receive ZLevelProjectileComponent.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ZLevelCapableWeaponComponent : Component
 {
     /// <summary>
-    /// Может ли это оружие стрелять прямой наводкой между уровнями
-    /// (стрела летит по прямой и может попасть на другой уровень через отверстие)
+    /// Can this weapon shoot directly between levels
+    /// (the arrow flies in a straight line and can hit another level through an opening)
     /// </summary>
     [DataField]
     public bool AllowDirectFire = true;
 
     /// <summary>
-    /// Процент пути на котором снаряд проверяет падение вниз
+    /// The percentage of the path on which the projectile checks for falling down
     /// </summary>
     [DataField]
     public float FallCheckDistance = 0.7f;

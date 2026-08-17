@@ -8,7 +8,7 @@ using Robust.Client.Graphics;
 
 namespace Content.Client._Nibiru.Faction.UI;
 
-// Код взят с Reserv'а и изменён под фракции
+// From Reserve
 [UsedImplicitly]
 public sealed class FactionRequestedEui : BaseEui
 {
@@ -31,13 +31,6 @@ public sealed class FactionRequestedEui : BaseEui
             SendMessage(new FactionJoinRequestMessage(true));
             _window.Close();
         };
-    }
-    public override void HandleState(EuiStateBase state)
-    {
-        //if (state is FactionJoinRequestMessage consentState)
-        //{
-        //    _window.SetConverterName(consentState.ConverterName);
-        //}
     }
 
     public override void Opened()

@@ -69,7 +69,6 @@ public sealed partial class NibiruRoundSaveSystem : EntitySystem
         base.Initialize();
         _mapLoader.OnIsSerializable += OnIsSerializable;
         SubscribeNetworkEvent<RequestSavedCharacterMessage>(OnSaveCharacterRequest);
-        //SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnPlayerBeforeSpawnEvent);
     }
 
     public override void Shutdown()
@@ -145,21 +144,13 @@ public sealed partial class NibiruRoundSaveSystem : EntitySystem
 
             Log.Info($"[SaveLoad] Reconnecting player {player.Name} to saved entity {uid} ({meta.EntityName}).");
 
-            // Получаем старый Mind напрямую, обходя TryGetMind который может быть рассинхронизирован
-            /*var oldMindId = player;
-            if (oldMindId != null)
-            {
-                Log.Info($"[SaveLoad] Wiping old mind {oldMindId} for player {player.Name}");
-                _mind.WipeMind(oldMindId);
-            }*/
-
-            // Создаём новый Mind с именем персонажа
+            // Create new mind for player
             var newMind = _mind.CreateMind(player.UserId, meta.EntityName);
 
-            // Устанавливаем UserId явно
+            // Set player user id
             _mind.SetUserId(newMind, player.UserId);
 
-            // Переносим разум в сущность
+            // Transfer mind to entity
             _mind.TransferTo(newMind, uid);
 
             if (TryComp<SSDIndicatorComponent>(uid, out var ssd))

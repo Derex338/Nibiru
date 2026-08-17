@@ -42,16 +42,6 @@ public sealed partial class CoolInWaterSystem : EntitySystem
         if (!TryComp<CoolInWaterComponent>(args.Used, out var comp))
             return;
 
-        //var name = _solution.EnumerateSolutions((uid, component));
-
-        //foreach (var (solName, _) in name)
-        //{
-        //if (solName == null)
-        //    return;
-
-        //if (!_solution.TryGetSolution(uid, solName, out _, out var sol) || sol is null || sol.Volume < 10)
-        //    return;
-
         if (!TryComp<SolutionComponent>(args.Used, out var usedSolution) || component.Solution.Volume < 10)
             return;
 
@@ -60,9 +50,6 @@ public sealed partial class CoolInWaterSystem : EntitySystem
 
         if (comp.Solution is not null)
         {
-            //if (!_solution.TryGetSolution(args.Used, comp.Solution, out var solution, out var soln))
-            //    return;
-
             if (comp.MinTemperature >= usedSolution.Solution.Temperature)
                 return;
 
@@ -86,10 +73,6 @@ public sealed partial class CoolInWaterSystem : EntitySystem
             });
         }
 
-        //break;
-        //}
-
-
         args.Handled = true;
     }
 
@@ -105,9 +88,6 @@ public sealed partial class CoolInWaterSystem : EntitySystem
 
         if (comp.Solution is not null)
         {
-            //if (!_solution.TryGetSolution(target, comp.Solution, out var solution, out _))
-            //    return;
-
             _solution.SetTemperature((target, targetSolution), comp.MinTemperature);
             Effect(target, comp, args.solution);
             args.Handled = true;

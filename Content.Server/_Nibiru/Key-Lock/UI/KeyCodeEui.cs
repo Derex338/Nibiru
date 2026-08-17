@@ -9,7 +9,7 @@ using Content.Shared._Nibiru.Lock;
 
 namespace Content.Server._Nibiru.Key.UI;
 
-//Взято за основу с Reserv
+// From Reserve
 public sealed class KeyCodeSetEui(EntityUid target, EntityUid user, DoorLockSystem lockSystem, PopupSystem popup, EntityManager entManager) : BaseEui
 {
     public override EuiStateBase GetNewState()

@@ -1,14 +1,14 @@
 namespace Content.Client.Localization;
 
 /// <summary>
-/// Интерфейс для UIController'ов и окон, которые должны
-/// перезагружать свои тексты при смене языка.
+/// Interface for UI controllers and windows that need to
+/// refresh their texts when the language changes.
 /// </summary>
 public interface ILanguageRefreshable
 {
     /// <summary>
-    /// Вызывается когда язык сменился. Контроллер/окно должно
-    /// обновить все локализованные тексты и пересоздать окна.
+    /// Called when the language changes. The controller/window should
+    /// update all localized texts and recreate windows.
     /// </summary>
     void OnLanguageChanged();
 }

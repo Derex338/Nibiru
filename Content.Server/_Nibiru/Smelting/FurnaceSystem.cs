@@ -41,20 +41,9 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SmeltingFurnaceComponent, ComponentInit>(OnFurnaceInit);
         SubscribeLocalEvent<SmeltingFurnaceComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SmeltingFurnaceComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SmeltingFurnaceComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
-
-        // Слушаем события от системы топлива
-        SubscribeLocalEvent<SmeltingFurnaceComponent, TemperatureChangedEvent>(OnTemperatureChanged);
-        SubscribeLocalEvent<SmeltingFurnaceComponent, FuelStateChangedEvent>(OnFuelStateChanged);
-    }
-
-    private void OnFurnaceInit(EntityUid uid, SmeltingFurnaceComponent component, ComponentInit args)
-    {
-        //component.OreContainer = _container.EnsureContainer<Container>(uid, component.ContainerId);
-        //component.SolutionContainer = _container.EnsureContainer<ContainerSlot>(uid, component.SolutionContainerId);
     }
 
     public override void Update(float frameTime)
@@ -64,8 +53,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
         var query = EntityQueryEnumerator<SmeltingFurnaceComponent, FuelConsumptionComponent>();
         while (query.MoveNext(out var uid, out var furnace, out var fuel))
         {
-            // Печь работает только если топливо достаточно горячее
-            if (!fuel.IsOperational) //|| furnace.OreContainer == null)
+            if (!fuel.IsOperational)
                 continue;
 
             UpdateFurnaceContents((uid, furnace, fuel), frameTime);
@@ -73,7 +61,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет содержимое печи - нагревает, плавит, сжигает
+    /// Updates furnace contents - heats, melts, burns
     /// </summary>
     private void UpdateFurnaceContents(
         Entity<SmeltingFurnaceComponent, FuelConsumptionComponent> ent,
@@ -87,7 +75,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
 
         foreach (var entity in inputContainer.ContainedEntities.ToArray())
         {
-            // Обрабатываем руду
+            // Process ore
             if (TryComp<SmeltableOreComponent>(entity, out var ore))
             {
                 if (ProcessOre(uid, entity, furnace, ore, furnaceTemp, dt))
@@ -97,19 +85,18 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
                 }
             }
 
-            // Обрабатываем обычные предметы с температурой
+            // Process temperature items
             if (TryComp<TemperatureComponent>(entity, out var temp))
             {
                 ProcessTemperature(uid, entity, furnace, temp, furnaceTemp, dt);
             }
         }
 
-        // Обновляем визуалы
         UpdateVisuals(uid, furnace, anythingSmelting);
     }
 
     /// <summary>
-    /// Обрабатывает плавку руды
+    /// Handles ore melting
     /// </summary>
     private bool ProcessOre(
         EntityUid furnaceUid,
@@ -119,20 +106,17 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
         float furnaceTemp,
         float dt)
     {
-        // Нагреваем руду если есть компонент температуры
         if (TryComp<TemperatureComponent>(oreUid, out var temp))
         {
-            HeatEntity(temp, furnaceTemp, dt, 30f); // Скорость нагрева руды
+            HeatEntity(temp, furnaceTemp, dt, 30f);
         }
 
         var currentTemp = temp?.CurrentTemperature ?? furnaceTemp;
-
-        // Если достигли температуры плавления - плавим
         if (currentTemp >= ore.MeltingPoint)
         {
             ore.MeltingProgress += ore.MeltingSpeed * dt;
 
-            // Руда полностью расплавилась
+            // Ore completely melted
             if (ore.MeltingProgress >= 1f)
             {
                 MeltOre(furnaceUid, oreUid, furnace, ore);
@@ -147,7 +131,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обрабатывает нагрев обычного предмета
+    /// Handles heating normal item
     /// </summary>
     private void ProcessTemperature(
         EntityUid furnaceUid,
@@ -157,17 +141,11 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
         float furnaceTemp,
         float dt)
     {
-        HeatEntity(temp, furnaceTemp, dt, 40f); // Скорость нагрева предметов
-
-        // Если предмет достиг температуры горения - сжигаем его
-        if (temp.CurrentTemperature >= furnace.BurnTemperature)
-        {
-            //BurnItem(furnaceUid, itemUid, furnace);
-        }
+        HeatEntity(temp, furnaceTemp, dt, 40f);
     }
 
     /// <summary>
-    /// Нагревает предмет
+    /// Heats entity
     /// </summary>
     private void HeatEntity(TemperatureComponent temp, float targetTemp, float dt, float rate)
     {
@@ -181,7 +159,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Плавит руду в реагент
+    /// Melts ore to reagent
     /// </summary>
     private void MeltOre(
         EntityUid furnaceUid,
@@ -214,21 +192,21 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
                 _solution.SetTemperature(furnaceSoln.Value, ore.ResultTemperature);
         }
 
-        // Звук плавления
+        // Melting sound
         if (furnace.MeltCompleteSound != null)
             _audio.PlayPvs(furnace.MeltCompleteSound, furnaceUid);
 
-        // Событие
+        // Event
         var ev = new OreMeltedEvent(oreUid, ore.ResultReagent, ore.ResultAmount);
         RaiseLocalEvent(furnaceUid, ev);
 
-        // Удаляем руду
+        // Delete ore
         QueueDel(oreUid);
     }
 
 
     /// <summary>
-    /// Сжигает предмет
+    /// Burns item
     /// </summary>
     private void BurnItem(EntityUid furnaceUid, EntityUid itemUid, SmeltingFurnaceComponent furnace)
     {
@@ -242,7 +220,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Добавление предмета в печь
+    /// Adding item to furnace
     /// </summary>
     private void OnInteractUsing(EntityUid uid, SmeltingFurnaceComponent comp, InteractUsingEvent args)
     {
@@ -251,16 +229,15 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
 
         var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
 
-        //Проверяем что это либо руда, либо предмет с температурой
+        // Checking if it's either ore or temperature item
         var canInsert = HasComp<SmeltableOreComponent>(args.Used);
-                       //HasComp<TemperatureComponent>(args.Used);
 
         if (!canInsert)
         {
             return;
         }
 
-        //Проверяем вместимость
+        // Checking capacity
         if (inputContainer.ContainedEntities.Count >= comp.MaxOreCapacity)
         {
             _popup.PopupEntity(
@@ -271,7 +248,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
             return;
         }
 
-        // Если это стак - берём один предмет
+        // If it's a stack - take one item
         if (TryComp<StackComponent>(args.Used, out var stack) && stack.Count > 1)
         {
             var splitStack = _stack.Split(
@@ -316,7 +293,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Examine - показываем содержимое и температуру
+    /// Examine - show contents and temperature
     /// </summary>
     private void OnExamined(EntityUid uid, SmeltingFurnaceComponent comp, ExaminedEvent args)
     {
@@ -349,7 +326,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Verb для извлечения содержимого
+    /// Verb for extracting contents
     /// </summary>
     private void OnGetVerbs(
         EntityUid uid,
@@ -422,9 +399,6 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("smelting-furnace-poured"), furnaceUid, user);
     }
 
-    /// <summary>
-    /// Опустошает печь
-    /// </summary>
     private void EmptyFurnace(EntityUid uid, SmeltingFurnaceComponent comp, EntityUid user)
     {
         var tooHot = false;
@@ -432,7 +406,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
 
         var inputContainer = _container.EnsureContainer<Container>(uid, comp.ContainerId);
 
-        // Извлекаем руду/предметы
+        // Extracting ore/items
         foreach (var itemUid in inputContainer.ContainedEntities.ToArray())
         {
             if (TryComp<TemperatureComponent>(itemUid, out var temp) &&
@@ -457,7 +431,7 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет визуалы печи
+    /// Updates furnace visuals
     /// </summary>
     private void UpdateVisuals(
         EntityUid uid,
@@ -472,27 +446,6 @@ public sealed partial class SmeltingFurnaceSystem : EntitySystem
 
         _appearance.SetData(uid, SmeltingFurnaceVisuals.ContainsOre, hasItems, appearance);
         _appearance.SetData(uid, SmeltingFurnaceVisuals.IsSmelting, isSmelting, appearance);
-    }
-
-    private void OnTemperatureChanged(
-        EntityUid uid,
-        SmeltingFurnaceComponent comp,
-        ref TemperatureChangedEvent args)
-    {
-        // Можно добавить звуки или эффекты при изменении температуры
-    }
-
-    private void OnFuelStateChanged(
-        EntityUid uid,
-        SmeltingFurnaceComponent comp,
-        ref FuelStateChangedEvent args)
-    {
-        // Можно добавить уведомления когда топливо заканчивается
-        if (!args.IsLit && comp.OreContainer != null &&
-            comp.OreContainer.ContainedEntities.Count > 0)
-        {
-            // Топливо закончилось, но в печи есть предметы
-        }
     }
 }
 

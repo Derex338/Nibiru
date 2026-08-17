@@ -35,10 +35,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
     [Dependency] private SharedMapSystem       _mapSys     = default!;
     [Dependency] private IPrototypeManager     _proto      = default!;
 
-    // -----------------------------------------------------------------------
-    // Job types (runtime-only, not serialised)
-    // -----------------------------------------------------------------------
-
     /// <summary>
     /// Represents an in-progress scan job for one player session.
     /// Tiles are queued during OnScanRequest and classified in batches in Update().
@@ -81,10 +77,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
     private readonly List<ScanJob> _activeScanJobs = new();
     private readonly List<OpenJob> _activeOpenJobs = new();
 
-    // -----------------------------------------------------------------------
-    // Lifecycle
-    // -----------------------------------------------------------------------
-
     public override void Initialize()
     {
         base.Initialize();
@@ -102,10 +94,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
         ProcessOpenJobs();
         ProcessScanJobs();
     }
-
-    // -----------------------------------------------------------------------
-    // BUI Open: stream saved chunks to client
-    // -----------------------------------------------------------------------
 
     private void OnBuiOpened(EntityUid uid, PlanetMapComponent component, BoundUIOpenedEvent args)
     {
@@ -185,10 +173,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
                 _activeOpenJobs.RemoveAt(i);
         }
     }
-
-    // -----------------------------------------------------------------------
-    // Scan request: queue tiles, classify in batches across ticks
-    // -----------------------------------------------------------------------
 
     private void OnScanRequest(PlanetMapScanRequestMessage msg, EntitySessionEventArgs args)
     {
@@ -331,10 +315,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
         }
     }
 
-    // -----------------------------------------------------------------------
-    // Merge helper
-    // -----------------------------------------------------------------------
-
     /// <summary>
     /// Merges a re-scanned region into persistent storage. Only tiles listed in
     /// <paramref name="processed"/> are OVERWRITTEN (including to zero), so removed
@@ -366,10 +346,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
             }
         }
     }
-
-    // -----------------------------------------------------------------------
-    // Tile classification
-    // -----------------------------------------------------------------------
 
     /// <summary>
     /// Determines the visual content of a tile (floor + object).
@@ -605,10 +581,6 @@ public sealed partial class PlanetMapSystem : EntitySystem
 
         return result;
     }
-
-    // -----------------------------------------------------------------------
-    // Line-of-sight (Bresenham integer walk)
-    // -----------------------------------------------------------------------
 
     /// <summary>
     /// Returns false if any hard-physics entity blocks the straight line between player and target tile.

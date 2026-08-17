@@ -41,7 +41,7 @@ public sealed class NibiruLeashOverlay : Overlay
 
             var worldPos = xformSystem.GetWorldPosition(xform, xformQuery);
             var targetWorldPos = xformSystem.GetWorldPosition(targetXform, xformQuery);
-            
+
             var diff = worldPos - targetWorldPos;
             if (diff.LengthSquared() < 0.01f)
                 continue;
@@ -54,7 +54,6 @@ public sealed class NibiruLeashOverlay : Overlay
             var box = new Box2(-Width, -length, Width, length);
             var rotated = new Box2Rotated(box.Translated(midPoint), angle, midPoint);
 
-            // Цвет веревки (светло-коричневый)
             var color = Color.FromHex("#A0522D");
 
             worldHandle.DrawRect(rotated, color);

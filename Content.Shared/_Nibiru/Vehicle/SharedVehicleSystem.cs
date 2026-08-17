@@ -22,9 +22,6 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Movement.Systems;
 
-/// <summary>
-/// Система управления транспортом через StrapComponent
-/// </summary>
 public sealed partial class RideableSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
@@ -91,7 +88,7 @@ public sealed partial class RideableSystem : EntitySystem
 
     private void OnBuckleChange(EntityUid uid, RideableComponent component, ref StrappedEvent args)
     {
-        // Кто-то пристегнулся - устанавливаем управление
+        // Someone buckled in - set up control
         SetupRider(uid, args.Buckle, component);
 
         UpdateAppearance(uid, component);
@@ -143,7 +140,7 @@ public sealed partial class RideableSystem : EntitySystem
             _buckle.StrapSetEnabled(uid, false, strap);
         }
 
-        // Если транспорт умер, обновляем возможность движения
+        // If vehicle died, update movement possibility
         if (!component.CanMoveWhenDead && _mobState.IsIncapacitated(uid))
             _actionBlocker.UpdateCanMove(uid);
     }
@@ -166,7 +163,6 @@ public sealed partial class RideableSystem : EntitySystem
         if (TryComp<BuckleComponent>(rider, out var buckleComp))
             _buckle.BuckleVehicleChange(rider, buckleComp, true);
 
-        // Перенаправляем инпут от всадника к транспорту
         _mover.SetRelay(rider, rideable);
         riderComp.Rideable = rideable;
         Dirty(rider, riderComp);
@@ -184,8 +180,6 @@ public sealed partial class RideableSystem : EntitySystem
 
     private void RemoveRider(EntityUid rideable, EntityUid rider, StrapComponent comp)
     {
-        //EnsureComp<ActiveNPCComponent>(rideable);
-
         RemComp<RelayInputMoverComponent>(rider);
         RemComp<InteractionRelayComponent>(rider);
 

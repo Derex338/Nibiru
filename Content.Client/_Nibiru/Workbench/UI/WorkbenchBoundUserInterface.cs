@@ -31,8 +31,6 @@ public sealed class WorkbenchBoundUserInterface : BoundUserInterface
                 if (_menu != null)
                 _menu.ConsRecipes = msg.Recipes;
                 _menu?.OnViewPopulateRecipes(this, (string.Empty, string.Empty));
-                //_menu.PopulateInfo(_selected);
-                //UpdateGhostPlacement();
                 break;
         }
     }

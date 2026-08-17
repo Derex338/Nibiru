@@ -9,9 +9,9 @@ using Robust.Shared.Timing;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Обрабатывает зрение и слух NPC.
-/// Проверяет угол обзора, дальность зрения, наличие препятствий (raycast),
-/// а также обнаружение по шуму на основе скорости движения цели.
+/// Processes NPC vision and hearing.
+/// Checks field of view, vision range, obstacle presence (raycast),
+/// and sound detection based on target movement speed.
 /// </summary>
 public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
 {
@@ -70,7 +70,7 @@ public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
             var diff = targetPos - myPos;
             var distance = diff.Length();
 
-            // Проверка зрения: дальность + угол обзора
+            // Check vision: range + field of view
             if (distance <= perception.VisionRange)
             {
                 if (IsInFieldOfView(diff, facingAngle, perception.VisionAngle))
@@ -80,7 +80,7 @@ public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
                 }
             }
 
-            // Проверка слуха: скорость цели должна быть достаточной
+            // Check hearing: target speed must be sufficient
             if (distance <= perception.HearingRange)
             {
                 if (TryDetectBySound(entity.Owner, perception))
@@ -92,7 +92,7 @@ public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Определяет, находится ли вектор к цели внутри конуса зрения.
+    /// Determines if the vector to the target is within the field of view cone.
     /// </summary>
     private bool IsInFieldOfView(System.Numerics.Vector2 directionToTarget, Angle facingAngle, float visionAngleDegrees)
     {
@@ -107,7 +107,7 @@ public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Пытается обнаружить цель по звуку на основе её скорости движения.
+    /// Tries to detect the target by sound based on its movement speed.
     /// </summary>
     private bool TryDetectBySound(EntityUid target, NibiruNpcPerceptionComponent perception)
     {
@@ -118,26 +118,26 @@ public sealed partial class NibiruNpcPerceptionSystem : EntitySystem
         if (speed <= 0.1f)
             return false;
 
-        // Быстрое движение (бег) — гарантированное обнаружение
+        // Fast movement (running) - guaranteed detection
         if (speed >= perception.HearingSpeedThreshold)
             return true;
 
-        // Медленное движение (ходьба шагом) — вероятностное обнаружение
+        // Slow movement (walking) - probabilistic detection
         var random = new System.Random();
         return random.NextDouble() < perception.WalkDetectionChance;
     }
 
     /// <summary>
-    /// Получает текущий угол взгляда NPC на основе его вращения.
+    /// Gets the current NPC looking angle based on its rotation.
     /// </summary>
     private Angle GetFacingAngle(EntityUid uid, TransformComponent xform)
     {
-        // Используем локальное вращение как направление взгляда
+        // Use local rotation as looking direction
         return xform.LocalRotation;
     }
 
     /// <summary>
-    /// Проверяет, обнаружена ли конкретная цель данным NPC.
+    /// Checks if the specific target is detected by this NPC.
     /// </summary>
     public bool IsDetected(EntityUid npc, EntityUid target, NibiruNpcPerceptionComponent? perception = null)
     {

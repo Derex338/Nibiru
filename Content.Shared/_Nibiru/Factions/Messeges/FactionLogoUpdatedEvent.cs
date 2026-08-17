@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared._Nibiru.Factions;
 
 /// <summary>
-/// Вызывается локально (на клиенте), когда текстура логотипа фракции была перегенерирована.
+/// Called locally (on the client) when the faction logo texture has been regenerated.
 /// </summary>
 public sealed class FactionLogoUpdatedEvent : EntityEventArgs
 {

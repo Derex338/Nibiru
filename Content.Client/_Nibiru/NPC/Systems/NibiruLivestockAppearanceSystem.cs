@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client._Nibiru.NPC.Systems;
 
 /// <summary>
-/// Обновляет внешний вид (спрайт) животного в зависимости от его пола.
+/// Updates the visual appearance of the animal based on its gender.
 /// </summary>
 public sealed partial class NibiruLivestockAppearanceSystem : EntitySystem
 {

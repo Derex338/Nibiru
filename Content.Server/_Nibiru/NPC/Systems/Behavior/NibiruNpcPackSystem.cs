@@ -1,4 +1,3 @@
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior;
 using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared.Mobs;
@@ -11,9 +10,9 @@ using Robust.Shared.Timing;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Управляет стайным поведением NPC
-/// Синхронизирует цели между членами стаи, обрабатывает иерархию
-/// и панику при потере лидера.
+/// Manages pack behavior for NPCs
+/// Synchronizes targets between pack members, handles hierarchy
+/// and panic when a leader is lost.
 /// </summary>
 public sealed partial class NibiruNpcPackSystem : EntitySystem
 {
@@ -32,18 +31,16 @@ public sealed partial class NibiruNpcPackSystem : EntitySystem
 
     private void OnPackStartup(EntityUid uid, NibiruNpcPackComponent component, ComponentStartup args)
     {
-        // Если PackId не задан, генерируем уникальный
         if (string.IsNullOrEmpty(component.PackId))
             component.PackId = $"pack_{uid}_{_timing.CurTick}";
 
-        // Автоопределение лидера: ищем других членов стаи рядом
         if (!component.IsLeader)
             TryFindLeader(uid, component);
     }
 
     private void OnPackShutdown(EntityUid uid, NibiruNpcPackComponent component, ComponentShutdown args)
     {
-        // Если умер лидер — стая паникует
+        // If leader dies, the pack panics
         if (component.IsLeader)
             NotifyPackLeaderDead(uid, component);
     }
@@ -112,7 +109,7 @@ public sealed partial class NibiruNpcPackSystem : EntitySystem
     }
 
     /// <summary>
-    /// Ищет лидера стаи среди ближайших сородичей.
+    /// Searches for a pack leader among nearby kin.
     /// </summary>
     private void TryFindLeader(EntityUid uid, NibiruNpcPackComponent pack)
     {
@@ -138,7 +135,7 @@ public sealed partial class NibiruNpcPackSystem : EntitySystem
     }
 
     /// <summary>
-    /// Формирует стаю из NPC, находящихся рядом друг с другом.
+    /// Forms a pack from NPCs located near each other.
     /// </summary>
     public void FormPack(EntityUid leader, float radius)
     {

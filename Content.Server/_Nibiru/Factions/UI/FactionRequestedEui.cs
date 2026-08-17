@@ -9,7 +9,7 @@ using Content.Shared._Nibiru.Factions.Messages;
 
 namespace Content.Server._Nibiru.Factions.UI;
 
-//Код взят с Reserv'а и изменён под фракции
+//From Reserve
 public sealed class FactionRequestedEui(EntityUid target, EntityUid converter, AddFactionVerb factionVerbSystem, PopupSystem popup, EntityManager entManager) : BaseEui
 {
     public override EuiStateBase GetNewState()

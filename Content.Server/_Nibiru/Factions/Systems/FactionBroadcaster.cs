@@ -9,8 +9,7 @@ using System.Linq;
 namespace Content.Server._Nibiru.Factions;
 
 /// <summary>
-/// Система для отправки обновлений списка фракций всем клиентам
-/// Работает аналогично обновлению списка работ в оригинальном GameTicker
+/// Send update faction list to all players
 /// </summary>
 public sealed partial class FactionBroadcaster : EntitySystem
 {
@@ -18,22 +17,6 @@ public sealed partial class FactionBroadcaster : EntitySystem
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private IConfigurationManager _configurationManager = default!;
-
-    private TimeSpan _nextBroadcast = TimeSpan.Zero;
-    private const float BroadcastInterval = 2f; // Отправляем обновления каждые 2 секунды
-
-    //public override void Update(float frameTime)
-    //{
-    //    base.Update(frameTime);
-
-    //    //if (Timing.CurTime < _nextBroadcast)
-    //    //    return;
-
-    //    //_nextBroadcast = Timing.CurTime + TimeSpan.FromSeconds(BroadcastInterval);
-
-    //    // Отправляем обновление всем подключённым клиентам
-    //    //BroadcastFactionsList();
-    //}
 
     public override void Initialize()
     {
@@ -44,7 +27,7 @@ public sealed partial class FactionBroadcaster : EntitySystem
     }
 
     /// <summary>
-    /// Отправляет актуальный список фракций всем клиентам
+    /// Send actual faction list to all players
     /// </summary>
     public void BroadcastFactionsList()
     {
@@ -53,15 +36,11 @@ public sealed partial class FactionBroadcaster : EntitySystem
 
         var factions = _factionSystem.AvailableFactions;
 
-        //if (factions.Count == 0)
-        //    return;
-
         var msg = new FactionsAvailableMessage
         {
             Factions = factions.ToList()
         };
 
-        // Отправляем всем подключённым игрокам
         foreach (var session in _playerManager.Sessions)
         {
             RaiseNetworkEvent(msg, session);
@@ -69,8 +48,7 @@ public sealed partial class FactionBroadcaster : EntitySystem
     }
 
     /// <summary>
-    /// Принудительно отправляет обновление списка фракций
-    /// Вызывается при изменении фракций
+    /// Force update faction list
     /// </summary>
     public void ForceUpdate()
     {

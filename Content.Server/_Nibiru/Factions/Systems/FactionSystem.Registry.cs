@@ -13,22 +13,22 @@ namespace Content.Server._Nibiru.Factions;
 public sealed partial class FactionSystem
 {
     /// <summary>
-    /// Обновляет список доступных фракций для клиентов
+    /// Update available factions list
     /// </summary>
     public List<FactionInfo> UpdateAvailableFactionsList()
     {
         var factions = new List<FactionInfo>();
 
-        // Проходим по всем картам
+        // Go through all maps
         var query = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
         while (query.MoveNext(out var mapUid, out var registry, out _))
         {
             foreach (var (factionName, data) in registry.Factions)
             {
-                // Конвертируем NetEntity обратно в EntityUid
+                // Convert NetEntity back to EntityUid
                 var leaderUid = GetEntity(data.Leader);
 
-                // Считаем живых участников (включая лидера)
+                // Count live members (including leader)
                 var aliveCount = 0;
                 if (_entityManager.EntityExists(leaderUid) &&
                     TryComp<MobStateComponent>(leaderUid, out var leaderMs) &&
@@ -50,14 +50,14 @@ public sealed partial class FactionSystem
                         aliveCount++;
                 }
 
-                // Удаляем несуществующих членов
+                // Remove non-existent members
                 foreach (var dead in deadNetMembers)
                     data.Members.Remove(dead);
 
                 if (aliveCount == 0 || !data.IsRecruiting)
                     continue;
 
-                // Не добавляем дубликаты
+                // Don't add duplicates
                 if (factions.Any(f => f.FactionName == factionName))
                     continue;
 
@@ -90,7 +90,7 @@ public sealed partial class FactionSystem
     }
 
     /// <summary>
-    /// Регистрирует фракцию во всех реестрах карт
+    /// Register faction in all map registries
     /// </summary>
     public void RegisterFaction(FactionComponent faction)
     {
@@ -142,12 +142,12 @@ public sealed partial class FactionSystem
 
         Dirty(faction.Owner, faction);
 
-        // Сразу обновляем список
+        // Update available factions list
         UpdateAvailableFactionsList();
     }
 
     /// <summary>
-    /// Регистрирует фракцию из лобби в реестре
+    /// Register faction from lobby to registry
     /// </summary>
     public void RegisterLobbyPref(NibiruFactionLeaderPrefsMessage pref)
     {
@@ -159,7 +159,7 @@ public sealed partial class FactionSystem
         {
             var registry = EnsureComp<FactionRegistryComponent>(mapUid);
 
-            // Если фракция уже есть (например, от победителя лотереи), не перезаписываем
+            // If the faction already exists (e.g., from lottery winner), don't overwrite
             if (registry.Factions.ContainsKey(pref.FactionName))
                 continue;
 
@@ -195,7 +195,7 @@ public sealed partial class FactionSystem
     }
 
     /// <summary>
-    /// Обновляет данные фракции во всех реестрах
+    /// Update faction data in all registries
     /// </summary>
     private void UpdateFactionRegistry(FactionComponent faction)
     {
@@ -238,12 +238,12 @@ public sealed partial class FactionSystem
 
         UpdateMemberDataUI(faction.Owner, faction);
 
-        // Обновляем список
+        // Update available factions list
         UpdateAvailableFactionsList();
     }
 
     /// <summary>
-    /// Удаляет фракцию из всех реестров
+    /// Remove faction from all registries
     /// </summary>
     private void UnregisterFaction(string factionName)
     {
@@ -256,7 +256,7 @@ public sealed partial class FactionSystem
             }
         }
 
-        // Обновляем список
+        // Update available factions list
         UpdateAvailableFactionsList();
     }
 

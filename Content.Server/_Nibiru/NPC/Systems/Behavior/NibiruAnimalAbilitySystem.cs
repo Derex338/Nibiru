@@ -82,8 +82,6 @@ public sealed partial class NibiruAnimalAbilitySystem : EntitySystem
         if (!TryComp<NibiruAnimalAbilityComponent>(bird, out var ability))
             return false;
 
-        // ... (checks)
-
         if (TryComp<NibiruNpcStateMachineComponent>(bird, out var state))
         {
             state.CurrentTarget = target;

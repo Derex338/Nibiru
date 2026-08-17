@@ -13,9 +13,6 @@ using Robust.Shared.IoC;
 
 namespace Content.Server._Nibiru.Factions.Commands;
 
-/// <summary>
-/// Команда для запроса списка фракций
-/// </summary>
 [AdminCommand(AdminFlags.Admin)]
 public sealed class RequestFactionsCommand : IConsoleCommand
 {
@@ -46,7 +43,7 @@ public sealed class RequestFactionsCommand : IConsoleCommand
 }
 
 /// <summary>
-/// Команда для присоединения к фракции через поздний вход
+/// Latejoin to faction command
 /// </summary>
 [AnyCommand]
 public sealed class LateJoinFactionCommand : IConsoleCommand
@@ -67,10 +64,8 @@ public sealed class LateJoinFactionCommand : IConsoleCommand
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var rule = entityManager.System<NibiruSurvivalRuleSystem>();
 
-        // Сохраняем выбор фракции
         rule.OnLateJoinFactionChoice(player, args.Length > 0 ? args[0] : null);
 
-        // Запускаем спавн игрока (аналогично latejoin_solo)
         var ticker = entityManager.System<GameTicker>();
         var query = entityManager.EntityQueryEnumerator<StationDataComponent>();
         while (query.MoveNext(out var uid, out var comp))
@@ -84,7 +79,7 @@ public sealed class LateJoinFactionCommand : IConsoleCommand
 }
 
 /// <summary>
-/// Команда для одиночного спавна
+/// Latejoin solo command
 /// </summary>
 [AnyCommand]
 public sealed class LateJoinSoloCommand : IConsoleCommand
@@ -117,10 +112,6 @@ public sealed class LateJoinSoloCommand : IConsoleCommand
             ticker.MakeJoinGame(player, uid);
             break;
         }
-
-        // Отправляем сообщение с пустым factionName
-        //var msg = new LateJoinFactionMessage { FactionName = null };
-        //entityManager.RaisePredictiveEvent(msg);
 
         shell.WriteLine("Spawning solo...");
     }

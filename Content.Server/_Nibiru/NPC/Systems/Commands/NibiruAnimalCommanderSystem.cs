@@ -45,13 +45,9 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, Content.Shared.Damage.Systems.DamageChangedEvent>(OnOwnerDamaged);
         SubscribeLocalEvent<NibiruAnimalCommanderComponent, Content.Shared.Pointing.AfterPointedAtEvent>(OnPointedAt);
 
-        // Перехватываем использование предмета на животном пока оно ждёт команду Search
+        // Search
         SubscribeLocalEvent<NibiruAnimalSearchWaitingComponent, InteractUsingEvent>(OnSearchItemPresented);
     }
-
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Ивенты обучения и управления списком животных
-    // ──────────────────────────────────────────────────────────────────────────
 
     private void OnCommandLearned(EntityUid uid, NibiruAnimalCommanderComponent comp, NibiruAnimalCommandLearnedEvent args)
     {
@@ -63,16 +59,16 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет кнопки действий на основе union выученных команд всех животных в группе.
-    /// Показывает кнопку, если хотя бы одно животное умеет эту команду.
+    /// Updates action buttons based on the union of learned commands from all animals in the group.
+    /// Shows the button if at least one animal knows this command.
     /// </summary>
     public void RefreshActions(EntityUid owner, NibiruAnimalCommanderComponent comp)
     {
-        // Если нет животных - ничего не делаем (RemoveAnimal/RemoveAllActions должны убирать кнопки)
+        // If there are no animals, do nothing (RemoveAnimal/RemoveAllActions must remove buttons)
         if (comp.Animals.Count == 0)
             return;
 
-        // Собираем объединение всех выученных команд у животных в группе
+        // Collect the union of all learned commands from animals in the group
         var available = new HashSet<NibiruAnimalCommand>();
         foreach (var animal in comp.Animals)
         {
@@ -106,17 +102,13 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
 
     private void UpdateActionToggles(EntityUid owner, NibiruAnimalCommanderComponent comp)
     {
-        // Так как только некоторые команды имеют состояние переключателя (toggle) — обновляем их явно.
+        // So only some commands have toggle state - update them explicitly.
         _actions.SetToggled(comp.AttackActionEntity, comp.CurrentMode == NibiruAnimalCommand.Attack);
         _actions.SetToggled(comp.GrabActionEntity,   comp.CurrentMode == NibiruAnimalCommand.Grab);
     }
 
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Public API — добавление / удаление животных из группы
-    // ──────────────────────────────────────────────────────────────────────────
-
     /// <summary>
-    /// Добавляет животное в группу командующего. Если уже есть — ничего не делает.
+    /// Adds an animal to the commander's group. If it already exists, does nothing.
     /// </summary>
     public void AddAnimal(EntityUid owner, EntityUid animal)
     {
@@ -128,13 +120,13 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         comp.Animals.Add(animal);
         RefreshActions(owner, comp);
 
-        // Сразу даём команду следовать
+        // Immediately give follow command
         _taming.GiveCommand(animal, owner, NibiruAnimalCommand.Follow);
         _popup.PopupEntity(Loc.GetString("nibiru-animal-command-follow-start"), owner, owner);
     }
 
     /// <summary>
-    /// Убирает животное из группы. Если больше нет животных — снимает действия.
+    /// Removes an animal from the group. If no animals are left, removes actions.
     /// </summary>
     public void RemoveAnimal(EntityUid owner, EntityUid animal)
     {
@@ -150,7 +142,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Устаревший метод для обратной совместимости — теперь добавляет животное в список.
+    /// Legacy method for backward compatibility - now adds an animal to the list.
     /// </summary>
     public void AssignAnimal(EntityUid owner, EntityUid animal)
     {
@@ -179,10 +171,6 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         RemoveAllActions(uid, component);
     }
 
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Update: очистка мёртвых / слишком далёких животных
-    // ──────────────────────────────────────────────────────────────────────────
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -196,14 +184,13 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
             var toRemove = new List<EntityUid>();
             foreach (var animal in comp.Animals)
             {
-                // Животное больше не существует или мертво
                 if (!Exists(animal) || _mobState.IsDead(animal))
                 {
                     toRemove.Add(animal);
                     continue;
                 }
 
-                // Животное слишком далеко
+                // Animal is too far
                 if (!TryComp(animal, out TransformComponent? animalXform))
                 {
                     toRemove.Add(animal);
@@ -226,7 +213,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
                 RemoveAllActions(uid, comp);
         }
 
-        // Таймаут ожидания обнюхивания
+        // Search timeout
         var searchQuery = EntityQueryEnumerator<NibiruAnimalSearchWaitingComponent>();
         while (searchQuery.MoveNext(out var animalUid, out var searchWait))
         {
@@ -239,10 +226,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         }
     }
 
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Обработчики действий
-    // ──────────────────────────────────────────────────────────────────────────
-
+    //  Action handlers
     private void OnFollowAction(EntityUid uid, NibiruAnimalCommanderComponent component, NibiruAnimalFollowActionEvent args)
     {
         if (args.Handled || component.Animals.Count == 0) return;
@@ -310,26 +294,25 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Команда Search: произносим фразу и переводим животных в режим ожидания обнюхивания.
-    /// Они ждут, пока хозяин поднесёт предмет.
+    /// Command Search: say the phrase and switch animals to waiting for sniffing.
+    /// They wait for the owner to bring an item.
     /// </summary>
     private void OnSearchAction(EntityUid uid, NibiruAnimalCommanderComponent component, NibiruAnimalSearchActionEvent args)
     {
         if (args.Handled || component.Animals.Count == 0) return;
         args.Handled = true;
 
-        // Произносим команду
+        // Say the command
         if (!string.IsNullOrEmpty(args.Speech))
             _chat.TrySendInGameICMessage(uid, args.Speech, InGameICChatType.Speak, false);
 
-        // Добавляем всем животным с выученным Search компонент ожидания
+        // Add waiting component to all animals with Search learned command
         var activated = 0;
         foreach (var animal in component.Animals)
         {
             if (!TryComp<NibiruTamableComponent>(animal, out var tamable)) continue;
             if (!tamable.LearnedCommands.Contains(NibiruAnimalCommand.Search)) continue;
 
-            // Проверяем дистанцию до животного
             if (!TryComp(animal, out TransformComponent? animalXform) ||
                 !TryComp(uid, out TransformComponent? ownerXform)) continue;
 
@@ -343,7 +326,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
             waiting.Commander = uid;
             waiting.Accumulator = 0f;
 
-            // Воспроизводим звук нюхания
+            // Play sniffing sound
             if (TryComp<NibiruNpcAudioComponent>(animal, out var audio))
                 _sounds.PlayAggroSound(animal, audio);
 
@@ -357,14 +340,14 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Игрок поднёс предмет животному в режиме ожидания обнюхивания.
-    /// Анализируем ДНК/отпечатки и запускаем поиск.
+    /// Player presented an item to the animal in sniffing wait mode.
+    /// Analyze DNA/fingerprints and start search.
     /// </summary>
     private void OnSearchItemPresented(EntityUid animalUid, NibiruAnimalSearchWaitingComponent waiting, InteractUsingEvent args)
     {
         if (args.Handled) return;
 
-        // Проверяем что взаимодействует именно хозяин
+        // Check that the user is the owner
         if (args.User != waiting.Commander) return;
 
         args.Handled = true;
@@ -375,7 +358,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         EntityUid? foundTarget = null;
         var foundTooFar = false;
 
-        // Ищем ДНК или отпечатки на предмете
+        // Search for DNA or fingerprints on the item
         if (TryComp<Content.Server.Forensics.ForensicsComponent>(args.Used, out var forensics))
         {
             string? targetBio = null;
@@ -387,7 +370,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
             {
                 var animalPos = _transform.GetMapCoordinates(animalUid);
 
-                // Поиск по ДНК
+                // Search by DNA
                 var dnaQuery = EntityQueryEnumerator<Content.Shared.Forensics.Components.DnaComponent, TransformComponent>();
                 while (dnaQuery.MoveNext(out var targetUid, out var dnaComp, out var targetXform))
                 {
@@ -397,7 +380,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
                     foundTooFar = true;
                 }
 
-                // Если не нашли — поиск по отпечаткам
+                // If not found — search by fingerprints
                 if (foundTarget == null)
                 {
                     var fpQuery = EntityQueryEnumerator<Content.Shared.Forensics.Components.FingerprintComponent, TransformComponent>();
@@ -439,9 +422,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("nibiru-animal-command-deliver-start"), uid, uid);
     }
 
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Реакция на урон: все животные в Following защищают хозяина
-    // ──────────────────────────────────────────────────────────────────────────
+    //  Reaction to damage: all animals in Following protect the owner
 
     private void OnOwnerDamaged(EntityUid uid, NibiruAnimalCommanderComponent component, Content.Shared.Damage.Systems.DamageChangedEvent args)
     {
@@ -458,9 +439,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         }
     }
 
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Указание пальцем: команда в режиме Attack/Grab отправляется всем
-    // ──────────────────────────────────────────────────────────────────────────
+    //  Pointing: command in Attack/Grab mode is sent to all
 
     private void OnPointedAt(EntityUid uid, NibiruAnimalCommanderComponent component, ref Content.Shared.Pointing.AfterPointedAtEvent args)
     {
@@ -495,13 +474,9 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         }
     }
 
-    // ──────────────────────────────────────────────────────────────────────────
-    //  Вспомогательные методы
-    // ──────────────────────────────────────────────────────────────────────────
-
     /// <summary>
-    /// Отправляет команду всем животным в группе у которых она выучена.
-    /// Возвращает количество животных которые приняли команду.
+    /// Sends a command to all animals in the group that have learned it.
+    /// Returns the number of animals that accepted the command.
     /// </summary>
     private int HandleCommandAll(EntityUid owner, NibiruAnimalCommanderComponent component, NibiruAnimalCommand command, string? speech, EntityUid? target = null)
     {
@@ -510,7 +485,7 @@ public sealed partial class NibiruAnimalCommanderSystem : EntitySystem
         if (!TryComp(owner, out TransformComponent? ownerXform))
             return 0;
 
-        // Произносим речь один раз (не для каждого животного)
+        // Speak the speech once (not for each animal)
         var speechSpoken = false;
         var successCount = 0;
 

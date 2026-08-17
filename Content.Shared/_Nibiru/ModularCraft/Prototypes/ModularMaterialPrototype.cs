@@ -23,14 +23,12 @@ public sealed partial class ModularMaterialPrototype : IPrototype
     [DataField("quality")]
     public int Quality { get; set; } = 1;
 
-    // --- Визуальные данные ---
     [DataField("texture")]
     public SpriteSpecifier? Texture { get; set; }
 
     [DataField("previewColor")]
     public string PreviewColor { get; set; } = "#A0A0B0";
 
-    // --- Мультипликаторы статов ---
     [DataField("damageMultiplier")]
     public FixedPoint2 DamageMultiplier { get; set; } = FixedPoint2.New(1.0f);
 

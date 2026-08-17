@@ -11,22 +11,22 @@ namespace Content.Shared._Nibiru.NPC.Behavior.Components;
 public enum LeapPhase : byte
 {
     /// <summary>
-    /// Ожидание / преследование цели.
+    /// Waiting for target / pursuing target.
     /// </summary>
     Idle,
 
     /// <summary>
-    /// Выполняет укус (атака в ближнем бою).
+    /// Performs a bite (melee attack).
     /// </summary>
     Biting,
 
     /// <summary>
-    /// Физический прыжок назад относительно направления тела.
+    /// Physical leap backward relative to body direction.
     /// </summary>
     Leaping,
 
     /// <summary>
-    /// Кулдаун после прыжка перед следующим циклом.
+    /// Cooldown after the jump before the next cycle.
     /// </summary>
     Cooldown,
 }
@@ -40,48 +40,48 @@ public enum LeapPhase : byte
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruNpcHitAndRunAttackComponent : Component
 {
-    // ── Runtime-состояние ────────────────────────────────────────────────
+    // Runtime-state
 
     /// <summary>
-    /// Текущая фаза цикла атаки.
+    /// Current phase of the attack cycle.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public LeapPhase Phase = LeapPhase.Idle;
 
     /// <summary>
-    /// Вектор прыжка назад (нормализованный, заполняется в момент укуса).
+    /// Leap backward vector (normalized, filled at the moment of bite).
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Vector2 LeapDirection;
 
     /// <summary>
-    /// Внутренний таймер текущей фазы.
+    /// Internal timer for the current phase.
     /// </summary>
     [ViewVariables]
     public float Timer;
 
-    // ── Настройки (DataField) ─────────────────────────────────────────────
+    // Settings (DataField)
 
     /// <summary>
-    /// Скорость прыжка назад (у.е./с).
+    /// Backward leap speed (units/sec).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float LeapSpeed = 9f;
 
     /// <summary>
-    /// Расстояние прыжка (у.е.). Определяет продолжительность фазы Leaping.
+    /// Leap distance (units). Determines the duration of the Leaping phase.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float LeapDistance = 3f;
 
     /// <summary>
-    /// Пауза в секундах после приземления перед следующим циклом.
+    /// Pause in seconds after landing before the next cycle.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float WaitDuration = 1.0f;
 
     /// <summary>
-    /// Дистанция до цели при которой начинается укус (переход в Biting).
+    /// Distance to the target at which the bite begins (transition to Biting).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float AttackRange = 1.5f;

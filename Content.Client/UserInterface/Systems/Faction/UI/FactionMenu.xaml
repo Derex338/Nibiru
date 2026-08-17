@@ -27,34 +27,28 @@
 
         <TabContainer Name="LeaderTabs" Access="Public" VerticalExpand="True">
             <BoxContainer Name="SettingsTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
-                <!-- Название фракции -->
+                <!-- Faction name -->
                 <BoxContainer Name="FactionNameChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionNameChange" Access="Public" MinSize="200 20" PlaceHolder="{Loc 'faction-name-placeholder'}" HorizontalExpand="True"/>
                     <Button Name="FactionNameChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'faction-change-button'}"/>
                 </BoxContainer>
 
-                <!-- Описание фракции -->
+                <!-- Faction description -->
                 <BoxContainer Name="FactionDescriptionChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionDescriptionChange" Access="Public" MinSize="200 20" PlaceHolder="{Loc 'faction-description-placeholder'}" HorizontalExpand="True"/>
                     <Button Name="FactionDescriptionChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'faction-change-button'}"/>
                 </BoxContainer>
 
-                <!-- Цвет фракции -->
+                <!-- Faction color -->
                 <BoxContainer Name="FactionColorChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
                     <LineEdit Name="FactionColorChange" Access="Public" MinSize="200 20" PlaceHolder="#000000 or blue" HorizontalExpand="True"/>
                     <Button Name="FactionColorChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'faction-change-button'}"/>
                 </BoxContainer>
 
-                <!-- Иконка фракции
-                <BoxContainer Name="FactionIconChangeContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5" HorizontalExpand="True">
-                    <LineEdit Name="FactionIconChange" Access="Public" MinSize="200 20" PlaceHolder="JobIconCaptain" HorizontalExpand="True"/>
-                    <Button Name="FactionIconChangeButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="80 20" Text="{Loc 'Сменить'}"/>
-                </BoxContainer>
-                -->
-                <!-- Логотип фракции -->
+                <!-- Faction logo -->
                 <Button Name="EditLogoButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-edit-logo-button'}" Margin="5"/>
 
-                <!-- Переключатель набора -->
+                <!-- Recruiting toggle -->
                 <BoxContainer Name="RecruitingContainer" Orientation="Horizontal" VerticalExpand="False" Margin="5">
                     <CheckBox Name="RecruitingToggle" Access="Public" Text="{Loc 'faction-ui-recruiting-toggle'}"/>
                 </BoxContainer>
@@ -94,10 +88,10 @@
             </ScrollContainer>
 
             <BoxContainer Name="MembersTab" Orientation="Vertical" SeparationOverride="5" Margin="5" VerticalExpand="True">
-                <!-- Управление ролями -->
+                <!-- Role management -->
                 <Button Name="CreateRoleButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-manage-roles-button'}"/>
 
-                <!-- Список членов -->
+                <!-- Member list -->
                 <BoxContainer Name="MembersContainer" Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="2" Margin="5" Access="Public">
                     <Label Text="{Loc 'faction-members'}" HorizontalAlignment="Left"/>
                     <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
@@ -112,7 +106,7 @@
                     </PanelContainer>
                 </BoxContainer>
 
-                <!-- Кнопки управления -->
+                <!-- Buttons -->
                 <GridContainer Name="Buttons" HorizontalExpand="true" Columns="2">
                     <Button Name="TransferTitle" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-transfer-title-button'}"/>
                     <Button Name="Heir" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare" MinSize="150 20" Text="{Loc 'faction-appoint-heir-button'}"/>
@@ -122,7 +116,7 @@
     </BoxContainer>
 
     <BoxContainer Name="FactionMemberWindow" Orientation="Vertical" SeparationOverride="12" MinWidth="320" Access="Public" Visible="True" Margin="12">
-        <!-- Заголовок с названием и иконкой -->
+        <!-- Header with name and icon -->
         <PanelContainer Name="FactionHeaderPanel" MinSize="0 70">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#202023" BorderColor="#353538" BorderThickness="1"/>
@@ -136,7 +130,7 @@
             </BoxContainer>
         </PanelContainer>
 
-        <!-- Информационный блок -->
+        <!-- Info block -->
         <PanelContainer VerticalExpand="True">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1a1a1c" BorderColor="#252528" BorderThickness="1"/>
@@ -156,7 +150,7 @@
             </BoxContainer>
         </PanelContainer>
 
-        <!-- Кнопки действий -->
+        <!-- Buttons -->
         <BoxContainer Orientation="Vertical" SeparationOverride="10" Margin="0 4 0 0">
              <Button Name="LeaveButton" Access="Public" ToggleMode="false" StyleClasses="ButtonSquare"
                     MinSize="140 40"

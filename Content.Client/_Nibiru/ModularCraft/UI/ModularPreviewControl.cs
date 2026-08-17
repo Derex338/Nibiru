@@ -24,16 +24,16 @@ public sealed class SlotVisualState
     public bool    IsSelected;
     public bool    IsHovered;
     public string? ModuleId;
-    public Color?  MaterialColor;       // null = нет материала
+    public Color?  MaterialColor;
     public SpriteSpecifier? MaterialTexture;
 }
 
 /// <summary>
-/// Контрол предпросмотра собираемого предмета.
-/// Все спрайты модулей рисуются поверх друг друга в координатах (0,0) элемента.
-/// Спрайт модуля перекрашивается по пикселям: цвет материала накладывается
-/// как Multiply в непрозрачные пиксели маски-текстуры материала.
-/// Хит-тест по непрозрачным пикселям спрайта (slot с максимальным Z-order побеждает).
+/// Preview control of the assembled item.
+/// All module sprites are drawn on top of each other in the element's (0,0) coordinates.
+/// The module sprite is repainted by pixels: the material color is applied
+/// as Multiply to the opaque pixels of the material mask-texture.
+/// Hit test on opaque sprite pixels (slot with maximum Z-order wins).
 /// </summary>
 public sealed class ModularPreviewControl : Control
 {
@@ -46,13 +46,13 @@ public sealed class ModularPreviewControl : Control
 
     private string? _itemType;
 
-    // Порядок слотов — определяет Z-order (последний рисуется поверх)
+    // Order of slots - determines the Z-order (the last is drawn on top)
     private List<string> _slotOrder = new();
 
     private readonly Dictionary<string, SlotVisualState> _states = new();
     private string? _hoveredSlot;
 
-    // Кеш текстур после перекраски материалом
+    // Cache of textures after repainting with material
     private readonly Dictionary<string, Texture> _tintedCache  = new();
     private readonly Dictionary<string, string>  _cacheKeys     = new(); // slotId → "moduleId:materialColor"
 
@@ -62,7 +62,7 @@ public sealed class ModularPreviewControl : Control
     private IResourceManager _resManager;
     private IClyde              _clyde;
 
-    // Размер контрола — все спрайты рисуем в этой области
+    // Control size - all sprites are drawn in this area
     private const float W = 120f;
     private const float H = 340f;
 
@@ -78,7 +78,7 @@ public sealed class ModularPreviewControl : Control
         _clyde       = IoCManager.Resolve<IClyde>();
     }
 
-    // ── API ───────────────────────────────────────────────────────────────────
+    // API
 
     public void SetItemType(string type)
     {
@@ -106,7 +106,7 @@ public sealed class ModularPreviewControl : Control
 
     public SlotVisualState? GetState(string slot) => _states.GetValueOrDefault(slot);
 
-    // ── Порядок слотов ────────────────────────────────────────────────────────
+    // Slot order
 
     private void RebuildOrder()
     {
@@ -117,7 +117,7 @@ public sealed class ModularPreviewControl : Control
             _slotOrder.Add(part.Id);
     }
 
-    // ── Кеш перекраски ────────────────────────────────────────────────────────
+    // Tint cache
 
     private void InvalidateTintCache(string slot)
     {
@@ -129,10 +129,10 @@ public sealed class ModularPreviewControl : Control
     }
 
     /// <summary>
-    /// Возвращает текстуру модуля, перекрашенную материалом:
-    /// — Берём исходный спрайт модуля (RGBA)
-    /// — Для каждого пикселя применяем Multiply с цветом материала
-    /// — Если есть текстура-маска материала, используем её alpha как интенсивность эффекта
+    /// Returns the module texture repainted with material:
+    /// — Take the source module sprite (RGBA)
+    /// — For each pixel, apply Multiply with the material color
+    /// — If there is a material mask texture, use its alpha as the effect intensity
     /// </summary>
     private Texture? GetTintedTexture(string slot, SlotVisualState state)
     {
@@ -142,23 +142,22 @@ public sealed class ModularPreviewControl : Control
         if (!_proto.TryIndex<ModularModulePrototype>(state.ModuleId, out var module) || module.Sprite == null)
             return null;
 
-        // Определяем ключ кеша
         string matKey = state.MaterialColor.HasValue ? state.MaterialColor.Value.ToHex() : "none";
         string key    = $"{state.ModuleId}:{matKey}";
 
         if (_cacheKeys.TryGetValue(slot, out var cached) && cached == key && _tintedCache.ContainsKey(slot))
             return _tintedCache[slot];
 
-        // Получаем путь к RSI-спрайту
+        // Get the path to the RSI sprite
         if (module.Sprite is not SpriteSpecifier.Rsi rsiSpec)
         {
-            // Для Texture-спрайтов просто рисуем с тинтом напрямую
+            // For Texture sprites, just draw directly with tint
             _cacheKeys[slot]  = key;
             _tintedCache[slot] = _sprite.Frame0(module.Sprite);
             return _tintedCache[slot];
         }
 
-        // Загружаем PNG файл спрайта напрямую для доступа к пикселям
+        // Load the RSI sprite PNG file directly for pixel access
         var pngPath = new ResPath("/Textures") / rsiSpec.RsiPath / $"{rsiSpec.RsiState}.png";
         if (!_resManager.TryContentFileRead(pngPath, out var stream))
             return null;
@@ -176,7 +175,7 @@ public sealed class ModularPreviewControl : Control
         var srcSpan = srcImage.GetPixelSpan();
         var dstSpan = dst.GetPixelSpan();
 
-        // Загружаем PNG маски материала (если есть)
+        // Load the material mask PNG (if any)
         Span<Rgba32> maskSpan = default;
         int maskW = 0, maskH = 0;
         Image<Rgba32>? maskImage = null;
@@ -195,7 +194,7 @@ public sealed class ModularPreviewControl : Control
             }
         }
 
-        // Цвет материала
+        // Material color
         Color matColor = state.MaterialColor ?? Color.White;
         float mr = matColor.R;
         float mg = matColor.G;
@@ -213,7 +212,7 @@ public sealed class ModularPreviewControl : Control
                     continue;
                 }
 
-                // Фактор наложения материала из маски (0..1)
+                // Material overlay factor from mask (0..1)
                 float factor = 1f;
                 if (maskImage != null && maskSpan.Length > 0)
                 {
@@ -223,7 +222,7 @@ public sealed class ModularPreviewControl : Control
                     factor = maskSpan[maskIdx].A / 255f;
                 }
 
-                // Multiply blend между оригиналом и цветом материала
+                // Multiply blend between the original and the material color
                 float nr = src.R / 255f;
                 float ng = src.G / 255f;
                 float nb = src.B / 255f;
@@ -250,7 +249,7 @@ public sealed class ModularPreviewControl : Control
         return tex;
     }
 
-    // ── Рендер ────────────────────────────────────────────────────────────────
+    // Render
 
     protected override void Draw(DrawingHandleScreen handle)
     {
@@ -280,7 +279,7 @@ public sealed class ModularPreviewControl : Control
             }
         }
 
-        // Подсветка наведённого слота поверх всех спрайтов
+        // Highlight the hovered slot over all sprites
         if (_hoveredSlot != null)
         {
             handle.DrawRect(drawArea, ColorHoverOutline.WithAlpha(0.25f));
@@ -289,12 +288,12 @@ public sealed class ModularPreviewControl : Control
 
     private void DrawPlaceholder(DrawingHandleScreen handle, string slot, SlotVisualState? state)
     {
-        // Небольшой серый прямоугольник посередине чтобы было видно что есть слот
+        // A small gray rectangle in the middle to show that there is a slot
         var ph = new UIBox2(W * 0.3f, H * 0.05f, W * 0.7f, H * 0.95f);
         handle.DrawRect(ph, new Color(80, 80, 80, 40));
     }
 
-    // ── Хит-тест: по непрозрачным пикселям (последний слот в Z-order побеждает) ──
+    // Hit test: based on opaque pixels (the last slot in Z-order wins)
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
     {
@@ -323,8 +322,8 @@ public sealed class ModularPreviewControl : Control
     }
 
     /// <summary>
-    /// Перебираем слоты в обратном порядке (самый верхний Z-first).
-    /// Для каждого проверяем, попадает ли курсор в непрозрачный пиксель текстуры.
+    /// Iterate through slots in reverse order (topmost Z-first).
+    /// For each, check if the cursor falls into an opaque pixel of the texture.
     /// </summary>
     private string? HitTest(Vector2 pos)
     {
@@ -343,7 +342,7 @@ public sealed class ModularPreviewControl : Control
                 module.Sprite is not SpriteSpecifier.Rsi rsiSpec)
                 continue;
 
-            // Загружаем PNG файл напрямую для проверки пикселя
+            // Load PNG file directly for pixel check
             var pngPath = new ResPath("/Textures") / rsiSpec.RsiPath / $"{rsiSpec.RsiState}.png";
             if (!_resManager.TryContentFileRead(pngPath, out var stream))
                 continue;
@@ -356,7 +355,7 @@ public sealed class ModularPreviewControl : Control
 
             var pixelSpan = img.GetPixelSpan();
 
-            // Маппим UI-координаты → пиксели спрайта
+            // Map UI coordinates to sprite pixels
             int px = (int)(pos.X / W * img.Width);
             int py = (int)(pos.Y / H * img.Height);
             px = Math.Clamp(px, 0, img.Width  - 1);

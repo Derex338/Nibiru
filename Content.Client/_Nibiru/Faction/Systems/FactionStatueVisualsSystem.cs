@@ -6,9 +6,10 @@ using System.Linq;
 namespace Content.Client._Nibiru.Faction.Systems;
 
 /// <summary>
-/// Client-сайд система. Когда статуя получает выбранного члена фракции,
-/// копирует его спрайт (RSI+state+color) на статую навсегда.
+/// Client-side system. When the statue receives a selected faction member,
+/// it copies their sprite (RSI+state+color) to the statue permanently.
 /// </summary>
+/// DONT WORK BY NOW
 public sealed partial class FactionStatueVisualsSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
@@ -18,7 +19,6 @@ public sealed partial class FactionStatueVisualsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<FactionStatueComponent, ComponentStartup>(OnStartup);
-        //SubscribeLocalEvent<FactionStatueComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
     private void OnStartup(Entity<FactionStatueComponent> ent, ref ComponentStartup args)
@@ -43,8 +43,7 @@ public sealed partial class FactionStatueVisualsSystem : EntitySystem
         if (!TryComp(member, out SpriteComponent? memberSprite))
             return;
 
-        // При добавлении старых капченых слоёв не обновляем повторно
-        // (SelectedMember уже был выбран ранее — слои уже скопированы)
+        // Don't re-update if old cached layers have already been added
         if (statueSprite.AllLayers.Count() > 1)
             return;
 
@@ -52,7 +51,7 @@ public sealed partial class FactionStatueVisualsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Копирует все видимые слои с мембера на статую, начиная со слоя 1 (0 — постамент).
+    /// Copies all visible layers from the member to the statue, starting from layer 1 (0 - the pedestal).
     /// </summary>
     private void CopyLayers(SpriteComponent statueSprite, SpriteComponent memberSprite)
     {
@@ -67,7 +66,6 @@ public sealed partial class FactionStatueVisualsSystem : EntitySystem
             if (rsi == null)
                 continue;
 
-            // Добавляем слой и настраиваем
             var newIdx = statueSprite.AddBlankLayer(layerIndex);
             statueSprite.LayerSetState(newIdx, layer.RsiState, rsi.Path);
             statueSprite.LayerSetColor(newIdx, layer.Color);

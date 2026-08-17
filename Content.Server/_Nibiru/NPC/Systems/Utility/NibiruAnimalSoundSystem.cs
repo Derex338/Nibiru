@@ -14,9 +14,6 @@ using Content.Shared._Nibiru.NPC.Behavior;
 
 namespace Content.Server._Nibiru.NPC.Systems.Utility;
 
-/// <summary>
-/// Воспроизводит звуки животных в зависимости от их состояния и действий.
-/// </summary>
 public sealed partial class NibiruAnimalSoundSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -65,11 +62,11 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // Обновленный цикл с использованием новых компонентов
+        // Updated cycle with new components
         var query = EntityQueryEnumerator<NibiruNpcStateMachineComponent, NibiruNpcAudioComponent>();
         while (query.MoveNext(out var uid, out var state, out var audio))
         {
-            // Звуки состояний (рычание при погоне, визг при бегстве)
+            // State sounds (growl while chasing, scream while fleeing)
             switch (state.CurrentState)
             {
                 case NibiruNpcState.Chasing:
@@ -97,7 +94,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
             }
         }
 
-        // Звуки сна
+        // Sleep sounds
         var sleepQuery = EntityQueryEnumerator<NibiruSleepCycleComponent>();
         while (sleepQuery.MoveNext(out var uid, out var sleep))
         {
@@ -107,7 +104,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     }
 
     /// <summary>
-    /// Воспроизводит звук кормления.
+    /// Play feeding sound.
     /// </summary>
     public void PlayFeedingSound(EntityUid uid)
     {
@@ -116,7 +113,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     }
 
     /// <summary>
-    /// Воспроизводит звук приручения.
+    /// Play tamed sound.
     /// </summary>
     public void PlayTamedSound(EntityUid uid)
     {
@@ -125,7 +122,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     }
 
     /// <summary>
-    /// Воспроизводит звук стрижки.
+    /// Play shearing sound.
     /// </summary>
     public void PlayShearingSound(EntityUid uid)
     {
@@ -134,7 +131,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     }
 
     /// <summary>
-    /// Воспроизводит звук дойки.
+    /// Play milking sound.
     /// </summary>
     public void PlayMilkingSound(EntityUid uid)
     {
@@ -143,7 +140,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     }
 
     /// <summary>
-    /// Воспроизводит звук рождения.
+    /// Play birth sound.
     /// </summary>
     public void PlayBirthSound(EntityUid uid)
     {
@@ -152,7 +149,7 @@ public sealed partial class NibiruAnimalSoundSystem : EntitySystem
     }
 
     /// <summary>
-    /// Воспроизводит звук привязывания.
+    /// Play leash sound.
     /// </summary>
     public void PlayLeashSound(EntityUid uid)
     {

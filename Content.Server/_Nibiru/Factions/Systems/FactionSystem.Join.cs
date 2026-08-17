@@ -45,11 +45,11 @@ public sealed partial class FactionSystem
             factionComponent.IsCreator = true;
             factionComponent.Rank = Loc.GetString("faction-default-rank-leader");
 
-            // Добавляем создателя в список всех членов
+            // Add creator to the list of all members
             AddToAllMembers(factionComponent, player);
 
             _adminLog.Add(LogType.FactionCreated, LogImpact.Medium,
-                $"{ToPrettyString(player):player} создал фракцию с названием {factionName}");
+                $"{ToPrettyString(player):player} created a faction with the name {factionName}");
 
             Dirty(player, factionComponent);
 
@@ -94,28 +94,28 @@ public sealed partial class FactionSystem
     }
 
     /// <summary>
-    /// Добавляет заспавненного игрока в выбранную фракцию
+    /// Add player to faction
     /// </summary>
     public bool TryJoinPlayerToFaction(EntityUid playerEntity, string factionName)
     {
-        // Ищем фракцию во всех реестрах
+        // Find faction in all registries
         var query = EntityQueryEnumerator<FactionRegistryComponent, MapComponent>();
         while (query.MoveNext(out var mapUid, out var registry, out _))
         {
             if (!registry.Factions.TryGetValue(factionName, out var factionData))
                 continue;
 
-            // Проверка фильтров
+            // Check filters
             if (!CheckFactionFilters(playerEntity, factionData, out var filterError))
             {
                 _popup.PopupEntity(filterError, playerEntity, playerEntity);
                 return false;
             }
 
-            // Находим живого члена фракции для телепортации
+            // Find live faction member for teleportation
             EntityUid? spawnNear = null;
 
-            // Сначала проверяем лидера
+            // Check leader first
             var leaderUid = GetEntity(factionData.Leader);
             if (_entityManager.EntityExists(leaderUid) &&
                 TryComp<MobStateComponent>(leaderUid, out var leaderMob) &&
@@ -125,7 +125,7 @@ public sealed partial class FactionSystem
             }
             else
             {
-                // Ищем любого живого члена
+                // Find live member
                 var deadNetMembers = new List<NetEntity>();
                 foreach (var netMember in factionData.Members)
                 {
@@ -143,14 +143,14 @@ public sealed partial class FactionSystem
                     }
                 }
 
-                // Удаляем несуществующих членов из данных реестра
+                // Remove dead members from registry
                 foreach (var dead in deadNetMembers)
                     factionData.Members.Remove(dead);
             }
 
             if (spawnNear != null)
             {
-                // Телепортируем игрока рядом с членом фракции
+                // Teleport player near faction member
                 var targetXform = Transform(spawnNear.Value);
                 var offset = _random.NextVector2(1f, 2f);
                 var newCoords = targetXform.Coordinates.Offset(offset);
@@ -159,23 +159,23 @@ public sealed partial class FactionSystem
             }
             else
             {
-                // Если нет никого рядом, значит либо это первая фракция из лобби, либо все мертвы
-                // Если в реестре еще нет лидера, то первый зашедший становится лидером
+                // If no one is nearby, it means either this is the first faction from the lobby or everyone is dead
+                // If there is no leader in the registry yet, the first one to enter becomes the leader
                 if (leaderUid == EntityUid.Invalid && factionData.Members.Count == 0)
                 {
                     leaderUid = playerEntity;
                 }
             }
 
-            // Добавляем в фракцию
+            // Add to faction
             var playerFaction = EnsureComp<FactionComponent>(playerEntity);
             playerFaction.FactionName = factionName;
             playerFaction.Leader = leaderUid;
 
-            // Загружаем историю всех членов из реестра
+            // Load history of all members from registry
             playerFaction.AllMembers = factionData.AllMembers ?? new();
 
-            // Добавляем в список всех когда-либо бывших членов (если ещё нет)
+            // Add to list of all members (if not already present)
             AddToAllMembers(playerFaction, playerEntity);
             playerFaction.FactionColor = factionData.Color;
             playerFaction.Description = factionData.Description;
@@ -210,7 +210,7 @@ public sealed partial class FactionSystem
                 if (leaderUid != playerEntity && !leaderComp.Members.Contains(playerEntity))
                     leaderComp.Members.Add(playerEntity);
 
-                // Добавляем в список всех членов у лидера
+                // Add to leader's list of all members
                 AddToAllMembers(leaderComp, playerEntity);
 
                 if (leaderComp.ResearchServer is { } researchServer && Exists(researchServer))
@@ -250,8 +250,8 @@ public sealed partial class FactionSystem
     }
 
     /// <summary>
-    /// Добавляет игрока в список всех когда-либо бывших членов фракции.
-    /// Если игрок уже есть в списке — пропускает.
+    /// Add player to the list of all faction members.
+    /// If the player is already in the list, skip.
     /// </summary>
     private void AddToAllMembers(FactionComponent faction, EntityUid member)
     {
@@ -271,7 +271,7 @@ public sealed partial class FactionSystem
     {
         error = string.Empty;
 
-        // Проверка по расе
+        // Check species
         if (data.WhiteListSpecies.Count > 0)
         {
             if (!TryComp<HumanoidProfileComponent>(player, out var appearance) ||
@@ -282,7 +282,7 @@ public sealed partial class FactionSystem
             }
         }
 
-        // Проверка по полу
+        // Check gender
         if (data.WhiteListGender.Count > 0)
         {
             if (!TryComp<HumanoidProfileComponent>(player, out var appearance) ||
@@ -293,7 +293,7 @@ public sealed partial class FactionSystem
             }
         }
 
-        // Проверка по цвету кожи
+        // Check skin color
         if (data.WhiteListSkinColors.Count > 0)
         {
             if (TryComp<HumanoidProfileComponent>(player, out var profileComp))
@@ -347,7 +347,7 @@ public sealed partial class FactionSystem
             }
         }
 
-        // Проверка по имени
+        // Check names
         if (data.WhiteListNames.Count > 0)
         {
             var name = Name(player);

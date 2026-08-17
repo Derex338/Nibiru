@@ -9,8 +9,8 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Client._Nibiru.Systems;
 
 /// <summary>
-/// Утилитарная система для генерации текстур из пиксельных данных.
-/// Результаты кешируются для повторного использования.
+/// Utility system for generating textures from pixel data.
+/// Results are cached for reuse.
 /// </summary>
 public sealed partial class TextureGenerationSystem : EntitySystem
 {
@@ -19,12 +19,12 @@ public sealed partial class TextureGenerationSystem : EntitySystem
     private readonly Dictionary<int, Texture> _textureCache = new();
 
     /// <summary>
-    /// Генерирует текстуру 16x16 из списка цветов.
-    /// Результат кешируется по хешу входных данных.
+    /// Generates a 16x16 texture from a list of colors.
+    /// Results are cached by hash.
     /// </summary>
-    /// <param name="pixels">Список из 256 цветов (16x16)</param>
-    /// <param name="name">Имя текстуры для отладки</param>
-    /// <returns>Готовая текстура или null при невалидных данных</returns>
+    /// <param name="pixels">List of 256 colors (16x16)</param>
+    /// <param name="name">Texture name for debugging</param>
+    /// <returns>Texture or null if invalid</returns>
     public Texture? GenerateTexture(List<Color> pixels, string? name = null)
     {
         if (pixels.Count != 16 * 16)
@@ -52,7 +52,7 @@ public sealed partial class TextureGenerationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Очищает кеш текстур. Полезно при смене данных.
+    /// Clears texture cache. Useful when changing data.
     /// </summary>
     public void ClearCache()
     {

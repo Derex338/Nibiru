@@ -3,8 +3,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Nibiru.NPC.Behavior;
 
 /// <summary>
-/// Компонент восприятия NPC: зрение с настраиваемым углом обзора и слух.
-/// Позволяет NPC реагировать только на тех, кто находится в поле зрения или производит шум.
+/// NPC perception component: vision with configurable field of view angle and hearing.
+/// Allows NPC to react only to those who are in the field of view or make noise.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruNpcPerceptionComponent : Component
@@ -12,28 +12,28 @@ public sealed partial class NibiruNpcPerceptionComponent : Component
     #region Vision
 
     /// <summary>
-    /// Дальность зрения в тайлах.
+    /// Vision range in tiles.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float VisionRange = 10f;
 
     /// <summary>
-    /// Угол обзора в градусах (полный конус, от центра в обе стороны).
-    /// 360 = видит во все стороны, 120 = стандартное зрение хищника,
-    /// 270 = широкое зрение травоядного.
+    /// Vision angle in degrees (full cone, from center in both directions).
+    /// 360 = sees in all directions, 120 = standard predator vision,
+    /// 270 = wide herbivore vision.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float VisionAngle = 120f;
 
     /// <summary>
-    /// Интервал проверки восприятия в секундах.
-    /// Не нужно проверять каждый тик — это экономит производительность.
+    /// Perception check interval in seconds.
+    /// No need to check every tick — this saves performance.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float PerceptionInterval = 0.5f;
 
     /// <summary>
-    /// Таймер до следующей проверки.
+    /// Timer until next check.
     /// </summary>
     [ViewVariables]
     public float PerceptionAccumulator;
@@ -49,15 +49,15 @@ public sealed partial class NibiruNpcPerceptionComponent : Component
     public float HearingRange = 8f;
 
     /// <summary>
-    /// Минимальная скорость движения цели, при которой NPC услышит её.
-    /// Ходьба шагом (~1.5) будет ниже порога, бег (~4.5) — выше.
+    /// Minimum movement speed of the target at which the NPC will hear it.
+    /// Walking (~1.5) will be below the threshold, running (~4.5) — above.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HearingSpeedThreshold = 3.0f;
 
     /// <summary>
-    /// Множитель шанса услышать шагающую цель (когда скорость ниже порога бега).
-    /// 0.1 = 10% шанс каждый тик проверки.
+    /// Probability multiplier for hearing a walking target (when speed is below the running threshold).
+    /// 0.1 = 10% chance each check tick.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float WalkDetectionChance = 0.1f;
@@ -65,15 +65,15 @@ public sealed partial class NibiruNpcPerceptionComponent : Component
     #endregion
 
     /// <summary>
-    /// Список обнаруженных целей (видимых или услышанных).
-    /// Обновляется каждый тик перцепции.
+    /// List of detected targets (visible or heard).
+    /// Updated every perception tick.
     /// </summary>
     [ViewVariables]
     public HashSet<EntityUid> DetectedEntities = new();
 
     /// <summary>
-    /// Последнее известное направление взгляда NPC (нормализованный вектор).
-    /// Используется для проверки угла обзора.
+    /// Last known look direction of the NPC (normalized vector).
+    /// Used to check the field of view angle.
     /// </summary>
     [ViewVariables]
     public Angle LastFacingAngle;

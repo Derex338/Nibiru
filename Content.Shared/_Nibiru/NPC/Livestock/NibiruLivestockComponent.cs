@@ -6,8 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared._Nibiru.NPC.Livestock;
 
 /// <summary>
-/// Компонент животноводства: определяет ресурсы, которые можно собирать с животного,
-/// и параметры разведения.
+/// Livestock component: defines harvestable resources and breeding parameters.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruLivestockComponent : Component
@@ -15,147 +14,147 @@ public sealed partial class NibiruLivestockComponent : Component
     #region Sounds
 
     /// <summary>
-    /// Звук стрижки шерсти.
+    /// Sound of shearing wool.
     /// </summary>
     [DataField]
     public SoundSpecifier? ShearingSound;
 
     /// <summary>
-    /// Звук дойки.
+    /// Sound of milking.
     /// </summary>
     [DataField]
     public SoundSpecifier? MilkingSound;
 
     /// <summary>
-    /// Звук рождения потомства.
+    /// Sound of giving birth.
     /// </summary>
     [DataField]
     public SoundSpecifier? BirthSound;
 
     #endregion
     /// <summary>
-    /// Ресурсы, которые можно периодически собирать (шерсть, молоко и т.п.).
+    /// Resources that can be periodically harvested (wool, milk, etc.).
     /// </summary>
     [DataField, ViewVariables]
     public List<LivestockResource> HarvestableResources = new();
 
     /// <summary>
-    /// Может ли это животное размножаться.
+    /// Can this animal breed.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanBreed = true;
 
     /// <summary>
-    /// Пол существа для разведения.
+    /// Sex for breeding.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public LivestockSex Sex = LivestockSex.Female;
 
     /// <summary>
-    /// Протопайп потомства.
+    /// Offspring prototype.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? OffspringPrototype;
 
     /// <summary>
-    /// Время вынашивания/инкубации в секундах.
+    /// Gestation / incubation time in seconds.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float GestationTime = 300f;
 
     /// <summary>
-    /// Текущий таймер вынашивания (если беременна).
+    /// Current gestation timer (if pregnant).
     /// </summary>
     [ViewVariables]
     public float GestationAccumulator;
 
     /// <summary>
-    /// Сколько потомков появляется за раз.
+    /// How many offspring appear at once.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int OffspringCount = 1;
 
     /// <summary>
-    /// Максимальное количество потомков за раз.
+    /// Maximum number of offspring at once.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MaxOffspringCount = 3;
 
     /// <summary>
-    /// Беременна ли сейчас.
+    /// Is pregnant currently.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public bool IsPregnant;
 
     /// <summary>
-    /// Кулдаун после рождения потомства (в секундах).
+    /// Breeding cooldown in seconds.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float BreedingCooldown = 600f;
 
     /// <summary>
-    /// Таймер кулдауна.
+    /// Breeding cooldown timer.
     /// </summary>
     [ViewVariables]
     public float BreedingCooldownAccumulator;
 
     /// <summary>
-    /// Готово ли к размножению.
+    /// Ready to breed.
     /// </summary>
     [ViewVariables]
     public bool ReadyToBreed => !IsPregnant && BreedingCooldownAccumulator <= 0f;
 
     /// <summary>
-    /// Спрайт для самца.
+    /// Sprite for male.
     /// </summary>
     [DataField]
     public SpriteSpecifier? MaleSprite;
 
     /// <summary>
-    /// Спрайт для самки.
+    /// Sprite for female.
     /// </summary>
     [DataField]
     public SpriteSpecifier? FemaleSprite;
 }
 
 /// <summary>
-/// Описание собираемого ресурса с животного.
+/// Description of the resource that can be harvested from the animal.
 /// </summary>
 [DataDefinition]
 public sealed partial class LivestockResource
 {
     /// <summary>
-    /// Прототип предмета, который выдается при сборе.
+    /// Prototype of the item to be harvested.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string ItemPrototype = string.Empty;
 
     /// <summary>
-    /// Время накопления ресурса в секундах.
+    /// Time to accumulate resources in seconds.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float GrowthTime = 120f;
 
     /// <summary>
-    /// Текущий прогресс роста.
+    /// Current progress of growth.
     /// </summary>
     [ViewVariables]
     public float GrowthAccumulator;
 
     /// <summary>
-    /// Готов ли ресурс к сбору.
+    /// Is the resource ready to harvest.
     /// </summary>
     [ViewVariables]
     public bool ReadyToHarvest => GrowthAccumulator >= GrowthTime;
 
     /// <summary>
-    /// Количество предметов за один сбор.
+    /// Quantity of items for one harvest.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Yield = 1;
 
     /// <summary>
-    /// Нужен ли инструмент для сбора (ножницы для стрижки и т.п.).
+    /// Is a tool required for harvesting (shears for shearing, etc.).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? RequiredTool;

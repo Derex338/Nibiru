@@ -49,10 +49,6 @@ namespace Content.Server._Nibiru.Construction.Conditions
 
         public bool DoExamine(ExaminedEvent args)
         {
-            //var entity = args.Examined;
-
-            //var anchored = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Anchored;
-
             if (Condition(args.Examined, IoCManager.Resolve<IEntityManager>()))
             {
                 args.PushMarkup(Loc.GetString("workbench-condition-lay-on-workbench"));
@@ -70,8 +66,6 @@ namespace Content.Server._Nibiru.Construction.Conditions
             yield return new ConstructionGuideEntry()
             {
                 Localization = "construction-guide-condition-workbench",
-                //Arguments = new (string, object)[] { ("workbench", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(WorkbenchId).Name) },
-                //Icon = WorkbenchIcon,
             };
         }
     }

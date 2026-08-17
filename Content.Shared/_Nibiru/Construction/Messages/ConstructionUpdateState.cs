@@ -10,15 +10,9 @@ public sealed class ConstructionUpdateState : BoundUserInterfaceState
 {
     public List<ProtoId<ConstructionPrototype>> Recipes;
 
-    //public List<ConstructionPrototype> Queue;
-
-    //public ConstructionPrototype? CurrentlyProducing;
-
-    public ConstructionUpdateState(List<ProtoId<ConstructionPrototype>> recipes)//, List<ConstructionPrototype> queue)//, ConstructionPrototype? currentlyProducing = null)
+    public ConstructionUpdateState(List<ProtoId<ConstructionPrototype>> recipes)
     {
         Recipes = recipes;
-        //Queue = queue;
-        //CurrentlyProducing = currentlyProducing;
     }
 }
 

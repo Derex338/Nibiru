@@ -18,7 +18,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._Nibiru.Armor;
 
 /// <summary>
-/// Система обработки пробития брони перед применением урона
+/// System for processing armor penetration before applying damage
 /// </summary>
 public sealed partial class ArmorPenetrationSystem : EntitySystem
 {

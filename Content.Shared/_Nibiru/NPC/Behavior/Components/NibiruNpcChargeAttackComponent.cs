@@ -6,130 +6,130 @@ using System.Numerics;
 namespace Content.Shared._Nibiru.NPC.Behavior.Components;
 
 /// <summary>
-/// Фазы атаки с разбега для рогатых животных.
+/// Phases of attack with a run-up for horned animals.
 /// </summary>
 [Serializable, NetSerializable]
 public enum ChargePhase : byte
 {
     /// <summary>
-    /// Ожидание / преследование цели. Переход в WindUp происходит
-    /// когда цель попадает в диапазон разбега.
+    /// Waiting for / chasing the target. Transition to WindUp occurs
+    /// when the target enters the run-up range.
     /// </summary>
     Idle,
 
     /// <summary>
-    /// Животное остановилось, повернулось к цели и трясётся.
-    /// Длится <see cref="NibiruNpcChargeAttackComponent.ShakeDuration"/> секунд.
+    /// The animal has stopped, turned to the target and is shaking.
+    /// Lasts <see cref="NibiruNpcChargeAttackComponent.ShakeDuration"/> seconds.
     /// </summary>
     WindUp,
 
     /// <summary>
-    /// Активный разбег — летит по прямой линии через физический импульс.
-    /// Тряска снята. Урон всему на пути через коллизии.
-    /// Останавливается при истечении <see cref="NibiruNpcChargeAttackComponent.MaxDuration"/>
-    /// или при столкновении со статичным объектом.
+    /// Active run-up - flies in a straight line through physical impulse.
+    /// Trembling removed. Damage to everything in the way through collisions.
+    /// Stops when <see cref="NibiruNpcChargeAttackComponent.MaxDuration"/> expires
+    /// or when colliding with a static object.
     /// </summary>
     Charging,
 
     /// <summary>
-    /// Кулдаун после разбега перед возвратом в преследование.
+    /// Cooldown after the run-up before returning to pursuit.
     /// </summary>
     Cooldown,
 }
 
 /// <summary>
-/// Компонент атаки с разбега — для рогатых животных (козы, коровы, и т.п.).
-/// Животное входит в диапазон разбега, останавливается, поворачивается к цели,
-/// начинает трястись (WindUp), затем бежит по прямой линии нанося урон
-/// всем сущностям на пути. Разбег останавливается при столкновении с твёрдым
-/// объектом или по истечении максимального времени.
-/// Движение реализовано через физический импульс, без навигации NPC.
+/// Component for attack with a run-up - for horned animals (goats, cows, etc.).
+/// The animal enters the run-up range, stops, turns to the target,
+/// begins to shake (WindUp), then runs in a straight line, dealing damage
+/// to all entities in the path. The run-up stops when colliding with a solid
+/// object or when the maximum time expires.
+/// Movement is implemented through physical impulse, without NPC navigation.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruNpcChargeAttackComponent : Component
 {
-    // ── Runtime-состояние ─────────────────────────────────────────────────
+    // Runtime-state
 
     /// <summary>
-    /// Текущая фаза разбега.
+    /// Current phase of the run-up.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public ChargePhase Phase = ChargePhase.Idle;
 
     /// <summary>
-    /// Нормализованный вектор направления разбега.
-    /// Фиксируется в момент входа в WindUp и не меняется до конца разбега.
+    /// Normalized vector of the run-up direction.
+    /// Fixed at the moment of entering WindUp and does not change until the end of the run-up.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Vector2 Direction;
 
     /// <summary>
-    /// Внутренний таймер текущей фазы.
+    /// Internal timer for the current phase.
     /// </summary>
     [ViewVariables]
     public float Timer;
 
     /// <summary>
-    /// Множество сущностей, уже получивших урон в текущем разбеге.
-    /// Сбрасывается при входе в WindUp.
+    /// Set of entities that have already received damage in the current run-up.
+    /// Cleared when entering WindUp.
     /// </summary>
     [ViewVariables]
     public HashSet<EntityUid> HitEntities = new();
 
-    // ── Настройки (DataField) ─────────────────────────────────────────────
+    // Config (DataField)
 
     /// <summary>
-    /// Продолжительность тряски перед разбегом (секунды).
+    /// Duration of the shake before the run-up (seconds).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float ShakeDuration = 1.0f;
 
     /// <summary>
-    /// Скорость разбега (у.е./с).
+    /// Run-up speed (units per second).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Speed = 15f;
 
     /// <summary>
-    /// Максимальная продолжительность разбега (секунды).
-    /// Если за это время не было столкновения со стеной — останавливается сам.
+    /// Maximum duration of the run-up (seconds).
+    /// If no collision with a wall occurs during this time, it stops by itself.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float MaxDuration = 1.5f;
 
     /// <summary>
-    /// Продолжительность кулдауна после разбега (секунды).
+    /// Cooldown duration after the run-up (seconds).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float CooldownDuration = 5.0f;
 
     /// <summary>
-    /// Минимальная дистанция до цели для начала WindUp.
+    /// Minimum distance to the target for the start of WindUp.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float MinChargeDistance = 3f;
 
     /// <summary>
-    /// Максимальная дистанция до цели для начала WindUp.
-    /// Если цель дальше — продолжает преследование.
+    /// Maximum distance to the target for the start of WindUp.
+    /// If the target is further away, the pursuit continues.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float MaxChargeDistance = 9f;
 
     /// <summary>
-    /// Урон наносимый каждой сущности при столкновении во время разбега.
+    /// Damage dealt to each entity upon collision during the run-up.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public DamageSpecifier? Damage;
 
     /// <summary>
-    /// Сила отбрасывания сущностей при столкновении во время разбега.
+    /// Knockback force applied to entities upon collision during the run-up.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float KnockbackForce = 6f;
 
     /// <summary>
-    /// Останавливать ли разбег при столкновении со статичным объектом (стеной).
+    /// Whether to stop the run-up upon collision with a static object (wall).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool StopOnWallCollision = true;

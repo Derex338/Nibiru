@@ -1,27 +1,27 @@
 namespace Content.Shared._Nibiru.NPC.Behavior;
 
 /// <summary>
-/// Определяет базовый тип поведения NPC по отношению к другим существам.
+/// Base type of behavior.
 /// </summary>
 public enum NibiruNpcBehaviorType : byte
 {
     /// <summary>
-    /// Нападает на враждебных существ при обнаружении.
+    /// Attacks hostile creatures when detected.
     /// </summary>
     Aggressive,
 
     /// <summary>
-    /// Атакует только в ответ на агрессию или при выполнении определённых условий.
+    /// Attacks only in response to aggression or when specific conditions are met.
     /// </summary>
     Neutral,
 
     /// <summary>
-    /// Никогда не атакует. Убегает при получении урона.
+    /// Never attacks. Runs away when taking damage.
     /// </summary>
     Passive,
 
     /// <summary>
-    /// Убегает от игроков и угроз при их обнаружении в зоне видимости.
+    /// Runs away from players and threats when detected in the field of view.
     /// </summary>
     Shy
 }

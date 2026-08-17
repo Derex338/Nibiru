@@ -27,13 +27,6 @@ public sealed class KeyCodeSetEui : BaseEui
             _window.Close();
         };
     }
-    public override void HandleState(EuiStateBase state)
-    {
-        //if (state is KeyCodeSetMessage consentState)
-        //{
-        //    _window.SetConverterName(consentState.ConverterName);
-        //}
-    }
 
     public override void Opened()
     {

@@ -7,9 +7,6 @@ using Robust.Shared.Player;
 
 namespace Content.Server._Nibiru.Factions.UI;
 
-/// <summary>
-/// EUI для выбора члена фракции при постройке статуи.
-/// </summary>
 public sealed partial class FactionStatueSelectionEui : BaseEui
 {
     [Dependency] private IEntityManager _entityManager = default!;
@@ -45,7 +42,6 @@ public sealed partial class FactionStatueSelectionEui : BaseEui
 
             statue.SelectedMember = select.SelectedMember;
 
-            // Ищем имя выбранного члена
             var member = statue.AllMembers.Find(m => m.Entity == select.SelectedMember);
             statue.SelectedMemberName = member.Name;
 

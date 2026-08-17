@@ -8,15 +8,13 @@
     MinSize="950 650"
     SetSize="1000 700">
 
-    <!-- Корневой контейнер: два столбца -->
+    <!-- Root container: two columns -->
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="0">
 
-        <!-- ═══════════════════════════════════════════════════════════════
-             ЛЕВАЯ ЧАСТЬ — предпросмотр оружия
-             ═══════════════════════════════════════════════════════════════ -->
+        <!-- LEFT PART — weapon preview -->
         <BoxContainer Orientation="Vertical" MinWidth="200" VerticalExpand="True">
 
-            <!-- Заголовок панели -->
+            <!-- Panel header -->
             <PanelContainer>
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1A1A22" />
@@ -27,7 +25,7 @@
                        StyleClasses="LabelSubText" />
             </PanelContainer>
 
-            <!-- Область предпросмотра -->
+            <!-- Preview area -->
             <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#131318" />
@@ -36,11 +34,11 @@
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               Margin="12 16 12 16">
-                    <!-- Выбор типа оружия -->
+                    <!-- Weapon type selection -->
                     <smithy:SlidingSelector Name="WeaponTypeSelector" Margin="0 0 0 10" />
-                    <!-- Сам предпросмотр (кастомный контрол) -->
+                    <!-- Actual preview (custom control) -->
                     <smithy:ModularPreviewControl Name="WeaponPreview" />
-                    <!-- Подсказка -->
+                    <!-- Hint -->
                     <Label Margin="0 10 0 0"
                            Text="{Loc 'weapon-smithy-hint-click'}"
                            HorizontalAlignment="Center"
@@ -49,7 +47,7 @@
                 </BoxContainer>
             </PanelContainer>
 
-            <!-- Итоговые статы (внизу левой панели) -->
+            <!-- Final stats (bottom of the left panel) -->
             <PanelContainer>
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1A1A22" />
@@ -64,19 +62,17 @@
 
         </BoxContainer>
 
-        <!-- Разделитель -->
+        <!-- Separator -->
         <PanelContainer MinWidth="2">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#2A2A35" />
             </PanelContainer.PanelOverride>
         </PanelContainer>
 
-        <!-- ═══════════════════════════════════════════════════════════════
-             ПРАВАЯ ЧАСТЬ — настройка модулей
-             ═══════════════════════════════════════════════════════════════ -->
+        <!-- RIGHT PART — module configuration -->
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
 
-            <!-- Активный слот — заголовок -->
+            <!-- Active slot header -->
             <PanelContainer Name="SlotHeaderPanel">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1E1E2A" />
@@ -90,7 +86,7 @@
                 </BoxContainer>
             </PanelContainer>
 
-            <!-- Тело правой панели (прокручиваемое) -->
+            <!-- Right panel body (scrollable) -->
             <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
                 <BoxContainer Name="RightBody"
                               Orientation="Vertical"
@@ -99,7 +95,7 @@
                               Margin="14 14 14 14"
                               SeparationOverride="14">
 
-                    <!-- PLACEHOLDER когда нет выбранного слота -->
+                    <!-- PLACEHOLDER when no slot selected -->
                     <BoxContainer Name="NoSelectionPanel"
                                   Orientation="Vertical"
                                   VerticalAlignment="Center"
@@ -112,53 +108,53 @@
                                StyleClasses="LabelSubText" />
                     </BoxContainer>
 
-                    <!-- ПАНЕЛЬ НАСТРОЙКИ СЛОТА (видна когда выбран слот) -->
+                    <!-- SLOT CONFIG PANEL (visible when a slot is selected) -->
                     <BoxContainer Name="SlotConfigPanel"
                                   Orientation="Vertical"
                                   Visible="False"
                                   SeparationOverride="12">
 
-                        <!-- Форма -->
+                        <!-- Shape -->
                         <BoxContainer Orientation="Vertical" SeparationOverride="4">
                             <Label Text="{Loc 'weapon-smithy-shape-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
                             <smithy:SlidingSelector Name="ShapeSelector" />
                         </BoxContainer>
 
-                        <!-- Горизонтальный разделитель -->
+                        <!-- Horizontal separator -->
                         <PanelContainer MinHeight="1">
                             <PanelContainer.PanelOverride>
                                 <gfx:StyleBoxFlat BackgroundColor="#2A2A3A" />
                             </PanelContainer.PanelOverride>
                         </PanelContainer>
 
-                        <!-- Материал -->
+                        <!-- Material -->
                         <BoxContainer Orientation="Vertical" SeparationOverride="4">
                             <Label Text="{Loc 'weapon-smithy-material-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
                             <smithy:SlidingSelector Name="MaterialSelector" />
                         </BoxContainer>
 
-                        <!-- Горизонтальный разделитель -->
+                        <!-- Horizontal separator -->
                         <PanelContainer MinHeight="1">
                             <PanelContainer.PanelOverride>
                                 <gfx:StyleBoxFlat BackgroundColor="#2A2A3A" />
                             </PanelContainer.PanelOverride>
                         </PanelContainer>
 
-                        <!-- Описание формы -->
+                        <!-- Module description -->
                         <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                             <Label Text="{Loc 'weapon-smithy-module-desc-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
                             <RichTextLabel Name="ModuleDescLabel"
                                    HorizontalExpand="True" />
                         </BoxContainer>
 
-                        <!-- Описание материала -->
+                        <!-- Material description -->
                         <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                             <Label Text="{Loc 'weapon-smithy-material-desc-label'}" StyleClasses="LabelSubText" FontColorOverride="#9999BB" />
                             <RichTextLabel Name="MaterialDescLabel"
                                    HorizontalExpand="True" />
                         </BoxContainer>
 
-                        <!-- Мини-статы выбранной комбинации -->
+                        <!-- Mini stats of selected combination -->
                         <PanelContainer>
                             <PanelContainer.PanelOverride>
                                 <gfx:StyleBoxFlat BackgroundColor="#1A1A28" />
@@ -176,7 +172,7 @@
                 </BoxContainer>
             </ScrollContainer>
 
-            <!-- Кнопка крафта -->
+            <!-- Craft button -->
             <PanelContainer>
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#141420" />

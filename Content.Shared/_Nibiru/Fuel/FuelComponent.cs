@@ -3,25 +3,25 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Nibiru.Fuel;
 
 /// <summary>
-/// Компонент топлива, которое можно добавить в объект с FuelConsumptionComponent
+/// Fuel component that can be added to an object with FuelConsumptionComponent
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class FuelComponent : Component
 {
     /// <summary>
-    /// Количество топлива (в секундах горения)
+    /// Fuel amount (in seconds of burn)
     /// </summary>
     [DataField]
     public float Value = 100f;
 
     /// <summary>
-    /// Максимальная температура горения этого топлива (°C)
+    /// Maximum burn temperature of this fuel (°C)
     /// </summary>
     [DataField]
     public float TemperatureMax = 800f;
 
     /// <summary>
-    /// Минимальная температура горения (°C)
+    /// Minimum burn temperature of this fuel (°C)
     /// </summary>
     [DataField]
     public float TemperatureMin = 400f;

@@ -5,10 +5,6 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server._Nibiru.Factions.Systems;
 
-/// <summary>
-/// Действие по завершению строительства статуи.
-/// Копирует данные о фракции строителя на статую и открывает EUI выбора члена.
-/// </summary>
 [UsedImplicitly]
 [DataDefinition]
 public sealed partial class SetFactionStatue : IGraphAction
@@ -31,7 +27,6 @@ public sealed partial class SetFactionStatue : IGraphAction
 
         entityManager.Dirty(uid, statue);
 
-        // Открываем EUI выбора члена для строителя
         var system = entityManager.EntitySysManager.GetEntitySystem<FactionStatueSystem>();
         system.OpenSelectionEui(uid, statue);
     }

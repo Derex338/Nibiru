@@ -1,12 +1,12 @@
 namespace Content.Shared._Nibiru.EntityInspector;
 
 /// <summary>
-/// Данные одного отображаемого поля для окна инспектора сущностей.
+/// Data of one field for Entity Inspector window.
 /// </summary>
-/// <param name="DisplayName">Отображаемое имя (или ключ локализации).</param>
-/// <param name="Value">Текущее значение поля.</param>
-/// <param name="Detail">Подробное описание для правой панели (или ключ локализации). Null — не показывать.</param>
-/// <param name="RequireOwnership">Если true, поле отображается только хозяину сущности (или тому, кто её держит).</param>
+/// <param name="DisplayName">Display name (or localization key).</param>
+/// <param name="Value">Current field value.</param>
+/// <param name="Detail">Detailed description for the right panel (or localization key). Null — do not show.</param>
+/// <param name="RequireOwnership">If true, the field is displayed only to the entity owner (or the one holding it).</param>
 public sealed record InspectableFieldData(
     string  DisplayName,
     object? Value,
@@ -16,19 +16,19 @@ public sealed record InspectableFieldData(
 );
 
 /// <summary>
-/// Реализуйте этот интерфейс на компоненте, чтобы он отображался в окне инспектора сущностей
+/// Implement this interface on a component to make it display in the Entity Inspector window.
 /// </summary>
 public interface IInspectableComponent
 {
     /// <summary>
-    /// Имя компонента в заголовке секции (или ключ Fluent-локализации).
-    /// Если пустая строка — имя берётся из имени типа без суффикса «Component».
+    /// Component name in section header (or Fluent localization key).
+    /// If empty string - name is taken from type name without «Component» suffix.
     /// </summary>
     string InspectorDisplayName { get; }
 
     /// <summary>
-    /// Возвращает список полей для отображения в инспекторе.
-    /// Вызывается каждый раз при открытии/обновлении окна.
+    /// Returns list of fields to display in the inspector.
+    /// Called every time the window opens.
     /// </summary>
     IEnumerable<InspectableFieldData> GetInspectableFields();
 }

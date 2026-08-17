@@ -50,17 +50,13 @@ public sealed partial class ModularCraftSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Для каждого слота, в котором ещё нет выбора, подставляет первый подходящий
-    /// модуль и первый материал. Вызывается при открытии UI и при смене типа предмета.
-    /// </summary>
     private void ApplyDefaults(ModularCraftStateComponent state, string? itemTypeId)
     {
         if (itemTypeId == null ||
             !_proto.TryIndex<ModularItemPrototype>(itemTypeId, out var itemProto))
             return;
 
-        // Первый материал — один для всех слотов
+        // First material for all slots
         var defaultMat = _proto.EnumeratePrototypes<ModularMaterialPrototype>()
             .OrderBy(m => m.Quality)
             .FirstOrDefault();
@@ -70,7 +66,7 @@ public sealed partial class ModularCraftSystem : EntitySystem
             var partId = partProtoId.Id;
             if (state.SlotConfigs.TryGetValue(partId, out var existing) &&
                 existing.ModuleId != null && existing.MaterialId != null)
-                continue; // уже заполнен
+                continue; // already filled
 
             var defaultMod = _proto.EnumeratePrototypes<ModularModulePrototype>()
                 .Where(m => m.PartType.Id == partId &&
@@ -132,41 +128,12 @@ public sealed partial class ModularCraftSystem : EntitySystem
         }
 
         BakeStats(modular);
-        //ApplySpriteLayers(crafted, modular);
 
         stateComp.SlotConfigs.Clear();
         SendState(uid);
 
         _popup.PopupEntity(Loc.GetString("weapon-smithy-crafted"), uid);
     }
-
-    /*private void ApplySpriteLayers(EntityUid crafted, ModularItemComponent comp)
-    {
-        if (!TryComp<SpriteComponent>(crafted, out var spriteComp)) return;
-
-        // Clear existing layers if any, or just add them.
-        // For a true dynamic sprite, we would need to construct it carefully.
-        // Since we are server-side, we can use SharedAppearanceSystem or send a net message.
-        // But SS14 allows modifying SpriteComponent layers if we do it carefully.
-        // Note: server-side SpriteComponent is mostly a shell in standard SS14 unless predicting.
-        // The proper way is a Custom Visualizer on the client. I'll just add it to Appearance.
-
-        // For now, doing it via a list of string paths to visualizer component:
-        var layers = new List<string>();
-        foreach (var cfg in comp.SlotConfigs.Values)
-        {
-            if (cfg.ModuleId != null && _proto.TryIndex(cfg.ModuleId.Value, out var mod))
-            {
-                if (mod.Sprite != null)
-                {
-                    layers.Add(mod.Sprite.ToString());
-                }
-            }
-        }
-
-        var appearance = EnsureComp<AppearanceComponent>(crafted);
-        _appearance.SetData(crafted, "ModularLayers", layers.ToArray(), appearance);
-    }*/
 
     private void SendState(EntityUid uid)
     {

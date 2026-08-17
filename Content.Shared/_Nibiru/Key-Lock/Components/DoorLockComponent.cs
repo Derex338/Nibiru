@@ -7,16 +7,13 @@ namespace Content.Shared._Nibiru.Lock;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class DoorLockComponent : Component
-{	
+{
 	[DataField]
     public int LockCode = 00000;
-	
+
 	[DataField]
     public bool Locked = false;
-	
-	//[DataField]
-    //public TimeSpan CrackDuration = TimeSpan.FromSeconds(60 * 5f);
-	
+
 	[DataField]
     public float CrackDuration = 120f;
 

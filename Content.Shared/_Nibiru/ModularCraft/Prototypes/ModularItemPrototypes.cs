@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.ModularCraft.Prototypes;
 
 /// <summary>
-/// Тип слота модульной системы (лезвие, рукоять, древко, навершие и т.д.)
+/// Type of slot in the modular system (blade, handle, shaft, top, etc.)
 /// </summary>
 [Prototype]
 public sealed partial class ModularPartPrototype : IPrototype
@@ -17,8 +17,8 @@ public sealed partial class ModularPartPrototype : IPrototype
 }
 
 /// <summary>
-/// Тип собираемого модульного предмета (меч, топор, кирка, посох)
-/// Определяет какие слоты нужны для сборки.
+/// Type of modular item to assemble (sword, axe, pickaxe, staff)
+/// Determines which slots are needed for assembly.
 /// </summary>
 [Prototype]
 public sealed partial class ModularItemPrototype : IPrototype
@@ -30,13 +30,13 @@ public sealed partial class ModularItemPrototype : IPrototype
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Обязательные слоты для этого предмета (например, Blade, Guard, Handle)
+    /// Required slots for this item (e.g., Blade, Guard, Handle)
     /// </summary>
     [DataField("requiredParts")]
     public List<ProtoId<ModularPartPrototype>> RequiredParts { get; set; } = new();
 
     /// <summary>
-    /// ID базовой сущности (Entity), которая будет заспавнена при крафте
+    /// ID of the base entity, which will be spawned during crafting
     /// </summary>
     [DataField("baseEntity")]
     public string BaseEntity { get; set; } = default!;

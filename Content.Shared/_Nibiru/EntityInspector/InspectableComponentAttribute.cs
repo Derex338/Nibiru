@@ -1,14 +1,14 @@
 namespace Content.Shared._Nibiru.EntityInspector;
 
 /// <summary>
-/// Помечает компонент как отображаемый в окне инспектора сущностей (Entity Inspector).
+/// Marks a component to be displayed in the entity inspector window (Entity Inspector).
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public sealed class InspectableComponentAttribute : Attribute
 {
     /// <summary>
-    /// Отображаемое имя компонента в окне инспектора.
-    /// Если не задано, будет использовано имя класса без суффикса «Component».
+    /// Display name of the component in inspector window.
+    /// If not specified, the name will be taken from the class name without the "Component" suffix.
     /// </summary>
     public string? DisplayName { get; }
 

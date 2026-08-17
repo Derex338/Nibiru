@@ -4,8 +4,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Localizations;
 
 /// <summary>
-/// Оповещение клиентских систем о смене языка.
-/// Шлётся через EventBus (EventSource.Local) при переключении культуры.
+/// Notification to client systems about language change.
+/// Sends via EventBus (EventSource.Local) when switching culture.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class LanguageChangedEvent : EntityEventArgs

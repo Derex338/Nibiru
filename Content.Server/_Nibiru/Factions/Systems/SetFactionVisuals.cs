@@ -26,8 +26,8 @@ public sealed partial class SetFactionVisuals : IGraphAction
         var visuals = entityManager.EnsureComponent<FactionVisualsComponent>(uid);
         visuals.FactionName = factionComp.FactionName;
         visuals.LogoBackground = factionComp.LogoBackground;
-        
-        // Копируем пиксели, чтобы они сохранились навсегда и не менялись при изменении логотипа фракции
+
+        // Copy pixels to keep it forever
         if (factionComp.LogoPixels != null && factionComp.LogoPixels.Count == 16 * 16)
         {
             visuals.LogoPixels = new List<Robust.Shared.Maths.Color>(factionComp.LogoPixels);

@@ -19,10 +19,6 @@ public sealed class WorkbenchUpdateState : BoundUserInterfaceState
 {
     public List<ProtoId<ConstructionPrototype>> Recipes;
 
-    //public LatheRecipeBatch[] Queue;
-
-    //public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
-
     public WorkbenchUpdateState(List<ProtoId<ConstructionPrototype>> recipes)
     {
         Recipes = recipes;

@@ -6,7 +6,6 @@ namespace Content.Shared._Nibiru.NPC.Commands;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruAnimalCommanderComponent : Component
 {
-    // Идентификаторы выдаваемых действий (Action)
     [DataField("followAction")]
     public string FollowActionId = "ActionNibiruAnimalFollow";
 
@@ -26,7 +25,7 @@ public sealed partial class NibiruAnimalCommanderComponent : Component
     public string DeliverActionId = "ActionNibiruAnimalDeliver";
 
     /// <summary>
-    /// Список всех прирученных животных, слушающих команды этого персонажа.
+    /// List of all tamed animals that listen to commands from this character.
     /// </summary>
     public List<EntityUid> Animals = new();
 

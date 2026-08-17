@@ -4,28 +4,28 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.NPC.Commands;
 
 /// <summary>
-/// Временный компонент на животном: ждёт, пока хозяин не поднесёт предмет для обнюхивания.
-/// Добавляется при команде Search и удаляется, когда:
-///  — игрок использовал предмет на животном (InteractUsing), или
-///  — истёк таймаут.
+/// Temporary component on an animal waiting for the owner to bring an item for sniffing.
+/// Added by the Search command and removed when:
+///  — the player uses an item on the animal (InteractUsing), or
+///  — the timeout expires.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruAnimalSearchWaitingComponent : Component
 {
     /// <summary>
-    /// Хозяин, ожидающий результата обнюхивания.
+    /// The owner waiting for the sniffing result.
     /// </summary>
     [DataField]
     public EntityUid Commander;
 
     /// <summary>
-    /// Сколько секунд животное ожидает предмет (таймаут).
+    /// How many seconds the animal waits for an item (timeout).
     /// </summary>
     [DataField]
     public float Timeout = 8f;
 
     /// <summary>
-    /// Накопитель времени.
+    /// Time accumulator.
     /// </summary>
     [ViewVariables]
     public float Accumulator;

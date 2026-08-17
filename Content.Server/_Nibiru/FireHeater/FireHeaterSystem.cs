@@ -21,7 +21,7 @@ using Content.Shared.Damage.Prototypes;
 namespace Content.Server._Nibiru.Heating;
 
 /// <summary>
-/// Система для нагрева предметов на поверхности (костры, жаровни и т.д.)
+/// System for heating entities on them (bonfire)
 /// </summary>
 public sealed partial class HeatingSurfaceSystem : EntitySystem
 {
@@ -36,8 +36,6 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        //SubscribeLocalEvent<HeatingSurfaceComponent, ExaminedEvent>(OnExamined);
     }
 
     public override void Update(float frameTime)
@@ -47,10 +45,9 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
         var query = EntityQueryEnumerator<HeatingSurfaceComponent, FuelConsumptionComponent>();
         while (query.MoveNext(out var uid, out var surface, out var fuel))
         {
-            // Поверхность нагревает только если источник достаточно горячий
+            // The surface heats only if the source is hot enough
             if (fuel.CurrentTemperature < surface.MinSourceTemperature)
             {
-                //UpdateVisuals(uid, surface, false, false);
                 continue;
             }
 
@@ -59,7 +56,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет нагрев предметов на поверхности
+    /// Updates the heating of items on the surface
     /// </summary>
     private void UpdateHeating(
         Entity<HeatingSurfaceComponent, FuelConsumptionComponent> ent,
@@ -69,32 +66,32 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
         var sourceTemp = fuel.CurrentTemperature;
         var isHeating = false;
 
-        // Получаем предметы на поверхности
+        // Getting items on the surface
         List<EntityUid> itemsToHeat;
 
         if (surface.RequirePlacedOnSurface &&
             TryComp<ItemPlacerComponent>(uid, out var placeable))
         {
-            // Используем PlaceableSurface
+            // Using PlaceableSurface
             itemsToHeat = GetItemsOnSurface(uid, placeable);
         }
         else
         {
-            // Используем радиус
+            // Using radius
             itemsToHeat = GetItemsInRadius(uid, surface);
         }
 
         if (itemsToHeat.Count <= 0)
             return;
 
-        // Обрабатываем каждый предмет
+        // Processing each item
         foreach (var entity in itemsToHeat)
         {
             ProcessItem(uid, entity, surface, sourceTemp, dt);
             isHeating = true;
         }
 
-        // Звук готовки
+        // Cooking sound
         if (isHeating)
         {
             surface.CookingSoundTimer -= dt;
@@ -107,12 +104,11 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
             }
         }
 
-        //UpdateVisuals(uid, surface, hasItems, isHeating);
         Dirty(uid, surface);
     }
 
     /// <summary>
-    /// Получает предметы с PlaceableSurface
+    /// Getting items from PlaceableSurface
     /// </summary>
     private List<EntityUid> GetItemsOnSurface(
         EntityUid surfaceUid,
@@ -130,7 +126,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Получает предметы в радиусе
+    /// Getting items in radius
     /// </summary>
     private List<EntityUid> GetItemsInRadius(
         EntityUid surfaceUid,
@@ -149,11 +145,6 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
             if (entity == surfaceUid)
                 continue;
 
-            // Проверяем что предмет находится на той же высоте
-            //var itemXform = Transform(entity);
-            //if (!_transform.IsParentOf(xform, itemXform.ParentUid))
-            //    continue;
-
             if (HasComp<TemperatureComponent>(entity))
                 items.Add(entity);
         }
@@ -162,7 +153,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обрабатывает нагрев отдельного предмета
+    /// Processing each item
     /// </summary>
     private bool ProcessItem(
         EntityUid surfaceUid,
@@ -171,13 +162,13 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
         float sourceTemp,
         float dt)
     {
-        // Руда
+        // Ore
         if (TryComp<SmeltableOreComponent>(itemUid, out var ore))
         {
             return ProcessOreOnSurface(surfaceUid, itemUid, surface, ore, sourceTemp, dt);
         }
 
-        // Обычный предмет с температурой
+        // Normal temperatured entity
         if (TryComp<TemperatureComponent>(itemUid, out var temp))
         {
             return ProcessTemperatureOnSurface(surfaceUid, itemUid, surface, temp, sourceTemp, dt);
@@ -187,7 +178,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обрабатывает руду на поверхности
+    /// Processing ore on surface
     /// </summary>
     private bool ProcessOreOnSurface(
         EntityUid surfaceUid,
@@ -197,7 +188,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
         float sourceTemp,
         float dt)
     {
-        // Нагреваем руду
+        // Heating ore
         if (TryComp<TemperatureComponent>(oreUid, out var temp))
         {
             HeatEntity(oreUid, temp, sourceTemp, dt, surface.HeatingRate);
@@ -205,14 +196,14 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
 
         var currentTemp = temp?.CurrentTemperature ?? sourceTemp;
 
-        // Если достигли температуры плавления
+        // If melting point is reached
         if (currentTemp >= ore.MeltingPoint)
         {
             ore.MeltingProgress += ore.MeltingSpeed * dt;
 
             if (ore.MeltingProgress >= 1f)
             {
-                // Руда расплавилась - создаём лужу металла или удаляем
+                // Ore melted - create metal puddle or remove
                 _popup.PopupEntity(
                     Loc.GetString("heating-surface-ore-melted"),
                     oreUid,
@@ -222,7 +213,6 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
                 var ev = new OreMeltedOnSurfaceEvent(surfaceUid, oreUid);
                 RaiseLocalEvent(surfaceUid, ev);
 
-                //QueueDel(oreUid);
                 return false;
             }
 
@@ -234,7 +224,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обрабатывает обычный предмет
+    /// Processing normal temperatured entity
     /// </summary>
     private bool ProcessTemperatureOnSurface(
         EntityUid surfaceUid,
@@ -246,7 +236,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     {
         HeatEntity(itemUid, temp, sourceTemp, dt, surface.HeatingRate);
 
-        // Если предмет слишком горячий - сжигаем
+        // If item is too hot - burn it
         if (temp.CurrentTemperature >= surface.BurnTemperature)
         {
             BurnItem(surfaceUid, itemUid, surface, sourceTemp, dt);
@@ -257,7 +247,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Нагревает предмет
+    /// Heating entity
     /// </summary>
     private void HeatEntity(
         EntityUid ent,
@@ -274,7 +264,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Сжигает предмет
+    /// Burning item
     /// </summary>
     private void BurnItem(
         EntityUid surfaceUid,
@@ -283,43 +273,13 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
         float temp,
         float dt)
     {
-        //if (surface.BurnSound != null)
-        //    _audio.PlayPvs(surface.BurnSound, surfaceUid);
-
-        //_popup.PopupEntity(
-        //    Loc.GetString("heating-surface-item-burned"),
-        //    itemUid,
-        //    PopupType.Medium
-        //);
-
         DamageSpecifier burnDamage = new();
         burnDamage.DamageDict = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>
         {
             { "Heat", temp / 100 * dt }
         };
         _damageableSystem.TryChangeDamage(itemUid, burnDamage, origin: surfaceUid);
-
-        //var ev = new ItemBurnedOnSurfaceEvent(surfaceUid, itemUid);
-        //RaiseLocalEvent(surfaceUid, ev);
-
-        //QueueDel(itemUid);
     }
-
-    /// <summary>
-    /// Обновляет визуалы
-    /// </summary>
-    /*private void UpdateVisuals(
-        EntityUid uid,
-        HeatingSurfaceComponent surface,
-        bool hasItems,
-        bool isHeating)
-    {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        _appearance.SetData(uid, HeatingSurfaceVisuals.HasItems, hasItems, appearance);
-        _appearance.SetData(uid, HeatingSurfaceVisuals.IsHeating, isHeating, appearance);
-    }*/
 
     private void OnExamined(EntityUid uid, HeatingSurfaceComponent comp, ExaminedEvent args)
     {
@@ -344,7 +304,7 @@ public sealed partial class HeatingSurfaceSystem : EntitySystem
 }
 
 /// <summary>
-/// Событие когда руда расплавилась на поверхности
+/// Event when ore melted on surface
 /// </summary>
 public sealed partial class OreMeltedOnSurfaceEvent : EntityEventArgs
 {
@@ -359,7 +319,7 @@ public sealed partial class OreMeltedOnSurfaceEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Событие когда предмет сгорел на поверхности
+/// Event when item burned on surface
 /// </summary>
 public sealed partial class ItemBurnedOnSurfaceEvent : EntityEventArgs
 {

@@ -15,7 +15,6 @@ public sealed partial class NibiruAnimalStayActionEvent : InstantActionEvent
     public string? Speech;
 }
 
-// Теперь это toggle-действие, которое устанавливает режим
 public sealed partial class NibiruAnimalAttackActionEvent : InstantActionEvent
 {
     [DataField("speech")]
@@ -24,7 +23,6 @@ public sealed partial class NibiruAnimalAttackActionEvent : InstantActionEvent
     public NibiruAnimalCommand Type = NibiruAnimalCommand.Attack;
 }
 
-// Теперь это toggle-действие, которое устанавливает режим
 public sealed partial class NibiruAnimalGrabActionEvent : InstantActionEvent
 {
     [DataField("speech")]
@@ -45,7 +43,6 @@ public sealed partial class NibiruAnimalDeliverActionEvent : InstantActionEvent
     public string? Speech;
 }
 
-// Событие для обработки команд, требующих указания цели
 public sealed partial class NibiruAnimalCommandModeEvent : InstantActionEvent
 {
     [DataField("speech")]

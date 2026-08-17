@@ -20,7 +20,6 @@ public sealed partial class TemperatureColorSystem : EntitySystem
 
     private void OnComponentStartup(EntityUid uid, TemperatureColorComponent component, ComponentStartup args)
     {
-        // Инициализируем начальное состояние
         UpdateTemperatureVisuals(uid, component, component.CurrentTemperature);
     }
 
@@ -34,32 +33,26 @@ public sealed partial class TemperatureColorSystem : EntitySystem
         var color = TemperatureToColor(temperature);
         var luminosity = TemperatureToLuminosity(temperature);
 
-        // Сохраняем состояние в компоненте для синхронизации
         component.CurrentTemperature = temperature;
         component.CurrentColor = color;
         Dirty(uid, component);
 
-        // Обновляем визуальные данные через Appearance
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             _appearance.SetData(uid, TemperatureColorVisuals.Temperature, temperature, appearance);
             _appearance.SetData(uid, TemperatureColorVisuals.Color, color, appearance);
         }
 
-        // Управляем свечением
         UpdateGlow(uid, component, temperature, color, luminosity);
     }
 
-    /// <summary>
-    /// Обновляет свечение объекта на основе температуры
-    /// </summary>
     private void UpdateGlow(EntityUid uid, TemperatureColorComponent component,
         float temperature, Color color, float luminosity)
     {
-        // Порог начала свечения (обычно ~800K для металлов)
+        // Starting glow threshold (usually ~800K for metals)
         if (temperature < component.GlowThreshold)
         {
-            // Выключаем свечение
+            // Turning off the glow
             if (TryComp<PointLightComponent>(uid, out var light))
             {
                 _pointLight.SetEnabled(uid, false, light);
@@ -67,42 +60,40 @@ public sealed partial class TemperatureColorSystem : EntitySystem
             return;
         }
 
-        // Создаём или обновляем компонент свечения
         var pointLight = EnsureComp<PointLightComponent>(uid);
 
-        // Вычисляем интенсивность свечения
         float intensity = CalculateGlowIntensity(temperature, luminosity, component);
         float radius = CalculateGlowRadius(temperature, component);
 
-        // Применяем настройки свечения
+        // Applying glow settings
         _pointLight.SetColor(uid, color, pointLight);
         _pointLight.SetEnergy(uid, intensity, pointLight);
         _pointLight.SetRadius(uid, radius, pointLight);
         _pointLight.SetEnabled(uid, true, pointLight);
 
-        // Мягкие тени для реалистичности
+        // Soft shadows for realism
         _pointLight.SetCastShadows(uid, component.CastShadows, pointLight);
     }
 
     /// <summary>
-    /// Вычисляет интенсивность свечения на основе температуры
+    /// Calculating glow intensity based on temperature
     /// </summary>
     private float CalculateGlowIntensity(float temperature, float luminosity, TemperatureColorComponent component)
     {
-        // Нормализуем температуру в диапазон 0-1
+        // Normalizing temperature to 0-1 range
         float normalizedTemp = (temperature - component.GlowThreshold) /
                               (component.MaxGlowTemperature - component.GlowThreshold);
         normalizedTemp = Math.Clamp(normalizedTemp, 0f, 1f);
 
-        // Используем степенную функцию для более реалистичного нарастания
+        // Using a power function for more realistic increase
         float intensity = (float)Math.Pow(normalizedTemp, component.IntensityExponent);
 
-        // Масштабируем к желаемому диапазону
+        // Scaling to the desired range
         return component.MinIntensity + intensity * (component.MaxIntensity - component.MinIntensity);
     }
 
     /// <summary>
-    /// Вычисляет радиус свечения
+    /// Calculating glow radius
     /// </summary>
     private float CalculateGlowRadius(float temperature, TemperatureColorComponent component)
     {
@@ -110,15 +101,15 @@ public sealed partial class TemperatureColorSystem : EntitySystem
                               (component.MaxGlowTemperature - component.GlowThreshold);
         normalizedTemp = Math.Clamp(normalizedTemp, 0f, 1f);
 
-        // Радиус растёт медленнее интенсивности
+        // Radius grows slower than intensity
         float radiusFactor = (float)Math.Pow(normalizedTemp, 0.5);
 
         return component.MinRadius + radiusFactor * (component.MaxRadius - component.MinRadius);
     }
 
     /// <summary>
-    /// Возвращает цвет раскалённого металла (800–12000 K)
-    /// Использует приближение закона излучения чёрного тела
+    /// Returns the color of glowing metal (800–12000 K)
+    /// Uses an approximation of the black body radiation law
     /// </summary>
     public static Color TemperatureToColor(float temperature)
     {
@@ -166,7 +157,7 @@ public sealed partial class TemperatureColorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Светимость металла (Вт/м²) — закон Стефана–Больцмана
+    /// Metal luminosity (W/m²) — Stefan–Boltzmann law
     /// </summary>
     public static float TemperatureToLuminosity(float temperature)
     {
@@ -175,7 +166,7 @@ public sealed partial class TemperatureColorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Возвращает описательное название цвета по температуре
+    /// Returns a descriptive color name based on temperature
     /// </summary>
     public static string GetColorName(float temperature)
     {

@@ -19,7 +19,7 @@ using Content.Shared.IdentityManagement;
 using Content.Server._Nibiru.Factions.UI;
 using Content.Shared.Mind.Components;
 
-//Часть кода взята с ReservStation
+// Partially from Reserve
 namespace Content.Server._Nibiru.Factions
 {
     public sealed partial class AddFactionVerb : EntitySystem
@@ -47,7 +47,6 @@ namespace Content.Server._Nibiru.Factions
 
             if (TryComp<FactionComponent>(args.Target, out var TargetFact))
             {
-                //if(string.IsNullOrWhiteSpace(TargetFact.FactionName) || string.IsNullOrWhiteSpace(Leader.FactionName) || Leader.FactionName == TargetFact.FactionName)
                 return;
             }
 
@@ -79,7 +78,6 @@ namespace Content.Server._Nibiru.Factions
                 _euiMan.OpenEui(window, session);
 
                 Dirty(converter, consFact);
-                //Dirty(target, targetComp);
             }
             else
             {

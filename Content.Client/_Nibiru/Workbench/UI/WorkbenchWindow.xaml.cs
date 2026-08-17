@@ -28,13 +28,13 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     private ConstructionSystem? _constructionSystem;
     private ConstructionPrototype? _selected;
 
-    // Список доступных рецептов
+    // List of available recipes
     public List<ProtoId<ConstructionPrototype>> ConsRecipes = new();
 
-    // Категория -> список рецептов
+    // Category -> list of recipes
     private Dictionary<string, List<ConstructionPrototype>> _categorizedRecipes = new();
 
-    // Кнопки рецептов для управления состоянием
+    // Recipe buttons for state management
     private Dictionary<string, Button> _recipeButtons = new();
 
     public EntityUid Entity;
@@ -49,7 +49,6 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
             _constructionSystem = constructionSystem;
 
-        // Подключаем события
         Search.OnTextChanged += _ => FilterRecipes(Search.Text);
         BuildButton.OnToggled += OnBuildButtonToggled;
         ClearButton.OnPressed += _ => ClearGhost();
@@ -81,22 +80,22 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Вызывается когда приходят рецепты с сервера
+    /// Called when recipes arrive from the server
     /// </summary>
     public void OnViewPopulateRecipes(object? sender, (string search, string category) args)
     {
         if (_constructionSystem is null)
             return;
 
-        // Категоризуем рецепты
+        // Categorize recipes
         CategorizeRecipes();
 
-        // Отображаем категории с рецептами
+        // Display categories with recipes
         PopulateCategoriesView();
     }
 
     /// <summary>
-    /// Группирует рецепты по категориям
+    /// Groups recipes by category
     /// </summary>
     private void CategorizeRecipes()
     {
@@ -117,7 +116,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
             _categorizedRecipes[category].Add(recipe);
         }
 
-        // Сортируем рецепты в каждой категории по имени
+        // Sorts recipes in each category by name
         foreach (var category in _categorizedRecipes.Keys)
         {
             _categorizedRecipes[category].Sort((a, b) =>
@@ -126,14 +125,14 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Отображает категории с рецептами
+    /// Displays categories with recipes
     /// </summary>
     private void PopulateCategoriesView()
     {
         CategoriesContainer.RemoveAllChildren();
         _recipeButtons.Clear();
 
-        // Сортируем категории по имени
+        // Sorts categories by name
         var sortedCategories = _categorizedRecipes.Keys.OrderBy(Loc.GetString).ToList();
 
         foreach (var category in sortedCategories)
@@ -142,7 +141,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
             if (recipes.Count == 0)
                 continue;
 
-            // Заголовок категории
+            // Category title
             var categoryLabel = new Label
             {
                 Text = Loc.GetString(category),
@@ -151,7 +150,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
             };
             CategoriesContainer.AddChild(categoryLabel);
 
-            // Грид с рецептами (4 колонки)
+            // Grid with recipes (4 columns)
             var recipeGrid = new GridContainer
             {
                 Columns = 4,
@@ -167,7 +166,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
                 if (!_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? proto))
                     continue;
 
-                // Создаём кнопку рецепта
+                // Creates a recipe button
                 var recipeButton = CreateRecipeButton(recipe, proto);
                 recipeGrid.AddChild(recipeButton);
 
@@ -179,7 +178,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Создаёт кнопку для рецепта
+    /// Creates a recipe button
     /// </summary>
     private Control CreateRecipeButton(ConstructionPrototype recipe, EntityPrototype targetProto)
     {
@@ -191,7 +190,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
             Margin = new Thickness(2)
         };
 
-        // Спрайт предмета
+        // Item sprite
         var protoView = new EntityPrototypeView
         {
             Scale = new Vector2(2f),
@@ -202,14 +201,14 @@ public sealed partial class WorkbenchWindow : DefaultWindow
 
         button.AddChild(protoView);
 
-        // При нажатии выбираем рецепт
+        // When pressed, select the recipe
         button.OnToggled += args =>
         {
             if (args.Pressed)
             {
                 SelectRecipe(recipe);
 
-                // Снимаем выделение с других кнопок
+                // Remove selection from other buttons
                 foreach (var (id, btn) in _recipeButtons)
                 {
                     if (id != recipe.ID && btn.Pressed)
@@ -226,7 +225,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Выбирает рецепт и отображает информацию о нём
+    /// Selects the recipe and displays information about it
     /// </summary>
     private void SelectRecipe(ConstructionPrototype recipe)
     {
@@ -238,7 +237,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         if (!_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? proto))
             return;
 
-        // Отображаем информацию
+        // Displays information
         TargetName.SetMessage(recipe.Name ?? "");
         TargetDesc.SetMessage(recipe.Description ?? "");
         TargetTexture.SetPrototype(proto.ID);
@@ -250,15 +249,15 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         RecipeStepList.Clear();
 
         var stepList = RecipeStepList;
-        // Генерируем список шагов
+        // Generates a list of steps
         GenerateStepList(recipe, stepList);
 
-        // Принудительно обновляем UI
+        // Force updates the UI
         RecipeStepList.InvalidateMeasure();
     }
 
     /// <summary>
-    /// Снимает выделение с рецепта
+    /// Deselects the recipe
     /// </summary>
     private void DeselectRecipe()
     {
@@ -273,7 +272,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Генерирует список шагов для рецепта
+    /// Generates a list of steps for the recipe
     /// </summary>
     private void GenerateStepList(ConstructionPrototype recipe, ItemList stepList)
     {
@@ -304,13 +303,13 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Фильтрует рецепты по поисковому запросу
+    /// Filters recipes by search query
     /// </summary>
     private void FilterRecipes(string searchText)
     {
         if (string.IsNullOrWhiteSpace(searchText))
         {
-            // Показываем все рецепты
+            // Shows all recipes
             PopulateCategoriesView();
             return;
         }
@@ -328,7 +327,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
                 filteredRecipes[category] = filtered;
         }
 
-        // Временно сохраняем и восстанавливаем
+        // Temporarily saves and restores
         var originalRecipes = _categorizedRecipes;
         _categorizedRecipes = filteredRecipes;
         PopulateCategoriesView();
@@ -336,7 +335,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Обработчик нажатия кнопки Build
+    /// Handles the Build button click
     /// </summary>
     private void OnBuildButtonToggled(BaseButton.ButtonToggledEventArgs args)
     {
@@ -359,7 +358,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         if (!_entityManager.TryGetComponent<WorkbenchComponent>(Entity, out var workbench))
             return;
 
-        // Удаляем только призрак который хранится в компоненте верстака
+        // Removes only the ghost that is stored in the workbench component
         if (workbench.CurrentGhost != null && _constructionSystem != null)
         {
             _constructionSystem.ClearGhost(workbench.CurrentGhost.GetHashCode());

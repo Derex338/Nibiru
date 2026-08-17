@@ -13,8 +13,7 @@ public sealed partial class NibiruFactionLogoSystem : EntitySystem
 {
     [Dependency] private IClyde _clyde = default!;
 
-    // Кэш текстур логотипов фракций по названию фракции
-    // Кэш текстур логотипов фракций по названию фракции
+    // Cache of faction logo textures by faction name
     private readonly Dictionary<string, OwnedTexture> _logoCache = new();
     private readonly Dictionary<string, OwnedTexture> _logo8x8Cache = new();
 
@@ -27,7 +26,7 @@ public sealed partial class NibiruFactionLogoSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, FactionComponent component, ref AfterAutoHandleStateEvent args)
     {
-        // Обновляем текстуру при изменении стейта
+        // Update texture on state change
         UpdateFactionLogo(component.FactionName, component.LogoBackground, component.LogoPixels, component.LogoPixels8x8);
     }
 
@@ -36,7 +35,7 @@ public sealed partial class NibiruFactionLogoSystem : EntitySystem
         if (string.IsNullOrEmpty(factionName) || pixels == null || pixels.Count != 16 * 16)
             return;
 
-        // Если все пиксели прозрачные и фон прозрачный, то логотипа нет
+        // If all pixels are transparent and background is transparent, there is no logo
         bool hasPixels = false;
         for (int i = 0; i < pixels.Count; i++)
         {
@@ -109,7 +108,7 @@ public sealed partial class NibiruFactionLogoSystem : EntitySystem
     }
 
     /// <summary>
-    /// Возвращает сгенерированную текстуру логотипа фракции, которую можно использовать в SpriteComponent
+    /// Returns generated faction logo texture that can be used in SpriteComponent
     /// </summary>
     public Texture? GetFactionLogoTexture(string factionName)
     {
@@ -120,7 +119,7 @@ public sealed partial class NibiruFactionLogoSystem : EntitySystem
     }
 
     /// <summary>
-    /// Возвращает сгенерированную 8x8 текстуру логотипа фракции
+    /// Returns generated 8x8 faction logo texture
     /// </summary>
     public Texture? GetFactionLogo8x8Texture(string factionName)
     {

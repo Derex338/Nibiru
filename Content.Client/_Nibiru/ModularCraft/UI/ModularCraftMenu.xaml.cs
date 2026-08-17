@@ -21,12 +21,11 @@ public sealed partial class ModularCraftMenu : FancyWindow
     private ModularCraftBUIState? _lastState;
     private string? _activeSlot;
 
-    // Данные для селекторов
     private List<(string Id, string Name)> _itemTypeItems = new();
     private List<(string Id, string Name)> _moduleItems   = new();
     private List<(string Id, string Name)> _materialItems = new();
 
-    // Подавляем отправку OnSlotChanged во время программных изменений UI
+    // Suppression of sending OnSlotChanged during program changes UI
     private bool _suppressSlotChanged;
 
     public ModularCraftMenu()
@@ -34,13 +33,13 @@ public sealed partial class ModularCraftMenu : FancyWindow
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        // Материалы одинаковы для всех слотов
+        // Materials are the same for all slots
         _materialItems = _proto.EnumeratePrototypes<ModularMaterialPrototype>()
             .OrderBy(p => p.Quality)
             .Select(p => (p.ID, p.Name))
             .ToList();
 
-        // Типы предметов
+        // Item types
         _itemTypeItems = _proto.EnumeratePrototypes<ModularItemPrototype>()
             .Select(p => (p.ID, p.Name))
             .ToList();
@@ -55,14 +54,13 @@ public sealed partial class ModularCraftMenu : FancyWindow
         WeaponPreview.OnSlotUnhovered += OnSlotUnhovered;
         WeaponPreview.OnSlotClicked   += OnSlotClicked;
 
-        // OnValueChanged вызывается только при нажатии стрелки (не при SetItems/SetValueSilent)
         ShapeSelector.OnValueChanged    += _ => { if (!_suppressSlotChanged) CommitCurrentSlot(); };
         MaterialSelector.OnValueChanged += _ => { if (!_suppressSlotChanged) CommitCurrentSlot(); };
 
         CraftButton.OnPressed += _ => OnCraftPressed?.Invoke();
     }
 
-    // ── Обновление из BUI ─────────────────────────────────────────────────────
+    // Update from BUI
 
     public void UpdateState(ModularCraftBUIState state)
     {
@@ -110,7 +108,7 @@ public sealed partial class ModularCraftMenu : FancyWindow
                 : Loc.GetString("weapon-smithy-fill-all-slots");
         }
 
-        // Если активный слот уже выбран — просто обновляем описания/статы, не трогая селекторы
+        // If the active slot is already selected - just update the descriptions/stats, do not touch the selectors
         if (_activeSlot != null)
         {
             RefreshDescriptions();
@@ -120,8 +118,7 @@ public sealed partial class ModularCraftMenu : FancyWindow
         UpdateTotalStats(state);
     }
 
-    // ── Hover / Click ─────────────────────────────────────────────────────────
-
+    // Hover / Click
     private void OnSlotHovered(string slot)
     {
         var visual = WeaponPreview.GetState(slot) ?? new SlotVisualState();
@@ -145,12 +142,12 @@ public sealed partial class ModularCraftMenu : FancyWindow
             ShowSlotConfig(slot, _lastState);
             _suppressSlotChanged = false;
 
-            // После настройки UI — отправляем дефолты на сервер один раз
+            // After configuring the UI - send defaults to the server once
             CommitCurrentSlot();
         }
     }
 
-    // ── Настройка слота (правая панель) ───────────────────────────────────────
+    // Slot configuration (right panel)
 
     private void ShowSlotConfig(string slot, ModularCraftBUIState state)
     {
@@ -174,7 +171,7 @@ public sealed partial class ModularCraftMenu : FancyWindow
         ShapeSelector.SetItems(_moduleItems);
         MaterialSelector.SetItems(_materialItems);
 
-        // Восстанавливаем сохранённые выборы или берём первые доступные
+        // Restore saved selections or take the first available ones
         string? modId = null;
         string? matId = null;
 
@@ -196,7 +193,7 @@ public sealed partial class ModularCraftMenu : FancyWindow
         RefreshComboStats();
     }
 
-    /// <summary>Отправляет текущий выбор формы+материала на сервер.</summary>
+    // Send current shape+material selection to server
     private void CommitCurrentSlot()
     {
         if (_activeSlot == null) return;

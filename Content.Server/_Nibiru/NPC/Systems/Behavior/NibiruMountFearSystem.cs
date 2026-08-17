@@ -1,4 +1,3 @@
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared.Buckle.Components;
@@ -15,10 +14,10 @@ using Content.Shared._Nibiru.NPC.Behavior;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Обрабатывает полосу страха верховых животных.
-/// Страх накапливается от урона, количества угроз рядом и огня.
-/// При максимуме — сбрасывает наездника и убегает.
-/// Постоянное воздействие стресса тренирует устойчивость.
+/// Handles the fear bar of mountable animals.
+/// Fear accumulates from damage, the number of nearby threats, and fire.
+/// When at maximum, it throws the rider and runs away.
+/// Constant exposure to stress trains resilience.
 /// </summary>
 public sealed partial class NibiruMountFearSystem : EntitySystem
 {
@@ -44,7 +43,6 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
         var fearIncrease = component.FearPerDamage * GetTrainingMultiplier(component);
         component.FearLevel = MathF.Min(component.FearLevel + fearIncrease, component.MaxFear);
 
-        // Проверяем паническое состояние
         CheckPanic(uid, component);
     }
 
@@ -55,7 +53,6 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
         var query = EntityQueryEnumerator<NibiruMountFearComponent, RideableComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var fear, out var rideable, out var xform))
         {
-            // Обработка текущей паники
             if (fear.IsPanicking)
             {
                 fear.PanicTimer -= frameTime;
@@ -67,7 +64,7 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
                 continue;
             }
 
-            // Проверяем угрозы периодически
+            // Periodically check for threats
             fear.ThreatCheckAccumulator += frameTime;
             if (fear.ThreatCheckAccumulator >= fear.ThreatCheckInterval)
             {
@@ -75,22 +72,22 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
                 ScanThreats(uid, fear, xform);
             }
 
-            // Убывание страха, когда нет угроз
+            // Fear decay when no threats are present
             if (fear.FearLevel > 0)
             {
                 fear.FearLevel = MathF.Max(0, fear.FearLevel - fear.FearDecayRate * frameTime);
             }
 
-            // Нервозность на средних уровнях
+            // Nervousness at medium levels
             if (fear.FearLevel > fear.MaxFear * 0.5f && fear.NervousSound != null)
             {
-                // Воспроизводится периодически в ScanThreats
+                // Will be played periodically in ScanThreats
             }
         }
     }
 
     /// <summary>
-    /// Сканирует окрестности на угрозы и увеличивает страх.
+    /// Scans the surroundings for threats and increases fear.
     /// </summary>
     private void ScanThreats(EntityUid uid, NibiruMountFearComponent fear, TransformComponent xform)
     {
@@ -107,7 +104,7 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
                 threatCount++;
         }
 
-        // Проверяем наличие огня рядом
+        // Check for nearby fire
         var nearbyEntities = new HashSet<EntityUid>();
         _lookup.GetEntitiesInRange(uid, fear.ThreatScanRadius, nearbyEntities);
 
@@ -127,19 +124,19 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
 
         var trainingMult = GetTrainingMultiplier(fear);
 
-        // Накопление страха от угроз
+        // Accumulating fear from threats
         if (threatCount > 0)
         {
             var threatFear = threatCount * fear.FearPerNearbyThreat * trainingMult;
             fear.FearLevel = MathF.Min(fear.FearLevel + threatFear, fear.MaxFear);
 
-            // Набираем опыт стрессоустойчивости
+            // Accumulating stress resistance experience
             fear.StressTraining = MathF.Min(
                 fear.StressTraining + fear.TrainingPerStressTick,
                 fear.MaxStressTraining);
         }
 
-        // Страх от огня
+        // Fear from fire
         if (fireNearby)
         {
             fear.FearLevel = MathF.Min(fear.FearLevel + fear.FearFromFire * trainingMult, fear.MaxFear);
@@ -153,18 +150,17 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
     }
 
     /// <summary>
-    /// Проверяет, достиг ли страх критического уровня. Если да — паника.
+    /// Checks if fear has reached a critical level. If so — panic.
     /// </summary>
     private void CheckPanic(EntityUid uid, NibiruMountFearComponent fear)
     {
         if (fear.IsPanicking || fear.FearLevel < fear.MaxFear)
             return;
 
-        // Паника: сбрасываем наездника
         fear.IsPanicking = true;
         fear.PanicTimer = fear.PanicDuration;
 
-        // Сбрасываем всех наездников
+        // Unbuckling all riders
         if (TryComp<StrapComponent>(uid, out var strap))
         {
             foreach (var rider in new List<EntityUid>(strap.BuckledEntities))
@@ -173,21 +169,21 @@ public sealed partial class NibiruMountFearSystem : EntitySystem
             }
         }
 
-        // Переводим в состояние бегства
+        // Switch to fleeing state
         if (TryComp<NibiruNpcStateMachineComponent>(uid, out var state))
         {
             state.CurrentState = NibiruNpcState.Fleeing;
             state.CurrentTarget = null;
         }
 
-        // Звук паники
+        // Panic sound
         if (fear.PanicSound != null)
             _audio.PlayPvs(fear.PanicSound, uid);
     }
 
     /// <summary>
-    /// Рассчитывает множитель снижения страха от тренировки.
-    /// При максимальной тренировке страх снижается на MaxFearReduction (до 70%).
+    /// Calculates the fear reduction multiplier from training.
+    /// At maximum training, fear is reduced by MaxFearReduction (up to 70%).
     /// </summary>
     private float GetTrainingMultiplier(NibiruMountFearComponent fear)
     {

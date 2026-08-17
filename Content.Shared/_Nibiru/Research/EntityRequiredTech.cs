@@ -6,10 +6,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Nibiru.Research
 {
     [DataDefinition]
-    public sealed partial class EntityRequiredTech 
+    public sealed partial class EntityRequiredTech
     {
 		[DataField("entity")]
-        public /*ProtoId<EntityPrototype>*/ EntProtoId EntityPrototypeId { get; private set; }
+        public EntProtoId EntityPrototypeId { get; private set; }
 
         public bool EntityValid(EntityUid uid)
         {

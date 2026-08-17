@@ -7,10 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Client._Nibiru.EntityInspector;
 
 /// <summary>
-/// Клиентская система инспектора сущностей.
-/// Добавляет иконку-кнопку в окно осмотра предмета (в тултип осмотра)
-/// для любой сущности, у которой хотя бы один компонент реализует
-/// <see cref="IInspectableComponent"/>.
+/// Rimworld like inspector system
 /// </summary>
 [UsedImplicitly]
 public sealed partial class EntityInspectorSystem : EntitySystem
@@ -19,7 +16,6 @@ public sealed partial class EntityInspectorSystem : EntitySystem
     [Dependency] private IEntityManager        _entityManager = default!;
     [Dependency] private Robust.Client.Player.IPlayerManager _playerManager = default!;
 
-    /// <summary>Переиспользуемое окно инспектора.</summary>
     private EntityInspectorWindow? _window;
 
     public override void Initialize()
@@ -28,9 +24,7 @@ public sealed partial class EntityInspectorSystem : EntitySystem
         SubscribeLocalEvent<GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Кнопка в тултипе осмотра
-    // ──────────────────────────────────────────────────────────
+    //  Eximine verb - button in examine tooltip
 
     private void OnGetExamineVerbs(GetVerbsEvent<ExamineVerb> args)
     {
@@ -39,8 +33,8 @@ public sealed partial class EntityInspectorSystem : EntitySystem
 
         args.Verbs.Add(new ExamineVerb
         {
-            ShowOnExamineTooltip = true,   // ← появляется как иконка в тултипе осмотра
-            HoverVerb            = false,  // ← кликабельная кнопка, не hover
+            ShowOnExamineTooltip = true,
+            HoverVerb            = false,
             ClientExclusive      = true,
             Priority             = 0,
 
@@ -52,17 +46,13 @@ public sealed partial class EntityInspectorSystem : EntitySystem
         });
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Открытие / обновление окна
-    // ──────────────────────────────────────────────────────────
-
     private void OpenInspector(EntityUid target)
     {
-        // Если окно уничтожено или ещё не создано — создаём заново
+        // If window is destroyed or not created yet - create new one
         if (_window is null || _window.Disposed)
             _window = _uiManager.CreateWindow<EntityInspectorWindow>();
 
-        // Если закрыто (крестиком) но не уничтожено — открываем снова
+        // If closed (by cross) but not destroyed - open again
         if (!_window.IsOpen)
             _window.OpenCentered();
 
@@ -85,20 +75,15 @@ public sealed partial class EntityInspectorSystem : EntitySystem
         _window.Populate(entityName, allComponents, isOwner);
     }
 
-    // ──────────────────────────────────────────────────────────
-    //  Вспомогательные (без рефлексии)
-    // ──────────────────────────────────────────────────────────
-
     private bool IsOwnedByPlayer(EntityUid target)
     {
         var player = _playerManager.LocalEntity;
         if (player == null) return false;
 
-        // Является ли игрок самим собой (смотрим на себя)
         if (target == player.Value)
             return true;
 
-        // Находится ли предмет в инвентаре/руках/внутри игрока (рекурсивный поиск родителя)
+        // Is the item in inventory/hands/inside the player (recursive search for the parent)
         var current = target;
         while (_entityManager.TryGetComponent<TransformComponent>(current, out var xform) && xform.ParentUid.Valid)
         {

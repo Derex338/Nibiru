@@ -13,7 +13,7 @@ public sealed partial class FactionVisualsSystem : EntitySystem
     [Dependency] private TextureGenerationSystem _texGen = default!;
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    
+
     private FactionIconOverlay? _overlay;
 
     public override void Initialize()
@@ -58,7 +58,7 @@ public sealed partial class FactionVisualsSystem : EntitySystem
 
         if (component.LogoPixels == null || component.LogoPixels.Count != 16 * 16)
         {
-            // Логотипа нет — показываем фон в оригинальном/перекрашенном виде
+            // No logo - show the background in its original/recolored form
             if (sprite.LayerMapTryGet(FactionVisualLayers.Background, out var bgLayerOnly))
             {
                 sprite.LayerSetVisible(bgLayerOnly, true);
@@ -70,14 +70,14 @@ public sealed partial class FactionVisualsSystem : EntitySystem
             return;
         }
 
-        // Перекрашиваем фон
+        // Recolor background
         if (sprite.LayerMapTryGet(FactionVisualLayers.Background, out var bgLayer))
         {
             sprite.LayerSetVisible(bgLayer, true);
             sprite.LayerSetColor(bgLayer, component.LogoBackground);
         }
 
-        // Генерируем и применяем текстуру логотипа
+        // Generate and apply the logo texture
         if (sprite.LayerMapTryGet(FactionVisualLayers.Logo, out var logoLayer))
         {
             sprite.LayerSetVisible(logoLayer, true);

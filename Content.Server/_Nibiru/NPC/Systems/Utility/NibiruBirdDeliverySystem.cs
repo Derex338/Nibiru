@@ -30,7 +30,6 @@ public sealed partial class NibiruBirdDeliverySystem : EntitySystem
 
     private void OnPostInteract(EntityUid uid, NibiruPigeonPostComponent component, InteractHandEvent args)
     {
-        // Если игрок ведет птицу, привязываем её к этому отделению
         if (TryComp<NibiruAnimalCommanderComponent>(args.User, out var commander) && commander.Animals != null)
         {
             foreach (var animal in commander.Animals)
@@ -81,17 +80,16 @@ public sealed partial class NibiruBirdDeliverySystem : EntitySystem
         if (!Exists(postUid))
             return;
 
-        // Птица улетает (исчезает и телепортируется через время)
         _popup.PopupEntity(Loc.GetString("nibiru-bird-delivery-depart"), uid);
 
         var targetPos = _transform.GetMapCoordinates(postUid);
 
-        // Логика полета: телепортация через время (например, 1 сек на 10 метров)
+        // Flight logic: teleportation through time (for example, 1 sec per 10 meters)
         var currentPos = _transform.GetMapCoordinates(uid);
         var dist = (targetPos.Position - currentPos.Position).Length();
         var delay = Math.Clamp(dist * 0.1f, 2f, 30f);
 
-        // Временно скрываем птицу в голубятне назначения
+        // Temporarily hide the bird in the destination pigeon coop
         var containerSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<Robust.Server.Containers.ContainerSystem>();
         var container = containerSystem.EnsureContainer<Robust.Shared.Containers.Container>(postUid, "bird_delivery_cage");
         containerSystem.Insert(uid, container);
@@ -125,6 +123,5 @@ public sealed partial class NibiruBirdDeliverySystem : EntitySystem
 
         component.PostName = args.Name;
         _metaData.SetEntityName(uid, args.Name);
-        //_popup.PopupEntity(Loc.GetString("nibiru-pigeon-post-renamed", ("name", args.Name)), uid);
     }
 }

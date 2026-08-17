@@ -7,27 +7,27 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Construction.Conditions;
 
 /// <summary>
-///   Условие для постройки предмета только на верстаке с определённым ID.
+///   Condition for construction of an item only on a workbench with a specific ID.
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
 public sealed partial class WorkbenchCondition : IConstructionCondition
 {
     /// <summary>
-    /// ID прототипа верстака, на котором можно построить предмет.
-    /// Если не указан, подойдёт любой верстак.
+    /// Prototype ID of the workbench on which the item can be built.
+    /// If not specified, any workbench will work.
     /// </summary>
     [DataField("workbench")]
     public ProtoId<EntityPrototype>? Workbench;
 
     /// <summary>
-    /// Иконка для отображения в гайде постройки.
+    /// Icon for display in construction guide.
     /// </summary>
     [DataField("guideIcon")]
     public SpriteSpecifier? GuideIcon;
 
     /// <summary>
-    /// Текст для отображения в гайде постройки.
+    /// Text for display in construction guide.
     /// </summary>
     [DataField("guideText")]
     public string GuideText = "construction-step-condition-workbench";
@@ -37,18 +37,18 @@ public sealed partial class WorkbenchCondition : IConstructionCondition
         var entManager = IoCManager.Resolve<IEntityManager>();
         var lookupSystem = entManager.System<EntityLookupSystem>();
 
-        // Получаем все сущности на этой позиции
+        // Get all entities at this position
         foreach (var entity in lookupSystem.GetEntitiesIntersecting(location, LookupFlags.Static | LookupFlags.Approximate))
         {
-            // Проверяем наличие компонента верстака
+            // Check for workbench component
             if (!entManager.HasComponent<WorkbenchComponent>(entity))
                 continue;
 
-            // Если workbench не указан, подходит любой верстак
+            // If workbench is not specified, any workbench will work
             if (Workbench == null)
                 return true;
 
-            // Проверяем совпадение ID прототипа
+            // Check for prototype ID match
             if (entManager.TryGetComponent<MetaDataComponent>(entity, out var meta) &&
                 meta.EntityPrototype != null &&
                 meta.EntityPrototype.ID == Workbench)

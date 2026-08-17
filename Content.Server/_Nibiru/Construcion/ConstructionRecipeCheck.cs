@@ -49,8 +49,6 @@ public sealed partial class ConstructionRecipeCheck : EntitySystem
         if (!TryComp<FactionComponent>(entity, out var comp))
             return;
 
-        // comp.StaticPacks.Add(new ProtoId<ConstructionPackPrototype>("FactionBase"));
-
         List<ProtoId<ConstructionPrototype>> crafts = GetAvailableRecipes(entity, comp, comp.StaticPacks);
 
         RaiseNetworkEvent(new ConstructionCrafts(GetNetEntity(entity), crafts), args.SenderSession);

@@ -5,8 +5,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.NPC.Commands;
 
 /// <summary>
-/// Способности, специфичные для конкретного вида животного.
-/// Одно животное может иметь несколько способностей.
+/// Animal-specific abilities.
+/// One animal can have multiple abilities.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruAnimalAbilityComponent : Component
@@ -14,89 +14,89 @@ public sealed partial class NibiruAnimalAbilityComponent : Component
     #region Sounds
 
     /// <summary>
-    /// Звук рычания/предупреждения при охране.
+    /// Sound of growling/warning during guarding.
     /// </summary>
     [DataField]
     public SoundSpecifier? GrowlSound;
 
     #endregion
     /// <summary>
-    /// Список доступных способностей данного животного.
+    /// List of available abilities for this animal.
     /// </summary>
     [DataField, ViewVariables]
     public HashSet<AnimalAbilityType> Abilities = new();
 
     /// <summary>
-    /// Радиус охраны (для Guard-способности). Рычит при приближении чужаков.
+    /// Guard radius (for Guard ability). Growls when strangers approach.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float GuardRadius = 5f;
 
     /// <summary>
-    /// Радиус поиска предметов (для Search-способности собак).
+    /// Search radius (for Search ability).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float SearchRadius = 15f;
 
     /// <summary>
-    /// Максимальная дальность доставки для птиц.
+    /// Max delivery range for birds.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float DeliveryRange = 50f;
 
     /// <summary>
-    /// Может ли животное нести предмет (для доставки писем, переноски добычи).
+    /// Can the animal carry an item (for delivering mail, carrying prey).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool CanCarryItem;
 
     /// <summary>
-    /// Текущий предмет, который несёт животное.
+    /// Current item carried by the animal.
     /// </summary>
     [ViewVariables]
     public EntityUid? CarriedItem;
 
     /// <summary>
-    /// Кулдаун способностей в секундах.
+    /// Ability cooldown in seconds.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float AbilityCooldown = 30f;
 
     /// <summary>
-    /// Таймер текущего кулдауна.
+    /// Current cooldown timer.
     /// </summary>
     [ViewVariables]
     public float CooldownAccumulator;
 }
 
 /// <summary>
-/// Типы способностей животных.
+/// Animal ability types.
 /// </summary>
 [Serializable, NetSerializable]
 public enum AnimalAbilityType : byte
 {
     /// <summary>
-    /// Охрана: рычит и предупреждает при приближении чужаков.
+    /// Guard: growls and warns when strangers approach.
     /// </summary>
     Guard,
 
     /// <summary>
-    /// Поиск: выслеживает предметы или существ по запаху.
+    /// Search: tracks items or creatures by scent.
     /// </summary>
     Search,
 
     /// <summary>
-    /// Доставка: птицы переносят письма/предметы на расстояние.
+    /// Delivery: birds carry mail/items over distance.
     /// </summary>
     Deliver,
 
     /// <summary>
-    /// Охота на вредителей: кошки ловят мышей и тараканов.
+    /// Pest control: cats catch mice and cockroaches.
     /// </summary>
     PestControl,
 
     /// <summary>
-    /// Вьючное животное: может нести груз.
+    /// Pack animal: can carry cargo.
     /// </summary>
     PackAnimal
 }

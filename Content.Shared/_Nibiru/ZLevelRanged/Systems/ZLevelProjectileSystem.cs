@@ -14,8 +14,8 @@ using System.Numerics;
 namespace Content.Shared._Nibiru.ZLevelRanged.Systems;
 
 /// <summary>
-/// Обрабатывает снаряды способные перемещаться между Z-уровнями.
-/// При достижении 70% пути проверяет наличие тайла внизу и телепортирует снаряд на уровень ниже если его нет.
+/// Manages projectiles capable of moving between Z-levels.
+/// When reaching 70% of the path, checks for the presence of a tile below and teleports the projectile to the level below if it's missing.
 /// </summary>
 public sealed partial class ZLevelProjectileSystem : EntitySystem
 {
@@ -46,15 +46,15 @@ public sealed partial class ZLevelProjectileSystem : EntitySystem
 
     private void OnAmmoShot(EntityUid uid, ZLevelCapableWeaponComponent component, AmmoShotEvent args)
     {
-        // Пропускаем навесную стрельбу - она обрабатывается отдельно
+        // Skip lobbed shots - they are handled separately
         if (args.Lobbed)
             return;
 
-        // Проверяем есть ли у оружия компонент ZLevelCapable
+        // Check if the weapon has ZLevelCapable component
         if (!TryComp<ZLevelCapableWeaponComponent>(uid, out var zLevelWeapon))
             return;
 
-        // Добавляем компонент ко всем выпущенным снарядам
+        // Add component to all fired projectiles
         foreach (var projectile in args.FiredProjectiles)
         {
             if (!_projectileQuery.HasComp(projectile))
@@ -75,9 +75,9 @@ public sealed partial class ZLevelProjectileSystem : EntitySystem
             comp.FallChecked = false;
             comp.TimeAlive = 0f;
 
-            // Вычисляем примерное время полета (для снарядов обычно 1-3 секунды)
-            // Это используется для определения момента проверки падения
-            comp.EstimatedFlightTime = comp.InitialSpeed > 0 ? 20f / comp.InitialSpeed : 1.5f; // 20 метров - средняя дальность
+            // Calculate estimated flight time (usually 1-3 seconds for projectiles)
+            // This is used to determine when to check for falling
+            comp.EstimatedFlightTime = comp.InitialSpeed > 0 ? 20f / comp.InitialSpeed : 1.5f; // 20 meters - average range
             comp.EstimatedFlightTime = Math.Clamp(comp.EstimatedFlightTime, 0.5f, 3.0f);
 
             Dirty(projectile, comp);
@@ -88,49 +88,45 @@ public sealed partial class ZLevelProjectileSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // Оптимизация: обрабатываем только снаряды с нашим компонентом
         var query = EntityQueryEnumerator<ZLevelProjectileComponent, TransformComponent, PhysicsComponent, ProjectileComponent>();
         while (query.MoveNext(out var uid, out var zLevel, out var xform, out var physics, out var projectile))
         {
-            // Инкрементируем время жизни
             zLevel.TimeAlive += frameTime;
 
-            // Пропускаем если уже проверили падение
             if (zLevel.FallChecked)
                 continue;
 
-            // Пропускаем если снаряд не может падать
             if (!zLevel.CanFallThrough)
                 continue;
 
-            // Пропускаем если нет начальной позиции
+            // Skip if no start position
             if (zLevel.StartPosition == null)
                 continue;
 
-            // Проверяем достигли ли 70% времени полета
+            // Check if 70% of flight time reached
             var flightProgress = zLevel.TimeAlive / zLevel.EstimatedFlightTime;
             if (flightProgress < zLevel.FallCheckDistance)
                 continue;
 
-            // Отмечаем что проверка выполнена
+            // Mark check as completed
             zLevel.FallChecked = true;
 
-            // Получаем текущую позицию
+            // Get current position
             var currentPos = _transform.GetWorldPosition(xform);
 
-            // Проверяем есть ли тайл внизу
+            // Check for tile below
             if (HasTileBelow(currentPos, xform.MapID, out var mapBelow))
             {
                 Dirty(uid, zLevel);
                 continue;
             }
 
-            // Тайла нет - телепортируем снаряд на уровень ниже
+            // No tile - teleport projectile to level below
             if (mapBelow != null)
             {
                 TransferProjectileDown(uid, currentPos, mapBelow.Value, physics, xform);
 
-                // Сбрасываем проверку чтобы на новом уровне тоже проверить (рекурсивное падение)
+                // Reset check to allow checking on the new level (recursive falling)
                 zLevel.FallChecked = false;
                 zLevel.StartPosition = currentPos;
                 zLevel.TimeAlive = 0f;
@@ -141,33 +137,33 @@ public sealed partial class ZLevelProjectileSystem : EntitySystem
     }
 
     /// <summary>
-    /// Проверяет есть ли тайл под снарядом на текущем уровне.
-    /// Если тайла нет - возвращает false и MapId уровня ниже куда нужно упасть.
+    /// Checks if there is a tile below the projectile on the current level.
+    /// If no tile is found - returns false and the MapId of the level below to fall to.
     /// </summary>
     private bool HasTileBelow(Vector2 worldPos, MapId currentMap, out MapId? mapBelow)
     {
         mapBelow = null;
 
-        // Находим грид на текущем уровне
+        // Find grid on current level
         var currentMapCoords = new MapCoordinates(worldPos, currentMap);
         if (!_mapManager.TryFindGridAt(currentMapCoords, out var currentGrid, out var currentGridComp))
-            return true; // Нет грида - не падаем (снаряд в космосе)
+            return true; // No grid - don't fall (projectile in space)
 
-        // Проверяем есть ли Z-level компонент
+        // Check for Z-level component
         if (!_zMapQuery.TryComp(currentGrid, out var zMapComp))
-            return true; // Не Z-level карта - не падаем
+            return true; // Not Z-level map - don't fall
 
-        // Проверяем есть ли тайл ПОД снарядом на ТЕКУЩЕМ уровне
+        // Check if there is a tile BELOW the projectile on the CURRENT level
         var tileIndices = _map.TileIndicesFor(currentGrid, currentGridComp, currentMapCoords);
         if (!_map.TryGetTileRef(currentGrid, currentGridComp, tileIndices, out var currentTileRef))
-            return true; // Не удалось получить тайл - не падаем
+            return true; // Failed to get tile - don't fall
 
-        // Если тайл НЕ пустой - не падаем, есть пол
+        // If tile is NOT empty - don't fall, there is a floor
         if (!currentTileRef.Tile.IsEmpty)
             return true;
 
-        // Тайл пустой - снаряд должен упасть!
-        // Ищем уровень ниже с непустым тайлом
+        // Tile is empty - projectile should fall!
+        // Search for level below with non-empty tile
         var currentLevel = (currentGrid, zMapComp);
         while (_zLevels.TryMapDown(currentLevel, out var mapBelowEntity))
         {
@@ -177,48 +173,48 @@ public sealed partial class ZLevelProjectileSystem : EntitySystem
             var targetMapId = mapBelowXform.MapID;
             var belowMapCoords = new MapCoordinates(worldPos, targetMapId);
 
-            // Проверяем есть ли грид на уровне ниже
+            // Check if there is grid on level below
             if (_mapManager.TryFindGridAt(belowMapCoords, out var belowGrid, out var belowGridComp))
             {
                 var belowTileIndices = _map.TileIndicesFor(belowGrid, belowGridComp, belowMapCoords);
                 if (_map.TryGetTileRef(belowGrid, belowGridComp, belowTileIndices, out var belowTileRef) &&
                     !belowTileRef.Tile.IsEmpty)
                 {
-                    // Нашли непустой тайл на уровне ниже - туда и упадём
+                    // Found non-empty tile on level below - fall there
                     mapBelow = targetMapId;
                     return false;
                 }
             }
 
-            // Продолжаем искать дальше вниз
+            // Continue searching down
             if (_zMapQuery.TryComp(belowGrid, out var belowZMapComp))
                 currentLevel = (belowGrid, belowZMapComp);
             else
                 break;
         }
 
-        // Не нашли твёрдый уровень ниже - не падаем (бездна)
+        // Couldn't find a solid level below - don't fall (void)
         return true;
     }
 
     /// <summary>
-    /// Телепортирует снаряд на уровень ниже с сохранением скорости
+    /// Teleports the projectile to the level below while maintaining velocity
     /// </summary>
     private void TransferProjectileDown(EntityUid projectile, Vector2 worldPos, MapId targetMap, PhysicsComponent physics, TransformComponent xform)
     {
-        // Сохраняем текущую скорость
+        // Save current velocity
         var velocity = physics.LinearVelocity;
         var angularVelocity = physics.AngularVelocity;
 
-        // Телепортируем на новый уровень
+        // Teleport to new level
         var newMapCoords = new MapCoordinates(worldPos, targetMap);
         _transform.SetMapCoordinates(projectile, newMapCoords);
 
-        // Восстанавливаем скорость (она могла сброситься при телепортации)
+        // Restore velocity (it could be reset during teleportation)
         _physics.SetLinearVelocity(projectile, velocity, body: physics);
         _physics.SetAngularVelocity(projectile, angularVelocity, body: physics);
 
-        // Обновляем компонент чтобы отслеживать новую позицию
+        // Update component to track new position
         if (TryComp<ZLevelProjectileComponent>(projectile, out var zLevel))
         {
             zLevel.OriginalMapId = targetMap;

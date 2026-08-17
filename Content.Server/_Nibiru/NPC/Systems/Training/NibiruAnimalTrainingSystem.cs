@@ -30,7 +30,7 @@ public sealed partial class NibiruAnimalTrainingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || !component.IsTamed)
             return;
 
-        // Только хозяин может открыть окно тренировки
+        // Only the owner can open the training window
         if (component.OwnerUid != args.User)
             return;
 
@@ -114,7 +114,7 @@ public sealed partial class NibiruAnimalTrainingSystem : EntitySystem
             return;
         }
 
-        // Требования к доверию для команд
+        // Trust requirements for commands
         float requiredTrust = args.Command switch
         {
             NibiruAnimalCommand.Follow => 50f,
@@ -133,7 +133,7 @@ public sealed partial class NibiruAnimalTrainingSystem : EntitySystem
         }
 
         component.LearnedCommands.Add(args.Command);
-        component.TrustLevel -= 30f; // Training commands "spends" trust
+        component.TrustLevel -= 30f;
 
         RaiseLocalEvent(component.OwnerUid.Value, new NibiruAnimalCommandLearnedEvent(uid, args.Command));
 

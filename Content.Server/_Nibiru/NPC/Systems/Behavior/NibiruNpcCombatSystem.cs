@@ -21,24 +21,24 @@ using System.Numerics;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Система боевого поведения животных Нибиру.
+/// Nibiru NPC combat behavior system.
 ///
-/// Реализует три стиля боя:
+/// Implements three combat styles:
 ///
-/// <b>Default</b> — классический ближний бой с коротким отступом после удара.
-/// Животное преследует цель, атакует мелее, отходит назад через steering,
-/// выжидает кулдаун и повторяет. Используется для большинства животных.
+/// <b>Default</b> — classic melee combat with a short retreat after hitting.
+/// The animal pursues the target, attacks with melee, retreats using steering,
+/// waits for cooldown and repeats. Used for most animals.
 ///
 /// <b>HitAndLeap</b> — "bite and leap back" tactic (for wolves and similar predators).
 /// The animal approaches the target, bites, then receives a physics impulse strictly
 /// backward relative to its body rotation — without using NPC navigation.
 /// After landing it pauses and then goes back on the attack.
 ///
-/// <b>Charge</b> — атака с разбега (для рогатых: козы, коровы).
-/// Животное входит в диапазон разбега, полностью останавливается, поворачивается
-/// к цели, начинает трястись (WindUp), затем летит по прямой через физический
-/// импульс, нанося урон и отбрасывая всё на пути. Остановка при столкновении
-/// со стеной или по истечении максимального времени разбега.
+/// <b>Charge</b> — Charge attack (for horned animals: goats, cows).
+/// The animal enters the charge range, fully stops, turns
+/// to the target, starts shaking (WindUp), then flies in a straight line through physical
+/// impulse, dealing damage and knocking back everything in its path. Stops on collision
+/// with a wall or when the maximum charge time is reached.
 /// </summary>
 public sealed partial class NibiruNpcCombatSystem : EntitySystem
 {
@@ -59,13 +59,11 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         SubscribeLocalEvent<NibiruNpcChargeAttackComponent, StartCollideEvent>(OnChargeCollide);
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  Точка входа
-    // ════════════════════════════════════════════════════════════════════════
+    //  Entry point
 
     /// <summary>
-    /// Вызывается из <see cref="NibiruNpcBehaviorSystem"/> на каждом кадре
-    /// для состояний Attacking и Fleeing.
+    /// Called by <see cref="NibiruNpcBehaviorSystem"/> on each frame
+    /// for Attacking and Fleeing states.
     /// </summary>
     public void ProcessCombat(
         EntityUid uid,
@@ -86,10 +84,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         }
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  Состояние Attacking — диспетчер стилей
-    // ════════════════════════════════════════════════════════════════════════
-
+    //  Attacking — styles dispatcher
     private void ProcessAttacking(
         EntityUid uid,
         NibiruNpcStateMachineComponent state,
@@ -97,7 +92,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         TransformComponent xform,
         float frameTime)
     {
-        // ── Проверка цели ─────────────────────────────────────────────────
+        // Target validation
         if (!ValidateTarget(uid, state, out var target, out var targetXform))
         {
             ResetToReturning(uid, state, combat);
@@ -110,7 +105,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
             return;
         }
 
-        // ── Диспетчер по стилю ────────────────────────────────────────────
+        //  Styles dispatcher
         switch (combat.CombatStyle)
         {
             case NibiruCombatStyle.HitAndRun
@@ -124,14 +119,12 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         }
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  Default — классическая атака с коротким отступом
-    // ════════════════════════════════════════════════════════════════════════
+    //  Default — classic melee combat with a short retreat
 
     /// <summary>
-    /// Обычный стиль: подошёл → ударил → отступил → подождал → повторил.
-    /// Отступ осуществляется через NPC steering (безопасно, без физических
-    /// артефактов). Подходит для крупных медленных животных и базовых противников.
+    /// Classic style: approach → strike → retreat → wait → repeat.
+    /// Retreat is handled via NPC steering (safe, no physics artifacts).
+    /// Suitable for large slow animals and basic enemies.
     /// </summary>
     private void ProcessDefault(
         EntityUid uid,
@@ -143,36 +136,36 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         float distance,
         float frameTime)
     {
-        // Фаза отступа
+        // Retreat phase
         if (combat.IsRetreating)
         {
             combat.RetreatTimer -= frameTime;
             if (combat.RetreatTimer <= 0f)
             {
                 combat.IsRetreating = false;
-                // Сбрасываем steering — NPC сам перейдёт к преследованию
+                // Reset steering — NPC will resume chasing
             }
             return;
         }
 
-        // Слишком далеко — продолжаем преследование
+        // Too far — continue chasing
         if (distance > 2.0f)
         {
             state.CurrentState = NibiruNpcState.Chasing;
             return;
         }
 
-        // Включаем боевой режим
+        // Activate combat mode
         if (TryComp<CombatModeComponent>(uid, out var combatMode) && !combatMode.IsInCombatMode)
             _combat.SetInCombatMode(uid, true, combatMode);
 
-        // Атака
+        // Attack
         if (_melee.TryGetWeapon(uid, out var weaponUid, out var weapon) &&
             _timing.CurTime >= weapon.NextAttack)
         {
             _melee.AttemptLightAttack(uid, weaponUid, weapon, target);
 
-            // Начать отступ назад от цели
+            // Begin retreat from the target
             var myPos = _xform.GetWorldPosition(xform);
             var targetPos = _xform.GetWorldPosition(targetXform);
             var awayDir = (myPos - targetPos);
@@ -191,23 +184,21 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         }
         else
         {
-            // Ещё не время атаковать — подходим к цели
+            // Not time to attack yet - approach the target
             _steering.Register(uid, new EntityCoordinates(target, Vector2.Zero));
         }
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  HitAndLeap — укусил и отпрыгнул (волки)
-    // ════════════════════════════════════════════════════════════════════════
+    //  HitAndLeap - bite and leap back
 
     /// <summary>
-    /// Волчья тактика — укусил и резко отпрыгнул назад через физику.
+    /// Wolf tactics - bite and leap back using physics.
     ///
-    /// Фазы:
-    ///   Idle    → подходит через steering, переход в Biting при достижении дальности атаки
-    ///   Biting  → атакует мелее, фиксирует вектор прыжка, немедленно → Leaping
-    ///   Leaping → физический импульс назад (SetLinearVelocity), steering отключён
-    ///   Cooldown→ стоит WaitDuration секунд, затем снова Idle
+    /// Phases:
+    ///   Idle    → approaches through steering, transition to Biting when attack range is reached
+    ///   Biting  → attacks with melee, fixes leap vector, immediately → Leaping
+    ///   Leaping → physics impulse backward (SetLinearVelocity), steering disabled
+    ///   Cooldown→ waits WaitDuration seconds, then returns to Idle
     /// </summary>
     private void ProcessHitAndLeap(
         EntityUid uid,
@@ -222,23 +213,23 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
     {
         switch (leap.Phase)
         {
-            // ── Idle: двигаемся к цели через steering ─────────────────────
+            //  Idle: move to target through steering
             case LeapPhase.Idle:
             {
-                // Если цель убежала слишком далеко — возвращаемся
+                // If target has run too far - return
                 if (distance > 15f)
                 {
                     ResetToReturning(uid, state, combat);
                     return;
                 }
 
-                // Включаем боевой режим для видимости
+                // Activate combat mode for visibility
                 if (TryComp<CombatModeComponent>(uid, out var cm) && !cm.IsInCombatMode)
                     _combat.SetInCombatMode(uid, true, cm);
 
                 if (distance <= leap.AttackRange)
                 {
-                    // Дошли — кусаем
+                    // Reached - bite
                     _steering.Unregister(uid);
                     leap.Phase = LeapPhase.Biting;
                 }
@@ -249,7 +240,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
                 break;
             }
 
-            // ── Biting: выполняем атаку, затем сразу прыжок ──────────────
+            //  Biting: perform attack, then immediately leap
             case LeapPhase.Biting:
             {
                 if (TryComp<CombatModeComponent>(uid, out var cm) && !cm.IsInCombatMode)
@@ -267,32 +258,32 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
 
                     // Direction "backward from target" = normalized vector (me → target), inverted
                     leap.LeapDirection = toTarget.LengthSquared() > 0.01f
-                        ? -Vector2.Normalize(toTarget)   // точно назад от цели
+                        ? -Vector2.Normalize(toTarget)   // exactly back from target
                         : -Vector2.UnitX;
 
-                    // Вычисляем длительность фазы прыжка из расстояния и скорости
+                    // Calculate the duration of the leap phase from distance and speed
                     leap.Timer = leap.LeapDistance / leap.LeapSpeed;
                     leap.Phase = LeapPhase.Leaping;
 
-                    // Немедленно применяем импульс
+                    // Immediately apply impulse
                     if (TryComp<PhysicsComponent>(uid, out var phys))
                         _physics.SetLinearVelocity(uid, leap.LeapDirection * leap.LeapSpeed, body: phys);
                 }
                 break;
             }
 
-            // ── Leaping: летим назад через физику ─────────────────────────
+            //  Leaping: flying backward through physics
             case LeapPhase.Leaping:
             {
                 leap.Timer -= frameTime;
 
-                // Поддерживаем скорость каждый тик (физика может её рассеивать)
+                // Maintain speed every tick (physics can dissipate it)
                 if (TryComp<PhysicsComponent>(uid, out var phys))
                     _physics.SetLinearVelocity(uid, leap.LeapDirection * leap.LeapSpeed, body: phys);
 
                 if (leap.Timer <= 0f)
                 {
-                    // Приземлились — тормозим
+                    // Landed — brake
                     if (TryComp<PhysicsComponent>(uid, out var physStop))
                         _physics.SetLinearVelocity(uid, Vector2.Zero, body: physStop);
 
@@ -302,7 +293,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
                 break;
             }
 
-            // ── Cooldown: ждём перед следующей атакой ─────────────────────
+            //  Cooldown: wait before next attack
             case LeapPhase.Cooldown:
             {
                 leap.Timer -= frameTime;
@@ -310,7 +301,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
                 if (leap.Timer <= 0f)
                 {
                     leap.Phase = LeapPhase.Idle;
-                    // Даём стиирингу снова вести к цели
+                    // Let steering lead to the target again
                     _steering.Register(uid, new EntityCoordinates(target, Vector2.Zero));
                 }
                 break;
@@ -318,18 +309,16 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         }
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  Charge — разбег рогатых
-    // ════════════════════════════════════════════════════════════════════════
+    //  Charge — charge of the horned
 
     /// <summary>
-    /// Вызывается из <see cref="NibiruNpcBehaviorSystem"/> в состоянии Charging.
+    /// Called from <see cref="NibiruNpcBehaviorSystem"/> in the Charging state.
     ///
-    /// Фазы:
-    ///   Idle     → ждёт в ProcessChasing; переход в WindUp через BehaviorSystem
-    ///   WindUp   → остановился, трясётся, ждёт ShakeDuration
-    ///   Charging → физический разбег по прямой, урон через коллизии
-    ///   Cooldown → отдыхает CooldownDuration, затем возврат в Chasing
+    /// Phases:
+    ///   Idle     → waits in ProcessChasing; transition to WindUp through BehaviorSystem
+    ///   WindUp   → stops, shakes, waits ShakeDuration
+    ///   Charging → physical run in a straight line, damage through collisions
+    ///   Cooldown → rests CooldownDuration, then returns to Chasing
     /// </summary>
     public void ProcessCharging(
         EntityUid uid,
@@ -341,44 +330,44 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
     {
         switch (charge.Phase)
         {
-            // ── WindUp: тряска, поворот к цели ───────────────────────────
+            //  WindUp: shaking, turning to target
             case ChargePhase.WindUp:
             {
                 charge.Timer -= frameTime;
 
                 if (charge.Timer <= 0f)
                 {
-                    // Убираем тряску — разбег начат
+                    // Remove shaking — charge started
                     RemCompDeferred<JitteringComponent>(uid);
 
                     charge.Timer = charge.MaxDuration;
                     charge.Phase = ChargePhase.Charging;
 
-                    // Немедленно запускаем физику
+                    // Immediately apply impulse
                     if (TryComp<PhysicsComponent>(uid, out var phys))
                         _physics.SetLinearVelocity(uid, charge.Direction * charge.Speed, body: phys);
                 }
                 break;
             }
 
-            // ── Charging: летим по прямой ─────────────────────────────────
+            //  Charging: flying in a straight line
             case ChargePhase.Charging:
             {
                 charge.Timer -= frameTime;
 
-                // Поддерживаем скорость каждый тик
+                // Maintain speed every tick
                 if (TryComp<PhysicsComponent>(uid, out var phys))
                     _physics.SetLinearVelocity(uid, charge.Direction * charge.Speed, body: phys);
 
                 if (charge.Timer <= 0f)
                 {
-                    // Время истекло — останавливаемся
+                    // Time expired - stop
                     StopCharge(uid, state, charge);
                 }
                 break;
             }
 
-            // ── Cooldown: отдых после разбега ─────────────────────────────
+            //  Cooldown: rest after charge
             case ChargePhase.Cooldown:
             {
                 charge.Timer -= frameTime;
@@ -388,7 +377,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
                     charge.Phase = ChargePhase.Idle;
                     state.CurrentState = NibiruNpcState.Chasing;
 
-                    // Включаем навигацию обратно
+                    // Enable navigation back to target
                     if (state.CurrentTarget != null)
                         _steering.Register(uid, new EntityCoordinates(state.CurrentTarget.Value, Vector2.Zero));
                 }
@@ -398,8 +387,8 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
     }
 
     /// <summary>
-    /// Инициирует WindUp для разбега. Вызывается из BehaviorSystem когда цель
-    /// попадает в нужный диапазон дистанции.
+    /// Initiates WindUp for the charge. Called from BehaviorSystem when the target
+    /// enters the required distance range.
     /// </summary>
     public void StartChargeWindUp(
         EntityUid uid,
@@ -411,7 +400,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         if (!TryComp(target, out TransformComponent? targetXform))
             return;
 
-        // Фиксируем направление разбега
+        // Fix the charge direction
         var myPos = _xform.GetWorldPosition(xform);
         var targetPos = _xform.GetWorldPosition(targetXform);
         var dir = targetPos - myPos;
@@ -419,18 +408,18 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
             ? Vector2.Normalize(dir)
             : Vector2.UnitX;
 
-        // Поворачиваем к цели
+        // Rotate to face target
         _xform.SetLocalRotation(uid, charge.Direction.ToAngle());
 
-        // Останавливаемся и отключаем навигацию
+        // Stop and disable navigation
         _steering.Unregister(uid);
         if (TryComp<PhysicsComponent>(uid, out var phys))
             _physics.SetLinearVelocity(uid, Vector2.Zero, body: phys);
 
-        // Очищаем список ранее задетых сущностей
+        // Clear list of previously hit entities
         charge.HitEntities.Clear();
 
-        // Запускаем тряску
+        // Start shaking
         _jitter.AddJitter(uid, 10f, 40f);
 
         charge.Timer = charge.ShakeDuration;
@@ -439,35 +428,29 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
     }
 
     /// <summary>
-    /// Останавливает разбег и переводит животное в Cooldown.
+    /// Stops the charge and transitions the animal to Cooldown.
     /// </summary>
     public void StopCharge(
         EntityUid uid,
         NibiruNpcStateMachineComponent state,
         NibiruNpcChargeAttackComponent charge)
     {
-        // Тормозим физику
         if (TryComp<PhysicsComponent>(uid, out var phys))
             _physics.SetLinearVelocity(uid, Vector2.Zero, body: phys);
 
-        // На всякий случай убираем тряску если она осталась
+        // Remove shaking if it remained
         RemCompDeferred<JitteringComponent>(uid);
 
         charge.Timer = charge.CooldownDuration;
         charge.Phase = ChargePhase.Cooldown;
-        state.CurrentState = NibiruNpcState.Charging; // остаёмся в Charging, обрабатываем Cooldown
+        state.CurrentState = NibiruNpcState.Charging;
     }
-
-    // ════════════════════════════════════════════════════════════════════════
-    //  Коллизия во время разбега
-    // ════════════════════════════════════════════════════════════════════════
 
     private void OnChargeCollide(
         EntityUid uid,
         NibiruNpcChargeAttackComponent charge,
         ref StartCollideEvent args)
     {
-        // Обрабатываем только фазу активного разбега
         if (charge.Phase != ChargePhase.Charging)
             return;
 
@@ -475,7 +458,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         if (other == uid)
             return;
 
-        // ── Столкновение со статичным объектом (стена, дверь) ─────────────
+        //  Collision with a static object (wall, door)
         if (charge.StopOnWallCollision)
         {
             if (TryComp<PhysicsComponent>(other, out var otherPhys) &&
@@ -487,19 +470,19 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
             }
         }
 
-        // ── Столкновение с живой сущностью ───────────────────────────────
+        //  Collision with a living entity
         if (!_mobState.IsAlive(other))
             return;
 
-        // Каждая сущность получает урон только один раз за разбег
+        // Each entity receives damage only once per charge
         if (!charge.HitEntities.Add(other))
             return;
 
-        // Наносим урон
+        // Inflict damage
         if (charge.Damage != null)
             _damageable.TryChangeDamage(other, charge.Damage, true, origin: uid);
 
-        // Отбрасываем в направлении разбега
+        // Knockback in the direction of the charge
         var myPos = _xform.GetWorldPosition(uid);
         var otherPos = _xform.GetWorldPosition(other);
         var knockDir = (otherPos - myPos).LengthSquared() > 0.01f
@@ -509,9 +492,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         _throwing.TryThrow(other, knockDir * charge.KnockbackForce, 1f, uid);
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  Fleeing — бегство
-    // ════════════════════════════════════════════════════════════════════════
+    //  Fleeing
 
     private void ProcessFleeing(
         EntityUid uid,
@@ -562,13 +543,8 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         }
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    //  Вспомогательные методы
-    // ════════════════════════════════════════════════════════════════════════
-
     /// <summary>
-    /// Проверяет что цель ещё существует, жива и доступна.
-    /// Возвращает false если цель недействительна.
+    /// Validates that the target still exists, is alive, and is reachable.
     /// </summary>
     private bool ValidateTarget(
         EntityUid uid,
@@ -595,7 +571,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
     }
 
     /// <summary>
-    /// Сбрасывает боевое состояние и переводит NPC в Returning.
+    /// Resets combat state and transitions NPC to Returning.
     /// </summary>
     private void ResetToReturning(
         EntityUid uid,
@@ -607,7 +583,7 @@ public sealed partial class NibiruNpcCombatSystem : EntitySystem
         combat.IsRetreating = false;
         combat.RetreatTimer = 0f;
 
-        // Сброс фазы HitAndLeap если есть
+        // Reset HitAndLeap phase if exists
         if (TryComp<NibiruNpcHitAndRunAttackComponent>(uid, out var leap))
         {
             leap.Phase = LeapPhase.Idle;

@@ -61,7 +61,6 @@ public sealed partial class AttackTypePrototype : IPrototype
     /// <summary>
     /// Completely replaces weapon base damage with this set (types & values).
     /// If null, uses weapon's own damage (adjusted by BonusDamage and DamageMultiplier).
-    /// Example: тычок копья даёт Piercing, а не Slash.
     /// </summary>
     [DataField]
     public DamageSpecifier? DamageOverride;

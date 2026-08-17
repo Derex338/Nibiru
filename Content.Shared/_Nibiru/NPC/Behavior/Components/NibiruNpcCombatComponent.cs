@@ -3,10 +3,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Nibiru.NPC.Behavior.Components;
 
 /// <summary>
-/// Компонент боевого стиля НПС-животного.
-/// Определяет какую тактику использует животное в бою.
-/// Специфические параметры каждого стиля хранятся в отдельных компонентах:
-/// - Default: без дополнительных компонентов
+/// Specific parameters of each style are stored in separate components:
+/// - Default: no additional components
 /// - HitAndLeap: <see cref="NibiruNpcHitAndRunAttackComponent"/>
 /// - Charge: <see cref="NibiruNpcChargeAttackComponent"/>
 /// </summary>
@@ -14,35 +12,35 @@ namespace Content.Shared._Nibiru.NPC.Behavior.Components;
 public sealed partial class NibiruNpcCombatComponent : Component
 {
     /// <summary>
-    /// Боевой стиль данного животного.
+    /// Combat style of this animal.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public NibiruCombatStyle CombatStyle = NibiruCombatStyle.Default;
 
-    // ── Параметры стиля Default ───────────────────────────────────────────
+    // Default style parameters
 
     /// <summary>
-    /// Расстояние на которое животное отходит назад после удара (Default-стиль).
+    /// Distance the animal retreats after an attack (Default-style).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float PostAttackRetreatDistance = 1.5f;
 
     /// <summary>
-    /// Длительность паузы после отступа перед следующей атакой (Default-стиль).
+    /// Duration of the pause after retreating before the next attack (Default-style).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float PostAttackCooldown = 0.8f;
 
-    // ── Runtime-состояние (общее) ─────────────────────────────────────────
+    // Runtime-state (general)
 
     /// <summary>
-    /// Таймер кулдауна после атаки (используется в Default-стиле для паузы отступа).
+    /// Attack cooldown timer (used in Default-style for retreat pause).
     /// </summary>
     [ViewVariables]
     public float RetreatTimer;
 
     /// <summary>
-    /// True если сейчас выполняется фаза отступа (Default-стиль).
+    /// True if currently performing a retreat phase (Default-style).
     /// </summary>
     [ViewVariables]
     public bool IsRetreating;

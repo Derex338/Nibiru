@@ -1,4 +1,3 @@
-// Obsolete root using removed
 using Content.Shared._Nibiru.NPC.Behavior.Components;
 using Content.Shared._Nibiru.NPC.Training;
 using Content.Shared.Damage;
@@ -10,9 +9,9 @@ using Content.Shared._Nibiru.NPC.Behavior;
 namespace Content.Server._Nibiru.NPC.Systems.Behavior;
 
 /// <summary>
-/// Управляет настроением прирученных животных.
-/// Настроение убывает со временем, повышается при кормлении и поглаживании.
-/// При низком настроении животное может перестать слушаться или одичать.
+/// Manages the mood of tamed animals.
+/// Mood decreases over time, increases when fed and petted.
+/// If the mood is low, the animal may stop obeying or become wild.
 /// </summary>
 public sealed partial class NibiruAnimalMoodSystem : EntitySystem
 {
@@ -27,7 +26,7 @@ public sealed partial class NibiruAnimalMoodSystem : EntitySystem
     }
 
     /// <summary>
-    /// Поглаживание — взаимодействие пустой рукой.
+    /// Petting — interaction with an empty hand.
     /// </summary>
     private void OnPetted(EntityUid uid, NibiruAnimalMoodComponent component, InteractHandEvent args)
     {
@@ -37,7 +36,7 @@ public sealed partial class NibiruAnimalMoodSystem : EntitySystem
         if (!TryComp<NibiruTamableComponent>(uid, out var tamable) || !tamable.IsTamed)
             return;
 
-        // Только хозяин может гладить с положительным эффектом
+        // Only owner can pet with a positive effect
         if (tamable.OwnerUid != args.User)
             return;
 
@@ -54,7 +53,7 @@ public sealed partial class NibiruAnimalMoodSystem : EntitySystem
         if (!TryComp<NibiruTamableComponent>(uid, out var tamable) || !tamable.IsTamed)
             return;
 
-        // Удар от хозяина сильно снижает настроение
+        // Strike from owner reduces mood
         if (tamable.OwnerUid == args.Origin)
         {
             component.Mood = MathF.Max(0, component.Mood - component.MoodPenaltyOnHit);
@@ -72,11 +71,11 @@ public sealed partial class NibiruAnimalMoodSystem : EntitySystem
             if (!tamable.IsTamed)
                 continue;
 
-            // Плавное убывание настроения
+            // Smooth mood decrease
             mood.Mood = MathF.Max(0, mood.Mood - mood.MoodDecayRate * frameTime);
             UpdateMoodState(uid, mood);
 
-            // При одичании полностью сбрасываем приручение
+            // When wild, completely reset taming
             if (mood.MoodState == AnimalMoodState.Wild)
             {
                 tamable.IsTamed = false;
@@ -93,7 +92,7 @@ public sealed partial class NibiruAnimalMoodSystem : EntitySystem
     }
 
     /// <summary>
-    /// Обновляет качественное состояние настроения на основе числового значения.
+    /// Updates the qualitative state of mood based on a numerical value.
     /// </summary>
     private void UpdateMoodState(EntityUid uid, NibiruAnimalMoodComponent mood)
     {
@@ -110,7 +109,7 @@ public sealed partial class NibiruAnimalMoodSystem : EntitySystem
     }
 
     /// <summary>
-    /// Повышает настроение при кормлении (вызывается из NibiruTamingSystem).
+    /// Increases mood when fed (called from NibiruTamingSystem).
     /// </summary>
     public void OnFed(EntityUid uid, NibiruAnimalMoodComponent? mood = null)
     {

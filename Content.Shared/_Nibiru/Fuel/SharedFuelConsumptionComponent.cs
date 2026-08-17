@@ -33,85 +33,85 @@ public abstract partial class SharedFuelConsumptionComponent : Component
     public float MaxFuelAmount = 500f;
 
     /// <summary>
-    /// Целевая температура горения топлива (°C)
+    /// Final temperature (°C)
     /// </summary>
     [DataField]
     public float TargetBurnTemperature = 800f;
 
     /// <summary>
-    /// Минимальная температура для работы (°C)
+    /// Minimum temperature to work (°C)
     /// </summary>
     [DataField]
     public float MinOperatingTemperature = 200f;
 
     /// <summary>
-    /// Скорость нагрева (°C/сек)
+    /// Heating rate (°C/sec)
     /// </summary>
     [DataField]
     public float HeatingRate = 100f;
 
     /// <summary>
-    /// Скорость остывания (°C/сек)
+    /// Cooling rate (°C/sec)
     /// </summary>
     [DataField]
     public float CoolingRate = 50f;
 
     /// <summary>
-    /// Скорость потребления топлива (единиц/сек)
+    /// Fuel consumption rate (units/sec)
     /// </summary>
     [DataField]
     public float FuelConsumptionRate = 1f;
 
     /// <summary>
-    /// Звук горения
+    /// Sound of burning fuel
     /// </summary>
     [DataField]
     public SoundSpecifier? LoopedSound = new SoundPathSpecifier("/Audio/Items/Flare/flare_burn.ogg");
 
     /// <summary>
-    /// Звук поджигания
+    /// Sound of igniting fuel
     /// </summary>
     [DataField]
     public SoundSpecifier? LitSound;
 
     /// <summary>
-    /// Звук затухания
+    /// Sound of dying fuel
     /// </summary>
     [DataField]
     public SoundSpecifier? DieSound;
 
     /// <summary>
-    /// Whitelist для топлива
+    /// Whitelist for fuel
     /// </summary>
     [DataField]
     public EntityWhitelist? FuelWhitelist;
 
     /// <summary>
-    /// Можно ли вообще потушить этот источник огня
+    /// Can the fire be extinguished at all
     /// </summary>
     [DataField]
     public bool CanBeExtinguished = true;
 
     /// <summary>
-    /// Можно ли потушить голыми руками (без инструмента)
+    /// Can the fire be extinguished by hand (without tools)
     /// </summary>
     [DataField]
     public bool CanExtinguishByHand = false;
 
     /// <summary>
-    /// Whitelist инструментов для тушения. Null — любой предмет подходит
+    /// Whitelist of tools for extinguishing. Null - any item is suitable
     /// </summary>
     [DataField]
     public EntityWhitelist? ExtinguisherWhitelist;
 
     /// <summary>
-    /// Качество инструмента, которое требуется для тушения (например, Digging для лопаты)
+    /// The quality of the tool required for extinguishing (e.g., Digging for a shovel)
     /// </summary>
     [DataField]
     public string? ExtinguisherQuality;
 
     /// <summary>
-    /// Задержка тушения инструментом
+    /// Delay to extinguish with tool
     /// </summary>
     [DataField]
     public float ExtinguishToolDuration = 2f;
@@ -139,7 +139,7 @@ public sealed partial class ExtinguishDoAfterEvent : SimpleDoAfterEvent
 }
 
 /// <summary>
-/// Событие изменения состояния топлива
+/// Event of fuel state change
 /// </summary>
 [ByRefEvent]
 public record struct FuelStateChangedEvent(
@@ -149,7 +149,7 @@ public record struct FuelStateChangedEvent(
 );
 
 /// <summary>
-/// Событие изменения температуры
+/// Event of temperature change
 /// </summary>
 [ByRefEvent]
 public record struct TemperatureChangedEvent(

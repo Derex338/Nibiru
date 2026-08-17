@@ -13,7 +13,7 @@ public sealed partial class ModularCraftComponent : Component
     public ProtoId<ModularItemPrototype>? CurrentItemType;
 
     /// <summary>
-    /// ID базовой сущности, на основе которой создаётся модульное оружие/инструмент
+    /// ID base entity, from which the modular weapon/tool is created
     /// </summary>
     [DataField]
     public string? BaseEntityPrototype;
@@ -29,7 +29,7 @@ public sealed partial class ModularItemComponent : Component
     [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<ModularPartPrototype>, ModularSlotConfig> SlotConfigs = new();
 
-    // Итоговые кешированные статы
+    // Final cached stats
     [ViewVariables, AutoNetworkedField] public FixedPoint2 TotalDamage;
     [ViewVariables, AutoNetworkedField] public FixedPoint2 TotalReach;
     [ViewVariables, AutoNetworkedField] public FixedPoint2 TotalPenetration;

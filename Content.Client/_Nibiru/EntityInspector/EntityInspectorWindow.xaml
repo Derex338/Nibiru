@@ -4,14 +4,14 @@
                 MinSize="500 300"
                 Resizable="True"
                 Title="Инспектор сущности">
-    <!-- Главный горизонтальный сплиттер: левая колонка | правая панель деталей -->
+    <!-- Base container -->
     <SplitContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Name="MainSplit">
 
-        <!-- ======== ЛЕВАЯ КОЛОНКА: список компонентов + поля ======== -->
+        <!-- LEFT PANEL: components + fields -->
         <BoxContainer Orientation="Vertical" MinWidth="280" MaxWidth="400"
                       HorizontalExpand="False" VerticalExpand="True">
 
-            <!-- Заголовок с именем сущности -->
+            <!-- Header with entity name -->
             <PanelContainer Name="EntityHeader" StyleClasses="PanelLow"
                             HorizontalExpand="True" Margin="0 0 0 2">
                 <BoxContainer Orientation="Horizontal" Margin="6 4">
@@ -23,7 +23,7 @@
                 </BoxContainer>
             </PanelContainer>
 
-            <!-- Скролл-контейнер для компонентов -->
+            <!-- Scroll container for components -->
             <ScrollContainer Name="ComponentScroll"
                              HScrollEnabled="False"
                              HorizontalExpand="True"
@@ -34,11 +34,11 @@
             </ScrollContainer>
         </BoxContainer>
 
-        <!-- ======== ПРАВАЯ ПАНЕЛЬ: детальная информация о поле ======== -->
+        <!-- RIGHT PANEL: field details -->
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
                       MinWidth="200">
 
-            <!-- Заголовок правой панели -->
+            <!-- Right panel header -->
             <PanelContainer Name="DetailHeader" StyleClasses="PanelLow"
                             HorizontalExpand="True" Margin="2 0 0 2">
                 <BoxContainer Orientation="Horizontal" Margin="6 4">
@@ -50,7 +50,7 @@
                 </BoxContainer>
             </PanelContainer>
 
-            <!-- Скролл для деталей -->
+            <!-- Scroll for details -->
             <ScrollContainer Name="DetailScroll"
                              HScrollEnabled="False"
                              HorizontalExpand="True"

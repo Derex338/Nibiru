@@ -6,8 +6,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Client._Nibiru.WeaponAttackType;
 
 /// <summary>
-/// Client-only система для изменения спрайтов оружия в зависимости от выбранного типа атаки.
-/// Подписывается на изменения NibiruWeaponAttackComponent и применяет SpriteState из AttackTypePrototype.
+/// Client-only sysytem for changes the sprites of weapons depending on the selected attack type.
+/// Subscribes to changes in NibiruWeaponAttackComponent and applies SpriteState from AttackTypePrototype.
 /// </summary>
 public sealed partial class NibiruWeaponAttackVisualizerSystem : EntitySystem
 {
@@ -28,13 +28,13 @@ public sealed partial class NibiruWeaponAttackVisualizerSystem : EntitySystem
 
     private void OnComponentStartup(EntityUid uid, NibiruWeaponAttackComponent component, ComponentStartup args)
     {
-        // Применяем начальный спрайт при инициализации компонента
+        // Applying initial sprite when the component is initialized
         ApplySpriteState(uid, component);
     }
 
     private void OnHandleState(EntityUid uid, NibiruWeaponAttackComponent component, ref AfterAutoHandleStateEvent args)
     {
-        // Применяем спрайт при получении обновления состояния с сервера
+        // Applying sprite when getting an update from the server
         ApplySpriteState(uid, component);
     }
 
@@ -48,7 +48,7 @@ public sealed partial class NibiruWeaponAttackVisualizerSystem : EntitySystem
 
         if (proto is not null &&!string.IsNullOrEmpty(proto.SpriteState))
         {
-            // Сохраняем оригинальное состояние если ещё не сохранено
+            // Saving the original state if it hasn't been saved yet
             if (component.OriginalSpriteState == null && spriteComp.AllLayers.Count() > 0)
             {
                 var state = _sprite.LayerGetRsiState((uid, spriteComp), 0);
@@ -56,7 +56,7 @@ public sealed partial class NibiruWeaponAttackVisualizerSystem : EntitySystem
                     component.OriginalSpriteState = state.Name;
             }
 
-            // Применяем новое состояние ко всем слоям
+            // Applying new state to all layers
             for (var i = 0; i < spriteComp.AllLayers.Count(); i++)
             {
                 _sprite.LayerSetRsiState((uid, spriteComp), i, proto.SpriteState);
@@ -64,7 +64,7 @@ public sealed partial class NibiruWeaponAttackVisualizerSystem : EntitySystem
         }
         else if (component.OriginalSpriteState != null)
         {
-            // Восстанавливаем оригинальное состояние
+            // Restoring the original state
             for (var i = 0; i < spriteComp.AllLayers.Count(); i++)
             {
                 _sprite.LayerSetRsiState((uid, spriteComp), i, component.OriginalSpriteState);

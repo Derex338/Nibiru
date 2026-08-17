@@ -22,12 +22,12 @@ public sealed partial class FactionSystem
         && TryComp<MobStateComponent>(component.Heir, out var heirMobStateComponent)
         && heirMobStateComponent.CurrentState == MobState.Alive)
         {
-            // У нас уже есть живой наследник
+            // We already have a live heir
             newLeader = component.Heir;
         }
         else
         {
-            // Ищем подходящего наследника по списку сверху вниз
+            // Search for a suitable heir in the list from top to bottom
             foreach (var memberUid in component.Members)
             {
                 if (!TryComp<MobStateComponent>(memberUid, out var ms) || ms.CurrentState != MobState.Alive)
@@ -48,7 +48,7 @@ public sealed partial class FactionSystem
                 }
             }
 
-            // Если никто не подошел по рангу, берем просто первого живого по списку
+            // If no one fits the rank, just take the first living person on the list
             if (!newLeader.Valid)
             {
                 foreach (var memberUid in component.Members)
@@ -72,8 +72,8 @@ public sealed partial class FactionSystem
             newLeaderComp.Roles = component.Roles;
             newLeaderComp.Rank = Loc.GetString("faction-rank-leader");
             component.IsCreator = false;
-            
-            _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(uid):player} умер. Новым лидером фракции {component.FactionName} стал {ToPrettyString(newLeader):player}");
+
+            _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(uid):player} died. New faction leader {component.FactionName} become {ToPrettyString(newLeader):player}");
         }
         else if (component.Members.Count > 0)
         {

@@ -3,20 +3,20 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Nibiru.NPC.Commands;
 
 /// <summary>
-/// Компонент для цели, которую схватило животное.
-/// Применяет замедление к цели.
+/// Component for the target being grabbed by an animal.
+/// Applies slowdown to the target.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NibiruAnimalGrabbedTargetComponent : Component
 {
     /// <summary>
-    /// Животное, которое схватило эту цель.
+    /// The animal that grabbed this target.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Grabber;
 
     /// <summary>
-    /// Множитель замедления для цели.
+    /// Slowdown multiplier for the target.
     /// </summary>
     [DataField]
     public float SlowdownMultiplier = 0.6f;

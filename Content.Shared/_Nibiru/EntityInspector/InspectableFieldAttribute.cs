@@ -1,26 +1,26 @@
 namespace Content.Shared._Nibiru.EntityInspector;
 
 /// <summary>
-/// Помечает поле или свойство компонента для отображения в окне инспектора сущностей.
-/// Значение показывается inline в левой колонке. При наличии <see cref="Detail"/> —
-/// при клике в правой панели появится расширенная информация.
+/// Marks a field or property of a component for display in the Entity Inspector window.
+/// The value is displayed inline in the left column. If <see cref="Detail"/> is specified —
+/// clicking it will show detailed information in the right panel.
 /// </summary>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
 public sealed class InspectableFieldAttribute : Attribute
 {
     /// <summary>
-    /// Отображаемое имя поля. Если не задано, берётся имя члена класса.
+    /// Display name of the field. If not specified, the name will be taken from the class name.
     /// </summary>
     public string? DisplayName { get; }
 
     /// <summary>
-    /// Подробное описание, которое будет показано в правой панели при клике на поле.
-    /// Если не задано, правая панель показывает полное строковое представление значения.
+    /// Detailed description that will be shown in the right panel when the field is clicked.
+    /// If not specified, the right panel will show the full string representation of the value.
     /// </summary>
     public string? Detail { get; set; }
 
     /// <summary>
-    /// Порядок отображения поля внутри секции компонента (меньше — выше).
+    /// Order of the field within the component section (smaller = higher).
     /// </summary>
     public int Order { get; set; } = 0;
 

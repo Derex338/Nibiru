@@ -11,7 +11,5 @@ public sealed partial class FactionSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        //SubscribeNetworkEvent<FactionUpdateMessage>(OnFactionUpdate);
     }
 }

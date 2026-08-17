@@ -15,9 +15,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Nibiru.World;
 
-// Взято за основу с RimFortress
+// From RimFortress
+
 /// <summary>
-/// Управление миром и генерацией
+/// Manages world and generation
 /// </summary>
 public abstract partial class SharedNibiruWorldSystem : EntitySystem
 {
@@ -35,106 +36,7 @@ public abstract partial class SharedNibiruWorldSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        //PlayerQuery = GetEntityQuery<RimFortressPlayerComponent>();
-        /*
-                Subs.CVar(_cvar, RfVars.MaxSettlementRadius, value => _maxSettlementRadius = value, true);
-                Subs.CVar(_cvar, RfVars.MinSettlementMembers, value => _minSettlementMembers = value, true);
-                Subs.CVar(_cvar, RfVars.PlayerSafeRadius, value => _playerSafeRadius = value, true);
-                Subs.CVar(_cvar, RfVars.SpawnAreaRadius, value => SpawnAreaRadius = value, true);
-                Subs.CVar(_cvar, RfVars.MinSpawnAreaTiles, value => MinSpawnAreaTiles = value, true);
-                */
     }
-/*
-    public void CreateMapBeacon(EntityUid gridUid, Vector2i indicates, Color color, string text)
-    {
-        var coords = _map.ToCoordinates(gridUid, indicates);
-        var uid = Spawn(null, coords);
-
-        var comp = EnsureComp<NavMapBeaconComponent>(uid);
-        comp.Color = color;
-        comp.Text = text;
-    }
-
-    public void ChangeBeacon(Entity<NavMapBeaconComponent?> entity, Color color, string text)
-    {
-        if (!Resolve(entity, ref entity.Comp))
-            return;
-
-        entity.Comp.Color = color;
-        entity.Comp.Text = text;
-    }*/
-    /*
-    public List<EntityCoordinates> GetPlayerCoords()
-    {
-        //var enumerator = EntityQueryEnumerator<RimFortressPlayerComponent>();
-
-        if (!Resolve(entity, ref entity.Comp)
-            || !_xformQuery.TryComp(entity, out var playerXform))
-            return new();
-
-        // Collect a list of the coordinates of all the player's pops
-        var points = new List<Vector2>();
-
-        if (!_xformQuery.TryComp(entity, out var xform))
-            return new();
-
-        points.Add(xform.Coordinates.Position);
-
-        return points;
-    }*/
-    /*
-    public void SetPlayerFactionColor(Entity<RimFortressPlayerComponent?> uid, Color color)
-    {
-        if (!Resolve(uid, ref uid.Comp))
-            return;
-
-        uid.Comp.FactionColor = color;
-
-        if (_net.IsServer)
-            Dirty(uid);
-
-        foreach (var pop in uid.Comp.Pops)
-        {
-            if (!TryComp(pop, out NavMapBeaconComponent? beacon))
-                continue;
-
-            beacon.Color = color;
-
-            if (_net.IsServer)
-                Dirty(pop, beacon);
-        }
-    }
-
-    public ProtoId<JobPrototype>? PickPopJob(IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
-    {
-        if (TryPick(JobPriority.High, out var picked))
-            return picked;
-
-        if (TryPick(JobPriority.Medium, out picked))
-            return picked;
-
-        if (TryPick(JobPriority.Low, out picked))
-            return picked;
-
-        return null;
-
-        bool TryPick(JobPriority priority, [NotNullWhen(true)] out ProtoId<JobPrototype>? jobId)
-        {
-            var filtered = jobPriorities
-                .Where(p => p.Value == priority)
-                .Select(p => p.Key)
-                .ToList();
-
-            if (filtered.Count != 0)
-            {
-                jobId = _random.Pick(filtered);
-                return true;
-            }
-
-            jobId = null;
-            return false;
-        }
-    }*/
 }
 
 [Serializable, NetSerializable]

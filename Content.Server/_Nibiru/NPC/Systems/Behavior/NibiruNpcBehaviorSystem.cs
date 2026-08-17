@@ -63,7 +63,6 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
 
     private void OnRefreshSpeed(EntityUid uid, NibiruNpcStateMachineComponent state, RefreshMovementSpeedModifiersEvent args)
     {
-        // Увеличиваем скорость только во время активного разбега (фаза Charging)
         if (state.CurrentState == NibiruNpcState.Charging &&
             TryComp<NibiruNpcChargeAttackComponent>(uid, out var charge) &&
             charge.Phase == ChargePhase.Charging)
@@ -172,7 +171,6 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
                     ProcessChasing(uid, state, perception, xform);
                     break;
                 case NibiruNpcState.Charging:
-                    // Разбег: Charging обрабатывается через ProcessCharging
                     if (combat != null && TryComp<NibiruNpcChargeAttackComponent>(uid, out var chargeComp))
                         _combatSystem.ProcessCharging(uid, state, combat, chargeComp, xform, frameTime);
                     break;
@@ -217,7 +215,6 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
                 return;
             }
 
-            // Проверка на голод
             if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger) &&
                 hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Peckish)
             {
@@ -249,7 +246,6 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
                 return;
             }
 
-            // Проверка на голод
             if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(uid, out var hunger) &&
                 hunger.CurrentThreshold <= Content.Shared.Nutrition.Components.HungerThreshold.Peckish)
             {
@@ -326,8 +322,6 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
             return;
         }
 
-        // Логика перехода в разбег (Charge)
-        // Запускаем WindUp если цель в диапазоне разбега и кулдаун прошёл
         if (TryComp<NibiruNpcCombatComponent>(uid, out var combatStyleComp) &&
             combatStyleComp.CombatStyle == NibiruCombatStyle.Charge &&
             TryComp<NibiruNpcChargeAttackComponent>(uid, out var chargeComp) &&
@@ -340,7 +334,6 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
             }
         }
 
-        // Grab: при достижении цели — вцепляемся
         if (state.CurrentCommand == NibiruAnimalCommand.Grab && distance <= 1.5f)
         {
             DamageSpecifier? biteDamage = null;
@@ -377,14 +370,14 @@ public sealed partial class NibiruNpcBehaviorSystem : EntitySystem
             return;
         }
 
-        // 1. Пытаемся съесть тайл
+        // 1. Try to eat the tile
         if (TryEatTile(uid, hunger, xform))
         {
             state.CurrentState = NibiruNpcState.Idle;
             return;
         }
 
-        // 2. Ищем еду
+        // 2. Search for food
         var food = FindFood(uid, perception);
         if (food != null)
         {

@@ -146,7 +146,6 @@ public sealed partial class FactionUIController : UIController, IOnStateEntered<
         };
 
         _factionWindow.FactionDescriptionChangeButton.OnPressed += _ => { OnChangeDescription(); };
-        //_factionWindow.FactionIconChangeButton.OnPressed += _ => { OnChangeIcon(); };
         _factionWindow.RecruitingToggle.OnPressed += _ => { OnToggleRecruiting(); };
 
         _factionWindow.FilterSpeciesButton.OnPressed += _ => OnChangeFilterSpecies();
@@ -354,7 +353,6 @@ public sealed partial class FactionUIController : UIController, IOnStateEntered<
             _factionWindow.FactionNameChange.Text = factionComponent.FactionName;
             _factionWindow.FactionDescriptionChange.Text = factionComponent.Description;
             _factionWindow.FactionColorChange.Text = factionComponent.FactionColor.ToHex();
-            //_factionWindow.FactionIconChange.Text = factionComponent.IconPath;
             _factionWindow.RecruitingToggle.Pressed = factionComponent.IsRecruiting;
 
             _factionWindow.FilterSpeciesLabel.Text = factionComponent.WhiteListSpecies.Count == 0 ? Loc.GetString("faction-filter-all") : string.Join(", ", factionComponent.WhiteListSpecies);
@@ -392,12 +390,6 @@ public sealed partial class FactionUIController : UIController, IOnStateEntered<
             return false;
 
         var entity = args.EntityUid;
-
-        // Return if can not see table or stunned/no hands
-        //if (!CanSeeTable(playerEntity, _table) || !CanDrag(playerEntity, entity, out _))
-        //{
-        //    return false;
-        //}
 
         if (_factionWindow.Heir!.Pressed)
         {
@@ -440,22 +432,6 @@ public sealed partial class FactionUIController : UIController, IOnStateEntered<
             UpdateState();
         }
     }
-
-    /*private void OnChangeIcon()
-    {
-        if (_factionWindow == null)
-            return;
-
-        var newIcon = _factionWindow.FactionIconChange.Text;
-        if (!string.IsNullOrWhiteSpace(newIcon))
-        {
-            _entityManager.RaisePredictiveEvent(new FactionChangeStateMessage
-            {
-                IconPath = newIcon
-            });
-            UpdateState();
-        }
-    }*/
 
     private void OnToggleRecruiting()
     {
@@ -546,7 +522,7 @@ public sealed partial class FactionUIController : UIController, IOnStateEntered<
     }
 
     /// <summary>
-    /// Подсветка членов фракции при выборе наследника или передаче титула
+    /// Highlighting faction members when selecting an heir or transferring a title
     /// </summary>
     private void ToggleMemberOutlines(bool enable)
     {

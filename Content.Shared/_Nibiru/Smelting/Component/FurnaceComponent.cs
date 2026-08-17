@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.Smelting;
 
 /// <summary>
-/// Компонент печи для плавки руд и нагрева предметов
+/// Component for a furnace for smelting ores and heating items
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SmeltingFurnaceComponent : Component
@@ -23,7 +23,7 @@ public sealed partial class SmeltingFurnaceComponent : Component
     public string Solution = "smelted_metal";
 
     /// <summary>
-    /// Контейнер для руд и предметов
+    /// Container for ores and items
     /// </summary>
     [ViewVariables]
     public Container? OreContainer = default!;
@@ -32,37 +32,37 @@ public sealed partial class SmeltingFurnaceComponent : Component
     public ContainerSlot? SolutionContainer = default!;
 
     /// <summary>
-    /// Максимальное количество предметов в печи
+    /// Maximum number of items in the furnace
     /// </summary>
     [DataField]
     public int MaxOreCapacity = 10;
 
     /// <summary>
-    /// Белый список тегов для предметов которые можно класть в печь
+    /// White list of tags for items that can be placed in the furnace
     /// </summary>
     [DataField]
     public List<ProtoId<TagPrototype>>? Tags;
 
     /// <summary>
-    /// Температура при которой предметы начинают гореть
+    /// Temperature at which items start to burn
     /// </summary>
     [DataField]
     public float BurnTemperature = 500f;
 
     /// <summary>
-    /// Звук плавления
+    /// Sound of melting
     /// </summary>
     [DataField]
     public SoundSpecifier? SmeltingSound;
 
     /// <summary>
-    /// Звук когда руда полностью расплавилась
+    /// Sound of fully melted ore
     /// </summary>
     [DataField]
     public SoundSpecifier? MeltCompleteSound;
 
     /// <summary>
-    /// Звук когда предмет сгорает
+    /// Sound of burning
     /// </summary>
     [DataField]
     public SoundSpecifier? BurnSound;

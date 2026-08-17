@@ -12,80 +12,6 @@ namespace Content.Shared._Nibiru.World;
 
 public partial class SharedNibiruWorldSystem
 {
-    /// <summary>
-    /// Spawns entities in random free tiles around a given center
-    /// </summary>
-    /// <param name="targetCoords">Spawning coordinates</param>
-    /// <param name="popPrototypes">Entity prototypes for spawning</param>
-    /// <param name="radius">The minimum distance that should be from the spawn point to any player settlement</param>
-    /// <returns>List of spawned entities</returns>
-    /*public void SpawnPop(
-        EntityCoordinates targetCoords,
-        List<EntProtoId> popPrototypes,
-        int? radius = null)
-    {
-        //var spawned = new List<EntityUid>();
-        var freeTiles = GetSpawnTiles(targetCoords, popPrototypes.Count, radius ?? _playerSafeRadius).ToList();
-
-        // Spawn the entities on a random free tile
-        //while (popPrototypes.Count > 0)
-        //{
-            var spawnCoords = Turf.GetTileCenter(_random.Pick(freeTiles));
-            var spawnedUid = Spawn(popPrototypes.Pop(), spawnCoords);
-
-            //spawned.Add(spawnedUid);
-        //}
-
-        //return spawned;
-    }*/
-
-    /// <summary>
-    /// Spawns entities in random free tiles around a given center
-    /// </summary>
-    /// <param name="targetCoords">Spawning coordinates</param>
-    /// <param name="popProto">Prototype of the entity to be spawned</param>
-    /// <param name="amount">Amount of entities to be spawned</param>
-    /// <param name="entities">Entities spawned elsewhere previously that will be used in place of the prototype spawning</param>
-    /// <param name="radius">The minimum distance that should be from the spawn point to any player settlement</param>
-    /// <returns>List of spawned entities</returns>
-    /*public List<EntityUid> SpawnPop(
-        EntityCoordinates targetCoords,
-        EntProtoId? popProto = null,
-        int amount = 1,
-        List<EntityUid>? entities = null,
-        int? radius = null)
-    {
-        DebugTools.Assert(popProto != null || entities?.Count == amount);
-
-        var spawned = new List<EntityUid>();
-        var freeTiles = GetSpawnTiles(targetCoords, amount, radius ?? _playerSafeRadius);
-
-        if (freeTiles.Count == 0)
-            return spawned;
-
-        // Spawn the entities on a random free tile
-        while (amount > 0)
-        {
-            var spawnCoords = Turf.GetTileCenter(_random.Pick(freeTiles));
-
-            // If we already have entities ready to go, we simply move them to the free places
-            if (entities?.Count > 0)
-            {
-                var entity = entities.Pop();
-                _transform.AttachToGridOrMap(entity);
-                _transform.SetCoordinates(entity, spawnCoords);
-                amount--;
-                continue;
-            }
-
-            var spawnedUid = Spawn(popProto, spawnCoords);
-            spawned.Add(spawnedUid);
-            amount--;
-        }
-
-        return spawned;
-    }*/
-
     public HashSet<TileRef> GetSpawnTiles(int amount)
     {
         if (Rule is not { } rule)
@@ -165,14 +91,14 @@ public partial class SharedNibiruWorldSystem
 
         var angle = Angle.FromDegrees(_random.NextFloat(360f));
         var distance = radiusFromPlayers;
-        var maxIterations = 50; // Лимит итераций чтобы избежать бесконечного цикла
+        var maxIterations = 50;
 
         for (var i = 0; i < maxIterations; i++)
         {
             var pos = new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * distance + targetCoords.Position;
 
             distance += radiusFromPlayers / 2;
-            angle += Angle.FromDegrees(37f); // Немного меняем угол на каждой итерации
+            angle += Angle.FromDegrees(37f);
 
             var box = Box2.CenteredAround(pos, new Vector2(spawnAreaRadius));
             var tiles = GetFreeTiles(grid, box, minSpawnAreaTiles);
@@ -183,7 +109,7 @@ public partial class SharedNibiruWorldSystem
             return tiles;
         }
 
-        // Если не нашли за 50 итераций — возвращаем пустое
+        // If we didn't find any in 50 iterations, we return an empty set
         return new HashSet<TileRef>();
     }
 

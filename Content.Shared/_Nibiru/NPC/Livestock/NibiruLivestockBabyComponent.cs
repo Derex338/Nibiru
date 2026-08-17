@@ -6,37 +6,37 @@ using Robust.Shared.Utility;
 namespace Content.Shared._Nibiru.NPC.Livestock;
 
 /// <summary>
-/// Компонент животноводства: регулирует детенышей.
+/// Livestock component for managing juveniles.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruLivestockBabyComponent : Component
 {
     /// <summary>
-    /// Массив спрайтов для разных стадий роста.
+    /// Sprite specifiers for different growth stages.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public List<SpriteSpecifier> Stages = new();
 
     /// <summary>
-    /// Время взросления.
+    /// Growth time per stage.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float StageGrowthTime = 300f;
 
     /// <summary>
-    /// Текущий прогресс взросления.
+    /// Current growth progress.
     /// </summary>
     [ViewVariables]
     public float GrowthAccumulator;
 
     /// <summary>
-    /// Текущая стадия взросления.
+    /// Current growth stage index.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public int GrowthStage;
 
     /// <summary>
-    /// Готово ли к взрослению.
+    /// Is ready to grow up.
     /// </summary>
     [ViewVariables]
     public bool ReadyToGrow => GrowthAccumulator >= StageGrowthTime;

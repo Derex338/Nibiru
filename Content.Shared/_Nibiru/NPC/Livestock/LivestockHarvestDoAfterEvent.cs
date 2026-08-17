@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.NPC.Livestock;
 
 /// <summary>
-/// Событие завершения DoAfter при сборе ресурсов с животного (стрижка, дойка).
+/// DoAfter completion event for harvesting resources from an animal (shearing, milking).
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class LivestockHarvestDoAfterEvent : SimpleDoAfterEvent
 {
     /// <summary>
-    /// Индекс ресурса в списке HarvestableResources.
+    /// Index of the resource in the HarvestableResources list.
     /// </summary>
     [DataField]
     public int ResourceIndex;

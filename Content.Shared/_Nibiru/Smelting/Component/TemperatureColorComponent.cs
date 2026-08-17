@@ -5,77 +5,77 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Nibiru.Smelting;
 
 /// <summary>
-/// Компонент для отображения цвета и свечения объекта в зависимости от температуры
+/// Component for displaying the color and glow of an object depending on temperature
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 public sealed partial class TemperatureColorComponent : Component
 {
     /// <summary>
-    /// Минимальная температура для начала свечения (K)
-    /// Для металлов обычно ~800K (тускло-красное свечение)
+    /// Minimum temperature for glow to start (K)
+    /// For metals, usually ~800K (dim red glow)
     /// </summary>
     [DataField("glowThreshold")]
     public float GlowThreshold = 800f;
 
     /// <summary>
-    /// Температура максимального свечения (K)
+    /// Maximum glow temperature (K)
     /// </summary>
     [DataField("maxGlowTemperature")]
     public float MaxGlowTemperature = 6000f;
 
     /// <summary>
-    /// Минимальная интенсивность свечения
+    /// Minimum glow intensity
     /// </summary>
     [DataField("minIntensity")]
     public float MinIntensity = 0.5f;
 
     /// <summary>
-    /// Максимальная интенсивность свечения
+    /// Maximum glow intensity
     /// </summary>
     [DataField("maxIntensity")]
     public float MaxIntensity = 4.0f;
 
     /// <summary>
-    /// Показатель степени для кривой интенсивности
-    /// (1.0 = линейная, >1 = быстрый рост, <1 = медленный рост)
+    /// Power exponent for intensity curve
+    /// (1.0 = linear, >1 = fast rise, <1 = slow rise)
     /// </summary>
     [DataField("intensityExponent")]
     public float IntensityExponent = 1.5f;
 
     /// <summary>
-    /// Минимальный радиус свечения
+    /// Minimum glow radius
     /// </summary>
     [DataField("minRadius")]
     public float MinRadius = 0.3f;
 
     /// <summary>
-    /// Максимальный радиус свечения
+    /// Maximum glow radius
     /// </summary>
     [DataField("maxRadius")]
     public float MaxRadius = 2.0f;
 
     /// <summary>
-    /// Отбрасывать ли тени от свечения
+    /// Cast shadows from glow
     /// </summary>
     [DataField("castShadows")]
     public bool CastShadows = true;
 
     /// <summary>
-    /// Применять ли цветовую модуляцию к спрайту объекта
+    /// Apply color modulation to object's sprite
     /// </summary>
     [DataField("modulateSprite")]
     public bool ModulateSprite = true;
 
     /// <summary>
-    /// Текущая температура (для синхронизации)
+    /// Current temperature (for synchronization)
     /// </summary>
     [DataField("currentTemperature"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float CurrentTemperature = 293f;
 
     /// <summary>
-    /// Текущий цвет (для синхронизации)
+    /// Current color (for synchronization)
     /// </summary>
     [DataField("currentColor"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
@@ -83,7 +83,7 @@ public sealed partial class TemperatureColorComponent : Component
 }
 
 /// <summary>
-/// Визуальные состояния для температуры
+/// Visual states for temperature
 /// </summary>
 [Serializable, NetSerializable]
 public enum TemperatureColorVisuals : byte

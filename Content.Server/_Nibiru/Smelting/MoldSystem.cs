@@ -64,8 +64,6 @@ public sealed partial class MoldSystem : EntitySystem
         {
             QueueDel(args.uid);
         }
-
-        //ScrapSpawn((args.uid, component), args);
     }
 
     private void ScrapSpawn(Entity<SolutionComponent> ent, MoltenPointChange args)

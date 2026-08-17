@@ -3,8 +3,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Nibiru.NPC.Utility;
 
 /// <summary>
-/// Компонент для игрока, который ведёт на поводке животное.
-/// Замедляет игрока.
+/// Component for a player holding a leashed animal.
+/// Slows the player.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruLeashHolderComponent : Component
@@ -20,7 +20,7 @@ public sealed partial class NibiruLeashHolderComponent : Component
 }
 
 /// <summary>
-/// Компонент для стойки/колышка, к которому можно привязать животное.
+/// Component for a post/stake to which an animal can be tethered.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NibiruLeashAnchorComponent : Component

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Client.Movement;
 
 /// <summary>
-/// Обрабатывает визуализацию транспорта (смена состояния спрайта)
+/// Handles vehicle visualization (sprite state switching)
 /// </summary>
 public sealed class RideableVisualizerSystem : VisualizerSystem<RideableVisualizerComponent>
 {
@@ -24,7 +24,7 @@ public sealed class RideableVisualizerSystem : VisualizerSystem<RideableVisualiz
         if (AppearanceSystem.TryGetData<bool>(uid, RideableVisuals.Dead, out var deadValue, args.Component))
             dead = deadValue;
 
-        // Определяем какое состояние использовать
+        // Determine which state to use
         string? state = component.BaseState;
 
         if (dead && component.DeadState != null)
@@ -38,7 +38,7 @@ public sealed class RideableVisualizerSystem : VisualizerSystem<RideableVisualiz
 }
 
 /// <summary>
-/// Компонент для визуализации транспорта
+/// Component for vehicle visualization
 /// </summary>
 [RegisterComponent]
 public sealed partial class RideableVisualizerComponent : Component

@@ -25,10 +25,10 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 {
     private Color _brushColor = Color.White;
     private Color _bgColor = Color.Transparent;
-    
+
     private Color[] _pixels = new Color[16 * 16];
     private PanelContainer[] _pixelPanels = new PanelContainer[16 * 16];
-    
+
     private Color[] _pixels8x8 = new Color[8 * 8];
     private PanelContainer[] _pixelPanels8x8 = new PanelContainer[8 * 8];
 
@@ -41,7 +41,6 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
-        // Инициализация 16x16
         for (int i = 0; i < 16 * 16; i++)
         {
             _pixels[i] = Color.Transparent;
@@ -51,7 +50,6 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
             UpdatePixelVisual(i, 16);
         }
 
-        // Инициализация 8x8
         for (int i = 0; i < 8 * 8; i++)
         {
             _pixels8x8[i] = Color.Transparent;
@@ -179,7 +177,7 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
     {
         var pixels = size == 16 ? _pixels : _pixels8x8;
         var panels = size == 16 ? _pixelPanels : _pixelPanels8x8;
-        
+
         var color = pixels[index] == Color.Transparent ? _bgColor : pixels[index];
         if (color == Color.Transparent)
         {
@@ -187,11 +185,11 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
             color = isDark ? new Color(35, 35, 35) : new Color(25, 25, 25);
         }
 
-        panels[index].PanelOverride = new StyleBoxFlat 
-        { 
+        panels[index].PanelOverride = new StyleBoxFlat
+        {
             BackgroundColor = color,
-            BorderColor = new Color(50, 50, 50, 40), 
-            BorderThickness = new Thickness(1) 
+            BorderColor = new Color(50, 50, 50, 40),
+            BorderThickness = new Thickness(1)
         };
     }
 
@@ -293,7 +291,6 @@ public sealed partial class FactionLogoEditorWindow : DefaultWindow
 
     private void ApplyPreset(List<Color> pixels16, List<Color> pixels8)
     {
-        // Очищаем передний план холста перед наложением шаблона
         for (int i = 0; i < 16 * 16; i++)
         {
             _pixels[i] = pixels16[i] != Color.Transparent ? _brushColor : Color.Transparent;

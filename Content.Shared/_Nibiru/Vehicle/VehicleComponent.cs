@@ -4,32 +4,32 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Movement.Components;
 
 /// <summary>
-/// Компонент для сущностей, которыми можно управлять через Strap (лошади, транспорт)
-/// Работает автоматически при пристёгивании к StrapComponent
+/// Component for entities that can be controlled via Strap (horses, vehicles)
+/// Works automatically when attached to a StrapComponent
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RideableComponent : Component
 {
     /// <summary>
-    /// Тип передвижения транспорта
+    /// Locomotion type of the vehicle
     /// </summary>
     [DataField, AutoNetworkedField]
     public RideableLocomotionType LocomotionType = RideableLocomotionType.Legs;
 
     /// <summary>
-    /// Может ли всадник управлять, если транспорт мёртв
+    /// Can the rider control the vehicle if it's dead
     /// </summary>
     [DataField]
     public bool CanMoveWhenDead = false;
 
     /// <summary>
-    /// Состояние спрайта когда на транспорте есть всадник
+    /// Sprite state when rider is on the vehicle
     /// </summary>
     [DataField]
     public string? MountedState;
 
     /// <summary>
-    /// Базовое состояние спрайта транспорта
+    /// Base sprite state of the vehicle
     /// </summary>
     [DataField]
     public string? BaseState;
@@ -39,28 +39,28 @@ public sealed partial class RideableComponent : Component
 }
 
 /// <summary>
-/// Тип передвижения транспорта
+/// Locomotion type of the vehicle
 /// </summary>
 [Serializable, NetSerializable]
 public enum RideableLocomotionType : byte
 {
     /// <summary>
-    /// Передвижение на ногах (лошади, животные)
+    /// Locomotion on legs (horses, animals)
     /// </summary>
     Legs,
 
     /// <summary>
-    /// Передвижение на колёсах (велосипеды, машины)
+    /// Locomotion on wheels (bicycles, cars)
     /// </summary>
     Wheels,
 
     /// <summary>
-    /// Передвижение на гусеницах (танки)
+    /// Locomotion on tracks (tanks)
     /// </summary>
     Tracks,
 
     /// <summary>
-    /// Полёт (летающие маунты)
+    /// Locomotion by flight (flying mounts)
     /// </summary>
     Flight
 }

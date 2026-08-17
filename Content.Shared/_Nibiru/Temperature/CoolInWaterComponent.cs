@@ -57,7 +57,6 @@ public sealed class CoolInWaterEntityEvent : EventArgs
 public sealed partial class CoolDoAfterEvent : SimpleDoAfterEvent
 {
     public Solution solution;
-    //public TemperatureComponent? temperatureComponent;
 
     public NetEntity TargetUid;
 
@@ -66,6 +65,5 @@ public sealed partial class CoolDoAfterEvent : SimpleDoAfterEvent
         TargetUid = uid;
 
         solution = sol;
-        //temperatureComponent = TempComp;
     }
 }

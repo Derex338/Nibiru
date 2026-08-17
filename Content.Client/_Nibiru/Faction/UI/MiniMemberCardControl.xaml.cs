@@ -30,13 +30,13 @@ public sealed partial class MiniMemberCardControl : Control
         _roles = roles;
         var member = entityManager.GetEntity(memberData.Entity);
 
-        // Главный контейнер
+        // Main container
         var mainContainer = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal
         };
 
-        // Фоновая панель (цветная полоска слева)
+        // Background panel (colored strip on the left)
         _background = new PanelContainer
         {
             StyleClasses = { "PdaBackground" },
@@ -46,7 +46,7 @@ public sealed partial class MiniMemberCardControl : Control
             Margin = new Thickness(0, 0, -5, 0)
         };
 
-        // Главная кнопка
+        // Main button
         _mainButton = new Button
         {
             Disabled = true,
@@ -56,14 +56,14 @@ public sealed partial class MiniMemberCardControl : Control
             Margin = new Thickness(0)
         };
 
-        // Содержимое главной кнопки
+        // Main button content
         var buttonContent = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             Margin = new Thickness(5)
         };
 
-        // Спрайт персонажа
+        // Sprite
         _spriteView = new SpriteView
         {
             OverrideDirection = Direction.South,
@@ -72,13 +72,13 @@ public sealed partial class MiniMemberCardControl : Control
         };
         _spriteView.SetEntity(member);
 
-        // Отступ
+        // Spacer
         var spacer = new Control
         {
             MinWidth = 5
         };
 
-        // Контейнер для имени и ранга
+        // Container for name and rank
         var infoContainer = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -86,14 +86,14 @@ public sealed partial class MiniMemberCardControl : Control
             HorizontalExpand = true
         };
 
-        // Имя персонажа
+        // Name
         _nameLabel = new RichTextLabel
         {
             StyleClasses = { "LabelSubText" }
         };
         _nameLabel.SetMessage(memberData.Name);
 
-        // Ранг
+        // Rank
         _rankLabel = new Label
         {
             StyleClasses = { "LabelSmall" },
@@ -107,7 +107,7 @@ public sealed partial class MiniMemberCardControl : Control
         infoContainer.AddChild(_nameLabel);
         infoContainer.AddChild(_rankLabel);
 
-        // Кнопка изменения ранга
+        // Change rank button
         _rankButton = new Button
         {
             StyleClasses = { "ButtonSquare" },
@@ -117,7 +117,7 @@ public sealed partial class MiniMemberCardControl : Control
             ToolTip = Loc.GetString("faction-button-change-rank-tooltip")
         };
 
-        // Кнопка кика
+        // Kick button
         _kickButton = new Button
         {
             StyleClasses = { "Caution" },
@@ -128,7 +128,7 @@ public sealed partial class MiniMemberCardControl : Control
         };
 
 
-        // Кнопки перемещения
+        // Move buttons
         var moveContainer = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -177,14 +177,14 @@ public sealed partial class MiniMemberCardControl : Control
         buttonContent.AddChild(_kickButton);
         buttonContent.AddChild(moveContainer);
 
-        // Добавляем содержимое в главную кнопку
+        // Add content to main button
         _mainButton.AddChild(buttonContent);
 
-        // Собираем всё вместе
+        // Collect everything together
         mainContainer.AddChild(_background);
         mainContainer.AddChild(_mainButton);
 
-        // Добавляем главный контейнер в Control
+        // Add main container to Control
         AddChild(mainContainer);
     }
 
@@ -193,15 +193,14 @@ public sealed partial class MiniMemberCardControl : Control
         if (playerEntity == null)
             return;
 
-        // Проверяем права на изменение ранга
+        // Check permissions to change rank
         if (!entityManager.TryGetComponent<FactionComponent>(playerEntity.Value, out var playerFaction))
             return;
 
         if (!playerFaction.IsCreator)
             return;
 
-        // Открываем диалог ввода ранга
-        // Открываем диалог ввода ранга
+        // Open rank change dialog
         var prompt = new RankChangePrompt(memberData.Entity, memberData.Rank, _roles, entityManager);
         prompt.OpenCentered();
     }
@@ -214,17 +213,17 @@ public sealed partial class MiniMemberCardControl : Control
         if (!entityManager.TryGetComponent<FactionComponent>(playerEntity, out var faction))
             return;
 
-        // Проверяем, является ли игрок создателем фракции
+        // Check if player is faction creator
         if (!faction.IsCreator)
             return;
 
-        // Отправляем сообщение о кике
+        // Send kick message
         entityManager.RaisePredictiveEvent(new FactionKickMemberMessage
         {
             Member = memberData.Entity
         });
 
-        // Удаляем карточку из UI
+        // Remove card from UI
         Parent?.RemoveChild(this);
     }
 
@@ -237,23 +236,23 @@ public sealed partial class MiniMemberCardControl : Control
         });
     }
 
-    // Публичные свойства для доступа к элементам
+    // Public properties for accessing elements
     public PanelContainer Background => _background;
     public SpriteView SpriteView => _spriteView;
 
-    // Метод для изменения цвета фона
+    // Method for changing background color
     public void SetBackgroundColor(Color color)
     {
         _background.ModulateSelfOverride = color;
     }
 
-    // Метод для обновления ранга
+    // Method for updating rank
     public void UpdateRank(string rank)
     {
         _rankLabel.Text = string.IsNullOrEmpty(rank) ? Loc.GetString("faction-rank-no-rank") : rank;
     }
 
-    // Метод для внешнего удаления
+    // Method for external removal
     public void Remove()
     {
         Parent?.RemoveChild(this);
@@ -261,7 +260,7 @@ public sealed partial class MiniMemberCardControl : Control
 }
 
 /// <summary>
-/// Диалог для изменения ранга члена фракции
+/// Dialog for changing faction member rank
 /// </summary>
 public sealed class RankChangePrompt : DefaultWindow
 {
@@ -383,7 +382,7 @@ public sealed class RoleManagePrompt : DefaultWindow
             Margin = new Thickness(10)
         };
 
-        // Селектор ролей
+        // Role selector
         var selectContainer = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -480,7 +479,7 @@ public sealed class RoleManagePrompt : DefaultWindow
         {
             var role = _roles[args.Id];
             _roleNameInput.Text = role.Name;
-            _roleNameInput.Editable = true; // Now editable
+            _roleNameInput.Editable = true;
             _canInviteCheck.Pressed = role.CanInvite;
             _canResearchCheck.Pressed = role.CanResearch;
             _canManageRolesCheck.Pressed = role.CanManageRoles;

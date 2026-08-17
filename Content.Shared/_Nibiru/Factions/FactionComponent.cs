@@ -10,7 +10,7 @@ namespace Content.Shared._Nibiru.Factions;
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 //[InspectableComponent("Faction")] // Это было для теста
-public sealed partial class FactionComponent : Component//, IInspectableComponent
+public sealed partial class FactionComponent : Component
 {
     [AutoNetworkedField]
     [DataField("factionName")]
@@ -36,15 +36,14 @@ public sealed partial class FactionComponent : Component//, IInspectableComponen
     public List<EntityUid> Members { get; set; } = new();
 
     /// <summary>
-    /// Все когда-либо бывшие члены фракции (включая лидера).
-    /// Никогда не очищается — используется для статуй и истории.
+    /// All members that ever been in faction
     /// </summary>
     [AutoNetworkedField]
     [ViewVariables]
     public List<FactionMemberRecord> AllMembers { get; set; } = new();
 
     /// <summary>
-    /// Данные о членах фракции для отображения в UI (кэш для клиента)
+    /// Faction members data for UI
     /// </summary>
     [AutoNetworkedField]
     public List<FactionMemberData> MemberData { get; set; } = new();
@@ -62,49 +61,49 @@ public sealed partial class FactionComponent : Component//, IInspectableComponen
     public Color FactionColor = Color.Pink;
 
     /// <summary>
-    /// Описание фракции
+    /// Faction description
     /// </summary>
     [AutoNetworkedField]
     [DataField("description")]
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
-    /// Иконка фракции (путь к StatusIconPrototype)
+    /// Faction icon (path to StatusIconPrototype)
     /// </summary>
     [AutoNetworkedField]
     [DataField("icon")]
     public string IconPath { get; set; } = string.Empty;
 
     /// <summary>
-    /// Цвет фона логотипа фракции
+    /// Color of faction logo background
     /// </summary>
     [AutoNetworkedField]
     [DataField("logoBackground")]
     public Color LogoBackground { get; set; } = Color.Transparent;
 
     /// <summary>
-    /// Данные рисунка логотипа 32x32
+    /// 32x32 logo drawing data
     /// </summary>
     [AutoNetworkedField]
     [DataField("logoPixels")]
     public List<Color> LogoPixels { get; set; } = new();
 
     /// <summary>
-    /// Данные иконки фракции 8x8
+    /// 8x8 icon drawing data
     /// </summary>
     [AutoNetworkedField]
     [DataField("logoPixels8x8")]
     public List<Color> LogoPixels8x8 { get; set; } = new();
 
     /// <summary>
-    /// Ранг/должность члена фракции
+    /// Role of faction member
     /// </summary>
     [AutoNetworkedField]
     [DataField("rank")]
     public string Rank { get; set; } = string.Empty;
 
     /// <summary>
-    /// Статус фракции
+    /// Faction status
     /// </summary>
     [AutoNetworkedField]
     [DataField("status")]
@@ -112,7 +111,7 @@ public sealed partial class FactionComponent : Component//, IInspectableComponen
     public FactionStatus Status { get; set; } = FactionStatus.Active;
 
     /// <summary>
-    /// Открыт ли набор в фракцию
+    /// Is faction recruiting
     /// </summary>
     [AutoNetworkedField]
     [DataField("recruiting")]
@@ -120,37 +119,32 @@ public sealed partial class FactionComponent : Component//, IInspectableComponen
     public bool IsRecruiting { get; set; } = false;
 
     /// <summary>
-    /// Фильтр по расам (SpeciesPrototype)
+    /// Species filter (SpeciesPrototype)
     /// </summary>
     [AutoNetworkedField]
     [DataField("whiteListSpecies")]
     public List<string> WhiteListSpecies { get; set; } = new();
 
     /// <summary>
-    /// Фильтр по полу (Sex)
+    /// Gender filter (Sex)
     /// </summary>
     [AutoNetworkedField]
     [DataField("whiteListGender")]
     public List<Sex> WhiteListGender { get; set; } = new();
 
     /// <summary>
-    /// Фильтр по цвету кожи для разных рас
+    /// Skin color filter for different species
     /// </summary>
     [AutoNetworkedField]
     [DataField("whiteListSkinColors")]
     public Dictionary<string, FactionSkinColorFilter> WhiteListSkinColors { get; set; } = new();
 
     /// <summary>
-    /// Фильтр по словам в имени (через запятую)
+    /// Name filter (comma separated)
     /// </summary>
     [AutoNetworkedField]
     [DataField("whiteListNames")]
     public List<string> WhiteListNames { get; set; } = new();
-
-    /// <summary>
-    /// Роли/Ранги фракции
-    /// </summary>
-    // ── IInspectableComponent ──────────────────────────────────────────────
 
     /*string IInspectableComponent.InspectorDisplayName => "entity-inspector-comp-faction";
 
@@ -195,7 +189,7 @@ public partial struct FactionRole
 }
 
 /// <summary>
-/// Фильтр цвета кожи
+/// Skin color filter
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 public partial struct FactionSkinColorFilter
@@ -208,7 +202,7 @@ public partial struct FactionSkinColorFilter
 }
 
 /// <summary>
-/// Данные о члене фракции для UI
+/// Faction members data for UI
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 public partial struct FactionMemberData
@@ -224,8 +218,8 @@ public partial struct FactionMemberData
 }
 
 /// <summary>
-/// Запись о члене фракции для списка всех когда-либо бывших членов.
-/// Хранит EntityId персонажа для получения спрайта.
+/// Faction member record for list of all members who ever been in faction.
+/// Stores EntityId of character for getting sprite.
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 public partial struct FactionMemberRecord
@@ -241,16 +235,16 @@ public partial struct FactionMemberRecord
 }
 
 /// <summary>
-/// Компонент для хранения всех фракций на карте
-/// Прикрепляется к entity карты
+/// Component for storing all factions on the map
+/// Attached to the map entity
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 public sealed partial class FactionRegistryComponent : Component
 {
     /// <summary>
-    /// Все зарегистрированные фракции на карте
-    /// Ключ - название фракции, значение - данные о фракции
+    /// All factions registered on the map
+    /// Key - faction name, value - faction data
     /// </summary>
     [AutoNetworkedField]
     [DataField("factions")]
@@ -258,92 +252,92 @@ public sealed partial class FactionRegistryComponent : Component
 }
 
 /// <summary>
-/// Данные о фракции в реестре
+/// Faction data
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
 public partial struct FactionRegistryData
 {
     /// <summary>
-    /// Название фракции
+    /// Faction name
     /// </summary>
     [DataField("name")]
     public string Name;
 
     /// <summary>
-    /// Лидер фракции (сериализуемый)
+    /// Faction leader (serialized)
     /// </summary>
     [DataField("leader")]
     public NetEntity Leader;
 
     /// <summary>
-    /// Список всех членов фракции (сериализуемый)
+    /// List of all faction members (serialized)
     /// </summary>
     [DataField("members")]
     public List<NetEntity> Members;
 
     /// <summary>
-    /// Список всех когда-либо бывших членов фракции (сериализуемый)
+    /// List of all members who ever been in faction (serialized)
     /// </summary>
     [DataField("allMembers")]
     public List<FactionMemberRecord> AllMembers;
 
     /// <summary>
-    /// Цвет фракции
+    /// Faction color
     /// </summary>
     [DataField("color")]
     public Color Color;
 
     /// <summary>
-    /// Описание фракции
+    /// Faction description
     /// </summary>
     [DataField("description")]
     public string Description;
 
     /// <summary>
-    /// Путь к иконке
+    /// Faction icon path
     /// </summary>
     [DataField("icon")]
     public string IconPath;
 
     /// <summary>
-    /// Цвет фона логотипа фракции
+    /// Faction logo background color
     /// </summary>
     [DataField("logoBackground")]
     public Color LogoBackground;
 
     /// <summary>
-    /// Данные рисунка логотипа 32x32
+    /// 32x32 logo drawing data
     /// </summary>
     [DataField("logoPixels")]
     public List<Color> LogoPixels;
 
     /// <summary>
-    /// Данные рисунка логотипа 8x8
+    /// 8x8 logo drawing data
     /// </summary>
     [DataField("logoPixels8x8")]
     public List<Color> LogoPixels8x8;
 
     /// <summary>
-    /// Статус фракции
+    /// Faction status
     /// </summary>
     [DataField("status")]
     public FactionStatus Status;
 
     /// <summary>
-    /// Открыт ли набор
+    /// Is recruiting
     /// </summary>
     [DataField("recruiting")]
     public bool IsRecruiting;
 
     /// <summary>
-    /// Время создания фракции
+    /// Faction creation time
     /// </summary>
     [DataField("created")]
     public TimeSpan Created;
 
     /// <summary>
-    /// Фильтры для вступления
+    /// Admission filters
     /// </summary>
     [DataField("whiteListSpecies")]
     public List<string> WhiteListSpecies;
@@ -358,25 +352,25 @@ public partial struct FactionRegistryData
     public List<string> WhiteListNames;
 
     /// <summary>
-    /// Список ролей фракции
+    /// Faction roles list
     /// </summary>
     [DataField("roles")]
     public List<FactionRole> Roles;
 }
 
 /// <summary>
-/// Статус фракции
+/// Faction status
 /// </summary>
 [Serializable, NetSerializable]
 public enum FactionStatus : byte
 {
-    Active,      // Активна
-    Recruiting,  // Набирает членов
-    AtWar        // В состоянии войны
+    Active,      // Active
+    Recruiting,  // Recruiting members
+    AtWar        // At war
 }
 
 /// <summary>
-/// Информация о фракции для UI
+/// Faction information for UI
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class FactionInfo
@@ -400,7 +394,7 @@ public sealed class FactionInfo
 }
 
 /// <summary>
-/// Сообщение для запроса списка фракций
+/// Message for requesting list of factions
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class RequestFactionsMessage : EntityEventArgs
@@ -408,7 +402,7 @@ public sealed class RequestFactionsMessage : EntityEventArgs
 }
 
 /// <summary>
-/// Сообщение с списком доступных фракций
+/// Message with list of available factions
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class AvailableFactionsMessage : EntityEventArgs
@@ -417,7 +411,7 @@ public sealed class AvailableFactionsMessage : EntityEventArgs
 }
 
 /// <summary>
-/// Сообщение для присоединения к фракции через поздний вход
+/// Message for joining faction through late join
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class LateJoinFactionMessage : EntityEventArgs

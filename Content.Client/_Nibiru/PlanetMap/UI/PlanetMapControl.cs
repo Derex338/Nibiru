@@ -28,29 +28,21 @@ public sealed class PlanetMapControl : Control
     private const int MinZoom    = 1;
     private const int MaxZoom    = 6;
 
-    // -----------------------------------------------------------------------
     // Persistent chunk data (merges from network batches)
-    // -----------------------------------------------------------------------
     private readonly Dictionary<Vector2i, uint[]> _savedChunks  = new();
     private readonly Dictionary<Vector2i, uint[]> _savedObjects = new();
     private readonly Dictionary<Vector2i, uint[]> _savedZones   = new();
 
-    // -----------------------------------------------------------------------
     // Camera state
-    // -----------------------------------------------------------------------
     private int     _zoom    = 2;
     private Vector2 _pan     = Vector2.Zero; // tile-space centre of viewport
     private bool    _panning;
 
-    // -----------------------------------------------------------------------
     // Player marker
-    // -----------------------------------------------------------------------
     public Vector2i PlayerTile;
     public bool     ShowPlayer = true;
 
-    // -----------------------------------------------------------------------
     // Colour palette
-    // -----------------------------------------------------------------------
     private static readonly Color UnexploredColor = new(0xBB, 0xA8, 0x80, 0xFF);
     private static readonly Color GridLineColor   = new(0x8A, 0x74, 0x50, 0x55);
     private static readonly Color PlayerColor     = new(0xEE, 0x22, 0x22, 0xFF);
@@ -59,9 +51,7 @@ public sealed class PlanetMapControl : Control
     private static readonly Color CompassBg       = new(0x22, 0x1A, 0x10, 0xCC);
     private static readonly Color HudTextColor    = new(1f, 1f, 1f, 0.65f);
 
-    // -----------------------------------------------------------------------
     // Services (cached at construction, not resolved per-frame)
-    // -----------------------------------------------------------------------
     private readonly Font                    _font;
     private readonly IEyeManager            _eyeManager;
     private readonly IResourceCache         _resCache;
@@ -70,11 +60,7 @@ public sealed class PlanetMapControl : Control
     private readonly IResourceManager       _resMgr;        // was resolved per-sprite in original
     private readonly IGameTiming            _gameTiming;
 
-    // -----------------------------------------------------------------------
     // Icon prototype lookup (O(1) resolved, cached per prototype ID)
-    // -----------------------------------------------------------------------
-
-    // Exact entity-ID → icon prototype (built at startup)
     private readonly Dictionary<string, PlanetMapIconPrototype> _entityIconMap = new();
 
     // Pattern-based fallback list (built at startup, avoids EnumeratePrototypes per draw)
@@ -83,9 +69,7 @@ public sealed class PlanetMapControl : Control
     // Cache: prototype ID → resolved icon (null = no icon, avoids re-searching)
     private readonly Dictionary<string, PlanetMapIconPrototype?> _resolvedIconCache = new();
 
-    // -----------------------------------------------------------------------
     // Colour caches
-    // -----------------------------------------------------------------------
     private readonly Dictionary<ushort, Color> _tileColorCache   = new();
     private readonly Dictionary<string, Color> _objectColorCache = new();
     private readonly Dictionary<string, Color> _spriteColorCache = new();
@@ -96,10 +80,6 @@ public sealed class PlanetMapControl : Control
     // Resolved zone visuals (prototype ID → cached render data)
     private readonly Dictionary<string, PlanetMapZonePrototype?> _resolvedZoneCache = new();
     private readonly Dictionary<string, Texture>                  _zoneTextureCache  = new();
-
-    // -----------------------------------------------------------------------
-    // Constructor
-    // -----------------------------------------------------------------------
 
     public PlanetMapControl()
     {
@@ -134,9 +114,7 @@ public sealed class PlanetMapControl : Control
         VerticalExpand   = true;
     }
 
-    // -----------------------------------------------------------------------
     // Public API
-    // -----------------------------------------------------------------------
 
     /// <summary>Clears all saved chunk data.</summary>
     public void ClearChunks()
@@ -219,9 +197,7 @@ public sealed class PlanetMapControl : Control
         _pan = new Vector2(PlayerTile.X, PlayerTile.Y);
     }
 
-    // -----------------------------------------------------------------------
     // Icon prototype lookup (with full caching)
-    // -----------------------------------------------------------------------
 
     private PlanetMapIconPrototype? TryGetIconPrototype(string protoId)
     {
@@ -250,9 +226,7 @@ public sealed class PlanetMapControl : Control
         return null;
     }
 
-    // -----------------------------------------------------------------------
     // Input
-    // -----------------------------------------------------------------------
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
@@ -275,7 +249,6 @@ public sealed class PlanetMapControl : Control
 
         var tileSize    = TilePixels * _zoom;
         var rel         = args.Relative;
-        // Инвертируем вращение для перемещения мыши в соответствии с новой ориентацией
         var rot         = (float)_eyeManager.CurrentEye.Rotation.Theta;
         var unrotatedX  = rel.X * MathF.Cos(rot) - rel.Y * MathF.Sin(rot);
         var unrotatedY  = rel.X * MathF.Sin(rot) + rel.Y * MathF.Cos(rot);
@@ -290,9 +263,7 @@ public sealed class PlanetMapControl : Control
         _zoom = Math.Clamp(_zoom + (args.Delta.Y > 0 ? 1 : -1), MinZoom, MaxZoom);
     }
 
-    // -----------------------------------------------------------------------
     // Drawing
-    // -----------------------------------------------------------------------
 
     protected override void Draw(DrawingHandleScreen handle)
     {
@@ -300,13 +271,10 @@ public sealed class PlanetMapControl : Control
 
         var size     = PixelSize;
         var tileSize = TilePixels * _zoom;
-        // Инвертируем угол поворота камеры, чтобы карта вращалась в правильную сторону
         var camRot   = -_eyeManager.CurrentEye.Rotation;
 
-        // Unexplored background
         handle.DrawRect(new UIBox2(Vector2.Zero, size), UnexploredColor);
 
-        // --- Compute visible tile range ---
         var halfW = size.X / 2f / tileSize;
         var halfH = size.Y / 2f / tileSize;
 
@@ -315,7 +283,7 @@ public sealed class PlanetMapControl : Control
         var minTileY = (int)MathF.Floor(_pan.Y - halfH) - 1;
         var maxTileY = (int)MathF.Ceiling(_pan.Y + halfH) + 1;
 
-        // --- Chunk-level culling: compute chunk coordinate bounds of viewport ---
+        // Chunk-level culling: compute chunk coordinate bounds of viewport
         // Adding +/−1 ensures we never clip chunks at the edges.
         var cSize    = SharedPlanetMapSystem.ChunkSize;
         var minCX    = (int)MathF.Floor((float)minTileX / cSize) - 1;
@@ -323,7 +291,7 @@ public sealed class PlanetMapControl : Control
         var minCY    = (int)MathF.Floor((float)minTileY / cSize) - 1;
         var maxCY    = (int)MathF.Ceiling((float)maxTileY / cSize) + 1;
 
-        // --- Draw visible chunks ---
+        // Draw visible chunks
         // We iterate _savedChunks (the dictionary of loaded data) instead of the
         // entire viewport range. For 1000 chunks, only those overlapping the viewport
         // (typically 20–50) pass the coordinate check. Inside each chunk we use direct
@@ -377,7 +345,7 @@ public sealed class PlanetMapControl : Control
             }
         }
 
-        // Zone blobs (forests, etc.) — under the object icons
+        // Zone blobs (forests, etc.) - under the object icons
         DrawZones(handle, size, tileSize, camRot, minTileX, maxTileX, minTileY, maxTileY);
 
         // 2. Object overlay (skipping tiles covered by a dense zone)
@@ -424,16 +392,13 @@ public sealed class PlanetMapControl : Control
             DrawPlayerMarker(handle, size, tileSize, camRot);
 
         // Compass rose (top-right)
-        // Компас вращается противоположно направлению поворота карты (т.е. по оригинальному углу камеры)
         DrawCompass(handle, size, -camRot);
 
         // HUD: zoom + player coordinates (bottom-left)
         DrawHud(handle, size);
     }
 
-    // -----------------------------------------------------------------------
     // Draw helpers
-    // -----------------------------------------------------------------------
 
     private void DrawObject(DrawingHandleScreen handle, UIBox2 rect, uint objId, int tileSize)
     {
@@ -498,13 +463,10 @@ public sealed class PlanetMapControl : Control
         }
     }
 
-    // -----------------------------------------------------------------------
     // Zone blob rendering
-    //
     // Each zone member is drawn as a soft-edged disc in screen space. Overlapping discs of a
     // dense cluster merge into one smooth blob, with round (not spiky) edges. No marching-squares
     // polygon tessellation is used, avoiding seams and spikes entirely.
-    // -----------------------------------------------------------------------
 
     // Base disc radius (tiles) around each zone member. Small enough to stay within the member's
     // own tile — isolated members render as a single small dot. Members that have a neighbour
@@ -774,9 +736,7 @@ public sealed class PlanetMapControl : Control
             zoomText, HudTextColor);
     }
 
-    // -----------------------------------------------------------------------
     // Colour helpers
-    // -----------------------------------------------------------------------
 
     private Color GetTileColor(ushort tileId)
     {
@@ -860,9 +820,7 @@ public sealed class PlanetMapControl : Control
         return Color.Transparent;
     }
 
-    // -----------------------------------------------------------------------
     // Geometry
-    // -----------------------------------------------------------------------
 
     private Vector2 TileToScreen(int tx, int ty, Vector2i screenSize, int tileSize, Angle camRot)
         => TileToScreen(new Vector2(tx, ty), screenSize, tileSize, camRot);
