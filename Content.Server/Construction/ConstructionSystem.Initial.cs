@@ -39,11 +39,28 @@ namespace Content.Server.Construction
         // --- YOU HAVE BEEN WARNED! AAAH! ---
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
+        private readonly Dictionary<ICommonSession, HashSet<int>> _cancelledBuilds = new();
+        private const int MaxInitialConstructionQueue = 99;
 
         private void InitializeInitial()
         {
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+            SubscribeNetworkEvent<CancelStructureConstructionMessage>(OnCancelStructureConstruction);
+        }
+
+        private void OnCancelStructureConstruction(CancelStructureConstructionMessage ev, EntitySessionEventArgs args)
+        {
+            if (!_beingBuilt.TryGetValue(args.SenderSession, out var building) || !building.Contains(ev.Ack))
+                return;
+
+            if (!_cancelledBuilds.TryGetValue(args.SenderSession, out var cancelled))
+            {
+                cancelled = [];
+                _cancelledBuilds[args.SenderSession] = cancelled;
+            }
+
+            cancelled.Add(ev.Ack);
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -470,104 +487,123 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession] = newSet;
             }
 
-            var location = GetCoordinates(ev.Location);
-
-            foreach (var condition in constructionPrototype.Conditions)
-            {
-                if (!condition.Condition(user, location, ev.Angle.GetCardinalDir()))
-                {
-                    Cleanup();
-                    return;
-                }
-            }
-
             void Cleanup()
             {
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);
-            }
-
-            if (!_actionBlocker.CanInteract(user, null)
-                || !TryComp(user, out HandsComponent? hands) || _handsSystem.GetActiveItem((user, hands)) == null)
-            {
-                Cleanup();
-                return;
-            }
-
-            var mapPos = _transformSystem.ToMapCoordinates(location);
-            var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
-
-            if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))
-            {
-                Cleanup();
-                return;
+                if (_cancelledBuilds.TryGetValue(args.SenderSession, out var cancelledSet))
+                    cancelledSet.Remove(ev.Ack);
             }
 
             if (pathFind == null)
                 throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
 
+            var location = GetCoordinates(ev.Location);
+            var mapPos = _transformSystem.ToMapCoordinates(location);
+            var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
             var targetNodeName = pathFind[0].Name;
+            var queueCount = Math.Clamp(ev.Count, 1, MaxInitialConstructionQueue);
 
-            if (_handsSystem.GetActiveItem((user, hands)) is not { Valid: true } holding)
+            for (var completed = 0; completed < queueCount; completed++)
             {
-                Cleanup();
-                return;
-            }
+                if (_cancelledBuilds.TryGetValue(args.SenderSession, out var cancelled) && cancelled.Contains(ev.Ack))
+                    break;
 
-            ConstructionGraphEdge? chosenEdge = null;
+                if (!Exists(user) || MetaData(user).EntityLifeStage >= EntityLifeStage.Terminating)
+                    break;
 
-            foreach (var edge in startNode.Edges)
-            {
-                if (edge.Target != targetNodeName)
-                    continue;
-
-                var valid = false;
-                foreach (var step in edge.Steps)
+                var canContinue = true;
+                foreach (var condition in constructionPrototype.Conditions)
                 {
-                    switch (step)
+                    if (condition.Condition(user, location, ev.Angle.GetCardinalDir()))
+                        continue;
+
+                    canContinue = false;
+                    break;
+                }
+
+                if (!canContinue
+                    || !_actionBlocker.CanInteract(user, null)
+                    || !TryComp(user, out HandsComponent? hands)
+                    || !_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate)
+                    || _handsSystem.GetActiveItem((user, hands)) is not { Valid: true } holding)
+                {
+                    if (completed == 0)
                     {
-                        case EntityInsertConstructionGraphStep entityInsert:
-                            if (entityInsert.EntityValid(holding, EntityManager, Factory))
-                                valid = true;
-                            break;
-                        // Nibiru - Added tool step handling for initial construction
-                        case ToolConstructionGraphStep toolStep:
-                            if (_toolSystem.HasQuality(holding, toolStep.Tool))
-                                valid = true;
+                        Cleanup();
+                        return;
+                    }
+
+                    break;
+                }
+
+                ConstructionGraphEdge? chosenEdge = null;
+
+                foreach (var edge in startNode.Edges)
+                {
+                    if (edge.Target != targetNodeName)
+                        continue;
+
+                    var valid = false;
+                    foreach (var step in edge.Steps)
+                    {
+                        switch (step)
+                        {
+                            case EntityInsertConstructionGraphStep entityInsert:
+                                if (entityInsert.EntityValid(holding, EntityManager, Factory))
+                                    valid = true;
+                                break;
+                            // Nibiru - Added tool step handling for initial construction
+                            case ToolConstructionGraphStep toolStep:
+                                if (_toolSystem.HasQuality(holding, toolStep.Tool))
+                                    valid = true;
+                                break;
+                        }
+
+                        if (valid)
                             break;
                     }
 
-                    if (valid)
-                        break;
-                }
+                    if (!valid)
+                        continue;
 
-                if (valid)
-                {
                     chosenEdge = edge;
                     break;
                 }
+
+                if (chosenEdge == null)
+                {
+                    if (completed == 0)
+                    {
+                        Cleanup();
+                        return;
+                    }
+
+                    break;
+                }
+
+                if (await Construct(user,
+                        (ev.Ack + constructionPrototype.GetHashCode()).ToString(),
+                        constructionGraph,
+                        chosenEdge,
+                        targetNode,
+                        location,
+                        constructionPrototype.CanRotate ? ev.Angle : Angle.Zero,
+                        holding) is not { Valid: true } structure)
+                {
+                    if (completed == 0)
+                    {
+                        Cleanup();
+                        return;
+                    }
+
+                    break;
+                }
+
+                var remaining = queueCount - completed - 1;
+                RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure), remaining));
+                _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             }
 
-            if (chosenEdge == null)
-            {
-                Cleanup();
-                return;
-            }
-
-            if (await Construct(user,
-                    (ev.Ack + constructionPrototype.GetHashCode()).ToString(),
-                    constructionGraph,
-                    chosenEdge,
-                    targetNode,
-                    GetCoordinates(ev.Location),
-                    constructionPrototype.CanRotate ? ev.Angle : Angle.Zero,
-                    holding) is not { Valid: true } structure)
-            {
-                Cleanup();
-                return;
-            }
-
-            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
-            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }
     }

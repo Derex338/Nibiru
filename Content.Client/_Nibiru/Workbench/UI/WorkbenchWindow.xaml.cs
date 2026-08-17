@@ -53,6 +53,9 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         BuildButton.OnToggled += OnBuildButtonToggled;
         ClearButton.OnPressed += _ => ClearGhost();
 
+        AmountSpin.InitDefaultButtons();
+        AmountSpin.IsValid = n => n >= 1 && n <= 99;
+
 		if (_constructionSystem != null)
 			_constructionSystem.ConstructionGuideAvailable += OnGuideAvailable;
 
@@ -344,9 +347,12 @@ public sealed partial class WorkbenchWindow : DefaultWindow
 
         if (_entityManager.TryGetComponent<TransformComponent>(Entity, out var transform))
         {
+            ClearGhost();
+
             var localPos = transform.Coordinates;
             var direction = transform.LocalRotation.GetCardinalDir();
-            if (_constructionSystem.TrySpawnGhost(_selected, localPos, direction, out var ghost) && _entityManager.TryGetComponent<WorkbenchComponent>(Entity, out var workbench))
+            var amount = Math.Clamp(AmountSpin.Value, 1, 99);
+            if (_constructionSystem.TrySpawnGhost(_selected, localPos, direction, out var ghost, amount) && _entityManager.TryGetComponent<WorkbenchComponent>(Entity, out var workbench))
                 workbench.CurrentGhost = ghost;
         }
 
@@ -362,6 +368,7 @@ public sealed partial class WorkbenchWindow : DefaultWindow
         if (workbench.CurrentGhost != null && _constructionSystem != null)
         {
             _constructionSystem.ClearGhost(workbench.CurrentGhost.GetHashCode());
+            workbench.CurrentGhost = null;
         }
     }
 

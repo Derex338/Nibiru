@@ -182,6 +182,13 @@ namespace Content.Client.Construction
                     "construction-ghost-examine-message",
                     ("name", component.Prototype.Name)));
 
+                if (component.RemainingCount > 1)
+                {
+                    args.PushMarkup(Loc.GetString(
+                        "construction-ghost-examine-queue",
+                        ("count", component.RemainingCount)));
+                }
+
                 if (!PrototypeManager.TryIndex(component.Prototype.Graph, out var graph))
                     return;
 
@@ -217,8 +224,18 @@ namespace Content.Client.Construction
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
-            // We get sent a NetEntity but it actually corresponds to our local Entity.
-            ClearGhost(msg.GhostId);
+            if (msg.RemainingCount > 0)
+            {
+                if (_ghosts.TryGetValue(msg.GhostId, out var ghost)
+                    && TryComp(ghost, out ConstructionGhostComponent? ghostComp))
+                {
+                    ghostComp.RemainingCount = msg.RemainingCount;
+                }
+
+                return;
+            }
+
+            ClearGhost(msg.GhostId, cancelQueue: false);
         }
 
         private void HandlePlayerAttached(LocalPlayerAttachedEvent msg)
@@ -284,7 +301,8 @@ namespace Content.Client.Construction
             ConstructionPrototype prototype,
             EntityCoordinates loc,
             Direction dir,
-            [NotNullWhen(true)] out EntityUid? ghost)
+            [NotNullWhen(true)] out EntityUid? ghost,
+            int remainingCount = 1)
         {
             ghost = null;
             if (_playerManager.LocalEntity is not { } user ||
@@ -310,6 +328,7 @@ namespace Content.Client.Construction
             var comp = Comp<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
             comp.GhostId = ghost.GetHashCode();
+            comp.RemainingCount = Math.Max(1, remainingCount);
             Comp<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, ghost.Value);
 
@@ -414,7 +433,8 @@ namespace Content.Client.Construction
             }
 
             var transform = Comp<TransformComponent>(ghostId);
-            var msg = new TryStartStructureConstructionMessage(GetNetCoordinates(transform.Coordinates), ghostComp.Prototype.ID, transform.LocalRotation, ghostId.GetHashCode());
+            var count = Math.Max(1, ghostComp.RemainingCount);
+            var msg = new TryStartStructureConstructionMessage(GetNetCoordinates(transform.Coordinates), ghostComp.Prototype.ID, transform.LocalRotation, ghostId.GetHashCode(), count);
             RaiseNetworkEvent(msg);
         }
 
@@ -429,10 +449,13 @@ namespace Content.Client.Construction
         /// <summary>
         /// Removes a construction ghost entity with the given ID.
         /// </summary>
-        public void ClearGhost(int ghostId)
+        public void ClearGhost(int ghostId, bool cancelQueue = true)
         {
             if (!_ghosts.TryGetValue(ghostId, out var ghost))
                 return;
+
+            if (cancelQueue)
+                RaiseNetworkEvent(new CancelStructureConstructionMessage(ghostId));
 
             QueueDel(ghost);
             _ghosts.Remove(ghostId);
@@ -443,8 +466,9 @@ namespace Content.Client.Construction
         /// </summary>
         public void ClearAllGhosts()
         {
-            foreach (var ghost in _ghosts.Values)
+            foreach (var (ghostId, ghost) in _ghosts)
             {
+                RaiseNetworkEvent(new CancelStructureConstructionMessage(ghostId));
                 QueueDel(ghost);
             }
 
