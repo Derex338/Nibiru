@@ -37,12 +37,18 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// </remarks>
     public readonly int Ack;
 
-    public TryStartStructureConstructionMessage(NetCoordinates loc, string prototypeName, Angle angle, int ack)
+    /// <summary>
+    /// How many times to repeat construction after a successful craft, like medical healing.
+    /// </summary>
+    public readonly int Count;
+
+    public TryStartStructureConstructionMessage(NetCoordinates loc, string prototypeName, Angle angle, int ack, int count = 1)
     {
         Location = loc;
         PrototypeName = prototypeName;
         Angle = angle;
         Ack = ack;
+        Count = count;
     }
 }
 
@@ -77,10 +83,30 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
     /// </summary>
     public readonly NetEntity? Uid;
 
-    public AckStructureConstructionMessage(int ghostId, NetEntity? uid = null)
+    /// <summary>
+    /// Remaining crafts in the queue after this acknowledgement. Zero deletes the ghost.
+    /// </summary>
+    public readonly int RemainingCount;
+
+    public AckStructureConstructionMessage(int ghostId, NetEntity? uid = null, int remainingCount = 0)
     {
         GhostId = ghostId;
         Uid = uid;
+        RemainingCount = remainingCount;
+    }
+}
+
+/// <summary>
+/// Sent client -> server to stop a repeating structure construction queue.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class CancelStructureConstructionMessage : EntityEventArgs
+{
+    public readonly int Ack;
+
+    public CancelStructureConstructionMessage(int ack)
+    {
+        Ack = ack;
     }
 }
 
